@@ -6,4 +6,5 @@ urlpatterns = [
     path('dashboard/', views.dashboard_view, name='dashboard'),
     path('metrics/', views.metrics_view, name='metrics'),
     path('sovereignty-metrics/', views.metrics_view, name='sovereignty_metrics'),
+    path('api/organizations/', views.SovereignOrganizationListCreateView.as_view(), name='organizations'),
 ]

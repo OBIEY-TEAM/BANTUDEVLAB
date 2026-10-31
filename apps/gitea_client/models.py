@@ -1,9 +1,19 @@
 from django.db import models
 
+
 class SovereignRepository(models.Model):
     """
     Cached and tracked metadata of sovereign repositories managed via BantuDevLab.
+    Linked optionally to a SovereignOrganization for multi-tenancy.
     """
+    organization = models.ForeignKey(
+        'core.SovereignOrganization',
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name='repositories',
+        help_text="Organisation souveraine de rattachement"
+    )
     name = models.CharField(max_length=255)
     owner = models.CharField(max_length=255)
     description = models.TextField(blank=True, default='')
