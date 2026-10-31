@@ -70,10 +70,11 @@ jobs:
 
       - name: Verify Finetuning Pipeline Integrity
         run: |
-          python -m py_compile finetuning/dataset_preparation.py finetuning/train_lora.py finetuning/evaluate.py
+          python -m py_compile finetuning/dataset_preparation.py finetuning/train_lora.py finetuning/evaluate.py finetuning/export_gguf.py
           python finetuning/dataset_preparation.py
           python finetuning/train_lora.py --dry_run
           python finetuning/evaluate.py
+          python finetuning/export_gguf.py --dry_run
 
       - name: Validate Docker Compose Configuration
         run: |

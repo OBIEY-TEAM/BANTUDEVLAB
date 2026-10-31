@@ -16,6 +16,7 @@ Ce dossier contient l'ensemble des outils nécessaires pour entraîner et adapte
 | `dataset_preparation.py` | Génère et formate le dataset d'instructions souverain (`sovereign_instruct_dataset.jsonl`). |
 | `train_lora.py` | Script d'entraînement avec quantification QLoRA 4-bit (BitsAndBytes + PEFT + TRL). |
 | `evaluate.py` | Suite de tests et métriques d'évaluation de la qualité du modèle fine-tuné. |
+| `export_gguf.py` | Outil d'export et empaquetage au format quantifié GGUF (q4_k_m) pour inférence ultra-légère (SOUV-04). |
 | `requirements.txt` | Dépendances nécessaires pour les calculs GPU (PyTorch, Transformers, Accelerate). |
 
 ---
@@ -48,4 +49,16 @@ python finetuning/train_lora.py \
 ### 4. Évaluation des résultats
 ```bash
 python finetuning/evaluate.py
+```
+
+### 5. Export & Packaging GGUF (Inférence Souveraine Ultra-Légère - SOUV-04)
+```bash
+# Exportation simulée (Dry-Run)
+python finetuning/export_gguf.py --dry_run
+
+# Exportation complète et quantification 4-bit
+python finetuning/export_gguf.py \
+  --weights_dir finetuning/lora_gemma_weights \
+  --output_path finetuning/gemma-5b-sovereign-q4_k_m.gguf \
+  --quantization q4_k_m
 ```
