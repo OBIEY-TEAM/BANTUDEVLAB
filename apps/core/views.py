@@ -1,4 +1,6 @@
 from django.shortcuts import render
+from django.db.models import Avg
+from django.views.decorators.cache import cache_page
 from apps.zkp_auth.models import SovereignIdentity
 from apps.gitea_client.client import GiteaClient
 from apps.gitea_client.models import SovereignRepository
@@ -26,9 +28,9 @@ def dashboard_view(request):
     audits = SecurityAuditReport.objects.all().order_by('-scanned_at')[:10]
     interactions_count = AIInteractionLog.objects.count()
 
-    avg_sovereignty = 98
-    if audits.exists():
-        avg_sovereignty = round(sum(a.sovereignty_score for a in audits) / len(audits))
+    # PERF-03: Remplacement de la boucle d'agrégation Python par models.Avg SQL
+    avg_aggregate = SecurityAuditReport.objects.aggregate(avg_score=Avg('sovereignty_score'))['avg_score']
+    avg_sovereignty = round(avg_aggregate) if avg_aggregate is not None else 98
 
     context = {
         'total_repos': len(repos),
@@ -40,6 +42,7 @@ def dashboard_view(request):
     }
     return render(request, 'core/dashboard.html', context)
 
+@cache_page(60)
 def metrics_view(request):
-    """Métriques de souveraineté numérique continentale."""
+    """Métriques de souveraineté numérique continentale (mises en cache 60s - PERF-04)."""
     return render(request, 'core/metrics.html')

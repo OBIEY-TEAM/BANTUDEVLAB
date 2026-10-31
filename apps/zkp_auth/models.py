@@ -25,10 +25,16 @@ class ZKPChallenge(models.Model):
     Prevents replay attacks.
     """
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='zkp_challenges')
-    challenge_nonce = models.CharField(max_length=128, unique=True)
+    challenge_nonce = models.CharField(max_length=128, unique=True, db_index=True)
     created_at = models.DateTimeField(auto_now_add=True)
-    expires_at = models.DateTimeField()
+    expires_at = models.DateTimeField(db_index=True)
     is_used = models.BooleanField(default=False)
+
+    class Meta:
+        indexes = [
+            models.Index(fields=['challenge_nonce'], name='zkp_nonce_idx'),
+            models.Index(fields=['expires_at'], name='zkp_expires_idx'),
+        ]
 
     @classmethod
     def create_challenge(cls, user, validity_seconds=300):

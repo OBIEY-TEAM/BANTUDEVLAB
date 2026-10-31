@@ -57,6 +57,7 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'config.wsgi.application'
+ASGI_APPLICATION = 'config.asgi.application'
 
 # Database configuration: support PostgreSQL with SQLite fallback
 DB_ENGINE = os.environ.get('DB_ENGINE', 'sqlite')
@@ -141,3 +142,48 @@ GITEA_WEBHOOK_SECRET = os.environ.get('GITEA_WEBHOOK_SECRET', 'sovereign_webhook
 GEMMA_API_URL = os.environ.get('GEMMA_API_URL', 'http://localhost:11434/api/generate')
 GEMMA_MODEL_NAME = os.environ.get('GEMMA_MODEL_NAME', 'gemma:5b')
 GEMMA_EMBEDDINGS_URL = os.environ.get('GEMMA_EMBEDDINGS_URL', 'http://localhost:11434/api/embeddings')
+
+# Celery / Redis Task Queue Configuration (PERF-01)
+REDIS_URL = os.environ.get('REDIS_URL', 'redis://127.0.0.1:6379/0')
+CELERY_BROKER_URL = os.environ.get('CELERY_BROKER_URL', REDIS_URL)
+CELERY_RESULT_BACKEND = os.environ.get('CELERY_RESULT_BACKEND', REDIS_URL)
+CELERY_ACCEPT_CONTENT = ['json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'
+CELERY_TIMEZONE = TIME_ZONE
+CELERY_TASK_TRACK_STARTED = True
+CELERY_TASK_TIME_LIMIT = 30 * 60
+
+# Distributed Caching Layer (PERF-04)
+def _get_cache_configuration():
+    redis_url = os.environ.get('REDIS_URL', 'redis://127.0.0.1:6379/0')
+    import sys
+    if 'test' in sys.argv or os.environ.get('REDIS_CACHE_ENABLED', '').lower() in ('false', '0'):
+        return {
+            'default': {
+                'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+                'LOCATION': 'bantudevlab-cache',
+                'TIMEOUT': 60,
+            }
+        }
+    try:
+        import redis
+        client = redis.Redis.from_url(redis_url, socket_connect_timeout=0.2)
+        client.ping()
+        return {
+            'default': {
+                'BACKEND': 'django.core.cache.backends.redis.RedisCache',
+                'LOCATION': redis_url,
+                'TIMEOUT': 60,
+            }
+        }
+    except Exception:
+        return {
+            'default': {
+                'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+                'LOCATION': 'bantudevlab-cache',
+                'TIMEOUT': 60,
+            }
+        }
+
+CACHES = _get_cache_configuration()
