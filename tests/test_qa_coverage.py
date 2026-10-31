@@ -235,3 +235,36 @@ class QACoverageExhaustiveTestCase(TestCase):
         # GitTokenValidateView missing token
         res_val_view = self.client.post("/api/zkp/tokens/validate/", {}, content_type="application/json")
         self.assertEqual(res_val_view.status_code, 400)
+
+    # -------------------------------------------------------------
+    # 4. finetuning/export_gguf (SOUV-04)
+    # -------------------------------------------------------------
+    def test_finetuning_export_gguf_tool(self):
+        import os
+        import tempfile
+
+        from finetuning.export_gguf import export_to_gguf
+
+        # Dry run execution
+        res_dry = export_to_gguf(
+            weights_dir="finetuning/lora_gemma_weights",
+            output_path="finetuning/test_model.gguf",
+            quantization="q4_k_m",
+            dry_run=True,
+        )
+        self.assertEqual(res_dry, 0)
+
+        # Actual file generation
+        with tempfile.TemporaryDirectory() as tmpdir:
+            out_path = f"{tmpdir}/output_model.gguf"
+            res_actual = export_to_gguf(
+                weights_dir=f"{tmpdir}/weights",
+                output_path=out_path,
+                quantization="q4_k_m",
+                dry_run=False,
+            )
+            self.assertEqual(res_actual, 0)
+            self.assertTrue(os.path.exists(out_path))
+            with open(out_path, "rb") as f:
+                header = f.read(4)
+                self.assertEqual(header, b"GGUF")
