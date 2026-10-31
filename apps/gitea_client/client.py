@@ -6,6 +6,7 @@ and the underlying open-source Git forge.
 
 import requests
 from django.conf import settings
+from django.core.cache import cache
 from typing import List, Dict, Any, Optional
 
 
@@ -13,7 +14,11 @@ class GiteaClient:
     """
     Client for interacting with Gitea REST API v1.
     Includes mock fallback mode if Gitea container is starting up or in offline/demo mode.
+    Caches repository listings for 60 seconds (PERF-04).
     """
+
+    CACHE_KEY_REPOS = 'gitea_repos_list'
+    CACHE_TTL = 60
 
     def __init__(self, api_url: Optional[str] = None, token: Optional[str] = None):
         self.api_url = (api_url or getattr(settings, 'GITEA_API_URL', 'http://localhost:3000/api/v1')).rstrip('/')
@@ -56,64 +61,72 @@ class GiteaClient:
             "fallback": True
         }
 
-    def list_repositories(self) -> List[Dict[str, Any]]:
-        """Lists sovereign repositories."""
+    def list_repositories(self, use_cache: bool = True) -> List[Dict[str, Any]]:
+        """Lists sovereign repositories, cached for 60 seconds (PERF-04)."""
+        if use_cache:
+            cached_repos = cache.get(self.CACHE_KEY_REPOS)
+            if cached_repos is not None:
+                return cached_repos
+
         res = self._get('/repos/search', params={'limit': 50})
         if res.get('success') and 'data' in res:
             repos = res['data'].get('data', [])
-            return repos
+        else:
+            # Sovereign default mock repositories for demo/hackathon display
+            repos = [
+                {
+                    "id": 1,
+                    "name": "afri-fintech-gateway",
+                    "full_name": "sovereign-org/afri-fintech-gateway",
+                    "description": "Passerelle panafricaine de paiement mobile & interopérabilité souveraine",
+                    "private": False,
+                    "stars_count": 42,
+                    "forks_count": 12,
+                    "open_issues_count": 3,
+                    "owner": {"username": "afri-foundation"},
+                    "clone_url": "https://forge.bantudevlab.africa/sovereign-org/afri-fintech-gateway.git",
+                    "html_url": "https://forge.bantudevlab.africa/sovereign-org/afri-fintech-gateway",
+                    "default_branch": "main",
+                    "sovereignty_level": "Tier-1 Continental",
+                },
+                {
+                    "id": 2,
+                    "name": "agro-sentinel-ai",
+                    "full_name": "sovereign-org/agro-sentinel-ai",
+                    "description": "Modèles de vision embarquée pour la surveillance des récoltes sahéliennes",
+                    "private": False,
+                    "stars_count": 89,
+                    "forks_count": 27,
+                    "open_issues_count": 5,
+                    "owner": {"username": "agro-tech-ci"},
+                    "clone_url": "https://forge.bantudevlab.africa/sovereign-org/agro-sentinel-ai.git",
+                    "html_url": "https://forge.bantudevlab.africa/sovereign-org/agro-sentinel-ai",
+                    "default_branch": "main",
+                    "sovereignty_level": "Tier-1 Continental",
+                },
+                {
+                    "id": 3,
+                    "name": "bantu-zkp-identity",
+                    "full_name": "bantudevlab/bantu-zkp-identity",
+                    "description": "Bibliothèque cryptographique Zero-Knowledge Proof pour l'Afrique de l'Ouest",
+                    "private": False,
+                    "stars_count": 154,
+                    "forks_count": 34,
+                    "open_issues_count": 1,
+                    "owner": {"username": "bantudevlab"},
+                    "clone_url": "https://forge.bantudevlab.africa/bantudevlab/bantu-zkp-identity.git",
+                    "html_url": "https://forge.bantudevlab.africa/bantudevlab/bantu-zkp-identity",
+                    "default_branch": "main",
+                    "sovereignty_level": "Tier-1 Continental",
+                }
+            ]
 
-        # Sovereign default mock repositories for demo/hackathon display
-        return [
-            {
-                "id": 1,
-                "name": "afri-fintech-gateway",
-                "full_name": "sovereign-org/afri-fintech-gateway",
-                "description": "Passerelle panafricaine de paiement mobile & interopérabilité souveraine",
-                "private": False,
-                "stars_count": 42,
-                "forks_count": 12,
-                "open_issues_count": 3,
-                "owner": {"username": "afri-foundation"},
-                "clone_url": "https://forge.bantudevlab.africa/sovereign-org/afri-fintech-gateway.git",
-                "html_url": "https://forge.bantudevlab.africa/sovereign-org/afri-fintech-gateway",
-                "default_branch": "main",
-                "sovereignty_level": "Tier-1 Continental",
-            },
-            {
-                "id": 2,
-                "name": "agro-sentinel-ai",
-                "full_name": "sovereign-org/agro-sentinel-ai",
-                "description": "Modèles de vision embarquée pour la surveillance des récoltes sahéliennes",
-                "private": False,
-                "stars_count": 89,
-                "forks_count": 27,
-                "open_issues_count": 5,
-                "owner": {"username": "agro-tech-ci"},
-                "clone_url": "https://forge.bantudevlab.africa/sovereign-org/agro-sentinel-ai.git",
-                "html_url": "https://forge.bantudevlab.africa/sovereign-org/agro-sentinel-ai",
-                "default_branch": "main",
-                "sovereignty_level": "Tier-1 Continental",
-            },
-            {
-                "id": 3,
-                "name": "bantu-zkp-identity",
-                "full_name": "bantudevlab/bantu-zkp-identity",
-                "description": "Bibliothèque cryptographique Zero-Knowledge Proof pour l'Afrique de l'Ouest",
-                "private": False,
-                "stars_count": 154,
-                "forks_count": 34,
-                "open_issues_count": 1,
-                "owner": {"username": "bantudevlab"},
-                "clone_url": "https://forge.bantudevlab.africa/bantudevlab/bantu-zkp-identity.git",
-                "html_url": "https://forge.bantudevlab.africa/bantudevlab/bantu-zkp-identity",
-                "default_branch": "main",
-                "sovereignty_level": "Tier-1 Continental",
-            }
-        ]
+        if use_cache:
+            cache.set(self.CACHE_KEY_REPOS, repos, self.CACHE_TTL)
+        return repos
 
     def create_repository(self, name: str, description: str = "", private: bool = False) -> Dict[str, Any]:
-        """Creates a repository on Gitea."""
+        """Creates a repository on Gitea and invalidates cached repository listings."""
         payload = {
             "name": name,
             "description": description,
@@ -122,6 +135,9 @@ class GiteaClient:
             "default_branch": "main"
         }
         res = self._post('/user/repos', payload)
+        # Invalider le cache des dépôts
+        cache.delete(self.CACHE_KEY_REPOS)
+
         if res.get('success'):
             return res
         return {

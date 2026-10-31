@@ -114,18 +114,51 @@ async function runAiReview() {
     const code = document.getElementById('scanCodeInput').value;
     const resultBox = document.getElementById('scanResult');
     resultBox.style.display = 'block';
-    resultBox.textContent = 'Interrogation de l\'assistant Gemma 5B local...';
+    resultBox.textContent = 'Connexion au flux SSE de Gemma 5B...\n';
 
     try {
-        const res = await fetch('/api/ai/review/', {
+        const response = await fetch('/api/ai/review/', {
             method: 'POST',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({code: code, context: 'security_audit'})
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'text/event-stream'
+            },
+            body: JSON.stringify({code: code, context: 'security_audit', stream: true})
         });
-        const data = await res.json();
-        resultBox.textContent = data.response;
+
+        if (!response.ok) {
+            resultBox.textContent = 'Erreur HTTP: ' + response.status;
+            return;
+        }
+
+        resultBox.textContent = '';
+        const reader = response.body.getReader();
+        const decoder = new TextDecoder('utf-8');
+        let buffer = '';
+
+        while (true) {
+            const {value, done} = await reader.read();
+            if (done) break;
+            buffer += decoder.decode(value, {stream: true});
+
+            const lines = buffer.split('\n\n');
+            buffer = lines.pop(); // keep last incomplete part
+
+            for (const line of lines) {
+                if (line.startsWith('data: ')) {
+                    try {
+                        const payload = JSON.parse(line.substring(6));
+                        if (payload.token) {
+                            resultBox.textContent += payload.token;
+                        }
+                    } catch (e) {
+                        console.error('Parse error:', e);
+                    }
+                }
+            }
+        }
     } catch(err) {
-        resultBox.textContent = 'Erreur lors de l\'appel IA: ' + err;
+        resultBox.textContent = 'Erreur lors du streaming SSE: ' + err;
     }
 }
 </script>
