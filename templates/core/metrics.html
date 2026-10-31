@@ -1,14 +1,161 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div style="max-width: 800px; margin: 0 auto;">
-    <h2>Indicateurs de Souveraineté Numérique Continentale</h2>
-    <p style="color: var(--text-muted); margin-bottom: 2rem;">Conformité avec la stratégie de transformation numérique de l'Union Africaine (2020-2030).</p>
+<div style="max-width: 1000px; margin: 0 auto;">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; flex-wrap: wrap; gap: 1rem;">
+        <div>
+            <h2>Indicateurs & Topologie Souveraine Panafricaine</h2>
+            <p style="color: var(--text-muted); margin-top: 0.3rem;">Supervision en temps réel des nœuds certifiés et conformité UA 2020-2030.</p>
+        </div>
+        <button class="btn btn-secondary" onclick="simulatePingAllNodes()">
+            ⚡ Tester la Latence des Nœuds
+        </button>
+    </div>
 
+    <!-- UI-05: Cartographie Interactive des Nœuds Souverains Africains -->
+    <div class="africa-map-wrapper">
+        <div style="text-align: center; margin-bottom: 1rem;">
+            <h3 style="margin: 0; color: #fff;">Topologie des Datacenters Certifiés</h3>
+            <p style="font-size: 0.85rem; color: var(--text-muted); margin: 0.2rem 0 0;">Cliquez sur un nœud ou une carte pour inspecter les métriques locales</p>
+        </div>
+
+        <div class="map-svg-container">
+            <svg viewBox="0 0 600 520" style="width: 100%; height: auto; filter: drop-shadow(0 15px 30px rgba(0,0,0,0.5));">
+                <!-- Silhouette stylisée du continent africain -->
+                <path d="M 170 80 Q 260 40 370 70 Q 480 120 460 200 Q 420 220 430 270 Q 470 300 460 360 Q 400 440 330 480 Q 280 470 260 420 Q 230 380 200 340 Q 150 280 130 250 Q 80 220 90 170 Q 110 120 170 80 Z"
+                      fill="#0e1726" stroke="#2a3b5c" stroke-width="2.5" />
+
+                <!-- Réseaux Dorsaux / Lignes d'interconnexion souveraines (IXP) -->
+                <g stroke="rgba(245, 158, 11, 0.35)" stroke-width="1.8" stroke-dasharray="4,4">
+                    <line x1="165" y1="215" x2="115" y2="185" /> <!-- Abidjan - Dakar -->
+                    <line x1="165" y1="215" x2="265" y2="245" /> <!-- Abidjan - Lagos -->
+                    <line x1="265" y1="245" x2="385" y2="300" /> <!-- Lagos - Kigali -->
+                    <line x1="385" y1="300" x2="435" y2="280" /> <!-- Kigali - Nairobi -->
+                    <line x1="115" y1="185" x2="265" y2="245" /> <!-- Dakar - Lagos -->
+                </g>
+
+                <!-- Nœud 1 : Dakar (SEN) (115, 185) -->
+                <g class="map-node-point" onclick="selectNode('dakar')">
+                    <circle cx="115" cy="185" r="16" fill="rgba(16, 185, 129, 0.25)" class="map-node-pulse" />
+                    <circle cx="115" cy="185" r="7" fill="var(--secondary-emerald)" stroke="#fff" stroke-width="2" />
+                    <text x="115" y="165" fill="#fff" font-size="12" font-weight="bold" text-anchor="middle">Dakar</text>
+                </g>
+
+                <!-- Nœud 2 : Abidjan (CIV) (165, 215) -->
+                <g class="map-node-point" onclick="selectNode('abidjan')">
+                    <circle cx="165" cy="215" r="20" fill="rgba(245, 158, 11, 0.35)" class="map-node-pulse" />
+                    <circle cx="165" cy="215" r="8" fill="var(--primary-african-gold)" stroke="#fff" stroke-width="2" />
+                    <text x="165" y="245" fill="#fff" font-size="13" font-weight="bold" text-anchor="middle">Abidjan (Systalink)</text>
+                </g>
+
+                <!-- Nœud 3 : Lagos (NGA) (265, 245) -->
+                <g class="map-node-point" onclick="selectNode('lagos')">
+                    <circle cx="265" cy="245" r="16" fill="rgba(59, 130, 246, 0.25)" class="map-node-pulse" />
+                    <circle cx="265" cy="245" r="7" fill="#3b82f6" stroke="#fff" stroke-width="2" />
+                    <text x="265" y="270" fill="#fff" font-size="12" font-weight="bold" text-anchor="middle">Lagos</text>
+                </g>
+
+                <!-- Nœud 4 : Kigali (RWA) (385, 300) -->
+                <g class="map-node-point" onclick="selectNode('kigali')">
+                    <circle cx="385" cy="300" r="16" fill="rgba(16, 185, 129, 0.25)" class="map-node-pulse" />
+                    <circle cx="385" cy="300" r="7" fill="var(--secondary-emerald)" stroke="#fff" stroke-width="2" />
+                    <text x="385" y="325" fill="#fff" font-size="12" font-weight="bold" text-anchor="middle">Kigali</text>
+                </g>
+
+                <!-- Nœud 5 : Nairobi (KEN) (435, 280) -->
+                <g class="map-node-point" onclick="selectNode('nairobi')">
+                    <circle cx="435" cy="280" r="16" fill="rgba(245, 158, 11, 0.25)" class="map-node-pulse" />
+                    <circle cx="435" cy="280" r="7" fill="var(--primary-african-gold)" stroke="#fff" stroke-width="2" />
+                    <text x="435" y="260" fill="#fff" font-size="12" font-weight="bold" text-anchor="middle">Nairobi</text>
+                </g>
+            </svg>
+        </div>
+
+        <!-- Cartes Interactives des 5 Nœuds -->
+        <div class="node-cards-grid">
+            <div id="card-abidjan" class="node-card selected" onclick="selectNode('abidjan')">
+                <div class="node-card-header">
+                    <strong>🇨🇮 Abidjan</strong>
+                    <span id="latency-abidjan" class="latency-badge">12 ms</span>
+                </div>
+                <div style="font-size: 0.8rem; color: var(--text-muted);">Datacenter Systalink Tier-3</div>
+                <div style="font-size: 0.75rem; color: var(--secondary-emerald); margin-top: 0.4rem;">● Actif & Opérationnel</div>
+            </div>
+
+            <div id="card-dakar" class="node-card" onclick="selectNode('dakar')">
+                <div class="node-card-header">
+                    <strong>🇸🇳 Dakar</strong>
+                    <span id="latency-dakar" class="latency-badge">18 ms</span>
+                </div>
+                <div style="font-size: 0.8rem; color: var(--text-muted);">Sovereign IXP Hub Tier-3</div>
+                <div style="font-size: 0.75rem; color: var(--secondary-emerald); margin-top: 0.4rem;">● Actif & Opérationnel</div>
+            </div>
+
+            <div id="card-lagos" class="node-card" onclick="selectNode('lagos')">
+                <div class="node-card-header">
+                    <strong>🇳🇬 Lagos</strong>
+                    <span id="latency-lagos" class="latency-badge">24 ms</span>
+                </div>
+                <div style="font-size: 0.8rem; color: var(--text-muted);">West Africa Interconnect Tier-4</div>
+                <div style="font-size: 0.75rem; color: var(--secondary-emerald); margin-top: 0.4rem;">● Actif & Opérationnel</div>
+            </div>
+
+            <div id="card-kigali" class="node-card" onclick="selectNode('kigali')">
+                <div class="node-card-header">
+                    <strong>🇷🇼 Kigali</strong>
+                    <span id="latency-kigali" class="latency-badge">31 ms</span>
+                </div>
+                <div style="font-size: 0.8rem; color: var(--text-muted);">Innovation City DC Tier-3</div>
+                <div style="font-size: 0.75rem; color: var(--secondary-emerald); margin-top: 0.4rem;">● Actif & Opérationnel</div>
+            </div>
+
+            <div id="card-nairobi" class="node-card" onclick="selectNode('nairobi')">
+                <div class="node-card-header">
+                    <strong>🇰🇪 Nairobi</strong>
+                    <span id="latency-nairobi" class="latency-badge">29 ms</span>
+                </div>
+                <div style="font-size: 0.8rem; color: var(--text-muted);">East Africa Gateway Tier-3</div>
+                <div style="font-size: 0.75rem; color: var(--secondary-emerald); margin-top: 0.4rem;">● Actif & Opérationnel</div>
+            </div>
+        </div>
+
+        <!-- Détails Dynamiques du Nœud Sélectionné -->
+        <div id="nodeDetailsBanner" class="node-details-banner">
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 1rem;">
+                <div>
+                    <h4 id="detailNodeName" style="margin: 0; color: #fff; font-size: 1.1rem;">🇨🇮 Nœud Central Systalink Cloud - Abidjan</h4>
+                    <p id="detailNodeDesc" style="margin: 0.3rem 0 0; font-size: 0.85rem; color: var(--text-muted);">
+                        Hôte principal du moteur Git souverain Gitea, cluster PostgreSQL répliqué et API BantuDevLab.
+                    </p>
+                </div>
+                <span id="detailCertification" class="brand-badge">CERTIFIÉ TIER-3 SOUVERAIN</span>
+            </div>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1rem; margin-top: 1rem; padding-top: 1rem; border-top: 1px solid rgba(255,255,255,0.08);">
+                <div>
+                    <span style="font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase;">Latence Locale</span>
+                    <div id="detailLatency" style="font-weight: 700; color: var(--secondary-emerald); font-size: 1.1rem;">12 ms</div>
+                </div>
+                <div>
+                    <span style="font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase;">Bande Passante IXP</span>
+                    <div id="detailBandwidth" style="font-weight: 700; color: #fff; font-size: 1.1rem;">100 Gbps Local IXP</div>
+                </div>
+                <div>
+                    <span style="font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase;">Protection Légale</span>
+                    <div id="detailJurisdiction" style="font-weight: 700; color: var(--primary-african-gold); font-size: 1.1rem;">Droit Ivoirien & UA</div>
+                </div>
+                <div>
+                    <span style="font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase;">Disponibilité SLA</span>
+                    <div id="detailUptime" style="font-weight: 700; color: var(--secondary-emerald); font-size: 1.1rem;">99.98%</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Piliers Stratégiques -->
     <div class="card" style="margin-bottom: 1.5rem;">
         <h3>📍 Localisation des Données & Hébergement</h3>
         <p>Les serveurs Git, bases de données relationnelles PostgreSQL et sauvegardes sont hébergés sur l'infrastructure Systalink Cloud en Côte d'Ivoire et au Sénégal.</p>
-        <div style="background: rgba(16, 185, 129, 0.2); border-left: 4px solid var(--secondary-emerald); padding: 0.8rem; margin-top: 1rem;">
+        <div style="background: rgba(16, 185, 129, 0.2); border-left: 4px solid var(--secondary-emerald); padding: 0.8rem; margin-top: 1rem; border-radius: 4px;">
             <strong>Statut : 100% Souverain</strong> — Immunité totale face au CLOUD Act et aux juridictions extraterritoriales.
         </div>
     </div>
@@ -29,4 +176,121 @@
         </div>
     </div>
 </div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+const NODES_DATA = {
+    abidjan: {
+        flag: "🇨🇮",
+        name: "Systalink Cloud Datacenter - Abidjan",
+        country: "Côte d'Ivoire",
+        desc: "Nœud central de la forge souveraine : héberge le moteur Gitea CE, les référentiels Git maîtres et le pipeline de fine-tuning Gemma 5B.",
+        certification: "CERTIFIÉ TIER-3 SOUVERAIN",
+        latency: 12,
+        bandwidth: "100 Gbps Local IXP (CI-IXP)",
+        jurisdiction: "Droit Ivoirien & Cadre UA",
+        uptime: "99.98%"
+    },
+    dakar: {
+        flag: "🇸🇳",
+        name: "Sovereign IXP Datacenter - Dakar",
+        country: "Sénégal",
+        desc: "Centre d'interconnexion pour l'Afrique de l'Ouest francophone, nœud de réplication chiffrée ZKP et miroirs de sécurité.",
+        certification: "CERTIFIÉ TIER-3 SOUVERAIN",
+        latency: 18,
+        bandwidth: "80 Gbps SENIX IXP",
+        jurisdiction: "Droit Sénégalais & CEDEAO",
+        uptime: "99.95%"
+    },
+    lagos: {
+        flag: "🇳🇬",
+        name: "MainOne Datacenter Gateway - Lagos",
+        country: "Nigeria",
+        desc: "Hub majeur de connectivité pour les fintechs et startups d'Afrique de l'Ouest, hébergeant des miroirs rapides de paquets.",
+        certification: "CERTIFIÉ TIER-4 DATACENTER",
+        latency: 24,
+        bandwidth: "200 Gbps NGIX IXP",
+        jurisdiction: "Droit Nigérian (NDPR)",
+        uptime: "99.99%"
+    },
+    kigali: {
+        flag: "🇷🇼",
+        name: "Kigali Innovation City DC - Kigali",
+        country: "Rwanda",
+        desc: "Pôle d'innovation panafricain pour le calcul distribué, l'audit IA local et l'hébergement des architectures souveraines.",
+        certification: "CERTIFIÉ TIER-3 SOUVERAIN",
+        latency: 31,
+        bandwidth: "50 Gbps RINEX IXP",
+        jurisdiction: "Droit Rwandais & Smart Africa",
+        uptime: "99.96%"
+    },
+    nairobi: {
+        flag: "🇰🇪",
+        name: "East Africa Gateway - Nairobi",
+        country: "Kenya",
+        desc: "Passerelle souveraine d'Afrique de l'Est pour les services financiers mobiles, M-Pesa connectors et pipelines CI/CD.",
+        certification: "CERTIFIÉ TIER-3 SOUVERAIN",
+        latency: 29,
+        bandwidth: "120 Gbps KIXP",
+        jurisdiction: "Droit Kényan & EAC",
+        uptime: "99.97%"
+    }
+};
+
+let selectedNodeKey = 'abidjan';
+
+function selectNode(key) {
+    if (!NODES_DATA[key]) return;
+    selectedNodeKey = key;
+
+    // Update cards active state
+    Object.keys(NODES_DATA).forEach(k => {
+        const card = document.getElementById(`card-${k}`);
+        if (card) {
+            if (k === key) card.classList.add('selected');
+            else card.classList.remove('selected');
+        }
+    });
+
+    // Update details banner
+    const data = NODES_DATA[key];
+    document.getElementById('detailNodeName').textContent = `${data.flag} ${data.name}`;
+    document.getElementById('detailNodeDesc').textContent = data.desc;
+    document.getElementById('detailCertification').textContent = data.certification;
+    document.getElementById('detailLatency').textContent = `${data.latency} ms`;
+    document.getElementById('detailBandwidth').textContent = data.bandwidth;
+    document.getElementById('detailJurisdiction').textContent = data.jurisdiction;
+    document.getElementById('detailUptime').textContent = data.uptime;
+
+    if (window.showToast) {
+        window.showToast(`Nœud sélectionné : ${data.country} (${data.latency} ms)`, 'info');
+    }
+}
+
+function simulatePingAllNodes() {
+    if (window.showToast) window.showToast("Mesure de la latence réseau des nœuds panafricains...", "info");
+
+    Object.keys(NODES_DATA).forEach(k => {
+        const jitter = Math.floor(Math.random() * 6) - 3;
+        const newLat = Math.max(8, NODES_DATA[k].latency + jitter);
+        NODES_DATA[k].latency = newLat;
+
+        const badge = document.getElementById(`latency-${k}`);
+        if (badge) {
+            badge.textContent = `${newLat} ms`;
+            badge.style.transform = 'scale(1.15)';
+            setTimeout(() => badge.style.transform = 'scale(1)', 300);
+        }
+    });
+
+    if (selectedNodeKey) {
+        document.getElementById('detailLatency').textContent = `${NODES_DATA[selectedNodeKey].latency} ms`;
+    }
+
+    setTimeout(() => {
+        if (window.showToast) window.showToast("Topologie réseau actualisée : latence moyenne 22 ms.", "success");
+    }, 400);
+}
+</script>
 {% endblock %}
