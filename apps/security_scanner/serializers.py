@@ -4,7 +4,8 @@ Transforms raw audit findings into the OASIS Static Analysis Results Interchange
 enabling native Gitea and CI/CD code scanning diff annotations.
 """
 
-from typing import Dict, Any, List
+from typing import Any, Dict
+
 from .models import SecurityAuditReport
 
 
@@ -42,17 +43,16 @@ class SarifReportSerializer:
 
             if rule_id not in rule_indices:
                 rule_indices[rule_id] = len(rules)
-                rules.append({
-                    "id": rule_id,
-                    "name": rule_id.replace("_", " ").title(),
-                    "shortDescription": {"text": desc},
-                    "fullDescription": {"text": f"{desc}. {recommendation}".strip()},
-                    "defaultConfiguration": {"level": level},
-                    "properties": {
-                        "tags": ["security", "sovereignty", "african-standards"],
-                        "precision": "high"
+                rules.append(
+                    {
+                        "id": rule_id,
+                        "name": rule_id.replace("_", " ").title(),
+                        "shortDescription": {"text": desc},
+                        "fullDescription": {"text": f"{desc}. {recommendation}".strip()},
+                        "defaultConfiguration": {"level": level},
+                        "properties": {"tags": ["security", "sovereignty", "african-standards"], "precision": "high"},
                     }
-                })
+                )
 
             rule_index = rule_indices[rule_id]
 
@@ -60,26 +60,15 @@ class SarifReportSerializer:
                 "ruleId": rule_id,
                 "ruleIndex": rule_index,
                 "level": level,
-                "message": {
-                    "text": f"{desc} : {snippet}" if snippet else desc
-                },
+                "message": {"text": f"{desc} : {snippet}" if snippet else desc},
                 "locations": [
                     {
                         "physicalLocation": {
-                            "artifactLocation": {
-                                "uri": filename,
-                                "uriBaseId": "%SRCROOT%"
-                            },
-                            "region": {
-                                "startLine": int(line),
-                                "startColumn": 1,
-                                "snippet": {
-                                    "text": snippet
-                                }
-                            }
+                            "artifactLocation": {"uri": filename, "uriBaseId": "%SRCROOT%"},
+                            "region": {"startLine": int(line), "startColumn": 1, "snippet": {"text": snippet}},
                         }
                     }
-                ]
+                ],
             }
             results.append(result_entry)
 
@@ -93,7 +82,7 @@ class SarifReportSerializer:
                             "name": "BantuDevLab Sovereign Security Scanner",
                             "organization": "BantuDevLab African Sovereign Forge",
                             "semanticVersion": "1.0.0",
-                            "rules": rules
+                            "rules": rules,
                         }
                     },
                     "results": results,
@@ -106,9 +95,9 @@ class SarifReportSerializer:
                         "highCount": report.high_count,
                         "mediumCount": report.medium_count,
                         "scannedAt": report.scanned_at.isoformat() if report.scanned_at else None,
-                    }
+                    },
                 }
-            ]
+            ],
         }
 
         return sarif_payload

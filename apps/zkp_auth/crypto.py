@@ -26,7 +26,7 @@ Protocol overview:
 
 import hashlib
 import secrets
-from typing import Tuple, Dict, Any
+from typing import Any, Dict, Tuple
 
 # Standard 2048-bit MODP Group (RFC 3526 Group 14) parameters for robust security
 # Or RFC 5114 1024-bit / standard prime for ultra fast verification during tests
@@ -61,13 +61,13 @@ class ZKPCrypto:
         hasher = hashlib.sha256()
         for item in args:
             if isinstance(item, int):
-                hasher.update(str(item).encode('utf-8'))
+                hasher.update(str(item).encode("utf-8"))
             elif isinstance(item, str):
-                hasher.update(item.encode('utf-8'))
+                hasher.update(item.encode("utf-8"))
             elif isinstance(item, bytes):
                 hasher.update(item)
             else:
-                hasher.update(str(item).encode('utf-8'))
+                hasher.update(str(item).encode("utf-8"))
         digest = hasher.hexdigest()
         return int(digest, 16) % Q
 

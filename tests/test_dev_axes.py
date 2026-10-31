@@ -4,17 +4,19 @@ Couvre DEV-01, DEV-02, DEV-03, DEV-04 et DEV-05.
 """
 
 import json
-from django.test import TestCase, Client
+
 from django.contrib.auth.models import User
-from apps.gitea_client.client import GiteaClient
-from apps.gitea_client.sync import GiteaSyncService
-from apps.gitea_client.models import SovereignRepository
+from django.test import Client, TestCase
+
 from apps.core.models import SovereignOrganization
-from apps.zkp_auth.crypto import ZKPCrypto
-from apps.zkp_auth.models import SovereignIdentity, ZKPChallenge, GitAccessToken
-from apps.zkp_auth.tokens import GitTokenService
+from apps.gitea_client.client import GiteaClient
+from apps.gitea_client.models import SovereignRepository
+from apps.gitea_client.sync import GiteaSyncService
 from apps.security_scanner.models import SecurityAuditReport
 from apps.security_scanner.serializers import SarifReportSerializer
+from apps.zkp_auth.crypto import ZKPCrypto
+from apps.zkp_auth.models import SovereignIdentity, ZKPChallenge
+from apps.zkp_auth.tokens import GitTokenService
 
 
 class Axe3DevTestCase(TestCase):
@@ -35,10 +37,7 @@ class Axe3DevTestCase(TestCase):
         self.assertEqual(prs[0]["state"], "open")
 
         update_res = client.update_pull_request(
-            owner="sovereign-org",
-            repo="afri-fintech-gateway",
-            pr_index=1,
-            state="closed"
+            owner="sovereign-org", repo="afri-fintech-gateway", pr_index=1, state="closed"
         )
         self.assertTrue(update_res.get("success"))
 
@@ -52,21 +51,23 @@ class Axe3DevTestCase(TestCase):
 
     def test_dev01_sync_api_endpoints(self):
         # GET full sync
-        get_resp = self.client.get('/api/forge/sync/?owner=sovereign-org&repo=afri-fintech-gateway')
+        get_resp = self.client.get("/api/forge/sync/?owner=sovereign-org&repo=afri-fintech-gateway")
         self.assertEqual(get_resp.status_code, 200)
         self.assertEqual(get_resp.json()["status"], "SUCCESS")
 
         # POST update PR status
         post_resp = self.client.post(
-            '/api/forge/sync/',
-            data=json.dumps({
-                'owner': 'sovereign-org',
-                'repo': 'afri-fintech-gateway',
-                'action': 'update_pr',
-                'pr_index': 1,
-                'state': 'closed'
-            }),
-            content_type='application/json'
+            "/api/forge/sync/",
+            data=json.dumps(
+                {
+                    "owner": "sovereign-org",
+                    "repo": "afri-fintech-gateway",
+                    "action": "update_pr",
+                    "pr_index": 1,
+                    "state": "closed",
+                }
+            ),
+            content_type="application/json",
         )
         self.assertEqual(post_resp.status_code, 200)
         self.assertTrue(post_resp.json()["synced"])
@@ -79,36 +80,34 @@ class Axe3DevTestCase(TestCase):
             entity_type="CENTRAL_BANK",
             country_code="COD",
             description="Banque Centrale souveraine",
-            sovereignty_level="Tier-1 Continental"
+            sovereignty_level="Tier-1 Continental",
         )
         self.assertEqual(str(org), "Banque Centrale du Congo (Banque Centrale - COD)")
 
-        repo = SovereignRepository.objects.create(
-            name="cbdc-congo-core",
-            owner="bcc-cd",
-            organization=org
-        )
+        repo = SovereignRepository.objects.create(name="cbdc-congo-core", owner="bcc-cd", organization=org)
         self.assertEqual(repo.organization, org)
         self.assertEqual(org.repositories.count(), 1)
 
     def test_dev02_organization_api_endpoints(self):
         # Création d'une organisation
         create_resp = self.client.post(
-            '/api/organizations/',
-            data=json.dumps({
-                'name': 'Ministère de l Économie Numérique Sénégal',
-                'slug': 'men-sn',
-                'entity_type': 'MINISTRY',
-                'country_code': 'SEN',
-                'description': 'Entité publique souveraine'
-            }),
-            content_type='application/json'
+            "/api/organizations/",
+            data=json.dumps(
+                {
+                    "name": "Ministère de l Économie Numérique Sénégal",
+                    "slug": "men-sn",
+                    "entity_type": "MINISTRY",
+                    "country_code": "SEN",
+                    "description": "Entité publique souveraine",
+                }
+            ),
+            content_type="application/json",
         )
         self.assertEqual(create_resp.status_code, 201)
         self.assertIn("organization", create_resp.json())
 
         # Liste et filtrage
-        list_resp = self.client.get('/api/organizations/?country=SEN')
+        list_resp = self.client.get("/api/organizations/?country=SEN")
         self.assertEqual(list_resp.status_code, 200)
         data = list_resp.json()
         self.assertGreaterEqual(data["count"], 1)
@@ -131,7 +130,7 @@ class Axe3DevTestCase(TestCase):
             commitment_t=proof["commitment_t"],
             response_s=proof["response_s"],
             name="MacBook CLI Git Token",
-            permissions="write"
+            permissions="write",
         )
         self.assertTrue(gen_result["success"])
         raw_token = gen_result["token"]
@@ -158,39 +157,39 @@ class Axe3DevTestCase(TestCase):
 
         # Appel API POST /api/zkp/tokens/generate/
         resp_gen = self.client.post(
-            '/api/zkp/tokens/generate/',
-            data=json.dumps({
-                'username': 'kofi_cli',
-                'challenge_nonce': chal.challenge_nonce,
-                'commitment_t': proof['commitment_t'],
-                'response_s': proof['response_s'],
-                'name': 'Kofi Linux Workstation',
-                'permissions': 'write'
-            }),
-            content_type='application/json'
+            "/api/zkp/tokens/generate/",
+            data=json.dumps(
+                {
+                    "username": "kofi_cli",
+                    "challenge_nonce": chal.challenge_nonce,
+                    "commitment_t": proof["commitment_t"],
+                    "response_s": proof["response_s"],
+                    "name": "Kofi Linux Workstation",
+                    "permissions": "write",
+                }
+            ),
+            content_type="application/json",
         )
         self.assertEqual(resp_gen.status_code, 201)
-        raw_token = resp_gen.json()['token']
+        raw_token = resp_gen.json()["token"]
 
         # Appel API POST /api/zkp/tokens/validate/
         resp_val = self.client.post(
-            '/api/zkp/tokens/validate/',
-            data=json.dumps({'token': raw_token}),
-            content_type='application/json'
+            "/api/zkp/tokens/validate/", data=json.dumps({"token": raw_token}), content_type="application/json"
         )
         self.assertEqual(resp_val.status_code, 200)
-        self.assertTrue(resp_val.json()['valid'])
-        self.assertEqual(resp_val.json()['username'], 'kofi_cli')
+        self.assertTrue(resp_val.json()["valid"])
+        self.assertEqual(resp_val.json()["username"], "kofi_cli")
 
     # DEV-04: Documentation API Interactive (OpenAPI / Swagger)
     def test_dev04_swagger_and_openapi_schema(self):
-        schema_resp = self.client.get('/api/schema/')
+        schema_resp = self.client.get("/api/schema/")
         self.assertEqual(schema_resp.status_code, 200)
-        self.assertIn('openapi', schema_resp.content.decode('utf-8'))
+        self.assertIn("openapi", schema_resp.content.decode("utf-8"))
 
-        docs_resp = self.client.get('/api/docs/')
+        docs_resp = self.client.get("/api/docs/")
         self.assertEqual(docs_resp.status_code, 200)
-        self.assertIn('swagger-ui', docs_resp.content.decode('utf-8').lower())
+        self.assertIn("swagger-ui", docs_resp.content.decode("utf-8").lower())
 
     # DEV-05: Export des Rapports de Sécurité au Format SARIF
     def test_dev05_sarif_serializer_and_export(self):
@@ -211,7 +210,7 @@ class Axe3DevTestCase(TestCase):
                     "severity": "CRITICAL",
                     "description": "Clé privée RSA détectée",
                     "snippet": "-----BEGIN RSA PRIVATE KEY-----",
-                    "recommendation": "Utiliser BantuDevLab Vault"
+                    "recommendation": "Utiliser BantuDevLab Vault",
                 },
                 {
                     "file": "auth_vault.py",
@@ -220,9 +219,9 @@ class Axe3DevTestCase(TestCase):
                     "severity": "HIGH",
                     "description": "Utilisation dangereuse de eval()",
                     "snippet": "eval(user_input)",
-                    "recommendation": "Supprimer eval()"
-                }
-            ]
+                    "recommendation": "Supprimer eval()",
+                },
+            ],
         )
 
         sarif_obj = SarifReportSerializer.serialize(report)
@@ -232,16 +231,18 @@ class Axe3DevTestCase(TestCase):
         self.assertEqual(run["tool"]["driver"]["name"], "BantuDevLab Sovereign Security Scanner")
         self.assertEqual(len(run["results"]), 2)
         self.assertEqual(run["results"][0]["level"], "error")
-        self.assertEqual(run["results"][0]["locations"][0]["physicalLocation"]["artifactLocation"]["uri"], "auth_vault.py")
+        self.assertEqual(
+            run["results"][0]["locations"][0]["physicalLocation"]["artifactLocation"]["uri"], "auth_vault.py"
+        )
         self.assertEqual(run["results"][0]["locations"][0]["physicalLocation"]["region"]["startLine"], 42)
 
         # Test export view
-        export_resp = self.client.get(f'/api/security/audits/{report.id}/sarif/')
+        export_resp = self.client.get(f"/api/security/audits/{report.id}/sarif/")
         self.assertEqual(export_resp.status_code, 200)
-        self.assertEqual(export_resp['Content-Type'], 'application/sarif+json')
+        self.assertEqual(export_resp["Content-Type"], "application/sarif+json")
         self.assertEqual(export_resp.json()["version"], "2.1.0")
 
         # Test latest export view
-        latest_resp = self.client.get('/api/security/sarif/')
+        latest_resp = self.client.get("/api/security/sarif/")
         self.assertEqual(latest_resp.status_code, 200)
         self.assertEqual(latest_resp.json()["version"], "2.1.0")
