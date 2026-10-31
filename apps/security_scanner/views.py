@@ -89,3 +89,25 @@ class SecurityAuditHistoryView(APIView):
             for a in audits
         ]
         return Response({"count": len(data), "audits": data}, status=status.HTTP_200_OK)
+
+
+class SecuritySarifExportView(APIView):
+    """
+    DEV-05: Export des Rapports de Sécurité au Format SARIF 2.1.0.
+    Permet à Gitea et aux runners CI/CD de consommer les résultats d'audit
+    et d'afficher les annotations directement dans les diffs de code.
+    """
+    def get(self, request, report_id=None):
+        from .serializers import SarifReportSerializer
+        if report_id:
+            try:
+                report = SecurityAuditReport.objects.get(id=report_id)
+            except SecurityAuditReport.DoesNotExist:
+                return Response({'error': f"Rapport d'audit #{report_id} introuvable."}, status=status.HTTP_404_NOT_FOUND)
+        else:
+            report = SecurityAuditReport.objects.order_by('-scanned_at').first()
+            if not report:
+                return Response({'error': "Aucun rapport d'audit de sécurité disponible."}, status=status.HTTP_404_NOT_FOUND)
+
+        sarif_data = SarifReportSerializer.serialize(report)
+        return Response(sarif_data, status=status.HTTP_200_OK, content_type='application/sarif+json')

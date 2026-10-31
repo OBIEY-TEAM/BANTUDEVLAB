@@ -167,3 +167,58 @@ class ZKPVerifyView(APIView):
 def zkp_login_page(request):
     """Page d'authentification souveraine ZKP"""
     return render(request, 'zkp_auth/login.html')
+
+
+from .tokens import GitTokenService
+
+
+class GitTokenGenerateView(APIView):
+    """
+    DEV-03: Generates a Git Access Token for CLI Git push/clone operations.
+    Requires and validates a Zero-Knowledge Proof (ZKP).
+    """
+    def post(self, request):
+        username = request.data.get('username')
+        challenge_nonce = request.data.get('challenge_nonce')
+        commitment_t = request.data.get('commitment_t')
+        response_s = request.data.get('response_s')
+        token_name = request.data.get('name', 'CLI Git Access Token')
+        permissions = request.data.get('permissions', 'write')
+        validity_days = int(request.data.get('validity_days', 30))
+
+        if not all([username, challenge_nonce, commitment_t, response_s]):
+            return Response(
+                {'error': 'username, challenge_nonce, commitment_t et response_s sont requis pour prouver votre identité via ZKP.'},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+
+        result = GitTokenService.issue_token_with_zkp(
+            username=username,
+            challenge_nonce=challenge_nonce,
+            commitment_t=commitment_t,
+            response_s=response_s,
+            name=token_name,
+            permissions=permissions,
+            validity_days=validity_days
+        )
+
+        if not result.get('success'):
+            return Response(result, status=status.HTTP_401_UNAUTHORIZED)
+
+        return Response(result, status=status.HTTP_201_CREATED)
+
+
+class GitTokenValidateView(APIView):
+    """
+    DEV-03: Validates a Git Access Token supplied by Git CLI or Gitea over HTTPS.
+    """
+    def post(self, request):
+        token = request.data.get('token')
+        if not token:
+            return Response({'error': 'token requis'}, status=status.HTTP_400_BAD_REQUEST)
+
+        result = GitTokenService.validate_token(token)
+        if not result.get('valid'):
+            return Response(result, status=status.HTTP_401_UNAUTHORIZED)
+
+        return Response(result, status=status.HTTP_200_OK)

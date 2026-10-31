@@ -20,6 +20,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'drf_spectacular',
     'apps.core',
     'apps.zkp_auth',
     'apps.gitea_client',
@@ -116,6 +117,15 @@ REST_FRAMEWORK = {
         'zkp': '5/minute',
         'scanner': '10/minute',
     },
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
+}
+
+SPECTACULAR_SETTINGS = {
+    'TITLE': 'BantuDevLab Sovereign Forge API',
+    'DESCRIPTION': 'Documentation interactive OpenAPI 3.0 des endpoints de la forge logicielle souveraine panafricaine (ZKP, Forge, Scanner de sécurité et Assistant IA Gemma 5B).',
+    'VERSION': '1.0.0',
+    'SERVE_INCLUDE_SCHEMA': False,
+    'COMPONENT_SPLIT_REQUEST': True,
 }
 
 # Security Hardening: En-têtes HTTP & Cookies (SEC-05)
