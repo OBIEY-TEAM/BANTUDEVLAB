@@ -25,6 +25,9 @@
     </nav>
 
     <main class="container">
+        <!-- Toast Notification Container (UI-04) -->
+        <div id="toastContainer" class="toast-container" aria-live="polite" aria-atomic="true"></div>
+
         {% block content %}{% endblock %}
     </main>
 
@@ -33,6 +36,50 @@
         <p style="font-size: 0.8rem; margin-top: 0.5rem; opacity: 0.7;">Zero-Trust ZKP Cryptography • Gemma 5B Local AI • Gitea CE Engine • African Data Sovereignty</p>
     </footer>
 
+    <!-- Global Notification System (UI-04) -->
+    <script>
+    window.showToast = function(message, type = 'info', duration = 4500) {
+        const container = document.getElementById('toastContainer');
+        if (!container) return;
+
+        const toast = document.createElement('div');
+        toast.className = `toast-item toast-${type}`;
+
+        const icons = {
+            success: '✅',
+            warning: '⚠️',
+            error: '❌',
+            info: 'ℹ️'
+        };
+        const icon = icons[type] || '🔔';
+
+        toast.innerHTML = `
+            <span class="toast-icon">${icon}</span>
+            <div class="toast-content">
+                <div class="toast-message">${message}</div>
+            </div>
+            <button class="toast-close" onclick="this.parentElement.remove()" aria-label="Fermer">&times;</button>
+        `;
+
+        container.appendChild(toast);
+
+        // Animate entrance
+        requestAnimationFrame(() => {
+            toast.classList.add('toast-show');
+        });
+
+        // Auto dismiss
+        if (duration > 0) {
+            setTimeout(() => {
+                toast.classList.remove('toast-show');
+                toast.classList.add('toast-hide');
+                setTimeout(() => {
+                    if (toast.parentElement) toast.remove();
+                }, 300);
+            }, duration);
+        }
+    };
+    </script>
     {% block extra_scripts %}{% endblock %}
 </body>
 </html>
