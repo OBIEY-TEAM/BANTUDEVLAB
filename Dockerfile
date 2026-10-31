@@ -19,8 +19,16 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 COPY requirements.txt /app/
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copie du code applicatif
-COPY . /app/
+# Création d'un utilisateur et groupe non-root pour le durcissement du conteneur
+RUN groupadd -g 1000 appgroup && \
+    useradd -u 1000 -g appgroup -s /bin/bash -m appuser
+
+# Copie du code applicatif et attribution des permissions à appuser
+COPY --chown=appuser:appgroup . /app/
+RUN chown -R appuser:appgroup /app
+
+# Bascule vers l'utilisateur non-root
+USER appuser
 
 # Port exposé
 EXPOSE 8000
