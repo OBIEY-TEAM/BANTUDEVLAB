@@ -1,16 +1,19 @@
 import secrets
-from django.db import models
+
 from django.contrib.auth.models import User
+from django.db import models
 from django.utils import timezone
+
 
 class SovereignIdentity(models.Model):
     """
     Zero-Trust sovereign identity linked to a user.
     Stores the public key (y) without ever storing the private key (x) or password.
     """
-    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='sovereign_identity')
+
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="sovereign_identity")
     public_key_y = models.TextField(help_text="Public Key (y = g^x mod p) in hex format")
-    country_code = models.CharField(max_length=3, default='CIV', help_text="African Sovereign Member State (ISO-3)")
+    country_code = models.CharField(max_length=3, default="CIV", help_text="African Sovereign Member State (ISO-3)")
     is_verified = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -24,7 +27,8 @@ class ZKPChallenge(models.Model):
     Session/nonce challenge issued for zero-trust interactive/non-interactive authentication.
     Prevents replay attacks.
     """
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='zkp_challenges')
+
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="zkp_challenges")
     challenge_nonce = models.CharField(max_length=128, unique=True, db_index=True)
     created_at = models.DateTimeField(auto_now_add=True)
     expires_at = models.DateTimeField(db_index=True)
@@ -32,8 +36,8 @@ class ZKPChallenge(models.Model):
 
     class Meta:
         indexes = [
-            models.Index(fields=['challenge_nonce'], name='zkp_nonce_idx'),
-            models.Index(fields=['expires_at'], name='zkp_expires_idx'),
+            models.Index(fields=["challenge_nonce"], name="zkp_nonce_idx"),
+            models.Index(fields=["expires_at"], name="zkp_expires_idx"),
         ]
 
     @classmethod
@@ -52,26 +56,27 @@ class GitAccessToken(models.Model):
     Enables developers to clone and push code to Gitea over HTTPS without standard passwords.
     Stores the SHA-256 hash of the token for security.
     """
+
     PERMISSION_CHOICES = [
-        ('read', 'Lecture seule (Clone / Pull)'),
-        ('write', 'Lecture / Écriture (Clone / Pull / Push)'),
-        ('admin', 'Administration complète'),
+        ("read", "Lecture seule (Clone / Pull)"),
+        ("write", "Lecture / Écriture (Clone / Pull / Push)"),
+        ("admin", "Administration complète"),
     ]
 
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='git_access_tokens')
-    name = models.CharField(max_length=100, default='CLI Git Access Token')
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="git_access_tokens")
+    name = models.CharField(max_length=100, default="CLI Git Access Token")
     token_prefix = models.CharField(max_length=16, help_text="First 8 characters for token identification")
     token_hash = models.CharField(max_length=64, unique=True, db_index=True, help_text="SHA-256 hash of the raw token")
-    permissions = models.CharField(max_length=20, choices=PERMISSION_CHOICES, default='write')
+    permissions = models.CharField(max_length=20, choices=PERMISSION_CHOICES, default="write")
     is_active = models.BooleanField(default=True)
     created_at = models.DateTimeField(auto_now_add=True)
     expires_at = models.DateTimeField(null=True, blank=True)
     last_used_at = models.DateTimeField(null=True, blank=True)
 
     class Meta:
-        ordering = ['-created_at']
+        ordering = ["-created_at"]
         indexes = [
-            models.Index(fields=['token_hash'], name='git_tok_hash_idx'),
+            models.Index(fields=["token_hash"], name="git_tok_hash_idx"),
         ]
 
     def is_valid(self):

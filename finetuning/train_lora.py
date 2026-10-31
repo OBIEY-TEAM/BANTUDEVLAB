@@ -9,9 +9,10 @@ Key Techniques:
 - Supervised Fine-Tuning Trainer (SFTTrainer) from TRL.
 """
 
-import os
 import argparse
+import os
 import sys
+
 
 def parse_args():
     parser = argparse.ArgumentParser(description="Fine-tune Gemma 5B for BantuDevLab")
@@ -38,6 +39,7 @@ def train(args):
 
     if not os.path.exists(args.dataset_path):
         from dataset_preparation import generate_training_data
+
         print("Génération automatique du jeu de données...")
         generate_training_data(args.dataset_path)
 
@@ -48,14 +50,9 @@ def train(args):
 
     try:
         import torch
-        from transformers import (
-            AutoModelForCausalLM,
-            AutoTokenizer,
-            BitsAndBytesConfig,
-            TrainingArguments
-        )
-        from peft import LoraConfig, get_peft_model, prepare_model_for_kbit_training
         from datasets import load_dataset
+        from peft import LoraConfig, get_peft_model, prepare_model_for_kbit_training
+        from transformers import AutoModelForCausalLM, AutoTokenizer, BitsAndBytesConfig, TrainingArguments
         from trl import SFTTrainer
     except ImportError as e:
         print(f"ℹ️ Note: Les dépendances GPU/PyTorch lourdes ne sont pas installées: {e}")
@@ -74,11 +71,7 @@ def train(args):
     tokenizer.pad_token = tokenizer.eos_token
 
     print("Chargement du modèle de base quantifié...")
-    model = AutoModelForCausalLM.from_pretrained(
-        args.model_name,
-        quantization_config=bnb_config,
-        device_map="auto"
-    )
+    model = AutoModelForCausalLM.from_pretrained(args.model_name, quantization_config=bnb_config, device_map="auto")
     model = prepare_model_for_kbit_training(model)
 
     peft_config = LoraConfig(
@@ -87,7 +80,7 @@ def train(args):
         target_modules=["q_proj", "k_proj", "v_proj", "o_proj", "gate_proj", "up_proj", "down_proj"],
         lora_dropout=0.05,
         bias="none",
-        task_type="CAUSAL_LM"
+        task_type="CAUSAL_LM",
     )
 
     model = get_peft_model(model, peft_config)
@@ -105,7 +98,7 @@ def train(args):
         fp16=not torch.cuda.is_bf16_supported(),
         bf16=torch.cuda.is_bf16_supported(),
         save_strategy="epoch",
-        optim="paged_adamw_8bit"
+        optim="paged_adamw_8bit",
     )
 
     trainer = SFTTrainer(
@@ -114,7 +107,7 @@ def train(args):
         dataset_text_field="text",
         max_seq_length=1024,
         tokenizer=tokenizer,
-        args=training_args
+        args=training_args,
     )
 
     print("Démarrage de l'entraînement...")

@@ -1,5 +1,7 @@
 from django.test import TestCase
+
 from apps.ai_assistant.gemma import GemmaAssistant
+
 
 class GemmaAssistantTestCase(TestCase):
     def test_gemma_fallback_analysis_clean_code(self):

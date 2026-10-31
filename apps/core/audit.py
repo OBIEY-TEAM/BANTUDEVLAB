@@ -1,6 +1,8 @@
 import hashlib
 import json
+
 from django.utils import timezone
+
 from .models import AuditTrailLog
 
 
@@ -12,13 +14,13 @@ class AuditTrail:
         H_curr = SHA-256(H_prev || timestamp || action_type || actor || details_json)
     """
 
-    GENESIS_HASH = '0' * 64
+    GENESIS_HASH = "0" * 64
 
     @staticmethod
     def _compute_hash(prev_hash: str, timestamp_str: str, action_type: str, actor: str, details: dict) -> str:
-        canonical_details = json.dumps(details, sort_keys=True, separators=(',', ':'))
+        canonical_details = json.dumps(details, sort_keys=True, separators=(",", ":"))
         payload = f"{prev_hash}|{timestamp_str}|{action_type}|{actor}|{canonical_details}"
-        return hashlib.sha256(payload.encode('utf-8')).hexdigest()
+        return hashlib.sha256(payload.encode("utf-8")).hexdigest()
 
     @classmethod
     def record_event(cls, action_type: str, actor: str, details: dict = None) -> AuditTrailLog:
@@ -28,18 +30,14 @@ class AuditTrail:
         if details is None:
             details = {}
 
-        last_entry = AuditTrailLog.objects.order_by('-id').first()
+        last_entry = AuditTrailLog.objects.order_by("-id").first()
         prev_hash = last_entry.current_hash if last_entry else cls.GENESIS_HASH
 
         now = timezone.now()
         timestamp_str = now.isoformat()
 
         current_hash = cls._compute_hash(
-            prev_hash=prev_hash,
-            timestamp_str=timestamp_str,
-            action_type=action_type,
-            actor=actor,
-            details=details
+            prev_hash=prev_hash, timestamp_str=timestamp_str, action_type=action_type, actor=actor, details=details
         )
 
         log_entry = AuditTrailLog.objects.create(
@@ -48,7 +46,7 @@ class AuditTrail:
             actor=actor,
             details=details,
             prev_hash=prev_hash,
-            current_hash=current_hash
+            current_hash=current_hash,
         )
         return log_entry
 
@@ -58,7 +56,7 @@ class AuditTrail:
         Verifies the cryptographic integrity of the entire audit chain.
         Returns True if all hashes are valid and unbroken, False otherwise.
         """
-        entries = list(AuditTrailLog.objects.order_by('id'))
+        entries = list(AuditTrailLog.objects.order_by("id"))
         if not entries:
             return True
 
@@ -73,7 +71,7 @@ class AuditTrail:
                 timestamp_str=timestamp_str,
                 action_type=entry.action_type,
                 actor=entry.actor,
-                details=entry.details
+                details=entry.details,
             )
 
             if entry.current_hash != computed_hash:
