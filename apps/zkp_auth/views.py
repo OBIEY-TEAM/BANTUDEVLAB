@@ -5,6 +5,7 @@ from django.contrib import messages
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
+from rest_framework.throttling import ScopedRateThrottle
 from .crypto import ZKPCrypto
 from .models import SovereignIdentity, ZKPChallenge
 
@@ -38,6 +39,12 @@ class ZKPRegisterView(APIView):
         except ValueError:
             return Response({'error': 'Format de clé publique invalide (hex attendu)'}, status=status.HTTP_400_BAD_REQUEST)
 
+        if not ZKPCrypto.validate_public_key(y_int):
+            return Response(
+                {'error': 'Clé publique invalide : n\'appartient pas au sous-groupe premier valide (Small Subgroup Protection).'},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+
         user = User.objects.create_user(username=username, email=email)
         # Random unusable password because authentication uses ZKP
         user.set_unusable_password()
@@ -58,10 +65,20 @@ class ZKPRegisterView(APIView):
         }, status=status.HTTP_201_CREATED)
 
 
+import secrets
+from django.utils import timezone
+
+
 class ZKPChallengeView(APIView):
     """
     Issues a cryptographically secure challenge nonce for the user to prove identity.
+    Protects against user enumeration by returning a consistent response structure,
+    status code (200 OK), and uniform timing whether the user exists or not.
+    Throttled to 5 req/min.
     """
+    throttle_classes = [ScopedRateThrottle]
+    throttle_scope = 'zkp'
+
     def post(self, request):
         username = request.data.get('username')
         if not username:
@@ -69,21 +86,29 @@ class ZKPChallengeView(APIView):
 
         try:
             user = User.objects.get(username=username)
+            challenge = ZKPChallenge.create_challenge(user=user)
+            challenge_nonce = challenge.challenge_nonce
+            expires_at = challenge.expires_at.isoformat()
         except User.DoesNotExist:
-            return Response({'error': 'Utilisateur introuvable'}, status=status.HTTP_404_NOT_FOUND)
+            # Mitigation for user enumeration: generate dummy challenge nonce and expiration with uniform format
+            challenge_nonce = secrets.token_hex(32)
+            expires_at = (timezone.now() + timezone.timedelta(seconds=300)).isoformat()
 
-        challenge = ZKPChallenge.create_challenge(user=user)
         return Response({
-            'username': user.username,
-            'challenge_nonce': challenge.challenge_nonce,
-            'expires_at': challenge.expires_at.isoformat(),
+            'username': username,
+            'challenge_nonce': challenge_nonce,
+            'expires_at': expires_at,
         }, status=status.HTTP_200_OK)
 
 
 class ZKPVerifyView(APIView):
     """
     Verifies the zero-knowledge proof against the active challenge nonce and user's public key.
+    Throttled to 5 req/min.
     """
+    throttle_classes = [ScopedRateThrottle]
+    throttle_scope = 'zkp'
+
     def post(self, request):
         username = request.data.get('username')
         challenge_nonce = request.data.get('challenge_nonce')
@@ -118,6 +143,14 @@ class ZKPVerifyView(APIView):
         is_valid = ZKPCrypto.verify_proof(public_y=y_int, proof=proof)
         if not is_valid:
             return Response({'error': 'Preuve ZKP invalide. Accès refusé.'}, status=status.HTTP_401_UNAUTHORIZED)
+
+        # Audit trail recording
+        from apps.core.audit import AuditTrail
+        AuditTrail.record_event(
+            action_type='ZKP_AUTH',
+            actor=user.username,
+            details={'country_code': identity.country_code, 'status': 'SUCCESS'}
+        )
 
         login(request, user)
         return Response({
