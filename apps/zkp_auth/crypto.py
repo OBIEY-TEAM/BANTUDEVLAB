@@ -88,6 +88,20 @@ class ZKPCrypto:
         return x, y
 
     @classmethod
+    def validate_public_key(cls, public_y: int) -> bool:
+        """
+        Validates that public key y belongs to the prime-order subgroup of order q:
+        1. 1 < y < p - 1
+        2. y^q mod p == 1
+        This eliminates Small Subgroup Attacks.
+        """
+        if not isinstance(public_y, int):
+            return False
+        if not (1 < public_y < (P - 1)):
+            return False
+        return pow(public_y, Q, P) == 1
+
+    @classmethod
     def generate_proof(cls, secret_x: int, public_y: int, message: str) -> Dict[str, str]:
         """
         Generates a Non-Interactive Zero-Knowledge Proof (NIZKP) of knowledge of secret_x.
@@ -127,6 +141,9 @@ class ZKPCrypto:
             return False
 
         if not (0 <= s < Q):
+            return False
+
+        if not cls.validate_public_key(public_y):
             return False
 
         # Reconstruct challenge
