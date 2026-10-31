@@ -44,3 +44,42 @@ class ZKPChallenge(models.Model):
 
     def is_valid(self):
         return not self.is_used and timezone.now() < self.expires_at
+
+
+class GitAccessToken(models.Model):
+    """
+    DEV-03: Git Access Token model validated via ZKP.
+    Enables developers to clone and push code to Gitea over HTTPS without standard passwords.
+    Stores the SHA-256 hash of the token for security.
+    """
+    PERMISSION_CHOICES = [
+        ('read', 'Lecture seule (Clone / Pull)'),
+        ('write', 'Lecture / Écriture (Clone / Pull / Push)'),
+        ('admin', 'Administration complète'),
+    ]
+
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='git_access_tokens')
+    name = models.CharField(max_length=100, default='CLI Git Access Token')
+    token_prefix = models.CharField(max_length=16, help_text="First 8 characters for token identification")
+    token_hash = models.CharField(max_length=64, unique=True, db_index=True, help_text="SHA-256 hash of the raw token")
+    permissions = models.CharField(max_length=20, choices=PERMISSION_CHOICES, default='write')
+    is_active = models.BooleanField(default=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    expires_at = models.DateTimeField(null=True, blank=True)
+    last_used_at = models.DateTimeField(null=True, blank=True)
+
+    class Meta:
+        ordering = ['-created_at']
+        indexes = [
+            models.Index(fields=['token_hash'], name='git_tok_hash_idx'),
+        ]
+
+    def is_valid(self):
+        if not self.is_active:
+            return False
+        if self.expires_at and timezone.now() > self.expires_at:
+            return False
+        return True
+
+    def __str__(self):
+        return f"GitAccessToken({self.user.username} - {self.name} [{self.token_prefix}...])"

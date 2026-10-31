@@ -112,3 +112,39 @@ class GiteaWebhookReceiverView(APIView):
                 "Gemma 5B AI PR review queued"
             ]
         }, status=status.HTTP_200_OK)
+
+
+class GiteaSyncView(APIView):
+    """
+    DEV-01: Bidirectional synchronization endpoint between Gitea and BantuDevLab.
+    Syncs commits, branches, and PR status.
+    """
+    def get(self, request):
+        owner = request.query_params.get('owner', 'sovereign-org')
+        repo = request.query_params.get('repo', 'afri-fintech-gateway')
+        from .sync import GiteaSyncService
+        service = GiteaSyncService()
+        result = service.full_sync_repository(owner=owner, repo=repo)
+        return Response(result, status=status.HTTP_200_OK)
+
+    def post(self, request):
+        owner = request.data.get('owner', 'sovereign-org')
+        repo = request.data.get('repo')
+        action = request.data.get('action', 'full_sync')
+
+        if not repo:
+            return Response({'error': 'repo est requis pour la synchronisation'}, status=status.HTTP_400_BAD_REQUEST)
+
+        from .sync import GiteaSyncService
+        service = GiteaSyncService()
+
+        if action == 'update_pr':
+            pr_index = request.data.get('pr_index')
+            state = request.data.get('state', 'closed')
+            if not pr_index:
+                return Response({'error': 'pr_index est requis pour update_pr'}, status=status.HTTP_400_BAD_REQUEST)
+            result = service.update_pr_status(owner=owner, repo=repo, pr_index=int(pr_index), state=state)
+            return Response(result, status=status.HTTP_200_OK)
+
+        result = service.full_sync_repository(owner=owner, repo=repo)
+        return Response(result, status=status.HTTP_200_OK)
