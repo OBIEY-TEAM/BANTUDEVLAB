@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div style="max-width: 800px; margin: 0 auto;">
+    <h2>Indicateurs de Souveraineté Numérique Continentale</h2>
+    <p style="color: var(--text-muted); margin-bottom: 2rem;">Conformité avec la stratégie de transformation numérique de l'Union Africaine (2020-2030).</p>
+
+    <div class="card" style="margin-bottom: 1.5rem;">
+        <h3>📍 Localisation des Données & Hébergement</h3>
+        <p>Les serveurs Git, bases de données relationnelles PostgreSQL et sauvegardes sont hébergés sur l'infrastructure Systalink Cloud en Côte d'Ivoire et au Sénégal.</p>
+        <div style="background: rgba(16, 185, 129, 0.2); border-left: 4px solid var(--secondary-emerald); padding: 0.8rem; margin-top: 1rem;">
+            <strong>Statut : 100% Souverain</strong> — Immunité totale face au CLOUD Act et aux juridictions extraterritoriales.
+        </div>
+    </div>
+
+    <div class="card" style="margin-bottom: 1.5rem;">
+        <h3>🔒 Cryptographie Zero-Knowledge (ZKP)</h3>
+        <p>Preuves de Schnorr non-interactives basées sur Fiat-Shamir garantissant une authentification à divulgation nulle de connaissance. Même en cas de compromission serveur, aucun mot de passe n'existe.</p>
+        <div style="background: rgba(245, 158, 11, 0.2); border-left: 4px solid var(--primary-african-gold); padding: 0.8rem; margin-top: 1rem;">
+            <strong>Statut : Cryptographiquement inviolable</strong> — Aucune empreinte secrète conservée.
+        </div>
+    </div>
+
+    <div class="card">
+        <h3>🧠 Intelligence Artificielle Locale (Gemma 5B)</h3>
+        <p>Modèle de fondation Gemma 5B fine-tuné sur les dépôts de code et besoins d'infrastructures télécoms/fintech africaines. Exécution 100% On-Premise / Local.</p>
+        <div style="background: rgba(16, 185, 129, 0.2); border-left: 4px solid var(--secondary-emerald); padding: 0.8rem; margin-top: 1rem;">
+            <strong>Statut : Zéro fuite de télémétrie</strong> — Vos algorithmes critiques restent strictement confidentiels.
+        </div>
+    </div>
+</div>
+{% endblock %}
