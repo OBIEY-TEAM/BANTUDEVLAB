@@ -29,6 +29,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'apps.core.middleware.SecurityHeadersMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -104,12 +105,37 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.SessionAuthentication',
         'rest_framework.authentication.BasicAuthentication',
     ],
+    'DEFAULT_THROTTLE_CLASSES': [
+        'rest_framework.throttling.AnonRateThrottle',
+        'rest_framework.throttling.UserRateThrottle',
+    ],
+    'DEFAULT_THROTTLE_RATES': {
+        'anon': '100/day',
+        'user': '1000/day',
+        'zkp': '5/minute',
+        'scanner': '10/minute',
+    },
 }
+
+# Security Hardening: En-têtes HTTP & Cookies (SEC-05)
+SECURE_BROWSER_XSS_FILTER = True
+SECURE_CONTENT_TYPE_NOSNIFF = True
+X_FRAME_OPTIONS = 'DENY'
+
+# Cookies Hardening
+SESSION_COOKIE_HTTPONLY = True
+SESSION_COOKIE_SAMESITE = 'Lax'
+CSRF_COOKIE_HTTPONLY = True
+CSRF_COOKIE_SAMESITE = 'Lax'
+
+# Content Security Policy (CSP)
+CSP_POLICY = "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; frame-ancestors 'none';"
 
 # Gitea / Forge Sovereign Integration
 GITEA_API_URL = os.environ.get('GITEA_API_URL', 'http://localhost:3000/api/v1')
 GITEA_ADMIN_TOKEN = os.environ.get('GITEA_ADMIN_TOKEN', '')
 GITEA_EXTERNAL_URL = os.environ.get('GITEA_EXTERNAL_URL', 'http://localhost:3000')
+GITEA_WEBHOOK_SECRET = os.environ.get('GITEA_WEBHOOK_SECRET', 'sovereign_webhook_secret_key_2025')
 
 # Gemma 5B Sovereign Assistant Configuration
 GEMMA_API_URL = os.environ.get('GEMMA_API_URL', 'http://localhost:11434/api/generate')

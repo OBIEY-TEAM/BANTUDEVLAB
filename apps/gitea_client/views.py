@@ -28,15 +28,24 @@ class RepositoryListView(APIView):
 
         # Cache in local sovereign repository table
         repo_data = result.get('data', {})
+        owner_username = repo_data.get('owner', {}).get('username', 'sovereign-org') if isinstance(repo_data.get('owner'), dict) else 'sovereign-org'
         SovereignRepository.objects.update_or_create(
             name=name,
-            owner=repo_data.get('owner', {}).get('username', 'sovereign-org') if isinstance(repo_data.get('owner'), dict) else 'sovereign-org',
+            owner=owner_username,
             defaults={
                 'description': description,
                 'html_url': repo_data.get('html_url', f"https://forge.bantudevlab.africa/sovereign-org/{name}"),
                 'clone_url': repo_data.get('clone_url', f"https://forge.bantudevlab.africa/sovereign-org/{name}.git"),
                 'is_private': private,
             }
+        )
+
+        # Audit trail recording
+        from apps.core.audit import AuditTrail
+        AuditTrail.record_event(
+            action_type='REPO_CREATE',
+            actor=request.user.username if request.user.is_authenticated else owner_username,
+            details={'repository': name, 'private': private}
         )
 
         return Response(result, status=status.HTTP_201_CREATED)
@@ -57,12 +66,35 @@ class ForgeStatusView(APIView):
         }, status=status.HTTP_200_OK)
 
 
+import hmac
+import hashlib
+from django.conf import settings
+
+
 class GiteaWebhookReceiverView(APIView):
     """
     Receives automated webhook payloads from Gitea on push or PR events,
     triggering security scans and AI reviews.
+    Enforces HMAC cryptographic signature verification via X-Gitea-Signature.
     """
     def post(self, request):
+        signature = request.headers.get('X-Gitea-Signature') or request.META.get('HTTP_X_GITEA_SIGNATURE')
+        if not signature:
+            return Response(
+                {'error': 'En-tête X-Gitea-Signature manquant. Requête non autorisée.'},
+                status=status.HTTP_401_UNAUTHORIZED
+            )
+
+        secret = getattr(settings, 'GITEA_WEBHOOK_SECRET', '').encode('utf-8')
+        payload_bytes = request.body
+        expected_signature = hmac.new(secret, payload_bytes, hashlib.sha256).hexdigest()
+
+        if not hmac.compare_digest(expected_signature, signature):
+            return Response(
+                {'error': 'Signature X-Gitea-Signature invalide.'},
+                status=status.HTTP_401_UNAUTHORIZED
+            )
+
         event = request.headers.get('X-Gitea-Event', 'push')
         payload = request.data
 
