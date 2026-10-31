@@ -4,20 +4,19 @@ Measures performance on code generation, ZKP verification accuracy,
 and secret detection rate.
 """
 
-import json
-import os
 import sys
 
 TEST_CASES = [
     {
         "prompt": "Génère la formule de vérification Schnorr NIZKP",
-        "expected_keywords": ["pow", "mod", "fiat-shamir", "hashlib"]
+        "expected_keywords": ["pow", "mod", "fiat-shamir", "hashlib"],
     },
     {
         "prompt": "Détecte la faille dans: cursor.execute('SELECT * FROM t WHERE id=' + id)",
-        "expected_keywords": ["sql", "injection", "paramétrée"]
-    }
+        "expected_keywords": ["sql", "injection", "paramétrée"],
+    },
 ]
+
 
 def evaluate_model(dry_run: bool = True):
     print("=" * 60)
@@ -37,6 +36,7 @@ def evaluate_model(dry_run: bool = True):
     print(f"\nScore d'évaluation global : {accuracy:.1f}%")
     print("Certification : Modèle conforme aux standards de sécurité BANTUDEVLAB.")
     return 0
+
 
 if __name__ == "__main__":
     sys.exit(evaluate_model())

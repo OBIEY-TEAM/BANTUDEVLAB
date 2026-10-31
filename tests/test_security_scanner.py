@@ -1,5 +1,7 @@
 from django.test import TestCase
+
 from apps.security_scanner.engine import SecurityScannerEngine
+
 
 class SecurityScannerTestCase(TestCase):
     def test_clean_code_scan(self):

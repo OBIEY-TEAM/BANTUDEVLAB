@@ -1,5 +1,7 @@
 from django.test import TestCase
-from apps.zkp_auth.crypto import ZKPCrypto, P, G, Q
+
+from apps.zkp_auth.crypto import G, P, Q, ZKPCrypto
+
 
 class ZKPCryptoTestCase(TestCase):
     def test_keypair_generation(self):

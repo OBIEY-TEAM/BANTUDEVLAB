@@ -7,11 +7,13 @@ Tokens are verified cryptographically via Zero-Knowledge Proofs.
 
 import hashlib
 import secrets
-from typing import Tuple, Dict, Any, Optional
-from django.utils import timezone
+from typing import Any, Dict
+
 from django.contrib.auth.models import User
+from django.utils import timezone
+
 from .crypto import ZKPCrypto
-from .models import SovereignIdentity, GitAccessToken
+from .models import GitAccessToken, SovereignIdentity
 
 
 class GitTokenService:
@@ -28,7 +30,7 @@ class GitTokenService:
     @classmethod
     def hash_token(cls, raw_token: str) -> str:
         """Computes SHA-256 hash of a raw token."""
-        return hashlib.sha256(raw_token.encode('utf-8')).hexdigest()
+        return hashlib.sha256(raw_token.encode("utf-8")).hexdigest()
 
     @classmethod
     def issue_token_with_zkp(
@@ -39,7 +41,7 @@ class GitTokenService:
         response_s: str,
         name: str = "CLI Git Access Token",
         permissions: str = "write",
-        validity_days: int = 30
+        validity_days: int = 30,
     ) -> Dict[str, Any]:
         """
         Validates ZKP proof for the user and generates a new Git access token.
@@ -73,7 +75,7 @@ class GitTokenService:
             token_hash=token_hash,
             permissions=permissions,
             expires_at=expires_at,
-            is_active=True
+            is_active=True,
         )
 
         return {
@@ -84,7 +86,7 @@ class GitTokenService:
             "permissions": token_record.permissions,
             "expires_at": expires_at.isoformat(),
             "username": user.username,
-            "instructions": f"Utilisez ce token comme mot de passe pour git clone / git push : https://{user.username}:{raw_token}@forge.bantudevlab.africa/..."
+            "instructions": f"Utilisez ce token comme mot de passe pour git clone / git push : https://{user.username}:{raw_token}@forge.bantudevlab.africa/...",
         }
 
     @classmethod
@@ -97,7 +99,7 @@ class GitTokenService:
 
         token_hash = cls.hash_token(raw_token)
         try:
-            token_obj = GitAccessToken.objects.select_related('user').get(token_hash=token_hash)
+            token_obj = GitAccessToken.objects.select_related("user").get(token_hash=token_hash)
         except GitAccessToken.DoesNotExist:
             return {"valid": False, "error": "Token inexistant ou révoqué"}
 
@@ -105,12 +107,12 @@ class GitTokenService:
             return {"valid": False, "error": "Token expiré ou inactif"}
 
         token_obj.last_used_at = timezone.now()
-        token_obj.save(update_fields=['last_used_at'])
+        token_obj.save(update_fields=["last_used_at"])
 
         return {
             "valid": True,
             "username": token_obj.user.username,
             "permissions": token_obj.permissions,
             "token_id": token_obj.id,
-            "expires_at": token_obj.expires_at.isoformat() if token_obj.expires_at else None
+            "expires_at": token_obj.expires_at.isoformat() if token_obj.expires_at else None,
         }

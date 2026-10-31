@@ -1,0 +1,40 @@
+[tool.pytest.ini_options]
+DJANGO_SETTINGS_MODULE = "config.settings"
+python_files = ["test_*.py", "*_test.py"]
+addopts = "--cov=apps/zkp_auth --cov=apps/security_scanner --cov=apps/ai_assistant --cov-report=term-missing --cov-fail-under=95"
+
+[tool.coverage.run]
+branch = false
+source = [
+    "apps/zkp_auth",
+    "apps/security_scanner",
+    "apps/ai_assistant"
+]
+omit = [
+    "*/migrations/*",
+    "*/tests/*"
+]
+
+[tool.coverage.report]
+fail_under = 95
+show_missing = true
+skip_covered = false
+
+[tool.ruff]
+target-version = "py312"
+line-length = 120
+exclude = [
+    ".git",
+    "migrations",
+    "__pycache__",
+    "staticfiles",
+    "media"
+]
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I"]
+ignore = ["E501"]
+
+[tool.bandit]
+exclude_dirs = ["tests", "migrations"]
+skips = ["B101", "B105", "B110"]

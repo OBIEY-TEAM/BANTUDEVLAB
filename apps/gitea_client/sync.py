@@ -7,9 +7,9 @@ Synchronizes:
 between Gitea REST API v1 and the sovereign BantuDevLab overlay.
 """
 
-from typing import Dict, Any, List, Optional
+from typing import Any, Dict, Optional
+
 from .client import GiteaClient
-from .models import SovereignRepository
 
 
 class GiteaSyncService:
@@ -23,47 +23,22 @@ class GiteaSyncService:
     def sync_repository_branches(self, owner: str, repo: str) -> Dict[str, Any]:
         """Synchronizes branch metadata from Gitea."""
         branches = self.client.get_repository_branches(owner, repo)
-        return {
-            "owner": owner,
-            "repo": repo,
-            "branches_count": len(branches),
-            "branches": branches,
-            "synced": True
-        }
+        return {"owner": owner, "repo": repo, "branches_count": len(branches), "branches": branches, "synced": True}
 
     def sync_repository_commits(self, owner: str, repo: str) -> Dict[str, Any]:
         """Synchronizes commit history from Gitea."""
         commits = self.client.get_repository_commits(owner, repo)
-        return {
-            "owner": owner,
-            "repo": repo,
-            "commits_count": len(commits),
-            "commits": commits,
-            "synced": True
-        }
+        return {"owner": owner, "repo": repo, "commits_count": len(commits), "commits": commits, "synced": True}
 
     def sync_pull_requests(self, owner: str, repo: str, state: str = "all") -> Dict[str, Any]:
         """Fetches and synchronizes PRs from Gitea to BantuDevLab."""
         pulls = self.client.get_pull_requests(owner, repo, state=state)
-        return {
-            "owner": owner,
-            "repo": repo,
-            "pull_requests_count": len(pulls),
-            "pull_requests": pulls,
-            "synced": True
-        }
+        return {"owner": owner, "repo": repo, "pull_requests_count": len(pulls), "pull_requests": pulls, "synced": True}
 
     def update_pr_status(self, owner: str, repo: str, pr_index: int, state: str) -> Dict[str, Any]:
         """Pushes PR status update back to Gitea."""
         res = self.client.update_pull_request(owner=owner, repo=repo, pr_index=pr_index, state=state)
-        return {
-            "owner": owner,
-            "repo": repo,
-            "pr_index": pr_index,
-            "state": state,
-            "result": res,
-            "synced": True
-        }
+        return {"owner": owner, "repo": repo, "pr_index": pr_index, "state": state, "result": res, "synced": True}
 
     def full_sync_repository(self, owner: str, repo: str) -> Dict[str, Any]:
         """Performs complete bidirectional sync for a repository."""
@@ -77,5 +52,5 @@ class GiteaSyncService:
             "commits": commits_data["commits"],
             "pull_requests": prs_data["pull_requests"],
             "status": "SUCCESS",
-            "message": f"Dépôt {owner}/{repo} synchronisé avec succès (branches, commits, PRs)."
+            "message": f"Dépôt {owner}/{repo} synchronisé avec succès (branches, commits, PRs).",
         }

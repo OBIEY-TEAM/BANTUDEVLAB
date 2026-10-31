@@ -1,6 +1,7 @@
 from django.test import TestCase
+
 from apps.gitea_client.client import GiteaClient
-from apps.gitea_client.models import SovereignRepository
+
 
 class GiteaClientTestCase(TestCase):
     def test_client_initialization(self):
