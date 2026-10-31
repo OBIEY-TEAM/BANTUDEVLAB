@@ -1,0 +1,141 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div style="max-width: 600px; margin: 2rem auto;" class="card">
+    <h2>🔐 Authentification Zero-Trust (ZKP)</h2>
+    <p style="color: var(--text-muted); font-size: 0.95rem;">
+        Prouvez votre identité sans jamais envoyer votre secret privé au serveur grâce au protocole Schnorr Zero-Knowledge Proof.
+    </p>
+
+    <div style="margin-top: 1.5rem;">
+        <label style="display: block; margin-bottom: 0.5rem; font-weight: bold;">Nom de développeur (Username) :</label>
+        <input type="text" id="zkpUsername" value="kouame_dev" style="width: 100%; padding: 0.6rem; background: #000; border: 1px solid var(--dark-border); color: #fff; border-radius: 6px;">
+
+        <label style="display: block; margin-top: 1rem; margin-bottom: 0.5rem; font-weight: bold;">Secret Souverain (Reste strictement dans votre navigateur) :</label>
+        <input type="password" id="zkpSecret" value="cle_secrete_panafricaine_2025" style="width: 100%; padding: 0.6rem; background: #000; border: 1px solid var(--dark-border); color: #fff; border-radius: 6px;">
+
+        <div style="margin-top: 1.5rem; display: flex; gap: 1rem;">
+            <button class="btn btn-secondary" onclick="registerZkpIdentity()">1. Créer Identité ZKP</button>
+            <button class="btn btn-primary" onclick="loginWithZkp()">2. Prouver Identité (ZKP Login)</button>
+        </div>
+    </div>
+
+    <div id="zkpLog" style="margin-top: 1.5rem; padding: 1rem; background: #000; border-radius: 6px; font-family: monospace; font-size: 0.85rem; display: none;"></div>
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+function log(msg) {
+    const box = document.getElementById('zkpLog');
+    box.style.display = 'block';
+    box.innerHTML += `<div>> ${msg}</div>`;
+}
+
+// Client-side helper using Web Crypto SHA-256 for deterministic key derivation
+async function sha256(str) {
+    const buf = new TextEncoder().encode(str);
+    const hashBuf = await crypto.subtle.digest('SHA-256', buf);
+    const hashArr = Array.from(new Uint8Array(hashBuf));
+    return hashArr.map(b => b.toString(16).padStart(2, '0')).join('');
+}
+
+// Schnorr BigInt modular exponentiation
+function modPow(base, exp, mod) {
+    let res = 1n;
+    base = base % mod;
+    while (exp > 0n) {
+        if (exp % 2n === 1n) res = (res * base) % mod;
+        exp = exp / 2n;
+        base = (base * base) % mod;
+    }
+    return res;
+}
+
+const P_HEX = "FFFFFFFFFFFFFFFFC90FDAA22168C234C4C6628B80DC1CD129024E088A67CC74020BBEA63B139B22514A08798E3404DDEF9519B3CD3A431B302B0A6DF25F14374FE1356D6D51C245E485B576625E7EC6F44C42E9A637ED6B0BFF5CB6F406B7EDEE386BFB5A899FA5AE9F24117C4B1FE649286651ECE45B3DC2007CB8A163BF0598DA48361C55D39A69163FA8FD24CF5F83655D23DCA3AD961C62F356208552BB9ED529077096966D670C354E4ABC9804F1746C08CA18217C32905E462E36CE3BE39E772C180E86039B2783A2EC07A28FB5C55DF06F4C52C9DE2BCBF6955817183995497CEA956AE515D2261898FA051015728E5A8AACAA68FFFFFFFFFFFFFFFF";
+const P = BigInt("0x" + P_HEX);
+const G = 2n;
+const Q = (P - 1n) / 2n;
+
+async function deriveKeyPair(secretStr) {
+    const hash = await sha256("bantudevlab_seed" + secretStr);
+    const x = (BigInt("0x" + hash) % (Q - 2n)) + 1n;
+    const y = modPow(G, x, P);
+    return { x, y };
+}
+
+async function registerZkpIdentity() {
+    const username = document.getElementById('zkpUsername').value;
+    const secret = document.getElementById('zkpSecret').value;
+    log(`Dérivation de la clé publique souveraine pour <b>${username}</b>...`);
+    const { x, y } = await deriveKeyPair(secret);
+    log(`Clé publique (y = g^x mod p) générée localement.`);
+
+    const res = await fetch('/api/zkp/register/', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({
+            username: username,
+            public_key_y: y.toString(16),
+            country_code: 'CIV'
+        })
+    });
+    const data = await res.json();
+    if (res.ok) {
+        log(`✅ Enregistrement ZKP réussi ! Aucune information secrète n'a quitté votre machine.`);
+    } else {
+        log(`⚠️ ${data.error || 'Erreur d\'enregistrement'}`);
+    }
+}
+
+async function loginWithZkp() {
+    const username = document.getElementById('zkpUsername').value;
+    const secret = document.getElementById('zkpSecret').value;
+    log(`Demande d'un défi (Challenge nonce) au serveur pour <b>${username}</b>...`);
+
+    const chalRes = await fetch('/api/zkp/challenge/', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({username})
+    });
+    const chalData = await chalRes.json();
+    if (!chalRes.ok) {
+        log(`❌ Erreur défi: ${chalData.error}`);
+        return;
+    }
+
+    const nonce = chalData.challenge_nonce;
+    log(`Challenge reçu : ${nonce.slice(0, 16)}...`);
+
+    // Prover calculates ZKP
+    const { x, y } = await deriveKeyPair(secret);
+    const vHash = await sha256(nonce + Math.random().toString());
+    const v = (BigInt("0x" + vHash) % (Q - 2n)) + 1n;
+    const t = modPow(G, v, P);
+
+    // Fiat-Shamir challenge calculation
+    const cHash = await sha256(G.toString() + y.toString() + t.toString() + nonce);
+    const c = BigInt("0x" + cHash) % Q;
+    const s = ((v - (c * x)) % Q + Q) % Q;
+
+    log(`Preuve (t, s) calculée. Envoi de la preuve au serveur pour vérification...`);
+
+    const verifyRes = await fetch('/api/zkp/verify/', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({
+            username: username,
+            challenge_nonce: nonce,
+            commitment_t: "0x" + t.toString(16),
+            response_s: "0x" + s.toString(16),
+        })
+    });
+    const verifyData = await verifyRes.json();
+    if (verifyRes.ok) {
+        log(`🎉 <b>Vérification Zero-Knowledge réussie !</b> Accès autorisé sans mot de passe.`);
+    } else {
+        log(`❌ Échec de la vérification : ${verifyData.error}`);
+    }
+}
+</script>
+{% endblock %}

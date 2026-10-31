@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}BANTUDEVLAB - Forge Logicielle Souveraine Africaine{% endblock %}</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    {% block extra_head %}{% endblock %}
+</head>
+<body>
+    <nav class="navbar">
+        <a href="{% url 'home' %}" class="brand">
+            <span>🌍</span>
+            <span>BANTUDEVLAB</span>
+            <span class="brand-badge">FORGE SOUVERAINE</span>
+        </a>
+        <div class="nav-links">
+            <a href="{% url 'home' %}">Accueil</a>
+            <a href="{% url 'dashboard' %}">Tableau de Bord</a>
+            <a href="{% url 'sovereignty_metrics' %}">Souveraineté Numérique</a>
+            <a href="{% url 'zkp_auth:zkp_login_page' %}">Connexion Zero-Trust</a>
+            <a href="http://localhost:3000" target="_blank" class="btn btn-primary">Accès Forge Git</a>
+        </div>
+    </nav>
+
+    <main class="container">
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer>
+        <p>© 2025 BANTUDEVLAB — Forge Logicielle Panafricaine & Souveraine. Hébergée sur Systalink Cloud.</p>
+        <p style="font-size: 0.8rem; margin-top: 0.5rem; opacity: 0.7;">Zero-Trust ZKP Cryptography • Gemma 5B Local AI • Gitea CE Engine • African Data Sovereignty</p>
+    </footer>
+
+    {% block extra_scripts %}{% endblock %}
+</body>
+</html>
