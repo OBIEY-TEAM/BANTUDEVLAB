@@ -1,5 +1,14 @@
 {% extends 'base.html' %}
 
+{% block extra_head %}
+<!-- CodeMirror (UI-01) -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/codemirror.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/theme/material-darker.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/codemirror.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/python/python.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/addon/edit/closebrackets.min.js"></script>
+{% endblock %}
+
 {% block content %}
 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
     <div>
@@ -56,14 +65,93 @@
             </table>
         </div>
 
-        <h3 style="margin-top: 2rem;">Testeur de Scan de Sécurité Souverain</h3>
-        <div class="card" style="margin-top: 1rem;">
-            <textarea id="scanCodeInput" rows="5" style="width: 100%; background: #000; color: #10b981; font-family: monospace; border: 1px solid var(--dark-border); padding: 0.5rem; border-radius: 6px;" placeholder="# Collez votre code Python ici pour analyse immédiate...&#10;api_key = 'ghp_super_secret_token_123456789012345678'"></textarea>
-            <div style="margin-top: 1rem; display: flex; gap: 1rem;">
-                <button class="btn btn-primary" onclick="runSecurityScan()">Lancer l'Audit de Sécurité</button>
-                <button class="btn btn-secondary" onclick="runAiReview()">Demander l'Avis de Gemma 5B</button>
+        <!-- Workbench avec Éditeur de Code Moderne (UI-01) -->
+        <h3 style="margin-top: 2rem; display: flex; align-items: center; justify-content: space-between;">
+            <span>Workbench Souverain & Audit SAST</span>
+            <span style="font-size: 0.8rem; color: var(--text-muted); font-weight: normal;">Éditeur avec coloration syntaxique & numérotation</span>
+        </h3>
+
+        <div class="card" style="margin-top: 1rem; padding: 1.25rem;">
+            <div class="editor-container">
+                <div class="editor-toolbar">
+                    <div class="file-tag">
+                        <span>🐍</span>
+                        <span>workbench_security_audit.py</span>
+                    </div>
+                    <div style="display: flex; gap: 0.75rem; align-items: center;">
+                        <span id="editorStatus" style="font-size: 0.8rem; color: var(--secondary-emerald);">● Prêt</span>
+                        <button class="btn btn-secondary" style="padding: 0.2rem 0.6rem; font-size: 0.75rem;" onclick="resetEditorSnippet()">Snippet Démo</button>
+                    </div>
+                </div>
+                <textarea id="scanCodeInput" class="fallback-code-editor" style="display: none;"></textarea>
+                <div id="codeEditorMount"></div>
             </div>
-            <div id="scanResult" style="margin-top: 1rem; display: none; padding: 1rem; background: #000; border-radius: 6px; font-family: monospace; font-size: 0.9rem; white-space: pre-wrap;"></div>
+
+            <div style="margin-top: 1.25rem; display: flex; gap: 1rem; flex-wrap: wrap;">
+                <button class="btn btn-primary" onclick="runSecurityScan()">
+                    🛡️ Lancer l'Audit de Sécurité
+                </button>
+                <button class="btn btn-secondary" onclick="runAiReview()">
+                    🧠 Demander l'Avis de Gemma 5B
+                </button>
+            </div>
+
+            <!-- Visualisation Graphique Moderne des Résultats (UI-02) -->
+            <div id="visualScanContainer" style="margin-top: 1.5rem; display: none;">
+                <!-- Jauge Circulaire & Statistiques de Souveraineté -->
+                <div class="sovereignty-gauge-card">
+                    <div class="circular-gauge-wrapper">
+                        <svg class="circular-gauge-svg" viewBox="0 0 120 120">
+                            <circle class="gauge-bg-circle" cx="60" cy="60" r="50"></circle>
+                            <circle id="gaugeProgressCircle" class="gauge-progress-circle" cx="60" cy="60" r="50" stroke-dasharray="314.16" stroke-dashoffset="314.16"></circle>
+                        </svg>
+                        <div class="gauge-inner-text">
+                            <div id="gaugeScoreText" class="gauge-percentage">--%</div>
+                            <div class="gauge-sublabel">Souveraineté</div>
+                        </div>
+                    </div>
+
+                    <div style="flex: 1; margin-left: 2rem;">
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <div>
+                                <h4 id="scanStatusTitle" style="margin: 0; font-size: 1.15rem;">Analyse Complétée</h4>
+                                <p id="scanJurisdiction" style="margin: 0.25rem 0 0; font-size: 0.82rem; color: var(--text-muted);">Normes de Souveraineté Numérique ADSS-v1</p>
+                            </div>
+                            <span id="scanStatusBadge" class="brand-badge">CONFORME</span>
+                        </div>
+
+                        <div class="metrics-pill-grid">
+                            <div class="metric-pill">
+                                <span id="pillCriticalCount" class="pill-val severity-pill-critical">0</span>
+                                <span class="pill-lbl">Critiques</span>
+                            </div>
+                            <div class="metric-pill">
+                                <span id="pillHighCount" class="pill-val severity-pill-high">0</span>
+                                <span class="pill-lbl">Hautes</span>
+                            </div>
+                            <div class="metric-pill">
+                                <span id="pillMediumCount" class="pill-val severity-pill-medium">0</span>
+                                <span class="pill-lbl">Moyennes</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Liste Interactive des Vulnérabilités -->
+                <div id="vulnerabilitiesListSection">
+                    <h4 style="margin-bottom: 0.75rem; display: flex; align-items: center; justify-content: space-between;">
+                        <span>Vulnérabilités & Fuites Détectées</span>
+                        <span id="issuesCountBadge" style="font-size: 0.8rem; color: var(--text-muted);">0 problème détecté</span>
+                    </h4>
+                    <div id="vulnerabilitiesContainer"></div>
+                </div>
+            </div>
+
+            <!-- Affichage Revue IA / Streaming SSE -->
+            <div id="aiReviewSection" style="margin-top: 1.5rem; display: none;">
+                <h4 style="margin-bottom: 0.5rem; color: var(--primary-african-gold);">Rapport d'Audit Gemma 5B (Local / On-Premise)</h4>
+                <div id="aiReviewContent" style="padding: 1.25rem; background: #080c14; border: 1px solid var(--dark-border); border-radius: 8px; font-family: monospace; font-size: 0.9rem; line-height: 1.6; white-space: pre-wrap; color: #e2e8f0;"></div>
+            </div>
         </div>
     </div>
 
@@ -91,30 +179,205 @@
 
 {% block extra_scripts %}
 <script>
+// CodeMirror Editor Initialization (UI-01)
+const DEFAULT_SNIPPET = `# Workbench Souverain - Analyse de Sécurité & Souveraineté
+import os
+import requests
+
+# 1. Fuite potentielle de secret souverain
+api_key = "ghp_super_secret_token_123456789012345678"
+
+def process_banking_request(user_input):
+    # 2. Utilisation risquée de eval
+    result = eval(user_input)
+
+    # 3. Fuite de télémétrie étrangère non souveraine
+    requests.post("https://foreign-analytics.tracking.com/collect", json={"log": result})
+
+    return result
+`;
+
+let editorInstance = null;
+
+function initCodeEditor() {
+    const mount = document.getElementById('codeEditorMount');
+    const textarea = document.getElementById('scanCodeInput');
+    textarea.value = DEFAULT_SNIPPET;
+
+    if (window.CodeMirror) {
+        editorInstance = CodeMirror(mount, {
+            value: DEFAULT_SNIPPET,
+            mode: "python",
+            theme: "material-darker",
+            lineNumbers: true,
+            indentUnit: 4,
+            lineWrapping: true,
+            autoCloseBrackets: true,
+            gutters: ["CodeMirror-linenumbers"]
+        });
+        textarea.style.display = 'none';
+    } else {
+        // Fallback textarea if CDN is not available
+        textarea.style.display = 'block';
+    }
+}
+
+function getEditorContent() {
+    if (editorInstance) {
+        return editorInstance.getValue();
+    }
+    return document.getElementById('scanCodeInput').value;
+}
+
+function resetEditorSnippet() {
+    if (editorInstance) {
+        editorInstance.setValue(DEFAULT_SNIPPET);
+    } else {
+        document.getElementById('scanCodeInput').value = DEFAULT_SNIPPET;
+    }
+    if (window.showToast) window.showToast('Code de démonstration rechargé.', 'info');
+}
+
+// UI-02: Visual Dashboard Updates & Circular Gauge
+function updateSovereigntyGauge(score) {
+    const circle = document.getElementById('gaugeProgressCircle');
+    const scoreText = document.getElementById('gaugeScoreText');
+    const circumference = 2 * Math.PI * 50; // ~314.16
+
+    scoreText.textContent = `${score}%`;
+    const offset = circumference - (score / 100) * circumference;
+    circle.style.strokeDashoffset = offset;
+
+    if (score >= 80) {
+        circle.style.stroke = 'var(--secondary-emerald)';
+        scoreText.style.color = 'var(--secondary-emerald)';
+    } else if (score >= 50) {
+        circle.style.stroke = 'var(--primary-african-gold)';
+        scoreText.style.color = 'var(--primary-african-gold)';
+    } else {
+        circle.style.stroke = '#ef4444';
+        scoreText.style.color = '#ef4444';
+    }
+}
+
+function renderVulnerabilityCards(issues) {
+    const container = document.getElementById('vulnerabilitiesContainer');
+    container.innerHTML = '';
+
+    if (!issues || issues.length === 0) {
+        container.innerHTML = `
+            <div style="padding: 1.5rem; text-align: center; background: rgba(16, 185, 129, 0.1); border: 1px solid var(--secondary-emerald); border-radius: 8px; color: #a7f3d0;">
+                <p style="font-weight: 600; margin: 0;">✨ Aucune vulnérabilité détectée !</p>
+                <p style="font-size: 0.85rem; margin: 0.3rem 0 0; opacity: 0.85;">Le code respecte strictement les critères de souveraineté panafricaine.</p>
+            </div>
+        `;
+        return;
+    }
+
+    issues.forEach(issue => {
+        const card = document.createElement('div');
+        const sevClass = (issue.severity || 'MEDIUM').toLowerCase();
+        card.className = `vulnerability-card sev-${sevClass}`;
+
+        const badgeClass = `badge-${sevClass}`;
+
+        card.innerHTML = `
+            <div class="vulnerability-header">
+                <div>
+                    <strong style="color: #fff; font-size: 0.95rem;">${issue.description || 'Vulnérabilité'}</strong>
+                    <span style="font-size: 0.8rem; color: var(--text-muted); margin-left: 0.5rem;">Ligne ${issue.line || '?'}</span>
+                </div>
+                <span class="severity-badge ${badgeClass}">${issue.severity || 'UNKNOWN'}</span>
+            </div>
+            ${issue.snippet ? `<div class="vuln-code-snippet">${escapeHtml(issue.snippet)}</div>` : ''}
+            ${issue.recommendation ? `
+                <div class="vuln-recommendation">
+                    <span>💡</span>
+                    <span><strong>Recommandation Souveraine :</strong> ${escapeHtml(issue.recommendation)}</span>
+                </div>
+            ` : ''}
+        `;
+        container.appendChild(card);
+    });
+}
+
+function escapeHtml(text) {
+    if (!text) return '';
+    return text
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+}
+
 async function runSecurityScan() {
-    const code = document.getElementById('scanCodeInput').value;
-    const resultBox = document.getElementById('scanResult');
-    resultBox.style.display = 'block';
-    resultBox.textContent = 'Analyse en cours par le moteur de sécurité souverain...';
+    const code = getEditorContent();
+    const visualBox = document.getElementById('visualScanContainer');
+    const editorStatus = document.getElementById('editorStatus');
+
+    if (!code || !code.trim()) {
+        if (window.showToast) window.showToast("Veuillez saisir du code à analyser.", "warning");
+        return;
+    }
+
+    editorStatus.textContent = '● Scan en cours...';
+    editorStatus.style.color = 'var(--primary-african-gold)';
+    if (window.showToast) window.showToast("Analyse par le moteur de sécurité souverain...", "info");
 
     try {
         const res = await fetch('/api/security/scan/', {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({content: code, filename: 'workbench.py', repository_name: 'workbench-repo'})
+            body: JSON.stringify({content: code, filename: 'workbench_security_audit.py', repository_name: 'workbench-repo'})
         });
         const data = await res.json();
-        resultBox.textContent = JSON.stringify(data, null, 2);
+
+        if (!res.ok) {
+            throw new Error(data.error || 'Erreur lors du scan');
+        }
+
+        visualBox.style.display = 'block';
+
+        // Update score & gauge
+        updateSovereigntyGauge(data.sovereignty_score || 0);
+
+        // Update counts
+        document.getElementById('pillCriticalCount').textContent = data.critical || 0;
+        document.getElementById('pillHighCount').textContent = data.high || 0;
+        document.getElementById('pillMediumCount').textContent = data.medium || 0;
+        document.getElementById('issuesCountBadge').textContent = `${data.total_issues || 0} problème(s) identifié(s)`;
+
+        // Update status rating
+        const ratingBadge = document.getElementById('scanStatusBadge');
+        ratingBadge.textContent = data.status_rating || 'COMPLETED';
+
+        // Render cards
+        renderVulnerabilityCards(data.issues || []);
+
+        editorStatus.textContent = '● Terminé';
+        editorStatus.style.color = 'var(--secondary-emerald)';
+        if (window.showToast) window.showToast(`Scan terminé ! Score de souveraineté : ${data.sovereignty_score}%`, 'success');
     } catch(err) {
-        resultBox.textContent = 'Erreur lors du scan: ' + err;
+        editorStatus.textContent = '● Erreur';
+        editorStatus.style.color = 'var(--tertiary-terracotta)';
+        if (window.showToast) window.showToast(`Erreur du scanner : ${err.message}`, 'error');
     }
 }
 
 async function runAiReview() {
-    const code = document.getElementById('scanCodeInput').value;
-    const resultBox = document.getElementById('scanResult');
-    resultBox.style.display = 'block';
-    resultBox.textContent = 'Connexion au flux SSE de Gemma 5B...\n';
+    const code = getEditorContent();
+    const aiSection = document.getElementById('aiReviewSection');
+    const aiContent = document.getElementById('aiReviewContent');
+
+    if (!code || !code.trim()) {
+        if (window.showToast) window.showToast("Veuillez saisir du code pour l'audit IA.", "warning");
+        return;
+    }
+
+    aiSection.style.display = 'block';
+    aiContent.textContent = 'Connexion sécurisée au moteur IA On-Premise Gemma 5B...\n';
+    if (window.showToast) window.showToast("Connexion au flux SSE de Gemma 5B...", "info");
 
     try {
         const response = await fetch('/api/ai/review/', {
@@ -127,11 +390,12 @@ async function runAiReview() {
         });
 
         if (!response.ok) {
-            resultBox.textContent = 'Erreur HTTP: ' + response.status;
+            aiContent.textContent = 'Erreur HTTP: ' + response.status;
+            if (window.showToast) window.showToast(`Erreur de connexion IA: HTTP ${response.status}`, 'error');
             return;
         }
 
-        resultBox.textContent = '';
+        aiContent.textContent = '';
         const reader = response.body.getReader();
         const decoder = new TextDecoder('utf-8');
         let buffer = '';
@@ -142,14 +406,14 @@ async function runAiReview() {
             buffer += decoder.decode(value, {stream: true});
 
             const lines = buffer.split('\n\n');
-            buffer = lines.pop(); // keep last incomplete part
+            buffer = lines.pop();
 
             for (const line of lines) {
                 if (line.startsWith('data: ')) {
                     try {
                         const payload = JSON.parse(line.substring(6));
                         if (payload.token) {
-                            resultBox.textContent += payload.token;
+                            aiContent.textContent += payload.token;
                         }
                     } catch (e) {
                         console.error('Parse error:', e);
@@ -157,9 +421,14 @@ async function runAiReview() {
                 }
             }
         }
+        if (window.showToast) window.showToast("Revue de code par Gemma 5B complétée.", "success");
     } catch(err) {
-        resultBox.textContent = 'Erreur lors du streaming SSE: ' + err;
+        aiContent.textContent = 'Erreur lors du streaming SSE: ' + err;
+        if (window.showToast) window.showToast(`Erreur SSE: ${err.message}`, 'error');
     }
 }
+
+// Initialize on DOM ready
+document.addEventListener('DOMContentLoaded', initCodeEditor);
 </script>
 {% endblock %}

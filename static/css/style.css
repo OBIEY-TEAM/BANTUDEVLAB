@@ -152,3 +152,579 @@ footer {
   color: var(--text-muted);
   font-size: 0.9rem;
 }
+
+/* ==========================================================
+   UI-04: TOAST NOTIFICATIONS SYSTEM
+   ========================================================== */
+.toast-container {
+  position: fixed;
+  top: 1.5rem;
+  right: 1.5rem;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  max-width: 420px;
+  width: calc(100% - 3rem);
+  pointer-events: none;
+}
+
+.toast-item {
+  pointer-events: auto;
+  display: flex;
+  align-items: flex-start;
+  gap: 0.85rem;
+  padding: 1rem 1.25rem;
+  background: rgba(17, 24, 39, 0.96);
+  border-radius: 10px;
+  border: 1px solid var(--dark-border);
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.6), 0 8px 10px -6px rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(12px);
+  color: #fff;
+  opacity: 0;
+  transform: translateX(100%) scale(0.95);
+  transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1), transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.toast-item.toast-show {
+  opacity: 1;
+  transform: translateX(0) scale(1);
+}
+
+.toast-item.toast-hide {
+  opacity: 0;
+  transform: translateX(50%) scale(0.9);
+}
+
+.toast-icon {
+  font-size: 1.3rem;
+  line-height: 1;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.toast-content {
+  flex: 1;
+}
+
+.toast-message {
+  font-size: 0.92rem;
+  line-height: 1.4;
+  word-break: break-word;
+}
+
+.toast-close {
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  font-size: 1.25rem;
+  cursor: pointer;
+  padding: 0 0.25rem;
+  line-height: 1;
+  transition: color 0.15s;
+}
+
+.toast-close:hover {
+  color: #fff;
+}
+
+.toast-item.toast-success {
+  border-left: 4px solid var(--secondary-emerald);
+  box-shadow: 0 0 15px rgba(16, 185, 129, 0.2);
+}
+
+.toast-item.toast-error {
+  border-left: 4px solid var(--tertiary-terracotta);
+  box-shadow: 0 0 15px rgba(220, 38, 38, 0.2);
+}
+
+.toast-item.toast-warning {
+  border-left: 4px solid var(--primary-african-gold);
+  box-shadow: 0 0 15px rgba(245, 158, 11, 0.2);
+}
+
+.toast-item.toast-info {
+  border-left: 4px solid #3b82f6;
+  box-shadow: 0 0 15px rgba(59, 130, 246, 0.2);
+}
+
+/* ==========================================================
+   UI-01: CODE EDITOR (CODEMIRROR) STYLING & CUSTOM WORKBENCH
+   ========================================================== */
+.editor-container {
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid var(--dark-border);
+  background: #0d1117;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.4);
+}
+
+.editor-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.6rem 1rem;
+  background: #161b22;
+  border-bottom: 1px solid var(--dark-border);
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+.editor-toolbar .file-tag {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 600;
+  color: #fff;
+}
+
+.CodeMirror {
+  font-family: "Fira Code", "JetBrains Mono", Consolas, Menlo, Monaco, monospace !important;
+  font-size: 0.92rem !important;
+  height: 280px !important;
+  line-height: 1.55 !important;
+  background-color: #0b0f19 !important;
+  color: #e6edf3 !important;
+}
+
+.CodeMirror-gutters {
+  background-color: #0d1117 !important;
+  border-right: 1px solid var(--dark-border) !important;
+  white-space: nowrap;
+}
+
+.CodeMirror-linenumber {
+  color: #484f58 !important;
+  padding: 0 8px 0 5px !important;
+}
+
+.CodeMirror-cursor {
+  border-left: 2px solid var(--primary-african-gold) !important;
+}
+
+/* Fallback textarea styling if CodeMirror CDN fails or is initializing */
+.fallback-code-editor {
+  width: 100%;
+  height: 260px;
+  background: #0b0f19;
+  color: #10b981;
+  font-family: monospace;
+  border: none;
+  padding: 0.75rem;
+  outline: none;
+  resize: vertical;
+  line-height: 1.5;
+  box-sizing: border-box;
+}
+
+/* ==========================================================
+   UI-02: MODERN DASHBOARD VISUALIZATIONS & VULNERABILITY CARDS
+   ========================================================== */
+.sovereignty-gauge-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  padding: 1.5rem;
+  background: linear-gradient(135deg, rgba(17, 24, 39, 0.95), rgba(31, 41, 55, 0.4));
+  border: 1px solid var(--dark-border);
+  border-radius: 12px;
+  margin-bottom: 1.5rem;
+}
+
+.circular-gauge-wrapper {
+  position: relative;
+  width: 130px;
+  height: 130px;
+}
+
+.circular-gauge-svg {
+  transform: rotate(-90deg);
+  width: 130px;
+  height: 130px;
+}
+
+.gauge-bg-circle {
+  fill: none;
+  stroke: rgba(255, 255, 255, 0.08);
+  stroke-width: 10;
+}
+
+.gauge-progress-circle {
+  fill: none;
+  stroke: var(--secondary-emerald);
+  stroke-width: 10;
+  stroke-linecap: round;
+  transition: stroke-dashoffset 1s ease-in-out, stroke 0.5s ease;
+}
+
+.gauge-inner-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+}
+
+.gauge-percentage {
+  font-size: 1.8rem;
+  font-weight: 800;
+  color: #fff;
+  line-height: 1;
+}
+
+.gauge-sublabel {
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-top: 4px;
+}
+
+.metrics-pill-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.75rem;
+  margin-top: 1rem;
+}
+
+.metric-pill {
+  background: rgba(0, 0, 0, 0.35);
+  border: 1px solid var(--dark-border);
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  text-align: center;
+}
+
+.metric-pill .pill-val {
+  font-size: 1.4rem;
+  font-weight: 700;
+  display: block;
+}
+
+.metric-pill .pill-lbl {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+}
+
+.severity-pill-critical { color: #f87171; }
+.severity-pill-high { color: #fb923c; }
+.severity-pill-medium { color: var(--primary-african-gold); }
+
+/* Vulnerability Interactive Cards */
+.vulnerability-card {
+  background: var(--dark-surface);
+  border: 1px solid var(--dark-border);
+  border-radius: 10px;
+  padding: 1.25rem;
+  margin-bottom: 1rem;
+  transition: transform 0.15s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.vulnerability-card:hover {
+  transform: translateY(-2px);
+  border-color: rgba(245, 158, 11, 0.4);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+}
+
+.vulnerability-card.sev-critical {
+  border-left: 5px solid #ef4444;
+}
+
+.vulnerability-card.sev-high {
+  border-left: 5px solid #f97316;
+}
+
+.vulnerability-card.sev-medium {
+  border-left: 5px solid var(--primary-african-gold);
+}
+
+.vulnerability-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.6rem;
+}
+
+.severity-badge {
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 0.25rem 0.6rem;
+  border-radius: 9999px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.badge-critical {
+  background: rgba(239, 68, 68, 0.18);
+  color: #f87171;
+  border: 1px solid rgba(239, 68, 68, 0.35);
+}
+
+.badge-high {
+  background: rgba(249, 115, 22, 0.18);
+  color: #fb923c;
+  border: 1px solid rgba(249, 115, 22, 0.35);
+}
+
+.badge-medium {
+  background: rgba(245, 158, 11, 0.18);
+  color: #fbbf24;
+  border: 1px solid rgba(245, 158, 11, 0.35);
+}
+
+.vuln-code-snippet {
+  background: #080c14;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 6px;
+  padding: 0.6rem 0.8rem;
+  font-family: monospace;
+  font-size: 0.85rem;
+  color: #f87171;
+  margin: 0.75rem 0;
+  overflow-x: auto;
+}
+
+.vuln-recommendation {
+  background: rgba(16, 185, 129, 0.08);
+  border-left: 3px solid var(--secondary-emerald);
+  padding: 0.5rem 0.8rem;
+  border-radius: 0 6px 6px 0;
+  font-size: 0.82rem;
+  color: #d1fae5;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* ==========================================================
+   UI-03: INTERACTIVE ZKP WIZARD & IDENTITY MANAGER STYLING
+   ========================================================== */
+.zkp-wizard-card {
+  max-width: 680px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background: var(--dark-surface);
+  border: 1px solid var(--dark-border);
+  border-radius: 16px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+}
+
+.zkp-steps-nav {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 2rem;
+  position: relative;
+}
+
+.zkp-steps-nav::before {
+  content: '';
+  position: absolute;
+  top: 18px;
+  left: 20px;
+  right: 20px;
+  height: 2px;
+  background: var(--dark-border);
+  z-index: 1;
+}
+
+.zkp-step-indicator {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.4rem;
+  cursor: pointer;
+}
+
+.zkp-step-circle {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--dark-bg);
+  border: 2px solid var(--dark-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  transition: all 0.3s ease;
+}
+
+.zkp-step-indicator.active .zkp-step-circle {
+  background: var(--primary-african-gold);
+  border-color: var(--primary-african-gold);
+  color: #000;
+  box-shadow: 0 0 15px rgba(245, 158, 11, 0.5);
+}
+
+.zkp-step-indicator.completed .zkp-step-circle {
+  background: var(--secondary-emerald);
+  border-color: var(--secondary-emerald);
+  color: #000;
+}
+
+.zkp-step-label {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  font-weight: 600;
+}
+
+.zkp-step-indicator.active .zkp-step-label {
+  color: #fff;
+}
+
+.mnemonic-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.6rem;
+  background: #080c14;
+  padding: 1rem;
+  border-radius: 10px;
+  border: 1px dashed rgba(245, 158, 11, 0.4);
+  margin-top: 1rem;
+}
+
+.mnemonic-word-chip {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: rgba(255, 255, 255, 0.05);
+  padding: 0.4rem 0.6rem;
+  border-radius: 6px;
+  font-family: monospace;
+  font-size: 0.85rem;
+  color: #fbbf24;
+}
+
+.mnemonic-num {
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  width: 16px;
+}
+
+/* Password & Key Strength Meter */
+.strength-meter-wrapper {
+  margin-top: 0.75rem;
+}
+
+.strength-meter-bar-container {
+  height: 6px;
+  width: 100%;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 9999px;
+  overflow: hidden;
+  margin-top: 0.4rem;
+}
+
+.strength-meter-bar {
+  height: 100%;
+  width: 0%;
+  transition: width 0.4s ease, background-color 0.4s ease;
+  border-radius: 9999px;
+}
+
+.strength-label {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  margin-top: 0.3rem;
+}
+
+/* ==========================================================
+   UI-05: PANAFRICAN SOVEREIGN NODES MAP & TELEMETRY
+   ========================================================== */
+.africa-map-wrapper {
+  position: relative;
+  background: radial-gradient(circle at 50% 50%, #111a2e 0%, #080c14 100%);
+  border: 1px solid var(--dark-border);
+  border-radius: 16px;
+  padding: 1.5rem;
+  margin: 2rem 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow: hidden;
+}
+
+.map-svg-container {
+  width: 100%;
+  max-width: 650px;
+  position: relative;
+}
+
+.map-node-point {
+  cursor: pointer;
+  transition: transform 0.2s ease, filter 0.2s ease;
+}
+
+.map-node-point:hover {
+  transform: scale(1.3);
+  filter: drop-shadow(0 0 10px var(--primary-african-gold));
+}
+
+.map-node-pulse {
+  animation: pulse-ring 2s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
+  transform-origin: center;
+}
+
+@keyframes pulse-ring {
+  0% { transform: scale(0.95); opacity: 0.8; }
+  50% { transform: scale(1.6); opacity: 0; }
+  100% { transform: scale(0.95); opacity: 0; }
+}
+
+.node-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1rem;
+  width: 100%;
+  margin-top: 1.5rem;
+}
+
+.node-card {
+  background: var(--dark-surface);
+  border: 1px solid var(--dark-border);
+  border-radius: 10px;
+  padding: 1rem;
+  cursor: pointer;
+  transition: border-color 0.2s, transform 0.2s;
+}
+
+.node-card:hover, .node-card.selected {
+  border-color: var(--primary-african-gold);
+  transform: translateY(-2px);
+  background: rgba(245, 158, 11, 0.05);
+}
+
+.node-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.latency-badge {
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 0.2rem 0.5rem;
+  border-radius: 6px;
+  background: rgba(16, 185, 129, 0.15);
+  color: var(--secondary-emerald);
+  border: 1px solid rgba(16, 185, 129, 0.3);
+}
+
+.node-details-banner {
+  background: rgba(245, 158, 11, 0.08);
+  border: 1px solid rgba(245, 158, 11, 0.3);
+  border-radius: 10px;
+  padding: 1.25rem;
+  margin-top: 1.5rem;
+  width: 100%;
+  box-sizing: border-box;
+}
