@@ -326,9 +326,13 @@ async function runSecurityScan() {
     if (window.showToast) window.showToast("Analyse par le moteur de sécurité souverain...", "info");
 
     try {
+        const headers = {'Content-Type': 'application/json'};
+        if (window.getCsrfToken && window.getCsrfToken()) {
+            headers['X-CSRFToken'] = window.getCsrfToken();
+        }
         const res = await fetch('/api/security/scan/', {
             method: 'POST',
-            headers: {'Content-Type': 'application/json'},
+            headers: headers,
             body: JSON.stringify({content: code, filename: 'workbench_security_audit.py', repository_name: 'workbench-repo'})
         });
         const data = await res.json();
@@ -380,12 +384,16 @@ async function runAiReview() {
     if (window.showToast) window.showToast("Connexion au flux SSE de Gemma 5B...", "info");
 
     try {
+        const aiHeaders = {
+            'Content-Type': 'application/json',
+            'Accept': 'text/event-stream'
+        };
+        if (window.getCsrfToken && window.getCsrfToken()) {
+            aiHeaders['X-CSRFToken'] = window.getCsrfToken();
+        }
         const response = await fetch('/api/ai/review/', {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'text/event-stream'
-            },
+            headers: aiHeaders,
             body: JSON.stringify({code: code, context: 'security_audit', stream: true})
         });
 

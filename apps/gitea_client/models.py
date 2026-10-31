@@ -6,17 +6,18 @@ class SovereignRepository(models.Model):
     Cached and tracked metadata of sovereign repositories managed via BantuDevLab.
     Linked optionally to a SovereignOrganization for multi-tenancy.
     """
+
     organization = models.ForeignKey(
-        'core.SovereignOrganization',
+        "core.SovereignOrganization",
         on_delete=models.SET_NULL,
         null=True,
         blank=True,
-        related_name='repositories',
-        help_text="Organisation souveraine de rattachement"
+        related_name="repositories",
+        help_text="Organisation souveraine de rattachement",
     )
     name = models.CharField(max_length=255)
     owner = models.CharField(max_length=255)
-    description = models.TextField(blank=True, default='')
+    description = models.TextField(blank=True, default="")
     html_url = models.URLField()
     clone_url = models.CharField(max_length=512)
     is_private = models.BooleanField(default=False)

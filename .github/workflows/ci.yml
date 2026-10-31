@@ -7,8 +7,37 @@ on:
     branches: [ main, master ]
 
 jobs:
+  lint_and_security:
+    name: Linting & Sécurité Statique (Ruff & Bandit - QA-04)
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: 'pip'
+
+      - name: Install Linting & Security Tools
+        run: |
+          python -m pip install --upgrade pip
+          pip install ruff bandit
+
+      - name: Ruff Linter & Format Check
+        run: |
+          ruff check .
+          ruff format --check .
+
+      - name: Bandit Static Application Security Testing
+        run: |
+          bandit -c pyproject.toml -r apps config
+
   test:
-    name: Tests Unitaires & Intégration Souveraine
+    name: Tests Unitaires, Fuzzing & Couverture Stricte (QA-01, QA-02, QA-03)
+    needs: lint_and_security
     runs-on: ubuntu-latest
 
     steps:
@@ -25,12 +54,17 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
+          python -m playwright install --with-deps chromium
 
       - name: Django System Checks
         run: |
           python manage.py check
 
-      - name: Run Automated Test Suite
+      - name: Run Pytest Suite with Strict Coverage (> 95% QA-03)
+        run: |
+          pytest --cov=apps/zkp_auth --cov=apps/security_scanner --cov=apps/ai_assistant --cov-report=term-missing --cov-fail-under=95
+
+      - name: Run Django Test Suite
         run: |
           python manage.py test tests -v 2
 
