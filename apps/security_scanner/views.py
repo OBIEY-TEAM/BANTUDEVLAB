@@ -22,6 +22,23 @@ class ScanCodeView(APIView):
         if not content:
             return Response({'error': 'content est requis pour le scan'}, status=status.HTTP_400_BAD_REQUEST)
 
+        async_mode = request.data.get('async', False) or request.query_params.get('async', 'false').lower() in ('true', '1')
+
+        if async_mode:
+            from .tasks import async_scan_code
+            actor = request.user.username if request.user.is_authenticated else 'anonymous-scanner'
+            task = async_scan_code.delay(
+                filename=filename,
+                content=content,
+                repository_name=repository_name,
+                actor=actor
+            )
+            return Response({
+                'task_id': task.id,
+                'status': 'PENDING',
+                'message': 'Scan de sécurité programmé de manière asynchrone via Celery'
+            }, status=status.HTTP_202_ACCEPTED)
+
         result = SecurityScannerEngine.scan_code(filename=filename, content=content)
 
         # Store persistent audit report

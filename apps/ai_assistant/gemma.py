@@ -7,9 +7,11 @@ Provides local / self-hosted inference integration for:
 - Offline sovereign fallback if external LLM host is unreachable
 """
 
+import json
+import time
 import requests
 from django.conf import settings
-from typing import Dict, Any, Optional
+from typing import Dict, Any, Optional, Generator
 
 
 class GemmaAssistant:
@@ -105,3 +107,56 @@ class GemmaAssistant:
             "response": response_text,
             "mode": "sovereign_local_engine",
         }
+
+    def stream_analyze_code(self, code_snippet: str, context: str = "review") -> Generator[str, None, None]:
+        """
+        Génère un flux de tokens/mots pour l'analyse Gemma 5B (Server-Sent Events).
+        Si l'API Ollama/vLLM est accessible en mode streaming, consomme son flux JSON chunks.
+        Sinon, émet mot à mot la réponse du moteur souverain de fallback.
+        """
+        prompt = (
+            f"{self.SYSTEM_PROMPT}\n\n"
+            f"TÂCHE: Analyse et recommandation technique ({context})\n"
+            f"CODE À ANALYSER:\n```\n{code_snippet}\n```\n\n"
+            f"Fournis une analyse structurée : Points forts, Vulnérabilités potentielles, Recommandation de souveraineté et Correctif proposé."
+        )
+
+        try:
+            response = requests.post(
+                self.api_url,
+                json={
+                    "model": self.model_name,
+                    "prompt": prompt,
+                    "stream": True,
+                    "options": {
+                        "temperature": 0.2,
+                        "num_predict": 1024
+                    }
+                },
+                stream=True,
+                timeout=10
+            )
+            if response.status_code == 200:
+                for line in response.iter_lines():
+                    if line:
+                        chunk = json.loads(line.decode('utf-8'))
+                        token = chunk.get("response", "")
+                        if token:
+                            yield token
+                        if chunk.get("done", False):
+                            return
+                return
+        except Exception:
+            pass
+
+        # Fallback mot à mot
+        fallback_res = self._generate_sovereign_fallback(code_snippet=code_snippet, context=context)
+        full_text = fallback_res.get("response", "")
+        # Découpage par mots pour un streaming fluide
+        tokens = full_text.split(" ")
+        for i, token in enumerate(tokens):
+            if i < len(tokens) - 1:
+                yield token + " "
+            else:
+                yield token
+            time.sleep(0.01)

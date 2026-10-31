@@ -1,4 +1,16 @@
 services:
+  # Broker de messages & Cache distribué souverain (Redis)
+  redis:
+    image: redis:7-alpine
+    container_name: bantudevlab_redis
+    restart: always
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    networks:
+      - sovereign_net
+
   # Base de données relationnelle souveraine
   db:
     image: postgres:16-alpine
@@ -65,17 +77,53 @@ services:
       - GITEA_EXTERNAL_URL=http://localhost:3000
       - GEMMA_API_URL=http://localhost:11434/api/generate
       - GEMMA_MODEL_NAME=gemma:5b
+      - REDIS_URL=redis://redis:6379/0
+      - CELERY_BROKER_URL=redis://redis:6379/0
+      - CELERY_RESULT_BACKEND=redis://redis:6379/0
+      - WEB_CONCURRENCY=4
     ports:
       - "8000:8000"
     depends_on:
       - db
       - gitea
+      - redis
+    networks:
+      - sovereign_net
+
+  # File de tâches asynchrones Celery Worker (PERF-01)
+  celery_worker:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: bantudevlab_celery
+    restart: always
+    command: celery -A config worker --loglevel=info --concurrency=4
+    environment:
+      - DEBUG=False
+      - DJANGO_SECRET_KEY=${DJANGO_SECRET_KEY:-bantudevlab-sovereign-secret-key-2025}
+      - DB_ENGINE=postgres
+      - POSTGRES_DB=${POSTGRES_DB:-bantudevlab}
+      - POSTGRES_USER=${POSTGRES_USER:-bantudevlab_admin}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-sovereign_pass_2025}
+      - POSTGRES_HOST=db
+      - POSTGRES_PORT=5432
+      - GITEA_API_URL=http://gitea:3000/api/v1
+      - GITEA_EXTERNAL_URL=http://localhost:3000
+      - GEMMA_API_URL=http://localhost:11434/api/generate
+      - GEMMA_MODEL_NAME=gemma:5b
+      - REDIS_URL=redis://redis:6379/0
+      - CELERY_BROKER_URL=redis://redis:6379/0
+      - CELERY_RESULT_BACKEND=redis://redis:6379/0
+    depends_on:
+      - db
+      - redis
     networks:
       - sovereign_net
 
 volumes:
   postgres_data:
   gitea_data:
+  redis_data:
 
 networks:
   sovereign_net:

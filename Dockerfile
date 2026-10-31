@@ -25,5 +25,8 @@ COPY . /app/
 # Port exposé
 EXPOSE 8000
 
-# Script d'entrée par défaut
-CMD ["sh", "-c", "python manage.py migrate && python manage.py runserver 0.0.0.0:8000"]
+# Variable d'environnement pour le dimensionnement dynamique des workers
+ENV WEB_CONCURRENCY=4
+
+# Lancement haute performance via Gunicorn avec workers asynchrones Uvicorn (PERF-05)
+CMD ["sh", "-c", "python manage.py migrate && gunicorn config.asgi:application -k uvicorn.workers.UvicornWorker --bind 0.0.0.0:8000 --workers ${WEB_CONCURRENCY:-4} --timeout 120 --access-logfile - --error-logfile -"]
