@@ -12,7 +12,7 @@
 <body>
     <nav class="navbar">
         <a href="{% url 'home' %}" class="brand">
-            <span>🌍</span>
+            <span class="brand-icon">{% icon "globe" size=26 %}</span>
             <span>BANTUDEVLAB</span>
             <span class="brand-badge">FORGE SOUVERAINE</span>
         </a>
@@ -33,7 +33,7 @@
     </main>
 
     <footer>
-        <p>© 2025 BANTUDEVLAB — Forge Logicielle Panafricaine & Souveraine. Hébergée sur Systalink Cloud.</p>
+        <p>© 2026 BANTUDEVLAB — Forge Logicielle Panafricaine & Souveraine. Hébergée sur Systalink Cloud.</p>
         <p style="font-size: 0.8rem; margin-top: 0.5rem; opacity: 0.7;">Zero-Trust ZKP Cryptography • Gemma 5B Local AI • Gitea CE Engine • African Data Sovereignty</p>
     </footer>
 
@@ -51,21 +51,32 @@
         const toast = document.createElement('div');
         toast.className = `toast-item toast-${type}`;
 
+        // Icones SVG auto-hebergees (plus d'emojis) - rendues cote serveur par la balise icon
         const icons = {
-            success: '✅',
-            warning: '⚠️',
-            error: '❌',
-            info: 'ℹ️'
+            success: '{% icon "circle-check" size=20 %}',
+            warning: '{% icon "triangle-alert" size=20 %}',
+            error: '{% icon "circle-x" size=20 %}',
+            info: '{% icon "info" size=20 %}'
         };
-        const icon = icons[type] || '🔔';
+        const icon = icons[type] || '{% icon "bell" size=20 %}';
 
-        toast.innerHTML = `
-            <span class="toast-icon">${icon}</span>
-            <div class="toast-content">
-                <div class="toast-message">${message}</div>
-            </div>
-            <button class="toast-close" onclick="this.parentElement.remove()" aria-label="Fermer">&times;</button>
-        `;
+        // SEC: le message est insere via textContent (jamais en HTML) pour eviter toute injection XSS.
+        const iconWrap = document.createElement('span');
+        iconWrap.className = 'toast-icon';
+        iconWrap.innerHTML = icon;
+        const content = document.createElement('div');
+        content.className = 'toast-content';
+        const msg = document.createElement('div');
+        msg.className = 'toast-message';
+        msg.textContent = message;
+        content.appendChild(msg);
+        const closeBtn = document.createElement('button');
+        closeBtn.className = 'toast-close';
+        closeBtn.setAttribute('aria-label', 'Fermer');
+        closeBtn.textContent = '\u00d7';
+        closeBtn.addEventListener('click', () => toast.remove());
+        toast.append(iconWrap, content, closeBtn);
+        toast.setAttribute('role', type === 'error' ? 'alert' : 'status');
 
         container.appendChild(toast);
 

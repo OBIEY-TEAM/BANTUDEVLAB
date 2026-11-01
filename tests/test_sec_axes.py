@@ -97,7 +97,7 @@ class Axe1SecurityTestCase(TestCase):
 
     # SEC-05: Durcissement des En-têtes HTTP & Cookies
     def test_sec05_security_headers_and_cookie_settings(self):
-        self.assertTrue(settings.SECURE_BROWSER_XSS_FILTER)
+        self.assertFalse(settings.SECURE_BROWSER_XSS_FILTER)  # obsolete, remplace par la CSP
         self.assertTrue(settings.SECURE_CONTENT_TYPE_NOSNIFF)
         self.assertEqual(settings.X_FRAME_OPTIONS, "DENY")
         self.assertTrue(settings.SESSION_COOKIE_HTTPONLY)

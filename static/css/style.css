@@ -728,3 +728,19 @@ footer {
   width: 100%;
   box-sizing: border-box;
 }
+
+/* ===== Icones SVG auto-hebergees (T-080..T-083) ===== */
+.icon { flex-shrink: 0; vertical-align: -0.2em; }
+.btn .icon, h2 .icon, h3 .icon, h4 .icon { margin-right: 0.4rem; }
+.btn .icon:last-child { margin-right: 0; margin-left: 0.4rem; }
+.brand-icon { display: inline-flex; align-items: center; color: var(--secondary-emerald, #10b981); }
+.toast-icon { display: inline-flex; align-items: center; }
+.toast-success .toast-icon { color: #10b981; }
+.toast-warning .toast-icon { color: #f59e0b; }
+.toast-error .toast-icon { color: #ef4444; }
+.toast-info .toast-icon { color: #38bdf8; }
+.flag { vertical-align: -0.2em; border-radius: 2px; box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.25); margin-right: 0.35rem; }
+.icon-dot { margin-right: 0.3rem; }
+#editorStatus::before { content: ""; display: inline-block; width: 0.55rem; height: 0.55rem; margin-right: 0.35rem; border-radius: 50%; background: currentColor; }
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; } }
+:focus-visible { outline: 3px solid #fbbf24; outline-offset: 2px; }

@@ -31,35 +31,53 @@ class GiteaClient:
         if self.token:
             self.headers["Authorization"] = f"token {self.token}"
 
-    def _get(self, endpoint: str, params: Optional[Dict] = None) -> Dict[str, Any]:
+    # PERF-061: circuit breaker - apres BREAKER_THRESHOLD echecs consecutifs, Gitea n'est plus
+    # sollicite pendant BREAKER_COOLDOWN secondes (les appelants utilisent leur repli).
+    BREAKER_THRESHOLD = 3
+    BREAKER_COOLDOWN = 30
+    CACHE_KEY_FAILURES = "gitea_breaker_failures"
+    CACHE_KEY_OPEN = "gitea_breaker_open"
+    REQUEST_TIMEOUT = 5
+
+    def _breaker_open(self) -> bool:
+        return bool(cache.get(self.CACHE_KEY_OPEN))
+
+    def _record_failure(self) -> None:
+        failures = (cache.get(self.CACHE_KEY_FAILURES) or 0) + 1
+        cache.set(self.CACHE_KEY_FAILURES, failures, self.BREAKER_COOLDOWN * 4)
+        if failures >= self.BREAKER_THRESHOLD:
+            cache.set(self.CACHE_KEY_OPEN, True, self.BREAKER_COOLDOWN)
+            cache.delete(self.CACHE_KEY_FAILURES)
+
+    def _record_success(self) -> None:
+        cache.delete(self.CACHE_KEY_FAILURES)
+
+    def _request(self, method: str, endpoint: str, ok_codes=(200,), **kwargs) -> Dict[str, Any]:
+        if self._breaker_open():
+            return {"success": False, "error": "Gitea indisponible (circuit ouvert)", "fallback": True}
         url = f"{self.api_url}/{endpoint.lstrip('/')}"
         try:
-            response = requests.get(url, headers=self.headers, params=params, timeout=5)
-            if response.status_code == 200:
-                return {"success": True, "data": response.json(), "status_code": 200}
-            return {"success": False, "error": response.text, "status_code": response.status_code}
-        except Exception as e:
-            return {"success": False, "error": str(e), "fallback": True}
+            # SEC-046: timeout systematique, pas de redirection suivie (anti-SSRF).
+            response = getattr(requests, method)(
+                url, headers=self.headers, timeout=self.REQUEST_TIMEOUT, allow_redirects=False, **kwargs
+            )
+        except Exception:
+            self._record_failure()
+            # Le detail de l'exception (URL interne, token...) n'est pas renvoye aux appelants.
+            return {"success": False, "error": "Gitea injoignable", "fallback": True}
+        self._record_success()
+        if response.status_code in ok_codes:
+            return {"success": True, "data": response.json(), "status_code": response.status_code}
+        return {"success": False, "error": response.text, "status_code": response.status_code}
+
+    def _get(self, endpoint: str, params: Optional[Dict] = None) -> Dict[str, Any]:
+        return self._request("get", endpoint, ok_codes=(200,), params=params)
 
     def _post(self, endpoint: str, json_data: Dict) -> Dict[str, Any]:
-        url = f"{self.api_url}/{endpoint.lstrip('/')}"
-        try:
-            response = requests.post(url, headers=self.headers, json=json_data, timeout=5)
-            if response.status_code in (200, 201):
-                return {"success": True, "data": response.json(), "status_code": response.status_code}
-            return {"success": False, "error": response.text, "status_code": response.status_code}
-        except Exception as e:
-            return {"success": False, "error": str(e), "fallback": True}
+        return self._request("post", endpoint, ok_codes=(200, 201), json=json_data)
 
     def _patch(self, endpoint: str, json_data: Dict) -> Dict[str, Any]:
-        url = f"{self.api_url}/{endpoint.lstrip('/')}"
-        try:
-            response = requests.patch(url, headers=self.headers, json=json_data, timeout=5)
-            if response.status_code in (200, 201):
-                return {"success": True, "data": response.json(), "status_code": response.status_code}
-            return {"success": False, "error": response.text, "status_code": response.status_code}
-        except Exception as e:
-            return {"success": False, "error": str(e), "fallback": True}
+        return self._request("patch", endpoint, ok_codes=(200, 201), json=json_data)
 
     def get_server_version(self) -> Dict[str, Any]:
         """Returns Gitea server version or sovereign simulated response."""

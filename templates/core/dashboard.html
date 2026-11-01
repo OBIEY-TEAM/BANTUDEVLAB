@@ -75,11 +75,11 @@
             <div class="editor-container">
                 <div class="editor-toolbar">
                     <div class="file-tag">
-                        <span>🐍</span>
+                        <span>{% icon "code" size=16 %}</span>
                         <span>workbench_security_audit.py</span>
                     </div>
                     <div style="display: flex; gap: 0.75rem; align-items: center;">
-                        <span id="editorStatus" style="font-size: 0.8rem; color: var(--secondary-emerald);">● Prêt</span>
+                        <span id="editorStatus" style="font-size: 0.8rem; color: var(--secondary-emerald);">{% icon "dot" size=10 %} Prêt</span>
                         <button class="btn btn-secondary" style="padding: 0.2rem 0.6rem; font-size: 0.75rem;" onclick="resetEditorSnippet()">Snippet Démo</button>
                     </div>
                 </div>
@@ -89,10 +89,10 @@
 
             <div style="margin-top: 1.25rem; display: flex; gap: 1rem; flex-wrap: wrap;">
                 <button class="btn btn-primary" onclick="runSecurityScan()">
-                    🛡️ Lancer l'Audit de Sécurité
+                    {% icon "shield" size=18 %} Lancer l'Audit de Sécurité
                 </button>
                 <button class="btn btn-secondary" onclick="runAiReview()">
-                    🧠 Demander l'Avis de Gemma 5B
+                    {% icon "bot" size=18 %} Demander l'Avis de Gemma 5B
                 </button>
             </div>
 
@@ -267,7 +267,7 @@ function renderVulnerabilityCards(issues) {
     if (!issues || issues.length === 0) {
         container.innerHTML = `
             <div style="padding: 1.5rem; text-align: center; background: rgba(16, 185, 129, 0.1); border: 1px solid var(--secondary-emerald); border-radius: 8px; color: #a7f3d0;">
-                <p style="font-weight: 600; margin: 0;">✨ Aucune vulnérabilité détectée !</p>
+                <p style="font-weight: 600; margin: 0;">{% icon "circle-check" size=20 %} Aucune vulnérabilité détectée !</p>
                 <p style="font-size: 0.85rem; margin: 0.3rem 0 0; opacity: 0.85;">Le code respecte strictement les critères de souveraineté panafricaine.</p>
             </div>
         `;
@@ -292,7 +292,7 @@ function renderVulnerabilityCards(issues) {
             ${issue.snippet ? `<div class="vuln-code-snippet">${escapeHtml(issue.snippet)}</div>` : ''}
             ${issue.recommendation ? `
                 <div class="vuln-recommendation">
-                    <span>💡</span>
+                    <span>{% icon "lightbulb" size=18 %}</span>
                     <span><strong>Recommandation Souveraine :</strong> ${escapeHtml(issue.recommendation)}</span>
                 </div>
             ` : ''}
@@ -321,7 +321,7 @@ async function runSecurityScan() {
         return;
     }
 
-    editorStatus.textContent = '● Scan en cours...';
+    editorStatus.textContent = 'Scan en cours...';
     editorStatus.style.color = 'var(--primary-african-gold)';
     if (window.showToast) window.showToast("Analyse par le moteur de sécurité souverain...", "info");
 
@@ -359,11 +359,11 @@ async function runSecurityScan() {
         // Render cards
         renderVulnerabilityCards(data.issues || []);
 
-        editorStatus.textContent = '● Terminé';
+        editorStatus.textContent = 'Terminé';
         editorStatus.style.color = 'var(--secondary-emerald)';
         if (window.showToast) window.showToast(`Scan terminé ! Score de souveraineté : ${data.sovereignty_score}%`, 'success');
     } catch(err) {
-        editorStatus.textContent = '● Erreur';
+        editorStatus.textContent = 'Erreur';
         editorStatus.style.color = 'var(--tertiary-terracotta)';
         if (window.showToast) window.showToast(`Erreur du scanner : ${err.message}`, 'error');
     }

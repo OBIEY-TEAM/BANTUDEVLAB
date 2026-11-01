@@ -88,7 +88,8 @@ class QACoverageExhaustiveTestCase(TestCase):
             )
             self.assertEqual(res_stream_err.status_code, 200)
             content = b"".join(res_stream_err.streaming_content).decode("utf-8")
-            self.assertIn("Streaming error", content)
+            self.assertNotIn("Streaming error", content)  # SEC-043: pas de fuite de detail interne
+            self.assertIn("Erreur interne", content)
 
         # GET method without code param
         res_get_err = self.client.get("/api/ai/review/")

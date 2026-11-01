@@ -8,7 +8,7 @@
             <p style="color: var(--text-muted); margin-top: 0.3rem;">Supervision en temps réel des nœuds certifiés et conformité UA 2020-2030.</p>
         </div>
         <button class="btn btn-secondary" onclick="simulatePingAllNodes()">
-            ⚡ Tester la Latence des Nœuds
+            {% icon "zap" size=18 %} Tester la Latence des Nœuds
         </button>
     </div>
 
@@ -75,47 +75,47 @@
         <div class="node-cards-grid">
             <div id="card-abidjan" class="node-card selected" onclick="selectNode('abidjan')">
                 <div class="node-card-header">
-                    <strong>🇨🇮 Abidjan</strong>
+                    <strong>{% flag "CIV" 22 %} Abidjan</strong>
                     <span id="latency-abidjan" class="latency-badge">12 ms</span>
                 </div>
                 <div style="font-size: 0.8rem; color: var(--text-muted);">Datacenter Systalink Tier-3</div>
-                <div style="font-size: 0.75rem; color: var(--secondary-emerald); margin-top: 0.4rem;">● Actif & Opérationnel</div>
+                <div style="font-size: 0.75rem; color: var(--secondary-emerald); margin-top: 0.4rem;">{% icon "dot" size=10 %} Actif & Opérationnel</div>
             </div>
 
             <div id="card-dakar" class="node-card" onclick="selectNode('dakar')">
                 <div class="node-card-header">
-                    <strong>🇸🇳 Dakar</strong>
+                    <strong>{% flag "SEN" 22 %} Dakar</strong>
                     <span id="latency-dakar" class="latency-badge">18 ms</span>
                 </div>
                 <div style="font-size: 0.8rem; color: var(--text-muted);">Sovereign IXP Hub Tier-3</div>
-                <div style="font-size: 0.75rem; color: var(--secondary-emerald); margin-top: 0.4rem;">● Actif & Opérationnel</div>
+                <div style="font-size: 0.75rem; color: var(--secondary-emerald); margin-top: 0.4rem;">{% icon "dot" size=10 %} Actif & Opérationnel</div>
             </div>
 
             <div id="card-lagos" class="node-card" onclick="selectNode('lagos')">
                 <div class="node-card-header">
-                    <strong>🇳🇬 Lagos</strong>
+                    <strong>{% flag "NGA" 22 %} Lagos</strong>
                     <span id="latency-lagos" class="latency-badge">24 ms</span>
                 </div>
                 <div style="font-size: 0.8rem; color: var(--text-muted);">West Africa Interconnect Tier-4</div>
-                <div style="font-size: 0.75rem; color: var(--secondary-emerald); margin-top: 0.4rem;">● Actif & Opérationnel</div>
+                <div style="font-size: 0.75rem; color: var(--secondary-emerald); margin-top: 0.4rem;">{% icon "dot" size=10 %} Actif & Opérationnel</div>
             </div>
 
             <div id="card-kigali" class="node-card" onclick="selectNode('kigali')">
                 <div class="node-card-header">
-                    <strong>🇷🇼 Kigali</strong>
+                    <strong>{% flag "RWA" 22 %} Kigali</strong>
                     <span id="latency-kigali" class="latency-badge">31 ms</span>
                 </div>
                 <div style="font-size: 0.8rem; color: var(--text-muted);">Innovation City DC Tier-3</div>
-                <div style="font-size: 0.75rem; color: var(--secondary-emerald); margin-top: 0.4rem;">● Actif & Opérationnel</div>
+                <div style="font-size: 0.75rem; color: var(--secondary-emerald); margin-top: 0.4rem;">{% icon "dot" size=10 %} Actif & Opérationnel</div>
             </div>
 
             <div id="card-nairobi" class="node-card" onclick="selectNode('nairobi')">
                 <div class="node-card-header">
-                    <strong>🇰🇪 Nairobi</strong>
+                    <strong>{% flag "KEN" 22 %} Nairobi</strong>
                     <span id="latency-nairobi" class="latency-badge">29 ms</span>
                 </div>
                 <div style="font-size: 0.8rem; color: var(--text-muted);">East Africa Gateway Tier-3</div>
-                <div style="font-size: 0.75rem; color: var(--secondary-emerald); margin-top: 0.4rem;">● Actif & Opérationnel</div>
+                <div style="font-size: 0.75rem; color: var(--secondary-emerald); margin-top: 0.4rem;">{% icon "dot" size=10 %} Actif & Opérationnel</div>
             </div>
         </div>
 
@@ -123,7 +123,7 @@
         <div id="nodeDetailsBanner" class="node-details-banner">
             <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 1rem;">
                 <div>
-                    <h4 id="detailNodeName" style="margin: 0; color: #fff; font-size: 1.1rem;">🇨🇮 Nœud Central Systalink Cloud - Abidjan</h4>
+                    <h4 id="detailNodeName" style="margin: 0; color: #fff; font-size: 1.1rem;">{% flag "CIV" 22 %} Nœud Central Systalink Cloud - Abidjan</h4>
                     <p id="detailNodeDesc" style="margin: 0.3rem 0 0; font-size: 0.85rem; color: var(--text-muted);">
                         Hôte principal du moteur Git souverain Gitea, cluster PostgreSQL répliqué et API BantuDevLab.
                     </p>
@@ -153,7 +153,7 @@
 
     <!-- Piliers Stratégiques -->
     <div class="card" style="margin-bottom: 1.5rem;">
-        <h3>📍 Localisation des Données & Hébergement</h3>
+        <h3>{% icon "map-pin" size=20 %} Localisation des Données & Hébergement</h3>
         <p>Les serveurs Git, bases de données relationnelles PostgreSQL et sauvegardes sont hébergés sur l'infrastructure Systalink Cloud en Côte d'Ivoire et au Sénégal.</p>
         <div style="background: rgba(16, 185, 129, 0.2); border-left: 4px solid var(--secondary-emerald); padding: 0.8rem; margin-top: 1rem; border-radius: 4px;">
             <strong>Statut : 100% Souverain</strong> — Immunité totale face au CLOUD Act et aux juridictions extraterritoriales.
@@ -161,7 +161,7 @@
     </div>
 
     <div class="card" style="margin-bottom: 1.5rem;">
-        <h3>🔒 Cryptographie Zero-Knowledge (ZKP)</h3>
+        <h3>{% icon "lock" size=20 %} Cryptographie Zero-Knowledge (ZKP)</h3>
         <p>Preuves de Schnorr non-interactives basées sur Fiat-Shamir garantissant une authentification à divulgation nulle de connaissance. Même en cas de compromission serveur, aucun mot de passe n'existe.</p>
         <div style="background: rgba(245, 158, 11, 0.2); border-left: 4px solid var(--primary-african-gold); padding: 0.8rem; margin-top: 1rem;">
             <strong>Statut : Cryptographiquement inviolable</strong> — Aucune empreinte secrète conservée.
@@ -169,7 +169,7 @@
     </div>
 
     <div class="card">
-        <h3>🧠 Intelligence Artificielle Locale (Gemma 5B)</h3>
+        <h3>{% icon "cpu" size=18 %} Intelligence Artificielle Locale (Gemma 5B)</h3>
         <p>Modèle de fondation Gemma 5B fine-tuné sur les dépôts de code et besoins d'infrastructures télécoms/fintech africaines. Exécution 100% On-Premise / Local.</p>
         <div style="background: rgba(16, 185, 129, 0.2); border-left: 4px solid var(--secondary-emerald); padding: 0.8rem; margin-top: 1rem;">
             <strong>Statut : Zéro fuite de télémétrie</strong> — Vos algorithmes critiques restent strictement confidentiels.
@@ -182,7 +182,7 @@
 <script>
 const NODES_DATA = {
     abidjan: {
-        flag: "🇨🇮",
+        flag: '{% flag "CIV" 22 %}',
         name: "Systalink Cloud Datacenter - Abidjan",
         country: "Côte d'Ivoire",
         desc: "Nœud central de la forge souveraine : héberge le moteur Gitea CE, les référentiels Git maîtres et le pipeline de fine-tuning Gemma 5B.",
@@ -193,7 +193,7 @@ const NODES_DATA = {
         uptime: "99.98%"
     },
     dakar: {
-        flag: "🇸🇳",
+        flag: '{% flag "SEN" 22 %}',
         name: "Sovereign IXP Datacenter - Dakar",
         country: "Sénégal",
         desc: "Centre d'interconnexion pour l'Afrique de l'Ouest francophone, nœud de réplication chiffrée ZKP et miroirs de sécurité.",
@@ -204,7 +204,7 @@ const NODES_DATA = {
         uptime: "99.95%"
     },
     lagos: {
-        flag: "🇳🇬",
+        flag: '{% flag "NGA" 22 %}',
         name: "MainOne Datacenter Gateway - Lagos",
         country: "Nigeria",
         desc: "Hub majeur de connectivité pour les fintechs et startups d'Afrique de l'Ouest, hébergeant des miroirs rapides de paquets.",
@@ -215,7 +215,7 @@ const NODES_DATA = {
         uptime: "99.99%"
     },
     kigali: {
-        flag: "🇷🇼",
+        flag: '{% flag "RWA" 22 %}',
         name: "Kigali Innovation City DC - Kigali",
         country: "Rwanda",
         desc: "Pôle d'innovation panafricain pour le calcul distribué, l'audit IA local et l'hébergement des architectures souveraines.",
@@ -226,7 +226,7 @@ const NODES_DATA = {
         uptime: "99.96%"
     },
     nairobi: {
-        flag: "🇰🇪",
+        flag: '{% flag "KEN" 22 %}',
         name: "East Africa Gateway - Nairobi",
         country: "Kenya",
         desc: "Passerelle souveraine d'Afrique de l'Est pour les services financiers mobiles, M-Pesa connectors et pipelines CI/CD.",
@@ -255,7 +255,7 @@ function selectNode(key) {
 
     // Update details banner
     const data = NODES_DATA[key];
-    document.getElementById('detailNodeName').textContent = `${data.flag} ${data.name}`;
+    document.getElementById('detailNodeName').innerHTML = `${data.flag} ${data.name}`;
     document.getElementById('detailNodeDesc').textContent = data.desc;
     document.getElementById('detailCertification').textContent = data.certification;
     document.getElementById('detailLatency').textContent = `${data.latency} ms`;
