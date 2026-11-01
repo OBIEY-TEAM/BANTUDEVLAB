@@ -13,7 +13,7 @@ from django.contrib.auth.models import User
 from django.utils import timezone
 
 from .crypto import ZKPCrypto
-from .models import GitAccessToken, SovereignIdentity
+from .models import GitAccessToken, SovereignIdentity, ZKPChallenge
 
 
 class GitTokenService:
@@ -52,6 +52,14 @@ class GitTokenService:
         except (User.DoesNotExist, SovereignIdentity.DoesNotExist):
             return {"success": False, "error": "Identité souveraine introuvable"}
 
+        # SEC-030: le defi doit exister, appartenir a l'utilisateur et etre valide (anti-rejeu).
+        try:
+            challenge = ZKPChallenge.objects.get(user=user, challenge_nonce=challenge_nonce)
+        except ZKPChallenge.DoesNotExist:
+            return {"success": False, "error": "Challenge introuvable. Génération de token refusée."}
+        if not challenge.is_valid():
+            return {"success": False, "error": "Challenge expiré ou déjà utilisé. Génération de token refusée."}
+
         # Verify ZKP proof
         y_int = int(identity.public_key_y, 16)
         proof = {
@@ -62,6 +70,10 @@ class GitTokenService:
 
         if not ZKPCrypto.verify_proof(public_y=y_int, proof=proof):
             return {"success": False, "error": "Preuve ZKP invalide. Génération de token refusée."}
+
+        # Consommation atomique du defi (une preuve valide = un seul token).
+        if not ZKPChallenge.objects.filter(pk=challenge.pk, is_used=False).update(is_used=True):
+            return {"success": False, "error": "Challenge déjà utilisé. Génération de token refusée."}
 
         raw_token = cls.generate_token_raw()
         token_hash = cls.hash_token(raw_token)

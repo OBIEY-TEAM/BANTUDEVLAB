@@ -1,4 +1,5 @@
 from rest_framework import status
+from rest_framework.permissions import AllowAny, IsAdminUser, IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.throttling import ScopedRateThrottle
 from rest_framework.views import APIView
@@ -13,6 +14,8 @@ class ScanCodeView(APIView):
     and digital sovereignty violations.
     Throttled to 10 req/min.
     """
+
+    permission_classes = [IsAuthenticated]
 
     throttle_classes = [ScopedRateThrottle]
     throttle_scope = "scanner"
@@ -82,6 +85,8 @@ class ScanCodeView(APIView):
 class SecurityAuditHistoryView(APIView):
     """Lists past security and sovereignty audit reports."""
 
+    permission_classes = [IsAuthenticated]
+
     def get(self, request):
         audits = SecurityAuditReport.objects.all().order_by("-scanned_at")[:20]
         data = [
@@ -106,6 +111,8 @@ class SecuritySarifExportView(APIView):
     Permet à Gitea et aux runners CI/CD de consommer les résultats d'audit
     et d'afficher les annotations directement dans les diffs de code.
     """
+
+    permission_classes = [IsAuthenticated]
 
     def get(self, request, report_id=None):
         from .serializers import SarifReportSerializer
