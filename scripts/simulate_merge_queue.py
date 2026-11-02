@@ -7,7 +7,6 @@ and cryptographic signatures before sequential automatic merge.
 
 import argparse
 import json
-import sys
 from typing import Any, Dict, List, Tuple
 
 
@@ -58,13 +57,15 @@ def simulate_merge_queue(
             status = "BLOCKED"
             blocked_count += 1
 
-        results.append({
-            "number": pr_id,
-            "title": pr.get("title", f"Pull Request #{pr_id}"),
-            "status": status,
-            "reason": reason,
-            "queue_position": idx + 1,
-        })
+        results.append(
+            {
+                "number": pr_id,
+                "title": pr.get("title", f"Pull Request #{pr_id}"),
+                "status": status,
+                "reason": reason,
+                "queue_position": idx + 1,
+            }
+        )
 
     return {
         "total_queued": len(queue_items),

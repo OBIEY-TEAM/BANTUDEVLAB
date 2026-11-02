@@ -213,4 +213,3 @@ class GemmaAssistantTestCase(TestCase):
             content_type="application/json",
         )
         self.assertEqual(res_err.status_code, 400)
-
