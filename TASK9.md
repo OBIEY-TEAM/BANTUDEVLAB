@@ -32,6 +32,6 @@
   - [x] Afficher la jauge de completion Primer (`.gh-task-progress-bar`) au-dessus du corps des tickets et des PRs.
   - [x] Synchroniser avec `gitea_home/custom/templates/custom/header.tmpl`.
 
-- [ ] **T-TSK-904 : Suite de Tests et Pipeline CI/CD d'Integrite des Releases**
-  - [ ] Ajouter les tests unitaires dans `tests/test_qa_coverage.py` et `tests/test_sec_axes.py`.
-  - [ ] Creer le workflow CI/CD `.github/workflows/provenance_integrity.yml` et `.gitea/workflows/provenance_integrity.yaml`.
+- [x] **T-TSK-904 : Suite de Tests et Pipeline CI/CD d'Integrite des Releases**
+  - [x] Ajouter les tests unitaires dans `tests/test_qa_coverage.py` et `tests/test_sec_axes.py`.
+  - [x] Creer le workflow CI/CD `.github/workflows/provenance_integrity.yml` et `.gitea/workflows/provenance_integrity.yaml`.

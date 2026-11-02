@@ -1,0 +1,37 @@
+name: Sovereign Release Provenance & Integrity CI
+
+on:
+  push:
+    branches: [ "main", "develop*", "feature/*" ]
+    paths:
+      - "scripts/generate_release_provenance.py"
+      - "docs/SOVEREIGN_RELEASE_INTEGRITY.md"
+  release:
+    types: [published]
+
+jobs:
+  provenance-verify:
+    name: Attestation and SHA256 Integrity Verification
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install django djangorestframework requests pytest pytest-django
+
+      - name: Verify Zero Emoji Policy
+        run: |
+          python scripts/check_no_emoji.py
+
+      - name: Test Release Provenance Generator
+        run: |
+          pytest tests/test_sec_axes.py -k "release_provenance" -v -o addopts=""
