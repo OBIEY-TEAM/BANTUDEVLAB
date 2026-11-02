@@ -127,3 +127,19 @@ class DesignAndNavigationTestCase(TestCase):
         self.assertIn('tabindex="0"', content)
         self.assertIn('role="button"', content)
         self.assertIn("onkeydown=", content)
+    def test_t_rea_1301_and_1302_reactions_and_shortcodes(self):
+        """T-REA-1301 & T-REA-1302 : Verification des reactions Primer et polyfill de shortcodes."""
+        from pathlib import Path
+
+        css_light = Path("custom/public/assets/css/theme-github.css").read_text(encoding="utf-8")
+        self.assertIn(".gh-reaction-btn", css_light)
+        self.assertIn(".gh-reaction-tag", css_light)
+
+        css_dark = Path("custom/public/assets/css/theme-github-dark.css").read_text(encoding="utf-8")
+        self.assertIn(".gh-reaction-btn", css_dark)
+
+        header_tmpl = Path("custom/templates/custom/header.tmpl").read_text(encoding="utf-8")
+        self.assertIn("T-REA-1302", header_tmpl)
+        self.assertIn("shortcodeMap", header_tmpl)
+        self.assertIn(":rocket:", header_tmpl)
+

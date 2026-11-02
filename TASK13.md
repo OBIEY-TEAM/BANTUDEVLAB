@@ -25,6 +25,6 @@
   - [x] Ajouter le filtre JavaScript de conversion automatique des codes textuels GitHub vers des badges accessibles dans `custom/templates/custom/header.tmpl`.
   - [x] Synchroniser avec `gitea_home/custom/templates/custom/header.tmpl`.
 
-- [ ] **T-REA-1303 : Tests Unitaires et Pipeline CI/CD pour les Reactions**
-  - [ ] Rediger les tests unitaires dans `tests/test_design_and_ux.py`.
-  - [ ] Creer les workflows CI/CD `.github/workflows/reactions_polyfill.yml` et `.gitea/workflows/reactions_polyfill.yaml`.
+- [x] **T-REA-1303 : Tests Unitaires et Pipeline CI/CD pour les Reactions**
+  - [x] Rediger les tests unitaires dans `tests/test_design_and_ux.py`.
+  - [x] Creer les workflows CI/CD `.github/workflows/reactions_polyfill.yml` et `.gitea/workflows/reactions_polyfill.yaml`.
