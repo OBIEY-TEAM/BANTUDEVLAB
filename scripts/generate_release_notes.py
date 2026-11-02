@@ -12,9 +12,7 @@ Classifies merged pull requests and commits into semantic categories:
 import argparse
 import json
 import re
-import sys
 from typing import Any, Dict, List
-
 
 CATEGORIES = [
     {
@@ -69,11 +67,13 @@ def generate_release_notes(
         author = entry.get("author", "contributor").lstrip("@")
         pr_number = entry.get("number")
         cat_key = classify_entry(title)
-        classified[cat_key].append({
-            "title": title,
-            "author": author,
-            "number": pr_number,
-        })
+        classified[cat_key].append(
+            {
+                "title": title,
+                "author": author,
+                "number": pr_number,
+            }
+        )
         if author:
             contributors.add(author)
 
@@ -114,7 +114,9 @@ def main():
     parser.add_argument("--input", help="Path to JSON file containing PR or commit list", default=None)
     parser.add_argument("--prev", help="Previous tag", default="v1.0.0")
     parser.add_argument("--current", help="Current tag", default="v1.1.0")
-    parser.add_argument("--repo-url", help="Repository URL", default="https://forge.bantudevlab.local/bantudev/bantudevlab")
+    parser.add_argument(
+        "--repo-url", help="Repository URL", default="https://forge.bantudevlab.local/bantudev/bantudevlab"
+    )
     args = parser.parse_args()
 
     if args.input:

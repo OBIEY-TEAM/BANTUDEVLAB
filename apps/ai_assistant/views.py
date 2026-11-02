@@ -297,9 +297,11 @@ class CopilotExportView(APIView):
             lines.append("")
 
         markdown_doc = "\n".join(lines).strip()
-        return Response({
-            "format": "markdown",
-            "content": markdown_doc,
-            "total_messages": len(messages),
-        }, status=status.HTTP_200_OK)
-
+        return Response(
+            {
+                "format": "markdown",
+                "content": markdown_doc,
+                "total_messages": len(messages),
+            },
+            status=status.HTTP_200_OK,
+        )

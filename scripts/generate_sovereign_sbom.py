@@ -28,13 +28,15 @@ def parse_requirements_txt(req_path: Path) -> List[Dict[str, str]]:
         if match:
             name = match.group(1)
             version = match.group(2) or "latest"
-            components.append({
-                "type": "library",
-                "name": name,
-                "version": version,
-                "purl": f"pkg:pypi/{name.lower()}@{version}",
-                "bom-ref": f"pkg:pypi/{name.lower()}@{version}",
-            })
+            components.append(
+                {
+                    "type": "library",
+                    "name": name,
+                    "version": version,
+                    "purl": f"pkg:pypi/{name.lower()}@{version}",
+                    "bom-ref": f"pkg:pypi/{name.lower()}@{version}",
+                }
+            )
     return components
 
 
