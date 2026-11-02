@@ -155,8 +155,8 @@ Ce document définit l'ensemble des tâches, sous-tâches techniques et configur
   - [x] Déployer **Opengist** en conteneur Docker interconnecté avec le SSO Gitea.
   - [x] Fournir un lien direct dans la navigation principale vers le service de snippets.
 
-- [ ] **T-EXT-604 : Espace d'Échange Communautaire (Équivalent GitHub Discussions)**
-  - [ ] Utiliser des labels d'issues dédiés (`type/discussion`) couplés à des templates, ou intégrer une instance **Discourse** auto-hébergée avec authentification OAuth2 déléguée à Gitea.
+- [x] **T-EXT-604 : Espace d'Échange Communautaire (Équivalent GitHub Discussions)**
+  - [x] Utiliser des labels d'issues dédiés (`type/discussion`) couplés à des templates, ou intégrer une instance **Discourse** auto-hébergée avec authentification OAuth2 déléguée à Gitea.
 
 ---
 
