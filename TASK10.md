@@ -17,9 +17,9 @@
 
 ## Taches du Cycle TASK10
 
-- [ ] **T-TAB-1001 : Mise en Forme Primer des Tableaux Markdown**
-  - [ ] Styliser les tableaux Markdown (`table`, `th`, `td`) avec les bordures et espacements GitHub Primer dans `custom/public/assets/css/theme-github.css` et `theme-github-dark.css`.
-  - [ ] Synchroniser avec `gitea_home/custom/public/assets/css/`.
+- [x] **T-TAB-1001 : Mise en Forme Primer des Tableaux Markdown**
+  - [x] Styliser les tableaux Markdown (`table`, `th`, `td`) avec les bordures et espacements GitHub Primer dans `custom/public/assets/css/theme-github.css` et `theme-github-dark.css`.
+  - [x] Synchroniser avec `gitea_home/custom/public/assets/css/`.
 
 - [ ] **T-TAB-1002 : Tri Interactif et Filtrage Dynamique des Colonnes**
   - [ ] Implementer le tri ascendant/descendant au clic sur les en-tetes `th` dans `custom/templates/custom/header.tmpl`.

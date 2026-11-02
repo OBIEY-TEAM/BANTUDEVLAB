@@ -332,3 +332,32 @@ body {
   text-overflow: ellipsis;
   max-width: 320px;
 }
+
+/* GitHub Modern Markdown Tables (T-TAB-1001) */
+.markdown table, .markup table {
+  border-spacing: 0 !important;
+  border-collapse: collapse !important;
+  display: block !important;
+  width: max-content !important;
+  max-width: 100% !important;
+  overflow: auto !important;
+  margin-top: 0 !important;
+  margin-bottom: 16px !important;
+}
+
+.markdown table th, .markup table th {
+  font-weight: 600 !important;
+  padding: 6px 13px !important;
+  border: 1px solid var(--color-border-default, #d0d7de) !important;
+  background-color: var(--color-canvas-subtle, #f6f8fa) !important;
+  color: var(--color-text, #1f2328) !important;
+}
+
+.markdown table td, .markup table td {
+  padding: 6px 13px !important;
+  border: 1px solid var(--color-border-default, #d0d7de) !important;
+}
+
+.markdown table tr:nth-child(2n), .markup table tr:nth-child(2n) {
+  background-color: var(--color-canvas-subtle, #f6f8fa) !important;
+}
