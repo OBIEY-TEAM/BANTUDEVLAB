@@ -317,5 +317,58 @@ document.addEventListener('DOMContentLoaded', function() {
       }
     });
   });
+
+  // GitHub Style Markdown Task List Progress Bar (T-TSK-903)
+  function updateTaskListProgress() {
+    const taskLists = document.querySelectorAll('.comment-body ul:has(input[type="checkbox"]), .issue-content ul:has(input[type="checkbox"])');
+    if (!taskLists.length) return;
+
+    let total = 0;
+    let completed = 0;
+    taskLists.forEach(ul => {
+      const inputs = ul.querySelectorAll('input[type="checkbox"]');
+      total += inputs.length;
+      inputs.forEach(inp => {
+        if (inp.checked) completed++;
+        inp.removeEventListener('change', updateTaskListProgress);
+        inp.addEventListener('change', updateTaskListProgress);
+      });
+    });
+
+    if (total === 0) return;
+
+    let barContainer = document.getElementById('gh-tasklist-progress-wrap');
+    if (!barContainer) {
+      const headerTarget = document.querySelector('.issue-title, .comment-header, .timeline-item');
+      if (!headerTarget) return;
+      barContainer = document.createElement('div');
+      barContainer.id = 'gh-tasklist-progress-wrap';
+      barContainer.style.margin = '10px 0 16px 0';
+      barContainer.style.padding = '8px 12px';
+      barContainer.style.background = 'var(--color-canvas-subtle, #f6f8fa)';
+      barContainer.style.border = '1px solid var(--color-border-default, #d0d7de)';
+      barContainer.style.borderRadius = '6px';
+      barContainer.innerHTML = `
+        <div style="display: flex; justify-content: space-between; font-size: 12px; font-weight: 500; margin-bottom: 6px; color: var(--color-text, #1f2328);">
+          <span id="gh-tasklist-progress-text"></span>
+          <span id="gh-tasklist-progress-pct"></span>
+        </div>
+        <div style="width: 100%; height: 6px; background-color: var(--color-border-muted, #d0d7de); border-radius: 3px; overflow: hidden;">
+          <div id="gh-tasklist-progress-fill" style="height: 100%; background-color: #1f883d; border-radius: 3px; transition: width 0.3s ease;"></div>
+        </div>
+      `;
+      headerTarget.insertAdjacentElement('afterend', barContainer);
+    }
+
+    const pct = Math.round((completed / total) * 100);
+    const textEl = document.getElementById('gh-tasklist-progress-text');
+    const pctEl = document.getElementById('gh-tasklist-progress-pct');
+    const fillEl = document.getElementById('gh-tasklist-progress-fill');
+    if (textEl) textEl.textContent = `${completed} of ${total} tasks completed`;
+    if (pctEl) pctEl.textContent = `${pct}%`;
+    if (fillEl) fillEl.style.width = `${pct}%`;
+  }
+
+  updateTaskListProgress();
 });
 </script>

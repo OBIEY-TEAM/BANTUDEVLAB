@@ -27,10 +27,10 @@
   - [x] Creer le script utilitaire `scripts/generate_release_provenance.py` calculant et attestant les sommes de controle SHA256 de chaque livrable de release.
   - [x] Exposer les informations d'integrite dans `docs/SOVEREIGN_RELEASE_INTEGRITY.md`.
 
-- [ ] **T-TSK-903 : Barres de Progression des Listes de Taches Markdown (Issue & PR Tasklists)**
-  - [ ] Ajouter le script client de calcul dynamique de progression (`x of y tasks`) dans `custom/templates/custom/header.tmpl`.
-  - [ ] Afficher la jauge de completion Primer (`.gh-task-progress-bar`) au-dessus du corps des tickets et des PRs.
-  - [ ] Synchroniser avec `gitea_home/custom/templates/custom/header.tmpl`.
+- [x] **T-TSK-903 : Barres de Progression des Listes de Taches Markdown (Issue & PR Tasklists)**
+  - [x] Ajouter le script client de calcul dynamique de progression (`x of y tasks`) dans `custom/templates/custom/header.tmpl`.
+  - [x] Afficher la jauge de completion Primer (`.gh-task-progress-bar`) au-dessus du corps des tickets et des PRs.
+  - [x] Synchroniser avec `gitea_home/custom/templates/custom/header.tmpl`.
 
 - [ ] **T-TSK-904 : Suite de Tests et Pipeline CI/CD d'Integrite des Releases**
   - [ ] Ajouter les tests unitaires dans `tests/test_qa_coverage.py` et `tests/test_sec_axes.py`.
