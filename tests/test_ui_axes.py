@@ -129,3 +129,18 @@ class Axe4UITestCase(TestCase):
         self.assertIn(".africa-map-wrapper", css_content)
         self.assertIn(".map-node-pulse", css_content)
         self.assertIn(".node-cards-grid", css_content)
+    def test_t_tab_1001_and_1002_markdown_table_primer_and_sorting(self):
+        """T-TAB-1001 & T-TAB-1002 : Verification des styles Primer de tableaux et tri dynamique."""
+        from pathlib import Path
+
+        css_light = Path("custom/public/assets/css/theme-github.css").read_text(encoding="utf-8")
+        self.assertIn(".markdown table", css_light)
+        self.assertIn("border-collapse: collapse", css_light)
+
+        css_dark = Path("custom/public/assets/css/theme-github-dark.css").read_text(encoding="utf-8")
+        self.assertIn(".markdown table", css_dark)
+
+        header_tmpl = Path("custom/templates/custom/header.tmpl").read_text(encoding="utf-8")
+        self.assertIn("T-TAB-1002", header_tmpl)
+        self.assertIn("data-sort", header_tmpl)
+
