@@ -98,9 +98,7 @@ class GitLabClientTestCase(TestCase):
         payload = {
             "project": {"name": "afri-fintech-gateway"},
             "user_username": "ibrahim_dev",
-            "commits": [
-                {"id": "sha123", "message": "feat: integration zkp et gitlab"}
-            ],
+            "commits": [{"id": "sha123", "message": "feat: integration zkp et gitlab"}],
         }
         response = self.client.post(
             "/api/gitlab/webhook/",
