@@ -9,6 +9,7 @@ from rest_framework.views import APIView
 
 from apps.ai_assistant.models import AIInteractionLog
 from apps.gitea_client.client import GiteaClient
+from apps.gitlab_client.client import GitLabClient
 from apps.security_scanner.models import SecurityAuditReport
 from apps.zkp_auth.models import SovereignIdentity
 
@@ -53,7 +54,7 @@ def readyz_view(request):
 
 def home_view(request):
     """Page d'accueil de la forge logicielle souveraine BANTUDEVLAB."""
-    repos = GiteaClient().list_repositories()[:3]
+    repos = (GitLabClient().list_repositories() or GiteaClient().list_repositories())[:3]
     recent_audits = SecurityAuditReport.objects.all().order_by("-scanned_at")[:3]
     context = {
         "total_repos": len(repos),
@@ -67,8 +68,7 @@ def home_view(request):
 
 def dashboard_view(request):
     """Tableau de bord unifié souverain."""
-    client = GiteaClient()
-    repos = client.list_repositories()
+    repos = GitLabClient().list_repositories() or GiteaClient().list_repositories()
     identities_count = SovereignIdentity.objects.count()
     audits = SecurityAuditReport.objects.all().order_by("-scanned_at")[:10]
     interactions_count = AIInteractionLog.objects.count()

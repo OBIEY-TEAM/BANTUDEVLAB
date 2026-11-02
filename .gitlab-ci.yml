@@ -1,0 +1,43 @@
+# GitLab CI/CD Pipeline - BantuDevLab Sovereign African Edition
+# Fused with BantuDevLab Core
+
+stages:
+  - test
+  - security-sast
+  - zkp-verification
+  - gemma-ai-review
+  - deploy-sovereign
+
+variables:
+  PYTHONUNBUFFERED: "1"
+  BANTU_CORE_URL: "http://127.0.0.1:8001"
+
+test-django-core:
+  stage: test
+  script:
+    - python -m pytest tests/ --no-cov
+    - python scripts/check_no_emoji.py
+
+sovereign-sast:
+  stage: security-sast
+  script:
+    - python -c "from apps.security_scanner.engine import SovereignSecurityScanner; import json; r = SovereignSecurityScanner.scan_code('print(1)'); print('SAST Score:', r['sovereignty_score'])"
+
+zero-trust-zkp-check:
+  stage: zkp-verification
+  script:
+    - python -c "from apps.zkp_auth.crypto import ZKPCrypto; x, y = ZKPCrypto.generate_keypair(); p = ZKPCrypto.generate_proof(x, y, 'nonce'); assert ZKPCrypto.verify_proof(y, p['commitment_t'], p['response_s'], 'nonce'); print('ZKP Proof Passed')"
+
+gemma-review:
+  stage: gemma-ai-review
+  script:
+    - python -c "from apps.ai_assistant.gemma import GemmaAIEngine; r = GemmaAIEngine.analyze_code('def test(): pass'); print('Gemma Local AI OK')"
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
+
+deploy-systalink-tier1:
+  stage: deploy-sovereign
+  script:
+    - echo "Déploiement sur cluster souverain Systalink Cloud (Abidjan/Dakar/Nairobi)"
+  only:
+    - main

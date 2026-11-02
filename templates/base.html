@@ -36,7 +36,7 @@
                 <a href="{% url 'zkp_auth:zkp_login_page' %}" class="{% if request.resolver_match.url_name == 'zkp_login_page' %}active{% endif %}" {% if request.resolver_match.url_name == 'zkp_login_page' %}aria-current="page"{% endif %}>{% trans "Connexion Zero-Trust" %}</a>
                 {% endif %}
                 <!-- Lien Externe Forge Git Sécurisé (NAV-05) -->
-                <a href="http://localhost:3000" target="_blank" rel="noopener noreferrer" class="btn btn-primary" title="{% trans 'Ouvre Gitea dans un nouvel onglet' %}">
+                <a href="{{ GITEA_EXTERNAL_URL|default:'http://localhost:3001' }}" target="_blank" rel="noopener noreferrer" class="btn btn-primary" title="{% trans 'Ouvre Gitea dans un nouvel onglet' %}">
                     {% trans "Accès Forge Git" %} {% icon "external-link" size=14 %}
                 </a>
             </div>
@@ -113,7 +113,7 @@
             {% if not request.user.is_authenticated %}
             <a href="{% url 'zkp_auth:zkp_login_page' %}">{% icon "key" size=18 %} {% trans "Connexion Zero-Trust" %}</a>
             {% endif %}
-            <a href="http://localhost:3000" target="_blank" rel="noopener noreferrer" class="btn btn-primary" style="margin-top: 1rem; text-align: center;">
+            <a href="{{ GITEA_EXTERNAL_URL|default:'http://localhost:3001' }}" target="_blank" rel="noopener noreferrer" class="btn btn-primary" style="margin-top: 1rem; text-align: center;">
                 {% trans "Accès Forge Git" %} {% icon "external-link" size=16 %}
             </a>
         </div>

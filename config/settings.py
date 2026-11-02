@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     "apps.core",
     "apps.zkp_auth",
     "apps.gitea_client",
+    "apps.gitlab_client",
     "apps.security_scanner",
     "apps.ai_assistant",
 ]
@@ -70,6 +71,7 @@ TEMPLATES = [
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
+                "apps.core.context_processors.forge_context",
             ],
         },
     },
@@ -184,10 +186,15 @@ DATA_UPLOAD_MAX_MEMORY_SIZE = 1024 * 1024  # SEC-043: corps de requete limite a 
 CSP_POLICY = "default-src 'self'; script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com; img-src 'self' data:; font-src 'self' https://cdnjs.cloudflare.com; frame-ancestors 'none';"
 
 # Gitea / Forge Sovereign Integration
-GITEA_API_URL = os.environ.get("GITEA_API_URL", "http://localhost:3000/api/v1")
+GITEA_API_URL = os.environ.get("GITEA_API_URL", "http://localhost:3001/api/v1")
 GITEA_ADMIN_TOKEN = os.environ.get("GITEA_ADMIN_TOKEN", "")
-GITEA_EXTERNAL_URL = os.environ.get("GITEA_EXTERNAL_URL", "http://localhost:3000")
+GITEA_EXTERNAL_URL = os.environ.get("GITEA_EXTERNAL_URL", "http://localhost:3001")
 GITEA_WEBHOOK_SECRET = os.environ.get("GITEA_WEBHOOK_SECRET", "dev-webhook-secret" if (DEBUG or TESTING) else "")
+
+# GitLab Sovereign Enterprise Integration
+GITLAB_URL = os.environ.get("GITLAB_URL", "http://localhost:3001")
+GITLAB_PRIVATE_TOKEN = os.environ.get("GITLAB_PRIVATE_TOKEN", "")
+GITLAB_WEBHOOK_SECRET = os.environ.get("GITLAB_WEBHOOK_SECRET", "bantu_gitlab_webhook_secret_2026")
 
 # Gemma 5B Sovereign Assistant Configuration
 GEMMA_API_URL = os.environ.get("GEMMA_API_URL", "http://localhost:11434/api/generate")

@@ -8,6 +8,7 @@ urlpatterns = [
     path("", include("apps.core.urls")),
     path("api/zkp/", include("apps.zkp_auth.urls")),
     path("api/forge/", include("apps.gitea_client.urls")),
+    path("api/gitlab/", include("apps.gitlab_client.urls")),
     path("api/security/", include("apps.security_scanner.urls")),
     path("api/ai/", include("apps.ai_assistant.urls")),
     # DEV-04: Documentation OpenAPI & Swagger UI
