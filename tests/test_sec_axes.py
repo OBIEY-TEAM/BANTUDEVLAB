@@ -261,3 +261,24 @@ class Axe1SecurityTestCase(TestCase):
         self.assertIn("* @kwame", notes)
         self.assertIn("**Full Changelog**: https://forge.bantudevlab.local/repo/compare/v1.0.0...v1.1.0", notes)
 
+    def test_t_org_2201_and_2202_organization_roles_matrix(self):
+        """T-ORG-2201 & T-ORG-2202 : Verification des styles et mapping de la matrice de roles organisationnels."""
+        from pathlib import Path
+
+        css_light = Path("custom/public/assets/css/theme-github.css").read_text(encoding="utf-8")
+        self.assertIn(".gh-team-card", css_light)
+        self.assertIn(".gh-role-badge", css_light)
+        self.assertIn(".gh-role-badge.triage", css_light)
+        self.assertIn(".gh-role-badge.maintain", css_light)
+        self.assertIn(".gh-role-badge.admin", css_light)
+
+        css_dark = Path("custom/public/assets/css/theme-github-dark.css").read_text(encoding="utf-8")
+        self.assertIn(".gh-team-card", css_dark)
+
+        doc_path = Path("docs/SOVEREIGN_ORG_ROLES.md")
+        self.assertTrue(doc_path.exists())
+        doc_content = doc_path.read_text(encoding="utf-8")
+        self.assertIn("Triage", doc_content)
+        self.assertIn("Maintain", doc_content)
+        self.assertIn("Admin", doc_content)
+

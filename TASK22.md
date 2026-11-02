@@ -26,6 +26,6 @@
   - [x] Documenter le mapping des unites de permissions Gitea vers les 5 roles GitHub dans `docs/SOVEREIGN_ORG_ROLES.md`.
   - [x] Fournir les exemples d'automatisation d'equipes via l'API REST.
 
-- [ ] **T-ORG-2203 : Tests Unitaires et Workflows CI/CD Organization Teams**
-  - [ ] Rediger les tests unitaires dans `tests/test_sec_axes.py`.
-  - [ ] Creer les workflows CI/CD `.github/workflows/org_teams.yml` et `.gitea/workflows/org_teams.yaml`.
+- [x] **T-ORG-2203 : Tests Unitaires et Workflows CI/CD Organization Teams**
+  - [x] Rediger les tests unitaires dans `tests/test_sec_axes.py`.
+  - [x] Creer les workflows CI/CD `.github/workflows/org_teams.yml` et `.gitea/workflows/org_teams.yaml`.
