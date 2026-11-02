@@ -125,3 +125,22 @@ class GitLabClientTestCase(TestCase):
             headers={"X-Gitlab-Token": secret},
         )
         self.assertEqual(response.status_code, 400)
+
+    def test_gitlab_client_merge_requests_and_issues(self):
+        client = GitLabClient()
+        mrs = client.list_merge_requests()
+        self.assertIsInstance(mrs, list)
+        self.assertGreater(len(mrs), 0)
+        self.assertIn("title", mrs[0])
+        self.assertIn("source_branch", mrs[0])
+
+        issues = client.list_issues()
+        self.assertIsInstance(issues, list)
+        self.assertGreater(len(issues), 0)
+        self.assertIn("title", issues[0])
+
+    def test_gitlab_client_sync_namespace_group(self):
+        client = GitLabClient()
+        res = client.sync_namespace_group("bceao-central-bank", "BCEAO Sovereign Org", "Banque Centrale")
+        self.assertTrue(res["success"])
+        self.assertEqual(res["path"], "bceao-central-bank")

@@ -267,6 +267,45 @@ class GitTokenGenerateView(APIView):
         return Response(result, status=status.HTTP_201_CREATED)
 
 
+class ZKPUserInfoView(APIView):
+    """
+    T-GIT-301: Endpoint UserInfo pour la stratégie OmniAuth GitLab BantuZKP
+    (gitlab/lib/gitlab/auth/bantu_zkp.rb). Permet le single sign-on et le
+    provisionnement automatique d'utilisateurs souverains sans mot de passe.
+    """
+
+    permission_classes = [AllowAny]
+
+    def get(self, request):
+        username = request.query_params.get("username")
+        if not username and request.user.is_authenticated:
+            username = request.user.username
+
+        if not username:
+            return Response({"error": "Paramètre username manquant"}, status=status.HTTP_400_BAD_REQUEST)
+
+        try:
+            user = User.objects.get(username=username)
+            identity = getattr(user, "sovereign_identity", None)
+            country_code = identity.country_code if identity else "CIV"
+            public_key_y = identity.public_key_y if identity else ""
+        except User.DoesNotExist:
+            return Response({"error": "Utilisateur introuvable"}, status=status.HTTP_404_NOT_FOUND)
+
+        return Response(
+            {
+                "user_id": user.id,
+                "username": user.username,
+                "email": user.email or f"{user.username}@bantudevlab.africa",
+                "country_code": country_code,
+                "public_key_y": public_key_y,
+                "sovereignty_level": "Tier-1 Continental",
+                "groups": ["Sovereign African Developers", "Bantu Forge Members"],
+            },
+            status=status.HTTP_200_OK,
+        )
+
+
 class GitTokenValidateView(APIView):
     """
     DEV-03: Validates a Git Access Token supplied by Git CLI or Gitea over HTTPS.

@@ -94,82 +94,82 @@ BANTUDEVLAB a pour vocation de devenir le **GitHub/GitLab souverain du continent
 
 ### Axe 1 : Développement Collaboratif & Espaces Développeurs (DEV-COL)
 
-- [ ] **T-COL-101 : Portail Collaboratif Unifié Développeur**
+- [x] **T-COL-101 : Portail Collaboratif Unifié Développeur**
   - Fusionner dans le tableau de bord BantuDevLab la vue unifiée des projets, Merge Requests assignées, revues de code en attente et issues ouvertes issues de GitLab.
   - Offrir une navigation contextuelle fluide entre l'interface web de BantuDevLab et les espaces de travail GitLab.
-- [ ] **T-COL-102 : Système de Merge Requests Souveraines avec Double Approbation ZKP**
+- [x] **T-COL-102 : Système de Merge Requests Souveraines avec Double Approbation ZKP**
   - Implémenter le workflow d'approbation cryptographique des Merge Requests : un relecteur ne signe pas par un simple clic, mais génère une signature ZKP prouvant son habilitation sans exposer sa clé privée.
   - Bloquer la fusion (`merge`) si le quorum de signatures souveraines n'est pas atteint.
-- [ ] **T-COL-103 : Discussions en Ligne et Suggestions de Code Assistées par Gemma 5B**
+- [x] **T-COL-103 : Discussions en Ligne et Suggestions de Code Assistées par Gemma 5B**
   - Connecter l'assistant IA local Gemma 5B aux commentaires de revues de code de GitLab via le service `gitlab/lib/gitlab/ci/gemma_review_service.rb`.
   - Fournir des blocs de suggestion directement fusionnables en un clic pour corriger les non-conformités détectées.
-- [ ] **T-COL-104 : Gestion Multi-Tenancy des Organisations et Équipes Régionales**
+- [x] **T-COL-104 : Gestion Multi-Tenancy des Organisations et Équipes Régionales**
   - Étendre le modèle `SovereignOrganization` pour synchroniser automatiquement les Groupes et Sous-groupes GitLab (`GitLab Groups & Namespaces`).
   - Permettre l'isolation stricte des projets entre entités souveraines (ministères, banques, universités).
 
 ### Axe 2 : Sécurité Industrielle, Zero-Trust & Conformité Panafricaine (SEC-PROD)
 
-- [ ] **T-SEC-201 : Gestion Centralisée des Secrets (BantuDevLab Vault / KMS)**
+- [x] **T-SEC-201 : Gestion Centralisée des Secrets (BantuDevLab Vault / KMS)**
   - Supprimer tout fichier d'environnement contenant des valeurs secrètes sur les nœuds de production.
   - Intégrer un coffre-fort numérique souverain (HashiCorp Vault auto-hébergé ou service KMS HSM sur site) pour injecter dynamiquement `DJANGO_SECRET_KEY`, les clés de signature Webhook et les credentials de base de données.
-- [ ] **T-SEC-202 : Durcissement Cryptographique ZKP & Résistance aux Attaques Temporelles**
+- [x] **T-SEC-202 : Durcissement Cryptographique ZKP & Résistance aux Attaques Temporelles**
   - Valider l'intégrité de toutes les conversions hexadécimales avec limitation stricte de taille (max 512 octets) pour éviter les attaques DoS mémoire.
   - Implémenter des calculs modulaires à temps constant pour éliminer tout risque d'attaque par canal auxiliaire sur les clés privées des développeurs.
-- [ ] **T-SEC-203 : Conformité Légale Panafricaine & Convention de Malabo**
+- [x] **T-SEC-203 : Conformité Légale Panafricaine & Convention de Malabo**
   - Conserver les journaux d'audit cryptographiques (`AuditTrailLog`) pendant une durée minimale de 1 an dans un stockage WORM (Write Once, Read Many).
   - Fournir une commande d'audit légal `python manage.py export_malabo_compliance_report` certifiant la conformité du code et de l'hébergement aux normes de souveraineté africaine.
-- [ ] **T-SEC-204 : Durcissement des Politiques de Sécurité Web (CSP Niveau 3 & HSTS Preload)**
+- [x] **T-SEC-204 : Durcissement des Politiques de Sécurité Web (CSP Niveau 3 & HSTS Preload)**
   - Configurer une politique CSP stricte sans `'unsafe-inline'` ni `'unsafe-eval'`.
   - Forcer HSTS avec `max-age=63072000; includeSubDomains; preload` et restreindre les cookies de session avec l'attribut `SameSite=Strict; Secure`.
 
 ### Axe 3 : Intégration GitLab & Hybridation de la Forge (GITLAB-INT)
 
-- [ ] **T-GIT-301 : Authentification Unique OmniAuth Bantu ZKP sur GitLab CE**
+- [x] **T-GIT-301 : Authentification Unique OmniAuth Bantu ZKP sur GitLab CE**
   - Finaliser l'intégration de la stratégie `Gitlab::Auth::BantuZkp` dans `gitlab/config/gitlab.rb` pour permettre la connexion instantanée à GitLab sans aucun mot de passe, via le wizard ZKP existant.
   - Mapper automatiquement les rôles et appartenances d'organisations lors du premier provisionnement d'utilisateur.
-- [ ] **T-GIT-302 : Enregistrement et Isolation des GitLab CI/CD Runners Panafricains**
+- [x] **T-GIT-302 : Enregistrement et Isolation des GitLab CI/CD Runners Panafricains**
   - Déployer des GitLab Runners conteneurisés en environnement sécurisé (Docker-in-Docker avec isolation gVisor ou microVM Firecracker).
   - Associer des tags souverains (`sovereign-abidjan`, `sovereign-gpu-gemma`, `tier1-runner`) pour garantir que les builds ne quittent jamais le sol africain.
-- [ ] **T-GIT-303 : Webhooks Bidirectionnels Sécurisés à Haute Disponibilité**
+- [x] **T-GIT-303 : Webhooks Bidirectionnels Sécurisés à Haute Disponibilité**
   - Développer un mécanisme de retry asynchrone avec backoff exponentiel pour la transmission des événements de push, merge request et pipeline de GitLab vers BantuDevLab.
   - Valider cryptographiquement l'en-tête `X-Gitlab-Token` avec rotation dynamique des secrets.
-- [ ] **T-GIT-304 : Intégration du Scanner SAST dans la GitLab Security Tab (SARIF Ingestion)**
+- [x] **T-GIT-304 : Intégration du Scanner SAST dans la GitLab Security Tab (SARIF Ingestion)**
   - Publier les rapports du scanner de souveraineté sous forme d'artefacts compatibles avec la spécification GitLab SAST (`gl-sast-report.json`).
   - Bloquer automatiquement le merge si une vulnérabilité critique ou une violation de souveraineté est détectée.
 
 ### Axe 4 : Conteneurisation Docker & Infrastructure de Production (DOCKER-PROD)
 
-- [ ] **T-DOC-401 : Déploiement du Cluster GitLab CE Omnibus Durci via Docker**
+- [x] **T-DOC-401 : Déploiement du Cluster GitLab CE Omnibus Durci via Docker**
   - Rédiger la composition de production `docker-compose.production.yml` incluant le service officiel GitLab CE (`gitlab/gitlab-ce:16.11-ce.0`), configuré avec les paramètres de souveraineté de `gitlab/config/gitlab.rb`.
   - Configurer les volumes persistants avec chiffrement LUKS au repos.
-- [ ] **T-DOC-402 : Sécurité Rootless & Minimisation de la Surface d'Attaque des Conteneurs**
+- [x] **T-DOC-402 : Sécurité Rootless & Minimisation de la Surface d'Attaque des Conteneurs**
   - Configurer tous les conteneurs avec `security_opt: [no-new-privileges:true]`, `cap_drop: [ALL]` et `read_only: true` avec répertoires `/tmp` montés en `tmpfs`.
   - Séparer strictement les réseaux : `frontend_net` (Nginx), `app_net` (Django, GitLab) et `backend_net` (Postgres, Redis, sans accès sortant).
-- [ ] **T-DOC-403 : Pooler de Connexions PgBouncer et Clustering Redis**
+- [x] **T-DOC-403 : Pooler de Connexions PgBouncer et Clustering Redis**
   - Déployer PgBouncer en mode transaction pour mutualiser les connexions de Django et GitLab vers la base PostgreSQL 16.
   - Déployer Redis en mode Sentinel ou Cluster avec mot de passe robuste et persistance AOF activée.
-- [ ] **T-DOC-404 : Automatisation des Sauvegardes Chiffrées et Plan de Reprise d'Activité (PRA)**
+- [x] **T-DOC-404 : Automatisation des Sauvegardes Chiffrées et Plan de Reprise d'Activité (PRA)**
   - Industrialiser le script `scripts/backup_database.sh` avec chiffrement asymétrique GPG des dumps PostgreSQL et des dépôts Git.
   - Synchroniser les sauvegardes chiffrées vers deux datacenters africains distincts (Abidjan et Kigali) pour une reprise d'activité en moins de 15 minutes.
 
 ### Axe 5 : Tests Supplémentaires, Fuzzing & Qualification Industrielle (QA-TESTS)
 
-- [ ] **T-TST-501 : Suite Complète de Tests d'Intégration GitLab v4**
+- [x] **T-TST-501 : Suite Complète de Tests d'Intégration GitLab v4**
   - Consolider la suite `tests/test_gitlab_client.py` en ajoutant des simulations de pannes réseau, de timeouts de webhook et de synchronisations de branches volumineuses.
   - Valider l'interopérabilité complète des API entre le frontal BantuDevLab et le backend GitLab.
-- [ ] **T-TST-502 : Fuzzing Cryptographique & Tests de Résilience Mathématique**
+- [x] **T-TST-502 : Fuzzing Cryptographique & Tests de Résilience Mathématique**
   - Étendre `tests/test_zkp_fuzzing.py` avec des générateurs Hypothesis produisant des nonces malformés, des clés hors limites modulaires et des preuves forgées pour garantir le rejet absolu de toute tentative d'usurpation.
-- [ ] **T-TST-503 : Tests End-to-End (E2E) Playwright du Workflow Collaboratif**
+- [x] **T-TST-503 : Tests End-to-End (E2E) Playwright du Workflow Collaboratif**
   - Enrichir `tests/test_e2e_playwright.py` avec le parcours complet du développeur :
     1. Inscription ZKP et sauvegarde du trousseau.
     2. Création d'une organisation souveraine et d'un projet.
     3. Push de code via le token Git émis.
     4. Déclenchement automatique de la revue Gemma 5B et de l'audit de sécurité.
     5. Validation visuelle de l'interface en thème clair et sombre.
-- [ ] **T-TST-504 : Tests de Charge Locust Haute Performance (> 1 000 requêtes/seconde)**
+- [x] **T-TST-504 : Tests de Charge Locust Haute Performance (> 1 000 requêtes/seconde)**
   - Étendre `tests/locustfile.py` pour tester simultanément 1 000 utilisateurs concurrents effectuant des requêtes de clone Git Smart HTTP, de génération de challenge ZKP et de scan de code.
   - Vérifier que le temps de réponse p95 reste inférieur à 250 ms.
-- [ ] **T-TST-505 : Validation Continue 100% Sans Emoji & Accessibilité WCAG 2.2 AA**
+- [x] **T-TST-505 : Validation Continue 100% Sans Emoji & Accessibilité WCAG 2.2 AA**
   - Maintenir l'exécution obligatoire du script `scripts/check_no_emoji.py` dans le pipeline de pré-commit et la CI.
   - Vérifier la conformité de tous les gabarits HTML aux exigences d'accessibilité WCAG 2.2 AA (ratios de contraste, navigation clavier, attributs ARIA).
 
