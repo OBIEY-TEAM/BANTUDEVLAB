@@ -503,5 +503,43 @@ document.addEventListener('DOMContentLoaded', function() {
       }
     });
   }
+
+  // GitHub Advanced Code Search Qualifiers Helper (T-SRC-1802)
+  const searchInput = document.querySelector('input[name="q"], .github-search-input');
+  if (searchInput && searchInput.parentElement) {
+    searchInput.parentElement.style.position = 'relative';
+    const popover = document.createElement('div');
+    popover.id = 'gh-search-qualifiers-popover';
+    popover.className = 'gh-search-qualifiers-popover';
+    popover.style.display = 'none';
+    popover.innerHTML = `
+      <div class="gh-qualifier-item" data-insert="path:"><span>Filtrer par chemin</span><span class="gh-qualifier-badge">path:</span></div>
+      <div class="gh-qualifier-item" data-insert="extension:"><span>Filtrer par extension</span><span class="gh-qualifier-badge">extension:</span></div>
+      <div class="gh-qualifier-item" data-insert="symbol:"><span>Recherche par symbole</span><span class="gh-qualifier-badge">symbol:</span></div>
+      <div class="gh-qualifier-item" data-insert="repo:"><span>Cibler un depot</span><span class="gh-qualifier-badge">repo:</span></div>
+      <div class="gh-qualifier-item" data-insert="lang:"><span>Langage</span><span class="gh-qualifier-badge">lang:</span></div>
+    `;
+    searchInput.parentElement.appendChild(popover);
+
+    searchInput.addEventListener('focus', () => {
+      popover.style.display = 'block';
+    });
+
+    popover.querySelectorAll('.gh-qualifier-item').forEach(item => {
+      item.addEventListener('mousedown', (e) => {
+        e.preventDefault();
+        const prefix = item.dataset.insert;
+        searchInput.value = (searchInput.value.trim() + ' ' + prefix).trimStart();
+        searchInput.focus();
+        popover.style.display = 'none';
+      });
+    });
+
+    document.addEventListener('click', (e) => {
+      if (!searchInput.contains(e.target) && !popover.contains(e.target)) {
+        popover.style.display = 'none';
+      }
+    });
+  }
 });
 </script>
