@@ -18,9 +18,9 @@
 
 ## Taches du Cycle TASK23
 
-- [ ] **T-DRF-2301 : Styles Primer pour les Draft Pull Requests**
-  - [ ] Ajouter les styles `.gh-draft-badge`, `.gh-ready-for-review-btn`, `.gh-draft-banner` dans `theme-github.css` et `theme-github-dark.css`.
-  - [ ] Synchroniser avec `gitea_home/custom/public/assets/css/`.
+- [x] **T-DRF-2301 : Styles Primer pour les Draft Pull Requests**
+  - [x] Ajouter les styles `.gh-draft-badge`, `.gh-ready-for-review-btn`, `.gh-draft-banner` dans `theme-github.css` et `theme-github-dark.css`.
+  - [x] Synchroniser avec `gitea_home/custom/public/assets/css/`.
 
 - [ ] **T-DRF-2302 : Rendu Dynamique et Flux « Ready for Review »**
   - [ ] Ajouter la detection de PR brouillon et l'injection de la banniere « Ready for review » dans `custom/templates/custom/header.tmpl`.
