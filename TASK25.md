@@ -22,9 +22,9 @@
   - [x] Ajouter les classes `.gh-advisory-card`, `.gh-severity-badge`, `.gh-confidential-banner` dans `theme-github.css` et `theme-github-dark.css`.
   - [x] Synchroniser avec `gitea_home/custom/public/assets/css/`.
 
-- [ ] **T-SEC-2502 : Modele de Signalement Confidentiel et Specification des Advisories**
-  - [ ] Creer `.gitea/SECURITY_ADVISORY_TEMPLATE.md` et `.github/SECURITY_ADVISORY_TEMPLATE.md`.
-  - [ ] Documenter le processus de divulgation responsable dans `docs/SOVEREIGN_SECURITY_ADVISORIES.md`.
+- [x] **T-SEC-2502 : Modele de Signalement Confidentiel et Specification des Advisories**
+  - [x] Creer `.gitea/SECURITY_ADVISORY_TEMPLATE.md` et `.github/SECURITY_ADVISORY_TEMPLATE.md`.
+  - [x] Documenter le processus de divulgation responsable dans `docs/SOVEREIGN_SECURITY_ADVISORIES.md`.
 
 - [ ] **T-SEC-2503 : Tests Unitaires et Workflows CI/CD Security Advisories**
   - [ ] Rediger les tests unitaires dans `tests/test_sec_axes.py`.
