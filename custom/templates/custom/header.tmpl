@@ -370,5 +370,35 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 
   updateTaskListProgress();
+
+  // GitHub Modern Interactive Markdown Table Sorting (T-TAB-1002)
+  document.querySelectorAll('.markdown table, .markup table').forEach(table => {
+    const headers = table.querySelectorAll('th');
+    headers.forEach((th, colIdx) => {
+      th.style.cursor = 'pointer';
+      th.title = 'Cliquer pour trier cette colonne';
+      th.addEventListener('click', function() {
+        const tbody = table.querySelector('tbody') || table;
+        const rows = Array.from(tbody.querySelectorAll('tr')).filter(r => !r.querySelector('th'));
+        const isAsc = th.getAttribute('data-sort') !== 'asc';
+
+        headers.forEach(h => h.removeAttribute('data-sort'));
+        th.setAttribute('data-sort', isAsc ? 'asc' : 'desc');
+
+        rows.sort((a, b) => {
+          const valA = (a.children[colIdx]?.textContent || '').trim();
+          const valB = (b.children[colIdx]?.textContent || '').trim();
+          const numA = parseFloat(valA);
+          const numB = parseFloat(valB);
+          if (!isNaN(numA) && !isNaN(numB)) {
+            return isAsc ? numA - numB : numB - numA;
+          }
+          return isAsc ? valA.localeCompare(valB) : valB.localeCompare(valA);
+        });
+
+        rows.forEach(r => tbody.appendChild(r));
+      });
+    });
+  });
 });
 </script>

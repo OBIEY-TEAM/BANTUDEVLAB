@@ -21,10 +21,10 @@
   - [x] Styliser les tableaux Markdown (`table`, `th`, `td`) avec les bordures et espacements GitHub Primer dans `custom/public/assets/css/theme-github.css` et `theme-github-dark.css`.
   - [x] Synchroniser avec `gitea_home/custom/public/assets/css/`.
 
-- [ ] **T-TAB-1002 : Tri Interactif et Filtrage Dynamique des Colonnes**
-  - [ ] Implementer le tri ascendant/descendant au clic sur les en-tetes `th` dans `custom/templates/custom/header.tmpl`.
-  - [ ] Ajouter l'indicateur visuel de tri discret (fleche SVG).
-  - [ ] Synchroniser avec `gitea_home/custom/templates/custom/header.tmpl`.
+- [x] **T-TAB-1002 : Tri Interactif et Filtrage Dynamique des Colonnes**
+  - [x] Implementer le tri ascendant/descendant au clic sur les en-tetes `th` dans `custom/templates/custom/header.tmpl`.
+  - [x] Ajouter l'indicateur visuel de tri discret (fleche SVG).
+  - [x] Synchroniser avec `gitea_home/custom/templates/custom/header.tmpl`.
 
 - [ ] **T-TAB-1003 : Tests Unitaires et Pipeline CI/CD pour le Moteur de Rendu Markdown**
   - [ ] Ajouter les tests de conformite du rendu Markdown dans `tests/test_ui_axes.py`.
