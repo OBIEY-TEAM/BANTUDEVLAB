@@ -31,6 +31,6 @@
   - [x] Ajouter le panneau lateral pliable d'arborescence de fichiers dans `custom/templates/repo/view_file.tmpl` avec raccourci clavier `t` (Go to file).
   - [x] Synchroniser avec `gitea_home/custom/templates/repo/view_file.tmpl`.
 
-- [ ] **T-PR-804 : Suite de Tests et Pipeline CI/CD pour la Revue Automatique de PR**
-  - [ ] Ajouter les tests unitaires et de simulation de webhooks dans `tests/test_ai_assistant.py` et `tests/test_gitea_client.py`.
-  - [ ] Creer les workflows CI/CD `.github/workflows/pr_review_bot.yml` et `.gitea/workflows/pr_review_bot.yaml`.
+- [x] **T-PR-804 : Suite de Tests et Pipeline CI/CD pour la Revue Automatique de PR**
+  - [x] Ajouter les tests unitaires et de simulation de webhooks dans `tests/test_ai_assistant.py` et `tests/test_gitea_client.py`.
+  - [x] Creer les workflows CI/CD `.github/workflows/pr_review_bot.yml` et `.gitea/workflows/pr_review_bot.yaml`.

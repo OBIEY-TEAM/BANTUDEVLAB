@@ -129,3 +129,48 @@ class GemmaAssistantTestCase(TestCase):
         self.assertEqual(res2.status_code, 400)
         res3 = client.post("/api/ai/copilot/pr-summary/", data={}, content_type="application/json")
         self.assertEqual(res3.status_code, 400)
+
+    def test_copilot_pr_review_bot_direct(self):
+        """T-PR-801 : Test du bot de revue PR via appel direct."""
+        from django.test import Client
+
+        client = Client()
+        res = client.post(
+            "/api/ai/copilot/pr-review-bot/",
+            data={
+                "repo_name": "bantudevlab/forge",
+                "pr_index": 42,
+                "diff": "+ def test(): return True",
+                "title": "Clean PR",
+            },
+            content_type="application/json",
+        )
+        self.assertEqual(res.status_code, 200)
+        data = res.json()
+        self.assertTrue(data["success"])
+        self.assertEqual(data["verdict"], "APPROVED")
+        self.assertIn("review_comment", data)
+
+    def test_copilot_pr_review_bot_webhook(self):
+        """T-PR-801 : Test du bot de revue PR via charge webhook Gitea/GitHub."""
+        from django.test import Client
+
+        client = Client()
+        webhook_payload = {
+            "action": "opened",
+            "pull_request": {
+                "number": 7,
+                "title": "Danger eval feature",
+                "body": "+ eval(request.GET['cmd'])",
+            },
+            "repository": {"full_name": "bantudevlab/core"},
+        }
+        res = client.post(
+            "/api/ai/copilot/pr-review-bot/",
+            data=webhook_payload,
+            content_type="application/json",
+        )
+        self.assertEqual(res.status_code, 200)
+        data = res.json()
+        self.assertTrue(data["success"])
+        self.assertEqual(data["verdict"], "REQUEST_CHANGES")
