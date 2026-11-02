@@ -18,10 +18,10 @@
 
 ## Taches du Cycle TASK26
 
-- [ ] **T-FIN-2601 : Export de Session et Persistance du Copilote IA Souverain**
-  - [ ] Implementer l'endpoint `/api/ai/copilot/export/` pour telecharger ou persister l'historique de discussion du copilote au format Markdown / JSON.
-  - [ ] Integrer le declencheur dans `custom/templates/custom/footer.tmpl`.
-  - [ ] Synchroniser avec `gitea_home/custom/templates/custom/footer.tmpl`.
+- [x] **T-FIN-2601 : Export de Session et Persistance du Copilote IA Souverain**
+  - [x] Implementer l'endpoint `/api/ai/copilot/export/` pour telecharger ou persister l'historique de discussion du copilote au format Markdown / JSON.
+  - [x] Integrer le declencheur dans `custom/templates/custom/footer.tmpl`.
+  - [x] Synchroniser avec `gitea_home/custom/templates/custom/footer.tmpl`.
 
 - [ ] **T-FIN-2602 : Rapport d'Audit Exhaustif des 20 Cycles de Developpement**
   - [ ] Rediger la revue complete de parite GitHub / Gitea dans `docs/SOVEREIGN_GITHUB_FORGE_COMPLETE_REVIEW.md`.
