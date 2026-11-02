@@ -3,9 +3,13 @@ import sys
 from pathlib import Path
 
 from django.core.exceptions import ImproperlyConfigured
-from dotenv import load_dotenv
 
-load_dotenv()
+try:
+    from dotenv import load_dotenv
+
+    load_dotenv()
+except (ImportError, ModuleNotFoundError):
+    pass
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -17,7 +21,7 @@ TESTING = (
 DEBUG = os.environ.get("DEBUG", "False").lower() in ("true", "1", "yes")
 
 # SEC-010: aucun secret par defaut en production.
-SECRET_KEY = os.environ.get("DJANGO_SECRET_KEY", "")
+SECRET_KEY = os.environ.get("DJANGO_SECRET_KEY") or os.environ.get("SECRET_KEY", "")
 if not SECRET_KEY:
     if DEBUG or TESTING:
         SECRET_KEY = "insecure-dev-only-key-do-not-use-in-production"  # nosec B105
