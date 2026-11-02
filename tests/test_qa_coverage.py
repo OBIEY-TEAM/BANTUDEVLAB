@@ -88,7 +88,8 @@ class QACoverageExhaustiveTestCase(TestCase):
             )
             self.assertEqual(res_stream_err.status_code, 200)
             content = b"".join(res_stream_err.streaming_content).decode("utf-8")
-            self.assertIn("Streaming error", content)
+            self.assertNotIn("Streaming error", content)  # SEC-043: pas de fuite de detail interne
+            self.assertIn("Erreur interne", content)
 
         # GET method without code param
         res_get_err = self.client.get("/api/ai/review/")
@@ -129,13 +130,25 @@ class QACoverageExhaustiveTestCase(TestCase):
         self.assertEqual(res_sarif.status_code, 200)
         self.assertEqual(res_sarif.json()["version"], "2.1.0")
 
+        # GitLab SAST Export View (T-GIT-304)
+        res_gl_sast = self.client.get(f"/api/security/audits/{report.id}/gitlab-sast/")
+        self.assertEqual(res_gl_sast.status_code, 200)
+        self.assertEqual(res_gl_sast.json()["version"], "15.0.0")
+
+        res_gl_sast_latest = self.client.get("/api/security/gitlab-sast/")
+        self.assertEqual(res_gl_sast_latest.status_code, 200)
+
         res_sarif_404 = self.client.get("/api/security/audits/999999/sarif/")
         self.assertEqual(res_sarif_404.status_code, 404)
+        res_gl_sast_404 = self.client.get("/api/security/audits/999999/gitlab-sast/")
+        self.assertEqual(res_gl_sast_404.status_code, 404)
 
         # SARIF Export View when no reports exist
         SecurityAuditReport.objects.all().delete()
         res_sarif_empty = self.client.get("/api/security/sarif/")
         self.assertEqual(res_sarif_empty.status_code, 404)
+        res_gl_sast_empty = self.client.get("/api/security/gitlab-sast/")
+        self.assertEqual(res_gl_sast_empty.status_code, 404)
 
     # -------------------------------------------------------------
     # 3. apps/zkp_auth (crypto, models, tokens, views)
@@ -235,6 +248,21 @@ class QACoverageExhaustiveTestCase(TestCase):
         # GitTokenValidateView missing token
         res_val_view = self.client.post("/api/zkp/tokens/validate/", {}, content_type="application/json")
         self.assertEqual(res_val_view.status_code, 400)
+
+        # ZKP UserInfo View (T-GIT-301)
+        from rest_framework.test import APIClient
+
+        anon_client = APIClient()
+        res_userinfo_missing = anon_client.get("/api/zkp/userinfo/")
+        self.assertEqual(res_userinfo_missing.status_code, 400)
+
+        res_userinfo_notfound = anon_client.get("/api/zkp/userinfo/?username=non_existent_zkp_user")
+        self.assertEqual(res_userinfo_notfound.status_code, 404)
+
+        res_userinfo_ok = anon_client.get(f"/api/zkp/userinfo/?username={self.user.username}")
+        self.assertEqual(res_userinfo_ok.status_code, 200)
+        self.assertEqual(res_userinfo_ok.json()["username"], self.user.username)
+        self.assertEqual(res_userinfo_ok.json()["country_code"], "CIV")
 
     # -------------------------------------------------------------
     # 4. finetuning/export_gguf (SOUV-04)

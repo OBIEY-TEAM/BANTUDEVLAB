@@ -1,0 +1,19 @@
+[Unit]
+Description=BantuDevLab Celery Beat Periodic Scheduler
+After=network.target redis.service postgresql.service celery_worker.service
+
+[Service]
+Type=simple
+User=appuser
+Group=appgroup
+WorkingDirectory=/opt/bantudevlab
+EnvironmentFile=/opt/bantudevlab/.env
+ExecStart=/opt/bantudevlab/.venv/bin/celery -A config beat \
+    --pidfile=/var/run/celery/beat.pid \
+    --logfile=/var/log/celery/beat.log \
+    --loglevel=INFO
+Restart=always
+RestartSec=10
+
+[Install]
+WantedBy=multi-user.target

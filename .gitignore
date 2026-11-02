@@ -12,3 +12,8 @@ finetuning/lora_gemma_weights/
 .pytest_cache/
 .coverage
 htmlcov/
+
+# Binaires et donnees runtime locales Gitea / Forge
+bin/
+gitea_home/
+forge_data/

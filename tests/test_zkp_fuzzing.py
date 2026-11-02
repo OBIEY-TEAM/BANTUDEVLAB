@@ -245,6 +245,12 @@ class ZKPFuzzingResilienceTestCase(TestCase):
         )
         self.assertEqual(res3.status_code, 401)
 
+    def test_fuzz_oversized_hex_payload_dos_protection(self):
+        """T-SEC-202 & T-TST-502: Teste le rejet immédiat des hexadécimaux géants anti-DoS."""
+        oversized_hex = "a" * 2000
+        proof_dos = {"commitment_t": oversized_hex, "response_s": "0x123", "message": "dos_test"}
+        self.assertFalse(ZKPCrypto.verify_proof(self.public_y, proof_dos))
+
     def test_resilience_git_token_issuance_fuzzing(self):
         """Teste la résilience du service d'émission de token Git face à de faux paramètres."""
         challenge = ZKPChallenge.create_challenge(user=self.user)

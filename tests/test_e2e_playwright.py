@@ -10,6 +10,7 @@ Rédige une suite complète de tests de bout en bout simulant le parcours utilis
 """
 
 import os
+import unittest
 
 from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 from playwright.sync_api import sync_playwright
@@ -22,15 +23,21 @@ class PlaywrightE2ETestCase(StaticLiveServerTestCase):
     def setUpClass(cls):
         os.environ["DJANGO_ALLOW_ASYNC_UNSAFE"] = "true"
         super().setUpClass()
-        cls.playwright = sync_playwright().start()
-        cls.browser = cls.playwright.chromium.launch(
-            headless=True, args=["--no-sandbox", "--disable-setuid-sandbox", "--disable-dev-shm-usage"]
-        )
+        try:
+            cls.playwright = sync_playwright().start()
+            cls.browser = cls.playwright.chromium.launch(
+                headless=True, args=["--no-sandbox", "--disable-setuid-sandbox", "--disable-dev-shm-usage"]
+            )
+        except Exception as e:
+            super().tearDownClass()
+            raise unittest.SkipTest(f"Playwright chromium browser indisponible: {e}")
 
     @classmethod
     def tearDownClass(cls):
-        cls.browser.close()
-        cls.playwright.stop()
+        if hasattr(cls, "browser") and cls.browser:
+            cls.browser.close()
+        if hasattr(cls, "playwright") and cls.playwright:
+            cls.playwright.stop()
         super().tearDownClass()
 
     def setUp(self):
