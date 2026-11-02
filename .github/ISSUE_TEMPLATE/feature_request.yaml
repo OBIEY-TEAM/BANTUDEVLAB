@@ -1,0 +1,30 @@
+name: "Proposition d'Evolution (Feature Request)"
+description: "Proposez une nouvelle fonctionnalite ou une amelioration architecturale pour BantuDevLab."
+title: "[FEAT]: "
+labels: ["kind/enhancement", "status/proposal"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Partagez vos idees pour renforcer la souverainete numerique et la forge collaborative.
+  - type: textarea
+    id: problem
+    attributes:
+      label: "Probleme ou besoin metier"
+      description: "Quel besoin ou manque cette fonctionnalite comble-t-elle ?"
+    validations:
+      required: true
+  - type: textarea
+    id: solution
+    attributes:
+      label: "Solution proposee"
+      description: "Decrivez en detail la fonctionnalite souhaitee."
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: "Alternatives envisagees"
+      description: "Avez-vous considere d'autres approches ?"
+    validations:
+      required: false

@@ -1,0 +1,54 @@
+name: "Rapport d'Anomalie (Bug Report)"
+description: "Signalez un dysfonctionnement technique ou une regression sur la plateforme souveraine."
+title: "[BUG]: "
+labels: ["kind/bug", "status/triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Merci de prendre le temps de signaler ce probleme.
+        Veuillez remplir les sections ci-dessous avec precision.
+  - type: input
+    id: component
+    attributes:
+      label: "Composant concerne"
+      description: "Ex: Authentification ZKP, Scanner SAST, Assistant IA, Client Gitea, etc."
+      placeholder: "apps/zkp_auth"
+    validations:
+      required: true
+  - type: textarea
+    id: current_behavior
+    attributes:
+      label: "Comportement observe"
+      description: "Description detaillee du probleme et comportement inattendu."
+      placeholder: "Lorsque je valide ma cle ZKP..."
+    validations:
+      required: true
+  - type: textarea
+    id: expected_behavior
+    attributes:
+      label: "Comportement attendu"
+      description: "Que devait-il se passer normalement ?"
+      placeholder: "La preuve de Schnorr doit etre acceptee et le jeton emis..."
+    validations:
+      required: true
+  - type: dropdown
+    id: severity
+    attributes:
+      label: "Niveau de severite"
+      options:
+        - "Critique (Bloquant production)"
+        - "Eleve (Dysfonctionnement majeur sans contournement)"
+        - "Moyen (Contournement possible)"
+        - "Faible (Amelioration mineure)"
+    validations:
+      required: true
+  - type: checkboxes
+    id: confirmations
+    attributes:
+      label: "Verifications preliminaires"
+      options:
+        - label: "J'ai verifie qu'aucun ticket identique n'existe deja."
+          required: true
+        - label: "Mon environnement local est a jour avec la branche principale."
+          required: true

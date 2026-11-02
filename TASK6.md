@@ -89,10 +89,10 @@ Ce document définit l'ensemble des tâches, sous-tâches techniques et configur
   - [x] Prendre en charge les formulaires de pull request via `.gitea/PULL_REQUEST_TEMPLATE.md` et `.gitea/PULL_REQUEST_TEMPLATE/`.
   - [x] Activer les différentes stratégies de fusion (Merge commit, Rebase, Squash, Rebase + fast-forward).
 
-- [ ] **T-COL-602 : Gestion Avancée des Issues et Formulaires Structurés (Issue Forms)**
-  - [ ] Déployer les templates de tickets basés sur des schémas YAML (`.gitea/ISSUE_TEMPLATE/*.yaml`) avec champs typés, listes déroulantes et cases à cocher.
-  - [ ] Organiser les jalons (Milestones), labels hiérarchisés et affectations multiples.
-  - [ ] Configurer le tableau de bord Kanban (Projets Gitea) pour émuler la vue Board de GitHub Projects.
+- [x] **T-COL-602 : Gestion Avancée des Issues et Formulaires Structurés (Issue Forms)**
+  - [x] Déployer les templates de tickets basés sur des schémas YAML (`.gitea/ISSUE_TEMPLATE/*.yaml`) avec champs typés, listes déroulantes et cases à cocher.
+  - [x] Organiser les jalons (Milestones), labels hiérarchisés et affectations multiples.
+  - [x] Configurer le tableau de bord Kanban (Projets Gitea) pour émuler la vue Board de GitHub Projects.
 
 - [ ] **T-COL-603 : Recherche Globale et Indexation de Code**
   - [ ] Configurer le moteur d'indexation de code interne (Bleve ou Elasticsearch/Meilisearch) dans `app.ini` :
