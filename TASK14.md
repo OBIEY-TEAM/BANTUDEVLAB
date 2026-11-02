@@ -25,6 +25,6 @@
   - [x] Integrer les classes `.gh-webhook-delivery-item`, `.gh-status-pill` dans `custom/public/assets/css/theme-github.css` et `theme-github-dark.css`.
   - [x] Synchroniser avec `gitea_home/custom/public/assets/css/`.
 
-- [ ] **T-WHK-1403 : Tests Unitaires et Pipeline CI/CD pour les Webhooks**
-  - [ ] Rediger les tests unitaires dans `tests/test_gitea_client.py`.
-  - [ ] Creer les workflows CI/CD `.github/workflows/webhook_deliveries.yml` et `.gitea/workflows/webhook_deliveries.yaml`.
+- [x] **T-WHK-1403 : Tests Unitaires et Pipeline CI/CD pour les Webhooks**
+  - [x] Rediger les tests unitaires dans `tests/test_gitea_client.py`.
+  - [x] Creer les workflows CI/CD `.github/workflows/webhook_deliveries.yml` et `.gitea/workflows/webhook_deliveries.yaml`.
