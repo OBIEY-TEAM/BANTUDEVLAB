@@ -19,15 +19,15 @@
 
     <!-- Wizard Step Navigation (UI-03) -->
     <div class="zkp-steps-nav">
-        <div class="zkp-step-indicator active" id="stepIndicator1" onclick="switchWizardStep(1)">
+        <div class="zkp-step-indicator active" id="stepIndicator1" tabindex="0" role="button" aria-label="Etape 1 : Identite" onclick="switchWizardStep(1)" onkeydown="if(event.key==='Enter'||event.key===' ') switchWizardStep(1)">
             <div class="zkp-step-circle">1</div>
             <span class="zkp-step-label">Identité</span>
         </div>
-        <div class="zkp-step-indicator" id="stepIndicator2" onclick="switchWizardStep(2)">
+        <div class="zkp-step-indicator" id="stepIndicator2" tabindex="0" role="button" aria-label="Etape 2 : Mnemonique" onclick="switchWizardStep(2)" onkeydown="if(event.key==='Enter'||event.key===' ') switchWizardStep(2)">
             <div class="zkp-step-circle">2</div>
             <span class="zkp-step-label">Mnémonique</span>
         </div>
-        <div class="zkp-step-indicator" id="stepIndicator3" onclick="switchWizardStep(3)">
+        <div class="zkp-step-indicator" id="stepIndicator3" tabindex="0" role="button" aria-label="Etape 3 : Zero-Trust Auth" onclick="switchWizardStep(3)" onkeydown="if(event.key==='Enter'||event.key===' ') switchWizardStep(3)">
             <div class="zkp-step-circle">3</div>
             <span class="zkp-step-label">Zero-Trust Auth</span>
         </div>
@@ -116,9 +116,15 @@
         </div>
 
         <div style="display: flex; gap: 1rem;">
-            <button class="btn btn-primary" style="flex: 1; padding: 0.85rem;" onclick="loginWithZkp()">
+            <button class="btn btn-primary" id="btnZkpLogin" style="flex: 1; padding: 0.85rem;" onclick="loginWithZkp()">
                 {% icon "log-in" size=18 %} Prouver mon Identité (Connexion Zero-Trust)
             </button>
+        </div>
+
+        <!-- Feedback d'Etat Interactif & SVG Spinner (T-UX-502) -->
+        <div id="zkpLoadingFeedback" style="display: none; align-items: center; justify-content: center; gap: 0.75rem; margin: 1rem 0; padding: 0.85rem; background: rgba(16, 185, 129, 0.1); border: 1px solid var(--accent-color, #10b981); border-radius: 8px; color: var(--text-primary, #fff);">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="animation: spin 1s linear infinite;"><path d="M21 12a9 9 0 1 1-6.219-8.56"></path></svg>
+            <span id="zkpLoadingText">Calcul de la preuve Fiat-Shamir et interrogation du serveur...</span>
         </div>
 
         <div style="margin-top: 2rem; display: flex; justify-content: flex-start;">
@@ -192,6 +198,14 @@ function generateNewMnemonic() {
         currentMnemonic.push(word);
 
         const chip = document.createElement('div');
+        chip.tabIndex = 0;
+        chip.setAttribute('role', 'listitem');
+        chip.setAttribute('aria-label', `Mot ${i + 1} : ${word}`);
+        chip.onkeydown = (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                if (window.showToast) window.showToast(`Mot ${i + 1} : ${word}`, 'info', 1500);
+            }
+        };
         chip.className = 'mnemonic-word-chip';
         chip.innerHTML = `<span class="mnemonic-num">${i + 1}.</span> <span>${word}</span>`;
         grid.appendChild(chip);
@@ -354,6 +368,12 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 async function loginWithZkp() {
+    const feedback = document.getElementById('zkpLoadingFeedback');
+    const loginBtn = document.getElementById('btnZkpLogin');
+    if (feedback) feedback.style.display = 'flex';
+    if (loginBtn) loginBtn.disabled = true;
+
+    try {
     const username = document.getElementById('zkpUsername').value;
     const secret = document.getElementById('zkpSecret').value;
     log(`Demande d'un défi (Challenge nonce) au serveur pour <b>${username}</b>...`);
@@ -402,6 +422,10 @@ async function loginWithZkp() {
     } else {
         log(`{% icon "circle-x" size=18 %} Échec de la vérification : ${verifyData.error}`);
         if (window.showToast) window.showToast(`Échec vérification ZKP : ${verifyData.error}`, 'error');
+    }
+    } finally {
+        if (feedback) feedback.style.display = 'none';
+        if (loginBtn) loginBtn.disabled = false;
     }
 }
 </script>

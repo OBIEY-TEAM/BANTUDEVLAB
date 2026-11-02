@@ -1,5 +1,5 @@
 """
-Dataset preparation pipeline for fine-tuning Gemma 5B on African Sovereign Software Engineering tasks.
+Dataset preparation pipeline for fine-tuning Gemma 2 2B on African Sovereign Software Engineering tasks.
 Generates instruction-tuning datasets covering:
 1. Zero-Knowledge Proof protocol implementations.
 2. Hardcoded secret remediation and secure coding for African FinTechs (USSD, Mobile Money, Interswitch).

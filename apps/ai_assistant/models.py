@@ -5,7 +5,7 @@ class AIInteractionLog(models.Model):
     query_context = models.CharField(max_length=100, default="code_review")
     prompt_snippet = models.TextField()
     ai_response = models.TextField()
-    model_used = models.CharField(max_length=100, default="gemma:5b")
+    model_used = models.CharField(max_length=100, default="gemma2:2b")
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):

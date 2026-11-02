@@ -4,11 +4,99 @@ Performs:
 1. Hardcoded Secret & Key Detection (AWS, GitHub tokens, Private keys, JWTs).
 2. Code Vulnerability Analysis (SQL Injection, Command Injection, Insecure Deserialization, eval/exec).
 3. Digital Sovereignty Compliance (Flags foreign data leakage, untrusted third-party telemetry, unencrypted cloud calls).
-4. Calculation of Continental Sovereignty Score (0 - 100).
+4. Shannon Entropy analysis for random / encrypted credentials (> 20 chars).
+5. Formal Python AST parsing to detect dangerous dynamic execution (eval, exec, os.system) even with aliasing.
+6. Calculation of Continental Sovereignty Score (0 - 100).
 """
 
+import ast
+import math
 import re
+from collections import Counter
 from typing import Any, Dict, List
+
+
+def calculate_shannon_entropy(data: str) -> float:
+    """
+    T-SEC-502 : Calcule l'entropie de Shannon en bits par caractère.
+    Une chaîne aléatoire ou chiffrée (token, secret, clé privée) présente une haute entropie (> 4.2).
+    """
+    if not data:
+        return 0.0
+    counts = Counter(data)
+    total = len(data)
+    return -sum((count / total) * math.log2(count / total) for count in counts.values())
+
+
+class PythonASTSecurityVisitor(ast.NodeVisitor):
+    """
+    T-SEC-502 : Analyseur syntaxique abstrait (AST) pour détecter les appels à eval(),
+    exec() et os.system() même en cas de renommage d'alias ou d'assignation indirecte.
+    """
+
+    def __init__(self, filename: str):
+        self.filename = filename
+        self.issues: List[Dict[str, Any]] = []
+        self.aliases: Dict[str, str] = {}
+
+    def visit_Import(self, node):
+        for alias in node.names:
+            if alias.name == "os" and alias.asname:
+                self.aliases[alias.asname] = "os"
+        self.generic_visit(node)
+
+    def visit_ImportFrom(self, node):
+        if node.module == "os":
+            for alias in node.names:
+                if alias.name == "system":
+                    target_name = alias.asname or alias.name
+                    self.aliases[target_name] = "os.system"
+        self.generic_visit(node)
+
+    def visit_Assign(self, node):
+        if isinstance(node.value, ast.Name):
+            source_id = node.value.id
+            resolved = self.aliases.get(source_id, source_id)
+            if resolved in ("eval", "exec", "os.system"):
+                for target in node.targets:
+                    if isinstance(target, ast.Name):
+                        self.aliases[target.id] = resolved
+        elif isinstance(node.value, ast.Attribute):
+            if isinstance(node.value.value, ast.Name):
+                base = node.value.value.id
+                resolved_base = self.aliases.get(base, base)
+                if resolved_base == "os" and node.value.attr == "system":
+                    for target in node.targets:
+                        if isinstance(target, ast.Name):
+                            self.aliases[target.id] = "os.system"
+        self.generic_visit(node)
+
+    def visit_Call(self, node):
+        func_name = None
+        if isinstance(node.func, ast.Name):
+            resolved = self.aliases.get(node.func.id, node.func.id)
+            if resolved in ("eval", "exec", "os.system"):
+                func_name = resolved
+        elif isinstance(node.func, ast.Attribute):
+            if isinstance(node.func.value, ast.Name):
+                base = self.aliases.get(node.func.value.id, node.func.value.id)
+                if base == "os" and node.func.attr == "system":
+                    func_name = "os.system"
+
+        if func_name:
+            desc = f"Appel dangereux à {func_name}() détecté via analyse syntaxique AST (T-SEC-502)"
+            self.issues.append(
+                {
+                    "file": self.filename,
+                    "line": getattr(node, "lineno", 1),
+                    "type": "VULNERABILITY",
+                    "severity": "HIGH",
+                    "description": desc,
+                    "snippet": f"Appel de fonction critique : {func_name}",
+                    "recommendation": "Remplacer par ast.literal_eval, une structure typée ou subprocess sans shell=True.",
+                }
+            )
+        self.generic_visit(node)
 
 
 class SecurityScannerEngine:
@@ -51,15 +139,19 @@ class SecurityScannerEngine:
         ),
     ]
 
+    QUOTED_TOKEN_RE = re.compile(r'["\']([A-Za-z0-9+/=_\-]{21,})["\']')
+
     @classmethod
     def scan_code(cls, filename: str, content: str) -> Dict[str, Any]:
         issues: List[Dict[str, Any]] = []
         lines = content.splitlines()
 
-        # 1. Detect hardcoded secrets
+        # 1. Detect hardcoded secrets via Regex
+        secret_lines = set()
         for line_no, line in enumerate(lines, start=1):
             for pattern, desc in cls.SECRET_PATTERNS:
                 if pattern.search(line):
+                    secret_lines.add(line_no)
                     issues.append(
                         {
                             "file": filename,
@@ -72,10 +164,37 @@ class SecurityScannerEngine:
                         }
                     )
 
-        # 2. Detect code vulnerabilities
+        # 2. T-SEC-502 : Shannon Entropy calculation on strings > 20 chars
+        for line_no, line in enumerate(lines, start=1):
+            if line_no in secret_lines:
+                continue
+            for match in cls.QUOTED_TOKEN_RE.finditer(line):
+                token = match.group(1)
+                # Ignore common long URLs or plain text words
+                if token.startswith("http://") or token.startswith("https://"):
+                    continue
+                entropy = calculate_shannon_entropy(token)
+                if entropy >= 4.3:
+                    secret_lines.add(line_no)
+                    issues.append(
+                        {
+                            "file": filename,
+                            "line": line_no,
+                            "type": "SECRET_LEAK",
+                            "severity": "CRITICAL",
+                            "description": f"Token à haute entropie détecté (entropie: {entropy:.2f} bits)",
+                            "snippet": line.strip()[:100],
+                            "recommendation": "Extraire le token chiffré/aléatoire dans les variables d'environnement.",
+                        }
+                    )
+                    break
+
+        # 3. Detect code vulnerabilities via Regex
+        vuln_lines = set()
         for line_no, line in enumerate(lines, start=1):
             for pattern, desc in cls.VULNERABILITY_PATTERNS:
                 if pattern.search(line):
+                    vuln_lines.add(line_no)
                     issues.append(
                         {
                             "file": filename,
@@ -88,7 +207,21 @@ class SecurityScannerEngine:
                         }
                     )
 
-        # 3. Detect sovereignty risks
+        # 4. T-SEC-502 : AST visitor for formal python parsing (aliases and calls)
+        try:
+            tree = ast.parse(content, filename=filename)
+            visitor = PythonASTSecurityVisitor(filename=filename)
+            visitor.visit(tree)
+            for ast_issue in visitor.issues:
+                # Add if not already reported by regex on the same line
+                if ast_issue["line"] not in vuln_lines:
+                    issues.append(ast_issue)
+                    vuln_lines.add(ast_issue["line"])
+        except Exception:
+            # Fallback silencieux si le fichier n'est pas du code Python valide
+            pass
+
+        # 5. Detect sovereignty risks
         for line_no, line in enumerate(lines, start=1):
             for pattern, desc in cls.SOVEREIGNTY_RISK_PATTERNS:
                 if pattern.search(line):

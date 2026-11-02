@@ -55,22 +55,22 @@ L'analyse du référentiel révèle une incohérence majeure de ciblage de modè
 
 ### Axe 1 : Développement Backend & Architecture Souveraine (DEV)
 
-- [ ] **T-DEV-501 : Bascule Complète du Socle IA vers le Modèle `gemma2:2b`**
+- [x] **T-DEV-501 : Bascule Complète du Socle IA vers le Modèle `gemma2:2b`**
   - Modifier `config/settings.py` : définir `GEMMA_MODEL_NAME = os.environ.get("GEMMA_MODEL_NAME", "gemma2:2b")`.
   - Mettre à jour `apps/ai_assistant/models.py` : définir la valeur par défaut du champ `model_used` sur `"gemma2:2b"`.
   - Mettre à jour `apps/ai_assistant/gemma.py` et les tâches Celery associées (`tasks.py`) pour exploiter l'identifiant `"gemma2:2b"`.
   - Adapter le prompt système pour respecter le format de prompt de Gemma 2 (`<start_of_turn>user\n...<end_of_turn>\n<start_of_turn>model\n`).
-- [ ] **T-DEV-502 : Découplage Asynchrone et Mise en Cache des Appels GitLab/Gitea**
+- [x] **T-DEV-502 : Découplage Asynchrone et Mise en Cache des Appels GitLab/Gitea**
   - Supprimer tout appel direct bloquant aux API GitLab/Gitea dans les vues HTML de `apps/core/views.py`.
   - Mettre en place une tâche Celery périodique (`sync_forge_repositories_cache`) rafraîchissant les dépôts dans Redis toutes les 30 secondes.
   - Servir les vues `home_view` et `dashboard_view` exclusivement via le cache Redis avec stratégie de repli instantané sans latence.
-- [ ] **T-DEV-503 : Curseur et Pagination par Lots pour la Vérification d'Audit Malabo**
+- [x] **T-DEV-503 : Curseur et Pagination par Lots pour la Vérification d'Audit Malabo**
   - Modifier `apps/core/audit.py` : refactoriser `verify_chain_integrity()` pour utiliser `.iterator(chunk_size=1000)`.
   - Créer une tâche Celery dédiée planifiée chaque nuit pour certifier la chaîne de hachage SHA-256 sans impacter la mémoire du serveur.
-- [ ] **T-DEV-504 : Purge Automatique Périodique des Challenges ZKP Expirés**
+- [x] **T-DEV-504 : Purge Automatique Périodique des Challenges ZKP Expirés**
   - Ajouter une méthode de classe `ZKPChallenge.purge_expired_challenges()` supprimant les nonces expirés depuis plus de 10 minutes.
   - Planifier l'exécution de la purge toutes les 15 minutes via Celery Beat.
-- [ ] **T-DEV-505 : Limitation Stricte du Payload et Anonymisation PII pour l'Assistant IA**
+- [x] **T-DEV-505 : Limitation Stricte du Payload et Anonymisation PII pour l'Assistant IA**
   - Dans `apps/ai_assistant/views.py`, ajouter une vérification de la taille du code soumis (limite maximale : 256 Ko ou 15 000 caractères).
   - Nettoyer les adresses IP, emails et clés API évidents du code avant soumission au modèle `gemma2:2b`.
 
@@ -78,17 +78,17 @@ L'analyse du référentiel révèle une incohérence majeure de ciblage de modè
 
 ### Axe 2 : Sécurité Industrielle, Cryptographie & Zero-Trust (SEC)
 
-- [ ] **T-SEC-501 : Éradication Totale des CDN Externes et CSP Stricte**
+- [x] **T-SEC-501 : Éradication Totale des CDN Externes et CSP Stricte**
   - Télécharger et auto-héberger les scripts et feuilles de style CodeMirror 5.65.16 dans le répertoire statique local `static/vendor/codemirror/`.
   - Mettre à jour `templates/core/dashboard.html` pour charger les assets via le tag Django `{% static 'vendor/codemirror/...' %}`.
   - Verrouiller la directive CSP dans `config/settings.py` : supprimer toute référence à `https://cdnjs.cloudflare.com`.
-- [ ] **T-SEC-502 : Durcissement du Scanner SAST avec Détection d'Entropie**
+- [x] **T-SEC-502 : Durcissement du Scanner SAST avec Détection d'Entropie**
   - Étendre `apps/security_scanner/engine.py` en ajoutant le calcul de l'entropie de Shannon sur les chaînes de plus de 20 caractères pour détecter les tokens chiffrés ou aléatoires.
   - Intégrer l'analyseur syntaxique standard Python `ast` pour repérer formellement les appels à `eval`, `exec` et `os.system` même en cas de renommage d'alias.
-- [ ] **T-SEC-503 : Journalisation Structurée des Exceptions GitLab/Gitea**
+- [x] **T-SEC-503 : Journalisation Structurée des Exceptions GitLab/Gitea**
   - Remplacer les clauses silencieuses `except Exception: pass` dans `apps/gitlab_client/client.py` et `apps/ai_assistant/gemma.py` par des logs structurés via `logging.getLogger("bantudevlab.security")`.
   - Enregistrer les tentatives d'accès échouées dans l'audit trail souverain.
-- [ ] **T-SEC-504 : Durcissement des Cookies de Session et Protection CSRF**
+- [x] **T-SEC-504 : Durcissement des Cookies de Session et Protection CSRF**
   - Définir `SESSION_COOKIE_SAMESITE = "Strict"` et `CSRF_COOKIE_SAMESITE = "Strict"` en production.
   - Garantir l'invalidation systématique de session lors du renouvellement des clés ZKP.
 
@@ -96,7 +96,7 @@ L'analyse du référentiel révèle une incohérence majeure de ciblage de modè
 
 ### Axe 3 : Modèle LLM, Inférence et Fine-Tuning `gemma2:2b` (AI/LLM)
 
-- [ ] **T-AI-501 : Standardisation du Format de Dialogue Instruct Gemma 2**
+- [x] **T-AI-501 : Standardisation du Format de Dialogue Instruct Gemma 2**
   - Adapter le constructeur de prompt dans `apps/ai_assistant/gemma.py` pour respecter la syntaxe officielle de Gemma 2 :
     ```text
     <start_of_turn>user
@@ -106,11 +106,11 @@ L'analyse du référentiel révèle une incohérence majeure de ciblage de modè
     <end_of_turn>
     <start_of_turn>model
     ```
-- [ ] **T-AI-502 : Alignement du Script de Fine-Tuning LoRA et Export GGUF**
+- [x] **T-AI-502 : Alignement du Script de Fine-Tuning LoRA et Export GGUF**
   - Vérifier que `finetuning/train_lora.py` utilise par défaut `--model_name google/gemma-2-2b-it`.
   - Mettre à jour `finetuning/export_gguf.py` pour générer un fichier nommé `gemma2-2b-sovereign-q4_k_m.gguf`.
   - Mettre à jour la documentation `finetuning/README.md` et les scripts d'importation Ollama (`Modelfile`) avec la mention de `gemma2:2b`.
-- [ ] **T-AI-503 : Optimisation du Streaming SSE pour Gemma 2 2B**
+- [x] **T-AI-503 : Optimisation du Streaming SSE pour Gemma 2 2B**
   - Ajuster les paramètres d'inférence pour `gemma2:2b` : `temperature: 0.15`, `top_p: 0.9`, `num_predict: 1024`.
   - Traiter les cas de déconnexion client SSE pendant la génération pour stopper prématurément la requête vers Ollama/vLLM.
 
@@ -118,16 +118,16 @@ L'analyse du référentiel révèle une incohérence majeure de ciblage de modè
 
 ### Axe 4 : Design UI/UX Panafricain & Front-End Souverain (UI/UX)
 
-- [ ] **T-UX-501 : Intégration Locale Complète de l'Éditeur CodeMirror**
+- [x] **T-UX-501 : Intégration Locale Complète de l'Éditeur CodeMirror**
   - Déployer les fichiers de CodeMirror en local : CSS du thème, JS principal, mode Python, addon de fermeture automatique de crochets.
   - S'assurer que le thème sombre/clair s'adapte automatiquement aux variables CSS existantes (`--bg-primary`, `--accent-color`).
-- [ ] **T-UX-502 : Feedback d'État Interactif pour le Wizard ZKP (BIP-39)**
+- [x] **T-UX-502 : Feedback d'État Interactif pour le Wizard ZKP (BIP-39)**
   - Ajouter un indicateur de chargement SVG natif (sans emoji) lors du calcul des preuves Fiat-Shamir et de l'interrogation du serveur.
   - Améliorer l'accessibilité au clavier (touches Tab, Entrée) du sélecteur de mots de la phrase mnémonique souveraine.
-- [ ] **T-UX-503 : Rafraîchissement Visuel des Métriques de Souveraineté**
+- [x] **T-UX-503 : Rafraîchissement Visuel des Métriques de Souveraineté**
   - Ajouter un bouton d'actualisation asynchrone (Fetch API) dans `templates/core/metrics.html` pour recharger les indicateurs de nœuds sans recharger la page complète.
   - Garantir le respect absolu des contrastes de couleur WCAG 2.2 AA sur l'ensemble des badges et graphiques SVG.
-- [ ] **T-UX-504 : Maintien Strict de la Politique Zéro-Emoji**
+- [x] **T-UX-504 : Maintien Strict de la Politique Zéro-Emoji**
   - Veiller à ce qu'aucun emoji Unicode ne soit introduit dans les gabarits, fichiers CSS/JS ou fichiers de documentation.
   - Utiliser exclusivement les balises `{% icon 'nom_icone' %}` et `{% flag 'code_pays' %}`.
 
@@ -135,31 +135,31 @@ L'analyse du référentiel révèle une incohérence majeure de ciblage de modè
 
 ### Axe 5 : Assurance Qualité, Tests & Fuzzing (QA/TEST)
 
-- [ ] **T-QA-501 : Tests Unitaires et d'Intégration du Moteur `gemma2:2b`**
+- [x] **T-QA-501 : Tests Unitaires et d'Intégration du Moteur `gemma2:2b`**
   - Mettre à jour `tests/test_ai_assistant.py` et `tests/test_qa_coverage.py` pour valider les réponses et fallbacks avec le modèle `gemma2:2b`.
   - Tester les formats de prompts spécifiques Gemma 2 et la gestion des flux SSE partiels.
-- [ ] **T-QA-502 : Extension des Tests de Fuzzing Cryptographique ZKP**
+- [x] **T-QA-502 : Extension des Tests de Fuzzing Cryptographique ZKP**
   - Dans `tests/test_zkp_fuzzing.py`, tester des nonces dépassant la taille de 512 octets et des clés publiques en dehors du groupe premier pour vérifier le rejet strict.
   - Valider l'idempotence et la résistance aux attaques par rejeu de challenge sous accès concurrent.
-- [ ] **T-QA-503 : Tests E2E Playwright de l'Expérience Hors-Ligne (Zero CDN)**
+- [x] **T-QA-503 : Tests E2E Playwright de l'Expérience Hors-Ligne (Zero CDN)**
   - Enrichir `tests/test_e2e_playwright.py` pour vérifier que le tableau de bord et l'éditeur CodeMirror se chargent parfaitement sans aucune requête réseau sortant vers l'extérieur du serveur local.
-- [ ] **T-QA-504 : Maintien d'une Couverture de Code Supérieure ou Égale à 95%**
+- [x] **T-QA-504 : Maintien d'une Couverture de Code Supérieure ou Égale à 95%**
   - S'assurer que `apps/zkp_auth`, `apps/security_scanner` et `apps/ai_assistant` conservent une couverture de test stricte `pytest --cov`.
 
 ---
 
 ### Axe 6 : Intégration Continue, Docker & Déploiement Industriel (OPS/CI)
 
-- [ ] **T-OPS-501 : Configuration du Service Inférence Ollama dans Docker Compose**
+- [x] **T-OPS-501 : Configuration du Service Inférence Ollama dans Docker Compose**
   - Ajouter un service `ollama` configuré avec le volume de stockage local des poids `gemma2:2b` dans `docker-compose.yml` et `docker-compose.production.yml`.
   - Configurer un script d'initialisation téléchargeant ou chargeant le modèle `gemma2:2b` au démarrage du conteneur.
-- [ ] **T-OPS-502 : Automatisation des Contrôles de Sécurité dans GitLab CI**
+- [x] **T-OPS-502 : Automatisation des Contrôles de Sécurité dans GitLab CI**
   - Compléter `.gitlab-ci.yml` avec l'exécution systématique de :
     - `ruff check .` et `ruff format --check .`
     - `bandit -r apps config -lll`
     - `python scripts/check_no_emoji.py`
     - `pytest --cov=apps/zkp_auth --cov=apps/security_scanner --cov=apps/ai_assistant --cov-fail-under=95`
-- [ ] **T-OPS-503 : Durcissement des Images Docker et Isolation Réseau**
+- [x] **T-OPS-503 : Durcissement des Images Docker et Isolation Réseau**
   - Valider l'exécution rootless de l'ensemble des conteneurs (`appuser:1000`).
   - Isoler le conteneur d'inférence LLM pour qu'il ne soit accessible que par le réseau privé interne `backend_net`.
 

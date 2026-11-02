@@ -1,5 +1,6 @@
 import json
 import logging
+import re
 
 from django.http import StreamingHttpResponse
 from rest_framework import status
@@ -11,13 +12,26 @@ from rest_framework.views import APIView
 from .gemma import GemmaAssistant
 from .models import AIInteractionLog
 
-MAX_CODE_LENGTH = 20000  # SEC-043: taille maximale du code soumis a l'IA
+# T-DEV-505: Limite stricte du payload (256 Ko ou 15 000 caracteres)
+MAX_CODE_CHARS = 15000
+MAX_CODE_BYTES = 256 * 1024
+
+IP_PATTERN = re.compile(r"\b(?:\d{1,3}\.){3}\d{1,3}\b")
+EMAIL_PATTERN = re.compile(r"\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}\b")
 
 
-def mask_secrets(text: str) -> str:
-    """SEC-051: masque les secrets detectes avant toute persistance en base."""
+def sanitize_pii_and_secrets(text: str) -> str:
+    """
+    T-DEV-505 & SEC-051: Nettoie les adresses IP, emails et cles d'API / secrets
+    du code avant injection dans le prompt de gemma2:2b et journalisation.
+    """
     from apps.security_scanner.engine import SecurityScannerEngine
 
+    # Anonymisation des adresses IP et adresses email
+    text = IP_PATTERN.sub("[IP_ANONYMISEE]", text)
+    text = EMAIL_PATTERN.sub("[EMAIL_ANONYMISE]", text)
+
+    # Masquage des cles d'API et secrets detectes par regex
     lines = []
     for line in text.splitlines():
         if any(pattern.search(line) for pattern, _ in SecurityScannerEngine.SECRET_PATTERNS):
@@ -26,12 +40,17 @@ def mask_secrets(text: str) -> str:
     return "\n".join(lines)
 
 
+def mask_secrets(text: str) -> str:
+    """Compatibilite avec les anciens appels."""
+    return sanitize_pii_and_secrets(text)
+
+
 def validate_input(code_snippet, context):
     """Retourne un message d'erreur ou None si l'entree est valide."""
     if not isinstance(code_snippet, str) or not code_snippet.strip():
         return "code snippet requis"
-    if len(code_snippet) > MAX_CODE_LENGTH:
-        return f"code trop volumineux ({MAX_CODE_LENGTH} caracteres maximum)"
+    if len(code_snippet) > MAX_CODE_CHARS or len(code_snippet.encode("utf-8")) > MAX_CODE_BYTES:
+        return f"code trop volumineux ({MAX_CODE_CHARS} caracteres ou 256 Ko maximum)"
     if not isinstance(context, str) or len(context) > 50:
         return "context invalide"
     return None
@@ -42,7 +61,7 @@ logger = logging.getLogger(__name__)
 
 class GemmaCodeReviewView(APIView):
     """
-    Submits code snippet to Gemma 5B for automated code review and security optimization.
+    Submits code snippet to Gemma 2 2B for automated code review and security optimization.
     Supports Server-Sent Events (SSE) streaming (PERF-02) or standard JSON response.
     """
 
@@ -57,7 +76,8 @@ class GemmaCodeReviewView(APIView):
         error = validate_input(code_snippet, context)
         if error:
             return Response({"error": error}, status=status.HTTP_400_BAD_REQUEST)
-        return self._stream_response(code_snippet, context)
+        sanitized_code = sanitize_pii_and_secrets(code_snippet)
+        return self._stream_response(sanitized_code, context)
 
     def post(self, request):
         code_snippet = request.data.get("code")
@@ -69,20 +89,22 @@ class GemmaCodeReviewView(APIView):
         if error:
             return Response({"error": error}, status=status.HTTP_400_BAD_REQUEST)
 
+        sanitized_code = sanitize_pii_and_secrets(code_snippet)
+
         # SSE Stream requested either via param stream=True or Accept: text/event-stream
         is_sse = stream is True or "text/event-stream" in accept_header
         if is_sse:
-            return self._stream_response(code_snippet, context)
+            return self._stream_response(sanitized_code, context)
 
         assistant = GemmaAssistant()
-        result = assistant.analyze_code(code_snippet=code_snippet, context=context)
+        result = assistant.analyze_code(code_snippet=sanitized_code, context=context)
 
         # Log AI interaction
         AIInteractionLog.objects.create(
             query_context=context,
-            prompt_snippet=mask_secrets(code_snippet)[:500],
+            prompt_snippet=sanitized_code[:500],
             ai_response=result.get("response", ""),
-            model_used=result.get("model", "gemma:5b"),
+            model_used=result.get("model", "gemma2:2b"),
         )
 
         return Response(result, status=status.HTTP_200_OK)
@@ -100,7 +122,7 @@ class GemmaCodeReviewView(APIView):
                 # Save log once streaming is done
                 AIInteractionLog.objects.create(
                     query_context=context,
-                    prompt_snippet=mask_secrets(code_snippet)[:500],
+                    prompt_snippet=code_snippet[:500],
                     ai_response=full_response,
                     model_used=assistant.model_name,
                 )
@@ -117,14 +139,14 @@ class GemmaCodeReviewView(APIView):
 
 
 class GemmaStatusView(APIView):
-    """Returns local Gemma 5B AI model state and sovereign configuration."""
+    """Returns local Gemma 2 2B AI model state and sovereign configuration."""
 
     permission_classes = [AllowAny]
 
     def get(self, request):
         return Response(
             {
-                "model": "Gemma 5B (African Sovereign Code Assistant)",
+                "model": "Gemma 2 2B (African Sovereign Code Assistant)",
                 "precision": "4-bit / 8-bit QLoRA Finetuned",
                 "host_environment": "Systalink Sovereign Cloud Cluster",
                 "offline_mode_capable": True,

@@ -1,5 +1,5 @@
 """
-Fine-Tuning Script for Gemma 5B using QLoRA (Quantized Low-Rank Adaptation).
+Fine-Tuning Script for Gemma 2 2B using QLoRA (Quantized Low-Rank Adaptation).
 Optimized for sovereign African cloud nodes with consumer or datacenter GPUs (16GB - 24GB VRAM).
 
 Key Techniques:
@@ -15,7 +15,7 @@ import sys
 
 
 def parse_args():
-    parser = argparse.ArgumentParser(description="Fine-tune Gemma 5B for BantuDevLab")
+    parser = argparse.ArgumentParser(description="Fine-tune Gemma 2 2B for BantuDevLab")
     parser.add_argument("--model_name", type=str, default="google/gemma-2-2b-it", help="Base model identifier or path")
     parser.add_argument("--dataset_path", type=str, default="finetuning/sovereign_instruct_dataset.jsonl")
     parser.add_argument("--output_dir", type=str, default="finetuning/lora_gemma_weights")
@@ -29,23 +29,23 @@ def parse_args():
 
 def train(args):
     print("=" * 60)
-    print("BANTUDEVLAB — Entraînement Souverain Gemma 5B (QLoRA)")
-    print(f"Modèle source        : {args.model_name}")
-    print(f"Fichier de données   : {args.dataset_path}")
+    print("BANTUDEVLAB -- Entrainement Souverain Gemma 2 2B (QLoRA)")
+    print(f"Modele source        : {args.model_name}")
+    print(f"Fichier de donnees   : {args.dataset_path}")
     print(f"Dossier de sortie    : {args.output_dir}")
-    print(f"Époques             : {args.num_train_epochs}")
+    print(f"Epoques             : {args.num_train_epochs}")
     print(f"Taux d'apprentissage : {args.learning_rate}")
     print("=" * 60)
 
     if not os.path.exists(args.dataset_path):
         from dataset_preparation import generate_training_data
 
-        print("Génération automatique du jeu de données...")
+        print("Generation automatique du jeu de donnees...")
         generate_training_data(args.dataset_path)
 
     if args.dry_run:
-        print("✅ Validation du pipeline de fine-tuning réussie (Dry-Run mode).")
-        print("Prêt pour l'exécution sur cluster GPU Systalink Cloud.")
+        print("[SUCCES] Validation du pipeline de fine-tuning reussie (Dry-Run mode).")
+        print("Pret pour l'execution sur cluster GPU Systalink Cloud.")
         return 0
 
     try:
@@ -55,8 +55,8 @@ def train(args):
         from transformers import AutoModelForCausalLM, AutoTokenizer, BitsAndBytesConfig, TrainingArguments
         from trl import SFTTrainer
     except ImportError as e:
-        print(f"ℹ️ Note: Les dépendances GPU/PyTorch lourdes ne sont pas installées: {e}")
-        print("Pour lancer l'entraînement complet : pip install -r finetuning/requirements.txt")
+        print(f"[NOTE] Les dependances GPU/PyTorch lourdes ne sont pas installees: {e}")
+        print("Pour lancer l'entrainement complet : pip install -r finetuning/requirements.txt")
         return 0
 
     print("Configuration de la quantification 4-bit NF4...")
@@ -70,7 +70,7 @@ def train(args):
     tokenizer = AutoTokenizer.from_pretrained(args.model_name)
     tokenizer.pad_token = tokenizer.eos_token
 
-    print("Chargement du modèle de base quantifié...")
+    print("Chargement du modele de base quantifie...")
     model = AutoModelForCausalLM.from_pretrained(args.model_name, quantization_config=bnb_config, device_map="auto")
     model = prepare_model_for_kbit_training(model)
 
@@ -84,7 +84,7 @@ def train(args):
     )
 
     model = get_peft_model(model, peft_config)
-    print("Paramètres entraînables LoRA calculés.")
+    print("Parametres entrainables LoRA calcules.")
 
     dataset = load_dataset("json", data_files=args.dataset_path)
 
@@ -110,10 +110,10 @@ def train(args):
         args=training_args,
     )
 
-    print("Démarrage de l'entraînement...")
+    print("Demarrage de l'entrainement...")
     trainer.train()
     trainer.model.save_pretrained(args.output_dir)
-    print(f"Modèle fine-tuné souverain sauvegardé avec succès dans : {args.output_dir}")
+    print(f"[SUCCES] Modele fine-tune souverain sauvegarde avec succes dans : {args.output_dir}")
     return 0
 
 

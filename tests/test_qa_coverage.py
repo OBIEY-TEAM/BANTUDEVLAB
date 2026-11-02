@@ -39,7 +39,7 @@ class QACoverageExhaustiveTestCase(TestCase):
             query_context="code_review",
             prompt_snippet="test prompt",
             ai_response="test response",
-            model_used="gemma:5b",
+            model_used="gemma2:2b",
         )
         self.assertIn("code_review", str(log_entry))
 
@@ -105,14 +105,25 @@ class QACoverageExhaustiveTestCase(TestCase):
     def test_security_scanner_models_and_views(self):
         report = SecurityAuditReport.objects.create(
             repository_name="cov-repo",
-            file_scanned="main.py",
-            total_issues=0,
-            critical_count=0,
-            high_count=0,
-            medium_count=0,
-            sovereignty_score=100,
-            status_rating="EXCELLENT",
-            raw_findings=[],
+            file_scanned="vuln.py",
+            sovereignty_score=35,
+            status_rating="CRITICAL_RISK",
+            raw_findings=[
+                {
+                    "type": "SECRET_LEAK",
+                    "description": "High entropy token",
+                    "severity": "CRITICAL",
+                    "file": "vuln.py",
+                    "line": 2,
+                },
+                {
+                    "type": "CODE_VULN",
+                    "description": "Command execution",
+                    "severity": "HIGH",
+                    "file": "vuln.py",
+                    "line": 5,
+                },
+            ],
         )
         self.assertIn("cov-repo", str(report))
 
@@ -264,6 +275,20 @@ class QACoverageExhaustiveTestCase(TestCase):
         self.assertEqual(res_userinfo_ok.json()["username"], self.user.username)
         self.assertEqual(res_userinfo_ok.json()["country_code"], "CIV")
 
+        # ZKP Rotate Key View (T-SEC-504)
+        auth_client = APIClient()
+        auth_client.force_authenticate(user=self.user)
+        res_rot_bad1 = auth_client.post("/api/zkp/rotate-key/", {}, format="json")
+        self.assertEqual(res_rot_bad1.status_code, 400)
+
+        res_rot_bad2 = auth_client.post("/api/zkp/rotate-key/", {"new_public_key_y": "invalid_hex"}, format="json")
+        self.assertEqual(res_rot_bad2.status_code, 400)
+
+        _, new_y = ZKPCrypto.generate_keypair()
+        res_rot_ok = auth_client.post("/api/zkp/rotate-key/", {"new_public_key_y": hex(new_y)}, format="json")
+        self.assertEqual(res_rot_ok.status_code, 200)
+        self.assertTrue(res_rot_ok.json()["success"])
+
     # -------------------------------------------------------------
     # 4. finetuning/export_gguf (SOUV-04)
     # -------------------------------------------------------------
@@ -296,3 +321,183 @@ class QACoverageExhaustiveTestCase(TestCase):
             with open(out_path, "rb") as f:
                 header = f.read(4)
                 self.assertEqual(header, b"GGUF")
+
+    def test_zkp_tasks_and_session_invalidation(self):
+        """Couverture pour apps/zkp_auth/tasks.py et invalidation de sessions."""
+        from django.contrib.sessions.backends.db import SessionStore
+
+        from apps.zkp_auth.tasks import purge_expired_zkp_challenges
+        from apps.zkp_auth.views import invalidate_user_sessions
+
+        # Create active session for user
+        s = SessionStore()
+        s["_auth_user_id"] = str(self.user.id)
+        s.save()
+
+        count = invalidate_user_sessions(self.user)
+        self.assertGreaterEqual(count, 1)
+
+        # Purge Celery task
+        res = purge_expired_zkp_challenges()
+        self.assertIsInstance(res, int)
+
+    def test_security_scanner_engine_and_ast_visitor_exhaustive(self):
+        """Couverture complète pour engine.py, AST visitor, Shannon entropy et SAST serializer."""
+        import ast
+
+        from apps.security_scanner.engine import (
+            PythonASTSecurityVisitor,
+            SecurityScannerEngine,
+            calculate_shannon_entropy,
+        )
+        from apps.security_scanner.models import SecurityAuditReport
+        from apps.security_scanner.serializers import SarifReportSerializer
+
+        # 1. Shannon entropy edge cases
+        self.assertEqual(calculate_shannon_entropy(""), 0.0)
+
+        # 2. AST Visitor aliases & calls
+        ast_code = """
+import os as my_os
+from os import system as sys_exec
+
+alias_eval = eval
+alias_sys = os.system
+
+my_os.system("ls")
+sys_exec("whoami")
+alias_eval("1 + 1")
+alias_sys("id")
+"""
+        tree = ast.parse(ast_code, filename="test_ast.py")
+        visitor = PythonASTSecurityVisitor(filename="test_ast.py")
+        visitor.visit(tree)
+        self.assertGreaterEqual(len(visitor.issues), 4)
+
+        # 3. High entropy secret detection & URL ignore
+        code_with_high_entropy = """
+secret_token = "aB3+kL9/xY2zmN8qpQ1swZ7pvR4wtE5uK"
+safe_url = "https://sovereign.bantudevlab.africa/api/v1/resource/endpoint"
+"""
+        scan_res = SecurityScannerEngine.scan_code("entropy.py", code_with_high_entropy)
+        self.assertEqual(scan_res["critical"], 1)
+
+        # 4. Invalid syntax fallback
+        invalid_code = "def invalid_syntax(: {{"
+        scan_invalid = SecurityScannerEngine.scan_code("syntax_err.py", invalid_code)
+        self.assertIsNotNone(scan_invalid)
+
+        # 5. Low score (score < 50 -> CRITICAL_RISK)
+        bad_code = """
+import os
+os.system("rm -rf /")
+eval("bad")
+exec("bad")
+password = "hardcoded_password_12345"
+aws_key = "AKIA1234567890ABCDEF"
+secret2 = "9a8b7c6d5e4f3a2b1c0d9e8f7a6b5c4d"
+"""
+        scan_bad = SecurityScannerEngine.scan_code("bad.py", bad_code)
+        self.assertEqual(scan_bad["status_rating"], "CRITICAL_RISK")
+
+        # 6. GitLab SAST serializer with raw findings
+        report = SecurityAuditReport.objects.create(
+            repository_name="test_repo",
+            file_scanned="vuln.py",
+            sovereignty_score=35,
+            status_rating="CRITICAL_RISK",
+            raw_findings=[
+                {
+                    "type": "SECRET_LEAK",
+                    "description": "High entropy token",
+                    "severity": "CRITICAL",
+                    "file": "vuln.py",
+                    "line": 2,
+                },
+                {
+                    "type": "CODE_VULN",
+                    "description": "Command execution",
+                    "severity": "HIGH",
+                    "file": "vuln.py",
+                    "line": 5,
+                },
+            ],
+        )
+        sast_artifact = SarifReportSerializer.serialize_gitlab_sast(report)
+        self.assertEqual(len(sast_artifact["vulnerabilities"]), 2)
+        self.assertEqual(sast_artifact["vulnerabilities"][0]["severity"], "Critical")
+
+    def test_coverage_gap_fillers(self):
+        """Comblement precis des branches pour atteindre > 97% sur zkp_auth, security_scanner et ai_assistant."""
+        from unittest.mock import patch
+
+        from apps.ai_assistant.views import mask_secrets, validate_input
+        from apps.security_scanner.tasks import async_scan_code
+        from apps.zkp_auth.models import ZKPChallenge
+        from apps.zkp_auth.tasks import purge_expired_zkp_challenges
+        from apps.zkp_auth.tokens import GitTokenService
+
+        # 1. ai_assistant gaps
+        self.assertEqual(mask_secrets("test"), "test")
+        self.assertEqual(validate_input("print(1)", "a" * 100), "context invalide")
+
+        # GET request with valid code
+        res_get_valid = self.client.get("/api/ai/review/?code=print(1)&context=review")
+        self.assertEqual(res_get_valid.status_code, 200)
+
+        # Successful streaming response
+        valid_code = "def valid_code():\n    return 42\n"
+        res_stream_ok = self.client.post(
+            "/api/ai/review/",
+            {"code": valid_code, "stream": True},
+            content_type="application/json",
+        )
+        self.assertEqual(res_stream_ok.status_code, 200)
+        chunks = list(res_stream_ok.streaming_content)
+        self.assertGreater(len(chunks), 0)
+
+        # 2. security_scanner tasks & async view
+        clean_content = "x = 1\ny = 2\n"
+        scan_task_res = async_scan_code(filename="clean.py", content=clean_content)
+        self.assertEqual(scan_task_res["total_issues"], 0)
+
+        res_async_view = self.client.post(
+            "/api/security/scan/",
+            {"filename": "app.py", "content": "x = 1", "async": True},
+            content_type="application/json",
+        )
+        self.assertEqual(res_async_view.status_code, 202)
+        self.assertEqual(res_async_view.json()["status"], "PENDING")
+
+        # 3. zkp_auth gaps (task exception, token validation, crypto validation)
+        with patch.object(ZKPChallenge, "purge_expired_challenges", side_effect=Exception("DB Error")):
+            self.assertEqual(purge_expired_zkp_challenges(), 0)
+
+        # Valid git token validation
+        from apps.zkp_auth.models import GitAccessToken
+
+        raw_tok = GitTokenService.generate_token_raw()
+        GitAccessToken.objects.create(
+            user=self.user,
+            name="gap_token",
+            token_prefix=raw_tok[:12],
+            token_hash=GitTokenService.hash_token(raw_tok),
+            permissions="write",
+            expires_at=timezone.now() + timezone.timedelta(days=1),
+            is_active=True,
+        )
+        val_res = self.client.post(
+            "/api/zkp/tokens/validate/",
+            {"token": raw_tok},
+            content_type="application/json",
+        )
+        self.assertEqual(val_res.status_code, 200)
+        self.assertTrue(val_res.json()["valid"])
+
+        # Crypto error paths
+        self.assertFalse(ZKPCrypto.validate_public_key("not_an_int"))
+        self.assertFalse(ZKPCrypto.verify_proof(self.y, {"commitment_t": "xyz"}))
+        self.assertFalse(ZKPCrypto.verify_proof(self.y, {"commitment_t": "0", "response_s": "1", "message": "msg"}))
+        self.assertFalse(
+            ZKPCrypto.verify_proof(self.y, {"commitment_t": "2", "response_s": hex(P + 10), "message": "msg"})
+        )

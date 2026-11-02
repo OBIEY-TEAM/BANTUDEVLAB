@@ -1,5 +1,5 @@
 """
-Evaluation and benchmark script for Fine-Tuned Gemma 5B.
+Evaluation and benchmark script for Fine-Tuned Gemma 2 2B.
 Measures performance on code generation, ZKP verification accuracy,
 and secret detection rate.
 """
@@ -20,7 +20,7 @@ TEST_CASES = [
 
 def evaluate_model(dry_run: bool = True):
     print("=" * 60)
-    print("BANTUDEVLAB — Évaluation des performances du modèle Gemma 5B")
+    print("BANTUDEVLAB — Évaluation des performances du modèle Gemma 2 2B")
     print("=" * 60)
 
     score = 0

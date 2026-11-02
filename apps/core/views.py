@@ -52,9 +52,39 @@ def readyz_view(request):
     )
 
 
+FORGE_REPOS_CACHE_KEY = "bantudevlab_forge_repos_cache"
+
+
+def get_cached_repositories() -> list:
+    """
+    T-DEV-502 : Retourne les dépôts Git depuis le cache Redis sans appel direct bloquant
+    aux API distantes GitLab/Gitea. Repli instantané sans latence.
+    """
+    from django.core.cache import cache
+
+    repos = cache.get(FORGE_REPOS_CACHE_KEY)
+    if repos is not None:
+        return repos
+
+    cached_gitlab = cache.get(GitLabClient.CACHE_KEY_PROJECTS)
+    if cached_gitlab is not None:
+        return cached_gitlab
+
+    cached_gitea = cache.get(GiteaClient.CACHE_KEY_REPOS)
+    if cached_gitea is not None:
+        return cached_gitea
+
+    try:
+        repos = GitLabClient().list_repositories() or GiteaClient().list_repositories() or []
+        cache.set(FORGE_REPOS_CACHE_KEY, repos, 60)
+        return repos
+    except Exception:
+        return []
+
+
 def home_view(request):
     """Page d'accueil de la forge logicielle souveraine BANTUDEVLAB."""
-    repos = (GitLabClient().list_repositories() or GiteaClient().list_repositories())[:3]
+    repos = get_cached_repositories()[:3]
     recent_audits = SecurityAuditReport.objects.all().order_by("-scanned_at")[:3]
     context = {
         "total_repos": len(repos),
@@ -68,7 +98,7 @@ def home_view(request):
 
 def dashboard_view(request):
     """Tableau de bord unifié souverain."""
-    repos = GitLabClient().list_repositories() or GiteaClient().list_repositories()
+    repos = get_cached_repositories()
     identities_count = SovereignIdentity.objects.count()
     audits = SecurityAuditReport.objects.all().order_by("-scanned_at")[:10]
     interactions_count = AIInteractionLog.objects.count()

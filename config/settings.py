@@ -151,7 +151,7 @@ REST_FRAMEWORK = {
 
 SPECTACULAR_SETTINGS = {
     "TITLE": "BantuDevLab Sovereign Forge API",
-    "DESCRIPTION": "Documentation interactive OpenAPI 3.0 des endpoints de la forge logicielle souveraine panafricaine (ZKP, Forge, Scanner de sécurité et Assistant IA Gemma 5B).",
+    "DESCRIPTION": "Documentation interactive OpenAPI 3.0 des endpoints de la forge logicielle souveraine panafricaine (ZKP, Forge, Scanner de securite et Assistant IA Gemma 2 2B).",
     "VERSION": "1.0.0",
     "SERVE_INCLUDE_SCHEMA": False,
     "COMPONENT_SPLIT_REQUEST": True,
@@ -164,9 +164,9 @@ X_FRAME_OPTIONS = "DENY"
 
 # Cookies Hardening
 SESSION_COOKIE_HTTPONLY = True
-SESSION_COOKIE_SAMESITE = "Lax"
+SESSION_COOKIE_SAMESITE = os.environ.get("SESSION_COOKIE_SAMESITE", "Lax" if (DEBUG or TESTING) else "Strict")
 CSRF_COOKIE_HTTPONLY = True
-CSRF_COOKIE_SAMESITE = "Lax"
+CSRF_COOKIE_SAMESITE = os.environ.get("CSRF_COOKIE_SAMESITE", "Lax" if (DEBUG or TESTING) else "Strict")
 
 # SEC-041: durcissement transport en production (HTTPS strict, HSTS, cookies Secure).
 if not (DEBUG or TESTING):
@@ -183,7 +183,7 @@ SECURE_CROSS_ORIGIN_OPENER_POLICY = "same-origin"
 DATA_UPLOAD_MAX_MEMORY_SIZE = 1024 * 1024  # SEC-043: corps de requete limite a 1 Mo
 
 # Content Security Policy (CSP)
-CSP_POLICY = "default-src 'self'; script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com; img-src 'self' data:; font-src 'self' https://cdnjs.cloudflare.com; frame-ancestors 'none';"
+CSP_POLICY = "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; frame-ancestors 'none';"
 
 # Gitea / Forge Sovereign Integration
 GITEA_API_URL = os.environ.get("GITEA_API_URL", "http://localhost:3002/api/v1")
@@ -199,9 +199,9 @@ GITLAB_URL = os.environ.get("GITLAB_URL", "http://localhost:3001")
 GITLAB_PRIVATE_TOKEN = os.environ.get("GITLAB_PRIVATE_TOKEN", "")
 GITLAB_WEBHOOK_SECRET = os.environ.get("GITLAB_WEBHOOK_SECRET", "bantu_gitlab_webhook_secret_2026")
 
-# Gemma 5B Sovereign Assistant Configuration
+# Gemma 2 2B Sovereign Assistant Configuration
 GEMMA_API_URL = os.environ.get("GEMMA_API_URL", "http://localhost:11434/api/generate")
-GEMMA_MODEL_NAME = os.environ.get("GEMMA_MODEL_NAME", "gemma:5b")
+GEMMA_MODEL_NAME = os.environ.get("GEMMA_MODEL_NAME", "gemma2:2b")
 GEMMA_EMBEDDINGS_URL = os.environ.get("GEMMA_EMBEDDINGS_URL", "http://localhost:11434/api/embeddings")
 
 # Celery / Redis Task Queue Configuration (PERF-01)
@@ -214,6 +214,22 @@ CELERY_RESULT_SERIALIZER = "json"
 CELERY_TIMEZONE = TIME_ZONE
 CELERY_TASK_TRACK_STARTED = True
 CELERY_TASK_TIME_LIMIT = 30 * 60
+
+# Celery Beat Periodic Tasks (T-DEV-502, T-DEV-503, T-DEV-504)
+CELERY_BEAT_SCHEDULE = {
+    "sync-forge-repositories-cache-every-30s": {
+        "task": "apps.core.tasks.sync_forge_repositories_cache",
+        "schedule": 30.0,
+    },
+    "verify-audit-chain-nightly": {
+        "task": "apps.core.tasks.verify_audit_chain_nightly",
+        "schedule": 86400.0,
+    },
+    "purge-expired-zkp-challenges-every-15m": {
+        "task": "apps.zkp_auth.tasks.purge_expired_zkp_challenges",
+        "schedule": 900.0,
+    },
+}
 
 
 # Distributed Caching Layer (PERF-04)
