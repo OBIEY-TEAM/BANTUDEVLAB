@@ -18,9 +18,9 @@
 
 ## Taches du Cycle TASK19
 
-- [ ] **T-SUG-1901 : Styles Primer pour les Blocs de Modification Suggeree**
-  - [ ] Ajouter les styles `.gh-suggestion-box`, `.gh-suggestion-header`, `.gh-suggestion-btn` dans `theme-github.css` et `theme-github-dark.css`.
-  - [ ] Synchroniser avec `gitea_home/custom/public/assets/css/`.
+- [x] **T-SUG-1901 : Styles Primer pour les Blocs de Modification Suggeree**
+  - [x] Ajouter les styles `.gh-suggestion-box`, `.gh-suggestion-header`, `.gh-suggestion-btn` dans `theme-github.css` et `theme-github-dark.css`.
+  - [x] Synchroniser avec `gitea_home/custom/public/assets/css/`.
 
 - [ ] **T-SUG-1902 : Moteur de Rendu Polyfill des Blocs ```suggestion**
   - [ ] Implementer le transformateur Markdown cote client dans `custom/templates/custom/header.tmpl`.

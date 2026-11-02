@@ -629,4 +629,58 @@ body {
   font-weight: 600 !important;
 }
 
+/* GitHub Pull Request Suggested Changes Widget (T-SUG-1901) */
+.gh-suggestion-box {
+  border: 1px solid var(--color-border-default, #d0d7de) !important;
+  border-radius: 6px !important;
+  overflow: hidden !important;
+  margin: 12px 0 !important;
+  background-color: var(--color-canvas-default, #ffffff) !important;
+}
+
+.gh-suggestion-header {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  padding: 8px 12px !important;
+  background-color: var(--color-canvas-subtle, #f6f8fa) !important;
+  border-bottom: 1px solid var(--color-border-default, #d0d7de) !important;
+  font-size: 12px !important;
+  font-weight: 600 !important;
+  color: var(--color-text-default, #1f2328) !important;
+}
+
+.gh-suggestion-body {
+  font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace !important;
+  font-size: 12px !important;
+  line-height: 1.5 !important;
+  background-color: rgba(46, 160, 67, 0.08) !important;
+  padding: 10px 12px !important;
+  color: #1a7f37 !important;
+  white-space: pre-wrap !important;
+  border-left: 3px solid #2da44e !important;
+}
+
+.gh-suggestion-btn {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 4px !important;
+  font-size: 12px !important;
+  font-weight: 500 !important;
+  padding: 3px 10px !important;
+  border-radius: 6px !important;
+  border: 1px solid var(--color-border-default, #d0d7de) !important;
+  background-color: var(--color-btn-bg, #f6f8fa) !important;
+  color: var(--color-text-default, #1f2328) !important;
+  cursor: pointer !important;
+  transition: background-color 0.1s ease !important;
+}
+
+.gh-suggestion-btn:hover {
+  background-color: rgba(46, 160, 67, 0.15) !important;
+  border-color: #2da44e !important;
+  color: #1a7f37 !important;
+}
+
+
 
