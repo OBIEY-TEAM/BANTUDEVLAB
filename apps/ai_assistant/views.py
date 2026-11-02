@@ -221,3 +221,40 @@ class CopilotPRSummaryView(APIView):
         assistant = GemmaAssistant()
         result = assistant.generate_pr_summary(diff_content=sanitized_diff, pr_title=title)
         return Response(result, status=status.HTTP_200_OK)
+
+
+class CopilotPRReviewBotView(APIView):
+    """
+    T-PR-801 : Declenchement de la revue automatique d'une Pull Request par le bot Copilot souverain.
+    """
+
+    permission_classes = [AllowAny]
+
+    def post(self, request):
+        from .tasks import async_pr_review_bot
+
+        repo_name = request.data.get("repo_name", "bantudevlab/forge")
+        pr_index = request.data.get("pr_index", 1)
+        diff_content = request.data.get("diff", "")
+        title = request.data.get("title", "")
+
+        # Support payload webhook GitHub / Gitea
+        if not diff_content and "pull_request" in request.data:
+            pr_data = request.data.get("pull_request", {})
+            title = pr_data.get("title", "")
+            diff_content = pr_data.get("body", "") or f"+ Pull Request #{pr_data.get('number', 1)}"
+            pr_index = pr_data.get("number", 1)
+            repo_data = request.data.get("repository", {})
+            repo_name = repo_data.get("full_name", repo_name)
+
+        if not diff_content:
+            return Response({"error": "Parametre 'diff' requis"}, status=status.HTTP_400_BAD_REQUEST)
+
+        sanitized_diff = sanitize_pii_and_secrets(diff_content)
+        result = async_pr_review_bot(
+            repo_name=repo_name,
+            pr_index=pr_index,
+            diff_content=sanitized_diff,
+            title=title,
+        )
+        return Response(result, status=status.HTTP_200_OK)

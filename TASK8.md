@@ -18,9 +18,9 @@
 
 ## Taches du Cycle TASK8
 
-- [ ] **T-PR-801 : Bot Autonome de Revue de Code sur Pull Requests (Local Gemma 2 2B)**
-  - [ ] Implementer le service `SovereignPRReviewBot` dans `apps/ai_assistant/tasks.py` et `apps/ai_assistant/views.py` analysant les diffs d'une PR et soumettant la revue via l'API Gitea.
-  - [ ] Exposer l'endpoint `/api/ai/copilot/pr-review-bot/` permettant de declencher la revue automatique lors d'un webhook `pull_request`.
+- [x] **T-PR-801 : Bot Autonome de Revue de Code sur Pull Requests (Local Gemma 2 2B)**
+  - [x] Implementer le service `SovereignPRReviewBot` dans `apps/ai_assistant/tasks.py` et `apps/ai_assistant/views.py` analysant les diffs d'une PR et soumettant la revue via l'API Gitea.
+  - [x] Exposer l'endpoint `/api/ai/copilot/pr-review-bot/` permettant de declencher la revue automatique lors d'un webhook `pull_request`.
 
 - [ ] **T-PR-802 : Boite de Fusion GitHub Moderne et Statuts CI/CD (Merge Box & Checks)**
   - [ ] Enrichir les styles Primer dans `custom/public/assets/css/theme-github.css` et `theme-github-dark.css` avec les classes de boite de fusion (`.gh-merge-box`, `.gh-status-check-item`).
