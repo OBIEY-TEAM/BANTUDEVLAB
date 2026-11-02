@@ -1,0 +1,278 @@
+import pathlib
+
+root = pathlib.Path(r"c:/Users/User/Desktop/AGENT/BANTUDEVLAB")
+base_path = root / "templates/base.html"
+
+base_content = """<!DOCTYPE html>
+{% load static i18n %}
+<html lang="{{ LANGUAGE_CODE|default:'fr' }}" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="{{ csrf_token }}">
+    <title>{% block title %}{% trans "BANTUDEVLAB - Forge Logicielle Souveraine Africaine" %}{% endblock %}</title>
+    <!-- Script Anti-FOUC pour Thème Clair / Sombre (DES-02) -->
+    <script>
+        (function() {
+            try {
+                const savedTheme = localStorage.getItem('bantu_theme') || (window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+                document.documentElement.setAttribute('data-theme', savedTheme);
+            } catch(e) {}
+        })();
+    </script>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    {% block extra_head %}{% endblock %}
+</head>
+<body>
+    <nav class="navbar" role="navigation" aria-label="{% trans 'Navigation Principale' %}">
+        <div class="navbar-container">
+            <a href="{% url 'home' %}" class="brand">
+                <span class="brand-icon">{% icon "globe" size=26 %}</span>
+                <span>BANTUDEVLAB</span>
+                <span class="brand-badge">{% trans "FORGE SOUVERAINE" %}</span>
+            </a>
+
+            <!-- Liens Navigation Desktop (NAV-02) -->
+            <div class="nav-links">
+                <a href="{% url 'home' %}" class="{% if request.resolver_match.url_name == 'home' %}active{% endif %}" {% if request.resolver_match.url_name == 'home' %}aria-current="page"{% endif %}>{% trans "Accueil" %}</a>
+                <a href="{% url 'dashboard' %}" class="{% if request.resolver_match.url_name == 'dashboard' %}active{% endif %}" {% if request.resolver_match.url_name == 'dashboard' %}aria-current="page"{% endif %}>{% trans "Tableau de Bord" %}</a>
+                <a href="{% url 'sovereignty_metrics' %}" class="{% if request.resolver_match.url_name == 'sovereignty_metrics' %}active{% endif %}" {% if request.resolver_match.url_name == 'sovereignty_metrics' %}aria-current="page"{% endif %}>{% trans "Souveraineté Numérique" %}</a>
+                {% if not request.user.is_authenticated %}
+                <a href="{% url 'zkp_auth:zkp_login_page' %}" class="{% if request.resolver_match.url_name == 'zkp_login_page' %}active{% endif %}" {% if request.resolver_match.url_name == 'zkp_login_page' %}aria-current="page"{% endif %}>{% trans "Connexion Zero-Trust" %}</a>
+                {% endif %}
+                <!-- Lien Externe Forge Git Sécurisé (NAV-05) -->
+                <a href="http://localhost:3000" target="_blank" rel="noopener noreferrer" class="btn btn-primary" title="{% trans 'Ouvre Gitea dans un nouvel onglet' %}">
+                    {% trans "Accès Forge Git" %} {% icon "external-link" size=14 %}
+                </a>
+            </div>
+
+            <!-- Actions Outils : Sélecteur Langue, Thème Clair/Sombre, Profil Utilisateur -->
+            <div class="nav-actions">
+                <!-- Sélecteur de Langue (I18N-02) -->
+                <div class="lang-dropdown">
+                    <button type="button" class="lang-toggle-btn" id="langMenuBtn" aria-haspopup="true" aria-expanded="false" title="{% trans 'Changer de langue' %}">
+                        {% icon "globe" size=16 %}
+                        <span id="currentLangLabel">{{ LANGUAGE_CODE|upper|default:'FR' }}</span>
+                        {% icon "chevron-down" size=12 %}
+                    </button>
+                    <div class="lang-menu" id="langMenu" role="menu" aria-labelledby="langMenuBtn">
+                        <form action="{% url 'set_language' %}" method="post" id="setLangForm">
+                            {% csrf_token %}
+                            <input name="next" type="hidden" value="{{ request.get_full_path|default:'/' }}">
+                            <button type="submit" name="language" value="fr" class="lang-item" role="menuitem">
+                                {% flag "CIV" 18 %} Français (FR)
+                            </button>
+                            <button type="submit" name="language" value="en" class="lang-item" role="menuitem">
+                                {% flag "NGA" 18 %} English (EN)
+                            </button>
+                            <button type="submit" name="language" value="sw" class="lang-item" role="menuitem">
+                                {% flag "KEN" 18 %} Kiswahili (SW)
+                            </button>
+                            <button type="submit" name="language" value="pt" class="lang-item" role="menuitem">
+                                {% flag "SEN" 18 %} Português (PT)
+                            </button>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Bascule Thème Clair / Sombre (DES-02) -->
+                <button type="button" class="theme-switch-btn" id="themeToggleBtn" aria-label="{% trans 'Basculer thème clair / sombre' %}" title="{% trans 'Basculer thème clair / sombre' %}">
+                    <span id="themeIcon">{% icon "sun" size=18 %}</span>
+                </button>
+
+                <!-- État Session Utilisateur (NAV-03) -->
+                {% if request.user.is_authenticated %}
+                <div class="user-session-badge" title="{% trans 'Session authentifiée via Zero-Trust ZKP' %}">
+                    {% icon "user" size=15 %}
+                    <span>{{ request.user.username }}</span>
+                    {% if request.user.sovereign_identity.country_code %}
+                    {% flag request.user.sovereign_identity.country_code 16 %}
+                    {% endif %}
+                </div>
+                {% endif %}
+
+                <!-- Bouton Menu Mobile (NAV-01) -->
+                <button type="button" class="navbar-toggle" id="mobileMenuBtn" aria-label="{% trans 'Menu de navigation' %}" aria-expanded="false">
+                    {% icon "menu" size=20 %}
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Drawer Mobile (NAV-01) -->
+    <div class="nav-drawer-overlay" id="drawerOverlay"></div>
+    <div class="nav-drawer" id="navDrawer" role="dialog" aria-modal="true" aria-label="{% trans 'Menu mobile' %}">
+        <div class="nav-drawer-header">
+            <div class="brand">
+                <span class="brand-icon">{% icon "globe" size=22 %}</span>
+                <span style="font-size: 1.1rem;">BANTUDEVLAB</span>
+            </div>
+            <button type="button" class="navbar-toggle" id="drawerCloseBtn" aria-label="{% trans 'Fermer le menu' %}">
+                {% icon "x" size=20 %}
+            </button>
+        </div>
+        <div class="nav-drawer-links">
+            <a href="{% url 'home' %}">{% icon "landmark" size=18 %} {% trans "Accueil" %}</a>
+            <a href="{% url 'dashboard' %}">{% icon "activity" size=18 %} {% trans "Tableau de Bord" %}</a>
+            <a href="{% url 'sovereignty_metrics' %}">{% icon "server" size=18 %} {% trans "Souveraineté Numérique" %}</a>
+            {% if not request.user.is_authenticated %}
+            <a href="{% url 'zkp_auth:zkp_login_page' %}">{% icon "key" size=18 %} {% trans "Connexion Zero-Trust" %}</a>
+            {% endif %}
+            <a href="http://localhost:3000" target="_blank" rel="noopener noreferrer" class="btn btn-primary" style="margin-top: 1rem; text-align: center;">
+                {% trans "Accès Forge Git" %} {% icon "external-link" size=16 %}
+            </a>
+        </div>
+    </div>
+
+    <main class="container">
+        <!-- Toast Notification Container (UI-04) -->
+        <div id="toastContainer" class="toast-container" aria-live="polite" aria-atomic="true"></div>
+
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer>
+        <p>© 2026 BANTUDEVLAB — {% trans "Forge Logicielle Panafricaine & Souveraine. Hébergée sur Systalink Cloud." %}</p>
+        <p style="font-size: 0.8rem; margin-top: 0.5rem; opacity: 0.7;">Zero-Trust ZKP Cryptography • Gemma 5B Local AI • Gitea CE Engine • African Data Sovereignty</p>
+    </footer>
+
+    <!-- Global Notification System & UI Handlers -->
+    <script>
+    window.getCsrfToken = function() {
+        const meta = document.querySelector('meta[name="csrf-token"]');
+        return meta ? meta.getAttribute('content') : '';
+    };
+
+    window.showToast = function(message, type = 'info', duration = 4500) {
+        const container = document.getElementById('toastContainer');
+        if (!container) return;
+
+        const toast = document.createElement('div');
+        toast.className = `toast-item toast-${type}`;
+
+        // Icones SVG auto-hebergees (plus d'emojis) - rendues cote serveur par la balise icon
+        const icons = {
+            success: '{% icon "circle-check" size=20 %}',
+            warning: '{% icon "triangle-alert" size=20 %}',
+            error: '{% icon "circle-x" size=20 %}',
+            info: '{% icon "info" size=20 %}'
+        };
+        const icon = icons[type] || '{% icon "bell" size=20 %}';
+
+        // SEC: le message est insere via textContent (jamais en HTML) pour eviter toute injection XSS.
+        const iconWrap = document.createElement('span');
+        iconWrap.className = 'toast-icon';
+        iconWrap.innerHTML = icon;
+        const content = document.createElement('div');
+        content.className = 'toast-content';
+        const msg = document.createElement('div');
+        msg.className = 'toast-message';
+        msg.textContent = message;
+        content.appendChild(msg);
+        const closeBtn = document.createElement('button');
+        closeBtn.className = 'toast-close';
+        closeBtn.setAttribute('aria-label', 'Fermer');
+        closeBtn.textContent = '\\u00d7';
+        closeBtn.addEventListener('click', () => toast.remove());
+        toast.append(iconWrap, content, closeBtn);
+        toast.setAttribute('role', type === 'error' ? 'alert' : 'status');
+
+        container.appendChild(toast);
+
+        // Animate entrance
+        requestAnimationFrame(() => {
+            toast.classList.add('toast-show');
+        });
+
+        // Auto dismiss
+        if (duration > 0) {
+            setTimeout(() => {
+                toast.classList.remove('toast-show');
+                toast.classList.add('toast-hide');
+                setTimeout(() => {
+                    if (toast.parentElement) toast.remove();
+                }, 300);
+            }, duration);
+        }
+    };
+
+    // Gestion du Thème Clair / Sombre (DES-02)
+    (function initTheme() {
+        const btn = document.getElementById('themeToggleBtn');
+        const iconContainer = document.getElementById('themeIcon');
+        const sunIcon = '{% icon "sun" size=18 %}';
+        const moonIcon = '{% icon "moon" size=18 %}';
+
+        function updateIcon(theme) {
+            if (iconContainer) {
+                iconContainer.innerHTML = (theme === 'light') ? moonIcon : sunIcon;
+            }
+        }
+
+        const currentTheme = document.documentElement.getAttribute('data-theme') || 'dark';
+        updateIcon(currentTheme);
+
+        if (btn) {
+            btn.addEventListener('click', function() {
+                const now = document.documentElement.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
+                document.documentElement.setAttribute('data-theme', now);
+                try { localStorage.setItem('bantu_theme', now); } catch(e) {}
+                updateIcon(now);
+                if (window.showToast) {
+                    window.showToast(now === 'light' ? '{% trans "Thème clair activé" %}' : '{% trans "Thème sombre activé" %}', 'info', 2000);
+                }
+            });
+        }
+    })();
+
+    // Gestion du Menu Déroulant Langue (I18N-02)
+    (function initLang() {
+        const btn = document.getElementById('langMenuBtn');
+        const menu = document.getElementById('langMenu');
+        if (btn && menu) {
+            btn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                const isExpanded = btn.getAttribute('aria-expanded') === 'true';
+                btn.setAttribute('aria-expanded', !isExpanded);
+                menu.classList.toggle('show');
+            });
+            document.addEventListener('click', function() {
+                menu.classList.remove('show');
+                btn.setAttribute('aria-expanded', 'false');
+            });
+        }
+    })();
+
+    // Gestion du Drawer Mobile (NAV-01)
+    (function initMobileDrawer() {
+        const openBtn = document.getElementById('mobileMenuBtn');
+        const closeBtn = document.getElementById('drawerCloseBtn');
+        const drawer = document.getElementById('navDrawer');
+        const overlay = document.getElementById('drawerOverlay');
+
+        function toggleDrawer(open) {
+            if (drawer && overlay) {
+                if (open) {
+                    drawer.classList.add('open');
+                    overlay.style.display = 'block';
+                    if (openBtn) openBtn.setAttribute('aria-expanded', 'true');
+                } else {
+                    drawer.classList.remove('open');
+                    overlay.style.display = 'none';
+                    if (openBtn) openBtn.setAttribute('aria-expanded', 'false');
+                }
+            }
+        }
+
+        if (openBtn) openBtn.addEventListener('click', () => toggleDrawer(true));
+        if (closeBtn) closeBtn.addEventListener('click', () => toggleDrawer(false));
+        if (overlay) overlay.addEventListener('click', () => toggleDrawer(false));
+    })();
+    </script>
+    {% block extra_scripts %}{% endblock %}
+</body>
+</html>
+"""
+
+base_path.write_bytes(base_content.replace("\n", "\r\n").encode("utf-8"))
+print("templates/base.html successfully updated")

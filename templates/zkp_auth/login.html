@@ -1,7 +1,14 @@
 {% extends 'base.html' %}
+{% load i18n %}
 
 {% block content %}
+<nav class="breadcrumbs" aria-label="{% trans 'Fil d Ariane' %}">
+    <a href="{% url 'home' %}">{% icon "landmark" size=14 %} {% trans "Accueil" %}</a>
+    <span class="breadcrumbs-separator">/</span>
+    <span class="breadcrumbs-current" aria-current="page">{% trans "Authentification Zero-Trust" %}</span>
+</nav>
 <div class="zkp-wizard-card">
+
     <div style="text-align: center; margin-bottom: 2rem;">
         <span class="brand-badge" style="font-size: 0.8rem; margin-bottom: 0.5rem;">PROTOCOLE SCHNORR NIZKP / FIAT-SHAMIR</span>
         <h2 style="margin: 0.5rem 0;">{% icon "key" size=22 %} Assistant d'Identité & Connexion Zero-Trust</h2>
@@ -51,9 +58,14 @@
     <div id="wizardStep2" class="wizard-step-content" style="display: none;">
         <div style="display: flex; justify-content: space-between; align-items: center;">
             <label style="font-weight: 600;">Phrase Mnémonique Souveraine (Standard BIP-39) :</label>
-            <button class="btn btn-secondary" style="padding: 0.3rem 0.7rem; font-size: 0.8rem;" onclick="generateNewMnemonic()">
-                {% icon "refresh-cw" size=18 %} Regénérer (12 Mots)
-            </button>
+            <div style="display: flex; gap: 0.5rem; align-items: center;">
+                <button type="button" class="copy-btn" id="copyMnemonicBtn" onclick="copyMnemonicPhrase()">
+                    {% icon "copy" size=14 %} <span id="copyMnemonicLabel">{% trans "Copier la phrase" %}</span>
+                </button>
+                <button class="btn btn-secondary" style="padding: 0.3rem 0.7rem; font-size: 0.8rem;" onclick="generateNewMnemonic()">
+                    {% icon "refresh-cw" size=18 %} Regénérer (12 Mots)
+                </button>
+            </div>
         </div>
         <p style="font-size: 0.82rem; color: var(--text-muted); margin: 0.3rem 0 0.75rem;">
             Ces 12 mots permettent de régénérer mathématiquement votre clé privée de signature ZKP dans n'importe quel terminal sécurisé.
@@ -149,6 +161,24 @@ function switchWizardStep(stepNumber) {
             }
         }
     });
+}
+
+
+function copyMnemonicPhrase() {
+    const text = (typeof currentMnemonic !== 'undefined' && currentMnemonic.length) ? currentMnemonic.join(' ') : document.getElementById('zkpSecret').value;
+    if (navigator.clipboard && text) {
+        navigator.clipboard.writeText(text).then(() => {
+            const btn = document.getElementById('copyMnemonicBtn');
+            const label = document.getElementById('copyMnemonicLabel');
+            if (btn) btn.classList.add('copied');
+            if (label) label.textContent = 'Copié !';
+            if (window.showToast) window.showToast('Phrase de 12 mots copiée !', 'success', 2000);
+            setTimeout(() => {
+                if (btn) btn.classList.remove('copied');
+                if (label) label.textContent = 'Copier la phrase';
+            }, 2000);
+        });
+    }
 }
 
 function generateNewMnemonic() {

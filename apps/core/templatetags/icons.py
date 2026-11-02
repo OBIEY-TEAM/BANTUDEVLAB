@@ -49,6 +49,15 @@ ICONS = {
     "dot": '<circle cx="12" cy="12" r="5" fill="currentColor" stroke="none"/>',
     "server": '<rect x="3" y="4" width="18" height="7" rx="2"/><rect x="3" y="13" width="18" height="7" rx="2"/><path d="M7 7.5v.01M7 16.5v.01"/>',
     "activity": '<path d="M3 12h4l3-8 4 16 3-8h4"/>',
+    "sun": '<circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>',
+    "moon": '<path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/>',
+    "menu": '<line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/>',
+    "x": '<line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>',
+    "external-link": '<path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/>',
+    "copy": '<rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/>',
+    "check": '<polyline points="20 6 9 17 4 12"/>',
+    "user": '<path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/>',
+    "chevron-down": '<polyline points="6 9 12 15 18 9"/>',
 }
 
 # Drapeaux simplifies (SVG 3:2), rendus en ligne : les emojis de drapeaux ne s'affichent pas sous Windows.

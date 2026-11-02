@@ -1,7 +1,14 @@
 {% extends 'base.html' %}
+{% load i18n %}
 
 {% block content %}
 <div style="max-width: 1000px; margin: 0 auto;">
+    <nav class="breadcrumbs" aria-label="{% trans 'Fil d Ariane' %}">
+        <a href="{% url 'home' %}">{% icon "landmark" size=14 %} {% trans "Accueil" %}</a>
+        <span class="breadcrumbs-separator">/</span>
+        <span class="breadcrumbs-current" aria-current="page">{% trans "Souveraineté Numérique" %}</span>
+    </nav>
+
     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; flex-wrap: wrap; gap: 1rem;">
         <div>
             <h2>Indicateurs & Topologie Souveraine Panafricaine</h2>
@@ -35,35 +42,35 @@
                 </g>
 
                 <!-- Nœud 1 : Dakar (SEN) (115, 185) -->
-                <g class="map-node-point" onclick="selectNode('dakar')">
+                <g class="map-node-point" tabindex="0" role="button" onkeydown="if(event.key==='Enter'||event.key===' ') selectNode('dakar')">
                     <circle cx="115" cy="185" r="16" fill="rgba(16, 185, 129, 0.25)" class="map-node-pulse" />
                     <circle cx="115" cy="185" r="7" fill="var(--secondary-emerald)" stroke="#fff" stroke-width="2" />
                     <text x="115" y="165" fill="#fff" font-size="12" font-weight="bold" text-anchor="middle">Dakar</text>
                 </g>
 
                 <!-- Nœud 2 : Abidjan (CIV) (165, 215) -->
-                <g class="map-node-point" onclick="selectNode('abidjan')">
+                <g class="map-node-point" tabindex="0" role="button" onkeydown="if(event.key==='Enter'||event.key===' ') selectNode('abidjan')">
                     <circle cx="165" cy="215" r="20" fill="rgba(245, 158, 11, 0.35)" class="map-node-pulse" />
                     <circle cx="165" cy="215" r="8" fill="var(--primary-african-gold)" stroke="#fff" stroke-width="2" />
                     <text x="165" y="245" fill="#fff" font-size="13" font-weight="bold" text-anchor="middle">Abidjan (Systalink)</text>
                 </g>
 
                 <!-- Nœud 3 : Lagos (NGA) (265, 245) -->
-                <g class="map-node-point" onclick="selectNode('lagos')">
+                <g class="map-node-point" tabindex="0" role="button" onkeydown="if(event.key==='Enter'||event.key===' ') selectNode('lagos')">
                     <circle cx="265" cy="245" r="16" fill="rgba(59, 130, 246, 0.25)" class="map-node-pulse" />
                     <circle cx="265" cy="245" r="7" fill="#3b82f6" stroke="#fff" stroke-width="2" />
                     <text x="265" y="270" fill="#fff" font-size="12" font-weight="bold" text-anchor="middle">Lagos</text>
                 </g>
 
                 <!-- Nœud 4 : Kigali (RWA) (385, 300) -->
-                <g class="map-node-point" onclick="selectNode('kigali')">
+                <g class="map-node-point" tabindex="0" role="button" onkeydown="if(event.key==='Enter'||event.key===' ') selectNode('kigali')">
                     <circle cx="385" cy="300" r="16" fill="rgba(16, 185, 129, 0.25)" class="map-node-pulse" />
                     <circle cx="385" cy="300" r="7" fill="var(--secondary-emerald)" stroke="#fff" stroke-width="2" />
                     <text x="385" y="325" fill="#fff" font-size="12" font-weight="bold" text-anchor="middle">Kigali</text>
                 </g>
 
                 <!-- Nœud 5 : Nairobi (KEN) (435, 280) -->
-                <g class="map-node-point" onclick="selectNode('nairobi')">
+                <g class="map-node-point" tabindex="0" role="button" onkeydown="if(event.key==='Enter'||event.key===' ') selectNode('nairobi')">
                     <circle cx="435" cy="280" r="16" fill="rgba(245, 158, 11, 0.25)" class="map-node-pulse" />
                     <circle cx="435" cy="280" r="7" fill="var(--primary-african-gold)" stroke="#fff" stroke-width="2" />
                     <text x="435" y="260" fill="#fff" font-size="12" font-weight="bold" text-anchor="middle">Nairobi</text>
@@ -73,7 +80,7 @@
 
         <!-- Cartes Interactives des 5 Nœuds -->
         <div class="node-cards-grid">
-            <div id="card-abidjan" class="node-card selected" onclick="selectNode('abidjan')">
+            <div id="card-abidjan" class="node-card selected" tabindex="0" role="button" onkeydown="if(event.key==='Enter'||event.key===' ') selectNode('abidjan')">
                 <div class="node-card-header">
                     <strong>{% flag "CIV" 22 %} Abidjan</strong>
                     <span id="latency-abidjan" class="latency-badge">12 ms</span>
@@ -82,7 +89,7 @@
                 <div style="font-size: 0.75rem; color: var(--secondary-emerald); margin-top: 0.4rem;">{% icon "dot" size=10 %} Actif & Opérationnel</div>
             </div>
 
-            <div id="card-dakar" class="node-card" onclick="selectNode('dakar')">
+            <div id="card-dakar" class="node-card" tabindex="0" role="button" onkeydown="if(event.key==='Enter'||event.key===' ') selectNode('dakar')">
                 <div class="node-card-header">
                     <strong>{% flag "SEN" 22 %} Dakar</strong>
                     <span id="latency-dakar" class="latency-badge">18 ms</span>
@@ -91,7 +98,7 @@
                 <div style="font-size: 0.75rem; color: var(--secondary-emerald); margin-top: 0.4rem;">{% icon "dot" size=10 %} Actif & Opérationnel</div>
             </div>
 
-            <div id="card-lagos" class="node-card" onclick="selectNode('lagos')">
+            <div id="card-lagos" class="node-card" tabindex="0" role="button" onkeydown="if(event.key==='Enter'||event.key===' ') selectNode('lagos')">
                 <div class="node-card-header">
                     <strong>{% flag "NGA" 22 %} Lagos</strong>
                     <span id="latency-lagos" class="latency-badge">24 ms</span>
@@ -100,7 +107,7 @@
                 <div style="font-size: 0.75rem; color: var(--secondary-emerald); margin-top: 0.4rem;">{% icon "dot" size=10 %} Actif & Opérationnel</div>
             </div>
 
-            <div id="card-kigali" class="node-card" onclick="selectNode('kigali')">
+            <div id="card-kigali" class="node-card" tabindex="0" role="button" onkeydown="if(event.key==='Enter'||event.key===' ') selectNode('kigali')">
                 <div class="node-card-header">
                     <strong>{% flag "RWA" 22 %} Kigali</strong>
                     <span id="latency-kigali" class="latency-badge">31 ms</span>
@@ -109,7 +116,7 @@
                 <div style="font-size: 0.75rem; color: var(--secondary-emerald); margin-top: 0.4rem;">{% icon "dot" size=10 %} Actif & Opérationnel</div>
             </div>
 
-            <div id="card-nairobi" class="node-card" onclick="selectNode('nairobi')">
+            <div id="card-nairobi" class="node-card" tabindex="0" role="button" onkeydown="if(event.key==='Enter'||event.key===' ') selectNode('nairobi')">
                 <div class="node-card-header">
                     <strong>{% flag "KEN" 22 %} Nairobi</strong>
                     <span id="latency-nairobi" class="latency-badge">29 ms</span>

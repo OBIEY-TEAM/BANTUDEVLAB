@@ -48,6 +48,7 @@ MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "apps.core.middleware.SecurityHeadersMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
+    "django.middleware.locale.LocaleMiddleware",  # I18N-01
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
@@ -109,6 +110,14 @@ LANGUAGE_CODE = "fr-fr"
 TIME_ZONE = "UTC"
 USE_I18N = True
 USE_TZ = True
+
+LANGUAGES = [
+    ("fr", "Français"),
+    ("en", "English"),
+    ("sw", "Kiswahili"),
+    ("pt", "Português"),
+]
+LOCALE_PATHS = [BASE_DIR / "locale"]
 
 STATIC_URL = "/static/"
 STATICFILES_DIRS = [BASE_DIR / "static"]
