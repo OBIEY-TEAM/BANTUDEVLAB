@@ -83,11 +83,11 @@ Ce document définit l'ensemble des tâches, sous-tâches techniques et configur
 
 ### Axe 3 : Collaboration, Pull Requests et Gestion de Projet
 
-- [ ] **T-COL-601 : Pull Requests et Mécanismes de Revue Approfondie**
-  - [ ] Configurer les règles de protection de branche par dépôt (revues obligatoires, commits signés, statuts CI exigés avant fusion).
-  - [ ] Activer le support du fichier `CODEOWNERS` dans la racine ou le dossier `.gitea/`.
-  - [ ] Prendre en charge les formulaires de pull request via `.gitea/PULL_REQUEST_TEMPLATE.md` et `.gitea/PULL_REQUEST_TEMPLATE/`.
-  - [ ] Activer les différentes stratégies de fusion (Merge commit, Rebase, Squash, Rebase + fast-forward).
+- [x] **T-COL-601 : Pull Requests et Mécanismes de Revue Approfondie**
+  - [x] Configurer les règles de protection de branche par dépôt (revues obligatoires, commits signés, statuts CI exigés avant fusion).
+  - [x] Activer le support du fichier `CODEOWNERS` dans la racine ou le dossier `.gitea/`.
+  - [x] Prendre en charge les formulaires de pull request via `.gitea/PULL_REQUEST_TEMPLATE.md` et `.gitea/PULL_REQUEST_TEMPLATE/`.
+  - [x] Activer les différentes stratégies de fusion (Merge commit, Rebase, Squash, Rebase + fast-forward).
 
 - [ ] **T-COL-602 : Gestion Avancée des Issues et Formulaires Structurés (Issue Forms)**
   - [ ] Déployer les templates de tickets basés sur des schémas YAML (`.gitea/ISSUE_TEMPLATE/*.yaml`) avec champs typés, listes déroulantes et cases à cocher.
