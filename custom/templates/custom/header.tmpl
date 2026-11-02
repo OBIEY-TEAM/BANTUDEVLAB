@@ -1,4 +1,4 @@
-<!-- BANTUDEVLAB - GitHub Navigation & Head Enhancements (T-UI-602) -->
+<!-- BANTUDEVLAB - GitHub Navigation & Head Enhancements (T-UI-602, T-UI-603) -->
 <style>
 /* GitHub Global Navigation Bar */
 .ui.menu.navbar {
@@ -73,12 +73,36 @@
 // GitHub Global Keyboard Shortcuts ('/' for search focus)
 document.addEventListener('keydown', function(e) {
   if (e.key === '/' && !['INPUT', 'TEXTAREA'].includes(document.activeElement.tagName)) {
-    e.preventDefault();
     const searchInput = document.querySelector('input[name="q"], .github-search-input, #search-input');
     if (searchInput) {
+      e.preventDefault();
       searchInput.focus();
       searchInput.select();
     }
   }
+});
+
+// GitHub Flavored Markdown Alerts Client-Side Polyfill (T-UI-603)
+document.addEventListener('DOMContentLoaded', function() {
+  const alertTypes = {
+    '[!NOTE]': { className: 'markdown-alert markdown-alert-note', title: 'Note' },
+    '[!TIP]': { className: 'markdown-alert markdown-alert-tip', title: 'Tip' },
+    '[!IMPORTANT]': { className: 'markdown-alert markdown-alert-important', title: 'Important' },
+    '[!WARNING]': { className: 'markdown-alert markdown-alert-warning', title: 'Warning' },
+    '[!CAUTION]': { className: 'markdown-alert markdown-alert-caution', title: 'Caution' }
+  };
+
+  document.querySelectorAll('blockquote').forEach(function(bq) {
+    const firstP = bq.querySelector('p');
+    if (!firstP) return;
+    const text = firstP.innerHTML.trim();
+    for (const [tag, conf] of Object.entries(alertTypes)) {
+      if (text.startsWith(tag)) {
+        bq.className = conf.className;
+        firstP.innerHTML = `<div class="markdown-alert-title">${conf.title}</div>` + text.slice(tag.length).trim();
+        break;
+      }
+    }
+  });
 });
 </script>
