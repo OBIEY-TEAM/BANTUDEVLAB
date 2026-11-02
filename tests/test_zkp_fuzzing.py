@@ -285,3 +285,73 @@ class ZKPFuzzingResilienceTestCase(TestCase):
 
             val_res = GitTokenService.validate_token(corrupted_token_str)
             self.assertFalse(val_res["valid"])
+
+    def test_fuzz_oversized_nonce_rejection(self):
+        """T-QA-502 : Fuzzing de nonces dépassant 512 octets -> rejet strict."""
+        oversized_nonce = "f" * 1024
+        proof = {"commitment_t": "0x123", "response_s": "0x456", "message": oversized_nonce}
+        self.assertFalse(ZKPCrypto.verify_proof(self.public_y, proof))
+
+        # Rejet au niveau de l'API REST
+        resp = self.client.post(
+            "/api/zkp/verify/",
+            {
+                "username": self.username,
+                "challenge_nonce": oversized_nonce,
+                "commitment_t": "0x123",
+                "response_s": "0x456",
+            },
+            content_type="application/json",
+        )
+        self.assertEqual(resp.status_code, 400)
+
+    def test_fuzz_public_keys_strictly_outside_group(self):
+        """T-QA-502 : Clés publiques en dehors du groupe premier -> rejet strict."""
+        for invalid_y in [0, 1, P - 1, P, P + 1]:
+            self.assertFalse(ZKPCrypto.validate_public_key(invalid_y))
+
+    def test_challenge_replay_and_idempotence(self):
+        """T-QA-502 : Idempotence et résistance au rejeu de challenge sous accès concurrent."""
+        challenge = ZKPChallenge.create_challenge(user=self.user)
+        proof = ZKPCrypto.generate_proof(self.secret_x, self.public_y, challenge.challenge_nonce)
+
+        # Premier appel : succès
+        res1 = self.client.post(
+            "/api/zkp/verify/",
+            {
+                "username": self.username,
+                "challenge_nonce": challenge.challenge_nonce,
+                "commitment_t": proof["commitment_t"],
+                "response_s": proof["response_s"],
+            },
+            content_type="application/json",
+        )
+        self.assertEqual(res1.status_code, 200)
+
+        # Deuxième appel avec le même challenge : rejet immédiat (anti-rejeu)
+        res2 = self.client.post(
+            "/api/zkp/verify/",
+            {
+                "username": self.username,
+                "challenge_nonce": challenge.challenge_nonce,
+                "commitment_t": proof["commitment_t"],
+                "response_s": proof["response_s"],
+            },
+            content_type="application/json",
+        )
+        self.assertEqual(res2.status_code, 401)
+
+    def test_purge_expired_challenges_auto(self):
+        """T-DEV-504 & T-QA-502 : Purge automatique des challenges ZKP expirés."""
+        old_time = timezone.now() - timezone.timedelta(minutes=15)
+        ch_old = ZKPChallenge.objects.create(
+            user=self.user,
+            challenge_nonce="old_expired_nonce_12345",
+            expires_at=old_time,
+        )
+        ch_fresh = ZKPChallenge.create_challenge(user=self.user)
+
+        deleted = ZKPChallenge.purge_expired_challenges(max_age_minutes=10)
+        self.assertGreaterEqual(deleted, 1)
+        self.assertFalse(ZKPChallenge.objects.filter(id=ch_old.id).exists())
+        self.assertTrue(ZKPChallenge.objects.filter(id=ch_fresh.id).exists())

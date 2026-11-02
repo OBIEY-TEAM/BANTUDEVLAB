@@ -143,3 +143,23 @@ def sovereign_function(query):
         # Vérifier la présence d'au moins une carte de vulnérabilité
         vuln_cards = self.page.locator(".vulnerability-card")
         self.assertTrue(vuln_cards.count() >= 1)
+
+    def test_zero_cdn_offline_isolation(self):
+        """
+        T-QA-503 : Vérifie que le tableau de bord et CodeMirror se chargent parfaitement
+        sans aucune requête réseau sortant vers l'extérieur du serveur local.
+        """
+        external_requests = []
+
+        def handle_request(request):
+            url = request.url
+            if not url.startswith(self.live_server_url) and not url.startswith("data:"):
+                external_requests.append(url)
+
+        self.page.on("request", handle_request)
+        self.page.goto(f"{self.live_server_url}/dashboard/")
+        self.page.wait_for_selector(".editor-container")
+        self.page.wait_for_function("() => window.CodeMirror !== undefined")
+
+        # Vérification qu'aucune requête externe / CDN n'a été émise
+        self.assertEqual(len(external_requests), 0, f"Requêtes CDN détectées : {external_requests}")

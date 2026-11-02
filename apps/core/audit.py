@@ -61,7 +61,7 @@ class AuditTrail:
         Returns True if all hashes are valid and unbroken, False otherwise.
         """
         # Parcours par lots (iterator) : memoire constante meme sur de grandes tables.
-        entries = AuditTrailLog.objects.order_by("id").iterator(chunk_size=500)
+        entries = AuditTrailLog.objects.order_by("id").iterator(chunk_size=1000)
 
         expected_prev_hash = cls.GENESIS_HASH
         for entry in entries:

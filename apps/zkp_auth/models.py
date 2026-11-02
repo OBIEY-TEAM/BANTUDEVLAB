@@ -46,6 +46,16 @@ class ZKPChallenge(models.Model):
         expires_at = timezone.now() + timezone.timedelta(seconds=validity_seconds)
         return cls.objects.create(user=user, challenge_nonce=nonce, expires_at=expires_at)
 
+    @classmethod
+    def purge_expired_challenges(cls, max_age_minutes: int = 10) -> int:
+        """
+        T-DEV-504 : Supprime les challenges ZKP expiress depuis plus de max_age_minutes.
+        Empeche l'accumulation de nonces orphelins (protection anti-DoS).
+        """
+        cutoff = timezone.now() - timezone.timedelta(minutes=max_age_minutes)
+        deleted_count, _ = cls.objects.filter(expires_at__lt=cutoff).delete()
+        return deleted_count
+
     def is_valid(self):
         return not self.is_used and timezone.now() < self.expires_at
 

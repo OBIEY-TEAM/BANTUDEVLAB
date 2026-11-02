@@ -16,8 +16,8 @@ x-django-env: &django-env
   GITEA_ADMIN_TOKEN: ${GITEA_ADMIN_TOKEN:-1749a33d29fee921385f891d05e6cc2aa5fa97f2}
   GITEA_WEBHOOK_SECRET: ${GITEA_WEBHOOK_SECRET:-bantu_dev_webhook_secret_key_2026}
   GITLAB_URL: ${GITLAB_URL:-http://localhost:3001}
-  GEMMA_API_URL: ${GEMMA_API_URL:-http://host.docker.internal:11434/api/generate}
-  GEMMA_MODEL_NAME: ${GEMMA_MODEL_NAME:-gemma:5b}
+  GEMMA_API_URL: ${GEMMA_API_URL:-http://ollama:11434/api/generate}
+  GEMMA_MODEL_NAME: ${GEMMA_MODEL_NAME:-gemma2:2b}
   REDIS_URL: redis://:${REDIS_PASSWORD:-sovereign_redis_pass_2025}@redis:6379/0
   CELERY_BROKER_URL: redis://:${REDIS_PASSWORD:-sovereign_redis_pass_2025}@redis:6379/0
   CELERY_RESULT_BACKEND: redis://:${REDIS_PASSWORD:-sovereign_redis_pass_2025}@redis:6379/0
@@ -36,7 +36,43 @@ services:
       POSTGRES_DB: ${POSTGRES_DB:-bantudevlab}
       POSTGRES_USER: ${POSTGRES_USER:-bantudevlab_admin}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-sovereign_pass_2025}
+      # Moteur d'Inference IA Locale Ollama (Gemma 2 2B) - T-OPS-501 & T-OPS-503
+  ollama:
+    image: ollama/ollama:latest
+    container_name: bantudevlab_ollama
+    restart: always
     volumes:
+      - ollama_models:/root/.ollama
+      - ./deploy/ai/start_gemma_engine.sh:/entrypoint.sh:ro
+    entrypoint: ["/bin/sh", "/entrypoint.sh"]
+    environment:
+      - OLLAMA_KEEP_ALIVE=24h
+      - GEMMA_MODEL=gemma2:2b
+    networks:
+      - backend_net
+    <<: *hardening
+
+  # Ordonnanceur periodique Celery Beat (T-DEV-502, T-DEV-503, T-DEV-504)
+  celery_beat:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: bantudevlab_celery_beat
+    restart: always
+    command: ["celery", "-A", "config", "beat", "--loglevel=info"]
+    environment:
+      <<: *django-env
+      DEBUG: "False"
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    <<: *hardening
+    networks:
+      - backend_net
+
+volumes:
       - postgres_data:/var/lib/postgresql/data
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
@@ -54,7 +90,43 @@ services:
     container_name: bantudevlab_redis
     restart: always
     command: ["redis-server", "--requirepass", "${REDIS_PASSWORD:-sovereign_redis_pass_2025}"]
+      # Moteur d'Inference IA Locale Ollama (Gemma 2 2B) - T-OPS-501 & T-OPS-503
+  ollama:
+    image: ollama/ollama:latest
+    container_name: bantudevlab_ollama
+    restart: always
     volumes:
+      - ollama_models:/root/.ollama
+      - ./deploy/ai/start_gemma_engine.sh:/entrypoint.sh:ro
+    entrypoint: ["/bin/sh", "/entrypoint.sh"]
+    environment:
+      - OLLAMA_KEEP_ALIVE=24h
+      - GEMMA_MODEL=gemma2:2b
+    networks:
+      - backend_net
+    <<: *hardening
+
+  # Ordonnanceur periodique Celery Beat (T-DEV-502, T-DEV-503, T-DEV-504)
+  celery_beat:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: bantudevlab_celery_beat
+    restart: always
+    command: ["celery", "-A", "config", "beat", "--loglevel=info"]
+    environment:
+      <<: *django-env
+      DEBUG: "False"
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    <<: *hardening
+    networks:
+      - backend_net
+
+volumes:
       - redis_data:/data
     healthcheck:
       test: ["CMD-SHELL", "redis-cli -a \"$$REDIS_PASSWORD\" ping | grep PONG"]
@@ -90,7 +162,43 @@ services:
       - GITEA__service__DISABLE_REGISTRATION=false
       - GITEA__service__ENABLE_CAPTCHA=false
       - GITEA__webhook__ALLOWED_HOST_LIST=django_app,forge_engine,127.0.0.1,localhost,host.docker.internal
+      # Moteur d'Inference IA Locale Ollama (Gemma 2 2B) - T-OPS-501 & T-OPS-503
+  ollama:
+    image: ollama/ollama:latest
+    container_name: bantudevlab_ollama
+    restart: always
     volumes:
+      - ollama_models:/root/.ollama
+      - ./deploy/ai/start_gemma_engine.sh:/entrypoint.sh:ro
+    entrypoint: ["/bin/sh", "/entrypoint.sh"]
+    environment:
+      - OLLAMA_KEEP_ALIVE=24h
+      - GEMMA_MODEL=gemma2:2b
+    networks:
+      - backend_net
+    <<: *hardening
+
+  # Ordonnanceur periodique Celery Beat (T-DEV-502, T-DEV-503, T-DEV-504)
+  celery_beat:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: bantudevlab_celery_beat
+    restart: always
+    command: ["celery", "-A", "config", "beat", "--loglevel=info"]
+    environment:
+      <<: *django-env
+      DEBUG: "False"
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    <<: *hardening
+    networks:
+      - backend_net
+
+volumes:
       - gitea_data:/data
     ports:
       - "3002:3000"
@@ -117,7 +225,43 @@ services:
     depends_on:
       gitea:
         condition: service_healthy
+      # Moteur d'Inference IA Locale Ollama (Gemma 2 2B) - T-OPS-501 & T-OPS-503
+  ollama:
+    image: ollama/ollama:latest
+    container_name: bantudevlab_ollama
+    restart: always
     volumes:
+      - ollama_models:/root/.ollama
+      - ./deploy/ai/start_gemma_engine.sh:/entrypoint.sh:ro
+    entrypoint: ["/bin/sh", "/entrypoint.sh"]
+    environment:
+      - OLLAMA_KEEP_ALIVE=24h
+      - GEMMA_MODEL=gemma2:2b
+    networks:
+      - backend_net
+    <<: *hardening
+
+  # Ordonnanceur periodique Celery Beat (T-DEV-502, T-DEV-503, T-DEV-504)
+  celery_beat:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: bantudevlab_celery_beat
+    restart: always
+    command: ["celery", "-A", "config", "beat", "--loglevel=info"]
+    environment:
+      <<: *django-env
+      DEBUG: "False"
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    <<: *hardening
+    networks:
+      - backend_net
+
+volumes:
       - gitea_data:/data
     entrypoint:
       - "sh"
@@ -176,7 +320,43 @@ services:
       GITEA_EXTERNAL_URL: "http://localhost:3002"
       GITEA_LOGIN_URL: "http://localhost:3002/user/login"
       GITEA_WEBHOOK_SECRET: ${GITEA_WEBHOOK_SECRET:-bantu_dev_webhook_secret_key_2026}
+      # Moteur d'Inference IA Locale Ollama (Gemma 2 2B) - T-OPS-501 & T-OPS-503
+  ollama:
+    image: ollama/ollama:latest
+    container_name: bantudevlab_ollama
+    restart: always
     volumes:
+      - ollama_models:/root/.ollama
+      - ./deploy/ai/start_gemma_engine.sh:/entrypoint.sh:ro
+    entrypoint: ["/bin/sh", "/entrypoint.sh"]
+    environment:
+      - OLLAMA_KEEP_ALIVE=24h
+      - GEMMA_MODEL=gemma2:2b
+    networks:
+      - backend_net
+    <<: *hardening
+
+  # Ordonnanceur periodique Celery Beat (T-DEV-502, T-DEV-503, T-DEV-504)
+  celery_beat:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: bantudevlab_celery_beat
+    restart: always
+    command: ["celery", "-A", "config", "beat", "--loglevel=info"]
+    environment:
+      <<: *django-env
+      DEBUG: "False"
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    <<: *hardening
+    networks:
+      - backend_net
+
+volumes:
       - forge_repos:/app/forge_data/repos
     <<: *hardening
     networks:
@@ -204,11 +384,48 @@ services:
       - sovereign_net
       - backend_net
 
+  # Moteur d'Inference IA Locale Ollama (Gemma 2 2B) - T-OPS-501 & T-OPS-503
+  ollama:
+    image: ollama/ollama:latest
+    container_name: bantudevlab_ollama
+    restart: always
+    volumes:
+      - ollama_models:/root/.ollama
+      - ./deploy/ai/start_gemma_engine.sh:/entrypoint.sh:ro
+    entrypoint: ["/bin/sh", "/entrypoint.sh"]
+    environment:
+      - OLLAMA_KEEP_ALIVE=24h
+      - GEMMA_MODEL=gemma2:2b
+    networks:
+      - backend_net
+    <<: *hardening
+
+  # Ordonnanceur periodique Celery Beat (T-DEV-502, T-DEV-503, T-DEV-504)
+  celery_beat:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: bantudevlab_celery_beat
+    restart: always
+    command: ["celery", "-A", "config", "beat", "--loglevel=info"]
+    environment:
+      <<: *django-env
+      DEBUG: "False"
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    <<: *hardening
+    networks:
+      - backend_net
+
 volumes:
   postgres_data:
   gitea_data:
   redis_data:
   forge_repos:
+  ollama_models:
 
 networks:
   sovereign_net:

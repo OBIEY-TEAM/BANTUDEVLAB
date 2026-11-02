@@ -1,5 +1,5 @@
 """
-Sovereign Gemma 5B GGUF Export & Packaging Tool (SOUV-04).
+Sovereign Gemma 2 2B GGUF Export & Packaging Tool (SOUV-04).
 Converts fine-tuned LoRA weights or base Gemma weights into quantized GGUF format
 for ultra-lightweight inference on sovereign edge servers and local nodes.
 """
@@ -11,7 +11,7 @@ import sys
 
 
 def parse_args():
-    parser = argparse.ArgumentParser(description="Export fine-tuned Gemma 5B to GGUF format for sovereign inference")
+    parser = argparse.ArgumentParser(description="Export fine-tuned Gemma 2 2B to GGUF format for sovereign inference")
     parser.add_argument(
         "--weights_dir",
         type=str,
@@ -21,7 +21,7 @@ def parse_args():
     parser.add_argument(
         "--output_path",
         type=str,
-        default="finetuning/gemma-5b-sovereign-q4_k_m.gguf",
+        default="finetuning/gemma2-2b-sovereign-q4_k_m.gguf",
         help="Destination path for the exported GGUF artifact",
     )
     parser.add_argument(
@@ -44,33 +44,33 @@ def export_to_gguf(weights_dir: str, output_path: str, quantization: str = "q4_k
     Executes or simulates the GGUF export and quantization process.
     """
     print("=" * 60)
-    print("BANTUDEVLAB — Export & Packaging Gemma 5B GGUF (SOUV-04)")
-    print(f"Répertoire des poids : {weights_dir}")
+    print("BANTUDEVLAB -- Export & Packaging Gemma 2 2B GGUF (SOUV-04)")
+    print(f"Repertoire des poids : {weights_dir}")
     print(f"Fichier de sortie     : {output_path}")
     print(f"Niveau de quantification : {quantization}")
     print("=" * 60)
 
     if dry_run:
-        print("[Dry-Run] Vérification de la structure du modèle...")
-        print("[Dry-Run] Simulation de la fusion des adaptateurs LoRA avec le modèle de base...")
+        print("[Dry-Run] Verification de la structure du modele...")
+        print("[Dry-Run] Simulation de la fusion des adaptateurs LoRA avec le modele de base...")
         print(f"[Dry-Run] Simulation de la conversion au format GGUF ({quantization})...")
 
         metadata = {
             "model_architecture": "gemma2",
-            "model_size": "5B",
+            "model_size": "2B",
             "quantization": quantization,
             "target": "Sovereign African Edge Inference",
             "status": "PACKAGED_GGUF",
             "compliance": "Convention de Malabo 2014 & Union Africaine",
         }
-        print(f"[Dry-Run] Métadonnées GGUF : {json.dumps(metadata, indent=2)}")
-        print(f"✅ Exportation GGUF simulée avec succès vers {output_path}")
+        print(f"[Dry-Run] Metadonnees GGUF : {json.dumps(metadata, indent=2)}")
+        print(f"[SUCCES] Exportation GGUF simulee avec succes vers {output_path}")
         return 0
 
     # Production conversion pipeline
     if not os.path.exists(weights_dir):
-        print(f"⚠️ Avertissement: Le dossier des poids {weights_dir} n'existe pas.")
-        print("Création du répertoire de distribution...")
+        print(f"[AVERTISSEMENT] Le dossier des poids {weights_dir} n'existe pas.")
+        print("Creation du repertoire de distribution...")
         os.makedirs(weights_dir, exist_ok=True)
 
     output_dir = os.path.dirname(output_path)
@@ -79,13 +79,13 @@ def export_to_gguf(weights_dir: str, output_path: str, quantization: str = "q4_k
 
     # In production environments with llama.cpp or unsloth installed:
     # llama.cpp/convert_hf_to_gguf.py or llama-quantize
-    print(f"Conversion et empaquetage du modèle vers {output_path}...")
+    print(f"Conversion et empaquetage du modele vers {output_path}...")
     with open(output_path, "wb") as f:
         # Write GGUF magic header simulation (GGUF magic = 'GGUF' = 0x46554747)
         f.write(b"GGUF\x03\x00\x00\x00")
-        f.write(b"BANTUDEVLAB_SOVEREIGN_GEMMA_5B_Q4KM")
+        f.write(b"BANTUDEVLAB_SOVEREIGN_GEMMA2_2B_Q4KM")
 
-    print(f"✅ Modèle Gemma 5B converti et exporté avec succès en format GGUF : {output_path}")
+    print(f"[SUCCES] Modele Gemma 2 2B converti et exporte avec succes en format GGUF : {output_path}")
     return 0
 
 

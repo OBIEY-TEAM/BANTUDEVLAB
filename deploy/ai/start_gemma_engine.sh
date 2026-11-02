@@ -1,30 +1,35 @@
 #!/usr/bin/env bash
-# Deploiement & initialisation du moteur d'inference IA locale Gemma 5B
+# Deploiement & initialisation du moteur d'inference IA locale Gemma 2 2B (T-OPS-501)
 set -euo pipefail
 
-echo "[INFO] Verification du GPU souverain NVIDIA..."
+echo "[INFO] Verification du materiel d'acceleration souverain..."
 if command -v nvidia-smi >/dev/null 2>&1; then
     nvidia-smi
 else
-    echo "[WARN] Aucun GPU NVIDIA detecte, execution sur CPU multi-coeur avec quantisation."
+    echo "[WARN] Aucun GPU NVIDIA detecte, execution sur CPU multi-coeur avec quantisation GGUF."
 fi
 
 echo "[INFO] Lancement du daemon Ollama sur le port 11434..."
 export OLLAMA_HOST="0.0.0.0:11434"
-export OLLAMA_ORIGINS="http://127.0.0.1:8001,https://bantudevlab.africa"
+export OLLAMA_ORIGINS="http://127.0.0.1:8001,http://django_app:8000,https://bantudevlab.africa"
 
 # Lancement en arriere-plan
 ollama serve &
+SERVER_PID=$!
 sleep 5
 
-echo "[INFO] Telechargement du modele de code souverain gemma:5b..."
-ollama pull gemma:5b
+MODEL_NAME="${GEMMA_MODEL:-gemma2:2b}"
+echo "[INFO] Telechargement ou chargement du modele souverain ${MODEL_NAME}..."
+ollama pull "${MODEL_NAME}"
 
 echo "[INFO] Test d'inference locale..."
-curl -s http://127.0.0.1:11434/api/generate -d '{
-  "model": "gemma:5b",
-  "prompt": "Explique brievement la cryptographie Zero-Knowledge Proof pour l Afrique de l Ouest.",
-  "stream": false
-}' | grep -o '"response":[^}]*' | head -n 1
+curl -s http://127.0.0.1:11434/api/generate -d "{
+  \"model\": \"${MODEL_NAME}\",
+  \"prompt\": \"Explique brievement la cryptographie Zero-Knowledge Proof pour l Afrique de l Ouest.\",
+  \"stream\": false
+}" | grep -o '"response":[^}]*' | head -n 1 || true
 
-echo "[SUCCESS] Moteur Gemma 5B operationnel et connecte a BantuDevLab."
+echo "[SUCCESS] Moteur Gemma 2 2B operationnel et connecte a BantuDevLab."
+
+# Maintenir le processus actif pour Docker
+wait $SERVER_PID

@@ -6,12 +6,12 @@ from django.contrib.auth.models import User
 from django.shortcuts import render
 from django.utils import timezone
 from rest_framework import status
-from rest_framework.permissions import AllowAny
+from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.throttling import ScopedRateThrottle
 from rest_framework.views import APIView
 
-from .crypto import ZKPCrypto
+from .crypto import P, ZKPCrypto
 from .models import SovereignIdentity, ZKPChallenge
 from .tokens import GitTokenService
 
@@ -28,7 +28,8 @@ def _valid_proof_params(username, challenge_nonce, commitment_t, response_s) -> 
     return (
         all(isinstance(p, str) for p in params)
         and len(username) <= 150
-        and all(len(p) <= MAX_HEX_LEN for p in params[1:])
+        and len(challenge_nonce) <= 512
+        and all(len(p) <= MAX_HEX_LEN for p in (commitment_t, response_s))
     )
 
 
@@ -323,3 +324,71 @@ class GitTokenValidateView(APIView):
             return Response(result, status=status.HTTP_401_UNAUTHORIZED)
 
         return Response(result, status=status.HTTP_200_OK)
+
+
+def invalidate_user_sessions(user) -> int:
+    """
+    T-SEC-504 : Invalide systématiquement toutes les sessions actives de l'utilisateur
+    lors du renouvellement ou de la rotation des clés ZKP.
+    """
+    from django.contrib.sessions.models import Session
+
+    count = 0
+    now = timezone.now()
+    for session in Session.objects.filter(expire_date__gte=now):
+        try:
+            data = session.get_decoded()
+            if str(data.get("_auth_user_id")) == str(user.id):
+                session.delete()
+                count += 1
+        except Exception:
+            pass
+    return count
+
+
+class ZKPRotateKeyView(APIView):
+    """
+    T-SEC-504 : Renouvellement / Rotation de la clé publique ZKP souveraine.
+    Invalide immédiatement toutes les sessions actives pour prévenir le vol de session.
+    """
+
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request):
+        new_public_key_y = request.data.get("new_public_key_y")
+        if not new_public_key_y:
+            return Response({"error": "new_public_key_y requis"}, status=status.HTTP_400_BAD_REQUEST)
+
+        try:
+            if not isinstance(new_public_key_y, str) or len(new_public_key_y) > MAX_HEX_LEN:
+                raise ValueError("Format invalide")
+            y_int = int(new_public_key_y, 16)
+            if not (1 < y_int < P - 1):
+                return Response(
+                    {"error": "Clé publique hors du groupe cryptographique"}, status=status.HTTP_400_BAD_REQUEST
+                )
+        except Exception:
+            return Response({"error": "Clé publique invalide (hex attendu)"}, status=status.HTTP_400_BAD_REQUEST)
+
+        identity, _ = SovereignIdentity.objects.get_or_create(user=request.user)
+        identity.public_key_y = new_public_key_y
+        identity.save(update_fields=["public_key_y", "updated_at"])
+
+        purged_sessions = invalidate_user_sessions(request.user)
+
+        from apps.core.audit import AuditTrail
+
+        AuditTrail.record_event(
+            action_type="ZKP_KEY_ROTATED",
+            actor=request.user.username,
+            details={"purged_sessions": purged_sessions, "country_code": identity.country_code},
+        )
+
+        return Response(
+            {
+                "success": True,
+                "message": "Clé ZKP renouvelée avec succès. Toutes les sessions actives ont été invalidées.",
+                "invalidated_sessions": purged_sessions,
+            },
+            status=status.HTTP_200_OK,
+        )

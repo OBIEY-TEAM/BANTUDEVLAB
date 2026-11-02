@@ -1,8 +1,10 @@
 """
 Client officiel GitLab CE / EE pour BantuDevLab.
 Utilise la bibliothèque officielle python-gitlab connectée à l'API GitLab v4.
+Intègre la journalisation structurée de sécurité et l'enregistrement dans l'Audit Trail (T-SEC-503).
 """
 
+import logging
 from typing import Any, Dict, List, Optional
 
 from django.conf import settings
@@ -10,11 +12,13 @@ from django.core.cache import cache
 
 import gitlab
 
+logger = logging.getLogger("bantudevlab.security")
+
 
 class GitLabClient:
     """
     Client d'interaction avec l'API GitLab v4 via le SDK officiel python-gitlab.
-    Met en cache les projets pendant 60s et intègre un circuit breaker.
+    Met en cache les projets pendant 60s et intègre un circuit breaker et des logs structurés.
     """
 
     CACHE_KEY_PROJECTS = "gitlab_projects_list"
@@ -25,8 +29,19 @@ class GitLabClient:
         self.token = private_token or getattr(settings, "GITLAB_PRIVATE_TOKEN", "")
         try:
             self.gl = gitlab.Gitlab(self.url, private_token=self.token or None, timeout=5)
-        except Exception:
+        except Exception as exc:
+            logger.warning("Échec d'initialisation du client GitLab SDK (%s): %s", self.url, exc)
+            self._log_audit_security_event("GITLAB_CLIENT_INIT_FAILED", {"url": self.url, "error": str(exc)})
             self.gl = None
+
+    def _log_audit_security_event(self, action_type: str, details: Dict[str, Any]) -> None:
+        """Enregistre un événement de sécurité dans l'audit trail souverain Malabo sans bloquer l'appelant."""
+        try:
+            from apps.core.audit import AuditTrail
+
+            AuditTrail.record_event(action_type=action_type, actor="gitlab_client", details=details)
+        except Exception:
+            pass
 
     def list_repositories(self) -> List[Dict[str, Any]]:
         """Liste les projets GitLab accessibles (compatible avec le tableau de bord BantuDevLab)."""
@@ -53,12 +68,14 @@ class GitLabClient:
                             "sovereignty_level": "Tier-1 Continental",
                         }
                     )
-        except Exception:
-            # Repli sur requête REST directe si le SDK ne peut pas parser
-            pass
+        except Exception as exc:
+            logger.warning("Erreur SDK GitLab lors de list_repositories (%s): %s", self.url, exc)
+            self._log_audit_security_event(
+                "GITLAB_API_ERROR", {"operation": "list_repositories_sdk", "url": self.url, "error": str(exc)}
+            )
 
         if not projects:
-            # Fallback vers les dépôts souverains configurés
+            # Fallback vers les dépôts souverains configurés via requête REST
             import requests
 
             try:
@@ -80,8 +97,11 @@ class GitLabClient:
                                 "sovereignty_level": "Tier-1 Continental",
                             }
                         )
-            except Exception:
-                pass
+            except Exception as exc:
+                logger.warning("Échec de la requête REST fallback GitLab projects (%s): %s", self.url, exc)
+                self._log_audit_security_event(
+                    "GITLAB_ACCESS_FAILED", {"operation": "list_repositories_rest", "url": self.url, "error": str(exc)}
+                )
 
         if projects:
             cache.set(self.CACHE_KEY_PROJECTS, projects, self.CACHE_TTL)
@@ -108,8 +128,8 @@ class GitLabClient:
                             "zkp_approvals_count": 0,
                         }
                     )
-        except Exception:
-            pass
+        except Exception as exc:
+            logger.warning("Erreur SDK GitLab list_merge_requests (%s): %s", self.url, exc)
 
         if not mrs:
             import requests
@@ -132,8 +152,8 @@ class GitLabClient:
                                 "zkp_approvals_count": 0,
                             }
                         )
-            except Exception:
-                pass
+            except Exception as exc:
+                logger.warning("Échec de la requête REST fallback GitLab MRs (%s): %s", self.url, exc)
 
         if not mrs:
             mrs = [
@@ -168,8 +188,8 @@ class GitLabClient:
                             "web_url": getattr(issue, "web_url", f"{self.url}/issues/{issue.iid}"),
                         }
                     )
-        except Exception:
-            pass
+        except Exception as exc:
+            logger.warning("Erreur SDK GitLab list_issues (%s): %s", self.url, exc)
 
         if not issues:
             issues = [
@@ -192,6 +212,7 @@ class GitLabClient:
                 return {"success": True, "group_id": group.id, "path": group.path}
         except Exception as e:
             logger_err = str(e)
+            logger.info("Synchronisation groupe GitLab (%s): %s", org_slug, logger_err)
             if "already exists" in logger_err.lower() or "has already been taken" in logger_err.lower():
                 return {"success": True, "status": "ALREADY_EXISTS", "path": org_slug}
         return {"success": True, "status": "SYNCHRONIZED", "path": org_slug}
@@ -205,8 +226,8 @@ class GitLabClient:
                     return {"version": v[0], "revision": v[1], "status": "ONLINE"}
                 elif isinstance(v, dict):
                     return v
-        except Exception:
-            pass
+        except Exception as exc:
+            logger.warning("Erreur SDK GitLab version (%s): %s", self.url, exc)
 
         import requests
 
@@ -214,7 +235,7 @@ class GitLabClient:
             res = requests.get(f"{self.url}/api/v4/version", timeout=3)
             if res.status_code == 200:
                 return res.json()
-        except Exception:
-            pass
+        except Exception as exc:
+            logger.warning("Échec de la requête REST GitLab version (%s): %s", self.url, exc)
 
         return {"version": "16.11.0-gitlab-sovereign", "status": "ONLINE"}
