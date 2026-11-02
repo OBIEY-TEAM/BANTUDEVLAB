@@ -22,9 +22,9 @@
   - [x] Implementer `scripts/generate_release_notes.py` capable de classifier les PRs fusionnees et commits selon les conventions semantiques (`feat:`, `fix:`, `docs:`, `refactor:`, `test:`).
   - [x] Generer le format Markdown standard GitHub (« What's Changed », liste des contributeurs, lien vers le diff complet).
 
-- [ ] **T-REL-1702 : Configuration Declaration et Documentation des Releases**
-  - [ ] Rediger `docs/SOVEREIGN_RELEASE_NOTES.md` specifiant la configuration `.github/release.yml` et `.gitea/release.yml`.
-  - [ ] Fournir les exemples de modeles de categories et exclusions (dependabot, bot).
+- [x] **T-REL-1702 : Configuration Declaration et Documentation des Releases**
+  - [x] Rediger `docs/SOVEREIGN_RELEASE_NOTES.md` specifiant la configuration `.github/release.yml` et `.gitea/release.yml`.
+  - [x] Fournir les exemples de modeles de categories et exclusions (dependabot, bot).
 
 - [ ] **T-REL-1703 : Tests Unitaires et Workflows CI/CD Release Notes**
   - [ ] Rediger les tests unitaires de validation du parseur dans `tests/test_sec_axes.py`.

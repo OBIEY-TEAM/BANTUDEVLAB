@@ -1,0 +1,30 @@
+changelog:
+  exclude:
+    labels:
+      - ignore-for-release
+      - dependencies
+    authors:
+      - dependabot
+      - renovate[bot]
+  categories:
+    - title: Exciting New Features
+      labels:
+        - feature
+        - enhancement
+    - title: Bug Fixes
+      labels:
+        - fix
+        - bug
+    - title: Security & Hardening
+      labels:
+        - security
+        - vulnerability
+    - title: Documentation Updates
+      labels:
+        - documentation
+        - docs
+    - title: Maintenance & Testing
+      labels:
+        - refactor
+        - test
+        - chore
