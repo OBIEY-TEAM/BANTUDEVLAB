@@ -1,0 +1,46 @@
+name: "Discussion Communautaire (GitHub Discussions)"
+description: "Posez une question, proposez une idee architecturale ou initiez un debat communautaire."
+title: "[DISCUSS]: "
+labels: ["type/discussion", "status/community"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Bienvenue dans l'espace de discussion communautaire souverain de BantuDevLab.
+        Cet espace permet d'echanger librement sur l'architecture, les idees de fonctionnalites et l'entraide technique.
+  - type: dropdown
+    id: category
+    attributes:
+      label: "Categorie de discussion"
+      options:
+        - "Idees & Propositions (Feature Ideas)"
+        - "Questions & Entraide (Q&A)"
+        - "Architecture & Securite (Architecture RFC)"
+        - "Annonces & Retours d'Experience (Show & Tell)"
+    validations:
+      required: true
+  - type: textarea
+    id: summary
+    attributes:
+      label: "Sujet ou Question"
+      description: "Expliquez clairement votre idee ou la question soumise a la communaute."
+      placeholder: "Comment structurer la federation inter-forge souveraine..."
+    validations:
+      required: true
+  - type: textarea
+    id: context_or_solution
+    attributes:
+      label: "Contexte, solutions envisagees ou alternatives"
+      description: "Donnez des references, des pistes explorees ou des exemples concrets."
+      placeholder: "J'ai considere l'approche Zero-Trust Schnorr avec les parametres suivants..."
+    validations:
+      required: false
+  - type: checkboxes
+    id: guidelines
+    attributes:
+      label: "Charte de contribution"
+      options:
+        - label: "J'ai recherche si une discussion similaire n'existait pas deja."
+          required: true
+        - label: "Le contenu respecte les standards techniques et de souverainete du projet."
+          required: true
