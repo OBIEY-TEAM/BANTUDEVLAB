@@ -4,9 +4,11 @@ Utilise la bibliothèque officielle python-gitlab connectée à l'API GitLab v4.
 """
 
 from typing import Any, Dict, List, Optional
-import gitlab
+
 from django.conf import settings
 from django.core.cache import cache
+
+import gitlab
 
 
 class GitLabClient:
@@ -85,7 +87,11 @@ class GitLabClient:
         """Récupère les informations de version de l'instance GitLab."""
         try:
             if self.gl:
-                return self.gl.version()
+                v = self.gl.version()
+                if isinstance(v, tuple) and len(v) >= 2:
+                    return {"version": v[0], "revision": v[1], "status": "ONLINE"}
+                elif isinstance(v, dict):
+                    return v
         except Exception:
             pass
 

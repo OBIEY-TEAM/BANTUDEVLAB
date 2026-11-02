@@ -1,13 +1,11 @@
 import hmac
 import json
 import logging
+
 from django.conf import settings
-from django.http import HttpResponse, JsonResponse
+from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_POST
-
-from apps.ai_assistant.tasks import async_analyze_code
-from apps.security_scanner.tasks import async_scan_code
 
 logger = logging.getLogger(__name__)
 
