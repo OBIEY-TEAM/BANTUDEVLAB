@@ -18,9 +18,9 @@
 
 ## Taches du Cycle TASK22
 
-- [ ] **T-ORG-2201 : Styles Primer pour les Equipes et Badges de Roles**
-  - [ ] Ajouter les classes `.gh-team-card`, `.gh-role-badge`, `.gh-role-triage`, `.gh-role-maintain` dans `theme-github.css` et `theme-github-dark.css`.
-  - [ ] Synchroniser avec `gitea_home/custom/public/assets/css/`.
+- [x] **T-ORG-2201 : Styles Primer pour les Equipes et Badges de Roles**
+  - [x] Ajouter les classes `.gh-team-card`, `.gh-role-badge`, `.gh-role-triage`, `.gh-role-maintain` dans `theme-github.css` et `theme-github-dark.css`.
+  - [x] Synchroniser avec `gitea_home/custom/public/assets/css/`.
 
 - [ ] **T-ORG-2202 : Specification et Guide de la Matrice de Roles Souveraine**
   - [ ] Documenter le mapping des unites de permissions Gitea vers les 5 roles GitHub dans `docs/SOVEREIGN_ORG_ROLES.md`.

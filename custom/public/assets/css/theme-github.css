@@ -753,6 +753,49 @@ body {
   align-items: center !important;
 }
 
+/* GitHub Organization Teams & Role Matrix (T-ORG-2201) */
+.gh-team-card {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  padding: 12px 16px !important;
+  border: 1px solid var(--color-border-default, #d0d7de) !important;
+  border-radius: 6px !important;
+  margin-bottom: 10px !important;
+  background-color: var(--color-canvas-default, #ffffff) !important;
+}
+
+.gh-role-badge {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 4px !important;
+  font-size: 11px !important;
+  font-weight: 600 !important;
+  padding: 2px 8px !important;
+  border-radius: 12px !important;
+  text-decoration: none !important;
+  border: 1px solid transparent !important;
+}
+
+.gh-role-badge.triage {
+  background-color: rgba(9, 105, 218, 0.1) !important;
+  color: #0969da !important;
+  border-color: rgba(9, 105, 218, 0.3) !important;
+}
+
+.gh-role-badge.maintain {
+  background-color: rgba(130, 80, 223, 0.1) !important;
+  color: #8250df !important;
+  border-color: rgba(130, 80, 223, 0.3) !important;
+}
+
+.gh-role-badge.admin {
+  background-color: rgba(207, 34, 46, 0.1) !important;
+  color: #cf222e !important;
+  border-color: rgba(207, 34, 46, 0.3) !important;
+}
+
+
 
 
 
