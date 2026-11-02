@@ -33,11 +33,11 @@ Ce document définit l'ensemble des tâches, sous-tâches techniques et configur
 
 ### Axe 1 : Design UI/UX et Thème Visuel GitHub Moderne
 
-- [ ] **T-UI-601 : Déploiement du Thème GitHub (Light & Dark Dimmed / Dark High Contrast)**
-  - [ ] Déployer la feuille de style communautaire `theme-github.css` et `theme-github-dark.css` dans `custom/public/assets/css/`.
-  - [ ] Définir les variables CSS conformes aux tokens de conception GitHub Primer (`--color-canvas-default`, `--color-btn-primary-bg`, `--color-accent-fg`, `--color-border-default`).
-  - [ ] Configurer `custom/conf/app.ini` avec `THEMES = gitea-auto,gitea-light,gitea-dark,github,github-dark` et `DEFAULT_THEME = github`.
-  - [ ] Supporter la détection automatique du mode sombre du système d'exploitation (`prefers-color-scheme`).
+- [x] **T-UI-601 : Déploiement du Thème GitHub (Light & Dark Dimmed / Dark High Contrast)**
+  - [x] Déployer la feuille de style communautaire `theme-github.css` et `theme-github-dark.css` dans `custom/public/assets/css/`.
+  - [x] Définir les variables CSS conformes aux tokens de conception GitHub Primer (`--color-canvas-default`, `--color-btn-primary-bg`, `--color-accent-fg`, `--color-border-default`).
+  - [x] Configurer `custom/conf/app.ini` avec `THEMES = gitea-auto,gitea-light,gitea-dark,github,github-dark` et `DEFAULT_THEME = github`.
+  - [x] Supporter la détection automatique du mode sombre du système d'exploitation (`prefers-color-scheme`).
 
 - [ ] **T-UI-602 : Surcharges de Gabarits (Templates Custom) pour Reproduire la Navigation GitHub**
   - [ ] Créer `custom/templates/custom/header.tmpl` reproduisant la barre supérieure de navigation GitHub (logo octocat/bantu, barre de recherche globale avec raccourci `/`, menu déroulant contextuel, cloche de notifications).
