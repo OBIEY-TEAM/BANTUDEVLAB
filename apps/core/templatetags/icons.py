@@ -78,7 +78,8 @@ def icon(name, size=20, cls="", title=""):
         return ""
     label = f'role="img" aria-label="{escape(title)}"' if title else 'aria-hidden="true" focusable="false"'
     css = f"icon icon-{escape(name)} {escape(cls)}".strip()
-    return mark_safe(
+    # Contenu SVG interne controlé, attributs dynamiques échappés via escape().
+    return mark_safe(  # nosec: B308, B703
         f'<svg class="{css}" width="{int(size)}" height="{int(size)}" viewBox="0 0 24 24" fill="none" '
         f'stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" {label}>{body}</svg>'
     )
@@ -93,7 +94,8 @@ def flag(code, width=24, title=""):
     width = int(width)
     height = round(width * 20 / 27)
     label = f'role="img" aria-label="{escape(title)}"' if title else 'aria-hidden="true" focusable="false"'
-    return mark_safe(
+    # Contenu SVG interne controlé, attributs dynamiques échappés via escape().
+    return mark_safe(  # nosec: B308, B703
         f'<svg class="flag flag-{escape(str(code).lower())}" width="{width}" height="{height}" viewBox="0 0 27 20" '
-        f'{label}><g>{body}</g></svg>'
+        f"{label}><g>{body}</g></svg>"
     )

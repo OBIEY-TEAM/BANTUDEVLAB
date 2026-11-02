@@ -11,11 +11,11 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 EMOJI = re.compile(
-    "[\U0001F000-\U0001FAFF"  # pictogrammes, drapeaux, emoticones
-    "\u2600-\u27BF"  # symboles divers et dingbats (check, croix, etoile...)
-    "\u2B00-\u2BFF"  # fleches et etoiles diverses
-    "\u231A\u231B\u23E9-\u23FF"
-    "\uFE0F\u200D]"
+    "[\U0001f000-\U0001faff"  # pictogrammes, drapeaux, emoticones
+    "\u2600-\u27bf"  # symboles divers et dingbats (check, croix, etoile...)
+    "\u2b00-\u2bff"  # fleches et etoiles diverses
+    "\u231a\u231b\u23e9-\u23ff"
+    "\ufe0f\u200d]"
 )
 TARGETS = ["templates", "static", "docs", "README.md", "CONTRIBUTING.md", "SECURITY.md", "CHANGELOG.md"]
 SUFFIXES = {".html", ".css", ".js", ".md", ".svg"}
@@ -44,7 +44,9 @@ def main() -> int:
     for path, number, line in found:
         print(f"{path}:{number}: emoji interdit -> {line}")
     if found:
-        print(f"\n{len(found)} emoji(s) detecte(s). Utilisez {{% icon %}} / {{% flag %}} (apps/core/templatetags/icons.py).")
+        print(
+            f"\n{len(found)} emoji(s) detecte(s). Utilisez {{% icon %}} / {{% flag %}} (apps/core/templatetags/icons.py)."
+        )
         return 1
     print("OK : aucun emoji.")
     return 0

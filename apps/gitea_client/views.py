@@ -4,13 +4,12 @@ import re
 
 from django.conf import settings
 from rest_framework import status
-from rest_framework.permissions import AllowAny, IsAdminUser, IsAuthenticated
+from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from .client import GiteaClient
 from .models import SovereignRepository
-
 
 SLUG_RE = re.compile(r"^[A-Za-z0-9_.-]{1,100}$")  # SEC-046: evite toute injection de chemin vers Gitea
 

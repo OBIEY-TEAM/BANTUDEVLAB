@@ -1,6 +1,6 @@
+import json
 import sys
 import unittest
-import json
 from unittest.mock import MagicMock, patch
 
 from django.conf import settings
@@ -149,7 +149,6 @@ class Axe2PerformanceTestCase(TestCase):
         self.assertEqual(settings.ASGI_APPLICATION, "config.asgi.application")
 
     @unittest.skipIf(sys.platform == "win32", "gunicorn requiert fcntl (POSIX uniquement)")
-
     def test_perf05_uvicorn_worker_importable(self):
         from uvicorn.workers import UvicornWorker
 
