@@ -198,3 +198,20 @@ class Axe4UITestCase(TestCase):
         self.assertIn("REPO_INDEXER_TYPE = bleve", doc_content)
         self.assertIn("symbol:", doc_content)
 
+    def test_t_sug_1901_and_1902_pr_suggested_changes(self):
+        """T-SUG-1901 & T-SUG-1902 : Verification des styles Primer et du polyfill de suggestions de code."""
+        from pathlib import Path
+
+        css_light = Path("custom/public/assets/css/theme-github.css").read_text(encoding="utf-8")
+        self.assertIn(".gh-suggestion-box", css_light)
+        self.assertIn(".gh-suggestion-header", css_light)
+        self.assertIn(".gh-suggestion-btn", css_light)
+
+        css_dark = Path("custom/public/assets/css/theme-github-dark.css").read_text(encoding="utf-8")
+        self.assertIn(".gh-suggestion-box", css_dark)
+
+        header_tmpl = Path("custom/templates/custom/header.tmpl").read_text(encoding="utf-8")
+        self.assertIn("T-SUG-1902", header_tmpl)
+        self.assertIn("Suggested change", header_tmpl)
+        self.assertIn("Apply suggestion", header_tmpl)
+
