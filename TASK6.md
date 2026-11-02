@@ -39,11 +39,11 @@ Ce document définit l'ensemble des tâches, sous-tâches techniques et configur
   - [x] Configurer `custom/conf/app.ini` avec `THEMES = gitea-auto,gitea-light,gitea-dark,github,github-dark` et `DEFAULT_THEME = github`.
   - [x] Supporter la détection automatique du mode sombre du système d'exploitation (`prefers-color-scheme`).
 
-- [ ] **T-UI-602 : Surcharges de Gabarits (Templates Custom) pour Reproduire la Navigation GitHub**
-  - [ ] Créer `custom/templates/custom/header.tmpl` reproduisant la barre supérieure de navigation GitHub (logo octocat/bantu, barre de recherche globale avec raccourci `/`, menu déroulant contextuel, cloche de notifications).
-  - [ ] Personnaliser `custom/templates/repo/header.tmpl` pour reproduire l'en-tête de dépôt avec les onglets officiels (Code, Issues, Pull requests, Actions, Projects, Wiki, Security, Insights, Settings).
-  - [ ] Adapter la vue de lecture de code (`custom/templates/repo/view_file.tmpl`) avec la barre d'outils GitHub (boutons Raw, Blame, Historique, Copie rapide et bouton d'édition avec raccourci clavier `e`).
-  - [ ] Personnaliser le pied de page (`custom/templates/custom/footer.tmpl`) aux couleurs et typographies discrètes de GitHub.
+- [x] **T-UI-602 : Surcharges de Gabarits (Templates Custom) pour Reproduire la Navigation GitHub**
+  - [x] Créer `custom/templates/custom/header.tmpl` reproduisant la barre supérieure de navigation GitHub (logo octocat/bantu, barre de recherche globale avec raccourci `/`, menu déroulant contextuel, cloche de notifications).
+  - [x] Personnaliser `custom/templates/repo/header.tmpl` pour reproduire l'en-tête de dépôt avec les onglets officiels (Code, Issues, Pull requests, Actions, Projects, Wiki, Security, Insights, Settings).
+  - [x] Adapter la vue de lecture de code (`custom/templates/repo/view_file.tmpl`) avec la barre d'outils GitHub (boutons Raw, Blame, Historique, Copie rapide et bouton d'édition avec raccourci clavier `e`).
+  - [x] Personnaliser le pied de page (`custom/templates/custom/footer.tmpl`) aux couleurs et typographies discrètes de GitHub.
 
 - [ ] **T-UI-603 : Typographie, Badges et Éléments Vectoriels**
   - [ ] Configurer la pile de polices système GitHub (`-apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans", Helvetica, Arial, sans-serif`).
