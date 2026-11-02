@@ -152,8 +152,8 @@ Ce document définit l'ensemble des tâches, sous-tâches techniques et configur
   - [x] Ajouter un bouton personnalisé « Ouvrir dans l'IDE Web » dans l'en-tête de dépôt via `custom/templates/repo/header.tmpl`.
 
 - [x] **T-EXT-603 : Partage de Snippets de Code (Équivalent GitHub Gist)**
-  - [ ] Déployer **Opengist** en conteneur Docker interconnecté avec le SSO Gitea.
-  - [ ] Fournir un lien direct dans la navigation principale vers le service de snippets.
+  - [x] Déployer **Opengist** en conteneur Docker interconnecté avec le SSO Gitea.
+  - [x] Fournir un lien direct dans la navigation principale vers le service de snippets.
 
 - [ ] **T-EXT-604 : Espace d'Échange Communautaire (Équivalent GitHub Discussions)**
   - [ ] Utiliser des labels d'issues dédiés (`type/discussion`) couplés à des templates, ou intégrer une instance **Discourse** auto-hébergée avec authentification OAuth2 déléguée à Gitea.
