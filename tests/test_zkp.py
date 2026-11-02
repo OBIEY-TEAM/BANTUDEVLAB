@@ -1,6 +1,8 @@
-from django.test import TestCase
+from django.contrib.auth.models import User
+from django.test import Client, TestCase
 
 from apps.zkp_auth.crypto import G, P, Q, ZKPCrypto
+from apps.zkp_auth.models import SovereignIdentity
 
 
 class ZKPCryptoTestCase(TestCase):
@@ -42,3 +44,34 @@ class ZKPCryptoTestCase(TestCase):
         replay_proof = proof.copy()
         replay_proof["message"] = "fraudulent-challenge"
         self.assertFalse(ZKPCrypto.verify_proof(public_y=y, proof=replay_proof))
+
+
+class ZKPOIDCIntegrationTestCase(TestCase):
+    """T-ADM-702 : Verifie l'exposition OIDC Discovery et les reclamations SSO/equipes."""
+
+    def setUp(self):
+        self.client = Client()
+        self.user = User.objects.create_user(username="sovereign_dev", email="dev@bantudevlab.africa")
+        SovereignIdentity.objects.create(
+            user=self.user,
+            public_key_y="1234abcd",
+            country_code="CIV",
+        )
+
+    def test_oidc_discovery_endpoint(self):
+        response = self.client.get("/.well-known/openid-configuration")
+        self.assertEqual(response.status_code, 200)
+        data = response.json()
+        self.assertIn("issuer", data)
+        self.assertIn("userinfo_endpoint", data)
+        self.assertIn("authorization_endpoint", data)
+        self.assertIn("groups", data["scopes_supported"])
+
+    def test_oidc_userinfo_claims(self):
+        response = self.client.get(f"/api/zkp/userinfo/?username={self.user.username}")
+        self.assertEqual(response.status_code, 200)
+        data = response.json()
+        self.assertEqual(data["sub"], str(self.user.id))
+        self.assertEqual(data["preferred_username"], self.user.username)
+        self.assertIn("groups", data)
+        self.assertTrue(len(data["groups"]) > 0)
