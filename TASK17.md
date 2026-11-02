@@ -18,9 +18,9 @@
 
 ## Taches du Cycle TASK17
 
-- [ ] **T-REL-1701 : Moteur de Generation de Notes de Version**
-  - [ ] Implementer `scripts/generate_release_notes.py` capable de classifier les PRs fusionnees et commits selon les conventions semantiques (`feat:`, `fix:`, `docs:`, `refactor:`, `test:`).
-  - [ ] Generer le format Markdown standard GitHub (« What's Changed », liste des contributeurs, lien vers le diff complet).
+- [x] **T-REL-1701 : Moteur de Generation de Notes de Version**
+  - [x] Implementer `scripts/generate_release_notes.py` capable de classifier les PRs fusionnees et commits selon les conventions semantiques (`feat:`, `fix:`, `docs:`, `refactor:`, `test:`).
+  - [x] Generer le format Markdown standard GitHub (« What's Changed », liste des contributeurs, lien vers le diff complet).
 
 - [ ] **T-REL-1702 : Configuration Declaration et Documentation des Releases**
   - [ ] Rediger `docs/SOVEREIGN_RELEASE_NOTES.md` specifiant la configuration `.github/release.yml` et `.gitea/release.yml`.
