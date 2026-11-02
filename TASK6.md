@@ -94,8 +94,8 @@ Ce document définit l'ensemble des tâches, sous-tâches techniques et configur
   - [x] Organiser les jalons (Milestones), labels hiérarchisés et affectations multiples.
   - [x] Configurer le tableau de bord Kanban (Projets Gitea) pour émuler la vue Board de GitHub Projects.
 
-- [ ] **T-COL-603 : Recherche Globale et Indexation de Code**
-  - [ ] Configurer le moteur d'indexation de code interne (Bleve ou Elasticsearch/Meilisearch) dans `app.ini` :
+- [x] **T-COL-603 : Recherche Globale et Indexation de Code**
+  - [x] Configurer le moteur d'indexation de code interne (Bleve ou Elasticsearch/Meilisearch) dans `app.ini` :
     ```ini
     [indexer]
     ISSUE_INDEXER_TYPE = bleve
@@ -103,7 +103,7 @@ Ce document définit l'ensemble des tâches, sous-tâches techniques et configur
     REPO_INDEXER_TYPE = bleve
     MAX_FILE_SIZE = 1048576
     ```
-  - [ ] Assurer la recherche instantanée de symboles, fonctions et mots-clés dans l'ensemble des dépôts indexés.
+  - [x] Assurer la recherche instantanée de symboles, fonctions et mots-clés dans l'ensemble des dépôts indexés.
 
 ---
 
