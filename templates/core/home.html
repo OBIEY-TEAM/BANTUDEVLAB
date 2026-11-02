@@ -9,9 +9,10 @@
         des preuves à divulgation nulle de connaissance (Zero-Knowledge Proofs), et l'intelligence artificielle
         locale Gemma 5B pour garantir l'indépendance technologique du continent.
     </p>
-    <div style="display: flex; gap: 1rem; justify-content: center;">
-        <a href="{% url 'dashboard' %}" class="btn btn-primary">Explorer le Tableau de Bord</a>
-        <a href="{% url 'zkp_auth:zkp_login_page' %}" class="btn btn-secondary">Authentification Zero-Trust (ZKP)</a>
+    <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+        <a href="{% url 'dashboard' %}" class="btn btn-primary">{% trans "Explorer le Tableau de Bord" %}</a>
+        <a href="{% url 'zkp_auth:zkp_login_page' %}" class="btn btn-secondary">{% trans "Authentification Zero-Trust (ZKP)" %}</a>
+        <a href="{% url 'faq' %}" class="btn btn-secondary">{% icon "help-circle" size=18 %} {% trans "Mode d'Emploi & FAQ" %}</a>
     </div>
 </section>
 
@@ -36,6 +37,21 @@
         <span class="stat-number">5 Milliards</span>
         <p style="color: var(--secondary-emerald); font-weight: bold;">Paramètres Optimisés</p>
     </div>
+</div>
+
+<!-- Bannière d'accès direct au Guide d'utilisation et FAQ -->
+<div class="card" style="margin-top: 3rem; background: linear-gradient(135deg, rgba(245, 158, 11, 0.08), rgba(17, 24, 39, 0.95)); border: 1px solid var(--primary-african-gold); display: flex; align-items: center; justify-content: space-between; gap: 1.5rem; flex-wrap: wrap;">
+    <div>
+        <h3 style="margin: 0 0 0.5rem 0; display: flex; align-items: center; gap: 0.5rem;">
+            {% icon "book-open" size=22 %} {% trans "Nouveau sur BANTUDEVLAB & GitLab ?" %}
+        </h3>
+        <p style="color: var(--text-muted); margin: 0; font-size: 0.95rem;">
+            {% trans "Consultez notre guide complet : création de compte, connexion sans mot de passe Zero-Trust, consultation du code source, clone avec token Git et foire aux questions." %}
+        </p>
+    </div>
+    <a href="{% url 'faq' %}" class="btn btn-primary" style="white-space: nowrap;">
+        {% trans "Consulter la FAQ & Guide" %} {% icon "chevron-right" size=16 %}
+    </a>
 </div>
 
 <div style="margin-top: 3rem;">

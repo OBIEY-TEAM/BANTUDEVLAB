@@ -94,6 +94,11 @@ def metrics_view(request):
     return render(request, "core/metrics.html")
 
 
+def faq_view(request):
+    """Fiche FAQ complète et guide d'utilisation de la forge souveraine BANTUDEVLAB & GitLab."""
+    return render(request, "core/faq.html")
+
+
 class SovereignOrganizationListCreateView(APIView):
     """
     DEV-02: Support Multi-Tenancy & Organisations Africaines.
