@@ -285,3 +285,50 @@ body {
 .gh-merge-btn-primary:hover {
   background-color: #1a7f37 !important;
 }
+
+/* GitHub Interactive Blame View & Heatmap Gradient (T-BLM-901) */
+.blame .lines-blame, .file-view.blame table {
+  border-collapse: separate !important;
+  border-spacing: 0 !important;
+}
+
+.blame-commit, .lines-blame td.blame-line {
+  position: relative !important;
+  padding: 4px 12px !important;
+  font-size: 12px !important;
+  border-bottom: 1px solid var(--color-border-muted, #afb8c1) !important;
+  background-color: var(--color-canvas-subtle, #f6f8fa) !important;
+}
+
+.gh-blame-heat-marker, .blame-heat-gradient {
+  display: inline-block;
+  width: 4px;
+  height: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+.gh-blame-heat-marker.heat-new { background-color: #0969da; }
+.gh-blame-heat-marker.heat-mid { background-color: #8250df; }
+.gh-blame-heat-marker.heat-old { background-color: #afb8c1; }
+
+.blame-commit-author {
+  font-weight: 600;
+  color: var(--color-text, #1f2328);
+}
+
+.blame-commit-date {
+  color: var(--color-text-light, #656d76);
+  font-size: 11px;
+  margin-left: 6px;
+}
+
+.blame-commit-message {
+  color: var(--color-text, #1f2328);
+  margin-top: 2px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 320px;
+}
