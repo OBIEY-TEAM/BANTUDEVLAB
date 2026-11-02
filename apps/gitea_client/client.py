@@ -22,7 +22,7 @@ class GiteaClient:
     CACHE_TTL = 60
 
     def __init__(self, api_url: Optional[str] = None, token: Optional[str] = None):
-        self.api_url = (api_url or getattr(settings, "GITEA_API_URL", "http://localhost:3001/api/v1")).rstrip("/")
+        self.api_url = (api_url or getattr(settings, "GITEA_API_URL", "http://localhost:3002/api/v1")).rstrip("/")
         self.token = token or getattr(settings, "GITEA_ADMIN_TOKEN", "")
         self.headers = {
             "Content-Type": "application/json",
@@ -33,11 +33,11 @@ class GiteaClient:
 
     # PERF-061: circuit breaker - apres BREAKER_THRESHOLD echecs consecutifs, Gitea n'est plus
     # sollicite pendant BREAKER_COOLDOWN secondes (les appelants utilisent leur repli).
-    BREAKER_THRESHOLD = 3
+    BREAKER_THRESHOLD = 5
     BREAKER_COOLDOWN = 30
     CACHE_KEY_FAILURES = "gitea_breaker_failures"
     CACHE_KEY_OPEN = "gitea_breaker_open"
-    REQUEST_TIMEOUT = 5
+    REQUEST_TIMEOUT = 15
 
     def _breaker_open(self) -> bool:
         return bool(cache.get(self.CACHE_KEY_OPEN))

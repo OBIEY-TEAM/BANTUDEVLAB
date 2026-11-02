@@ -44,7 +44,26 @@
     </div>
 </div>
 
-<div style="display: grid; grid-template-columns: 2fr 1fr; gap: 2rem; margin-top: 2.5rem;">
+<!-- Bannière Bascule d'Environnement Forge (Gitea / GitLab) -->
+<div class="card" style="margin-top: 1.5rem; display: flex; justify-content: space-between; align-items: center; background: rgba(16, 185, 129, 0.05); border: 1px solid rgba(16, 185, 129, 0.3); padding: 1rem 1.5rem;">
+    <div style="display: flex; align-items: center; gap: 0.8rem;">
+        {% icon "git-branch" size=22 %}
+        <div>
+            <strong style="color: #10b981;">{% trans "Bascule d'Environnement Forge Souveraine" %}</strong>
+            <p style="margin: 0; font-size: 0.85rem; color: var(--text-muted);">{% trans "Accédez directement à vos espaces de dépôts Gitea ou GitLab CE." %} <span style="opacity: 0.8; font-family: monospace; font-size: 0.8rem;">(Gitea : <a href="{{ GITEA_LOGIN_URL|default:'http://localhost:3002/user/login' }}" target="_blank" rel="noopener noreferrer" style="color: #10b981; text-decoration: underline;">http://localhost:3002/user/login</a>)</span></p>
+        </div>
+    </div>
+    <div style="display: flex; gap: 0.8rem;">
+        <a href="{{ GITEA_LOGIN_URL|default:'http://localhost:3002/user/login' }}" target="_blank" rel="noopener noreferrer" class="btn btn-outline" style="border-color: #10b981; color: #10b981;" title="{% trans 'Connexion directe Gitea' %}">
+            {% icon "git-branch" size=14 %} {% trans "Basculer vers Gitea" %}
+        </a>
+        <a href="{{ GITLAB_URL|default:'http://localhost:3001' }}" target="_blank" rel="noopener noreferrer" class="btn btn-primary">
+            {% icon "code" size=14 %} {% trans "Espace GitLab" %}
+        </a>
+    </div>
+</div>
+
+<div style="display: grid; grid-template-columns: 2fr 1fr; gap: 2rem; margin-top: 2rem;">
     <div>
         <h3>Dépôts Hébergés sur Gitea / Systalink</h3>
         <div class="card" style="margin-top: 1rem;">

@@ -97,6 +97,9 @@
                         {% trans "Sur la mire de connexion GitLab, cliquez sur le bouton souverain" %} <em>« Connexion avec Bantu ZKP »</em>. {% trans "Si vous êtes déjà authentifié sur BantuDevLab, la session GitLab est ouverte instantanément. Sinon, vous serez invité à signer le défi cryptographique sans jamais saisir de mot de passe." %}
                     </li>
                 </ol>
+                <div style="margin: 1rem 0; padding: 0.75rem 1rem; background: rgba(16, 185, 129, 0.08); border-left: 3px solid #10b981; border-radius: 4px;">
+                    <strong>Accès direct Gitea :</strong> Chemin de connexion direct aux dépôts Git : <a href="{{ GITEA_LOGIN_URL|default:'http://localhost:3002/user/login' }}" target="_blank" rel="noopener noreferrer" style="color: #10b981; font-weight: 600; text-decoration: underline;">http://localhost:3002/user/login</a>
+                </div>
                 <div class="faq-tip-box">
                     {% icon "info" size=18 %} <strong>{% trans "Protection anti-rejeu :" %}</strong> {% trans "Chaque défi de connexion est unique et consommé atomiquement. Une preuve interceptée sur le réseau ne peut jamais être réutilisée." %}
                 </div>

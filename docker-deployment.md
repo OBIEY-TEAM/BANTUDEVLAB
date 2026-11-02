@@ -1,0 +1,94 @@
+# Deploiement Conteneurise Docker - BANTUDEVLAB
+
+Ce guide explique comment deployer l'integralite de la plateforme BantuDevLab et de sa forge Git souveraine dans un environnement Docker conteneurise, cle-en-main, sans aucune reinstallation manuelle de dependances (Python, PostgreSQL, Redis, Gitea).
+
+---
+
+## 1. Prerequis Uniques
+
+- **Docker Desktop** (version 24+ ou superieure)
+- **Docker Compose** (v2 ou v5 integre a Docker CLI)
+
+*Aucune installation locale de Python, Git, SQLite ou Gitea n'est requise sur la machine hote.*
+
+---
+
+## 2. Deploiement en 1 Clic / 1 Commande
+
+### Option A : Ligne de commande universelle
+A la racine du projet, lancez :
+
+```bash
+docker compose up -d --build
+```
+
+### Option B : Scripts d'automatisation fournis
+- **Sous Windows (Invite de commandes)** : double-cliquez sur `deploy_docker.bat`
+- **Sous Windows (PowerShell)** : executez `.\deploy_docker.ps1`
+- **Sous Linux / macOS** : executez `./deploy_docker.sh`
+
+---
+
+## 3. Cartographie des Services et Ports
+
+Tous les conteneurs sont relies sur un reseau interne securise `sovereign_net` et exposent directement les memes ports d'acces que votre environnement local :
+
+| Conteneur | Service | Port Hote | URL d'Acces | Role |
+|---|---|---|---|---|
+| `bantudevlab_core` | Portail Django Web | `8001` | [http://localhost:8001/](http://localhost:8001/) | Portail central, audit ZKP, IA souveraine |
+| `bantudevlab_gitea` | Gitea Forge Officielle | `3002` | [http://localhost:3002/user/login](http://localhost:3002/user/login) | Serveur Git complet officiel v1.22 |
+| `bantudevlab_forge` | Moteur Forge Souverain | `3001` | [http://localhost:3001/](http://localhost:3001/) | Passerelle Git HTTP, Smart HTTP & API CE |
+| `bantudevlab_postgres` | Base relationnelle | `5432` | Reseau interne | Stockage PostgreSQL 16 Alpine |
+| `bantudevlab_redis` | Cache & Broker | `6379` | Reseau interne | Broker Redis 7 Alpine |
+| `bantudevlab_celery` | File de taches | - | Reseau interne | Worker asynchrone Celery |
+| `bantudevlab_gitea_init` | Init automatique | - | One-shot | Creation automatique du compte `bantu_admin` |
+
+---
+
+## 4. Identifiants Administrateur Preconfigures
+
+| Service | Utilisateur | Mot de passe | Role |
+|---|---|---|---|
+| **Gitea Forge** | `bantu_admin` | `BantuAdmin2026!` | Administrateur global de la forge |
+| **PostgreSQL** | `bantudevlab_admin` | `sovereign_pass_2025` | Base `bantudevlab` |
+| **Redis** | `default` | `sovereign_redis_pass_2025` | Cache distribue |
+
+---
+
+## 5. Commandes Utiles au Quotidien
+
+### Verifier l'etat des conteneurs
+```bash
+docker compose ps
+```
+
+### Consulter les journaux en direct
+```bash
+# Tous les services
+docker compose logs -f
+
+# Un service specifique
+docker compose logs -f django_app
+docker compose logs -f gitea
+docker compose logs -f forge_engine
+```
+
+### Arreter la composition
+```bash
+docker compose stop
+```
+
+### Relancer les conteneurs deja construits (sans recompiler)
+```bash
+docker compose start
+```
+
+### Tout supprimer (conteneurs et reseaux, en conservant les volumes de donnees)
+```bash
+docker compose down
+```
+
+### Reinitialiser completement (y compris les donnees persistees)
+```bash
+docker compose down -v
+```
