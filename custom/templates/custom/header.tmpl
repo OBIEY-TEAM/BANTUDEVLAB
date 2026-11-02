@@ -541,5 +541,38 @@ document.addEventListener('DOMContentLoaded', function() {
       }
     });
   }
+
+  // GitHub Pull Request Suggested Changes Polyfill (T-SUG-1902)
+  document.querySelectorAll('pre code').forEach(codeEl => {
+    const isSuggestion = codeEl.classList.contains('language-suggestion') ||
+                         codeEl.parentElement.classList.contains('language-suggestion') ||
+                         codeEl.textContent.trim().startsWith('```suggestion');
+    if (isSuggestion && !codeEl.closest('.gh-suggestion-box')) {
+      const rawText = codeEl.textContent.replace(/^```suggestion\s*/, '').replace(/```$/, '').trim();
+      const preEl = codeEl.parentElement;
+      const box = document.createElement('div');
+      box.className = 'gh-suggestion-box';
+      box.innerHTML = `
+        <div class="gh-suggestion-header">
+          <span>Suggested change</span>
+          <button type="button" class="gh-suggestion-btn" data-applied="false">Apply suggestion</button>
+        </div>
+        <div class="gh-suggestion-body">${rawText}</div>
+      `;
+
+      const btn = box.querySelector('.gh-suggestion-btn');
+      btn.addEventListener('click', () => {
+        if (navigator.clipboard) {
+          navigator.clipboard.writeText(rawText);
+        }
+        btn.textContent = 'Applied';
+        btn.style.borderColor = '#2da44e';
+        btn.style.color = '#1a7f37';
+        btn.disabled = true;
+      });
+
+      preEl.replaceWith(box);
+    }
+  });
 });
 </script>

@@ -22,9 +22,9 @@
   - [x] Ajouter les styles `.gh-suggestion-box`, `.gh-suggestion-header`, `.gh-suggestion-btn` dans `theme-github.css` et `theme-github-dark.css`.
   - [x] Synchroniser avec `gitea_home/custom/public/assets/css/`.
 
-- [ ] **T-SUG-1902 : Moteur de Rendu Polyfill des Blocs ```suggestion**
-  - [ ] Implementer le transformateur Markdown cote client dans `custom/templates/custom/header.tmpl`.
-  - [ ] Synchroniser avec `gitea_home/custom/templates/custom/header.tmpl`.
+- [x] **T-SUG-1902 : Moteur de Rendu Polyfill des Blocs ```suggestion**
+  - [x] Implementer le transformateur Markdown cote client dans `custom/templates/custom/header.tmpl`.
+  - [x] Synchroniser avec `gitea_home/custom/templates/custom/header.tmpl`.
 
 - [ ] **T-SUG-1903 : Tests Unitaires et Workflows CI/CD Suggested Changes**
   - [ ] Rediger les tests unitaires dans `tests/test_ui_axes.py`.
