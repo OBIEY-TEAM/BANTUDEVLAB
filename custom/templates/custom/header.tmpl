@@ -400,5 +400,32 @@ document.addEventListener('DOMContentLoaded', function() {
       });
     });
   });
+
+  // GitHub Modern Profile README.md Enhancement (T-PRF-1202)
+  const profileContainer = document.querySelector('.user.profile, .ui.container.user-profile');
+  if (profileContainer) {
+    const usernameEl = document.querySelector('.profile-avatar-name, .username, h2.ui.header');
+    const username = usernameEl ? usernameEl.textContent.trim() : '';
+    if (username && !document.getElementById('gh-profile-readme-card')) {
+      const readmeBox = document.createElement('div');
+      readmeBox.id = 'gh-profile-readme-card';
+      readmeBox.style.margin = '16px 0';
+      readmeBox.style.border = '1px solid var(--color-border-default, #d0d7de)';
+      readmeBox.style.borderRadius = '6px';
+      readmeBox.style.background = 'var(--color-canvas-default, #ffffff)';
+      readmeBox.style.padding = '16px';
+      readmeBox.innerHTML = `
+        <div style="display: flex; justify-content: space-between; align-items: center; padding-bottom: 8px; border-bottom: 1px solid var(--color-border-default, #d0d7de); font-size: 12px; color: var(--color-text-light, #656d76);">
+          <span>${username} / README.md</span>
+          <span style="font-size: 11px; border: 1px solid var(--color-border-default, #d0d7de); border-radius: 4px; padding: 1px 5px;">Special Repository</span>
+        </div>
+        <div style="padding-top: 12px; font-size: 13px; color: var(--color-text, #1f2328);">
+          <p>Bienvenue sur le profil de developpeur souverain <strong>${username}</strong> sur BantuDevLab Forge.</p>
+        </div>
+      `;
+      const repoListTarget = document.querySelector('.ui.tab[data-tab="overview"], .user-profile-content') || profileContainer;
+      repoListTarget.prepend(readmeBox);
+    }
+  }
 });
 </script>

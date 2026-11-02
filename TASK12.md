@@ -21,9 +21,9 @@
   - [x] Integrer les classes `.gh-pinned-repo-card` et `.repo-language-color` dans `custom/public/assets/css/theme-github.css` et `theme-github-dark.css`.
   - [x] Synchroniser avec `gitea_home/custom/public/assets/css/`.
 
-- [ ] **T-PRF-1202 : Rendu Automatique du Profil README (`username/username`)**
-  - [ ] Configurer la detection du depot special de profil et l'injection dynamique du README souverain dans `custom/templates/custom/header.tmpl`.
-  - [ ] Synchroniser avec `gitea_home/custom/templates/custom/header.tmpl`.
+- [x] **T-PRF-1202 : Rendu Automatique du Profil README (`username/username`)**
+  - [x] Configurer la detection du depot special de profil et l'injection dynamique du README souverain dans `custom/templates/custom/header.tmpl`.
+  - [x] Synchroniser avec `gitea_home/custom/templates/custom/header.tmpl`.
 
 - [ ] **T-PRF-1203 : Tests Unitaires et Pipeline CI/CD pour la Presentation de Profil**
   - [ ] Rediger les tests unitaires dans `tests/test_ui_axes.py`.
