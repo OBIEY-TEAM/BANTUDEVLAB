@@ -205,3 +205,83 @@ body {
   font-weight: 600 !important;
   padding: 4px 8px !important;
 }
+
+/* GitHub Modern Pull Request Merge Box & Status Checks (T-PR-802) */
+.gh-merge-box, .ui.segment.branch-status, .diff-detail-box.merge-box {
+  border: 1px solid var(--color-border-default, #d0d7de) !important;
+  border-radius: 8px !important;
+  background-color: var(--color-canvas-default, #ffffff) !important;
+  padding: 16px !important;
+  margin-top: 16px !important;
+  box-shadow: 0 1px 3px rgba(31, 35, 40, 0.12) !important;
+}
+
+.gh-merge-box.clean, .branch-status.clean {
+  border-left: 5px solid #1a7f37 !important;
+}
+
+.gh-merge-box.conflict, .branch-status.conflict {
+  border-left: 5px solid #cf222e !important;
+}
+
+.gh-merge-box.checking, .branch-status.checking {
+  border-left: 5px solid #bf8700 !important;
+}
+
+.gh-status-check-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--color-border-muted, #afb8c1);
+  font-size: 13px;
+}
+
+.gh-status-check-item:last-child {
+  border-bottom: none;
+}
+
+.gh-status-check-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 500;
+}
+
+.gh-status-check-badge.success {
+  color: #1a7f37;
+  font-weight: 600;
+}
+
+.gh-status-check-badge.failure {
+  color: #cf222e;
+  font-weight: 600;
+}
+
+.gh-status-check-badge.pending {
+  color: #bf8700;
+  font-weight: 600;
+}
+
+.gh-merge-action-bar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding-top: 12px;
+  margin-top: 12px;
+  border-top: 1px solid var(--color-border-default, #d0d7de);
+}
+
+.gh-merge-btn-primary {
+  background-color: #1f883d !important;
+  color: #ffffff !important;
+  border-radius: 6px !important;
+  font-weight: 600 !important;
+  padding: 7px 16px !important;
+  border: 1px solid rgba(31, 35, 40, 0.15) !important;
+  box-shadow: 0 1px 0 rgba(31, 35, 40, 0.1) !important;
+}
+
+.gh-merge-btn-primary:hover {
+  background-color: #1a7f37 !important;
+}
