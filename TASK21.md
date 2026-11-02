@@ -26,6 +26,6 @@
   - [x] Ajouter le script d'enrichissement des barres de jalons dans `custom/templates/custom/header.tmpl`.
   - [x] Synchroniser avec `gitea_home/custom/templates/custom/header.tmpl`.
 
-- [ ] **T-MLS-2103 : Tests Unitaires et Workflows CI/CD Milestones**
-  - [ ] Rediger les tests unitaires dans `tests/test_ui_axes.py`.
-  - [ ] Creer les workflows CI/CD `.github/workflows/milestones_progress.yml` et `.gitea/workflows/milestones_progress.yaml`.
+- [x] **T-MLS-2103 : Tests Unitaires et Workflows CI/CD Milestones**
+  - [x] Rediger les tests unitaires dans `tests/test_ui_axes.py`.
+  - [x] Creer les workflows CI/CD `.github/workflows/milestones_progress.yml` et `.gitea/workflows/milestones_progress.yaml`.

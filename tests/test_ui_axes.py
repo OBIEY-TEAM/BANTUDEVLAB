@@ -232,3 +232,20 @@ class Axe4UITestCase(TestCase):
         self.assertIn("gh-graph-canvas", header_tmpl)
         self.assertIn("#0969da", header_tmpl)
 
+    def test_t_mls_2101_and_2102_milestones_burndown_progress(self):
+        """T-MLS-2101 & T-MLS-2102 : Verification des styles Primer et du calculateur de jalons."""
+        from pathlib import Path
+
+        css_light = Path("custom/public/assets/css/theme-github.css").read_text(encoding="utf-8")
+        self.assertIn(".gh-milestone-card", css_light)
+        self.assertIn(".gh-milestone-progress-bar", css_light)
+        self.assertIn(".gh-milestone-progress-fill", css_light)
+
+        css_dark = Path("custom/public/assets/css/theme-github-dark.css").read_text(encoding="utf-8")
+        self.assertIn(".gh-milestone-card", css_dark)
+
+        header_tmpl = Path("custom/templates/custom/header.tmpl").read_text(encoding="utf-8")
+        self.assertIn("T-MLS-2102", header_tmpl)
+        self.assertIn("gh-milestone-progress-bar", header_tmpl)
+        self.assertIn("complete", header_tmpl)
+
