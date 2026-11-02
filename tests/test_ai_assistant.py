@@ -174,3 +174,43 @@ class GemmaAssistantTestCase(TestCase):
         data = res.json()
         self.assertTrue(data["success"])
         self.assertEqual(data["verdict"], "REQUEST_CHANGES")
+
+    def test_copilot_session_export(self):
+        """T-FIN-2601 : Test de l'exportation de session de discussion Copilot."""
+        from django.test import Client
+
+        client = Client()
+        messages = [
+            {"role": "user", "content": "Comment optimiser cet algorithme ?"},
+            {"role": "assistant", "content": "Utilisez une table de hachage O(1)."},
+        ]
+
+        # Export Markdown
+        res_md = client.post(
+            "/api/ai/copilot/export/",
+            data={"messages": messages, "format": "markdown"},
+            content_type="application/json",
+        )
+        self.assertEqual(res_md.status_code, 200)
+        data_md = res_md.json()
+        self.assertEqual(data_md["format"], "markdown")
+        self.assertIn("Session d'Assistance Copilote", data_md["content"])
+        self.assertIn("Utilisez une table de hachage", data_md["content"])
+
+        # Export JSON
+        res_json = client.post(
+            "/api/ai/copilot/export/",
+            data={"messages": messages, "format": "json"},
+            content_type="application/json",
+        )
+        self.assertEqual(res_json.status_code, 200)
+        self.assertEqual(res_json.json()["format"], "json")
+
+        # Invalid payload
+        res_err = client.post(
+            "/api/ai/copilot/export/",
+            data={"messages": "not_a_list"},
+            content_type="application/json",
+        )
+        self.assertEqual(res_err.status_code, 400)
+
