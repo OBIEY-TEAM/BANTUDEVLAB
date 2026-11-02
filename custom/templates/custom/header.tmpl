@@ -427,5 +427,31 @@ document.addEventListener('DOMContentLoaded', function() {
       repoListTarget.prepend(readmeBox);
     }
   }
+
+  // GitHub Accessible Reaction Shortcodes Polyfill (T-REA-1302)
+  const shortcodeMap = {
+    ':+1:': '[+1]',
+    ':thumbsup:': '[+1]',
+    ':-1:': '[-1]',
+    ':thumbsdown:': '[-1]',
+    ':heart:': '[Heart]',
+    ':rocket:': '[Rocket]',
+    ':eyes:': '[Eyes]',
+    ':tada:': '[Hooray]',
+    ':hooray:': '[Hooray]',
+    ':sparkles:': '[Sparkles]'
+  };
+
+  document.querySelectorAll('.comment-body, .issue-content, .commit-summary, .commit-body').forEach(el => {
+    let html = el.innerHTML;
+    let modified = false;
+    for (const [code, replacement] of Object.entries(shortcodeMap)) {
+      if (html.includes(code)) {
+        html = html.replaceAll(code, `<span class="gh-reaction-tag">${replacement}</span>`);
+        modified = true;
+      }
+    }
+    if (modified) el.innerHTML = html;
+  });
 });
 </script>
