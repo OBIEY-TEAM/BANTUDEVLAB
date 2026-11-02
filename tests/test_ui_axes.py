@@ -158,3 +158,21 @@ class Axe4UITestCase(TestCase):
         self.assertIn("T-PRF-1202", header_tmpl)
         self.assertIn("README.md", header_tmpl)
 
+    def test_t_ntf_1601_and_1602_notifications_inbox_and_filter_tabs(self):
+        """T-NTF-1601 & T-NTF-1602 : Verification des styles et filtres dynamiques des notifications."""
+        from pathlib import Path
+
+        css_light = Path("custom/public/assets/css/theme-github.css").read_text(encoding="utf-8")
+        self.assertIn(".gh-notifications-nav", css_light)
+        self.assertIn(".gh-notification-item", css_light)
+        self.assertIn(".gh-notification-unread", css_light)
+
+        css_dark = Path("custom/public/assets/css/theme-github-dark.css").read_text(encoding="utf-8")
+        self.assertIn(".gh-notifications-nav", css_dark)
+        self.assertIn(".gh-filter-badge", css_dark)
+
+        header_tmpl = Path("custom/templates/custom/header.tmpl").read_text(encoding="utf-8")
+        self.assertIn("T-NTF-1602", header_tmpl)
+        self.assertIn("gh-notif-nav", header_tmpl)
+        self.assertIn("data-filter", header_tmpl)
+

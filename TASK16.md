@@ -26,6 +26,6 @@
   - [x] Ajouter le mecanisme de tri cote client (Non lus, Mentions, Participations) et le raccourci `m` dans `custom/templates/custom/header.tmpl`.
   - [x] Synchroniser avec `gitea_home/custom/templates/custom/header.tmpl`.
 
-- [ ] **T-NTF-1603 : Tests de Conformite et Pipeline CI/CD Notifications**
-  - [ ] Rediger les tests unitaires dans `tests/test_ui_axes.py`.
-  - [ ] Creer les workflows CI/CD `.github/workflows/notifications_inbox.yml` et `.gitea/workflows/notifications_inbox.yaml`.
+- [x] **T-NTF-1603 : Tests de Conformite et Pipeline CI/CD Notifications**
+  - [x] Rediger les tests unitaires dans `tests/test_ui_axes.py`.
+  - [x] Creer les workflows CI/CD `.github/workflows/notifications_inbox.yml` et `.gitea/workflows/notifications_inbox.yaml`.
