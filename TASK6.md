@@ -135,9 +135,9 @@ Ce document définit l'ensemble des tâches, sous-tâches techniques et configur
     ```
   - [x] Permettre le push et pull d'images Docker via `docker login <domaine>` et l'authentification par jeton d'accès.
 
-- [ ] **T-PKG-602 : Registres de Dépendances Multi-Langages**
-  - [ ] Valider le support des registres natifs : PyPI, npm, Maven/Gradle, NuGet, Cargo, Composer, Go, Helm, Debian, RPM.
-  - [ ] Configurer les quotas de stockage et les politiques de rétention des versions d'artefacts.
+- [x] **T-PKG-602 : Registres de Dépendances Multi-Langages**
+  - [x] Valider le support des registres natifs : PyPI, npm, Maven/Gradle, NuGet, Cargo, Composer, Go, Helm, Debian, RPM.
+  - [x] Configurer les quotas de stockage et les politiques de rétention des versions d'artefacts.
 
 ---
 
