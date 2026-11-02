@@ -10,4 +10,5 @@ urlpatterns = [
     path("copilot/explain/", views.CopilotExplainView.as_view(), name="copilot_explain"),
     path("copilot/complete/", views.CopilotCompleteView.as_view(), name="copilot_complete"),
     path("copilot/pr-summary/", views.CopilotPRSummaryView.as_view(), name="copilot_pr_summary"),
+    path("copilot/pr-review-bot/", views.CopilotPRReviewBotView.as_view(), name="copilot_pr_review_bot"),
 ]
