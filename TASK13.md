@@ -17,9 +17,9 @@
 
 ## Taches du Cycle TASK13
 
-- [ ] **T-REA-1301 : Pastilles de Reactions Primer sans Emojis (SVG & Badges Textuels)**
-  - [ ] Styliser les boutons de reactions (`.gh-reaction-btn`, `.gh-reaction-badge`) dans `custom/public/assets/css/theme-github.css` et `theme-github-dark.css`.
-  - [ ] Synchroniser avec `gitea_home/custom/public/assets/css/`.
+- [x] **T-REA-1301 : Pastilles de Reactions Primer sans Emojis (SVG & Badges Textuels)**
+  - [x] Styliser les boutons de reactions (`.gh-reaction-btn`, `.gh-reaction-badge`) dans `custom/public/assets/css/theme-github.css` et `theme-github-dark.css`.
+  - [x] Synchroniser avec `gitea_home/custom/public/assets/css/`.
 
 - [ ] **T-REA-1302 : Polyfill de Conversion des Shortcodes GitHub (`:+1:`, `:heart:`, `:rocket:`)**
   - [ ] Ajouter le filtre JavaScript de conversion automatique des codes textuels GitHub vers des badges accessibles dans `custom/templates/custom/header.tmpl`.
