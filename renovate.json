@@ -1,0 +1,29 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "description": "BANTUDEVLAB - Configuration Renovate (Equivalent Dependabot pour Gitea)",
+  "extends": [
+    "config:recommended",
+    ":dependencyDashboard"
+  ],
+  "platform": "gitea",
+  "endpoint": "http://gitea:3000/api/v1",
+  "timezone": "Africa/Abidjan",
+  "schedule": ["before 6am on monday"],
+  "packageRules": [
+    {
+      "matchPackagePatterns": ["*"],
+      "matchUpdateTypes": ["minor", "patch"],
+      "groupName": "all non-major dependencies"
+    },
+    {
+      "matchPackageNames": ["django"],
+      "allowedVersions": "<6.0.0"
+    }
+  ],
+  "vulnerabilityAlerts": {
+    "enabled": true
+  },
+  "osvVulnerabilityAlerts": true,
+  "prHourlyLimit": 5,
+  "prConcurrentLimit": 10
+}

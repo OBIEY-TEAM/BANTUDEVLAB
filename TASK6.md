@@ -114,10 +114,10 @@ Ce document définit l'ensemble des tâches, sous-tâches techniques et configur
   - [x] Intégrer **Gitleaks** ou **TruffleHog** dans les étapes de validation pre-receive ou CI pour bloquer la fuite de secrets et tokens.
   - [x] Générer et ingérer les rapports de vulnérabilité au format SARIF standardisé.
 
-- [ ] **T-SEC-602 : Analyse des Dépendances et Mises à Jour Automatisées (Équivalent Dependabot)**
-  - [ ] Déployer un conteneur dédié **Renovate** configuré pour sonder périodiquement l'instance Gitea.
-  - [ ] Automatiser l'ouverture de pull requests de mise à jour des dépendances vulnérables ou obsolètes (Python, Node.js, Go, Docker).
-  - [ ] Intégrer **Trivy** et **OSV-Scanner** pour la vérification du graphe des dépendances.
+- [x] **T-SEC-602 : Analyse des Dépendances et Mises à Jour Automatisées (Équivalent Dependabot)**
+  - [x] Déployer un conteneur dédié **Renovate** configuré pour sonder périodiquement l'instance Gitea.
+  - [x] Automatiser l'ouverture de pull requests de mise à jour des dépendances vulnérables ou obsolètes (Python, Node.js, Go, Docker).
+  - [x] Intégrer **Trivy** et **OSV-Scanner** pour la vérification du graphe des dépendances.
 
 - [ ] **T-SEC-603 : Sécurité des Accès et Authentification Forte**
   - [ ] Activer l'authentification à deux facteurs (2FA) via TOTP et clés de sécurité matérielles WebAuthn/FIDO2.
