@@ -169,9 +169,9 @@ Ce document définit l'ensemble des tâches, sous-tâches techniques et configur
   - [x] Connecter Gitea à l'API BantuDevLab ZKP en tant que fournisseur d'identité OAuth2/OIDC.
   - [x] Permettre la synchronisation automatique des équipes et permissions d'organisations.
 
-- [ ] **T-ADM-703 : Sauvegardes Automatisées et Supervision Industrielle**
-  - [ ] Automatiser la tâche quotidienne `gitea dump` avec chiffrement GPG des archives de configuration, base de données et dépôts Git.
-  - [ ] Exposer les métriques Prometheus de Gitea (`/metrics`) vers la pile d'observabilité Grafana.
+- [x] **T-ADM-703 : Sauvegardes Automatisées et Supervision Industrielle**
+  - [x] Automatiser la tâche quotidienne `gitea dump` avec chiffrement GPG des archives de configuration, base de données et dépôts Git.
+  - [x] Exposer les métriques Prometheus de Gitea (`/metrics`) vers la pile d'observabilité Grafana.
 
 ---
 

@@ -20,3 +20,6 @@ forge_data/
 
 # SAST Artefacts
 *.sarif
+
+# Backups
+backups/
