@@ -433,3 +433,43 @@ body {
 .repo-lang-go { background-color: #00ADD8; }
 .repo-lang-rust { background-color: #dea584; }
 .repo-lang-html { background-color: #e34c26; }
+
+/* GitHub Accessible Text Reactions & Badges (T-REA-1301) */
+.gh-reactions-container, .ui.labeled.button.reaction-button {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+  margin-top: 6px !important;
+}
+
+.gh-reaction-btn, .reaction-button {
+  background-color: #161b22 !important;
+  border: 1px solid #30363d !important;
+  border-radius: 20px !important;
+  padding: 2px 8px !important;
+  font-size: 11px !important;
+  font-weight: 600 !important;
+  color: #e6edf3 !important;
+  cursor: pointer !important;
+  transition: background-color 0.15s ease, border-color 0.15s ease !important;
+}
+
+.gh-reaction-btn:hover, .reaction-button:hover {
+  background-color: #21262d !important;
+  border-color: #2f81f7 !important;
+}
+
+.gh-reaction-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.gh-reaction-tag {
+  font-size: 11px;
+  font-weight: 600;
+  padding: 1px 6px;
+  border-radius: 12px;
+  background: rgba(110, 118, 129, 0.4);
+  color: #e6edf3;
+}
