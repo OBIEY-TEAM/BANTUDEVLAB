@@ -17,9 +17,9 @@
 
 ## Taches du Cycle TASK15
 
-- [ ] **T-BRN-1501 : Badges Primer de Signature de Commits (« Verified » & « Unverified »)**
-  - [ ] Styliser les badges `.gh-commit-badge.verified` et `.gh-commit-badge.unverified` dans `custom/public/assets/css/theme-github.css` et `theme-github-dark.css`.
-  - [ ] Synchroniser avec `gitea_home/custom/public/assets/css/`.
+- [x] **T-BRN-1501 : Badges Primer de Signature de Commits (« Verified » & « Unverified »)**
+  - [x] Styliser les badges `.gh-commit-badge.verified` et `.gh-commit-badge.unverified` dans `custom/public/assets/css/theme-github.css` et `theme-github-dark.css`.
+  - [x] Synchroniser avec `gitea_home/custom/public/assets/css/`.
 
 - [ ] **T-BRN-1502 : Guide et Specification des Rulesets GitHub pour Gitea**
   - [ ] Documenter les regles de protection equivalentes aux Rulesets modernes dans `docs/SOVEREIGN_BRANCH_RULESETS.md`.
