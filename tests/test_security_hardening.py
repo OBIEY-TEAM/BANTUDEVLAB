@@ -207,3 +207,22 @@ class SettingsHardeningTests(TestCase):
             "rest_framework.authentication.BasicAuthentication",
             settings.REST_FRAMEWORK["DEFAULT_AUTHENTICATION_CLASSES"],
         )
+    def test_cyclonedx_sbom_generation_and_schema(self):
+        """T-SBM-1101 & T-SBM-1103 : Verification du format CycloneDX v1.5 et Package URLs."""
+        import tempfile
+        from pathlib import Path
+        from scripts.generate_sovereign_sbom import generate_cyclonedx_sbom
+
+        with tempfile.TemporaryDirectory() as tmpdir:
+            tmp_path = Path(tmpdir)
+            sample_req = tmp_path / "requirements.txt"
+            sample_req.write_text("django==5.2.18\ndjangorestframework==3.15.2\n", encoding="utf-8")
+            out_file = tmp_path / "bom.cyclonedx.json"
+
+            sbom = generate_cyclonedx_sbom(tmp_path, out_file)
+            self.assertEqual(sbom["bomFormat"], "CycloneDX")
+            self.assertEqual(sbom["specVersion"], "1.5")
+            self.assertGreaterEqual(len(sbom["components"]), 2)
+            self.assertEqual(sbom["components"][0]["name"], "django")
+            self.assertIn("pkg:pypi/django@5.2.18", sbom["components"][0]["purl"])
+
