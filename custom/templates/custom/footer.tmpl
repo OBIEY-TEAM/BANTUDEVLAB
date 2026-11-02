@@ -1,4 +1,4 @@
-<!-- BANTUDEVLAB - GitHub Sovereign Footer (T-UI-602) -->
+<!-- BANTUDEVLAB - GitHub Sovereign Footer & Copilot Widget (T-UI-602, T-COP-702) -->
 <footer class="page-footer" style="margin-top: 40px; padding: 32px 16px; border-top: 1px solid var(--color-border-default, #d0d7de); font-size: 12px; color: var(--color-text-light, #656d76); background-color: var(--color-canvas-subtle, #f6f8fa);">
   <div style="max-width: 1280px; margin: 0 auto; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 16px;">
     <div style="display: flex; align-items: center; gap: 8px;">
@@ -9,7 +9,7 @@
     </div>
     <div style="display: flex; gap: 16px; flex-wrap: wrap;">
       <a href="http://127.0.0.1:8001/" style="color: var(--color-accent-fg, #0969da); text-decoration: none;">Portail Central</a>
-      <a href="/explore/repos" style="color: var(--color-accent-fg, #0969da); text-decoration: none;">Dépôts</a>
+      <a href="/explore/repos" style="color: var(--color-accent-fg, #0969da); text-decoration: none;">Depots</a>
       <a href="http://localhost:3001/" style="color: var(--color-accent-fg, #0969da); text-decoration: none;">Passerelle Git</a>
       <a href="/api/v1/swagger" style="color: var(--color-accent-fg, #0969da); text-decoration: none;">API REST</a>
       <a href="https://docs.gitea.com" target="_blank" rel="noopener noreferrer" style="color: var(--color-text-light, #656d76); text-decoration: none;">Documentation</a>
@@ -17,3 +17,134 @@
     </div>
   </div>
 </footer>
+
+<!-- Sovereign Copilot Widget (T-COP-702) -->
+<div id="sovereign-copilot-container" style="position: fixed; bottom: 20px; right: 20px; z-index: 9999; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;">
+  <button id="copilot-toggle-btn" style="display: flex; align-items: center; gap: 8px; background: #24292f; color: #ffffff; border: 1px solid #d0d7de; border-radius: 20px; padding: 8px 16px; font-size: 13px; font-weight: 600; cursor: pointer; box-shadow: 0 4px 12px rgba(0,0,0,0.15); transition: transform 0.15s ease;">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+      <path d="M7.75 2a.75.75 0 0 1 .75.75V4h1.75a.75.75 0 0 1 0 1.5H8.5v2.25a.75.75 0 0 1-1.5 0V5.5H5.25a.75.75 0 0 1 0-1.5H7V2.75A.75.75 0 0 1 7.75 2Z"></path>
+      <path d="M1 8a7 7 0 1 1 14 0A7 7 0 0 1 1 8Zm7-5.5a5.5 5.5 0 1 0 0 11 5.5 5.5 0 0 0 0-11Z"></path>
+    </svg>
+    <span>Copilot</span>
+  </button>
+
+  <div id="copilot-window" style="display: none; width: 360px; height: 460px; background: #ffffff; border: 1px solid #d0d7de; border-radius: 12px; box-shadow: 0 8px 24px rgba(140,149,159,0.25); flex-direction: column; overflow: hidden; margin-bottom: 10px;">
+    <div style="background: #f6f8fa; border-bottom: 1px solid #d0d7de; padding: 10px 14px; display: flex; justify-content: space-between; align-items: center;">
+      <span style="font-weight: 600; font-size: 13px; color: #1f2328;">BantuDevLab Copilot (Gemma 2 2B)</span>
+      <button id="copilot-close-btn" style="background: none; border: none; font-size: 16px; cursor: pointer; color: #656d76;">&times;</button>
+    </div>
+    <div style="display: flex; gap: 6px; padding: 8px 12px; border-bottom: 1px solid #f0f2f4; background: #ffffff;">
+      <button id="copilot-explain-btn" style="font-size: 11px; background: #f6f8fa; border: 1px solid #d0d7de; border-radius: 6px; padding: 3px 8px; cursor: pointer;">Expliquer</button>
+      <button id="copilot-review-btn" style="font-size: 11px; background: #f6f8fa; border: 1px solid #d0d7de; border-radius: 6px; padding: 3px 8px; cursor: pointer;">Audit Securite</button>
+      <button id="copilot-summary-btn" style="font-size: 11px; background: #f6f8fa; border: 1px solid #d0d7de; border-radius: 6px; padding: 3px 8px; cursor: pointer;">Synthese Diff</button>
+    </div>
+    <div id="copilot-messages" style="flex: 1; padding: 12px; overflow-y: auto; font-size: 12px; color: #1f2328; line-height: 1.5;">
+      <div style="background: #f6f8fa; padding: 8px 10px; border-radius: 6px; margin-bottom: 8px;">
+        Bonjour ! Je suis Copilot, votre assistant souverain anime par Gemma 2 2B. Que souhaitez-vous analyser ou generer ?
+      </div>
+    </div>
+    <div style="padding: 10px; border-top: 1px solid #d0d7de; background: #f6f8fa; display: flex; gap: 6px;">
+      <input id="copilot-input" type="text" placeholder="Poser une question..." style="flex: 1; font-size: 12px; border: 1px solid #d0d7de; border-radius: 6px; padding: 6px 10px; outline: none;" />
+      <button id="copilot-send-btn" style="background: #1f883d; color: #ffffff; border: none; border-radius: 6px; padding: 6px 12px; font-size: 12px; font-weight: 600; cursor: pointer;">Envoyer</button>
+    </div>
+  </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const toggleBtn = document.getElementById('copilot-toggle-btn');
+  const copilotWin = document.getElementById('copilot-window');
+  const closeBtn = document.getElementById('copilot-close-btn');
+  const sendBtn = document.getElementById('copilot-send-btn');
+  const inputField = document.getElementById('copilot-input');
+  const msgBox = document.getElementById('copilot-messages');
+  const explainBtn = document.getElementById('copilot-explain-btn');
+  const reviewBtn = document.getElementById('copilot-review-btn');
+  const summaryBtn = document.getElementById('copilot-summary-btn');
+
+  function toggleWindow() {
+    const isVisible = copilotWin.style.display === 'flex';
+    copilotWin.style.display = isVisible ? 'none' : 'flex';
+  }
+
+  if (toggleBtn) toggleBtn.addEventListener('click', toggleWindow);
+  if (closeBtn) closeBtn.addEventListener('click', toggleWindow);
+
+  function appendMessage(sender, text) {
+    const msg = document.createElement('div');
+    msg.style.padding = '8px 10px';
+    msg.style.borderRadius = '6px';
+    msg.style.marginBottom = '8px';
+    if (sender === 'user') {
+      msg.style.background = '#0969da';
+      msg.style.color = '#ffffff';
+      msg.style.alignSelf = 'flex-end';
+    } else {
+      msg.style.background = '#f6f8fa';
+      msg.style.color = '#1f2328';
+      msg.style.border = '1px solid #d0d7de';
+    }
+    msg.textContent = text;
+    msgBox.appendChild(msg);
+    msgBox.scrollTop = msgBox.scrollHeight;
+  }
+
+  async function callCopilot(endpoint, payload) {
+    appendMessage('bot', 'Analyse souveraine en cours...');
+    try {
+      const resp = await fetch('http://127.0.0.1:8001/api/ai/' + endpoint, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+      const data = await resp.json();
+      const lastMsg = msgBox.lastChild;
+      if (lastMsg) lastMsg.remove();
+      const responseText = data.explanation || data.completion || data.summary || data.response || data.error || 'Reponse recue';
+      appendMessage('bot', responseText);
+    } catch (err) {
+      const lastMsg = msgBox.lastChild;
+      if (lastMsg) lastMsg.remove();
+      appendMessage('bot', 'Service Copilot momentanement indisponible en local (127.0.0.1:8001).');
+    }
+  }
+
+  if (sendBtn && inputField) {
+    sendBtn.addEventListener('click', function() {
+      const text = inputField.value.trim();
+      if (!text) return;
+      appendMessage('user', text);
+      inputField.value = '';
+      callCopilot('copilot/explain/', { code: text, language: 'general' });
+    });
+    inputField.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter') sendBtn.click();
+    });
+  }
+
+  if (explainBtn) {
+    explainBtn.addEventListener('click', function() {
+      const codeBlock = document.querySelector('table.lines-num, pre, code');
+      const snippet = codeBlock ? codeBlock.textContent.slice(0, 1000) : 'def main():\n    return True';
+      appendMessage('user', 'Expliquer le code visible sur cette page');
+      callCopilot('copilot/explain/', { code: snippet, language: 'python' });
+    });
+  }
+
+  if (reviewBtn) {
+    reviewBtn.addEventListener('click', function() {
+      const codeBlock = document.querySelector('table.lines-num, pre, code');
+      const snippet = codeBlock ? codeBlock.textContent.slice(0, 1000) : 'import os\nos.system("echo test")';
+      appendMessage('user', 'Audit de securite souverain');
+      callCopilot('review/', { code: snippet, context: 'security' });
+    });
+  }
+
+  if (summaryBtn) {
+    summaryBtn.addEventListener('click', function() {
+      appendMessage('user', 'Generer le resume des modifications');
+      callCopilot('copilot/pr-summary/', { diff: '+ print("BantuDevLab sovereign update")', title: 'Mise a jour' });
+    });
+  }
+});
+</script>
