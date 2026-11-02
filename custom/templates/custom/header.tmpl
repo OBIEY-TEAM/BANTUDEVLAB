@@ -1,0 +1,84 @@
+<!-- BANTUDEVLAB - GitHub Navigation & Head Enhancements (T-UI-602) -->
+<style>
+/* GitHub Global Navigation Bar */
+.ui.menu.navbar {
+  height: 56px !important;
+  padding: 0 16px !important;
+  display: flex !important;
+  align-items: center !important;
+}
+
+/* GitHub Global Search Bar */
+.github-search-input {
+  background-color: rgba(255, 255, 255, 0.12) !important;
+  border: 1px solid var(--color-border-default, #d0d7de) !important;
+  border-radius: 6px !important;
+  color: var(--color-text, #1f2328) !important;
+  padding: 5px 12px !important;
+  font-size: 13px !important;
+  width: 280px !important;
+  transition: width 0.2s ease, border-color 0.2s ease;
+}
+
+.github-search-input:focus {
+  width: 360px !important;
+  border-color: var(--color-accent-fg, #0969da) !important;
+  background-color: var(--color-canvas-default, #ffffff) !important;
+}
+
+.github-search-kbd {
+  font-size: 11px;
+  border: 1px solid var(--color-border-default, #d0d7de);
+  border-radius: 4px;
+  padding: 1px 4px;
+  margin-left: 6px;
+  color: var(--color-text-light, #656d76);
+}
+
+/* GitHub Repository Tabs Alignment */
+.repo-header-tabs {
+  background-color: var(--color-canvas-subtle, #f6f8fa);
+  border-bottom: 1px solid var(--color-border-default, #d0d7de);
+  padding: 0 16px;
+  display: flex;
+  gap: 8px;
+}
+
+.repo-tab-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 12px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--color-text-light, #656d76);
+  border-bottom: 2px solid transparent;
+  text-decoration: none;
+  transition: color 0.15s ease, border-color 0.15s ease;
+}
+
+.repo-tab-item:hover {
+  color: var(--color-text, #1f2328);
+  border-bottom-color: var(--color-border-muted, #afb8c1);
+}
+
+.repo-tab-item.active {
+  color: var(--color-text, #1f2328);
+  font-weight: 600;
+  border-bottom-color: #fd8c73;
+}
+</style>
+
+<script>
+// GitHub Global Keyboard Shortcuts ('/' for search focus)
+document.addEventListener('keydown', function(e) {
+  if (e.key === '/' && !['INPUT', 'TEXTAREA'].includes(document.activeElement.tagName)) {
+    e.preventDefault();
+    const searchInput = document.querySelector('input[name="q"], .github-search-input, #search-input');
+    if (searchInput) {
+      searchInput.focus();
+      searchInput.select();
+    }
+  }
+});
+</script>
