@@ -78,7 +78,7 @@ jobs:
 
       - name: Validate Docker Compose Configuration
         run: |
-          docker compose config --quiet
+          docker compose --env-file .env.example config --quiet
 
   docker_build:
     name: Build & Verify Docker Images
