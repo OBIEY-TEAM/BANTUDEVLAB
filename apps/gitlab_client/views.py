@@ -46,11 +46,14 @@ def gitlab_webhook_receiver(request):
     if commits:
         logger.info(f"GitLab Push Hook: {len(commits)} commits sur {repo_name} par {username}")
 
-    return JsonResponse({
-        "received": True,
-        "event": event_type,
-        "project": repo_name,
-        "triggered_by": username,
-        "actions": actions_executed,
-        "engine": "GitLab CE Panafricain",
-    }, status=200)
+    return JsonResponse(
+        {
+            "received": True,
+            "event": event_type,
+            "project": repo_name,
+            "triggered_by": username,
+            "actions": actions_executed,
+            "engine": "GitLab CE Panafricain",
+        },
+        status=200,
+    )
