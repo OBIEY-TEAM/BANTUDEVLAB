@@ -369,3 +369,67 @@ body {
 .markdown table tr:nth-child(2n), .markup table tr:nth-child(2n) {
   background-color: rgba(110, 118, 129, 0.1) !important;
 }
+
+/* GitHub Pinned Repositories & Language Dots (T-PRF-1201) */
+.gh-pinned-repo-grid {
+  display: grid !important;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)) !important;
+  gap: 16px !important;
+  margin-top: 12px !important;
+  margin-bottom: 24px !important;
+}
+
+.gh-pinned-repo-card {
+  border: 1px solid #30363d !important;
+  border-radius: 6px !important;
+  padding: 16px !important;
+  background-color: #0d1117 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: space-between !important;
+  transition: border-color 0.15s ease !important;
+}
+
+.gh-pinned-repo-card:hover {
+  border-color: #2f81f7 !important;
+}
+
+.gh-pinned-repo-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 600;
+  font-size: 14px;
+  color: #2f81f7;
+}
+
+.gh-pinned-repo-desc {
+  font-size: 12px;
+  color: #8b949e;
+  margin-top: 8px;
+  margin-bottom: 12px;
+  flex: 1;
+}
+
+.gh-pinned-repo-meta {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  font-size: 12px;
+  color: #8b949e;
+}
+
+.repo-language-color {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  margin-right: 4px;
+}
+
+.repo-lang-python { background-color: #3572A5; }
+.repo-lang-javascript { background-color: #f1e05a; }
+.repo-lang-typescript { background-color: #3178c6; }
+.repo-lang-go { background-color: #00ADD8; }
+.repo-lang-rust { background-color: #dea584; }
+.repo-lang-html { background-color: #e34c26; }
