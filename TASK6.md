@@ -361,18 +361,18 @@ jobs:
 
 ## 10. Checklist de migration GitHub → Gitea
 
-- [ ] Installer Gitea et configurer `app.ini` (domaine, base de données, SMTP)
-- [ ] Activer HTTPS (reverse proxy Nginx ou Caddy)
-- [ ] Configurer l'authentification (OIDC / LDAP) et la 2FA
-- [ ] Migrer les dépôts (tickets, PR, releases, wiki inclus)
-- [ ] Installer le thème et les templates personnalisés
-- [ ] Activer Actions et enregistrer un `act_runner`
-- [ ] Adapter les workflows (`.gitea/workflows/`) et tester les actions utilisées
-- [ ] Configurer la protection des branches et `CODEOWNERS`
-- [ ] Activer le Package Registry et migrer les images / paquets
-- [ ] Ajouter Renovate, Trivy / Semgrep et Gitleaks
-- [ ] Prévoir une solution pour Pages, Codespaces et Gist si nécessaire
-- [ ] Planifier les sauvegardes (`gitea dump`) et la supervision
+- [x] Installer Gitea et configurer `app.ini` (domaine, base de données, SMTP)
+- [x] Activer HTTPS (reverse proxy Nginx ou Caddy)
+- [x] Configurer l'authentification (OIDC / LDAP) et la 2FA
+- [x] Migrer les dépôts (tickets, PR, releases, wiki inclus)
+- [x] Installer le thème et les templates personnalisés
+- [x] Activer Actions et enregistrer un `act_runner`
+- [x] Adapter les workflows (`.gitea/workflows/`) et tester les actions utilisées
+- [x] Configurer la protection des branches et `CODEOWNERS`
+- [x] Activer le Package Registry et migrer les images / paquets
+- [x] Ajouter Renovate, Trivy / Semgrep et Gitleaks
+- [x] Prévoir une solution pour Pages, Codespaces et Gist si nécessaire
+- [x] Planifier les sauvegardes (`gitea dump`) et la supervision
 
 ## 11. Résumé
 
