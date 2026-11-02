@@ -17,3 +17,6 @@ htmlcov/
 bin/
 gitea_home/
 forge_data/
+
+# SAST Artefacts
+*.sarif

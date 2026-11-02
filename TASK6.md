@@ -109,10 +109,10 @@ Ce document définit l'ensemble des tâches, sous-tâches techniques et configur
 
 ### Axe 4 : Sécurité du Code, Analyse et Dépendances
 
-- [ ] **T-SEC-601 : Pipeline d'Analyse SAST et Secrets (Équivalent CodeQL / Secret Scanning)**
-  - [ ] Intégrer un workflow Gitea Actions automatisé exécutant **Semgrep** et le scanner souverain BantuDevLab sur chaque commit et pull request.
-  - [ ] Intégrer **Gitleaks** ou **TruffleHog** dans les étapes de validation pre-receive ou CI pour bloquer la fuite de secrets et tokens.
-  - [ ] Générer et ingérer les rapports de vulnérabilité au format SARIF standardisé.
+- [x] **T-SEC-601 : Pipeline d'Analyse SAST et Secrets (Équivalent CodeQL / Secret Scanning)**
+  - [x] Intégrer un workflow Gitea Actions automatisé exécutant **Semgrep** et le scanner souverain BantuDevLab sur chaque commit et pull request.
+  - [x] Intégrer **Gitleaks** ou **TruffleHog** dans les étapes de validation pre-receive ou CI pour bloquer la fuite de secrets et tokens.
+  - [x] Générer et ingérer les rapports de vulnérabilité au format SARIF standardisé.
 
 - [ ] **T-SEC-602 : Analyse des Dépendances et Mises à Jour Automatisées (Équivalent Dependabot)**
   - [ ] Déployer un conteneur dédié **Renovate** configuré pour sonder périodiquement l'instance Gitea.
