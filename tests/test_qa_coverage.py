@@ -461,13 +461,18 @@ secret2 = "9a8b7c6d5e4f3a2b1c0d9e8f7a6b5c4d"
         scan_task_res = async_scan_code(filename="clean.py", content=clean_content)
         self.assertEqual(scan_task_res["total_issues"], 0)
 
-        res_async_view = self.client.post(
-            "/api/security/scan/",
-            {"filename": "app.py", "content": "x = 1", "async": True},
-            content_type="application/json",
-        )
-        self.assertEqual(res_async_view.status_code, 202)
-        self.assertEqual(res_async_view.json()["status"], "PENDING")
+        with patch("apps.security_scanner.tasks.async_scan_code.delay") as mock_scan_delay:
+            mock_task = MagicMock()
+            mock_task.id = "mock-scan-task-42"
+            mock_scan_delay.return_value = mock_task
+            res_async_view = self.client.post(
+                "/api/security/scan/",
+                {"filename": "app.py", "content": "x = 1", "async": True},
+                content_type="application/json",
+            )
+            self.assertEqual(res_async_view.status_code, 202)
+            self.assertEqual(res_async_view.json()["status"], "PENDING")
+            self.assertEqual(res_async_view.json()["task_id"], "mock-scan-task-42")
 
         # 3. zkp_auth gaps (task exception, token validation, crypto validation)
         with patch.object(ZKPChallenge, "purge_expired_challenges", side_effect=Exception("DB Error")):
