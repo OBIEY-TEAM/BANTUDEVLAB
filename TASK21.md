@@ -22,9 +22,9 @@
   - [x] Ajouter les styles `.gh-milestone-card`, `.gh-milestone-progress-bar`, `.gh-milestone-meta` dans `theme-github.css` et `theme-github-dark.css`.
   - [x] Synchroniser avec `gitea_home/custom/public/assets/css/`.
 
-- [ ] **T-MLS-2102 : Calculateur Dynamique de Progression et Statuts**
-  - [ ] Ajouter le script d'enrichissement des barres de jalons dans `custom/templates/custom/header.tmpl`.
-  - [ ] Synchroniser avec `gitea_home/custom/templates/custom/header.tmpl`.
+- [x] **T-MLS-2102 : Calculateur Dynamique de Progression et Statuts**
+  - [x] Ajouter le script d'enrichissement des barres de jalons dans `custom/templates/custom/header.tmpl`.
+  - [x] Synchroniser avec `gitea_home/custom/templates/custom/header.tmpl`.
 
 - [ ] **T-MLS-2103 : Tests Unitaires et Workflows CI/CD Milestones**
   - [ ] Rediger les tests unitaires dans `tests/test_ui_axes.py`.

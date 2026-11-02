@@ -602,5 +602,35 @@ document.addEventListener('DOMContentLoaded', function() {
       });
     }
   }
+
+  // GitHub Modern Milestone Progress Calculator (T-MLS-2102)
+  const isMilestonesView = window.location.pathname.includes('/milestone') || document.querySelector('.milestone-list');
+  if (isMilestonesView) {
+    document.querySelectorAll('.milestone-item, .milestones-list .item, .milestone-card').forEach(item => {
+      item.classList.add('gh-milestone-card');
+      const text = item.textContent;
+      const openMatch = text.match(/(\d+)\s*(ouvert|open)/i);
+      const closedMatch = text.match(/(\d+)\s*(ferm[ée]|closed)/i);
+      const openCount = openMatch ? parseInt(openMatch[1], 10) : 0;
+      const closedCount = closedMatch ? parseInt(closedMatch[1], 10) : 0;
+      const total = openCount + closedCount;
+      const pct = total > 0 ? Math.round((closedCount / total) * 100) : 0;
+
+      let progressWrap = item.querySelector('.gh-milestone-progress-bar');
+      if (!progressWrap) {
+        progressWrap = document.createElement('div');
+        progressWrap.className = 'gh-milestone-progress-bar';
+        progressWrap.innerHTML = `<div class="gh-milestone-progress-fill" style="width: ${pct}%"></div>`;
+
+        const metaEl = document.createElement('div');
+        metaEl.className = 'gh-milestone-meta';
+        metaEl.innerHTML = `<span><strong>${pct}%</strong> complete</span> <span>${openCount} open</span> <span>${closedCount} closed</span>`;
+
+        const targetCol = item.querySelector('.milestone-progress, .right.floated, .content') || item;
+        targetCol.appendChild(progressWrap);
+        targetCol.appendChild(metaEl);
+      }
+    });
+  }
 });
 </script>
