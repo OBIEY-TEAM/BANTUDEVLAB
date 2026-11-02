@@ -3,6 +3,7 @@ from django.urls import include, path
 from drf_spectacular.views import SpectacularAPIView, SpectacularRedocView, SpectacularSwaggerView
 
 urlpatterns = [
+    path("i18n/", include("django.conf.urls.i18n")),  # I18N-01: Switch langue
     path("admin/", admin.site.urls),
     path("", include("apps.core.urls")),
     path("api/zkp/", include("apps.zkp_auth.urls")),
