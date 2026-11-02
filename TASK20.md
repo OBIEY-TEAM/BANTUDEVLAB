@@ -26,6 +26,6 @@
   - [x] Ajouter la palette de couleurs GitHub (Bleu, Vert, Violet, Orange, Rouge) et le lissage SVG dans `custom/templates/custom/header.tmpl`.
   - [x] Synchroniser avec `gitea_home/custom/templates/custom/header.tmpl`.
 
-- [ ] **T-GRP-2003 : Tests Unitaires et Workflows CI/CD Commit Graph**
-  - [ ] Rediger les tests unitaires dans `tests/test_ui_axes.py`.
-  - [ ] Creer les workflows CI/CD `.github/workflows/commit_graph.yml` et `.gitea/workflows/commit_graph.yaml`.
+- [x] **T-GRP-2003 : Tests Unitaires et Workflows CI/CD Commit Graph**
+  - [x] Rediger les tests unitaires dans `tests/test_ui_axes.py`.
+  - [x] Creer les workflows CI/CD `.github/workflows/commit_graph.yml` et `.gitea/workflows/commit_graph.yaml`.
