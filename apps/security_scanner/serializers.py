@@ -127,10 +127,7 @@ class SarifReportSerializer:
                     "description": desc,
                     "severity": sev,
                     "confidence": "High",
-                    "scanner": {
-                        "id": "bantudevlab_sast",
-                        "name": "BantuDevLab Sovereign SAST Scanner"
-                    },
+                    "scanner": {"id": "bantudevlab_sast", "name": "BantuDevLab Sovereign SAST Scanner"},
                     "location": {
                         "file": filename,
                         "start_line": int(line),
@@ -141,7 +138,7 @@ class SarifReportSerializer:
                             "name": rule_id,
                             "value": rule_id,
                         }
-                    ]
+                    ],
                 }
             )
 
@@ -153,13 +150,11 @@ class SarifReportSerializer:
                     "id": "bantudevlab_sast",
                     "name": "BantuDevLab Sovereign SAST Scanner",
                     "version": "1.0.0",
-                    "vendor": {
-                        "name": "BantuDevLab Panafrican Forge"
-                    }
+                    "vendor": {"name": "BantuDevLab Panafrican Forge"},
                 },
                 "type": "sast",
                 "status": "success",
                 "start_time": report.scanned_at.isoformat() if report.scanned_at else "2026-11-02T00:00:00Z",
                 "end_time": report.scanned_at.isoformat() if report.scanned_at else "2026-11-02T00:00:01Z",
-            }
+            },
         }
