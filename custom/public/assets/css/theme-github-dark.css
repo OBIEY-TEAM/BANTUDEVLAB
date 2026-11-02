@@ -513,3 +513,29 @@ body {
   background-color: rgba(248, 81, 73, 0.2) !important;
   color: #f85149 !important;
 }
+
+/* GitHub Verified & Unverified Commit Badges (T-BRN-1501) */
+.gh-commit-badge, .ui.label.text.green, .commit-status-badge {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 4px !important;
+  font-size: 11px !important;
+  font-weight: 600 !important;
+  padding: 1px 7px !important;
+  border-radius: 12px !important;
+  text-decoration: none !important;
+  border: 1px solid transparent !important;
+}
+
+.gh-commit-badge.verified, .ui.label.text.green {
+  border-color: rgba(63, 185, 80, 0.4) !important;
+  color: #3fb950 !important;
+  background-color: rgba(63, 185, 80, 0.15) !important;
+}
+
+.gh-commit-badge.unverified {
+  border-color: var(--color-border-default, #30363d) !important;
+  color: var(--color-text-light, #8b949e) !important;
+  background-color: var(--color-canvas-subtle, #161b22) !important;
+}
+
