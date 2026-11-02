@@ -9,5 +9,6 @@ urlpatterns = [
     path("dashboard/", views.dashboard_view, name="dashboard"),
     path("metrics/", views.metrics_view, name="metrics"),
     path("sovereignty-metrics/", views.metrics_view, name="sovereignty_metrics"),
+    path("faq/", views.faq_view, name="faq"),
     path("api/organizations/", views.SovereignOrganizationListCreateView.as_view(), name="organizations"),
 ]
