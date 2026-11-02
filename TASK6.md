@@ -165,9 +165,9 @@ Ce document définit l'ensemble des tâches, sous-tâches techniques et configur
 - [x] **T-ADM-701 : Intégration CLI Officielle `tea` (Équivalent `gh`)**
   - [x] Documenter et configurer l'outil CLI officiel `tea` pour la gestion des dépôts, issues, pull requests et releases depuis le terminal des développeurs.
 
-- [ ] **T-ADM-702 : Pont d'Authentification Zero-Trust ZKP et OAuth2/OIDC**
-  - [ ] Connecter Gitea à l'API BantuDevLab ZKP en tant que fournisseur d'identité OAuth2/OIDC.
-  - [ ] Permettre la synchronisation automatique des équipes et permissions d'organisations.
+- [x] **T-ADM-702 : Pont d'Authentification Zero-Trust ZKP et OAuth2/OIDC**
+  - [x] Connecter Gitea à l'API BantuDevLab ZKP en tant que fournisseur d'identité OAuth2/OIDC.
+  - [x] Permettre la synchronisation automatique des équipes et permissions d'organisations.
 
 - [ ] **T-ADM-703 : Sauvegardes Automatisées et Supervision Industrielle**
   - [ ] Automatiser la tâche quotidienne `gitea dump` avec chiffrement GPG des archives de configuration, base de données et dépôts Git.

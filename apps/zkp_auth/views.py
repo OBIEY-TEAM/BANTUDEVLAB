@@ -295,13 +295,42 @@ class ZKPUserInfoView(APIView):
 
         return Response(
             {
+                "sub": str(user.id),
                 "user_id": user.id,
                 "username": user.username,
+                "preferred_username": user.username,
                 "email": user.email or f"{user.username}@bantudevlab.africa",
                 "country_code": country_code,
                 "public_key_y": public_key_y,
                 "sovereignty_level": "Tier-1 Continental",
                 "groups": ["Sovereign African Developers", "Bantu Forge Members"],
+            },
+            status=status.HTTP_200_OK,
+        )
+
+
+class ZKPOpenIDConfigurationView(APIView):
+    """
+    T-ADM-702 : Point de terminaison OpenID Connect Discovery standard.
+    Permet la federation et la decouverte automatique des points d'acces OIDC
+    par Gitea et les services tiers.
+    """
+
+    permission_classes = [AllowAny]
+
+    def get(self, request):
+        issuer_url = request.build_absolute_uri("/").rstrip("/")
+        return Response(
+            {
+                "issuer": issuer_url,
+                "authorization_endpoint": f"{issuer_url}/api/zkp/login-ui/",
+                "token_endpoint": f"{issuer_url}/api/zkp/verify/",
+                "userinfo_endpoint": f"{issuer_url}/api/zkp/userinfo/",
+                "response_types_supported": ["code", "token", "id_token"],
+                "subject_types_supported": ["public"],
+                "id_token_signing_alg_values_supported": ["HS256", "RS256"],
+                "scopes_supported": ["openid", "profile", "email", "groups"],
+                "claims_supported": ["sub", "username", "preferred_username", "email", "groups", "country_code"],
             },
             status=status.HTTP_200_OK,
         )

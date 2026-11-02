@@ -3,9 +3,13 @@ from django.urls import include, path
 from django.views.generic import RedirectView
 from drf_spectacular.views import SpectacularAPIView, SpectacularRedocView, SpectacularSwaggerView
 
+from apps.zkp_auth.views import ZKPOpenIDConfigurationView
+
 urlpatterns = [
     path("i18n/", include("django.conf.urls.i18n")),  # I18N-01: Switch langue
     path("admin/", admin.site.urls),
+    # Point de decouverte OIDC racine
+    path(".well-known/openid-configuration", ZKPOpenIDConfigurationView.as_view(), name="root_openid_configuration"),
     # Redirections directes vers Gitea Native (3002)
     path(
         "gitea/", RedirectView.as_view(url="http://localhost:3002/user/login", permanent=False), name="redirect_gitea"
