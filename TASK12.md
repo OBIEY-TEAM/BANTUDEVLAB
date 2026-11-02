@@ -25,6 +25,6 @@
   - [x] Configurer la detection du depot special de profil et l'injection dynamique du README souverain dans `custom/templates/custom/header.tmpl`.
   - [x] Synchroniser avec `gitea_home/custom/templates/custom/header.tmpl`.
 
-- [ ] **T-PRF-1203 : Tests Unitaires et Pipeline CI/CD pour la Presentation de Profil**
-  - [ ] Rediger les tests unitaires dans `tests/test_ui_axes.py`.
-  - [ ] Creer les workflows CI/CD `.github/workflows/profile_presentation.yml` et `.gitea/workflows/profile_presentation.yaml`.
+- [x] **T-PRF-1203 : Tests Unitaires et Pipeline CI/CD pour la Presentation de Profil**
+  - [x] Rediger les tests unitaires dans `tests/test_ui_axes.py`.
+  - [x] Creer les workflows CI/CD `.github/workflows/profile_presentation.yml` et `.gitea/workflows/profile_presentation.yaml`.
