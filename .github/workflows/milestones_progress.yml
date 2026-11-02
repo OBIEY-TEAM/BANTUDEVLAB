@@ -1,0 +1,39 @@
+name: Sovereign Issue Milestones CI
+
+on:
+  push:
+    branches: [ "main", "develop*", "feature/*" ]
+    paths:
+      - "custom/public/assets/css/**"
+      - "custom/templates/custom/header.tmpl"
+      - "tests/test_ui_axes.py"
+      - ".github/workflows/milestones_progress.yml"
+  pull_request:
+    branches: [ "main", "develop*" ]
+
+jobs:
+  milestones-verify:
+    name: Verify Issue Milestones Styles & Burndown Progress
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install django djangorestframework requests pytest pytest-django
+
+      - name: Verify Zero Emoji Policy
+        run: |
+          python scripts/check_no_emoji.py
+
+      - name: Test Milestones Progress
+        run: |
+          pytest tests/test_ui_axes.py -k "test_t_mls_2101_and_2102_milestones_burndown_progress" -v -o addopts=""
