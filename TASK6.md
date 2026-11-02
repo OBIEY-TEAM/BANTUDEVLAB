@@ -45,10 +45,10 @@ Ce document définit l'ensemble des tâches, sous-tâches techniques et configur
   - [x] Adapter la vue de lecture de code (`custom/templates/repo/view_file.tmpl`) avec la barre d'outils GitHub (boutons Raw, Blame, Historique, Copie rapide et bouton d'édition avec raccourci clavier `e`).
   - [x] Personnaliser le pied de page (`custom/templates/custom/footer.tmpl`) aux couleurs et typographies discrètes de GitHub.
 
-- [ ] **T-UI-603 : Typographie, Badges et Éléments Vectoriels**
-  - [ ] Configurer la pile de polices système GitHub (`-apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans", Helvetica, Arial, sans-serif`).
-  - [ ] Remplacer les boutons et compteurs (Stars, Forks, Watch) par les styles arrondis avec bordures fines caractéristiques de GitHub.
-  - [ ] Adapter le visualiseur Markdown pour supporter les blocs d'alerte GitHub Flavored Markdown (`> [!NOTE]`, `> [!TIP]`, `> [!IMPORTANT]`, `> [!WARNING]`, `> [!CAUTION]`).
+- [x] **T-UI-603 : Typographie, Badges et Éléments Vectoriels**
+  - [x] Configurer la pile de polices système GitHub (`-apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans", Helvetica, Arial, sans-serif`).
+  - [x] Remplacer les boutons et compteurs (Stars, Forks, Watch) par les styles arrondis avec bordures fines caractéristiques de GitHub.
+  - [x] Adapter le visualiseur Markdown pour supporter les blocs d'alerte GitHub Flavored Markdown (`> [!NOTE]`, `> [!TIP]`, `> [!IMPORTANT]`, `> [!WARNING]`, `> [!CAUTION]`).
 
 ---
 

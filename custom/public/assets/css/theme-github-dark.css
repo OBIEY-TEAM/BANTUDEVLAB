@@ -162,3 +162,52 @@ body {
   background-color: #0d1117 !important;
   box-shadow: none !important;
 }
+
+/* GitHub Flavored Markdown Alerts (T-UI-603) */
+.markdown-alert, blockquote.alert-note, blockquote.alert-tip, blockquote.alert-important, blockquote.alert-warning, blockquote.alert-caution {
+  padding: 8px 16px !important;
+  margin-bottom: 16px !important;
+  border-left: 0.25em solid #2f81f7 !important;
+  border-radius: 0 6px 6px 0 !important;
+  background-color: #161b22 !important;
+}
+
+.markdown-alert-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 600;
+  font-size: 14px;
+  margin-bottom: 4px;
+}
+
+.markdown-alert-note { border-left-color: #2f81f7 !important; }
+.markdown-alert-note .markdown-alert-title { color: #2f81f7; }
+
+.markdown-alert-tip { border-left-color: #3fb950 !important; }
+.markdown-alert-tip .markdown-alert-title { color: #3fb950; }
+
+.markdown-alert-important { border-left-color: #a371f7 !important; }
+.markdown-alert-important .markdown-alert-title { color: #a371f7; }
+
+.markdown-alert-warning { border-left-color: #d29922 !important; }
+.markdown-alert-warning .markdown-alert-title { color: #d29922; }
+
+.markdown-alert-caution { border-left-color: #f85149 !important; }
+.markdown-alert-caution .markdown-alert-title { color: #f85149; }
+
+/* GitHub Rounded Star / Fork / Watch Buttons Dark */
+.repo-buttons .ui.labeled.button, .ui.buttons .ui.button {
+  border-radius: 6px !important;
+  font-size: 12px !important;
+  font-weight: 500 !important;
+}
+
+.repo-buttons .ui.basic.label {
+  border-radius: 0 6px 6px 0 !important;
+  border-left: 0 !important;
+  background: #0d1117 !important;
+  color: #e6edf3 !important;
+  font-weight: 600 !important;
+  padding: 4px 8px !important;
+}
