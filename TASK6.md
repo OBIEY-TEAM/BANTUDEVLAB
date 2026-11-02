@@ -65,16 +65,16 @@ Ce document définit l'ensemble des tâches, sous-tâches techniques et configur
   - [x] Configurer le stockage local ou S3/MinIO pour les artefacts de build et le cache des étapes de workflow.
   - [x] Assurer la rétro-compatibilité de lecture pour les deux dossiers `.gitea/workflows/` et `.github/workflows/`.
 
-- [ ] **T-ACT-602 : Déploiement et Enregistrement du Démon `act_runner`**
-  - [ ] Créer le service Docker Compose pour déployer `gitea/act_runner:latest`.
-  - [ ] Enregistrer le runner au niveau de l'instance ou de l'organisation via un jeton d'enregistrement (`GITEA_RUNNER_REGISTRATION_TOKEN`).
-  - [ ] Définir les étiquettes (labels) d'images système compatibles :
+- [x] **T-ACT-602 : Déploiement et Enregistrement du Démon `act_runner`**
+  - [x] Créer le service Docker Compose pour déployer `gitea/act_runner:latest`.
+  - [x] Enregistrer le runner au niveau de l'instance ou de l'organisation via un jeton d'enregistrement (`GITEA_RUNNER_REGISTRATION_TOKEN`).
+  - [x] Définir les étiquettes (labels) d'images système compatibles :
     - `ubuntu-latest:docker://node:20-bookworm` ou `catthehacker/ubuntu:act-latest`
     - `ubuntu-22.04:docker://catthehacker/ubuntu:act-22.04`
     - `ubuntu-20.04:docker://catthehacker/ubuntu:act-20.04`
-  - [ ] Durcir l'exécution du runner pour isoler le socket Docker en environnement multi-locataire.
+  - [x] Durcir l'exécution du runner pour isoler le socket Docker en environnement multi-locataire.
 
-- [ ] **T-ACT-603 : Compatibilité des Workflows et Actions du Marketplace**
+- [x] **T-ACT-603 : Compatibilité des Workflows et Actions du Marketplace**
   - [ ] Tester les actions les plus courantes de la communauté GitHub (`actions/checkout@v4`, `actions/setup-python@v5`, `actions/setup-node@v4`, `actions/upload-artifact@v3`).
   - [ ] Configurer un proxy de mise en cache local pour éviter les limitations de débit de l'API publique GitHub.
   - [ ] Mettre en place la gestion unifiée des secrets et variables au niveau dépôt, organisation et instance globale.

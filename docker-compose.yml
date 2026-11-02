@@ -220,6 +220,27 @@ services:
       - backend_net
     <<: *hardening
 
+
+  # Demonstrateur Gitea Actions / GitHub Actions Runner (T-ACT-602)
+  act_runner:
+    image: gitea/act_runner:latest
+    container_name: bantudevlab_act_runner
+    restart: always
+    environment:
+      GITEA_INSTANCE_URL: http://gitea:3000
+      GITEA_RUNNER_REGISTRATION_TOKEN: ${GITEA_RUNNER_REGISTRATION_TOKEN:-bantu_act_runner_token_2026}
+      GITEA_RUNNER_NAME: bantudevlab-act-runner
+      GITEA_RUNNER_LABELS: ubuntu-latest:docker://catthehacker/ubuntu:act-latest,ubuntu-22.04:docker://catthehacker/ubuntu:act-22.04,ubuntu-20.04:docker://catthehacker/ubuntu:act-20.04
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - act_runner_data:/data
+      - ./deploy/ci/act_runner_config.yaml:/config.yaml:ro
+    command: ["daemon", "--config", "/config.yaml"]
+    networks:
+      - backend_net
+    depends_on:
+      - gitea
+
   # Ordonnanceur periodique Celery Beat (T-DEV-502, T-DEV-503, T-DEV-504)
   celery_beat:
     build:
@@ -246,6 +267,7 @@ volumes:
   redis_data:
   forge_repos:
   ollama_models:
+  act_runner_data:
 
 networks:
   sovereign_net:
