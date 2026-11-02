@@ -154,3 +154,70 @@ class GemmaStatusView(APIView):
             },
             status=status.HTTP_200_OK,
         )
+
+
+class CopilotExplainView(APIView):
+    """
+    T-COP-701 : Point d'acces Copilot pour expliquer un fragment de code ou fichier.
+    """
+
+    permission_classes = [AllowAny]
+
+    def post(self, request):
+        code = request.data.get("code")
+        language = request.data.get("language", "")
+        if not code or not isinstance(code, str):
+            return Response({"error": "Parametre 'code' requis"}, status=status.HTTP_400_BAD_REQUEST)
+        if len(code) > MAX_CODE_CHARS:
+            return Response(
+                {"error": f"Code trop volumineux ({MAX_CODE_CHARS} caracteres max)"},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+
+        sanitized_code = sanitize_pii_and_secrets(code)
+        assistant = GemmaAssistant()
+        result = assistant.explain_code(code_snippet=sanitized_code, language=language)
+        return Response(result, status=status.HTTP_200_OK)
+
+
+class CopilotCompleteView(APIView):
+    """
+    T-COP-701 : Point d'acces Copilot pour l'autocompletion de code.
+    """
+
+    permission_classes = [AllowAny]
+
+    def post(self, request):
+        code = request.data.get("code")
+        language = request.data.get("language", "")
+        if not code or not isinstance(code, str):
+            return Response({"error": "Parametre 'code' requis"}, status=status.HTTP_400_BAD_REQUEST)
+        if len(code) > MAX_CODE_CHARS:
+            return Response(
+                {"error": f"Code trop volumineux ({MAX_CODE_CHARS} caracteres max)"},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+
+        sanitized_code = sanitize_pii_and_secrets(code)
+        assistant = GemmaAssistant()
+        result = assistant.complete_code(prefix_code=sanitized_code, language=language)
+        return Response(result, status=status.HTTP_200_OK)
+
+
+class CopilotPRSummaryView(APIView):
+    """
+    T-COP-701 : Point d'acces Copilot pour la synthese de Pull Request.
+    """
+
+    permission_classes = [AllowAny]
+
+    def post(self, request):
+        diff = request.data.get("diff")
+        title = request.data.get("title", "")
+        if not diff or not isinstance(diff, str):
+            return Response({"error": "Parametre 'diff' requis"}, status=status.HTTP_400_BAD_REQUEST)
+
+        sanitized_diff = sanitize_pii_and_secrets(diff)
+        assistant = GemmaAssistant()
+        result = assistant.generate_pr_summary(diff_content=sanitized_diff, pr_title=title)
+        return Response(result, status=status.HTTP_200_OK)

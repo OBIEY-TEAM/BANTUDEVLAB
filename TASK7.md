@@ -17,10 +17,10 @@
 
 ## Taches du Cycle TASK7
 
-- [ ] **T-COP-701 : Points d'Acces API Copilot Souverain (Completions, Explications, PR Summary)**
-  - [ ] Implementer l'endpoint `/api/ai/copilot/explain/` permettant d'expliquer un fichier ou fragment de code selectionne.
-  - [ ] Implementer l'endpoint `/api/ai/copilot/complete/` pour la suggestion et l'autocompletion de code basee sur `gemma2:2b`.
-  - [ ] Implementer l'endpoint `/api/ai/copilot/pr-summary/` pour generer automatiquement le resume d'une Pull Request.
+- [x] **T-COP-701 : Points d'Acces API Copilot Souverain (Completions, Explications, PR Summary)**
+  - [x] Implementer l'endpoint `/api/ai/copilot/explain/` permettant d'expliquer un fichier ou fragment de code selectionne.
+  - [x] Implementer l'endpoint `/api/ai/copilot/complete/` pour la suggestion et l'autocompletion de code basee sur `gemma2:2b`.
+  - [x] Implementer l'endpoint `/api/ai/copilot/pr-summary/` pour generer automatiquement le resume d'une Pull Request.
 
 - [ ] **T-COP-702 : Widget Flottant et Interface Chat Copilot dans Gitea**
   - [ ] Ajouter le bouton et la fenetre tiroir Copilot en bas a droite dans `custom/templates/custom/footer.tmpl`.
