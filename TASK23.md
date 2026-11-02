@@ -26,6 +26,6 @@
   - [x] Ajouter la detection de PR brouillon et l'injection de la banniere « Ready for review » dans `custom/templates/custom/header.tmpl`.
   - [x] Synchroniser avec `gitea_home/custom/templates/custom/header.tmpl`.
 
-- [ ] **T-DRF-2303 : Tests Unitaires et Workflows CI/CD Draft PRs**
-  - [ ] Rediger les tests unitaires dans `tests/test_ui_axes.py`.
-  - [ ] Creer les workflows CI/CD `.github/workflows/draft_prs.yml` et `.gitea/workflows/draft_prs.yaml`.
+- [x] **T-DRF-2303 : Tests Unitaires et Workflows CI/CD Draft PRs**
+  - [x] Rediger les tests unitaires dans `tests/test_ui_axes.py`.
+  - [x] Creer les workflows CI/CD `.github/workflows/draft_prs.yml` et `.gitea/workflows/draft_prs.yaml`.
