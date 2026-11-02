@@ -1,0 +1,39 @@
+name: Sovereign Branch Rulesets & Signature CI
+
+on:
+  push:
+    branches: [ "main", "develop*", "feature/*" ]
+    paths:
+      - "docs/SOVEREIGN_BRANCH_RULESETS.md"
+      - "tests/test_sec_axes.py"
+      - "custom/public/assets/css/**"
+      - ".github/workflows/branch_rulesets.yml"
+  pull_request:
+    branches: [ "main", "develop*" ]
+
+jobs:
+  rulesets-verify:
+    name: Verify Sovereign Branch Rulesets & Commit Signatures
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install django djangorestframework requests pytest pytest-django
+
+      - name: Verify Zero Emoji Policy
+        run: |
+          python scripts/check_no_emoji.py
+
+      - name: Test Branch Rulesets & Commit Signatures
+        run: |
+          pytest tests/test_sec_axes.py -k "test_t_brn_1503_branch_rulesets_verification" -v -o addopts=""
