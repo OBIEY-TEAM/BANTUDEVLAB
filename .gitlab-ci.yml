@@ -10,6 +10,8 @@ stages:
 
 variables:
   PYTHONUNBUFFERED: "1"
+  DJANGO_SETTINGS_MODULE: "config.settings"
+  DJANGO_SECRET_KEY: "bantu-gitlab-ci-sovereign-secret-key-2026"
   BANTU_CORE_URL: "http://127.0.0.1:8001"
 
 test-django-core:
@@ -21,17 +23,17 @@ test-django-core:
 sovereign-sast:
   stage: security-sast
   script:
-    - python -c "from apps.security_scanner.engine import SovereignSecurityScanner; import json; r = SovereignSecurityScanner.scan_code('print(1)'); print('SAST Score:', r['sovereignty_score'])"
+    - python -c "from apps.security_scanner.engine import SecurityScannerEngine; import json; r = SecurityScannerEngine.scan_code('snippet.py', 'print(1)'); print('SAST Score:', r['sovereignty_score'])"
 
 zero-trust-zkp-check:
   stage: zkp-verification
   script:
-    - python -c "from apps.zkp_auth.crypto import ZKPCrypto; x, y = ZKPCrypto.generate_keypair(); p = ZKPCrypto.generate_proof(x, y, 'nonce'); assert ZKPCrypto.verify_proof(y, p['commitment_t'], p['response_s'], 'nonce'); print('ZKP Proof Passed')"
+    - python -c "from apps.zkp_auth.crypto import ZKPCrypto; x, y = ZKPCrypto.generate_keypair(); p = ZKPCrypto.generate_proof(x, y, 'nonce'); assert ZKPCrypto.verify_proof(y, p); print('ZKP Proof Passed')"
 
 gemma-review:
   stage: gemma-ai-review
   script:
-    - python -c "from apps.ai_assistant.gemma import GemmaAIEngine; r = GemmaAIEngine.analyze_code('def test(): pass'); print('Gemma Local AI OK')"
+    - python -c "from apps.ai_assistant.gemma import GemmaAssistant; r = GemmaAssistant().analyze_code('def test(): pass'); print('Gemma Local AI OK')"
   rules:
     - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
 
