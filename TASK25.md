@@ -18,9 +18,9 @@
 
 ## Taches du Cycle TASK25
 
-- [ ] **T-SEC-2501 : Styles Primer pour les Avis de Securite et Badges de Severite**
-  - [ ] Ajouter les classes `.gh-advisory-card`, `.gh-severity-badge`, `.gh-confidential-banner` dans `theme-github.css` et `theme-github-dark.css`.
-  - [ ] Synchroniser avec `gitea_home/custom/public/assets/css/`.
+- [x] **T-SEC-2501 : Styles Primer pour les Avis de Securite et Badges de Severite**
+  - [x] Ajouter les classes `.gh-advisory-card`, `.gh-severity-badge`, `.gh-confidential-banner` dans `theme-github.css` et `theme-github-dark.css`.
+  - [x] Synchroniser avec `gitea_home/custom/public/assets/css/`.
 
 - [ ] **T-SEC-2502 : Modele de Signalement Confidentiel et Specification des Advisories**
   - [ ] Creer `.gitea/SECURITY_ADVISORY_TEMPLATE.md` et `.github/SECURITY_ADVISORY_TEMPLATE.md`.

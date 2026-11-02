@@ -884,6 +884,64 @@ body {
   border-bottom: none !important;
 }
 
+/* GitHub Security Advisories & Severity Badges (T-SEC-2501) */
+.gh-advisory-card {
+  padding: 16px !important;
+  border: 1px solid var(--color-border-default, #30363d) !important;
+  border-radius: 6px !important;
+  margin-bottom: 12px !important;
+  background-color: var(--color-canvas-default, #0d1117) !important;
+}
+
+.gh-severity-badge {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 4px !important;
+  font-size: 11px !important;
+  font-weight: 700 !important;
+  padding: 2px 8px !important;
+  border-radius: 12px !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.5px !important;
+}
+
+.gh-severity-badge.critical {
+  background-color: rgba(248, 81, 73, 0.15) !important;
+  color: #f85149 !important;
+  border: 1px solid rgba(248, 81, 73, 0.4) !important;
+}
+
+.gh-severity-badge.high {
+  background-color: rgba(219, 109, 40, 0.15) !important;
+  color: #db6d28 !important;
+  border: 1px solid rgba(219, 109, 40, 0.4) !important;
+}
+
+.gh-severity-badge.medium {
+  background-color: rgba(210, 153, 34, 0.15) !important;
+  color: #d29922 !important;
+  border: 1px solid rgba(210, 153, 34, 0.4) !important;
+}
+
+.gh-severity-badge.low {
+  background-color: rgba(56, 139, 253, 0.15) !important;
+  color: #58a6ff !important;
+  border: 1px solid rgba(56, 139, 253, 0.4) !important;
+}
+
+.gh-confidential-banner {
+  padding: 12px 16px !important;
+  border: 1px solid rgba(219, 109, 40, 0.4) !important;
+  border-radius: 6px !important;
+  background-color: rgba(219, 109, 40, 0.1) !important;
+  color: #f0883e !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 12px !important;
+  margin-bottom: 16px !important;
+}
+
+
 
 
 
