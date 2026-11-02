@@ -632,5 +632,50 @@ document.addEventListener('DOMContentLoaded', function() {
       }
     });
   }
+
+  // GitHub Draft Pull Requests & Ready for Review Flow (T-DRF-2302)
+  const isPullRequestPage = window.location.pathname.includes('/pulls/');
+  if (isPullRequestPage) {
+    const titleHeader = document.querySelector('.issue-title-header, .header-wrapper, .issue-title');
+    const isDraft = document.title.includes('WIP:') ||
+                    (titleHeader && (titleHeader.textContent.includes('WIP:') || titleHeader.textContent.includes('Draft:')));
+
+    if (isDraft) {
+      // Inject Draft badge
+      const stateBadge = document.querySelector('.ui.label.green, .issue-state-badge');
+      if (stateBadge && !document.querySelector('.gh-draft-badge')) {
+        const draftBadge = document.createElement('span');
+        draftBadge.className = 'gh-draft-badge';
+        draftBadge.textContent = 'Draft';
+        stateBadge.replaceWith(draftBadge);
+      }
+
+      // Inject Draft banner above merge box
+      const mergeBox = document.querySelector('.gh-merge-box, .merge-section, #issue-comment-box');
+      if (mergeBox && !document.querySelector('.gh-draft-banner')) {
+        const banner = document.createElement('div');
+        banner.className = 'gh-draft-banner';
+        banner.innerHTML = `
+          <div>
+            <strong>This pull request is still a work in progress.</strong>
+            <p style="margin: 2px 0 0; font-size: 12px; color: var(--color-text-light, #656d76);">Draft pull requests cannot be merged until marked as ready.</p>
+          </div>
+          <button type="button" class="gh-ready-for-review-btn" id="btn-ready-review">Ready for review</button>
+        `;
+
+        const btn = banner.querySelector('#btn-ready-review');
+        btn.addEventListener('click', () => {
+          const wipForm = document.querySelector('form[action*="/toggle_wip"], button[name="toggle_wip"]');
+          if (wipForm) {
+            wipForm.click ? wipForm.click() : wipForm.submit();
+          } else {
+            banner.remove();
+          }
+        });
+
+        mergeBox.parentNode.insertBefore(banner, mergeBox);
+      }
+    }
+  }
 });
 </script>
