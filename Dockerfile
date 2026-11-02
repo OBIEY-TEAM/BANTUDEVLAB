@@ -1,13 +1,13 @@
 # Dockerfile multi-stage pour la surcouche souveraine BANTUDEVLAB
 FROM python:3.12-slim
 
-ENV PYTHONDONTWRITEBYTECODE=1
-ENV PYTHONUNBUFFERED=1
-ENV DEBIAN_FRONTEND=noninteractive
+ENV PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONUNBUFFERED=1 \
+    DEBIAN_FRONTEND=noninteractive
 
 WORKDIR /app
 
-# Installation des dépendances système nécessaires
+# Installation des dependances systeme necessaires
 RUN apt-get update && apt-get install -y --no-install-recommends \
     build-essential \
     libpq-dev \
@@ -15,23 +15,24 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     curl \
     && rm -rf /var/lib/apt/lists/*
 
-# Installation des dépendances Python
+# Installation des dependances Python
 COPY requirements.txt /app/
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Création d'un utilisateur et groupe non-root pour le durcissement du conteneur
+# Creation d'un utilisateur et groupe non-root pour le durcissement du conteneur
 RUN groupadd -g 1000 appgroup && \
     useradd -u 1000 -g appgroup -s /bin/bash -m appuser
 
-# Copie du code applicatif et attribution des permissions à appuser
+# Copie du code applicatif et attribution des permissions a appuser
 COPY --chown=appuser:appgroup . /app/
-RUN chown -R appuser:appgroup /app
+RUN mkdir -p /app/staticfiles /app/forge_data/repos && \
+    chown -R appuser:appgroup /app
 
 # Bascule vers l'utilisateur non-root
 USER appuser
 
-# Port exposé
-EXPOSE 8000
+# Ports exposes (8000 pour Django, 3001 pour Forge Server)
+EXPOSE 8000 3001
 
 # Variable d'environnement pour le dimensionnement dynamique des workers
 ENV WEB_CONCURRENCY=4

@@ -186,10 +186,11 @@ DATA_UPLOAD_MAX_MEMORY_SIZE = 1024 * 1024  # SEC-043: corps de requete limite a 
 CSP_POLICY = "default-src 'self'; script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com; img-src 'self' data:; font-src 'self' https://cdnjs.cloudflare.com; frame-ancestors 'none';"
 
 # Gitea / Forge Sovereign Integration
-GITEA_API_URL = os.environ.get("GITEA_API_URL", "http://localhost:3001/api/v1")
+GITEA_API_URL = os.environ.get("GITEA_API_URL", "http://localhost:3002/api/v1")
 GITEA_ADMIN_TOKEN = os.environ.get("GITEA_ADMIN_TOKEN", "")
-GITEA_EXTERNAL_URL = os.environ.get("GITEA_EXTERNAL_URL", "http://localhost:3001")
-GITEA_WEBHOOK_SECRET = os.environ.get("GITEA_WEBHOOK_SECRET", "dev-webhook-secret" if (DEBUG or TESTING) else "")
+GITEA_EXTERNAL_URL = os.environ.get("GITEA_EXTERNAL_URL", "http://localhost:3002")
+GITEA_LOGIN_URL = os.environ.get("GITEA_LOGIN_URL", "http://localhost:3002/user/login")
+GITEA_WEBHOOK_SECRET = os.environ.get("GITEA_WEBHOOK_SECRET", "bantu_dev_webhook_secret_key_2026" if (DEBUG or TESTING) else "")
 
 # GitLab Sovereign Enterprise Integration
 GITLAB_URL = os.environ.get("GITLAB_URL", "http://localhost:3001")

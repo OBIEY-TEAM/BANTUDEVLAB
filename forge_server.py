@@ -89,6 +89,9 @@ class SovereignForgeHandler(BaseHTTPRequestHandler):
         self.send_header("Access-Control-Allow-Headers", "Content-Type, Authorization, X-Gitea-Signature")
         self.end_headers()
 
+    def do_HEAD(self):
+        self.do_GET()
+
     def do_GET(self):
         url = urllib.parse.urlparse(self.path)
         path = url.path.rstrip("/")
@@ -168,7 +171,13 @@ class SovereignForgeHandler(BaseHTTPRequestHandler):
             return self._handle_git_http(url)
 
         # 7. UI: Web Pages
-        if path in ("", "/", "/explore"):
+        if path.rstrip("/") in ("/gitea", "/switch-gitea", "/basculer-gitea"):
+            self.send_response(302)
+            self.send_header("Location", "http://localhost:3002/user/login")
+            self.end_headers()
+            return
+
+        if path in ("", "/", "/explore", "/gitlab"):
             return self._render_home_ui()
 
         m_repo_ui = re.match(r"^/([^/]+)/([^/]+)$", path)
@@ -526,7 +535,8 @@ class SovereignForgeHandler(BaseHTTPRequestHandler):
             <span>BANTUDEVLAB FORGE GIT</span>
             <span class="badge">SYSTALINK CLOUD</span>
         </a>
-        <div style="display: flex; gap: 1rem; align-items: center;">
+        <div style="display: flex; gap: 0.8rem; align-items: center;">
+            <a href="http://localhost:3002/user/login" class="btn btn-outline" style="border-color: #10b981; color: #10b981;">Basculer vers Gitea &rarr;</a>
             <a href="{BANTU_CORE_URL}/" class="btn btn-outline">&larr; Retour au Portail BantuDevLab</a>
             <a href="{BANTU_CORE_URL}/dashboard/" class="btn btn-gold">Tableau de Bord & Audit</a>
         </div>
@@ -575,6 +585,107 @@ class SovereignForgeHandler(BaseHTTPRequestHandler):
 </html>"""
         return self._send_html(html)
 
+    def _render_gitea_ui(self):
+        repos = self._get_repos_list()
+        repos_html = "".join(
+            f"""
+        <div class="repo-card" style="border-left: 3px solid #10b981;">
+            <div class="repo-header">
+                <a href="/{r["full_name"]}" class="repo-title" style="color: #10b981;">{r["full_name"]}</a>
+                <span class="badge" style="background: #10b981; color: #000;">Gitea CE Souverain</span>
+            </div>
+            <p class="repo-desc">{r["description"]}</p>
+            <div class="repo-footer">
+                <span>Stars: {r["stars_count"]}</span>
+                <span>Forks: {r["forks_count"]}</span>
+                <code class="clone-snippet">git clone {r["clone_url"]}</code>
+            </div>
+        </div>
+        """
+            for r in repos
+        )
+
+        html = f"""<!DOCTYPE html>
+<html lang="fr" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <title>Gitea Souverain — BANTUDEVLAB</title>
+    <style>
+        :root {{
+            --emerald: #10b981;
+            --bg: #0b0f19;
+            --surface: #111827;
+            --border: #1f2937;
+            --text: #f9fafb;
+            --muted: #9ca3af;
+        }}
+        body {{
+            margin: 0; font-family: system-ui, -apple-system, sans-serif;
+            background: var(--bg); color: var(--text); line-height: 1.6;
+        }}
+        .navbar {{
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 1rem 2rem; background: var(--surface); border-bottom: 2px solid var(--emerald);
+        }}
+        .brand {{ display: flex; align-items: center; gap: 0.6rem; font-weight: 800; font-size: 1.25rem; color: #fff; text-decoration: none; }}
+        .badge {{ background: var(--emerald); color: #000; font-size: 0.75rem; padding: 0.2rem 0.5rem; border-radius: 4px; font-weight: bold; }}
+        .container {{ max-width: 1100px; margin: 2rem auto; padding: 0 1rem; }}
+        .btn {{
+            display: inline-block; padding: 0.5rem 1rem; border-radius: 6px;
+            font-weight: 600; text-decoration: none; cursor: pointer; border: none;
+        }}
+        .btn-emerald {{ background: var(--emerald); color: #000; }}
+        .btn-outline {{ background: transparent; border: 1px solid var(--border); color: var(--text); }}
+        .btn-outline:hover {{ border-color: var(--emerald); color: var(--emerald); }}
+        .hero {{
+            background: radial-gradient(circle at 50% 10%, rgba(16, 185, 129, 0.15), transparent 70%);
+            padding: 2.5rem; border-radius: 12px; border: 1px solid var(--border); margin-bottom: 2rem; text-align: center;
+        }}
+        .repo-card {{
+            background: var(--surface); border: 1px solid var(--border);
+            border-radius: 8px; padding: 1.25rem; margin-bottom: 1rem;
+        }}
+        .repo-header {{ display: flex; justify-content: space-between; align-items: center; }}
+        .repo-title {{ font-size: 1.15rem; font-weight: 700; text-decoration: none; }}
+        .repo-desc {{ color: var(--muted); margin: 0.5rem 0; font-size: 0.95rem; }}
+        .repo-footer {{ display: flex; gap: 1.5rem; align-items: center; font-size: 0.85rem; color: var(--muted); flex-wrap: wrap; }}
+        .clone-snippet {{ background: #000; padding: 0.25rem 0.6rem; border-radius: 4px; color: var(--emerald); font-family: monospace; }}
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <a href="http://localhost:3002/user/login" class="brand">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2" style="vertical-align:middle;margin-right:6px;"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+            <span>BANTUDEVLAB GITEA CE</span>
+            <span class="badge">ESPACE GITEA SOUVERAIN</span>
+        </a>
+        <div style="display: flex; gap: 0.8rem; align-items: center;">
+            <a href="/" class="btn btn-outline" style="border-color: #f59e0b; color: #f59e0b;">Basculer sur GitLab &rarr;</a>
+            <a href="{BANTU_CORE_URL}/" class="btn btn-outline">&larr; Retour au Portail BantuDevLab</a>
+            <a href="{BANTU_CORE_URL}/dashboard/" class="btn btn-emerald">Tableau de Bord & Audit</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="hero">
+            <h1 style="margin-top: 0; color: var(--emerald);">Forge Logicielle Gitea Souveraine</h1>
+            <p style="color: var(--muted); max-width: 700px; margin: 0 auto 1.5rem;">
+                Interface légère Gitea CE hébergée sur l'infrastructure continentale Systalink Cloud.
+                API v1 Gitea compatible, Zero-Trust ZKP et Webhooks HMAC-SHA256.
+            </p>
+            <div style="display: flex; gap: 1rem; justify-content: center;">
+                <a href="/api/v1/version" target="_blank" class="btn btn-outline">Consulter Version API v1</a>
+                <a href="/" class="btn btn-emerald">Basculer sur l'Espace GitLab CE</a>
+            </div>
+        </div>
+
+        <h2>Dépôts Disponibles sur Gitea</h2>
+        {repos_html}
+    </div>
+</body>
+</html>"""
+        return self._send_html(html)
+
     def _render_repo_ui(self, owner, repo):
         repo_dir = REPOS_DIR / owner / f"{repo}.git"
         if not repo_dir.exists():
@@ -611,7 +722,7 @@ class SovereignForgeHandler(BaseHTTPRequestHandler):
 <body>
     <nav class="navbar">
         <a href="/" style="color: #fff; font-weight: 800; text-decoration: none;">BANTUDEVLAB FORGE GIT</a>
-        <a href="{BANTU_CORE_URL}/dashboard/" style="color: var(--gold); text-decoration: none; font-weight: bold;">&larr; Tableau de Bord BantuDevLab</a>
+        <div style="display: flex; gap: 0.8rem; align-items: center;"><a href="http://localhost:3002/user/login" style="border: 1px solid #10b981; color: #10b981; padding: 0.35rem 0.75rem; border-radius: 6px; text-decoration: none; font-size: 0.85rem;">Basculer vers Gitea &rarr;</a><a href="{BANTU_CORE_URL}/dashboard/" style="color: var(--gold); text-decoration: none; font-weight: bold;">&larr; Tableau de Bord BantuDevLab</a></div>
     </nav>
     <div class="container">
         <h1>{owner}/{repo}</h1>
@@ -630,6 +741,107 @@ class SovereignForgeHandler(BaseHTTPRequestHandler):
                 {commits_html}
             </ul>
         </div>
+    </div>
+</body>
+</html>"""
+        return self._send_html(html)
+
+    def _render_gitea_ui(self):
+        repos = self._get_repos_list()
+        repos_html = "".join(
+            f"""
+        <div class="repo-card" style="border-left: 3px solid #10b981;">
+            <div class="repo-header">
+                <a href="/{r["full_name"]}" class="repo-title" style="color: #10b981;">{r["full_name"]}</a>
+                <span class="badge" style="background: #10b981; color: #000;">Gitea CE Souverain</span>
+            </div>
+            <p class="repo-desc">{r["description"]}</p>
+            <div class="repo-footer">
+                <span>Stars: {r["stars_count"]}</span>
+                <span>Forks: {r["forks_count"]}</span>
+                <code class="clone-snippet">git clone {r["clone_url"]}</code>
+            </div>
+        </div>
+        """
+            for r in repos
+        )
+
+        html = f"""<!DOCTYPE html>
+<html lang="fr" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <title>Gitea Souverain — BANTUDEVLAB</title>
+    <style>
+        :root {{
+            --emerald: #10b981;
+            --bg: #0b0f19;
+            --surface: #111827;
+            --border: #1f2937;
+            --text: #f9fafb;
+            --muted: #9ca3af;
+        }}
+        body {{
+            margin: 0; font-family: system-ui, -apple-system, sans-serif;
+            background: var(--bg); color: var(--text); line-height: 1.6;
+        }}
+        .navbar {{
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 1rem 2rem; background: var(--surface); border-bottom: 2px solid var(--emerald);
+        }}
+        .brand {{ display: flex; align-items: center; gap: 0.6rem; font-weight: 800; font-size: 1.25rem; color: #fff; text-decoration: none; }}
+        .badge {{ background: var(--emerald); color: #000; font-size: 0.75rem; padding: 0.2rem 0.5rem; border-radius: 4px; font-weight: bold; }}
+        .container {{ max-width: 1100px; margin: 2rem auto; padding: 0 1rem; }}
+        .btn {{
+            display: inline-block; padding: 0.5rem 1rem; border-radius: 6px;
+            font-weight: 600; text-decoration: none; cursor: pointer; border: none;
+        }}
+        .btn-emerald {{ background: var(--emerald); color: #000; }}
+        .btn-outline {{ background: transparent; border: 1px solid var(--border); color: var(--text); }}
+        .btn-outline:hover {{ border-color: var(--emerald); color: var(--emerald); }}
+        .hero {{
+            background: radial-gradient(circle at 50% 10%, rgba(16, 185, 129, 0.15), transparent 70%);
+            padding: 2.5rem; border-radius: 12px; border: 1px solid var(--border); margin-bottom: 2rem; text-align: center;
+        }}
+        .repo-card {{
+            background: var(--surface); border: 1px solid var(--border);
+            border-radius: 8px; padding: 1.25rem; margin-bottom: 1rem;
+        }}
+        .repo-header {{ display: flex; justify-content: space-between; align-items: center; }}
+        .repo-title {{ font-size: 1.15rem; font-weight: 700; text-decoration: none; }}
+        .repo-desc {{ color: var(--muted); margin: 0.5rem 0; font-size: 0.95rem; }}
+        .repo-footer {{ display: flex; gap: 1.5rem; align-items: center; font-size: 0.85rem; color: var(--muted); flex-wrap: wrap; }}
+        .clone-snippet {{ background: #000; padding: 0.25rem 0.6rem; border-radius: 4px; color: var(--emerald); font-family: monospace; }}
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <a href="http://localhost:3002/user/login" class="brand">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2" style="vertical-align:middle;margin-right:6px;"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+            <span>BANTUDEVLAB GITEA CE</span>
+            <span class="badge">ESPACE GITEA SOUVERAIN</span>
+        </a>
+        <div style="display: flex; gap: 0.8rem; align-items: center;">
+            <a href="/" class="btn btn-outline" style="border-color: #f59e0b; color: #f59e0b;">Basculer sur GitLab &rarr;</a>
+            <a href="{BANTU_CORE_URL}/" class="btn btn-outline">&larr; Retour au Portail BantuDevLab</a>
+            <a href="{BANTU_CORE_URL}/dashboard/" class="btn btn-emerald">Tableau de Bord & Audit</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="hero">
+            <h1 style="margin-top: 0; color: var(--emerald);">Forge Logicielle Gitea Souveraine</h1>
+            <p style="color: var(--muted); max-width: 700px; margin: 0 auto 1.5rem;">
+                Interface légère Gitea CE hébergée sur l'infrastructure continentale Systalink Cloud.
+                API v1 Gitea compatible, Zero-Trust ZKP et Webhooks HMAC-SHA256.
+            </p>
+            <div style="display: flex; gap: 1rem; justify-content: center;">
+                <a href="/api/v1/version" target="_blank" class="btn btn-outline">Consulter Version API v1</a>
+                <a href="/" class="btn btn-emerald">Basculer sur l'Espace GitLab CE</a>
+            </div>
+        </div>
+
+        <h2>Dépôts Disponibles sur Gitea</h2>
+        {repos_html}
     </div>
 </body>
 </html>"""
