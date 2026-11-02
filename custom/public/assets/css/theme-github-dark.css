@@ -1,0 +1,164 @@
+/* ==========================================================================
+   BANTUDEVLAB - Theme GitHub Dark (GitHub Primer Design Tokens)
+   Compatible Gitea 1.22+ / Aligné sur GitHub Moderne Dark Mode
+   ========================================================================== */
+
+:root {
+  /* GitHub Primer Color Tokens (Dark) */
+  --color-canvas-default: #0d1117;
+  --color-canvas-subtle: #161b22;
+  --color-border-default: #30363d;
+  --color-border-muted: #21262d;
+  --color-neutral-muted: rgba(110, 118, 129, 0.4);
+  --color-accent-fg: #2f81f7;
+  --color-accent-emphasis: #1f6feb;
+  --color-success-fg: #3fb950;
+  --color-success-emphasis: #238636;
+  --color-attention-fg: #d29922;
+  --color-attention-emphasis: #9e6a03;
+  --color-severe-fg: #db6d28;
+  --color-danger-fg: #f85149;
+  --color-danger-emphasis: #da3633;
+  --color-done-fg: #a371f7;
+  --color-done-emphasis: #8957e5;
+
+  /* Gitea Internal Mapping to GitHub Primer Dark */
+  --color-primary: #238636;
+  --color-primary-contrast: #ffffff;
+  --color-primary-dark-1: #1f7f32;
+  --color-primary-dark-2: #196c2a;
+  --color-primary-dark-3: #135521;
+  --color-primary-dark-4: #0e3f18;
+  --color-primary-light-1: #2ea043;
+  --color-primary-light-2: #3fb950;
+  --color-primary-light-3: #56d364;
+  --color-primary-light-4: #7ee787;
+  --color-primary-light-5: #aff5b4;
+  --color-primary-alpha-10: rgba(46, 160, 67, 0.15);
+  --color-primary-alpha-20: rgba(46, 160, 67, 0.25);
+  --color-primary-alpha-30: rgba(46, 160, 67, 0.35);
+
+  --color-body: #0d1117;
+  --color-box-header: #161b22;
+  --color-box-body: #0d1117;
+  --color-text: #e6edf3;
+  --color-text-light: #7d8590;
+  --color-text-light-1: #7d8590;
+  --color-text-light-2: #848d97;
+  --color-text-light-3: #6e7681;
+  --color-text-dark: #f0f6fc;
+
+  --color-footer: #0d1117;
+  --color-navbar: #010409;
+  --color-navbar-transparent: rgba(1, 4, 9, 0.9);
+  --color-light: #161b22;
+  --color-light-mimic-enabled: rgba(255, 255, 255, calc(40 / 255 * 222 / 255 / var(--opacity-boost)));
+  --color-light-border: #30363d;
+
+  --color-secondary: #21262d;
+  --color-secondary-bg: #161b22;
+  --color-secondary-border: #30363d;
+  --color-secondary-border-dark-1: #3b434b;
+  --color-secondary-border-dark-2: #48525c;
+  --color-secondary-hover: #30363d;
+  --color-secondary-active: #282e33;
+
+  --color-hover: #161b22;
+  --color-active: #1f242c;
+  --color-border: #30363d;
+  --color-border-subtle: #21262d;
+
+  --color-red: #f85149;
+  --color-orange: #db6d28;
+  --color-yellow: #d29922;
+  --color-green: #3fb950;
+  --color-teal: #39c5cf;
+  --color-blue: #2f81f7;
+  --color-purple: #a371f7;
+
+  /* Typography Stack - GitHub Native */
+  --fonts-regular: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+  --fonts-monospace: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
+  --border-radius: 6px;
+  --border-radius-medium: 6px;
+}
+
+body {
+  font-family: var(--fonts-regular);
+  color: var(--color-text);
+  background-color: var(--color-body);
+}
+
+/* GitHub Style Top Navigation (Dark Header) */
+.ui.menu.navbar {
+  background-color: #010409 !important;
+  border-bottom: 1px solid #30363d !important;
+  box-shadow: none !important;
+}
+
+/* GitHub Style Repository Header & Tabs */
+.ui.tabular.menu {
+  border-bottom: 1px solid #30363d !important;
+}
+
+.ui.tabular.menu .item {
+  border: none !important;
+  border-bottom: 2px solid transparent !important;
+  color: #7d8590 !important;
+  font-weight: 500 !important;
+  padding: 8px 16px !important;
+  border-radius: 0 !important;
+}
+
+.ui.tabular.menu .item.active {
+  border-bottom: 2px solid #f78166 !important;
+  color: #f0f6fc !important;
+  font-weight: 600 !important;
+  background: transparent !important;
+}
+
+.ui.tabular.menu .item:hover {
+  border-bottom: 2px solid #8b949e !important;
+  color: #f0f6fc !important;
+}
+
+/* GitHub Style Buttons */
+.ui.button {
+  border-radius: 6px !important;
+  font-weight: 500 !important;
+  background-color: #21262d !important;
+  color: #c9d1d9 !important;
+  border: 1px solid #30363d !important;
+}
+
+.ui.button:hover {
+  background-color: #30363d !important;
+  color: #f0f6fc !important;
+}
+
+.ui.button.primary, .ui.button.green {
+  background-color: #238636 !important;
+  color: #ffffff !important;
+  border-color: rgba(240, 246, 252, 0.1) !important;
+}
+
+.ui.button.primary:hover, .ui.button.green:hover {
+  background-color: #2ea043 !important;
+}
+
+/* GitHub Style Rounded Counter Badges */
+.ui.label, .counter {
+  border-radius: 20px !important;
+  font-weight: 500 !important;
+  font-size: 12px !important;
+  background-color: rgba(110, 118, 129, 0.4) !important;
+  color: #e6edf3 !important;
+}
+
+/* GitHub Style Panels / Segments */
+.ui.segment {
+  border-radius: 6px !important;
+  border: 1px solid #30363d !important;
+  background-color: #0d1117 !important;
+  box-shadow: none !important;
+}
