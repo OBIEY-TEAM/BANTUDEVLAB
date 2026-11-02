@@ -22,9 +22,9 @@
   - [x] Ajouter les classes `.gh-notifications-nav`, `.gh-notification-item`, `.gh-notification-unread`, `.gh-filter-badge` dans `custom/public/assets/css/theme-github.css` et `theme-github-dark.css`.
   - [x] Synchroniser avec `gitea_home/custom/public/assets/css/`.
 
-- [ ] **T-NTF-1602 : Script de Filtrage Dynamique et Raccourci Clavier**
-  - [ ] Ajouter le mecanisme de tri cote client (Non lus, Mentions, Participations) et le raccourci `m` dans `custom/templates/custom/header.tmpl`.
-  - [ ] Synchroniser avec `gitea_home/custom/templates/custom/header.tmpl`.
+- [x] **T-NTF-1602 : Script de Filtrage Dynamique et Raccourci Clavier**
+  - [x] Ajouter le mecanisme de tri cote client (Non lus, Mentions, Participations) et le raccourci `m` dans `custom/templates/custom/header.tmpl`.
+  - [x] Synchroniser avec `gitea_home/custom/templates/custom/header.tmpl`.
 
 - [ ] **T-NTF-1603 : Tests de Conformite et Pipeline CI/CD Notifications**
   - [ ] Rediger les tests unitaires dans `tests/test_ui_axes.py`.
