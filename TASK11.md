@@ -17,9 +17,9 @@
 
 ## Taches du Cycle TASK11
 
-- [ ] **T-SBM-1101 : Generateur Souverain de SBOM CycloneDX et SPDX**
-  - [ ] Implementer le script `scripts/generate_sovereign_sbom.py` analysant les manifests (`requirements.txt`, `pyproject.toml`, `package.json`) et generant `bom.cyclonedx.json`.
-  - [ ] Documenter le format et les normes de gouvernance dans `docs/SOVEREIGN_DEPENDENCY_GRAPH_SBOM.md`.
+- [x] **T-SBM-1101 : Generateur Souverain de SBOM CycloneDX et SPDX**
+  - [x] Implementer le script `scripts/generate_sovereign_sbom.py` analysant les manifests (`requirements.txt`, `pyproject.toml`, `package.json`) et generant `bom.cyclonedx.json`.
+  - [x] Documenter le format et les normes de gouvernance dans `docs/SOVEREIGN_DEPENDENCY_GRAPH_SBOM.md`.
 
 - [ ] **T-SBM-1102 : Interconnexion de l'Onglet Insights et Graphe de Dependances**
   - [ ] Mettre a jour `custom/templates/repo/header.tmpl` pour activer le lien contextuel de l'onglet Insights vers la vue de dependances.
