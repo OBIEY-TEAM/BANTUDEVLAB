@@ -1,0 +1,28 @@
+# BANTUDEVLAB - Service Opengist (Equivalent GitHub Gist) - T-EXT-603
+services:
+  opengist:
+    image: ghcr.io/thomiceli/opengist:latest
+    container_name: bantudevlab_opengist
+    restart: unless-stopped
+    ports:
+      - "6157:6157"
+    environment:
+      UNSECURE_COOKIES: "false"
+      GIST_EXTERNAL_URL: "http://localhost:6157"
+      OAUTH2_GITEA_ENABLED: "true"
+      OAUTH2_GITEA_CLIENT_ID: "${GITEA_OPENGIST_CLIENT_ID}"
+      OAUTH2_GITEA_CLIENT_SECRET: "${GITEA_OPENGIST_CLIENT_SECRET}"
+      OAUTH2_GITEA_AUTH_URL: "http://gitea:3000/login/oauth/authorize"
+      OAUTH2_GITEA_TOKEN_URL: "http://gitea:3000/login/oauth/access_token"
+      OAUTH2_GITEA_USER_URL: "http://gitea:3000/api/v1/user"
+    volumes:
+      - opengist_data:/opengist
+    networks:
+      - backend_net
+
+volumes:
+  opengist_data:
+
+networks:
+  backend_net:
+    external: true

@@ -104,5 +104,17 @@ document.addEventListener('DOMContentLoaded', function() {
       }
     }
   });
+
+  // Inject sovereign Gist shortcut in top navbar if present
+  const navContainer = document.querySelector('.ui.secondary.menu') || document.querySelector('.ui.menu.navbar');
+  if (navContainer && !document.querySelector('.nav-gist-item')) {
+    const gistLink = document.createElement('a');
+    gistLink.className = 'item nav-gist-item';
+    gistLink.href = 'http://localhost:6157/';
+    gistLink.target = '_blank';
+    gistLink.rel = 'noopener noreferrer';
+    gistLink.textContent = 'Gists';
+    navContainer.appendChild(gistLink);
+  }
 });
 </script>
