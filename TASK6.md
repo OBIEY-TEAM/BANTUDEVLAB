@@ -119,9 +119,9 @@ Ce document définit l'ensemble des tâches, sous-tâches techniques et configur
   - [x] Automatiser l'ouverture de pull requests de mise à jour des dépendances vulnérables ou obsolètes (Python, Node.js, Go, Docker).
   - [x] Intégrer **Trivy** et **OSV-Scanner** pour la vérification du graphe des dépendances.
 
-- [ ] **T-SEC-603 : Sécurité des Accès et Authentification Forte**
-  - [ ] Activer l'authentification à deux facteurs (2FA) via TOTP et clés de sécurité matérielles WebAuthn/FIDO2.
-  - [ ] Vérifier la signature cryptographique des commits via clés GPG et SSH avec affichage du badge « Verified ».
+- [x] **T-SEC-603 : Sécurité des Accès et Authentification Forte**
+  - [x] Activer l'authentification à deux facteurs (2FA) via TOTP et clés de sécurité matérielles WebAuthn/FIDO2.
+  - [x] Vérifier la signature cryptographique des commits via clés GPG et SSH avec affichage du badge « Verified ».
 
 ---
 
