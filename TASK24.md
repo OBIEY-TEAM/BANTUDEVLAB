@@ -18,9 +18,9 @@
 
 ## Taches du Cycle TASK24
 
-- [ ] **T-MRG-2401 : Styles Primer pour la File d'Attente de Fusion (Merge Queue)**
-  - [ ] Ajouter les styles `.gh-merge-queue-badge`, `.gh-merge-queue-box`, `.gh-merge-queue-item` dans `theme-github.css` et `theme-github-dark.css`.
-  - [ ] Synchroniser avec `gitea_home/custom/public/assets/css/`.
+- [x] **T-MRG-2401 : Styles Primer pour la File d'Attente de Fusion (Merge Queue)**
+  - [x] Ajouter les styles `.gh-merge-queue-badge`, `.gh-merge-queue-box`, `.gh-merge-queue-item` dans `theme-github.css` et `theme-github-dark.css`.
+  - [x] Synchroniser avec `gitea_home/custom/public/assets/css/`.
 
 - [ ] **T-MRG-2402 : Moteur de Simulation et Specification de File de Fusion**
   - [ ] Implementer `scripts/simulate_merge_queue.py` pour valider les fusions en file selon les checks CI et l'ordre FIFO.
