@@ -172,3 +172,25 @@ class Axe1SecurityTestCase(TestCase):
         new_count = AuditTrailLog.objects.count()
         self.assertGreaterEqual(new_count - initial_count, 3)
         self.assertTrue(AuditTrail.verify_chain_integrity())
+    def test_t_rel_902_release_provenance_and_checksums(self):
+        """T-REL-902 : Verification du generateur de provenance SLSA et SHA256SUMS."""
+        import tempfile
+        from pathlib import Path
+        from scripts.generate_release_provenance import generate_provenance
+
+        with tempfile.TemporaryDirectory() as tmpdir:
+            tmp_path = Path(tmpdir)
+            sample_file = tmp_path / "app-v1.0.tar.gz"
+            sample_file.write_bytes(b"BANTUDEVLAB_RELEASE_BINARY_DATA")
+
+            result = generate_provenance([sample_file], tmp_path)
+            self.assertEqual(result["total_files"], 1)
+
+            checksums_content = (tmp_path / "SHA256SUMS").read_text(encoding="utf-8")
+            self.assertIn("app-v1.0.tar.gz", checksums_content)
+
+            slsa_content = json.loads((tmp_path / "provenance.slsa.json").read_text(encoding="utf-8"))
+            self.assertEqual(slsa_content["predicateType"], "https://slsa.dev/provenance/v1")
+            self.assertEqual(slsa_content["subject"][0]["name"], "app-v1.0.tar.gz")
+            self.assertIn("sha256", slsa_content["subject"][0]["digest"])
+
