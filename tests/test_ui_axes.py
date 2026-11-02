@@ -176,3 +176,25 @@ class Axe4UITestCase(TestCase):
         self.assertIn("gh-notif-nav", header_tmpl)
         self.assertIn("data-filter", header_tmpl)
 
+    def test_t_src_1801_and_1802_code_search_qualifiers_and_docs(self):
+        """T-SRC-1801 & T-SRC-1802 : Verification des styles et popover des qualificateurs de recherche de code."""
+        from pathlib import Path
+
+        css_light = Path("custom/public/assets/css/theme-github.css").read_text(encoding="utf-8")
+        self.assertIn(".gh-search-qualifiers-popover", css_light)
+        self.assertIn(".gh-qualifier-badge", css_light)
+
+        css_dark = Path("custom/public/assets/css/theme-github-dark.css").read_text(encoding="utf-8")
+        self.assertIn(".gh-search-qualifiers-popover", css_dark)
+
+        header_tmpl = Path("custom/templates/custom/header.tmpl").read_text(encoding="utf-8")
+        self.assertIn("T-SRC-1802", header_tmpl)
+        self.assertIn("gh-search-qualifiers-popover", header_tmpl)
+        self.assertIn("path:", header_tmpl)
+
+        doc_path = Path("docs/SOVEREIGN_CODE_SEARCH.md")
+        self.assertTrue(doc_path.exists())
+        doc_content = doc_path.read_text(encoding="utf-8")
+        self.assertIn("REPO_INDEXER_TYPE = bleve", doc_content)
+        self.assertIn("symbol:", doc_content)
+
