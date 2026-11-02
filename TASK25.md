@@ -26,6 +26,6 @@
   - [x] Creer `.gitea/SECURITY_ADVISORY_TEMPLATE.md` et `.github/SECURITY_ADVISORY_TEMPLATE.md`.
   - [x] Documenter le processus de divulgation responsable dans `docs/SOVEREIGN_SECURITY_ADVISORIES.md`.
 
-- [ ] **T-SEC-2503 : Tests Unitaires et Workflows CI/CD Security Advisories**
-  - [ ] Rediger les tests unitaires dans `tests/test_sec_axes.py`.
-  - [ ] Creer les workflows CI/CD `.github/workflows/security_advisories.yml` et `.gitea/workflows/security_advisories.yaml`.
+- [x] **T-SEC-2503 : Tests Unitaires et Workflows CI/CD Security Advisories**
+  - [x] Rediger les tests unitaires dans `tests/test_sec_axes.py`.
+  - [x] Creer les workflows CI/CD `.github/workflows/security_advisories.yml` et `.gitea/workflows/security_advisories.yaml`.

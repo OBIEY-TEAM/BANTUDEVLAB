@@ -337,3 +337,28 @@ class Axe1SecurityTestCase(TestCase):
         self.assertEqual(batch_result["merged"], 1)
         self.assertEqual(batch_result["blocked"], 2)
 
+    def test_t_sec_2501_and_2502_security_advisories(self):
+        """T-SEC-2501 & T-SEC-2502 : Verification des styles et templates d'avis de securite."""
+        from pathlib import Path
+
+        css_light = Path("custom/public/assets/css/theme-github.css").read_text(encoding="utf-8")
+        self.assertIn(".gh-advisory-card", css_light)
+        self.assertIn(".gh-severity-badge.critical", css_light)
+        self.assertIn(".gh-severity-badge.high", css_light)
+        self.assertIn(".gh-severity-badge.medium", css_light)
+        self.assertIn(".gh-severity-badge.low", css_light)
+        self.assertIn(".gh-confidential-banner", css_light)
+
+        css_dark = Path("custom/public/assets/css/theme-github-dark.css").read_text(encoding="utf-8")
+        self.assertIn(".gh-advisory-card", css_dark)
+
+        gh_tmpl = Path(".github/SECURITY_ADVISORY_TEMPLATE.md")
+        self.assertTrue(gh_tmpl.exists())
+        self.assertIn("CVSS v3.1", gh_tmpl.read_text(encoding="utf-8"))
+
+        gitea_tmpl = Path(".gitea/SECURITY_ADVISORY_TEMPLATE.md")
+        self.assertTrue(gitea_tmpl.exists())
+
+        doc_path = Path("docs/SOVEREIGN_SECURITY_ADVISORIES.md")
+        self.assertTrue(doc_path.exists())
+
