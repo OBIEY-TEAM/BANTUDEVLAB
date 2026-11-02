@@ -22,9 +22,9 @@
   - [x] Ajouter les styles `.gh-draft-badge`, `.gh-ready-for-review-btn`, `.gh-draft-banner` dans `theme-github.css` et `theme-github-dark.css`.
   - [x] Synchroniser avec `gitea_home/custom/public/assets/css/`.
 
-- [ ] **T-DRF-2302 : Rendu Dynamique et Flux « Ready for Review »**
-  - [ ] Ajouter la detection de PR brouillon et l'injection de la banniere « Ready for review » dans `custom/templates/custom/header.tmpl`.
-  - [ ] Synchroniser avec `gitea_home/custom/templates/custom/header.tmpl`.
+- [x] **T-DRF-2302 : Rendu Dynamique et Flux « Ready for Review »**
+  - [x] Ajouter la detection de PR brouillon et l'injection de la banniere « Ready for review » dans `custom/templates/custom/header.tmpl`.
+  - [x] Synchroniser avec `gitea_home/custom/templates/custom/header.tmpl`.
 
 - [ ] **T-DRF-2303 : Tests Unitaires et Workflows CI/CD Draft PRs**
   - [ ] Rediger les tests unitaires dans `tests/test_ui_axes.py`.
