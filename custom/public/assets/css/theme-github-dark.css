@@ -292,3 +292,50 @@ body {
 .gh-merge-btn-primary:hover {
   background-color: #2ea043 !important;
 }
+
+/* GitHub Interactive Blame View & Heatmap Gradient (T-BLM-901) */
+.blame .lines-blame, .file-view.blame table {
+  border-collapse: separate !important;
+  border-spacing: 0 !important;
+}
+
+.blame-commit, .lines-blame td.blame-line {
+  position: relative !important;
+  padding: 4px 12px !important;
+  font-size: 12px !important;
+  border-bottom: 1px solid #21262d !important;
+  background-color: #161b22 !important;
+}
+
+.gh-blame-heat-marker, .blame-heat-gradient {
+  display: inline-block;
+  width: 4px;
+  height: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+.gh-blame-heat-marker.heat-new { background-color: #2f81f7; }
+.gh-blame-heat-marker.heat-mid { background-color: #a371f7; }
+.gh-blame-heat-marker.heat-old { background-color: #484f58; }
+
+.blame-commit-author {
+  font-weight: 600;
+  color: #e6edf3;
+}
+
+.blame-commit-date {
+  color: #8b949e;
+  font-size: 11px;
+  margin-left: 6px;
+}
+
+.blame-commit-message {
+  color: #e6edf3;
+  margin-top: 2px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 320px;
+}

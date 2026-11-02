@@ -18,10 +18,10 @@
 
 ## Taches du Cycle TASK9
 
-- [ ] **T-BLM-901 : Vue Blame Interactive a Gradient Thermique et Cartes de Commit**
-  - [ ] Integrer la barre thermique d'anciennete de commit (`.gh-blame-heat-marker`) dans `custom/public/assets/css/theme-github.css` et `theme-github-dark.css`.
-  - [ ] Permettre la previsualisation contextuelle de l'auteur et du message de commit.
-  - [ ] Synchroniser avec `gitea_home/custom/public/assets/css/`.
+- [x] **T-BLM-901 : Vue Blame Interactive a Gradient Thermique et Cartes de Commit**
+  - [x] Integrer la barre thermique d'anciennete de commit (`.gh-blame-heat-marker`) dans `custom/public/assets/css/theme-github.css` et `theme-github-dark.css`.
+  - [x] Permettre la previsualisation contextuelle de l'auteur et du message de commit.
+  - [x] Synchroniser avec `gitea_home/custom/public/assets/css/`.
 
 - [ ] **T-REL-902 : Integrite Cryptographique et Sommes de Controle des Releases (SHA256 & SLSA)**
   - [ ] Creer le script utilitaire `scripts/generate_release_provenance.py` calculant et attestant les sommes de controle SHA256 de chaque livrable de release.
