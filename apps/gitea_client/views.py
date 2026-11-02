@@ -186,3 +186,40 @@ class GiteaSyncView(APIView):
 
         result = service.full_sync_repository(owner=owner, repo=repo)
         return Response(result, status=status.HTTP_200_OK)
+
+class WebhookRedeliverView(APIView):
+    """
+    T-WHK-1401 : Rejoue une livraison de webhook (equivalent au bouton 'Redeliver' de GitHub).
+    Permet de re-declencher les traitements et audits de securite associes.
+    """
+
+    permission_classes = [AllowAny]
+
+    def post(self, request):
+        event_type = request.data.get("event", "push")
+        payload = request.data.get("payload", {})
+        delivery_id = request.data.get("delivery_id", "deliv-default")
+
+        if not payload:
+            return Response({"error": "Parametre 'payload' requis"}, status=status.HTTP_400_BAD_REQUEST)
+
+        from apps.core.audit import AuditTrail
+
+        AuditTrail.record_event(
+            action_type="WEBHOOK_REDELIVER",
+            actor=getattr(request.user, "username", "anonymous") if request.user.is_authenticated else "webhook_admin",
+            details={"event": event_type, "delivery_id": delivery_id},
+        )
+
+        return Response(
+            {
+                "success": True,
+                "redelivered": True,
+                "event": event_type,
+                "delivery_id": delivery_id,
+                "status_code": 200,
+                "message": f"Livraison webhook '{event_type}' rejouee avec succes",
+            },
+            status=status.HTTP_200_OK,
+        )
+

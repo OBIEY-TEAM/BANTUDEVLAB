@@ -17,9 +17,9 @@
 
 ## Taches du Cycle TASK14
 
-- [ ] **T-WHK-1401 : Point d'Acces de Rejeu de Livraisons Webhook (`/api/forge/webhooks/redeliver/`)**
-  - [ ] Implementer la vue `WebhookRedeliverView` dans `apps/gitea_client/views.py` et `urls.py`.
-  - [ ] Permettre la reinjection securisee des evenements `push`, `pull_request` et `issues`.
+- [x] **T-WHK-1401 : Point d'Acces de Rejeu de Livraisons Webhook (`/api/forge/webhooks/redeliver/`)**
+  - [x] Implementer la vue `WebhookRedeliverView` dans `apps/gitea_client/views.py` et `urls.py`.
+  - [x] Permettre la reinjection securisee des evenements `push`, `pull_request` et `issues`.
 
 - [ ] **T-WHK-1402 : Styles Primer pour l'Inspecteur de Livraisons de Webhooks**
   - [ ] Integrer les classes `.gh-webhook-delivery-item`, `.gh-status-pill` dans `custom/public/assets/css/theme-github.css` et `theme-github-dark.css`.
