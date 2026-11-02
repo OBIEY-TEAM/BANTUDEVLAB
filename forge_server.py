@@ -92,24 +92,28 @@ class SovereignForgeHandler(BaseHTTPRequestHandler):
     def do_GET(self):
         url = urllib.parse.urlparse(self.path)
         path = url.path.rstrip("/")
-        query = urllib.parse.parse_qs(url.query)
+        urllib.parse.parse_qs(url.query)
 
         # 1. API: /api/v1/version & /api/v4/version (GitLab CE)
         if path == "/api/v4/version":
-            return self._send_json({
-                "version": "16.11.0-gitlab-sovereign",
-                "revision": "7bf3e9a4f21",
-                "status": "ONLINE",
-                "engine": "GitLab CE Panafricain",
-            })
+            return self._send_json(
+                {
+                    "version": "16.11.0-gitlab-sovereign",
+                    "revision": "7bf3e9a4f21",
+                    "status": "ONLINE",
+                    "engine": "GitLab CE Panafricain",
+                }
+            )
 
         if path == "/api/v4/user":
-            return self._send_json({
-                "id": 1,
-                "username": "sovereign_admin",
-                "name": "Administrateur Souverain",
-                "state": "active",
-            })
+            return self._send_json(
+                {
+                    "id": 1,
+                    "username": "sovereign_admin",
+                    "name": "Administrateur Souverain",
+                    "state": "active",
+                }
+            )
 
         if path == "/api/v4/projects":
             return self._send_json(self._get_gitlab_projects_list())
@@ -123,13 +127,15 @@ class SovereignForgeHandler(BaseHTTPRequestHandler):
             return self._send_json({"message": "404 Project Not Found"}, status=404)
 
         if path == "/api/v1/version":
-            return self._send_json({
-                "version": "1.23.0-sovereign-panafrican",
-                "status": "ONLINE",
-                "engine": "Gitea / GitLab CE Hybrid",
-                "cloud_provider": "Systalink Cloud Sovereign Cluster",
-                "location": "Abidjan Tier-3 Datacenter",
-            })
+            return self._send_json(
+                {
+                    "version": "1.23.0-sovereign-panafrican",
+                    "status": "ONLINE",
+                    "engine": "Gitea / GitLab CE Hybrid",
+                    "cloud_provider": "Systalink Cloud Sovereign Cluster",
+                    "location": "Abidjan Tier-3 Datacenter",
+                }
+            )
 
         # 2. API: /api/v1/repos/search
         if path == "/api/v1/repos/search":
@@ -291,27 +297,32 @@ class SovereignForgeHandler(BaseHTTPRequestHandler):
                     for repo_dir in owner_dir.glob("*.git"):
                         name = repo_dir.stem
                         full = f"{owner_dir.name}/{name}"
-                        meta = REPO_METADATA.get(full, {
-                            "description": "Dépôt souverain BANTUDEVLAB",
-                            "stars": 10,
-                            "forks": 2,
-                            "sovereignty_level": "Tier-1 Continental",
-                        })
-                        items.append({
-                            "id": abs(hash(full)) % 10000,
-                            "name": name,
-                            "full_name": full,
-                            "description": meta["description"],
-                            "private": False,
-                            "stars_count": meta["stars"],
-                            "forks_count": meta["forks"],
-                            "open_issues_count": 1,
-                            "owner": {"username": owner_dir.name},
-                            "clone_url": f"http://localhost:{PORT}/{full}.git",
-                            "html_url": f"http://localhost:{PORT}/{full}",
-                            "default_branch": "main",
-                            "sovereignty_level": meta["sovereignty_level"],
-                        })
+                        meta = REPO_METADATA.get(
+                            full,
+                            {
+                                "description": "Dépôt souverain BANTUDEVLAB",
+                                "stars": 10,
+                                "forks": 2,
+                                "sovereignty_level": "Tier-1 Continental",
+                            },
+                        )
+                        items.append(
+                            {
+                                "id": abs(hash(full)) % 10000,
+                                "name": name,
+                                "full_name": full,
+                                "description": meta["description"],
+                                "private": False,
+                                "stars_count": meta["stars"],
+                                "forks_count": meta["forks"],
+                                "open_issues_count": 1,
+                                "owner": {"username": owner_dir.name},
+                                "clone_url": f"http://localhost:{PORT}/{full}.git",
+                                "html_url": f"http://localhost:{PORT}/{full}",
+                                "default_branch": "main",
+                                "sovereignty_level": meta["sovereignty_level"],
+                            }
+                        )
         return items
 
     def _get_gitlab_projects_list(self):
@@ -319,22 +330,24 @@ class SovereignForgeHandler(BaseHTTPRequestHandler):
         projects = []
         for r in repos:
             owner, name = r["full_name"].split("/", 1)
-            projects.append({
-                "id": r["id"],
-                "name": name,
-                "path": name,
-                "path_with_namespace": r["full_name"],
-                "description": r["description"],
-                "star_count": r["stars_count"],
-                "forks_count": r["forks_count"],
-                "web_url": f"http://localhost:{PORT}/{r['full_name']}",
-                "http_url_to_repo": f"http://localhost:{PORT}/{r['full_name']}.git",
-                "default_branch": "main",
-                "visibility": "public",
-                "created_at": "2026-01-01T00:00:00.000Z",
-                "last_activity_at": "2026-11-02T04:00:00.000Z",
-                "namespace": {"id": 1, "name": owner, "path": owner, "kind": "group"},
-            })
+            projects.append(
+                {
+                    "id": r["id"],
+                    "name": name,
+                    "path": name,
+                    "path_with_namespace": r["full_name"],
+                    "description": r["description"],
+                    "star_count": r["stars_count"],
+                    "forks_count": r["forks_count"],
+                    "web_url": f"http://localhost:{PORT}/{r['full_name']}",
+                    "http_url_to_repo": f"http://localhost:{PORT}/{r['full_name']}.git",
+                    "default_branch": "main",
+                    "visibility": "public",
+                    "created_at": "2026-01-01T00:00:00.000Z",
+                    "last_activity_at": "2026-11-02T04:00:00.000Z",
+                    "namespace": {"id": 1, "name": owner, "path": owner, "kind": "group"},
+                }
+            )
         return projects
 
     def _get_repo_commits(self, owner, repo):
@@ -350,13 +363,15 @@ class SovereignForgeHandler(BaseHTTPRequestHandler):
         for line in res.stdout.splitlines():
             parts = line.split("||")
             if len(parts) == 4:
-                commits.append({
-                    "sha": parts[0],
-                    "commit": {
-                        "author": {"name": parts[1], "date": parts[2]},
-                        "message": parts[3],
-                    },
-                })
+                commits.append(
+                    {
+                        "sha": parts[0],
+                        "commit": {
+                            "author": {"name": parts[1], "date": parts[2]},
+                            "message": parts[3],
+                        },
+                    }
+                )
         return commits
 
     def _get_repo_branches(self, owner, repo):
@@ -393,14 +408,19 @@ class SovereignForgeHandler(BaseHTTPRequestHandler):
 
     def _dispatch_webhook(self, payload):
         import urllib.request
+
         webhook_url = f"{BANTU_CORE_URL}/api/forge/webhook/"
         body = json.dumps(payload).encode("utf-8")
         sig = hmac.new(WEBHOOK_SECRET.encode("utf-8"), body, hashlib.sha256).hexdigest()
-        req = urllib.request.Request(webhook_url, data=body, headers={
-            "Content-Type": "application/json",
-            "X-Gitea-Signature": sig,
-            "X-Gitea-Event": "push",
-        })
+        req = urllib.request.Request(
+            webhook_url,
+            data=body,
+            headers={
+                "Content-Type": "application/json",
+                "X-Gitea-Signature": sig,
+                "X-Gitea-Event": "push",
+            },
+        )
         try:
             with urllib.request.urlopen(req, timeout=5) as resp:
                 data = json.loads(resp.read().decode("utf-8"))
@@ -410,14 +430,19 @@ class SovereignForgeHandler(BaseHTTPRequestHandler):
 
     def _dispatch_gitlab_webhook(self, payload):
         import urllib.request
+
         webhook_url = f"{BANTU_CORE_URL}/api/gitlab/webhook/"
         body = json.dumps(payload).encode("utf-8")
         token = os.environ.get("GITLAB_WEBHOOK_SECRET", "bantu_gitlab_webhook_secret_2026")
-        req = urllib.request.Request(webhook_url, data=body, headers={
-            "Content-Type": "application/json",
-            "X-Gitlab-Token": token,
-            "X-Gitlab-Event": "Push Hook",
-        })
+        req = urllib.request.Request(
+            webhook_url,
+            data=body,
+            headers={
+                "Content-Type": "application/json",
+                "X-Gitlab-Token": token,
+                "X-Gitlab-Event": "Push Hook",
+            },
+        )
         try:
             with urllib.request.urlopen(req, timeout=5) as resp:
                 data = json.loads(resp.read().decode("utf-8"))
@@ -428,20 +453,23 @@ class SovereignForgeHandler(BaseHTTPRequestHandler):
     # ---------------- UI Templates ----------------
     def _render_home_ui(self):
         repos = self._get_repos_list()
-        repos_html = "".join(f"""
+        repos_html = "".join(
+            f"""
         <div class="repo-card">
             <div class="repo-header">
-                <a href="/{r['full_name']}" class="repo-title">{r['full_name']}</a>
+                <a href="/{r["full_name"]}" class="repo-title">{r["full_name"]}</a>
                 <span class="badge">Tier-1 Souverain</span>
             </div>
-            <p class="repo-desc">{r['description']}</p>
+            <p class="repo-desc">{r["description"]}</p>
             <div class="repo-footer">
-                <span>Stars: {r['stars_count']}</span>
-                <span>Forks: {r['forks_count']}</span>
-                <code class="clone-snippet">git clone {r['clone_url']}</code>
+                <span>Stars: {r["stars_count"]}</span>
+                <span>Forks: {r["forks_count"]}</span>
+                <code class="clone-snippet">git clone {r["clone_url"]}</code>
             </div>
         </div>
-        """ for r in repos)
+        """
+            for r in repos
+        )
 
         html = f"""<!DOCTYPE html>
 <html lang="fr" data-theme="dark">
@@ -553,15 +581,18 @@ class SovereignForgeHandler(BaseHTTPRequestHandler):
             return self._send_html("Dépôt introuvable", status=404)
 
         commits = self._get_repo_commits(owner, repo)
-        branches = self._get_repo_branches(owner, repo)
-        commits_html = "".join(f"""
+        self._get_repo_branches(owner, repo)
+        commits_html = "".join(
+            f"""
         <li style="padding: 0.5rem 0; border-bottom: 1px solid var(--border); font-size: 0.9rem;">
-            <strong>{c['commit']['message']}</strong>
+            <strong>{c["commit"]["message"]}</strong>
             <div style="color: var(--muted); font-size: 0.8rem;">
-                Par {c['commit']['author']['name']} • SHA: <code>{c['sha'][:8]}</code> • {c['commit']['author']['date']}
+                Par {c["commit"]["author"]["name"]} • SHA: <code>{c["sha"][:8]}</code> • {c["commit"]["author"]["date"]}
             </div>
         </li>
-        """ for c in commits)
+        """
+            for c in commits
+        )
 
         html = f"""<!DOCTYPE html>
 <html lang="fr" data-theme="dark">
