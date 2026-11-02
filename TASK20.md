@@ -18,9 +18,9 @@
 
 ## Taches du Cycle TASK20
 
-- [ ] **T-GRP-2001 : Styles Primer pour le Graphe de Commits et Reseau de Branches**
-  - [ ] Ajouter les classes `.gh-graph-container`, `.gh-graph-dot`, `.gh-graph-branch-tag` dans `theme-github.css` et `theme-github-dark.css`.
-  - [ ] Synchroniser avec `gitea_home/custom/public/assets/css/`.
+- [x] **T-GRP-2001 : Styles Primer pour le Graphe de Commits et Reseau de Branches**
+  - [x] Ajouter les classes `.gh-graph-container`, `.gh-graph-dot`, `.gh-graph-branch-tag` dans `theme-github.css` et `theme-github-dark.css`.
+  - [x] Synchroniser avec `gitea_home/custom/public/assets/css/`.
 
 - [ ] **T-GRP-2002 : Script d'Amelioration Topologique du Graphe SVG**
   - [ ] Ajouter la palette de couleurs GitHub (Bleu, Vert, Violet, Orange, Rouge) et le lissage SVG dans `custom/templates/custom/header.tmpl`.
