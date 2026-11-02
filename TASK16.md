@@ -18,9 +18,9 @@
 
 ## Taches du Cycle TASK16
 
-- [ ] **T-NTF-1601 : Styles Primer pour le Centre de Notifications**
-  - [ ] Ajouter les classes `.gh-notifications-nav`, `.gh-notification-item`, `.gh-notification-unread`, `.gh-filter-badge` dans `custom/public/assets/css/theme-github.css` et `theme-github-dark.css`.
-  - [ ] Synchroniser avec `gitea_home/custom/public/assets/css/`.
+- [x] **T-NTF-1601 : Styles Primer pour le Centre de Notifications**
+  - [x] Ajouter les classes `.gh-notifications-nav`, `.gh-notification-item`, `.gh-notification-unread`, `.gh-filter-badge` dans `custom/public/assets/css/theme-github.css` et `theme-github-dark.css`.
+  - [x] Synchroniser avec `gitea_home/custom/public/assets/css/`.
 
 - [ ] **T-NTF-1602 : Script de Filtrage Dynamique et Raccourci Clavier**
   - [ ] Ajouter le mecanisme de tri cote client (Non lus, Mentions, Participations) et le raccourci `m` dans `custom/templates/custom/header.tmpl`.
