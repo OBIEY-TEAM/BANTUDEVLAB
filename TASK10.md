@@ -26,6 +26,6 @@
   - [x] Ajouter l'indicateur visuel de tri discret (fleche SVG).
   - [x] Synchroniser avec `gitea_home/custom/templates/custom/header.tmpl`.
 
-- [ ] **T-TAB-1003 : Tests Unitaires et Pipeline CI/CD pour le Moteur de Rendu Markdown**
-  - [ ] Ajouter les tests de conformite du rendu Markdown dans `tests/test_ui_axes.py`.
-  - [ ] Creer les workflows CI/CD `.github/workflows/markdown_tables.yml` et `.gitea/workflows/markdown_tables.yaml`.
+- [x] **T-TAB-1003 : Tests Unitaires et Pipeline CI/CD pour le Moteur de Rendu Markdown**
+  - [x] Ajouter les tests de conformite du rendu Markdown dans `tests/test_ui_axes.py`.
+  - [x] Creer les workflows CI/CD `.github/workflows/markdown_tables.yml` et `.gitea/workflows/markdown_tables.yaml`.
