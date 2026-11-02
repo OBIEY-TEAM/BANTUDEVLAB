@@ -18,9 +18,9 @@
 
 ## Taches du Cycle TASK21
 
-- [ ] **T-MLS-2101 : Styles Primer pour les Jalons et Barres de Progression**
-  - [ ] Ajouter les styles `.gh-milestone-card`, `.gh-milestone-progress-bar`, `.gh-milestone-meta` dans `theme-github.css` et `theme-github-dark.css`.
-  - [ ] Synchroniser avec `gitea_home/custom/public/assets/css/`.
+- [x] **T-MLS-2101 : Styles Primer pour les Jalons et Barres de Progression**
+  - [x] Ajouter les styles `.gh-milestone-card`, `.gh-milestone-progress-bar`, `.gh-milestone-meta` dans `theme-github.css` et `theme-github-dark.css`.
+  - [x] Synchroniser avec `gitea_home/custom/public/assets/css/`.
 
 - [ ] **T-MLS-2102 : Calculateur Dynamique de Progression et Statuts**
   - [ ] Ajouter le script d'enrichissement des barres de jalons dans `custom/templates/custom/header.tmpl`.
