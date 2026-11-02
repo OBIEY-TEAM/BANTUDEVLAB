@@ -1,0 +1,41 @@
+name: Sovereign Security Advisories CI
+
+on:
+  push:
+    branches: [ "main", "develop*", "feature/*" ]
+    paths:
+      - ".github/SECURITY_ADVISORY_TEMPLATE.md"
+      - ".gitea/SECURITY_ADVISORY_TEMPLATE.md"
+      - "docs/SOVEREIGN_SECURITY_ADVISORIES.md"
+      - "custom/public/assets/css/**"
+      - "tests/test_sec_axes.py"
+      - ".github/workflows/security_advisories.yml"
+  pull_request:
+    branches: [ "main", "develop*" ]
+
+jobs:
+  advisories-verify:
+    name: Verify Security Advisories Templates & Styles
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install django djangorestframework requests pytest pytest-django
+
+      - name: Verify Zero Emoji Policy
+        run: |
+          python scripts/check_no_emoji.py
+
+      - name: Test Security Advisories
+        run: |
+          pytest tests/test_sec_axes.py -k "test_t_sec_2501_and_2502_security_advisories" -v -o addopts=""
