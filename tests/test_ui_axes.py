@@ -249,3 +249,20 @@ class Axe4UITestCase(TestCase):
         self.assertIn("gh-milestone-progress-bar", header_tmpl)
         self.assertIn("complete", header_tmpl)
 
+    def test_t_drf_2301_and_2302_draft_prs_flow(self):
+        """T-DRF-2301 & T-DRF-2302 : Verification des styles et flux de draft pull requests."""
+        from pathlib import Path
+
+        css_light = Path("custom/public/assets/css/theme-github.css").read_text(encoding="utf-8")
+        self.assertIn(".gh-draft-badge", css_light)
+        self.assertIn(".gh-draft-banner", css_light)
+        self.assertIn(".gh-ready-for-review-btn", css_light)
+
+        css_dark = Path("custom/public/assets/css/theme-github-dark.css").read_text(encoding="utf-8")
+        self.assertIn(".gh-draft-badge", css_dark)
+
+        header_tmpl = Path("custom/templates/custom/header.tmpl").read_text(encoding="utf-8")
+        self.assertIn("T-DRF-2302", header_tmpl)
+        self.assertIn("Ready for review", header_tmpl)
+        self.assertIn("Draft pull requests cannot be merged", header_tmpl)
+
