@@ -1,13 +1,81 @@
-<!-- BANTUDEVLAB - GitHub Style Code Viewer Toolbar (T-UI-602) -->
+<!-- BANTUDEVLAB - GitHub Style Code Viewer Toolbar & File Tree (T-UI-602, T-PR-803) -->
+<style>
+/* GitHub File Tree Sidebar Layout */
+.gh-file-viewer-wrapper {
+  display: flex;
+  gap: 16px;
+  width: 100%;
+  margin-top: 8px;
+}
+
+.gh-file-tree-sidebar {
+  width: 260px;
+  min-width: 240px;
+  background: var(--color-canvas-subtle, #f6f8fa);
+  border: 1px solid var(--color-border-default, #d0d7de);
+  border-radius: 6px;
+  padding: 8px;
+  display: none;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 12px;
+  height: fit-content;
+  max-height: 80vh;
+  overflow-y: auto;
+}
+
+.gh-file-tree-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: 600;
+  padding: 4px 6px;
+  border-bottom: 1px solid var(--color-border-default, #d0d7de);
+  margin-bottom: 4px;
+}
+
+.gh-file-filter-input {
+  width: 100%;
+  padding: 4px 8px;
+  font-size: 11px;
+  border: 1px solid var(--color-border-default, #d0d7de);
+  border-radius: 4px;
+  outline: none;
+  background: var(--color-canvas-default, #ffffff);
+}
+
+.gh-file-tree-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 6px;
+  border-radius: 4px;
+  color: var(--color-text, #1f2328);
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.gh-file-tree-item:hover {
+  background: var(--color-canvas-default, #ffffff);
+  color: var(--color-accent-fg, #0969da);
+}
+</style>
+
 <div class="file-view-header" style="display: flex; justify-content: space-between; align-items: center; padding: 8px 16px; background-color: var(--color-canvas-subtle, #f6f8fa); border: 1px solid var(--color-border-default, #d0d7de); border-top-left-radius: 6px; border-top-right-radius: 6px; margin-bottom: -1px; font-size: 13px;">
   <div style="display: flex; align-items: center; gap: 8px; font-weight: 500;">
+    <button id="toggle-file-tree-btn" class="ui tiny compact button" style="display: inline-flex; align-items: center; gap: 4px;" title="Afficher/masquer l'arborescence (raccourci 't')">
+      <svg height="14" viewBox="0 0 16 16" width="14" fill="currentColor">
+        <path d="M1 2.75C1 1.784 1.784 1 2.75 1h10.5c.966 0 1.75.784 1.75 1.75v10.5A1.75 1.75 0 0 1 13.25 15H2.75A1.75 1.75 0 0 1 1 13.25Zm5 10.75V2.5H2.75a.25.25 0 0 0-.25.25v10.5c0 .138.112.25.25.25Zm1.5 0h5.75a.25.25 0 0 0 .25-.25V2.75a.25.25 0 0 0-.25-.25H7.5Z"></path>
+      </svg>
+      <span>Fichiers</span>
+    </button>
     <span>{{.FileSize}}</span>
     <span style="color: var(--color-text-light, #656d76);">|</span>
     <span>{{.NumLines}} lignes</span>
   </div>
   <div class="file-actions" style="display: flex; gap: 6px;">
     <a class="ui tiny compact button" href="{{.RawFileLink}}" target="_blank" rel="noopener noreferrer">Raw</a>
-    <a class="ui tiny compact button" href="{{.RepoLink}}/blame/{{.BranchNameSubURL}}/{{EscapePound .TreePath}}">Blame</a>
+    <a class="ui tiny compact button" href="{{.RepoLink}}/blame/{{.BranchNameSubURL}}/{{EscapePound .TreePath}}" title="Raccourci 'b'">Blame</a>
     <a class="ui tiny compact button" href="{{.RepoLink}}/commits/{{.BranchNameSubURL}}/{{EscapePound .TreePath}}">History</a>
     {{if .CanEditFile}}
     <a class="ui tiny compact button" href="{{.RepoLink}}/_edit/{{.BranchNameSubURL}}/{{EscapePound .TreePath}}" title="Modifier ce fichier (raccourci 'e')">
@@ -18,15 +86,69 @@
   </div>
 </div>
 
+<div class="gh-file-viewer-wrapper">
+  <div id="gh-file-tree" class="gh-file-tree-sidebar">
+    <div class="gh-file-tree-header">
+      <span>Arborescence de fichiers</span>
+      <span class="github-search-kbd">t</span>
+    </div>
+    <input id="gh-tree-filter" class="gh-file-filter-input" placeholder="Filtrer les fichiers..." />
+    <div id="gh-tree-items" style="margin-top: 6px; display: flex; flex-direction: column; gap: 2px;">
+      <a class="gh-file-tree-item" href="{{.RepoLink}}/src/{{.BranchNameSubURL}}">.. (Racine du depot)</a>
+    </div>
+  </div>
+</div>
+
 <script>
-// Shortcut 'e' to edit currently viewed file
+// Shortcuts 'e' for edit, 'b' for blame, 't' for file tree toggle
 document.addEventListener('keydown', function(e) {
-  if (e.key === 'e' && !['INPUT', 'TEXTAREA'].includes(document.activeElement.tagName)) {
+  if (['INPUT', 'TEXTAREA'].includes(document.activeElement.tagName)) return;
+
+  if (e.key === 'e') {
     const editBtn = document.querySelector('.file-actions a[href*="/_edit/"]');
     if (editBtn) {
       e.preventDefault();
       window.location.href = editBtn.href;
     }
+  }
+
+  if (e.key === 'b') {
+    const blameBtn = document.querySelector('.file-actions a[href*="/blame/"]');
+    if (blameBtn) {
+      e.preventDefault();
+      window.location.href = blameBtn.href;
+    }
+  }
+
+  if (e.key === 't') {
+    e.preventDefault();
+    toggleFileTree();
+  }
+});
+
+function toggleFileTree() {
+  const tree = document.getElementById('gh-file-tree');
+  if (!tree) return;
+  const isHidden = tree.style.display !== 'flex';
+  tree.style.display = isHidden ? 'flex' : 'none';
+  if (isHidden) {
+    const filter = document.getElementById('gh-tree-filter');
+    if (filter) filter.focus();
+  }
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+  const btn = document.getElementById('toggle-file-tree-btn');
+  if (btn) btn.addEventListener('click', toggleFileTree);
+
+  const filter = document.getElementById('gh-tree-filter');
+  if (filter) {
+    filter.addEventListener('input', function(e) {
+      const q = e.target.value.toLowerCase();
+      document.querySelectorAll('#gh-tree-items .gh-file-tree-item').forEach(it => {
+        it.style.display = it.textContent.toLowerCase().includes(q) ? 'flex' : 'none';
+      });
+    });
   }
 });
 </script>
