@@ -590,3 +590,43 @@ body {
   border-left: 3px solid #0969da !important;
 }
 
+/* GitHub Advanced Code Search & Qualifiers Popover (T-SRC-1801) */
+.gh-search-qualifiers-popover {
+  position: absolute !important;
+  top: 100% !important;
+  left: 0 !important;
+  width: 320px !important;
+  background-color: var(--color-canvas-default, #ffffff) !important;
+  border: 1px solid var(--color-border-default, #d0d7de) !important;
+  border-radius: 6px !important;
+  box-shadow: 0 8px 24px rgba(140, 149, 159, 0.2) !important;
+  padding: 8px 0 !important;
+  z-index: 1000 !important;
+  margin-top: 4px !important;
+}
+
+.gh-qualifier-item {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  padding: 6px 12px !important;
+  cursor: pointer !important;
+  font-size: 12px !important;
+  color: var(--color-text-default, #1f2328) !important;
+}
+
+.gh-qualifier-item:hover {
+  background-color: var(--color-canvas-subtle, #f6f8fa) !important;
+}
+
+.gh-qualifier-badge {
+  font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace !important;
+  font-size: 11px !important;
+  padding: 2px 6px !important;
+  border-radius: 4px !important;
+  background-color: rgba(175, 184, 193, 0.2) !important;
+  color: var(--color-accent-fg, #0969da) !important;
+  font-weight: 600 !important;
+}
+
+

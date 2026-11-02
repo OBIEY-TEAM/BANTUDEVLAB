@@ -18,9 +18,9 @@
 
 ## Taches du Cycle TASK18
 
-- [ ] **T-SRC-1801 : Styles et Palette de Qualificateurs de Recherche Primer**
-  - [ ] Ajouter les styles `.gh-search-qualifiers-popover`, `.gh-qualifier-badge`, `.gh-qualifier-item` dans `theme-github.css` et `theme-github-dark.css`.
-  - [ ] Synchroniser avec `gitea_home/custom/public/assets/css/`.
+- [x] **T-SRC-1801 : Styles et Palette de Qualificateurs de Recherche Primer**
+  - [x] Ajouter les styles `.gh-search-qualifiers-popover`, `.gh-qualifier-badge`, `.gh-qualifier-item` dans `theme-github.css` et `theme-github-dark.css`.
+  - [x] Synchroniser avec `gitea_home/custom/public/assets/css/`.
 
 - [ ] **T-SRC-1802 : Aide a la Recherche Interactive et Documentation Bleve**
   - [ ] Ajouter le volet interactif d'aide aux qualificateurs dans `custom/templates/custom/header.tmpl`.
