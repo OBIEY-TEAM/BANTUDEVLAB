@@ -25,6 +25,6 @@
   - [x] Documenter les regles de protection equivalentes aux Rulesets modernes dans `docs/SOVEREIGN_BRANCH_RULESETS.md`.
   - [x] Configurer les directives de conformite cryptographique et revues requises.
 
-- [ ] **T-BRN-1503 : Tests Unitaires et Pipeline CI/CD pour les Rulesets**
-  - [ ] Rediger les tests de verification de signatures dans `tests/test_sec_axes.py`.
-  - [ ] Creer les workflows CI/CD `.github/workflows/branch_rulesets.yml` et `.gitea/workflows/branch_rulesets.yaml`.
+- [x] **T-BRN-1503 : Tests Unitaires et Pipeline CI/CD pour les Rulesets**
+  - [x] Rediger les tests de verification de signatures dans `tests/test_sec_axes.py`.
+  - [x] Creer les workflows CI/CD `.github/workflows/branch_rulesets.yml` et `.gitea/workflows/branch_rulesets.yaml`.

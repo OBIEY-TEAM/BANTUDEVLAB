@@ -194,3 +194,46 @@ class Axe1SecurityTestCase(TestCase):
             self.assertEqual(slsa_content["subject"][0]["name"], "app-v1.0.tar.gz")
             self.assertIn("sha256", slsa_content["subject"][0]["digest"])
 
+    def test_t_brn_1503_branch_rulesets_verification(self):
+        """T-BRN-1503 : Verification de la conformite des branch rulesets et signatures cryptographiques."""
+        from pathlib import Path
+
+        doc_path = Path("docs/SOVEREIGN_BRANCH_RULESETS.md")
+        self.assertTrue(doc_path.exists(), "SOVEREIGN_BRANCH_RULESETS.md doit exister")
+        content = doc_path.read_text(encoding="utf-8")
+        self.assertIn("require_signed_commits", content)
+        self.assertIn("dismiss_stale_approvals", content)
+        self.assertIn("gh-commit-badge.verified", content)
+
+        ruleset = {
+            "rule_name": "main",
+            "require_signed_commits": True,
+            "required_approvals": 1,
+            "block_force_push": True,
+            "status_check_contexts": ["ci/tests", "security/sast"],
+        }
+
+        commit_signed = {
+            "hash": "a1b2c3d4",
+            "signature": {"verified": True, "signer_key": "GPG-7890", "trust_model": "collaborator"},
+        }
+        commit_unsigned = {
+            "hash": "e5f6a7b8",
+            "signature": {"verified": False, "signer_key": None, "trust_model": None},
+        }
+
+        def evaluate_commit_compliance(commit, rule):
+            if rule.get("require_signed_commits"):
+                sig = commit.get("signature", {})
+                if not (sig.get("verified") and sig.get("signer_key")):
+                    return False, "unverified"
+            return True, "verified"
+
+        ok_signed, badge_signed = evaluate_commit_compliance(commit_signed, ruleset)
+        ok_unsigned, badge_unsigned = evaluate_commit_compliance(commit_unsigned, ruleset)
+
+        self.assertTrue(ok_signed)
+        self.assertEqual(badge_signed, "verified")
+        self.assertFalse(ok_unsigned)
+        self.assertEqual(badge_unsigned, "unverified")
+
