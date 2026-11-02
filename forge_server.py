@@ -92,7 +92,7 @@ class SovereignForgeHandler(BaseHTTPRequestHandler):
     def do_GET(self):
         url = urllib.parse.urlparse(self.path)
         path = url.path.rstrip("/")
-        query = urllib.parse.parse_qs(url.query)
+        urllib.parse.parse_qs(url.query)
 
         # 1. API: /api/v1/version & /api/v4/version (GitLab CE)
         if path == "/api/v4/version":
@@ -553,7 +553,7 @@ class SovereignForgeHandler(BaseHTTPRequestHandler):
             return self._send_html("Dépôt introuvable", status=404)
 
         commits = self._get_repo_commits(owner, repo)
-        branches = self._get_repo_branches(owner, repo)
+        self._get_repo_branches(owner, repo)
         commits_html = "".join(f"""
         <li style="padding: 0.5rem 0; border-bottom: 1px solid var(--border); font-size: 0.9rem;">
             <strong>{c['commit']['message']}</strong>
