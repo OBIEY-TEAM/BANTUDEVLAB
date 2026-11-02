@@ -27,9 +27,9 @@
   - [x] Integrer la previsualisation interactive des regles de protection (revues requises, checks verts, options de merge squash/rebase).
   - [x] Synchroniser avec `gitea_home/custom/public/assets/css/`.
 
-- [ ] **T-PR-803 : Arborescence de Fichiers Interactive (GitHub File Tree Sidebar)**
-  - [ ] Ajouter le panneau lateral pliable d'arborescence de fichiers dans `custom/templates/repo/view_file.tmpl` avec raccourci clavier `t` (Go to file).
-  - [ ] Synchroniser avec `gitea_home/custom/templates/repo/view_file.tmpl`.
+- [x] **T-PR-803 : Arborescence de Fichiers Interactive (GitHub File Tree Sidebar)**
+  - [x] Ajouter le panneau lateral pliable d'arborescence de fichiers dans `custom/templates/repo/view_file.tmpl` avec raccourci clavier `t` (Go to file).
+  - [x] Synchroniser avec `gitea_home/custom/templates/repo/view_file.tmpl`.
 
 - [ ] **T-PR-804 : Suite de Tests et Pipeline CI/CD pour la Revue Automatique de PR**
   - [ ] Ajouter les tests unitaires et de simulation de webhooks dans `tests/test_ai_assistant.py` et `tests/test_gitea_client.py`.
