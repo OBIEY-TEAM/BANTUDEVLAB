@@ -155,9 +155,7 @@ class SecurityGitLabSastExportView(APIView):
         else:
             report = SecurityAuditReport.objects.order_by("-scanned_at").first()
             if not report:
-                return Response(
-                    {"error": "Aucun rapport d'audit disponible."}, status=status.HTTP_404_NOT_FOUND
-                )
+                return Response({"error": "Aucun rapport d'audit disponible."}, status=status.HTTP_404_NOT_FOUND)
 
         sast_data = SarifReportSerializer.serialize_gitlab_sast(report)
         return Response(sast_data, status=status.HTTP_200_OK)
