@@ -169,3 +169,7 @@ class GemmaAssistant:
             else:
                 yield token
             time.sleep(0.01)
+
+
+# Alias de compatibilité souveraine
+GemmaAIEngine = GemmaAssistant

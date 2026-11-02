@@ -190,7 +190,9 @@ GITEA_API_URL = os.environ.get("GITEA_API_URL", "http://localhost:3002/api/v1")
 GITEA_ADMIN_TOKEN = os.environ.get("GITEA_ADMIN_TOKEN", "")
 GITEA_EXTERNAL_URL = os.environ.get("GITEA_EXTERNAL_URL", "http://localhost:3002")
 GITEA_LOGIN_URL = os.environ.get("GITEA_LOGIN_URL", "http://localhost:3002/user/login")
-GITEA_WEBHOOK_SECRET = os.environ.get("GITEA_WEBHOOK_SECRET", "bantu_dev_webhook_secret_key_2026" if (DEBUG or TESTING) else "")
+GITEA_WEBHOOK_SECRET = os.environ.get(
+    "GITEA_WEBHOOK_SECRET", "bantu_dev_webhook_secret_key_2026" if (DEBUG or TESTING) else ""
+)
 
 # GitLab Sovereign Enterprise Integration
 GITLAB_URL = os.environ.get("GITLAB_URL", "http://localhost:3001")

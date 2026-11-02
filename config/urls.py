@@ -7,9 +7,19 @@ urlpatterns = [
     path("i18n/", include("django.conf.urls.i18n")),  # I18N-01: Switch langue
     path("admin/", admin.site.urls),
     # Redirections directes vers Gitea Native (3002)
-    path("gitea/", RedirectView.as_view(url="http://localhost:3002/user/login", permanent=False), name="redirect_gitea"),
-    path("switch-gitea/", RedirectView.as_view(url="http://localhost:3002/user/login", permanent=False), name="switch_gitea"),
-    path("basculer-gitea/", RedirectView.as_view(url="http://localhost:3002/user/login", permanent=False), name="basculer_gitea"),
+    path(
+        "gitea/", RedirectView.as_view(url="http://localhost:3002/user/login", permanent=False), name="redirect_gitea"
+    ),
+    path(
+        "switch-gitea/",
+        RedirectView.as_view(url="http://localhost:3002/user/login", permanent=False),
+        name="switch_gitea",
+    ),
+    path(
+        "basculer-gitea/",
+        RedirectView.as_view(url="http://localhost:3002/user/login", permanent=False),
+        name="basculer_gitea",
+    ),
     path("", include("apps.core.urls")),
     path("api/zkp/", include("apps.zkp_auth.urls")),
     path("api/forge/", include("apps.gitea_client.urls")),
