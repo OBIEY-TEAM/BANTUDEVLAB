@@ -127,13 +127,13 @@ Ce document définit l'ensemble des tâches, sous-tâches techniques et configur
 
 ### Axe 5 : Registres de Paquets et Artefacts
 
-- [ ] **T-PKG-601 : Registre de Conteneurs OCI / Docker (Équivalent ghcr.io)**
-  - [ ] Activer le registre de conteneurs dans `app.ini` :
+- [x] **T-PKG-601 : Registre de Conteneurs OCI / Docker (Équivalent ghcr.io)**
+  - [x] Activer le registre de conteneurs dans `app.ini` :
     ```ini
     [packages]
     ENABLED = true
     ```
-  - [ ] Permettre le push et pull d'images Docker via `docker login <domaine>` et l'authentification par jeton d'accès.
+  - [x] Permettre le push et pull d'images Docker via `docker login <domaine>` et l'authentification par jeton d'accès.
 
 - [ ] **T-PKG-602 : Registres de Dépendances Multi-Langages**
   - [ ] Valider le support des registres natifs : PyPI, npm, Maven/Gradle, NuGet, Cargo, Composer, Go, Helm, Debian, RPM.
