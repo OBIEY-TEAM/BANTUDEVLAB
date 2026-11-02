@@ -25,6 +25,6 @@
   - [x] Mettre a jour `custom/templates/repo/header.tmpl` pour activer le lien contextuel de l'onglet Insights vers la vue de dependances.
   - [x] Synchroniser avec `gitea_home/custom/templates/repo/header.tmpl`.
 
-- [ ] **T-SBM-1103 : Tests Unitaires et Pipeline CI/CD d'Attestation SBOM**
-  - [ ] Rediger les tests unitaires dans `tests/test_security_hardening.py`.
-  - [ ] Creer les workflows CI/CD `.github/workflows/sbom_cyclonedx.yml` et `.gitea/workflows/sbom_cyclonedx.yaml`.
+- [x] **T-SBM-1103 : Tests Unitaires et Pipeline CI/CD d'Attestation SBOM**
+  - [x] Rediger les tests unitaires dans `tests/test_security_hardening.py`.
+  - [x] Creer les workflows CI/CD `.github/workflows/sbom_cyclonedx.yml` et `.gitea/workflows/sbom_cyclonedx.yaml`.
