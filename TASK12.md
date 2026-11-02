@@ -17,9 +17,9 @@
 
 ## Taches du Cycle TASK12
 
-- [ ] **T-PRF-1201 : Cartes de Depots Epingles Primer et Pastilles de Langages**
-  - [ ] Integrer les classes `.gh-pinned-repo-card` et `.repo-language-color` dans `custom/public/assets/css/theme-github.css` et `theme-github-dark.css`.
-  - [ ] Synchroniser avec `gitea_home/custom/public/assets/css/`.
+- [x] **T-PRF-1201 : Cartes de Depots Epingles Primer et Pastilles de Langages**
+  - [x] Integrer les classes `.gh-pinned-repo-card` et `.repo-language-color` dans `custom/public/assets/css/theme-github.css` et `theme-github-dark.css`.
+  - [x] Synchroniser avec `gitea_home/custom/public/assets/css/`.
 
 - [ ] **T-PRF-1202 : Rendu Automatique du Profil README (`username/username`)**
   - [ ] Configurer la detection du depot special de profil et l'injection dynamique du README souverain dans `custom/templates/custom/header.tmpl`.
