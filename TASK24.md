@@ -26,6 +26,6 @@
   - [x] Implementer `scripts/simulate_merge_queue.py` pour valider les fusions en file selon les checks CI et l'ordre FIFO.
   - [x] Documenter le fonctionnement dans `docs/SOVEREIGN_MERGE_QUEUE.md`.
 
-- [ ] **T-MRG-2403 : Tests Unitaires et Workflows CI/CD Merge Queue**
-  - [ ] Rediger les tests unitaires dans `tests/test_sec_axes.py`.
-  - [ ] Creer les workflows CI/CD `.github/workflows/merge_queue.yml` et `.gitea/workflows/merge_queue.yaml`.
+- [x] **T-MRG-2403 : Tests Unitaires et Workflows CI/CD Merge Queue**
+  - [x] Rediger les tests unitaires dans `tests/test_sec_axes.py`.
+  - [x] Creer les workflows CI/CD `.github/workflows/merge_queue.yml` et `.gitea/workflows/merge_queue.yaml`.

@@ -282,3 +282,58 @@ class Axe1SecurityTestCase(TestCase):
         self.assertIn("Maintain", doc_content)
         self.assertIn("Admin", doc_content)
 
+    def test_t_mrg_2401_and_2402_merge_queue_simulation(self):
+        """T-MRG-2401 & T-MRG-2402 : Verification du moteur de simulation de merge queue et styles."""
+        from pathlib import Path
+        from scripts.simulate_merge_queue import simulate_merge_queue, evaluate_queue_item
+
+        css_light = Path("custom/public/assets/css/theme-github.css").read_text(encoding="utf-8")
+        self.assertIn(".gh-merge-queue-badge", css_light)
+        self.assertIn(".gh-merge-queue-box", css_light)
+
+        css_dark = Path("custom/public/assets/css/theme-github-dark.css").read_text(encoding="utf-8")
+        self.assertIn(".gh-merge-queue-badge", css_dark)
+
+        # Simulation
+        rules = {
+            "required_approvals": 1,
+            "require_signed_commits": True,
+            "required_status_checks": ["ci/tests"],
+        }
+        good_pr = {
+            "number": 1,
+            "draft": False,
+            "approvals": 1,
+            "signature": {"verified": True, "key_id": "KEY1"},
+            "status_checks": {"ci/tests": "success"},
+        }
+        draft_pr = {
+            "number": 2,
+            "draft": True,
+            "approvals": 1,
+            "signature": {"verified": True, "key_id": "KEY2"},
+            "status_checks": {"ci/tests": "success"},
+        }
+        failing_pr = {
+            "number": 3,
+            "draft": False,
+            "approvals": 1,
+            "signature": {"verified": True, "key_id": "KEY3"},
+            "status_checks": {"ci/tests": "failure"},
+        }
+
+        ok, _ = evaluate_queue_item(good_pr, rules)
+        self.assertTrue(ok)
+
+        ok_draft, reason_draft = evaluate_queue_item(draft_pr, rules)
+        self.assertFalse(ok_draft)
+        self.assertIn("Draft", reason_draft)
+
+        ok_fail, _ = evaluate_queue_item(failing_pr, rules)
+        self.assertFalse(ok_fail)
+
+        batch_result = simulate_merge_queue([good_pr, draft_pr, failing_pr], rules)
+        self.assertEqual(batch_result["total_queued"], 3)
+        self.assertEqual(batch_result["merged"], 1)
+        self.assertEqual(batch_result["blocked"], 2)
+
