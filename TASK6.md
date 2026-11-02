@@ -75,9 +75,9 @@ Ce document définit l'ensemble des tâches, sous-tâches techniques et configur
   - [x] Durcir l'exécution du runner pour isoler le socket Docker en environnement multi-locataire.
 
 - [x] **T-ACT-603 : Compatibilité des Workflows et Actions du Marketplace**
-  - [ ] Tester les actions les plus courantes de la communauté GitHub (`actions/checkout@v4`, `actions/setup-python@v5`, `actions/setup-node@v4`, `actions/upload-artifact@v3`).
-  - [ ] Configurer un proxy de mise en cache local pour éviter les limitations de débit de l'API publique GitHub.
-  - [ ] Mettre en place la gestion unifiée des secrets et variables au niveau dépôt, organisation et instance globale.
+  - [x] Tester les actions les plus courantes de la communauté GitHub (`actions/checkout@v4`, `actions/setup-python@v5`, `actions/setup-node@v4`, `actions/upload-artifact@v3`).
+  - [x] Configurer un proxy de mise en cache local pour éviter les limitations de débit de l'API publique GitHub.
+  - [x] Mettre en place la gestion unifiée des secrets et variables au niveau dépôt, organisation et instance globale.
 
 ---
 
