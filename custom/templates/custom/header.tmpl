@@ -453,5 +453,55 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     if (modified) el.innerHTML = html;
   });
+
+  // GitHub Notifications Modern Inbox & Filter Tabs (T-NTF-1602)
+  const isNotificationsPage = window.location.pathname.includes('/notifications') || document.querySelector('.notifications-list');
+  if (isNotificationsPage) {
+    const notifContainer = document.querySelector('.notifications-list, .user.notification') || document.querySelector('.ui.container');
+    if (notifContainer && !document.getElementById('gh-notif-nav')) {
+      const navBar = document.createElement('div');
+      navBar.id = 'gh-notif-nav';
+      navBar.className = 'gh-notifications-nav';
+      navBar.innerHTML = `
+        <a class="gh-filter-tab active" data-filter="all" href="#all">Inbox <span class="gh-filter-badge">All</span></a>
+        <a class="gh-filter-tab" data-filter="unread" href="#unread">Unread <span class="gh-filter-badge">New</span></a>
+        <a class="gh-filter-tab" data-filter="participating" href="#participating">Participating</a>
+        <a class="gh-filter-tab" data-filter="mentioned" href="#mentioned">Mentioned</a>
+      `;
+
+      navBar.querySelectorAll('.gh-filter-tab').forEach(tab => {
+        tab.addEventListener('click', (e) => {
+          e.preventDefault();
+          navBar.querySelectorAll('.gh-filter-tab').forEach(t => t.classList.remove('active'));
+          tab.classList.add('active');
+          const filter = tab.dataset.filter;
+          document.querySelectorAll('.gh-notification-item, .item.notification-item').forEach(item => {
+            if (filter === 'all') {
+              item.style.display = '';
+            } else if (filter === 'unread') {
+              item.style.display = item.classList.contains('gh-notification-unread') || item.classList.contains('unread') ? '' : 'none';
+            } else if (filter === 'participating') {
+              item.style.display = item.textContent.toLowerCase().includes('participat') ? '' : 'none';
+            } else if (filter === 'mentioned') {
+              item.style.display = item.textContent.toLowerCase().includes('mention') || item.textContent.includes('@') ? '' : 'none';
+            }
+          });
+        });
+      });
+
+      notifContainer.parentNode.insertBefore(navBar, notifContainer);
+    }
+
+    // Keyboard shortcut 'm' to mark notifications as read
+    document.addEventListener('keydown', (e) => {
+      if (e.target.matches('input, textarea, [contenteditable="true"]')) return;
+      if (e.key === 'm' || e.key === 'M') {
+        const markReadBtn = document.querySelector('button[name="action"][value="read"], .mark-read-button, .btn-mark-all-read');
+        if (markReadBtn) {
+          markReadBtn.click();
+        }
+      }
+    });
+  }
 });
 </script>
