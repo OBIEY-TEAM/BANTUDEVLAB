@@ -24,7 +24,7 @@ breadcrumb_dash = """{% block content %}
     <span class="breadcrumbs-current" aria-current="page">{% trans "Tableau de Bord" %}</span>
 </nav>
 """
-if "class=\"breadcrumbs\"" not in dash_text:
+if 'class="breadcrumbs"' not in dash_text:
     dash_text = dash_text.replace("{% block content %}", breadcrumb_dash, 1)
 
 # Add Language Selector in code editor toolbar
@@ -72,25 +72,23 @@ breadcrumb_metrics = """{% block content %}
         <span class="breadcrumbs-current" aria-current="page">{% trans "Souveraineté Numérique" %}</span>
     </nav>
 """
-if "class=\"breadcrumbs\"" not in metrics_text:
+if 'class="breadcrumbs"' not in metrics_text:
     metrics_text = metrics_text.replace(
-        "{% block content %}\n<div style=\"max-width: 1000px; margin: 0 auto;\">",
-        breadcrumb_metrics,
-        1
+        '{% block content %}\n<div style="max-width: 1000px; margin: 0 auto;">', breadcrumb_metrics, 1
     )
 
 # Add keyboard accessibility to node cards & SVG points
 metrics_text = metrics_text.replace(
     '<g class="map-node-point" onclick="selectNode(\'',
-    '<g class="map-node-point" tabindex="0" role="button" onkeydown="if(event.key===\'Enter\'||event.key===\' \') selectNode(\''
+    '<g class="map-node-point" tabindex="0" role="button" onkeydown="if(event.key===\'Enter\'||event.key===\' \') selectNode(\'',
 )
 metrics_text = metrics_text.replace(
     'class="node-card" onclick="selectNode(\'',
-    'class="node-card" tabindex="0" role="button" onkeydown="if(event.key===\'Enter\'||event.key===\' \') selectNode(\''
+    'class="node-card" tabindex="0" role="button" onkeydown="if(event.key===\'Enter\'||event.key===\' \') selectNode(\'',
 )
 metrics_text = metrics_text.replace(
     'class="node-card selected" onclick="selectNode(\'',
-    'class="node-card selected" tabindex="0" role="button" onkeydown="if(event.key===\'Enter\'||event.key===\' \') selectNode(\''
+    'class="node-card selected" tabindex="0" role="button" onkeydown="if(event.key===\'Enter\'||event.key===\' \') selectNode(\'',
 )
 
 metrics_path.write_bytes(metrics_text.replace("\n", "\r\n").encode("utf-8"))
@@ -110,12 +108,8 @@ breadcrumb_login = """{% block content %}
 </nav>
 <div class="zkp-wizard-card">
 """
-if "class=\"breadcrumbs\"" not in login_text:
-    login_text = login_text.replace(
-        "{% block content %}\n<div class=\"zkp-wizard-card\">",
-        breadcrumb_login,
-        1
-    )
+if 'class="breadcrumbs"' not in login_text:
+    login_text = login_text.replace('{% block content %}\n<div class="zkp-wizard-card">', breadcrumb_login, 1)
 
 # Add Copy Mnemonic button next to regenerate
 old_regen = """            <button class="btn btn-secondary" style="padding: 0.3rem 0.7rem; font-size: 0.8rem;" onclick="generateNewMnemonic()">
@@ -152,7 +146,9 @@ function copyMnemonicPhrase() {
 }
 """
 if "function copyMnemonicPhrase" not in login_text:
-    login_text = login_text.replace("function generateNewMnemonic() {", copy_fn + "\nfunction generateNewMnemonic() {", 1)
+    login_text = login_text.replace(
+        "function generateNewMnemonic() {", copy_fn + "\nfunction generateNewMnemonic() {", 1
+    )
 
 login_path.write_bytes(login_text.replace("\n", "\r\n").encode("utf-8"))
 print("login.html patched")

@@ -1,17 +1,17 @@
 import os
+import sys
 from pathlib import Path
 
+from django.core.exceptions import ImproperlyConfigured
 from dotenv import load_dotenv
 
 load_dotenv()
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-import sys
-
-from django.core.exceptions import ImproperlyConfigured
-
-TESTING = "test" in sys.argv or "pytest" in sys.modules
+TESTING = (
+    any(cmd in sys.argv for cmd in ("test", "pytest", "check", "makemigrations", "migrate")) or "pytest" in sys.modules
+)
 
 # SEC-011: DEBUG desactive par defaut (opt-in explicite pour le developpement).
 DEBUG = os.environ.get("DEBUG", "False").lower() in ("true", "1", "yes")

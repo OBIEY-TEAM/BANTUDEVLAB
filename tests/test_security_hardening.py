@@ -34,7 +34,9 @@ class AnonymousAccessTests(TestCase):
     def test_protected_routes_reject_anonymous(self):
         for method, url in PROTECTED:
             with self.subTest(url=url):
-                resp = getattr(self.client, method)(url, {}, format="json") if method == "post" else self.client.get(url)
+                resp = (
+                    getattr(self.client, method)(url, {}, format="json") if method == "post" else self.client.get(url)
+                )
                 self.assertIn(resp.status_code, (401, 403))
 
     def test_public_routes_remain_open(self):
@@ -151,7 +153,9 @@ class RegistrationValidationTests(TestCase):
 
     def test_valid_registration_still_works(self):
         resp = self.client.post(
-            "/api/zkp/register/", {"username": "erin_01", "public_key_y": hex(self.y), "country_code": "SEN"}, format="json"
+            "/api/zkp/register/",
+            {"username": "erin_01", "public_key_y": hex(self.y), "country_code": "SEN"},
+            format="json",
         )
         self.assertEqual(resp.status_code, 201)
 

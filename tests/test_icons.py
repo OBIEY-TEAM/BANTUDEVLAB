@@ -51,7 +51,7 @@ class NoEmojiTests(TestCase):
     def test_checker_flags_emojis(self):
         checker = _load_checker()
         sample = ROOT / "tests" / "_emoji_sample.tmp.md"
-        sample.write_text("Bonjour \U0001F680", encoding="utf-8")
+        sample.write_text("Bonjour \U0001f680", encoding="utf-8")
         try:
             found = checker.find_emojis([sample])
         finally:
