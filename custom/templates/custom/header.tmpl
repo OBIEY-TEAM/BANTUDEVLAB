@@ -574,5 +574,33 @@ document.addEventListener('DOMContentLoaded', function() {
       preEl.replaceWith(box);
     }
   });
+
+  // GitHub Modern Commit Network Graph Enhancer (T-GRP-2002)
+  const graphContainer = document.querySelector('#git-graph-container, #rel-container, .graph-inner, svg.graph');
+  if (graphContainer) {
+    const primerPalette = ['#0969da', '#1a7f37', '#8250df', '#bc4c00', '#cf222e'];
+    const svgEl = graphContainer.tagName.toLowerCase() === 'svg' ? graphContainer : graphContainer.querySelector('svg');
+    if (svgEl) {
+      svgEl.classList.add('gh-graph-canvas');
+      const parentWrap = svgEl.parentElement;
+      if (parentWrap && !parentWrap.classList.contains('gh-graph-container')) {
+        parentWrap.classList.add('gh-graph-container');
+      }
+
+      // Enhance commit dots
+      svgEl.querySelectorAll('circle').forEach((circle, idx) => {
+        circle.classList.add('gh-graph-dot');
+        const color = primerPalette[idx % primerPalette.length];
+        if (!circle.getAttribute('fill') || circle.getAttribute('fill') === 'currentColor') {
+          circle.setAttribute('fill', color);
+        }
+      });
+
+      // Enhance branch tags
+      document.querySelectorAll('.graph-label, .branch-tag, .flow-tag').forEach(tag => {
+        tag.classList.add('gh-graph-branch-tag');
+      });
+    }
+  }
 });
 </script>

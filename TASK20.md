@@ -22,9 +22,9 @@
   - [x] Ajouter les classes `.gh-graph-container`, `.gh-graph-dot`, `.gh-graph-branch-tag` dans `theme-github.css` et `theme-github-dark.css`.
   - [x] Synchroniser avec `gitea_home/custom/public/assets/css/`.
 
-- [ ] **T-GRP-2002 : Script d'Amelioration Topologique du Graphe SVG**
-  - [ ] Ajouter la palette de couleurs GitHub (Bleu, Vert, Violet, Orange, Rouge) et le lissage SVG dans `custom/templates/custom/header.tmpl`.
-  - [ ] Synchroniser avec `gitea_home/custom/templates/custom/header.tmpl`.
+- [x] **T-GRP-2002 : Script d'Amelioration Topologique du Graphe SVG**
+  - [x] Ajouter la palette de couleurs GitHub (Bleu, Vert, Violet, Orange, Rouge) et le lissage SVG dans `custom/templates/custom/header.tmpl`.
+  - [x] Synchroniser avec `gitea_home/custom/templates/custom/header.tmpl`.
 
 - [ ] **T-GRP-2003 : Tests Unitaires et Workflows CI/CD Commit Graph**
   - [ ] Rediger les tests unitaires dans `tests/test_ui_axes.py`.
