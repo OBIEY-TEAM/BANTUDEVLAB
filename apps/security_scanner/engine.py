@@ -131,3 +131,7 @@ class SecurityScannerEngine:
             "issues": issues,
             "jurisdiction": "African Digital Sovereignty Standards (ADSS-v1)",
         }
+
+
+# Alias de compatibilité souveraine
+SovereignSecurityScanner = SecurityScannerEngine
