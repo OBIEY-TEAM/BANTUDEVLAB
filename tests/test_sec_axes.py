@@ -237,3 +237,27 @@ class Axe1SecurityTestCase(TestCase):
         self.assertFalse(ok_unsigned)
         self.assertEqual(badge_unsigned, "unverified")
 
+    def test_t_rel_1703_automated_release_notes_generator(self):
+        """T-REL-1703 : Verification du generateur de notes de version GitHub."""
+        from scripts.generate_release_notes import generate_release_notes, classify_entry
+
+        self.assertEqual(classify_entry("feat(ui): add new button"), "features")
+        self.assertEqual(classify_entry("fix: resolve null pointer"), "fixes")
+        self.assertEqual(classify_entry("docs: update setup guide"), "docs")
+        self.assertEqual(classify_entry("sec(auth): enforce token validation"), "security")
+        self.assertEqual(classify_entry("chore: cleanup unused files"), "maintenance")
+
+        entries = [
+            {"title": "feat: brand new dashboard", "author": "kwame", "number": 10},
+            {"title": "fix: race condition in cache", "author": "amina", "number": 11},
+            {"title": "docs: ruleset documentation", "author": "chidi", "number": 12},
+        ]
+
+        notes = generate_release_notes(entries, "v1.0.0", "v1.1.0", "https://forge.bantudevlab.local/repo")
+        self.assertIn("## What's Changed", notes)
+        self.assertIn("### Exciting New Features", notes)
+        self.assertIn("### Bug Fixes", notes)
+        self.assertIn("### Documentation Updates", notes)
+        self.assertIn("* @kwame", notes)
+        self.assertIn("**Full Changelog**: https://forge.bantudevlab.local/repo/compare/v1.0.0...v1.1.0", notes)
+
