@@ -215,3 +215,20 @@ class Axe4UITestCase(TestCase):
         self.assertIn("Suggested change", header_tmpl)
         self.assertIn("Apply suggestion", header_tmpl)
 
+    def test_t_grp_2001_and_2002_commit_network_graph(self):
+        """T-GRP-2001 & T-GRP-2002 : Verification des styles Primer et de l'amelioration topologique SVG."""
+        from pathlib import Path
+
+        css_light = Path("custom/public/assets/css/theme-github.css").read_text(encoding="utf-8")
+        self.assertIn(".gh-graph-container", css_light)
+        self.assertIn(".gh-graph-dot", css_light)
+        self.assertIn(".gh-graph-branch-tag", css_light)
+
+        css_dark = Path("custom/public/assets/css/theme-github-dark.css").read_text(encoding="utf-8")
+        self.assertIn(".gh-graph-container", css_dark)
+
+        header_tmpl = Path("custom/templates/custom/header.tmpl").read_text(encoding="utf-8")
+        self.assertIn("T-GRP-2002", header_tmpl)
+        self.assertIn("gh-graph-canvas", header_tmpl)
+        self.assertIn("#0969da", header_tmpl)
+
