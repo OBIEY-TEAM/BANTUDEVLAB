@@ -22,10 +22,10 @@
   - [x] Implementer l'endpoint `/api/ai/copilot/complete/` pour la suggestion et l'autocompletion de code basee sur `gemma2:2b`.
   - [x] Implementer l'endpoint `/api/ai/copilot/pr-summary/` pour generer automatiquement le resume d'une Pull Request.
 
-- [ ] **T-COP-702 : Widget Flottant et Interface Chat Copilot dans Gitea**
-  - [ ] Ajouter le bouton et la fenetre tiroir Copilot en bas a droite dans `custom/templates/custom/footer.tmpl`.
-  - [ ] Permettre l'interaction en direct avec l'assistant local (analyse du fichier courant, prompt libre).
-  - [ ] Synchroniser les templates personnalises avec `gitea_home/custom/templates/`.
+- [x] **T-COP-702 : Widget Flottant et Interface Chat Copilot dans Gitea**
+  - [x] Ajouter le bouton et la fenetre tiroir Copilot en bas a droite dans `custom/templates/custom/footer.tmpl`.
+  - [x] Permettre l'interaction en direct avec l'assistant local (analyse du fichier courant, prompt libre).
+  - [x] Synchroniser les templates personnalises avec `gitea_home/custom/templates/`.
 
 - [ ] **T-COP-703 : Palette de Commandes Globale Moderne (Equivalent GitHub Ctrl+K / Cmd+K)**
   - [ ] Integrer la fenetre modale de commande spotlight declenchee par le raccourci `Ctrl+K` ou `Cmd+K` dans `custom/templates/custom/header.tmpl`.
