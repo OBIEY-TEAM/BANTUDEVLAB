@@ -54,16 +54,16 @@ Ce document définit l'ensemble des tâches, sous-tâches techniques et configur
 
 ### Axe 2 : Moteur de CI/CD et Gitea Actions (Compatible GitHub Actions)
 
-- [ ] **T-ACT-601 : Activation et Configuration Serveur de Gitea Actions**
-  - [ ] Activer le sous-système Actions dans `custom/conf/app.ini` :
+- [x] **T-ACT-601 : Activation et Configuration Serveur de Gitea Actions**
+  - [x] Activer le sous-système Actions dans `custom/conf/app.ini` :
     ```ini
     [actions]
     ENABLED = true
     DEFAULT_ACTIONS_URL = github
     ARTIFACT_RETENTION_DAYS = 90
     ```
-  - [ ] Configurer le stockage local ou S3/MinIO pour les artefacts de build et le cache des étapes de workflow.
-  - [ ] Assurer la rétro-compatibilité de lecture pour les deux dossiers `.gitea/workflows/` et `.github/workflows/`.
+  - [x] Configurer le stockage local ou S3/MinIO pour les artefacts de build et le cache des étapes de workflow.
+  - [x] Assurer la rétro-compatibilité de lecture pour les deux dossiers `.gitea/workflows/` et `.github/workflows/`.
 
 - [ ] **T-ACT-602 : Déploiement et Enregistrement du Démon `act_runner`**
   - [ ] Créer le service Docker Compose pour déployer `gitea/act_runner:latest`.
