@@ -23,3 +23,6 @@ forge_data/
 
 # Backups
 backups/
+
+# SBOM Artefacts
+*.cyclonedx.json
