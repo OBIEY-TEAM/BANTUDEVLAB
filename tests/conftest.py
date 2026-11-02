@@ -32,6 +32,12 @@ def _clear_cache():
     """Isole les tests : throttling DRF, circuit breaker Gitea et caches vivent dans le cache."""
     from django.core.cache import cache
 
-    cache.clear()
+    try:
+        cache.clear()
+    except Exception:
+        pass
     yield
-    cache.clear()
+    try:
+        cache.clear()
+    except Exception:
+        pass

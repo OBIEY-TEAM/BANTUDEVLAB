@@ -32,6 +32,6 @@
   - [x] Proposer la recherche rapide, le basculement d'onglet (Code, Issues, PRs), et l'appel direct a Copilot.
   - [x] Synchroniser avec `gitea_home/custom/templates/custom/header.tmpl`.
 
-- [ ] **T-COP-704 : Suite de Tests et Pipeline CI/CD Copilot**
-  - [ ] Rediger les tests unitaires et d'integration pour les points d'acces Copilot dans `tests/test_ai_assistant.py`.
-  - [ ] Creer le workflow CI/CD `.github/workflows/copilot_verification.yml` et son miroir `.gitea/workflows/copilot_verification.yaml`.
+- [x] **T-COP-704 : Suite de Tests et Pipeline CI/CD Copilot**
+  - [x] Rediger les tests unitaires et d'integration pour les points d'acces Copilot dans `tests/test_ai_assistant.py`.
+  - [x] Creer le workflow CI/CD `.github/workflows/copilot_verification.yml` et son miroir `.gitea/workflows/copilot_verification.yaml`.

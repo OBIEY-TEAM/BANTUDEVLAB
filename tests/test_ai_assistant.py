@@ -72,3 +72,60 @@ class GemmaAssistantTestCase(TestCase):
         first_token = next(generator)
         self.assertTrue(len(first_token) > 0)
         generator.close()  # Interruption anticipée par le client
+
+    def test_copilot_explain_endpoint(self):
+        """T-COP-701 : Test du point d'accès Copilot Explain."""
+        from django.test import Client
+
+        client = Client()
+        res = client.post(
+            "/api/ai/copilot/explain/",
+            data={"code": "def hello():\n    return 'world'\n", "language": "python"},
+            content_type="application/json",
+        )
+        self.assertEqual(res.status_code, 200)
+        data = res.json()
+        self.assertTrue(data["success"])
+        self.assertIn("explanation", data)
+
+    def test_copilot_complete_endpoint(self):
+        """T-COP-701 : Test du point d'accès Copilot Complete."""
+        from django.test import Client
+
+        client = Client()
+        res = client.post(
+            "/api/ai/copilot/complete/",
+            data={"code": "def calculate_hash(data):", "language": "python"},
+            content_type="application/json",
+        )
+        self.assertEqual(res.status_code, 200)
+        data = res.json()
+        self.assertTrue(data["success"])
+        self.assertIn("completion", data)
+
+    def test_copilot_pr_summary_endpoint(self):
+        """T-COP-701 : Test du point d'accès Copilot PR Summary."""
+        from django.test import Client
+
+        client = Client()
+        res = client.post(
+            "/api/ai/copilot/pr-summary/",
+            data={"diff": "+ def new_feature(): pass", "title": "Add feature"},
+            content_type="application/json",
+        )
+        self.assertEqual(res.status_code, 200)
+        data = res.json()
+        self.assertTrue(data["success"])
+        self.assertIn("summary", data)
+
+    def test_copilot_validation_errors(self):
+        """T-COP-701 : Test de rejet si paramètres invalides."""
+        from django.test import Client
+
+        client = Client()
+        res = client.post("/api/ai/copilot/explain/", data={}, content_type="application/json")
+        self.assertEqual(res.status_code, 400)
+        res2 = client.post("/api/ai/copilot/complete/", data={}, content_type="application/json")
+        self.assertEqual(res2.status_code, 400)
+        res3 = client.post("/api/ai/copilot/pr-summary/", data={}, content_type="application/json")
+        self.assertEqual(res3.status_code, 400)
