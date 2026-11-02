@@ -1,13 +1,11 @@
 import hmac
 import json
 import logging
+
 from django.conf import settings
-from django.http import HttpResponse, JsonResponse
+from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_POST
-
-from apps.ai_assistant.tasks import async_analyze_code
-from apps.security_scanner.tasks import async_scan_code
 
 logger = logging.getLogger(__name__)
 
@@ -48,11 +46,14 @@ def gitlab_webhook_receiver(request):
     if commits:
         logger.info(f"GitLab Push Hook: {len(commits)} commits sur {repo_name} par {username}")
 
-    return JsonResponse({
-        "received": True,
-        "event": event_type,
-        "project": repo_name,
-        "triggered_by": username,
-        "actions": actions_executed,
-        "engine": "GitLab CE Panafricain",
-    }, status=200)
+    return JsonResponse(
+        {
+            "received": True,
+            "event": event_type,
+            "project": repo_name,
+            "triggered_by": username,
+            "actions": actions_executed,
+            "engine": "GitLab CE Panafricain",
+        },
+        status=200,
+    )
