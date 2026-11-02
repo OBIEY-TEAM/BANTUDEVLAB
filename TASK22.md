@@ -22,9 +22,9 @@
   - [x] Ajouter les classes `.gh-team-card`, `.gh-role-badge`, `.gh-role-triage`, `.gh-role-maintain` dans `theme-github.css` et `theme-github-dark.css`.
   - [x] Synchroniser avec `gitea_home/custom/public/assets/css/`.
 
-- [ ] **T-ORG-2202 : Specification et Guide de la Matrice de Roles Souveraine**
-  - [ ] Documenter le mapping des unites de permissions Gitea vers les 5 roles GitHub dans `docs/SOVEREIGN_ORG_ROLES.md`.
-  - [ ] Fournir les exemples d'automatisation d'equipes via l'API REST.
+- [x] **T-ORG-2202 : Specification et Guide de la Matrice de Roles Souveraine**
+  - [x] Documenter le mapping des unites de permissions Gitea vers les 5 roles GitHub dans `docs/SOVEREIGN_ORG_ROLES.md`.
+  - [x] Fournir les exemples d'automatisation d'equipes via l'API REST.
 
 - [ ] **T-ORG-2203 : Tests Unitaires et Workflows CI/CD Organization Teams**
   - [ ] Rediger les tests unitaires dans `tests/test_sec_axes.py`.
