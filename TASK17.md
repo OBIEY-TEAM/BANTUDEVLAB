@@ -26,6 +26,6 @@
   - [x] Rediger `docs/SOVEREIGN_RELEASE_NOTES.md` specifiant la configuration `.github/release.yml` et `.gitea/release.yml`.
   - [x] Fournir les exemples de modeles de categories et exclusions (dependabot, bot).
 
-- [ ] **T-REL-1703 : Tests Unitaires et Workflows CI/CD Release Notes**
-  - [ ] Rediger les tests unitaires de validation du parseur dans `tests/test_sec_axes.py`.
-  - [ ] Creer les workflows CI/CD `.github/workflows/release_notes.yml` et `.gitea/workflows/release_notes.yaml`.
+- [x] **T-REL-1703 : Tests Unitaires et Workflows CI/CD Release Notes**
+  - [x] Rediger les tests unitaires de validation du parseur dans `tests/test_sec_axes.py`.
+  - [x] Creer les workflows CI/CD `.github/workflows/release_notes.yml` et `.gitea/workflows/release_notes.yaml`.
