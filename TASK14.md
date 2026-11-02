@@ -21,9 +21,9 @@
   - [x] Implementer la vue `WebhookRedeliverView` dans `apps/gitea_client/views.py` et `urls.py`.
   - [x] Permettre la reinjection securisee des evenements `push`, `pull_request` et `issues`.
 
-- [ ] **T-WHK-1402 : Styles Primer pour l'Inspecteur de Livraisons de Webhooks**
-  - [ ] Integrer les classes `.gh-webhook-delivery-item`, `.gh-status-pill` dans `custom/public/assets/css/theme-github.css` et `theme-github-dark.css`.
-  - [ ] Synchroniser avec `gitea_home/custom/public/assets/css/`.
+- [x] **T-WHK-1402 : Styles Primer pour l'Inspecteur de Livraisons de Webhooks**
+  - [x] Integrer les classes `.gh-webhook-delivery-item`, `.gh-status-pill` dans `custom/public/assets/css/theme-github.css` et `theme-github-dark.css`.
+  - [x] Synchroniser avec `gitea_home/custom/public/assets/css/`.
 
 - [ ] **T-WHK-1403 : Tests Unitaires et Pipeline CI/CD pour les Webhooks**
   - [ ] Rediger les tests unitaires dans `tests/test_gitea_client.py`.
