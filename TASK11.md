@@ -21,9 +21,9 @@
   - [x] Implementer le script `scripts/generate_sovereign_sbom.py` analysant les manifests (`requirements.txt`, `pyproject.toml`, `package.json`) et generant `bom.cyclonedx.json`.
   - [x] Documenter le format et les normes de gouvernance dans `docs/SOVEREIGN_DEPENDENCY_GRAPH_SBOM.md`.
 
-- [ ] **T-SBM-1102 : Interconnexion de l'Onglet Insights et Graphe de Dependances**
-  - [ ] Mettre a jour `custom/templates/repo/header.tmpl` pour activer le lien contextuel de l'onglet Insights vers la vue de dependances.
-  - [ ] Synchroniser avec `gitea_home/custom/templates/repo/header.tmpl`.
+- [x] **T-SBM-1102 : Interconnexion de l'Onglet Insights et Graphe de Dependances**
+  - [x] Mettre a jour `custom/templates/repo/header.tmpl` pour activer le lien contextuel de l'onglet Insights vers la vue de dependances.
+  - [x] Synchroniser avec `gitea_home/custom/templates/repo/header.tmpl`.
 
 - [ ] **T-SBM-1103 : Tests Unitaires et Pipeline CI/CD d'Attestation SBOM**
   - [ ] Rediger les tests unitaires dans `tests/test_security_hardening.py`.
