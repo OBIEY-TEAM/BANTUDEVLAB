@@ -26,6 +26,6 @@
   - [x] Implementer le transformateur Markdown cote client dans `custom/templates/custom/header.tmpl`.
   - [x] Synchroniser avec `gitea_home/custom/templates/custom/header.tmpl`.
 
-- [ ] **T-SUG-1903 : Tests Unitaires et Workflows CI/CD Suggested Changes**
-  - [ ] Rediger les tests unitaires dans `tests/test_ui_axes.py`.
-  - [ ] Creer les workflows CI/CD `.github/workflows/suggested_changes.yml` et `.gitea/workflows/suggested_changes.yaml`.
+- [x] **T-SUG-1903 : Tests Unitaires et Workflows CI/CD Suggested Changes**
+  - [x] Rediger les tests unitaires dans `tests/test_ui_axes.py`.
+  - [x] Creer les workflows CI/CD `.github/workflows/suggested_changes.yml` et `.gitea/workflows/suggested_changes.yaml`.
