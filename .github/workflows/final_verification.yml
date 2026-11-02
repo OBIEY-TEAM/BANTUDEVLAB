@@ -1,0 +1,39 @@
+name: Sovereign Final Verification & Parity CI
+
+on:
+  push:
+    branches: [ "main", "develop*", "feature/*" ]
+    paths:
+      - "docs/SOVEREIGN_GITHUB_FORGE_COMPLETE_REVIEW.md"
+      - "apps/ai_assistant/**"
+      - "tests/test_ai_assistant.py"
+      - ".github/workflows/final_verification.yml"
+  pull_request:
+    branches: [ "main", "develop*" ]
+
+jobs:
+  final-verification:
+    name: Full Sovereign Forge & AI Assistant Verification
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install django djangorestframework requests pytest pytest-django
+
+      - name: Verify Zero Emoji Policy
+        run: |
+          python scripts/check_no_emoji.py
+
+      - name: Test Copilot Session Export
+        run: |
+          pytest tests/test_ai_assistant.py -k "test_copilot_session_export" -v -o addopts=""
