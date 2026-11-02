@@ -258,3 +258,48 @@ class CopilotPRReviewBotView(APIView):
             title=title,
         )
         return Response(result, status=status.HTTP_200_OK)
+
+
+class CopilotExportView(APIView):
+    """
+    T-FIN-2601 : Point d'acces Copilot pour l'exportation et persistance de session de discussion.
+    Supporte les formats Markdown (.md) et JSON (.json).
+    """
+
+    permission_classes = [AllowAny]
+
+    def post(self, request):
+        messages = request.data.get("messages", [])
+        export_format = request.data.get("format", "markdown").lower()
+
+        if not isinstance(messages, list):
+            return Response({"error": "Parametre 'messages' doit etre une liste"}, status=status.HTTP_400_BAD_REQUEST)
+
+        if export_format == "json":
+            return Response({"messages": messages, "format": "json"}, status=status.HTTP_200_OK)
+
+        # Markdown format
+        lines = [
+            "# Session d'Assistance Copilote Souverain (BantuDevLab)",
+            "",
+            "> Genere automatiquement par BantuDevLab Sovereign Copilot.",
+            "",
+            "---",
+            "",
+        ]
+
+        for idx, msg in enumerate(messages, 1):
+            role = msg.get("role", "user").capitalize()
+            content = sanitize_pii_and_secrets(str(msg.get("content", "")))
+            lines.append(f"### {idx}. {role}")
+            lines.append("")
+            lines.append(content)
+            lines.append("")
+
+        markdown_doc = "\n".join(lines).strip()
+        return Response({
+            "format": "markdown",
+            "content": markdown_doc,
+            "total_messages": len(messages),
+        }, status=status.HTTP_200_OK)
+
