@@ -52,7 +52,7 @@
         <svg height="16" viewBox="0 0 16 16" width="16" fill="currentColor"><path d="M0 1.75A.75.75 0 0 1 .75 1h4.253c1.227 0 2.317.59 3 1.501A3.743 3.743 0 0 1 11.006 1h4.244a.75.75 0 0 1 .75.75v10.5a.75.75 0 0 1-.75.75h-4.244a2.25 2.25 0 0 0-1.756.843l-.25.333-1.028-1.37A2.25 2.25 0 0 0 6.003 13H.75a.75.75 0 0 1-.75-.75Zm1.5.75v9h3.503c.764 0 1.488.35 1.964.945l.283.354V3.882c-.524-.555-1.266-.882-2.083-.882Zm7.75 10.299c.476-.595 1.2-.945 1.964-.945H14.5v-9h-3.494c-.817 0-1.559.327-2.083.882v8.718Z"></path></svg>
         <span>Wiki</span>
       </a>
-      <a class="repo-tab-item" href="{{.RepoLink}}/activity">
+      <a class="repo-tab-item {{if or .PageIsActivity (eq .Tab "insights")}}active{{end}}" href="{{.RepoLink}}/activity" title="Insights, Graphe de dependances et SBOM (T-SBM-1102)">
         <svg height="16" viewBox="0 0 16 16" width="16" fill="currentColor"><path d="M1.5 1.75V13.5h13.75a.75.75 0 0 1 0 1.5H.75a.75.75 0 0 1-.75-.75V1.75a.75.75 0 0 1 1.5 0Zm14.28 2.97-4.5 4.5a.75.75 0 0 1-1.06 0L7.5 6.56l-3.22 3.22a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042l3.75-3.75a.75.75 0 0 1 1.06 0L10.75 7.69l3.97-3.97a.75.75 0 0 1 1.06 1.06Z"></path></svg>
         <span>Insights</span>
       </a>
