@@ -27,10 +27,10 @@
   - [x] Permettre l'interaction en direct avec l'assistant local (analyse du fichier courant, prompt libre).
   - [x] Synchroniser les templates personnalises avec `gitea_home/custom/templates/`.
 
-- [ ] **T-COP-703 : Palette de Commandes Globale Moderne (Equivalent GitHub Ctrl+K / Cmd+K)**
-  - [ ] Integrer la fenetre modale de commande spotlight declenchee par le raccourci `Ctrl+K` ou `Cmd+K` dans `custom/templates/custom/header.tmpl`.
-  - [ ] Proposer la recherche rapide, le basculement d'onglet (Code, Issues, PRs), et l'appel direct a Copilot.
-  - [ ] Synchroniser avec `gitea_home/custom/templates/custom/header.tmpl`.
+- [x] **T-COP-703 : Palette de Commandes Globale Moderne (Equivalent GitHub Ctrl+K / Cmd+K)**
+  - [x] Integrer la fenetre modale de commande spotlight declenchee par le raccourci `Ctrl+K` ou `Cmd+K` dans `custom/templates/custom/header.tmpl`.
+  - [x] Proposer la recherche rapide, le basculement d'onglet (Code, Issues, PRs), et l'appel direct a Copilot.
+  - [x] Synchroniser avec `gitea_home/custom/templates/custom/header.tmpl`.
 
 - [ ] **T-COP-704 : Suite de Tests et Pipeline CI/CD Copilot**
   - [ ] Rediger les tests unitaires et d'integration pour les points d'acces Copilot dans `tests/test_ai_assistant.py`.
