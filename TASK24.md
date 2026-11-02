@@ -22,9 +22,9 @@
   - [x] Ajouter les styles `.gh-merge-queue-badge`, `.gh-merge-queue-box`, `.gh-merge-queue-item` dans `theme-github.css` et `theme-github-dark.css`.
   - [x] Synchroniser avec `gitea_home/custom/public/assets/css/`.
 
-- [ ] **T-MRG-2402 : Moteur de Simulation et Specification de File de Fusion**
-  - [ ] Implementer `scripts/simulate_merge_queue.py` pour valider les fusions en file selon les checks CI et l'ordre FIFO.
-  - [ ] Documenter le fonctionnement dans `docs/SOVEREIGN_MERGE_QUEUE.md`.
+- [x] **T-MRG-2402 : Moteur de Simulation et Specification de File de Fusion**
+  - [x] Implementer `scripts/simulate_merge_queue.py` pour valider les fusions en file selon les checks CI et l'ordre FIFO.
+  - [x] Documenter le fonctionnement dans `docs/SOVEREIGN_MERGE_QUEUE.md`.
 
 - [ ] **T-MRG-2403 : Tests Unitaires et Workflows CI/CD Merge Queue**
   - [ ] Rediger les tests unitaires dans `tests/test_sec_axes.py`.
