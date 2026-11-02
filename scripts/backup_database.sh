@@ -26,10 +26,14 @@ fi
 
 echo "[INFO] Sauvegarde chiffree terminee : ${ENC_FILE}"
 
-# Replicate to Sovereign S3 compatible object storage if configured
+# Replicate to Sovereign S3 compatible object storage across two distinct African regions (Abidjan & Kigali)
+# T-DOC-404: Plan de Reprise d'Activité (PRA) souverain
 if command -v aws >/dev/null 2>&1 && [ -n "${S3_BACKUP_BUCKET:-}" ]; then
-    echo "[INFO] Synchronisation vers le bucket S3 souverain..."
-    aws s3 cp "${ENC_FILE}" "s3://${S3_BACKUP_BUCKET}/backups/${TIMESTAMP}/" --endpoint-url "${S3_ENDPOINT:-https://s3.systalink.africa}"
+    echo "[INFO] Synchronisation vers le bucket S3 souverain primaire (Abidjan)..."
+    aws s3 cp "${ENC_FILE}" "s3://${S3_BACKUP_BUCKET}/abidjan/${TIMESTAMP}/" --endpoint-url "${S3_ENDPOINT:-https://s3.abidjan.systalink.africa}" || true
+
+    echo "[INFO] Replicat PRA vers le datacenter secondaire (Kigali)..."
+    aws s3 cp "${ENC_FILE}" "s3://${S3_BACKUP_BUCKET_KIGALI:-bantu-backup-kigali}/kigali/${TIMESTAMP}/" --endpoint-url "${S3_ENDPOINT_KIGALI:-https://s3.kigali.systalink.africa}" || true
 fi
 
 # Clean backups older than retention policy

@@ -15,7 +15,7 @@ gitlab-runner register \
   --executor "docker" \
   --docker-image "python:3.12-slim" \
   --description "${RUNNER_NAME}" \
-  --tag-list "sovereign,docker,python,systalink" \
+  --tag-list "sovereign,docker,python,systalink,sovereign-abidjan,sovereign-gpu-gemma,tier1-runner" \
   --run-untagged="true" \
   --locked="false" \
   --access-level="not_protected"
