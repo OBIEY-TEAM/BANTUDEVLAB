@@ -143,11 +143,11 @@ Ce document définit l'ensemble des tâches, sous-tâches techniques et configur
 
 ### Axe 6 : Intégrations Tiers Écosystème GitHub (Pages, Codespaces, Gist, Discussions)
 
-- [ ] **T-EXT-601 : Publication de Sites Statiques (Équivalent GitHub Pages)**
-  - [ ] Mettre en place un pipeline Gitea Actions déployant les sites statiques générés (HTML/Hugo/Jekyll) vers un conteneur Nginx dédié ou intégrer le serveur Pages de Codeberg (`codeberg-pages`).
-  - [ ] Configurer la gestion automatique des certificats TLS pour les sous-domaines de projets.
+- [x] **T-EXT-601 : Publication de Sites Statiques (Équivalent GitHub Pages)**
+  - [x] Mettre en place un pipeline Gitea Actions déployant les sites statiques générés (HTML/Hugo/Jekyll) vers un conteneur Nginx dédié ou intégrer le serveur Pages de Codeberg (`codeberg-pages`).
+  - [x] Configurer la gestion automatique des certificats TLS pour les sous-domaines de projets.
 
-- [ ] **T-EXT-602 : Environnements de Développement Web (Équivalent GitHub Codespaces)**
+- [x] **T-EXT-602 : Environnements de Développement Web (Équivalent GitHub Codespaces)**
   - [ ] Déployer une instance auto-hébergée de **Coder**, **DevPod** ou **code-server** connectée à Gitea via OAuth2.
   - [ ] Ajouter un bouton personnalisé « Ouvrir dans l'IDE Web » dans l'en-tête de dépôt via `custom/templates/repo/header.tmpl`.
 

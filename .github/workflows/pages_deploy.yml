@@ -1,0 +1,30 @@
+name: BantuDevLab Sovereign Pages Deployment (GitHub Pages Equivalent)
+
+on:
+  push:
+    branches: [ main, gh-pages ]
+  workflow_dispatch:
+
+jobs:
+  deploy-pages:
+    name: Build & Deploy Static Pages
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Source Code
+        uses: actions/checkout@v4
+
+      - name: Build Static Site
+        run: |
+          mkdir -p public_site
+          if [ -d "docs" ]; then
+            cp -r docs/* public_site/
+          else
+            echo "<html><head><title>BantuDevLab Pages</title></head><body><h1>Sovereign Project Site</h1><p>Deploye avec succes sur la forge souveraine.</p></body></html>" > public_site/index.html
+          fi
+
+      - name: Archive Pages Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: github-pages
+          path: public_site/
+          retention-days: 14
