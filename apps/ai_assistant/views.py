@@ -1,9 +1,9 @@
-﻿import json
+import json
 import logging
 
 from django.http import StreamingHttpResponse
 from rest_framework import status
-from rest_framework.permissions import AllowAny, IsAdminUser, IsAuthenticated
+from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.throttling import ScopedRateThrottle
 from rest_framework.views import APIView

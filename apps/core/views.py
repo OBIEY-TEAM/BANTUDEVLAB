@@ -46,7 +46,9 @@ def readyz_view(request):
     except Exception:
         checks["cache"] = "error"
     healthy = all(v == "ok" for v in checks.values())
-    return JsonResponse({"status": "ready" if healthy else "degraded", "checks": checks}, status=200 if healthy else 503)
+    return JsonResponse(
+        {"status": "ready" if healthy else "degraded", "checks": checks}, status=200 if healthy else 503
+    )
 
 
 def home_view(request):

@@ -6,7 +6,7 @@ from django.contrib.auth.models import User
 from django.shortcuts import render
 from django.utils import timezone
 from rest_framework import status
-from rest_framework.permissions import AllowAny, IsAdminUser, IsAuthenticated
+from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework.throttling import ScopedRateThrottle
 from rest_framework.views import APIView
@@ -14,7 +14,6 @@ from rest_framework.views import APIView
 from .crypto import ZKPCrypto
 from .models import SovereignIdentity, ZKPChallenge
 from .tokens import GitTokenService
-
 
 USERNAME_RE = re.compile(r"^[A-Za-z0-9._-]{3,32}$")
 COUNTRY_RE = re.compile(r"^[A-Z]{3}$")
@@ -26,8 +25,10 @@ def _valid_proof_params(username, challenge_nonce, commitment_t, response_s) -> 
     params = (username, challenge_nonce, commitment_t, response_s)
     if not all(params):
         return False
-    return all(isinstance(p, str) for p in params) and len(username) <= 150 and all(
-        len(p) <= MAX_HEX_LEN for p in params[1:]
+    return (
+        all(isinstance(p, str) for p in params)
+        and len(username) <= 150
+        and all(len(p) <= MAX_HEX_LEN for p in params[1:])
     )
 
 
