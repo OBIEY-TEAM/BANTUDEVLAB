@@ -1,0 +1,28 @@
+[Unit]
+Description=BantuDevLab Celery Worker Service
+After=network.target redis.service postgresql.service
+
+[Service]
+Type=forking
+User=appuser
+Group=appgroup
+WorkingDirectory=/opt/bantudevlab
+EnvironmentFile=/opt/bantudevlab/.env
+ExecStart=/opt/bantudevlab/.venv/bin/celery multi start worker1 \
+    -A config \
+    --pidfile=/var/run/celery/%n.pid \
+    --logfile=/var/log/celery/%n%I.log \
+    --loglevel=INFO \
+    --concurrency=4
+ExecStop=/opt/bantudevlab/.venv/bin/celery multi stopwait worker1 \
+    --pidfile=/var/run/celery/%n.pid
+ExecReload=/opt/bantudevlab/.venv/bin/celery multi restart worker1 \
+    -A config \
+    --pidfile=/var/run/celery/%n.pid \
+    --logfile=/var/log/celery/%n%I.log \
+    --loglevel=INFO
+Restart=always
+RestartSec=10
+
+[Install]
+WantedBy=multi-user.target

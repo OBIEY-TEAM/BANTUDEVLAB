@@ -1,10 +1,17 @@
 {% extends 'base.html' %}
+{% load i18n %}
 
 {% block content %}
+<nav class="breadcrumbs" aria-label="{% trans 'Fil d Ariane' %}">
+    <a href="{% url 'home' %}">{% icon "landmark" size=14 %} {% trans "Accueil" %}</a>
+    <span class="breadcrumbs-separator">/</span>
+    <span class="breadcrumbs-current" aria-current="page">{% trans "Authentification Zero-Trust" %}</span>
+</nav>
 <div class="zkp-wizard-card">
+
     <div style="text-align: center; margin-bottom: 2rem;">
         <span class="brand-badge" style="font-size: 0.8rem; margin-bottom: 0.5rem;">PROTOCOLE SCHNORR NIZKP / FIAT-SHAMIR</span>
-        <h2 style="margin: 0.5rem 0;">🔐 Assistant d'Identité & Connexion Zero-Trust</h2>
+        <h2 style="margin: 0.5rem 0;">{% icon "key" size=22 %} Assistant d'Identité & Connexion Zero-Trust</h2>
         <p style="color: var(--text-muted); font-size: 0.95rem; max-width: 550px; margin: 0 auto;">
             Générez votre clé souveraine protégée par mnémonique BIP-39 et prouvez mathématiquement votre identité sans jamais exposer de mot de passe.
         </p>
@@ -34,16 +41,16 @@
         <div style="margin-top: 1.25rem;">
             <label style="display: block; margin-bottom: 0.4rem; font-weight: 600;">Juridiction Continentale (Nœud Souverain) :</label>
             <select id="zkpCountry" style="width: 100%; padding: 0.75rem; background: #080c14; border: 1px solid var(--dark-border); color: #fff; border-radius: 8px; font-size: 0.95rem; box-sizing: border-box;">
-                <option value="CIV">🇨🇮 Côte d'Ivoire (Systalink Abidjan DC)</option>
-                <option value="SEN">🇸🇳 Sénégal (Dakar Sovereign Node)</option>
-                <option value="NGA">🇳🇬 Nigeria (Lagos Datacenter)</option>
-                <option value="KEN">🇰🇪 Kenya (Nairobi IXP Hub)</option>
-                <option value="RWA">🇷🇼 Rwanda (Kigali Innovation City)</option>
+                <option value="CIV">Côte d'Ivoire (Systalink Abidjan DC)</option>
+                <option value="SEN">Sénégal (Dakar Sovereign Node)</option>
+                <option value="NGA">Nigeria (Lagos Datacenter)</option>
+                <option value="KEN">Kenya (Nairobi IXP Hub)</option>
+                <option value="RWA">Rwanda (Kigali Innovation City)</option>
             </select>
         </div>
 
         <div style="margin-top: 2rem; display: flex; justify-content: flex-end;">
-            <button class="btn btn-primary" onclick="switchWizardStep(2)">Suivant : Générer la Clé Souveraine ➔</button>
+            <button class="btn btn-primary" onclick="switchWizardStep(2)">Suivant : Générer la Clé Souveraine {% icon "arrow-right" size=18 %}</button>
         </div>
     </div>
 
@@ -51,9 +58,14 @@
     <div id="wizardStep2" class="wizard-step-content" style="display: none;">
         <div style="display: flex; justify-content: space-between; align-items: center;">
             <label style="font-weight: 600;">Phrase Mnémonique Souveraine (Standard BIP-39) :</label>
-            <button class="btn btn-secondary" style="padding: 0.3rem 0.7rem; font-size: 0.8rem;" onclick="generateNewMnemonic()">
-                🔄 Regénérer (12 Mots)
-            </button>
+            <div style="display: flex; gap: 0.5rem; align-items: center;">
+                <button type="button" class="copy-btn" id="copyMnemonicBtn" onclick="copyMnemonicPhrase()">
+                    {% icon "copy" size=14 %} <span id="copyMnemonicLabel">{% trans "Copier la phrase" %}</span>
+                </button>
+                <button class="btn btn-secondary" style="padding: 0.3rem 0.7rem; font-size: 0.8rem;" onclick="generateNewMnemonic()">
+                    {% icon "refresh-cw" size=18 %} Regénérer (12 Mots)
+                </button>
+            </div>
         </div>
         <p style="font-size: 0.82rem; color: var(--text-muted); margin: 0.3rem 0 0.75rem;">
             Ces 12 mots permettent de régénérer mathématiquement votre clé privée de signature ZKP dans n'importe quel terminal sécurisé.
@@ -81,16 +93,16 @@
         <!-- Bouton Téléchargement Clé Privée Protégée -->
         <div style="margin-top: 1.5rem; display: flex; gap: 1rem; flex-wrap: wrap;">
             <button class="btn btn-secondary" onclick="downloadSovereignKeyFile()">
-                💾 Télécharger Fichier Clé Souveraine (.json)
+                {% icon "download" size=18 %} Télécharger Fichier Clé Souveraine (.json)
             </button>
             <button class="btn btn-primary" onclick="registerZkpIdentity()">
-                ✨ Enregistrer Identité sur BantuDevLab
+                {% icon "save" size=18 %} Enregistrer Identité sur BantuDevLab
             </button>
         </div>
 
         <div style="margin-top: 2rem; display: flex; justify-content: space-between;">
-            <button class="btn btn-secondary" onclick="switchWizardStep(1)">⬅ Précédent</button>
-            <button class="btn btn-primary" onclick="switchWizardStep(3)">Passer à la Connexion ➔</button>
+            <button class="btn btn-secondary" onclick="switchWizardStep(1)">{% icon "arrow-left" size=18 %} Précédent</button>
+            <button class="btn btn-primary" onclick="switchWizardStep(3)">Passer à la Connexion {% icon "arrow-right" size=18 %}</button>
         </div>
     </div>
 
@@ -105,12 +117,12 @@
 
         <div style="display: flex; gap: 1rem;">
             <button class="btn btn-primary" style="flex: 1; padding: 0.85rem;" onclick="loginWithZkp()">
-                🚀 Prouver mon Identité (Connexion Zero-Trust)
+                {% icon "log-in" size=18 %} Prouver mon Identité (Connexion Zero-Trust)
             </button>
         </div>
 
         <div style="margin-top: 2rem; display: flex; justify-content: flex-start;">
-            <button class="btn btn-secondary" onclick="switchWizardStep(2)">⬅ Revenir au Mnémonique</button>
+            <button class="btn btn-secondary" onclick="switchWizardStep(2)">{% icon "arrow-left" size=18 %} Revenir au Mnémonique</button>
         </div>
     </div>
 
@@ -149,6 +161,24 @@ function switchWizardStep(stepNumber) {
             }
         }
     });
+}
+
+
+function copyMnemonicPhrase() {
+    const text = (typeof currentMnemonic !== 'undefined' && currentMnemonic.length) ? currentMnemonic.join(' ') : document.getElementById('zkpSecret').value;
+    if (navigator.clipboard && text) {
+        navigator.clipboard.writeText(text).then(() => {
+            const btn = document.getElementById('copyMnemonicBtn');
+            const label = document.getElementById('copyMnemonicLabel');
+            if (btn) btn.classList.add('copied');
+            if (label) label.textContent = 'Copié !';
+            if (window.showToast) window.showToast('Phrase de 12 mots copiée !', 'success', 2000);
+            setTimeout(() => {
+                if (btn) btn.classList.remove('copied');
+                if (label) label.textContent = 'Copier la phrase';
+            }, 2000);
+        });
+    }
 }
 
 function generateNewMnemonic() {
@@ -310,10 +340,10 @@ async function registerZkpIdentity() {
     });
     const data = await res.json();
     if (res.ok) {
-        log(`✅ Enregistrement ZKP réussi ! Aucune information secrète n'a quitté votre machine.`);
+        log(`{% icon "circle-check" size=18 %} Enregistrement ZKP réussi ! Aucune information secrète n'a quitté votre machine.`);
         if (window.showToast) window.showToast(`Identité ZKP pour '${username}' enregistrée avec succès !`, 'success');
     } else {
-        log(`⚠️ ${data.error || 'Erreur d\'enregistrement'}`);
+        log(`{% icon "triangle-alert" size=18 %} ${data.error || 'Erreur d\'enregistrement'}`);
         if (window.showToast) window.showToast(`Erreur : ${data.error || 'Échec de l\'enregistrement'}`, 'error');
     }
 }
@@ -335,7 +365,7 @@ async function loginWithZkp() {
     });
     const chalData = await chalRes.json();
     if (!chalRes.ok) {
-        log(`❌ Erreur défi: ${chalData.error}`);
+        log(`{% icon "circle-x" size=18 %} Erreur défi: ${chalData.error}`);
         return;
     }
 
@@ -367,10 +397,10 @@ async function loginWithZkp() {
     });
     const verifyData = await verifyRes.json();
     if (verifyRes.ok) {
-        log(`🎉 <b>Vérification Zero-Knowledge réussie !</b> Accès autorisé sans mot de passe.`);
+        log(`{% icon "sparkles" size=18 %} <b>Vérification Zero-Knowledge réussie !</b> Accès autorisé sans mot de passe.`);
         if (window.showToast) window.showToast(`Connexion Zero-Trust réussie pour ${username} !`, 'success');
     } else {
-        log(`❌ Échec de la vérification : ${verifyData.error}`);
+        log(`{% icon "circle-x" size=18 %} Échec de la vérification : ${verifyData.error}`);
         if (window.showToast) window.showToast(`Échec vérification ZKP : ${verifyData.error}`, 'error');
     }
 }

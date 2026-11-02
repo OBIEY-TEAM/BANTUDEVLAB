@@ -101,3 +101,60 @@ class SarifReportSerializer:
         }
 
         return sarif_payload
+
+    @classmethod
+    def serialize_gitlab_sast(cls, report: SecurityAuditReport) -> Dict[str, Any]:
+        """
+        T-GIT-304: Exporte l'artefact au format gl-sast-report.json officiel
+        pour ingestion directe dans le GitLab Security Dashboard.
+        """
+        vulnerabilities = []
+        findings = report.raw_findings or []
+
+        for idx, finding in enumerate(findings):
+            rule_id = finding.get("type", "SOVEREIGN_VULN")
+            desc = finding.get("description", "Alerte de sécurité souveraine")
+            sev = finding.get("severity", "Medium").capitalize()
+            filename = finding.get("file", report.file_scanned or "app.py")
+            line = finding.get("line", 1)
+
+            vulnerabilities.append(
+                {
+                    "id": f"bantu-sast-{report.id or 1}-{idx}",
+                    "category": "sast",
+                    "name": rule_id,
+                    "message": desc,
+                    "description": desc,
+                    "severity": sev,
+                    "confidence": "High",
+                    "scanner": {"id": "bantudevlab_sast", "name": "BantuDevLab Sovereign SAST Scanner"},
+                    "location": {
+                        "file": filename,
+                        "start_line": int(line),
+                    },
+                    "identifiers": [
+                        {
+                            "type": "bantudevlab_rule_type",
+                            "name": rule_id,
+                            "value": rule_id,
+                        }
+                    ],
+                }
+            )
+
+        return {
+            "version": "15.0.0",
+            "vulnerabilities": vulnerabilities,
+            "scan": {
+                "scanner": {
+                    "id": "bantudevlab_sast",
+                    "name": "BantuDevLab Sovereign SAST Scanner",
+                    "version": "1.0.0",
+                    "vendor": {"name": "BantuDevLab Panafrican Forge"},
+                },
+                "type": "sast",
+                "status": "success",
+                "start_time": report.scanned_at.isoformat() if report.scanned_at else "2026-11-02T00:00:00Z",
+                "end_time": report.scanned_at.isoformat() if report.scanned_at else "2026-11-02T00:00:01Z",
+            },
+        }

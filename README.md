@@ -1,140 +1,139 @@
-# 🌍 BANTUDEVLAB — Forge Logicielle Souveraine de l'Afrique
+# BANTUDEVLAB - Forge Logicielle Souveraine de l'Afrique
 
-> **BANTUDEVLAB** est la forge logicielle souveraine de l'Afrique : un système complet et sécurisé de gestion de versions conçu pour centraliser le code et propulser la collaboration des développeurs du continent en toute indépendance technologique et réglementaire.
+> **BANTUDEVLAB** centralise le code des développeurs africains sur une infrastructure souveraine : moteur Git (Gitea), authentification sans mot de passe par preuve à divulgation nulle de connaissance (ZKP), scanner de sécurité et de souveraineté, et assistant IA local (Gemma 5B).
 
----
+## Sommaire
 
-## 🏛️ Stratégie Hybride et Architecture
+1. [Architecture](#architecture)
+2. [Stack technique](#stack-technique)
+3. [Démarrage rapide](#démarrage-rapide)
+4. [Sécurité](#sécurité)
+5. [Authentification Zero-Trust (ZKP)](#authentification-zero-trust-zkp)
+6. [Scanner de sécurité](#scanner-de-sécurité-et-score-de-souveraineté)
+7. [API](#api)
+8. [Interface et icônes](#interface-et-icônes)
+9. [Tests et CI/CD](#tests-et-cicd)
+10. [Documentation](#documentation)
 
-BANTUDEVLAB combine la robustesse d'un moteur open-source éprouvé avec une surcouche souveraine en Python/Django :
+## Architecture
 
-```
-                               ┌──────────────────────────────────────────────────┐
-                               │                 DÉVELOPPEURS                     │
-                               └────────────────────────┬─────────────────────────┘
-                                                        │
-                      ┌─────────────────────────────────┴─────────────────────────────────┐
-                      │                                                                   │
-                      ▼                                                                   ▼
-       ┌──────────────────────────────┐                                   ┌──────────────────────────────┐
-       │   Gitea / GitLab CE Engine   │◄──────── API REST / Webhooks ────►│    Surcouche BANTUDEVLAB     │
-       │     (Systalink Cloud)        │                                   │       (Python / Django)      │
-       ├──────────────────────────────┤                                   ├──────────────────────────────┤
-       │ • Dépôts Git souverains      │                                   │ • Dashboard Panafricain      │
-       │ • Pull Requests & Issues     │                                   │ • Zero-Trust ZKP Auth        │
-       │ • CI/CD Runner intégré       │                                   │ • Scanner de Sécurité        │
-       │ • Contrôle d'accès Git       │                                   │ • Assistant IA Gemma 5B      │
-       └──────────────┬───────────────┘                                   └──────────────┬───────────────┘
-                      │                                                                  │
-                      └───────────────────────────────┬──────────────────────────────────┘
-                                                      ▼
-                                   ┌──────────────────────────────────────┐
-                                   │       PostgreSQL 16 Multi-Tenant     │
-                                   │   (Hébergement Cloud Panafricain)    │
-                                   └──────────────────────────────────────┘
+```mermaid
+flowchart LR
+    Dev["Développeurs"] --> Django["Surcouche BANTUDEVLAB<br/>(Django + DRF)"]
+    Dev -->|"git over HTTPS/SSH"| Gitea["Gitea CE"]
+    Django -->|"API REST + webhooks signés"| Gitea
+    Django --> PG[("PostgreSQL 16")]
+    Django --> Redis[("Redis<br/>cache + Celery")]
+    Django --> Gemma["Gemma 5B local<br/>(Ollama / vLLM)"]
+    Celery["Workers Celery"] --> Redis
+    Celery --> PG
 ```
 
-1. **Le moteur de gestion de versions (Déploiement)** :
-   - Basé sur **Gitea / GitLab CE** déployé directement sur l'infrastructure cloud souveraine **Systalink**.
-   - Fournit instantanément l'infrastructure de base de type GitHub (dépôts Git, pull requests, revues, interface standard).
-2. **La surcouche souveraine (Code Python & Django)** :
-   - Tableau de bord d'analyse de souveraineté et de sécurité.
-   - Système d'authentification **Zero-Trust** basé sur les **Zero-Knowledge Proofs (ZKP)**.
-   - Intégration de l'IA locale **Gemma 5B** pour auditer et assister les développeurs sans fuite de code vers l'extérieur.
+PostgreSQL et Redis ne sont joignables que depuis le réseau Docker interne (`backend_net`).
 
----
+## Stack technique
 
-## 🧰 Stack Technique
+| Couche | Technologie |
+|---|---|
+| Backend | Python 3.12+, Django 5.1, Django REST Framework, drf-spectacular |
+| Forge Git | Gitea 1.23 (rootless) |
+| Données | PostgreSQL 16 (SQLite en développement), Redis 7 |
+| Asynchrone | Celery |
+| IA | Gemma 5B (fine-tuning LoRA/QLoRA dans `finetuning/`) |
+| Serveur | Gunicorn + Uvicorn workers |
+| Qualité | pytest, coverage, ruff, bandit, Playwright |
 
-- **Moteur Git** : Gitea 1.23+ / GitLab CE
-- **Backend & Surcouche** : Python 3.12, Django 5.x, Django REST Framework
-- **Cryptographie & Sécurité** : Zero-Knowledge Proofs (Schnorr / Sigma NIZKP via Fiat-Shamir), Cryptography
-- **Base de données** : PostgreSQL 16
-- **Conteneurisation & OS** : Docker, Docker Compose, Linux
-- **Intelligence Artificielle** : Gemma 5B (Local / QLoRA 4-bit)
+## Démarrage rapide
 
----
+### 1. Configurer l'environnement
 
-## 🚀 Démarrage Rapide
-
-### 1. Cloner le projet et configurer l'environnement
 ```bash
 cp .env.example .env
+# Éditez .env : remplacez TOUTES les valeurs CHANGE_ME
+python -c "import secrets; print(secrets.token_urlsafe(64))"   # pour DJANGO_SECRET_KEY et GITEA_WEBHOOK_SECRET
 ```
 
-### 2. Démarrer avec Docker Compose (Environnement Complet)
-```bash
-docker compose up -d
-```
-Les services seront accessibles sur :
-- **Surcouche Souveraine BantuDevLab** : `http://localhost:8000`
-- **Forge Git Gitea** : `http://localhost:3000`
-- **Base PostgreSQL** : `localhost:5432`
+Sans `DJANGO_SECRET_KEY`, l'application refuse de démarrer en production (`DEBUG=False`, valeur par défaut).
 
-### 3. Exécution locale (Mode Développement)
+### 2. Docker Compose (environnement complet)
+
 ```bash
+docker compose up -d --build
+```
+
+Variables obligatoires : `DJANGO_SECRET_KEY`, `POSTGRES_PASSWORD`, `REDIS_PASSWORD`, `GITEA_WEBHOOK_SECRET`.
+
+### 3. Exécution locale (développement)
+
+```bash
+python -m venv .venv && source .venv/bin/activate    # Windows : .venv\Scripts\activate
 pip install -r requirements.txt
+export DEBUG=True
 python manage.py migrate
 python manage.py runserver
 ```
 
----
+## Sécurité
 
-## 🔐 Authentification Zero-Trust (Zero-Knowledge Proofs - ZKP)
+- Authentification obligatoire par défaut sur l'API ; seuls l'inscription, le défi, la vérification ZKP, les statuts et le webhook signé sont publics.
+- Défis ZKP à usage unique, consommés de manière atomique (anti-rejeu), y compris pour l'émission de tokens Git.
+- Webhook Gitea vérifié par HMAC-SHA256 ; désactivé (503) si aucun secret n'est configuré.
+- En production : HTTPS forcé, HSTS, cookies `Secure`, CSP, `Referrer-Policy`, `COOP`.
+- Journal d'audit chaîné par hachage (`AuditTrail`), insertion transactionnelle.
+- Secrets masqués avant toute persistance des requêtes à l'IA.
+- Conteneurs durcis : `no-new-privileges`, `cap_drop: ALL`, utilisateur non root.
 
-BANTUDEVLAB intègre un protocole cryptographique de **preuves à divulgation nulle de connaissance** (Schnorr / Sigma NIZKP via l'heuristique de Fiat-Shamir) :
-- **Clé Privée ($x$)** : Reste strictement sur la machine du développeur.
-- **Clé Publique ($y = g^x \pmod p$)** : Enregistrée sur la plateforme.
-- **Engagement ($t = g^v \pmod p$)** et **Réponse ($s = v - c \cdot x \pmod q$)** : Permettent de vérifier mathématiquement l'identité sans qu'aucun mot de passe ni hash réversible ne transite sur le réseau.
-- **Protection Anti-Replay** : Chaque session d'authentification requiert un *challenge nonce* à usage unique.
+Voir [SECURITY.md](SECURITY.md) et [docs/security/threat-model.md](docs/security/threat-model.md).
 
----
+## Authentification Zero-Trust (ZKP)
 
-## 🛡️ Scanner de Sécurité et Score de Souveraineté
+Protocole d'identification de Schnorr rendu non interactif (Fiat-Shamir) sur le groupe MODP 2048 bits (RFC 3526). Le serveur ne reçoit et ne stocke que la clé publique `y = g^x mod p` ; le secret `x` ne quitte jamais le poste du développeur.
 
-Le moteur `apps/security_scanner` analyse le code source à chaque commit et pull request :
-- Détection des secrets et tokens hardcodés (GitHub/Gitea tokens, clés privées SSH/RSA, identifiants IAM, JWTs).
-- Détection des failles courantes (Injections SQL, exécutions de commandes OS, eval/exec).
-- Analyse de souveraineté : Détection des fuites de télémétrie et dépendances cloud étrangères non souveraines.
-- Attribution d'un **Score de Souveraineté Numérique** (0-100%).
+1. `POST /api/zkp/register/` - enregistre l'identité (clé publique validée contre les attaques de petit sous-groupe).
+2. `POST /api/zkp/challenge/` - émet un nonce à usage unique (5 minutes).
+3. `POST /api/zkp/verify/` - vérifie la preuve `(t, s)` et ouvre la session.
+4. `POST /api/zkp/tokens/generate/` - émet un token Git (`read`, `write`, `admin`, 1 à 365 jours) contre une preuve valide.
 
----
+## Scanner de sécurité et score de souveraineté
 
-## 🧠 Dossier de Fine-Tuning Gemma 5B (`finetuning/`)
+`POST /api/security/scan/` analyse un fichier (secrets en dur, injections, `eval`/`exec`, dépendances non souveraines) et calcule un score de 0 à 100. Les rapports sont exportables au format SARIF 2.1.0 (`/api/security/sarif/`).
 
-Le dossier `finetuning/` contient un pipeline d'entraînement complet pour adapter Gemma 5B aux cas d'usage africains :
-- `dataset_preparation.py` : Génération de jeux de données d'instructions pour les systèmes bancaires (Mobile Money, USSD), la sécurité ZKP et les architectures souveraines.
-- `train_lora.py` : Script d'entraînement avec quantification **QLoRA 4-bit (NF4)** optimisé pour GPU.
-- `evaluate.py` : Évaluation des métriques de précision et de conformité sécuritaire.
-- `README.md` : Guide complet d'entraînement et d'inférence.
+## API
 
-Pour lancer un test du pipeline de fine-tuning :
-```bash
-python finetuning/dataset_preparation.py
-python finetuning/train_lora.py --dry_run
-python finetuning/evaluate.py
+- Documentation interactive : `/api/docs/` (Swagger) et `/api/redoc/`.
+- Schéma OpenAPI : `/api/schema/`.
+- Santé : `/healthz` (liveness) et `/readyz` (base de données et cache).
+
+## Interface et icônes
+
+L'interface n'utilise **aucun emoji** : les icônes sont des SVG auto-hébergés (aucun CDN) rendus par les balises `{% icon %}` et `{% flag %}` (voir `apps/core/templatetags/icons.py`).
+
+```django
+{% icon "shield-check" size=20 %}
+{% flag "CIV" %}
 ```
 
----
+Le contrôle `python scripts/check_no_emoji.py` est exécuté par les tests et la CI.
 
-## 🧪 Tests Automatisés & Intégration Continue (CI/CD)
+## Tests et CI/CD
 
-Le projet dispose d'une suite de tests complète couvrant 100% des modules :
 ```bash
-python manage.py test tests -v 2
+pytest                      # suite complète (couverture minimale configurée dans pyproject.toml)
+ruff check . && bandit -r apps config -c pyproject.toml
+python scripts/check_no_emoji.py
 ```
 
-Le pipeline CI/CD GitHub Actions (`.github/workflows/ci.yml`) automatise :
-1. Les vérifications de conformité système Django (`manage.py check`).
-2. L'exécution de tous les tests unitaires et d'intégration (ZKP, Gitea client, Scanner, Assistant Gemma, Endpoints API).
-3. La validation syntaxique et fonctionnelle du pipeline de fine-tuning.
-4. La validation de la configuration Docker Compose et le build des conteneurs.
+La CI GitHub Actions (`.github/workflows/ci.yml`) exécute lint, tests, analyse de sécurité, validation de la configuration Docker Compose et construction de l'image.
 
----
+## Documentation
 
-## 🌍 Vision Stratégique & Souveraineté Panafricaine
-
-BANTUDEVLAB libère l'écosystème tech africain des dépendances extérieures :
-- **Immunité Juridique** : Données protégées contre le Cloud Act américain et les sanctions extraterritoriales.
-- **Résilience Réseau** : Capacité d'opération locale et décentralisée au sein des points d'échange Internet africains (IXP).
-- **Fierté & Indépendance** : Une infrastructure pensée par et pour les développeurs africains.
+| Document | Contenu |
+|---|---|
+| [docs/architecture.md](docs/architecture.md) | Architecture et décisions (ADR) |
+| [docs/security/threat-model.md](docs/security/threat-model.md) | Modèle de menaces (STRIDE) |
+| [docs/security/crypto-spec.md](docs/security/crypto-spec.md) | Spécification du protocole ZKP |
+| [docs/operations.md](docs/operations.md) | Déploiement, sauvegardes, runbook |
+| [docs/pitch-cadev-2026.md](docs/pitch-cadev-2026.md) | Pitch de 10 minutes pour la CADEV 2026 |
+| [CONTRIBUTING.md](CONTRIBUTING.md) | Guide de contribution |
+| [CHANGELOG.md](CHANGELOG.md) | Historique des changements |
+| [backlod.md](backlod.md) | Backlog d'amélioration et avancement |

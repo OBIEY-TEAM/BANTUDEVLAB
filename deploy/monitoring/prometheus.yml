@@ -1,0 +1,26 @@
+global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+
+scrape_configs:
+  - job_name: "bantudevlab_core"
+    static_configs:
+      - targets: ["127.0.0.1:8001"]
+    metrics_path: "/metrics"
+
+  - job_name: "gitlab_forge"
+    static_configs:
+      - targets: ["127.0.0.1:3001"]
+    metrics_path: "/metrics"
+
+  - job_name: "postgres_database"
+    static_configs:
+      - targets: ["127.0.0.1:9187"]
+
+  - job_name: "redis_cache"
+    static_configs:
+      - targets: ["127.0.0.1:9121"]
+
+  - job_name: "node_system"
+    static_configs:
+      - targets: ["127.0.0.1:9100"]

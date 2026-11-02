@@ -1,0 +1,23 @@
+# Exclusions pour la construction de l'image Docker BANTUDEVLAB
+.venv/
+venv/
+env/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.pytest_cache/
+.coverage
+htmlcov/
+bin/*.exe
+bin/gitea.exe
+gitea_home/
+forge_data/
+.git/
+.gitignore
+.dockerignore
+.env
+*.log
+node_modules/
+.idea/
+.vscode/

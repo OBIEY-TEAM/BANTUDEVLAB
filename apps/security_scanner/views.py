@@ -1,4 +1,5 @@
 from rest_framework import status
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.throttling import ScopedRateThrottle
 from rest_framework.views import APIView
@@ -13,6 +14,8 @@ class ScanCodeView(APIView):
     and digital sovereignty violations.
     Throttled to 10 req/min.
     """
+
+    permission_classes = [IsAuthenticated]
 
     throttle_classes = [ScopedRateThrottle]
     throttle_scope = "scanner"
@@ -82,6 +85,8 @@ class ScanCodeView(APIView):
 class SecurityAuditHistoryView(APIView):
     """Lists past security and sovereignty audit reports."""
 
+    permission_classes = [IsAuthenticated]
+
     def get(self, request):
         audits = SecurityAuditReport.objects.all().order_by("-scanned_at")[:20]
         data = [
@@ -107,6 +112,8 @@ class SecuritySarifExportView(APIView):
     et d'afficher les annotations directement dans les diffs de code.
     """
 
+    permission_classes = [IsAuthenticated]
+
     def get(self, request, report_id=None):
         from .serializers import SarifReportSerializer
 
@@ -126,3 +133,29 @@ class SecuritySarifExportView(APIView):
 
         sarif_data = SarifReportSerializer.serialize(report)
         return Response(sarif_data, status=status.HTTP_200_OK, content_type="application/sarif+json")
+
+
+class SecurityGitLabSastExportView(APIView):
+    """
+    T-GIT-304: Export officiel au format gl-sast-report.json pour la GitLab Security Tab.
+    """
+
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request, report_id=None):
+        from .serializers import SarifReportSerializer
+
+        if report_id:
+            try:
+                report = SecurityAuditReport.objects.get(id=report_id)
+            except SecurityAuditReport.DoesNotExist:
+                return Response(
+                    {"error": f"Rapport d'audit #{report_id} introuvable."}, status=status.HTTP_404_NOT_FOUND
+                )
+        else:
+            report = SecurityAuditReport.objects.order_by("-scanned_at").first()
+            if not report:
+                return Response({"error": "Aucun rapport d'audit disponible."}, status=status.HTTP_404_NOT_FOUND)
+
+        sast_data = SarifReportSerializer.serialize_gitlab_sast(report)
+        return Response(sast_data, status=status.HTTP_200_OK)

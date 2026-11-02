@@ -1,6 +1,7 @@
 import hashlib
 import json
 
+from django.db import transaction
 from django.utils import timezone
 
 from .models import AuditTrailLog
@@ -30,24 +31,27 @@ class AuditTrail:
         if details is None:
             details = {}
 
-        last_entry = AuditTrailLog.objects.order_by("-id").first()
-        prev_hash = last_entry.current_hash if last_entry else cls.GENESIS_HASH
+        # SEC-050: lecture du dernier maillon + insertion dans une transaction avec verrou de ligne
+        # (select_for_update, effectif sur PostgreSQL) pour garder la chaine coherente en concurrence.
+        with transaction.atomic():
+            last_entry = AuditTrailLog.objects.select_for_update().order_by("-id").first()
+            prev_hash = last_entry.current_hash if last_entry else cls.GENESIS_HASH
 
-        now = timezone.now()
-        timestamp_str = now.isoformat()
+            now = timezone.now()
+            timestamp_str = now.isoformat()
 
-        current_hash = cls._compute_hash(
-            prev_hash=prev_hash, timestamp_str=timestamp_str, action_type=action_type, actor=actor, details=details
-        )
+            current_hash = cls._compute_hash(
+                prev_hash=prev_hash, timestamp_str=timestamp_str, action_type=action_type, actor=actor, details=details
+            )
 
-        log_entry = AuditTrailLog.objects.create(
-            timestamp=now,
-            action_type=action_type,
-            actor=actor,
-            details=details,
-            prev_hash=prev_hash,
-            current_hash=current_hash,
-        )
+            log_entry = AuditTrailLog.objects.create(
+                timestamp=now,
+                action_type=action_type,
+                actor=actor,
+                details=details,
+                prev_hash=prev_hash,
+                current_hash=current_hash,
+            )
         return log_entry
 
     @classmethod
@@ -56,9 +60,8 @@ class AuditTrail:
         Verifies the cryptographic integrity of the entire audit chain.
         Returns True if all hashes are valid and unbroken, False otherwise.
         """
-        entries = list(AuditTrailLog.objects.order_by("id"))
-        if not entries:
-            return True
+        # Parcours par lots (iterator) : memoire constante meme sur de grandes tables.
+        entries = AuditTrailLog.objects.order_by("id").iterator(chunk_size=500)
 
         expected_prev_hash = cls.GENESIS_HASH
         for entry in entries:
