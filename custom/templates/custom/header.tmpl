@@ -1,4 +1,4 @@
-<!-- BANTUDEVLAB - GitHub Navigation & Head Enhancements (T-UI-602, T-UI-603) -->
+<!-- BANTUDEVLAB - GitHub Navigation, Head Enhancements & Command Palette (T-UI-602, T-UI-603, T-COP-703) -->
 <style>
 /* GitHub Global Navigation Bar */
 .ui.menu.navbar {
@@ -67,11 +67,155 @@
   font-weight: 600;
   border-bottom-color: #fd8c73;
 }
+
+/* GitHub Modern Command Palette Modal (T-COP-703) */
+#github-command-palette-modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background-color: rgba(27, 31, 36, 0.5);
+  backdrop-filter: blur(2px);
+  z-index: 100000;
+  align-items: flex-start;
+  justify-content: center;
+  padding-top: 10vh;
+}
+
+.command-palette-box {
+  width: 640px;
+  max-width: 90vw;
+  background: var(--color-canvas-default, #ffffff);
+  border: 1px solid var(--color-border-default, #d0d7de);
+  border-radius: 12px;
+  box-shadow: 0 16px 32px rgba(1, 4, 9, 0.28);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.command-palette-input-wrap {
+  display: flex;
+  align-items: center;
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--color-border-default, #d0d7de);
+  gap: 10px;
+}
+
+.command-palette-input {
+  flex: 1;
+  border: none;
+  outline: none;
+  font-size: 15px;
+  background: transparent;
+  color: var(--color-text, #1f2328);
+}
+
+.command-palette-list {
+  max-height: 340px;
+  overflow-y: auto;
+  padding: 6px 0;
+  list-style: none;
+  margin: 0;
+}
+
+.command-palette-item {
+  padding: 10px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 13px;
+  color: var(--color-text, #1f2328);
+  cursor: pointer;
+  transition: background-color 0.1s ease;
+}
+
+.command-palette-item:hover, .command-palette-item.active {
+  background-color: var(--color-canvas-subtle, #f6f8fa);
+  color: var(--color-accent-fg, #0969da);
+}
+
+.command-palette-footer {
+  padding: 8px 16px;
+  background: var(--color-canvas-subtle, #f6f8fa);
+  border-top: 1px solid var(--color-border-default, #d0d7de);
+  font-size: 11px;
+  color: var(--color-text-light, #656d76);
+  display: flex;
+  gap: 16px;
+}
 </style>
 
+<!-- Command Palette Markup -->
+<div id="github-command-palette-modal">
+  <div class="command-palette-box">
+    <div class="command-palette-input-wrap">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" style="color: #656d76;">
+        <path d="M10.68 11.74a6 6 0 0 1-7.922-8.982 6 6 0 0 1 8.982 7.922l3.04 3.04a.749.749 0 0 1-.326 1.275.749.749 0 0 1-.734-.215ZM11.5 7a4.5 4.5 0 1 0-9 0 4.5 4.5 0 0 0 9 0Z"></path>
+      </svg>
+      <input id="palette-search-input" class="command-palette-input" placeholder="Type a command or search (Code, Issues, PRs, Copilot)..." autocomplete="off" />
+      <span class="github-search-kbd">Esc</span>
+    </div>
+    <ul id="palette-command-list" class="command-palette-list">
+      <li class="command-palette-item" data-action="nav-code">
+        <span>&gt; Jump to Code</span>
+        <span class="github-search-kbd">G C</span>
+      </li>
+      <li class="command-palette-item" data-action="nav-issues">
+        <span>&gt; Jump to Issues</span>
+        <span class="github-search-kbd">G I</span>
+      </li>
+      <li class="command-palette-item" data-action="nav-pulls">
+        <span>&gt; Jump to Pull Requests</span>
+        <span class="github-search-kbd">G P</span>
+      </li>
+      <li class="command-palette-item" data-action="nav-actions">
+        <span>&gt; Jump to Actions / CI</span>
+        <span class="github-search-kbd">G A</span>
+      </li>
+      <li class="command-palette-item" data-action="ask-copilot">
+        <span>&gt; Ask Sovereign Copilot AI</span>
+        <span class="github-search-kbd">Ctrl+I</span>
+      </li>
+      <li class="command-palette-item" data-action="open-codespaces">
+        <span>&gt; Open in Web IDE / Codespaces</span>
+        <span class="github-search-kbd">.</span>
+      </li>
+      <li class="command-palette-item" data-action="open-gists">
+        <span>&gt; Open Sovereign Gists</span>
+        <span class="github-search-kbd">G S</span>
+      </li>
+      <li class="command-palette-item" data-action="toggle-theme">
+        <span>&gt; Switch Theme (Light / Dark)</span>
+        <span class="github-search-kbd">T</span>
+      </li>
+    </ul>
+    <div class="command-palette-footer">
+      <span>Fleches Haut/Bas pour naviguer</span>
+      <span>Entree pour executer</span>
+      <span>Echap pour fermer</span>
+    </div>
+  </div>
+</div>
+
 <script>
-// GitHub Global Keyboard Shortcuts ('/' for search focus)
+// GitHub Global Keyboard Shortcuts ('/' for search focus, 'Ctrl+K' for command palette)
 document.addEventListener('keydown', function(e) {
+  // Command Palette Ctrl+K / Cmd+K (T-COP-703)
+  if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') {
+    e.preventDefault();
+    toggleCommandPalette();
+    return;
+  }
+
+  // Escape to close command palette
+  if (e.key === 'Escape') {
+    const modal = document.getElementById('github-command-palette-modal');
+    if (modal && modal.style.display === 'flex') {
+      modal.style.display = 'none';
+      return;
+    }
+  }
+
   if (e.key === '/' && !['INPUT', 'TEXTAREA'].includes(document.activeElement.tagName)) {
     const searchInput = document.querySelector('input[name="q"], .github-search-input, #search-input');
     if (searchInput) {
@@ -81,6 +225,27 @@ document.addEventListener('keydown', function(e) {
     }
   }
 });
+
+function toggleCommandPalette() {
+  const modal = document.getElementById('github-command-palette-modal');
+  const input = document.getElementById('palette-search-input');
+  if (!modal) return;
+  const isHidden = modal.style.display !== 'flex';
+  modal.style.display = isHidden ? 'flex' : 'none';
+  if (isHidden && input) {
+    input.value = '';
+    filterPaletteCommands('');
+    setTimeout(() => input.focus(), 50);
+  }
+}
+
+function filterPaletteCommands(term) {
+  const items = document.querySelectorAll('#palette-command-list .command-palette-item');
+  items.forEach(item => {
+    const text = item.textContent.toLowerCase();
+    item.style.display = text.includes(term.toLowerCase()) ? 'flex' : 'none';
+  });
+}
 
 // GitHub Flavored Markdown Alerts Client-Side Polyfill (T-UI-603)
 document.addEventListener('DOMContentLoaded', function() {
@@ -116,5 +281,41 @@ document.addEventListener('DOMContentLoaded', function() {
     gistLink.textContent = 'Gists';
     navContainer.appendChild(gistLink);
   }
+
+  // Command palette live filtering & actions
+  const paletteInput = document.getElementById('palette-search-input');
+  if (paletteInput) {
+    paletteInput.addEventListener('input', function(e) {
+      filterPaletteCommands(e.target.value);
+    });
+  }
+
+  const modal = document.getElementById('github-command-palette-modal');
+  if (modal) {
+    modal.addEventListener('click', function(e) {
+      if (e.target === modal) modal.style.display = 'none';
+    });
+  }
+
+  document.querySelectorAll('#palette-command-list .command-palette-item').forEach(item => {
+    item.addEventListener('click', function() {
+      const action = item.getAttribute('data-action');
+      if (modal) modal.style.display = 'none';
+      if (action === 'nav-code') window.location.href = window.location.pathname.replace(/\/issues|\/pulls|\/actions.*/, '');
+      if (action === 'nav-issues') window.location.href = window.location.pathname.replace(/\/issues|\/pulls|\/actions.*/, '') + '/issues';
+      if (action === 'nav-pulls') window.location.href = window.location.pathname.replace(/\/issues|\/pulls|\/actions.*/, '') + '/pulls';
+      if (action === 'nav-actions') window.location.href = window.location.pathname.replace(/\/issues|\/pulls|\/actions.*/, '') + '/actions';
+      if (action === 'ask-copilot') {
+        const copilotBtn = document.getElementById('copilot-toggle-btn');
+        if (copilotBtn) copilotBtn.click();
+      }
+      if (action === 'open-codespaces') window.open('http://localhost:8443/', '_blank');
+      if (action === 'open-gists') window.open('http://localhost:6157/', '_blank');
+      if (action === 'toggle-theme') {
+        const themeBtn = document.querySelector('.theme-toggle, [data-theme]');
+        if (themeBtn) themeBtn.click();
+      }
+    });
+  });
 });
 </script>
