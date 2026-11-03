@@ -92,16 +92,30 @@ document.addEventListener('DOMContentLoaded', function() {
 
   async function callCopilot(endpoint, payload) {
     appendMessage('bot', 'Analyse souveraine en cours...');
-    try {
-      const resp = await fetch('http://127.0.0.1:8001/api/ai/' + endpoint, {
+    const host = (window.location.hostname === 'localhost') ? 'localhost' : '127.0.0.1';
+    const altHost = (host === 'localhost') ? '127.0.0.1' : 'localhost';
+    const tryFetch = async (targetHost) => {
+      return await fetch('http://' + targetHost + ':8001/api/ai/' + endpoint, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload)
       });
+    };
+
+    try {
+      let resp;
+      try {
+        resp = await tryFetch(host);
+      } catch (err1) {
+        resp = await tryFetch(altHost);
+      }
+      if (!resp.ok) {
+        throw new Error('HTTP ' + resp.status);
+      }
       const data = await resp.json();
       const lastMsg = msgBox.lastChild;
       if (lastMsg) lastMsg.remove();
-      const responseText = data.explanation || data.completion || data.summary || data.response || data.error || 'Reponse recue';
+      const responseText = data.explanation || data.completion || data.summary || data.response || data.review_comment || data.error || 'Reponse recue';
       appendMessage('bot', responseText);
     } catch (err) {
       const lastMsg = msgBox.lastChild;
@@ -137,7 +151,7 @@ document.addEventListener('DOMContentLoaded', function() {
       const codeBlock = document.querySelector('table.lines-num, pre, code');
       const snippet = codeBlock ? codeBlock.textContent.slice(0, 1000) : 'import os\nos.system("echo test")';
       appendMessage('user', 'Audit de securite souverain');
-      callCopilot('review/', { code: snippet, context: 'security' });
+      callCopilot('copilot/review/', { code: snippet, context: 'security' });
     });
   }
 
@@ -162,7 +176,8 @@ document.addEventListener('DOMContentLoaded', function() {
       });
 
       try {
-        const resp = await fetch('http://127.0.0.1:8001/api/ai/copilot/export/', {
+        const expHost = (window.location.hostname === 'localhost') ? 'localhost' : '127.0.0.1';
+        const resp = await fetch('http://' + expHost + ':8001/api/ai/copilot/export/', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ messages: messages, format: 'markdown' })
