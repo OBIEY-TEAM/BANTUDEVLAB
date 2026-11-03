@@ -305,3 +305,22 @@ class CopilotExportView(APIView):
             },
             status=status.HTTP_200_OK,
         )
+
+class CopilotReviewView(APIView):
+    """
+    Point d'acces Copilot public pour l'audit de securite interactif depuis l'interface forge.
+    """
+
+    permission_classes = [AllowAny]
+
+    def post(self, request):
+        code = request.data.get("code")
+        context = request.data.get("context", "security")
+        if not code or not isinstance(code, str):
+            return Response({"error": "Parametre 'code' requis"}, status=status.HTTP_400_BAD_REQUEST)
+
+        sanitized_code = sanitize_pii_and_secrets(code)
+        assistant = GemmaAssistant()
+        result = assistant.analyze_code(code_snippet=sanitized_code, context=context)
+        return Response(result, status=status.HTTP_200_OK)
+
