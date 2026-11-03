@@ -129,6 +129,7 @@ class Axe4UITestCase(TestCase):
         self.assertIn(".africa-map-wrapper", css_content)
         self.assertIn(".map-node-pulse", css_content)
         self.assertIn(".node-cards-grid", css_content)
+
     def test_t_tab_1001_and_1002_markdown_table_primer_and_sorting(self):
         """T-TAB-1001 & T-TAB-1002 : Verification des styles Primer de tableaux et tri dynamique."""
         from pathlib import Path
@@ -143,6 +144,7 @@ class Axe4UITestCase(TestCase):
         header_tmpl = Path("custom/templates/custom/header.tmpl").read_text(encoding="utf-8")
         self.assertIn("T-TAB-1002", header_tmpl)
         self.assertIn("data-sort", header_tmpl)
+
     def test_t_prf_1201_and_1202_pinned_repos_and_profile_readme(self):
         """T-PRF-1201 & T-PRF-1202 : Verification des cartes de depots epingles et profil README."""
         from pathlib import Path
@@ -265,4 +267,3 @@ class Axe4UITestCase(TestCase):
         self.assertIn("T-DRF-2302", header_tmpl)
         self.assertIn("Ready for review", header_tmpl)
         self.assertIn("Draft pull requests cannot be merged", header_tmpl)
-

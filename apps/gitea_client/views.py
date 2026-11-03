@@ -187,6 +187,7 @@ class GiteaSyncView(APIView):
         result = service.full_sync_repository(owner=owner, repo=repo)
         return Response(result, status=status.HTTP_200_OK)
 
+
 class WebhookRedeliverView(APIView):
     """
     T-WHK-1401 : Rejoue une livraison de webhook (equivalent au bouton 'Redeliver' de GitHub).
@@ -222,4 +223,3 @@ class WebhookRedeliverView(APIView):
             },
             status=status.HTTP_200_OK,
         )
-

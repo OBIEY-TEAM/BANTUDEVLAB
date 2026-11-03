@@ -28,7 +28,7 @@ jobs:
       - name: Install Scanner Dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install ruff bandit django djangorestframework
+          pip install ruff bandit django djangorestframework celery python-dotenv requests drf-spectacular
 
       - name: Execute Sovereign SAST & Secret Scanner
         env:

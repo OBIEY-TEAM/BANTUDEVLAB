@@ -25,6 +25,7 @@ class GiteaClientTestCase(TestCase):
         res = client.create_repository(name="sovereign-smart-contract", description="Test repo")
         self.assertTrue(res.get("success"))
         self.assertEqual(res["data"]["name"], "sovereign-smart-contract")
+
     def test_t_whk_1401_webhook_redeliver_endpoint(self):
         """T-WHK-1401 : Verification du rejeu de webhook."""
         from django.test import Client
@@ -56,4 +57,3 @@ class GiteaClientTestCase(TestCase):
             content_type="application/json",
         )
         self.assertEqual(res.status_code, 400)
-
