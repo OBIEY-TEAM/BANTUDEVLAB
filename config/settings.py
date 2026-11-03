@@ -1,3 +1,4 @@
+import importlib.util
 import os
 import sys
 from pathlib import Path
@@ -32,6 +33,8 @@ if not SECRET_KEY:
 
 ALLOWED_HOSTS = [h.strip() for h in os.environ.get("ALLOWED_HOSTS", "localhost,127.0.0.1").split(",") if h.strip()]
 
+HAS_DRF_SPECTACULAR = importlib.util.find_spec("drf_spectacular") is not None
+
 INSTALLED_APPS = [
     "django.contrib.admin",
     "django.contrib.auth",
@@ -40,7 +43,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "rest_framework",
-    "drf_spectacular",
+    *(["drf_spectacular"] if HAS_DRF_SPECTACULAR else []),
     "apps.core",
     "apps.zkp_auth",
     "apps.gitea_client",
@@ -150,7 +153,7 @@ REST_FRAMEWORK = {
         "zkp_register": "10/hour",
         "ai": "20/minute",
     },
-    "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
+    **({"DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema"} if HAS_DRF_SPECTACULAR else {}),
 }
 
 SPECTACULAR_SETTINGS = {
