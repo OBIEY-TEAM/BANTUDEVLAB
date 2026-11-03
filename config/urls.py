@@ -1,7 +1,13 @@
 from django.contrib import admin
 from django.urls import include, path
 from django.views.generic import RedirectView
-from drf_spectacular.views import SpectacularAPIView, SpectacularRedocView, SpectacularSwaggerView
+
+try:
+    from drf_spectacular.views import SpectacularAPIView, SpectacularRedocView, SpectacularSwaggerView
+
+    has_spectacular = True
+except (ImportError, ModuleNotFoundError):
+    has_spectacular = False
 
 from apps.zkp_auth.views import ZKPOpenIDConfigurationView
 
@@ -30,8 +36,12 @@ urlpatterns = [
     path("api/gitlab/", include("apps.gitlab_client.urls")),
     path("api/security/", include("apps.security_scanner.urls")),
     path("api/ai/", include("apps.ai_assistant.urls")),
-    # DEV-04: Documentation OpenAPI & Swagger UI
-    path("api/schema/", SpectacularAPIView.as_view(), name="schema"),
-    path("api/docs/", SpectacularSwaggerView.as_view(url_name="schema"), name="swagger-ui"),
-    path("api/redoc/", SpectacularRedocView.as_view(url_name="schema"), name="redoc"),
 ]
+
+if has_spectacular:
+    # DEV-04: Documentation OpenAPI & Swagger UI
+    urlpatterns += [
+        path("api/schema/", SpectacularAPIView.as_view(), name="schema"),
+        path("api/docs/", SpectacularSwaggerView.as_view(url_name="schema"), name="swagger-ui"),
+        path("api/redoc/", SpectacularRedocView.as_view(url_name="schema"), name="redoc"),
+    ]

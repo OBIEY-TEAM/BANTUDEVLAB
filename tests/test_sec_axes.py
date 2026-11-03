@@ -172,10 +172,12 @@ class Axe1SecurityTestCase(TestCase):
         new_count = AuditTrailLog.objects.count()
         self.assertGreaterEqual(new_count - initial_count, 3)
         self.assertTrue(AuditTrail.verify_chain_integrity())
+
     def test_t_rel_902_release_provenance_and_checksums(self):
         """T-REL-902 : Verification du generateur de provenance SLSA et SHA256SUMS."""
         import tempfile
         from pathlib import Path
+
         from scripts.generate_release_provenance import generate_provenance
 
         with tempfile.TemporaryDirectory() as tmpdir:
@@ -239,7 +241,7 @@ class Axe1SecurityTestCase(TestCase):
 
     def test_t_rel_1703_automated_release_notes_generator(self):
         """T-REL-1703 : Verification du generateur de notes de version GitHub."""
-        from scripts.generate_release_notes import generate_release_notes, classify_entry
+        from scripts.generate_release_notes import classify_entry, generate_release_notes
 
         self.assertEqual(classify_entry("feat(ui): add new button"), "features")
         self.assertEqual(classify_entry("fix: resolve null pointer"), "fixes")
@@ -285,7 +287,8 @@ class Axe1SecurityTestCase(TestCase):
     def test_t_mrg_2401_and_2402_merge_queue_simulation(self):
         """T-MRG-2401 & T-MRG-2402 : Verification du moteur de simulation de merge queue et styles."""
         from pathlib import Path
-        from scripts.simulate_merge_queue import simulate_merge_queue, evaluate_queue_item
+
+        from scripts.simulate_merge_queue import evaluate_queue_item, simulate_merge_queue
 
         css_light = Path("custom/public/assets/css/theme-github.css").read_text(encoding="utf-8")
         self.assertIn(".gh-merge-queue-badge", css_light)
@@ -361,4 +364,3 @@ class Axe1SecurityTestCase(TestCase):
 
         doc_path = Path("docs/SOVEREIGN_SECURITY_ADVISORIES.md")
         self.assertTrue(doc_path.exists())
-

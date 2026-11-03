@@ -9,7 +9,6 @@ import argparse
 import datetime
 import hashlib
 import json
-import os
 import subprocess
 from pathlib import Path
 from typing import Dict, List
