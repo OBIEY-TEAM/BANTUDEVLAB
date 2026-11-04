@@ -1,19 +1,38 @@
 <script>
 (function() {
+  /* Anti-FOUC : execute avant tout rendu CSS pour eviter le flash blanc/noir */
   function getCookie(name) {
-    const m = document.cookie.match(new RegExp('(?:^|;\\s*)' + name + '=([^;]*)'));
-    return m ? decodeURIComponent(m[2]) : null;
+    var m = document.cookie.match(new RegExp('(?:^|;\\s*)' + name + '=([^;]*)'));
+    return m ? decodeURIComponent(m[1]) : null;
   }
-  const bantuTheme = getCookie('bantu_theme');
-  const giteaTheme = getCookie('theme');
-  const isDark = (bantuTheme === 'dark') || (giteaTheme && giteaTheme.includes('dark')) || (!bantuTheme && !giteaTheme);
+  var bantuTheme = getCookie('bantu_theme');
+  var giteaTheme = getCookie('theme');
+  var isDark;
+  if (bantuTheme === 'light' || giteaTheme === 'github') {
+    isDark = false;
+  } else if (bantuTheme === 'dark' || (giteaTheme && giteaTheme.indexOf('dark') !== -1)) {
+    isDark = true;
+  } else {
+    isDark = true; /* mode sombre par defaut */
+  }
+
+  /* Appliquer data-theme immediatement avant tout CSS */
   document.documentElement.setAttribute('data-theme', isDark ? 'dark' : 'light');
-  
-  // Swap theme CSS link immediately if needed
-  const link = document.querySelector('link[rel="stylesheet"][href*="theme-"]');
+
+  /* Injecter un style inline instantane pour bloquer le flash de couleur */
+  var s = document.createElement('style');
+  if (isDark) {
+    s.textContent = 'html,body{background-color:#020617 !important;color:#f8fafc !important;}';
+  } else {
+    s.textContent = 'html,body{background-color:#ffffff !important;color:#1f2328 !important;}';
+  }
+  document.head.appendChild(s);
+
+  /* Basculer le fichier CSS de theme immediatement */
+  var link = document.querySelector('link[rel="stylesheet"][href*="theme-"]');
   if (link) {
-    const target = isDark ? 'theme-github-dark.css' : 'theme-github.css';
-    if (!link.href.includes(target)) {
+    var target = isDark ? 'theme-github-dark.css' : 'theme-github.css';
+    if (link.href.indexOf(target) === -1) {
       link.href = link.href.replace(/theme-[a-zA-Z0-9_-]+\.css/, target);
     }
   }
