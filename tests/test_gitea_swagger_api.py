@@ -1,7 +1,10 @@
-from django.test import TestCase
-import urllib.request
 import json
+import urllib.request
+
+from django.test import TestCase
+
 from apps.gitea_client.client import GiteaClient
+
 
 class GiteaSwaggerAPITestCase(TestCase):
     """

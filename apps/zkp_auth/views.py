@@ -46,8 +46,6 @@ class ZKPRegisterView(APIView):
 
     def post(self, request):
         username = request.data.get("username")
-        if isinstance(username, str):
-            username = username.strip().replace(" ", "-").lower()
         if username is not None and (not isinstance(username, str) or not USERNAME_RE.match(username)):
             return Response(
                 {"error": "username invalide (3-32 caracteres : lettres, chiffres, '.', '_', '-')"},
