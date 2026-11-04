@@ -544,13 +544,13 @@ class SovereignForgeHandler(BaseHTTPRequestHandler):
 
     <div class="container">
         <div class="hero">
-            <h1 style="margin-top: 0;">Moteur Git Panafricain & Dépôts Souverains</h1>
+            <h1 style="margin-top: 0;">Moteur Git Panafricain & Dépôts Souverains (Production)</h1>
             <p style="color: var(--muted); max-width: 700px; margin: 0 auto 1.5rem;">
                 Forge logicielle distribuée connectée en temps réel au portail BantuDevLab.
                 Protocoles Git Smart HTTP, Zero-Trust ZKP et Webhooks signés HMAC.
             </p>
             <div style="display: flex; gap: 1rem; justify-content: center;">
-                <button class="btn btn-gold" onclick="triggerTestWebhook()">Simuler Push Webhook vers BantuDevLab</button>
+                <button class="btn btn-gold" onclick="triggerTestWebhook()">Émettre Webhook de Production HMAC vers BantuDevLab</button>
             </div>
             <div id="webhookResult" style="margin-top: 1rem; font-family: monospace; font-size: 0.85rem; color: var(--emerald);"></div>
         </div>
