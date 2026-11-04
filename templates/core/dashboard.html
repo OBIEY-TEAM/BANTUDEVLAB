@@ -212,7 +212,7 @@
                 <div id="vulnerabilitiesListSection">
                     <h4 style="margin-bottom: 0.75rem; display: flex; align-items: center; justify-content: space-between;">
                         <span>{% trans "Vulnérabilités & Fuites Détectées" %}</span>
-                        <span id="issuesCountBadge" style="font-size: 0.8rem; color: var(--text-muted);">0 {% trans "problème détecté" %}</span>
+                        <span id="issuesCountBadge" style="font-size: 0.8rem; color: var(--text-muted);">{% trans "0 problème détecté" %}</span>
                     </h4>
                     <div id="vulnerabilitiesContainer"></div>
                 </div>
@@ -235,7 +235,7 @@
                     <strong>{{ audit.repository_name }}</strong>
                     <span style="color: var(--secondary-emerald); font-weight: bold;">{{ audit.sovereignty_score }}%</span>
                 </div>
-                <p style="font-size: 0.8rem; color: var(--text-muted); margin: 0.3rem 0;">Fichier : {{ audit.file_scanned }}</p>
+                <p style="font-size: 0.8rem; color: var(--text-muted); margin: 0.3rem 0;">{% trans "Fichier :" %} {{ audit.file_scanned }}</p>
                 <span class="brand-badge" style="font-size: 0.7rem;">{{ audit.status_rating }}</span>
             </div>
             {% empty %}

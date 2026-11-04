@@ -54,6 +54,39 @@ class SyncAndBrandingTestCase(TestCase):
             translated = _("Tableau de Bord Souverain BANTUDEVLAB")
             self.assertEqual(translated, exp_title)
 
+    def test_workbench_and_audit_sast_translations(self):
+        """Verifie la traduction exacte des composants du Workbench, de l'audit SAST et de Gemma."""
+        checks = {
+            "en": {
+                "Guide & FAQ": "Documentation & FAQ",
+                "Workbench Souverain & Audit SAST": "Sovereign Workbench & SAST Audit",
+                "Lancer l'Audit de Sécurité": "Run Security Audit",
+                "Demander l'Avis de Gemma 5B": "Ask Gemma 5B Review",
+            },
+            "sw": {
+                "Guide & FAQ": "Mwongozo na Maswali",
+                "Workbench Souverain & Audit SAST": "Jukwaa Huru la Kazi na Ukaguzi wa SAST",
+                "Lancer l'Audit de Sécurité": "Anzisha Ukaguzi wa Usalama",
+                "Demander l'Avis de Gemma 5B": "Omba Maoni ya AI ya Gemma 5B",
+            },
+            "pt": {
+                "Guide & FAQ": "Guia & FAQ",
+                "Workbench Souverain & Audit SAST": "Workbench Soberano & Auditoria SAST",
+                "Lancer l'Audit de Sécurité": "Executar Auditoria de Seguranca",
+                "Demander l'Avis de Gemma 5B": "Pedir Opiniao do Gemma 5B",
+            },
+            "fr": {
+                "Guide & FAQ": "Guide & FAQ",
+                "Workbench Souverain & Audit SAST": "Workbench Souverain & Audit SAST",
+                "Lancer l'Audit de Sécurité": "Lancer l'Audit de Sécurité",
+                "Demander l'Avis de Gemma 5B": "Demander l'Avis de Gemma 5B",
+            }
+        }
+        for lang_code, mapping in checks.items():
+            activate(lang_code)
+            for source, expected in mapping.items():
+                self.assertEqual(_(source), expected)
+
     def test_home_page_rendering_in_multiple_languages(self):
         """Verifie que la page d'accueil repond en 200 et reflete la langue active."""
         for lang_code in ["fr", "en", "sw", "pt"]:
@@ -88,3 +121,17 @@ class SyncAndBrandingTestCase(TestCase):
         self.assertIn("gitea-bantu-lang-selector", header_tmpl)
         self.assertIn("gitea-theme-toggle-btn", header_tmpl)
         self.assertIn("syncEcosystemChange", header_tmpl)
+        self.assertIn("BANTUDEVLAB GITEA DARK & LIGHT MODE PERFECTION", header_tmpl)
+
+    def test_copilot_chatbot_multilingual_and_dark_mode(self):
+        """Verifie que le Chat Bot Copilot dans Gitea footer contient les 4 langues et les styles sans fond blanc force."""
+        footer_tmpl = Path("custom/templates/custom/footer.tmpl").read_text(encoding="utf-8")
+        self.assertIn("COPILOT_I18N", footer_tmpl)
+        self.assertIn("fr:", footer_tmpl)
+        self.assertIn("en:", footer_tmpl)
+        self.assertIn("sw:", footer_tmpl)
+        self.assertIn("pt:", footer_tmpl)
+        self.assertIn("applyCopilotI18n", footer_tmpl)
+        self.assertIn("#copilot-window", footer_tmpl)
+        self.assertIn('[data-theme="light"] #copilot-window', footer_tmpl)
+        self.assertNotIn("background: #ffffff; color: #1f2328;", footer_tmpl)

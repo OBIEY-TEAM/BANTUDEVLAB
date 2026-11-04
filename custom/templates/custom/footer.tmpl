@@ -1,58 +1,439 @@
-<!-- BANTUDEVLAB - GitHub Sovereign Footer & Copilot Widget (T-UI-602, T-COP-702) -->
-<footer class="page-footer" style="margin-top: 40px; padding: 32px 16px; border-top: 1px solid var(--color-border-default, #d0d7de); font-size: 12px; color: var(--color-text-light, #656d76); background-color: var(--color-canvas-subtle, #f6f8fa);">
+<!-- BANTUDEVLAB - GitHub Sovereign Footer & Multi-lingual Copilot Widget (T-UI-602, T-COP-702) -->
+<style>
+/* Sovereign Footer Styles */
+.page-footer-container {
+  margin-top: 40px;
+  padding: 32px 16px;
+  border-top: 1px solid var(--color-border-default, #1e293b);
+  font-size: 12px;
+  color: var(--color-text-light, #94a3b8);
+  background-color: var(--color-canvas-subtle, #070e1e);
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+[data-theme="light"] .page-footer-container {
+  background-color: #f8fafc;
+  border-color: #e2e8f0;
+  color: #64748b;
+}
+
+/* Sovereign Copilot Widget Theming */
+#sovereign-copilot-container {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 99999;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+}
+
+#copilot-toggle-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #0b1528;
+  color: #00e5ff;
+  border: 1px solid #1e293b;
+  border-radius: 20px;
+  padding: 8px 16px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 4px 16px rgba(0, 229, 255, 0.25);
+  transition: transform 0.15s ease, border-color 0.15s ease;
+}
+#copilot-toggle-btn:hover {
+  transform: translateY(-2px);
+  border-color: #00e5ff;
+}
+
+[data-theme="light"] #copilot-toggle-btn {
+  background: #ffffff;
+  color: #0051cc;
+  border-color: #cbd5e1;
+  box-shadow: 0 4px 16px rgba(0, 81, 204, 0.15);
+}
+
+#copilot-window {
+  display: none;
+  width: 380px;
+  height: 480px;
+  background: #070e1e;
+  border: 1px solid #1e293b;
+  border-radius: 12px;
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.6);
+  flex-direction: column;
+  overflow: hidden;
+  margin-bottom: 10px;
+  color: #f8fafc;
+}
+
+[data-theme="light"] #copilot-window {
+  background: #ffffff;
+  color: #0f172a;
+  border-color: #cbd5e1;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.1);
+}
+
+#copilot-header {
+  background: #020617;
+  border-bottom: 1px solid #1e293b;
+  padding: 10px 14px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #f8fafc;
+}
+[data-theme="light"] #copilot-header {
+  background: #f8fafc;
+  color: #0f172a;
+  border-color: #e2e8f0;
+}
+
+#copilot-quick-actions {
+  display: flex;
+  gap: 6px;
+  padding: 8px 12px;
+  border-bottom: 1px solid #1e293b;
+  background: #070e1e;
+  overflow-x: auto;
+}
+[data-theme="light"] #copilot-quick-actions {
+  background: #f8fafc;
+  border-color: #e2e8f0;
+}
+
+.copilot-action-btn {
+  font-size: 11px;
+  background: #0b1528;
+  color: #f8fafc;
+  border: 1px solid #1e293b;
+  border-radius: 6px;
+  padding: 4px 8px;
+  cursor: pointer;
+  white-space: nowrap;
+  font-weight: 500;
+  transition: all 0.15s ease;
+}
+.copilot-action-btn:hover {
+  border-color: #00e5ff;
+  color: #00e5ff;
+}
+[data-theme="light"] .copilot-action-btn {
+  background: #ffffff;
+  color: #0f172a;
+  border-color: #cbd5e1;
+}
+
+#copilot-messages {
+  flex: 1;
+  padding: 12px;
+  overflow-y: auto;
+  font-size: 12px;
+  color: #f8fafc;
+  line-height: 1.5;
+  background: #070e1e;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+[data-theme="light"] #copilot-messages {
+  background: #ffffff;
+  color: #0f172a;
+}
+
+.copilot-msg-bot {
+  background: #0b1528;
+  color: #f8fafc;
+  border: 1px solid #1e293b;
+  padding: 8px 12px;
+  border-radius: 8px;
+  align-self: flex-start;
+  max-width: 90%;
+  word-break: break-word;
+}
+[data-theme="light"] .copilot-msg-bot {
+  background: #f1f5f9;
+  color: #0f172a;
+  border-color: #e2e8f0;
+}
+
+.copilot-msg-user {
+  background: #0070f3;
+  color: #ffffff;
+  padding: 8px 12px;
+  border-radius: 8px;
+  align-self: flex-end;
+  max-width: 90%;
+  word-break: break-word;
+}
+
+#copilot-input-bar {
+  padding: 10px;
+  border-top: 1px solid #1e293b;
+  background: #020617;
+  display: flex;
+  gap: 6px;
+}
+[data-theme="light"] #copilot-input-bar {
+  background: #f8fafc;
+  border-color: #e2e8f0;
+}
+
+#copilot-input {
+  flex: 1;
+  font-size: 12px;
+  background: #0b1528;
+  color: #f8fafc;
+  border: 1px solid #1e293b;
+  border-radius: 6px;
+  padding: 6px 10px;
+  outline: none;
+}
+[data-theme="light"] #copilot-input {
+  background: #ffffff;
+  color: #0f172a;
+  border-color: #cbd5e1;
+}
+
+#copilot-send-btn {
+  background: #10b981;
+  color: #ffffff;
+  border: none;
+  border-radius: 6px;
+  padding: 6px 12px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+}
+#copilot-send-btn:hover {
+  background: #059669;
+}
+</style>
+
+<footer class="page-footer page-footer-container">
   <div style="max-width: 1280px; margin: 0 auto; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 16px;">
     <div style="display: flex; align-items: center; gap: 8px;">
-      <svg height="24" aria-hidden="true" viewBox="0 0 16 16" version="1.1" width="24" fill="currentColor">
-        <path d="M8 0c4.42 0 8 3.58 8 8a8.013 8.013 0 0 1-5.45 7.59c-.4.08-.55-.17-.55-.38 0-.27.01-1.13.01-2.2 0-.75-.25-1.23-.54-1.48 1.78-.2 3.65-.88 3.65-3.95 0-.88-.31-1.59-.82-2.15.08-.2.36-1.02-.08-2.12 0 0-.67-.22-2.2.82-.64-.18-1.32-.27-2-.27-.68 0-1.36.09-2 .27-1.53-1.03-2.2-.82-2.2-.82-.44 1.1-.16 1.92-.08 2.12-.51.56-.82 1.28-.82 2.15 0 3.06 1.86 3.75 3.64 3.95-.23.2-.44.55-.51 1.07-.46.21-1.61.55-2.33-.66-.15-.24-.6-.83-1.23-.82-.67.01-.27.38.01.53.34.19.73.9.82 1.13.16.45.68 1.31 2.69.94 0 .67.01 1.3.01 1.49 0 .21-.15.45-.55.38A7.995 7.995 0 0 1 0 8c0-4.42 3.58-8 8-8Z"></path>
-      </svg>
-      <span>BantuDevLab Sovereign Forge (GitHub-Compatible Experience)</span>
+      <img src="/assets/img/logo.svg" width="22" height="22" alt="Logo" style="vertical-align: middle; border-radius: 4px;">
+      <span style="font-weight: 600;">BantuDevLab Sovereign Forge (GitHub-Compatible Experience)</span>
     </div>
     <div style="display: flex; gap: 16px; flex-wrap: wrap;">
-      <a href="http://127.0.0.1:8001/" style="color: var(--color-accent-fg, #0969da); text-decoration: none;">Portail Central</a>
-      <a href="/explore/repos" style="color: var(--color-accent-fg, #0969da); text-decoration: none;">Depots</a>
-      <a href="http://localhost:3001/" style="color: var(--color-accent-fg, #0969da); text-decoration: none;">Passerelle Git</a>
-      <a href="/api/v1/swagger" style="color: var(--color-accent-fg, #0969da); text-decoration: none;">API REST</a>
-      <a href="https://docs.gitea.com" target="_blank" rel="noopener noreferrer" style="color: var(--color-text-light, #656d76); text-decoration: none;">Documentation</a>
-      <a href="http://127.0.0.1:8001/metrics/" style="color: var(--color-text-light, #656d76); text-decoration: none;">Supervision Souveraine</a>
+      <a href="http://127.0.0.1:8001/" style="color: var(--color-accent-fg, #00e5ff); text-decoration: none;">Portail Central</a>
+      <a href="/explore/repos" style="color: var(--color-accent-fg, #00e5ff); text-decoration: none;">Depots</a>
+      <a href="http://localhost:3001/" style="color: var(--color-accent-fg, #00e5ff); text-decoration: none;">Passerelle Git</a>
+      <a href="/api/v1/swagger" style="color: var(--color-accent-fg, #00e5ff); text-decoration: none;">API REST</a>
+      <a href="https://docs.gitea.com" target="_blank" rel="noopener noreferrer" style="color: var(--color-text-light, #94a3b8); text-decoration: none;">Documentation</a>
+      <a href="http://127.0.0.1:8001/metrics/" style="color: var(--color-text-light, #94a3b8); text-decoration: none;">Supervision Souveraine</a>
     </div>
   </div>
 </footer>
 
 <!-- Sovereign Copilot Widget (T-COP-702) -->
-<div id="sovereign-copilot-container" style="position: fixed; bottom: 20px; right: 20px; z-index: 9999; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;">
-  <button id="copilot-toggle-btn" style="display: flex; align-items: center; gap: 8px; background: #24292f; color: #ffffff; border: 1px solid #d0d7de; border-radius: 20px; padding: 8px 16px; font-size: 13px; font-weight: 600; cursor: pointer; box-shadow: 0 4px 12px rgba(0,0,0,0.15); transition: transform 0.15s ease;">
+<div id="sovereign-copilot-container">
+  <button id="copilot-toggle-btn">
     <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
       <path d="M7.75 2a.75.75 0 0 1 .75.75V4h1.75a.75.75 0 0 1 0 1.5H8.5v2.25a.75.75 0 0 1-1.5 0V5.5H5.25a.75.75 0 0 1 0-1.5H7V2.75A.75.75 0 0 1 7.75 2Z"></path>
       <path d="M1 8a7 7 0 1 1 14 0A7 7 0 0 1 1 8Zm7-5.5a5.5 5.5 0 1 0 0 11 5.5 5.5 0 0 0 0-11Z"></path>
     </svg>
-    <span>Copilot</span>
+    <span id="copilot-btn-label">Copilot IA</span>
   </button>
 
-  <div id="copilot-window" style="display: none; width: 360px; height: 460px; background: var(--color-canvas-default, #ffffff); border: 1px solid var(--color-border-default, #d0d7de); border-radius: 12px; box-shadow: 0 8px 24px rgba(0,0,0,0.35); flex-direction: column; overflow: hidden; margin-bottom: 10px;">
-    <div style="background: var(--color-canvas-subtle, #f6f8fa); border-bottom: 1px solid var(--color-border-default, #d0d7de); padding: 10px 14px; display: flex; justify-content: space-between; align-items: center;">
-      <span id="copilot-title-text" style="font-weight: 600; font-size: 13px; color: var(--color-text, #1f2328);">BantuDevLab Copilot (Gemma 2 2B)</span>
-      <button id="copilot-close-btn" style="background: none; border: none; font-size: 16px; cursor: pointer; color: var(--color-text-light, #656d76);">&times;</button>
+  <div id="copilot-window">
+    <div id="copilot-header">
+      <span id="copilot-title-text" style="font-weight: 600; font-size: 13px;">BantuDevLab Copilot (Gemma 2 2B)</span>
+      <button id="copilot-close-btn" style="background: none; border: none; font-size: 18px; cursor: pointer; color: inherit;">&times;</button>
     </div>
-    <div style="display: flex; gap: 6px; padding: 8px 12px; border-bottom: 1px solid var(--color-border-muted, #f0f2f4); background: var(--color-canvas-default, #ffffff);">
-      <button id="copilot-explain-btn" style="font-size: 11px; background: var(--color-canvas-subtle, #f6f8fa); color: var(--color-text, #1f2328); border: 1px solid var(--color-border-default, #d0d7de); border-radius: 6px; padding: 3px 8px; cursor: pointer;">Expliquer</button>
-      <button id="copilot-review-btn" style="font-size: 11px; background: var(--color-canvas-subtle, #f6f8fa); color: var(--color-text, #1f2328); border: 1px solid var(--color-border-default, #d0d7de); border-radius: 6px; padding: 3px 8px; cursor: pointer;">Audit Securite</button>
-      <button id="copilot-summary-btn" style="font-size: 11px; background: var(--color-canvas-subtle, #f6f8fa); color: var(--color-text, #1f2328); border: 1px solid var(--color-border-default, #d0d7de); border-radius: 6px; padding: 3px 8px; cursor: pointer;">Synthese Diff</button>
-      <button id="copilot-export-btn" style="font-size: 11px; background: var(--color-canvas-subtle, #f6f8fa); color: var(--color-text, #1f2328); border: 1px solid var(--color-border-default, #d0d7de); border-radius: 6px; padding: 3px 8px; cursor: pointer;">Exporter</button>
+    <div id="copilot-quick-actions">
+      <button id="copilot-explain-btn" class="copilot-action-btn">Expliquer</button>
+      <button id="copilot-review-btn" class="copilot-action-btn">Audit Securite</button>
+      <button id="copilot-summary-btn" class="copilot-action-btn">Synthese Diff</button>
+      <button id="copilot-export-btn" class="copilot-action-btn">Exporter</button>
     </div>
-    <div id="copilot-messages" style="flex: 1; padding: 12px; overflow-y: auto; font-size: 12px; color: var(--color-text, #1f2328); line-height: 1.5;">
-      <div id="copilot-welcome-msg" style="background: var(--color-canvas-subtle, #f6f8fa); color: var(--color-text, #1f2328); border: 1px solid var(--color-border-muted, #d0d7de); padding: 8px 10px; border-radius: 6px; margin-bottom: 8px;">
+    <div id="copilot-messages">
+      <div class="copilot-msg-bot" id="copilot-welcome-msg">
         Bonjour ! Je suis Copilot, votre assistant souverain anime par Gemma 2 2B. Que souhaitez-vous analyser ou generer ?
       </div>
     </div>
-    <div style="padding: 10px; border-top: 1px solid var(--color-border-default, #d0d7de); background: var(--color-canvas-subtle, #f6f8fa); display: flex; gap: 6px;">
-      <input id="copilot-input" type="text" placeholder="Poser une question..." style="flex: 1; font-size: 12px; background: var(--color-canvas-default, #ffffff); color: var(--color-text, #1f2328); border: 1px solid var(--color-border-default, #d0d7de); border-radius: 6px; padding: 6px 10px; outline: none;" />
-      <button id="copilot-send-btn" style="background: #1f883d; color: #ffffff; border: none; border-radius: 6px; padding: 6px 12px; font-size: 12px; font-weight: 600; cursor: pointer;">Envoyer</button>
+    <div id="copilot-input-bar">
+      <input id="copilot-input" type="text" placeholder="Poser une question..." />
+      <button id="copilot-send-btn">Envoyer</button>
     </div>
   </div>
 </div>
 
 <script>
+// Multi-lingual Copilot Dictionary
+const COPILOT_I18N = {
+  fr: {
+    btn: "Copilot IA",
+    title: "BantuDevLab Copilot (Gemma 2 2B)",
+    explain: "Expliquer",
+    review: "Audit Securite",
+    summary: "Synthese Diff",
+    export: "Exporter",
+    welcome: "Bonjour ! Je suis Copilot, votre assistant souverain anime par Gemma 2 2B. Que souhaitez-vous analyser ou generer ?",
+    placeholder: "Poser une question...",
+    send: "Envoyer",
+    analyzing: "Analyse souveraine en cours...",
+    unavailable: "Service Copilot momentanement indisponible en local (127.0.0.1:8001).",
+    explainPrompt: "Expliquer le code visible sur cette page",
+    reviewPrompt: "Audit de securite souverain",
+    summaryPrompt: "Generer le resume des modifications",
+    exportSuccess: "Exportation de session Copilot telechargee."
+  },
+  en: {
+    btn: "Copilot AI",
+    title: "BantuDevLab Copilot (Gemma 2 2B)",
+    explain: "Explain",
+    review: "Security Audit",
+    summary: "Diff Summary",
+    export: "Export",
+    welcome: "Hello! I am Copilot, your sovereign assistant powered by Gemma 2 2B. What would you like to analyze or generate?",
+    placeholder: "Ask a question...",
+    send: "Send",
+    analyzing: "Sovereign analysis in progress...",
+    unavailable: "Copilot service momentarily unavailable locally (127.0.0.1:8001).",
+    explainPrompt: "Explain the code visible on this page",
+    reviewPrompt: "Sovereign security audit",
+    summaryPrompt: "Generate changes summary",
+    exportSuccess: "Copilot session exported successfully."
+  },
+  sw: {
+    btn: "Copilot AI",
+    title: "BantuDevLab Copilot (Gemma 2 2B)",
+    explain: "Fafanua",
+    review: "Ukaguzi wa Usalama",
+    summary: "Muhtasari wa Diff",
+    export: "Hamisha",
+    welcome: "Habari! Mimi ni Copilot, msaidizi wako huru anayeendeshwa na Gemma 2 2B. Ungependa kuchambua au kuzalisha nini?",
+    placeholder: "Uliza swali...",
+    send: "Tuma",
+    analyzing: "Uchambuzi huru unaendelea...",
+    unavailable: "Huduma ya Copilot haipatikani kwa muda (127.0.0.1:8001).",
+    explainPrompt: "Fafanua msimbo unaoonekana kwenye ukurasa huu",
+    reviewPrompt: "Ukaguzi wa usalama huru",
+    summaryPrompt: "Zalisha muhtasari wa mabadiliko",
+    exportSuccess: "Kikao cha Copilot kimehamishwa kwa mafanikio."
+  },
+  pt: {
+    btn: "Copilot IA",
+    title: "BantuDevLab Copilot (Gemma 2 2B)",
+    explain: "Explicar",
+    review: "Auditoria Seguranca",
+    summary: "Sintese Diff",
+    export: "Exportar",
+    welcome: "Ola! Eu sou o Copilot, seu assistente soberano impulsionado por Gemma 2 2B. O que gostaria de analisar ou gerar?",
+    placeholder: "Faca uma pergunta...",
+    send: "Enviar",
+    analyzing: "Analise soberana em andamento...",
+    unavailable: "Servico Copilot temporariamente indisponivel localmente (127.0.0.1:8001).",
+    explainPrompt: "Explicar o codigo visivel nesta pagina",
+    reviewPrompt: "Auditoria de seguranca soberana",
+    summaryPrompt: "Gerar resumo das alteracoes",
+    exportSuccess: "Sessao do Copilot exportada com sucesso."
+  }
+};
+
+function getActiveCopilotLang() {
+  try {
+    const urlLang = new URLSearchParams(window.location.search).get('lang');
+    if (urlLang) {
+      const l = urlLang.toLowerCase();
+      if (l.startsWith('en')) return 'en';
+      if (l.startsWith('sw')) return 'sw';
+      if (l.startsWith('pt')) return 'pt';
+      if (l.startsWith('fr')) return 'fr';
+    }
+  } catch(e) {}
+
+  try {
+    const lsLang = localStorage.getItem('bantu_lang');
+    if (lsLang && COPILOT_I18N[lsLang]) return lsLang;
+  } catch(e) {}
+
+  function getCookie(name) {
+    const m = document.cookie.match(new RegExp('(?:^|;\\s*)' + name + '=([^;]*)'));
+    return m ? decodeURIComponent(m[1] ? m[1] : '').toLowerCase() : null;
+  }
+
+  const cookieStr = document.cookie;
+  const matchBantu = cookieStr.match(/(?:^|;\s*)bantu_lang=([^;]*)/);
+  if (matchBantu) {
+    const val = decodeURIComponent(matchBantu[1]).toLowerCase();
+    if (val.startsWith('en')) return 'en';
+    if (val.startsWith('sw')) return 'sw';
+    if (val.startsWith('pt')) return 'pt';
+    if (val.startsWith('fr')) return 'fr';
+  }
+
+  const matchDjango = cookieStr.match(/(?:^|;\s*)django_language=([^;]*)/);
+  if (matchDjango) {
+    const val = decodeURIComponent(matchDjango[1]).toLowerCase();
+    if (val.startsWith('en')) return 'en';
+    if (val.startsWith('sw')) return 'sw';
+    if (val.startsWith('pt')) return 'pt';
+    if (val.startsWith('fr')) return 'fr';
+  }
+
+  const matchGitea = cookieStr.match(/(?:^|;\s*)lang=([^;]*)/);
+  if (matchGitea) {
+    const val = decodeURIComponent(matchGitea[1]).toLowerCase();
+    if (val.startsWith('en')) return 'en';
+    if (val.startsWith('sw')) return 'sw';
+    if (val.startsWith('pt')) return 'pt';
+    if (val.startsWith('fr')) return 'fr';
+  }
+
+  return 'fr';
+}
+
+function applyCopilotI18n() {
+  const lang = getActiveCopilotLang();
+  const t = COPILOT_I18N[lang] || COPILOT_I18N.fr;
+
+  const btnLabel = document.getElementById('copilot-btn-label');
+  if (btnLabel) btnLabel.textContent = t.btn;
+
+  const titleText = document.getElementById('copilot-title-text');
+  if (titleText) titleText.textContent = t.title;
+
+  const explainBtn = document.getElementById('copilot-explain-btn');
+  if (explainBtn) explainBtn.textContent = t.explain;
+
+  const reviewBtn = document.getElementById('copilot-review-btn');
+  if (reviewBtn) reviewBtn.textContent = t.review;
+
+  const summaryBtn = document.getElementById('copilot-summary-btn');
+  if (summaryBtn) summaryBtn.textContent = t.summary;
+
+  const exportBtn = document.getElementById('copilot-export-btn');
+  if (exportBtn) exportBtn.textContent = t.export;
+
+  const inputField = document.getElementById('copilot-input');
+  if (inputField) inputField.placeholder = t.placeholder;
+
+  const sendBtn = document.getElementById('copilot-send-btn');
+  if (sendBtn) sendBtn.textContent = t.send;
+
+  const welcomeMsg = document.getElementById('copilot-welcome-msg');
+  if (welcomeMsg) welcomeMsg.textContent = t.welcome;
+}
+
 document.addEventListener('DOMContentLoaded', function() {
+  applyCopilotI18n();
+
+  window.addEventListener('storage', applyCopilotI18n);
+  window.addEventListener('focus', applyCopilotI18n);
+  try {
+    if (typeof BroadcastChannel !== 'undefined') {
+      const bc = new BroadcastChannel('bantu_ecosystem_sync');
+      bc.onmessage = function(ev) {
+        if (ev.data && ev.data.lang) {
+          applyCopilotI18n();
+        }
+      };
+    }
+  } catch(e) {}
+
   const toggleBtn = document.getElementById('copilot-toggle-btn');
   const copilotWin = document.getElementById('copilot-window');
   const closeBtn = document.getElementById('copilot-close-btn');
@@ -62,111 +443,7 @@ document.addEventListener('DOMContentLoaded', function() {
   const explainBtn = document.getElementById('copilot-explain-btn');
   const reviewBtn = document.getElementById('copilot-review-btn');
   const summaryBtn = document.getElementById('copilot-summary-btn');
-
-  // I18N Chatbot Translations dictionary
-  const CHATBOT_I18N = {
-    fr: {
-      title: 'BantuDevLab Copilot (Gemma 2 2B)',
-      explainBtn: 'Expliquer',
-      reviewBtn: 'Audit Sécurité',
-      summaryBtn: 'Synthèse Diff',
-      exportBtn: 'Exporter',
-      welcome: 'Bonjour ! Je suis Copilot, votre assistant souverain animé par Gemma 2 2B. Que souhaitez-vous analyser ou générer ?',
-      placeholder: 'Poser une question...',
-      send: 'Envoyer',
-      analyzing: 'Analyse souveraine en cours...',
-      unavailable: 'Service Copilot momentanément indisponible en local (127.0.0.1:8001).',
-      explainPrompt: 'Expliquer le code visible sur cette page',
-      reviewPrompt: 'Audit de sécurité souverain',
-      summaryPrompt: 'Générer le résumé des modifications',
-      exportSuccess: 'Exportation locale terminée en mémoire.'
-    },
-    en: {
-      title: 'BantuDevLab Copilot (Gemma 2 2B)',
-      explainBtn: 'Explain',
-      reviewBtn: 'Security Audit',
-      summaryBtn: 'Diff Summary',
-      exportBtn: 'Export',
-      welcome: 'Hello! I am Copilot, your sovereign AI assistant powered by Gemma 2 2B. What would you like to analyze or generate?',
-      placeholder: 'Ask a question...',
-      send: 'Send',
-      analyzing: 'Sovereign analysis in progress...',
-      unavailable: 'Copilot service currently unavailable locally (127.0.0.1:8001).',
-      explainPrompt: 'Explain the visible code on this page',
-      reviewPrompt: 'Sovereign security audit',
-      summaryPrompt: 'Generate modifications summary',
-      exportSuccess: 'Local export completed in memory.'
-    },
-    sw: {
-      title: 'BantuDevLab Copilot (Gemma 2 2B)',
-      explainBtn: 'Fafanua',
-      reviewBtn: 'Ukaguzi wa Usalama',
-      summaryBtn: 'Muhtasari wa Tofauti',
-      exportBtn: 'Hamisha',
-      welcome: 'Jambo! Mimi ni Copilot, msaidizi wako wa AI anayeendeshwa na Gemma 2 2B. Ungependa kuchambua au kutoa nini?',
-      placeholder: 'Uliza swali...',
-      send: 'Tuma',
-      analyzing: 'Uchambuzi unaendelea...',
-      unavailable: 'Huduma ya Copilot haipatikani kwa sasa (127.0.0.1:8001).',
-      explainPrompt: 'Fafanua msimbo unaoonekana kwenye ukurasa huu',
-      reviewPrompt: 'Ukaguzi huru wa usalama',
-      summaryPrompt: 'Toa muhtasari wa mabadiliko',
-      exportSuccess: 'Uhamishaji umekamilika katika kumbukumbu.'
-    },
-    pt: {
-      title: 'BantuDevLab Copilot (Gemma 2 2B)',
-      explainBtn: 'Explicar',
-      reviewBtn: 'Auditoria de Segurança',
-      summaryBtn: 'Resumo Diff',
-      exportBtn: 'Exportar',
-      welcome: 'Olá! Sou o Copilot, seu assistente soberano de IA alimentado por Gemma 2 2B. O que você gostaria de analisar ou gerar?',
-      placeholder: 'Faça uma pergunta...',
-      send: 'Enviar',
-      analyzing: 'Análise soberana em andamento...',
-      unavailable: 'Serviço Copilot momentaneamente indisponível localmente (127.0.0.1:8001).',
-      explainPrompt: 'Explicar o código visível nesta página',
-      reviewPrompt: 'Auditoria de segurança soberana',
-      summaryPrompt: 'Gerar resumo das alterações',
-      exportSuccess: 'Exportação local concluída na memória.'
-    }
-  };
-
-  function getChatLang() {
-    const m = document.cookie.match(/(?:^|;\s*)(?:bantu_lang|django_language)=([^;]*)/);
-    if (m && m[1]) {
-      const code = decodeURIComponent(m[1]).toLowerCase().slice(0, 2);
-      if (CHATBOT_I18N[code]) return code;
-    }
-    const giteaM = document.cookie.match(/(?:^|;\s*)lang=([^;]*)/);
-    if (giteaM && giteaM[1]) {
-      const val = decodeURIComponent(giteaM[1]).toLowerCase();
-      if (val.startsWith('en')) return 'en';
-      if (val.startsWith('sw')) return 'sw';
-      if (val.startsWith('pt')) return 'pt';
-    }
-    return 'fr';
-  }
-
-  function applyChatbotLanguage() {
-    const curLang = getChatLang();
-    const t = CHATBOT_I18N[curLang] || CHATBOT_I18N.fr;
-
-    const titleEl = document.getElementById('copilot-title-text');
-    if (titleEl) titleEl.textContent = t.title;
-
-    if (explainBtn) explainBtn.textContent = t.explainBtn;
-    if (reviewBtn) reviewBtn.textContent = t.reviewBtn;
-    if (summaryBtn) summaryBtn.textContent = t.summaryBtn;
-    const expBtn = document.getElementById('copilot-export-btn');
-    if (expBtn) expBtn.textContent = t.exportBtn;
-
-    const welcomeEl = document.getElementById('copilot-welcome-msg');
-    if (welcomeEl) welcomeEl.textContent = t.welcome;
-
-    if (inputField) inputField.setAttribute('placeholder', t.placeholder);
-    if (sendBtn) sendBtn.textContent = t.send;
-  }
-  applyChatbotLanguage();
+  const exportBtn = document.getElementById('copilot-export-btn');
 
   function toggleWindow() {
     const isVisible = copilotWin.style.display === 'flex';
@@ -178,27 +455,17 @@ document.addEventListener('DOMContentLoaded', function() {
 
   function appendMessage(sender, text) {
     const msg = document.createElement('div');
-    msg.style.padding = '8px 10px';
-    msg.style.borderRadius = '6px';
-    msg.style.marginBottom = '8px';
-    if (sender === 'user') {
-      msg.style.background = '#0969da';
-      msg.style.color = '#ffffff';
-      msg.style.alignSelf = 'flex-end';
-    } else {
-      msg.style.background = 'var(--color-canvas-subtle, #f6f8fa)';
-      msg.style.color = 'var(--color-text, #1f2328)';
-      msg.style.border = '1px solid var(--color-border-muted, #d0d7de)';
-    }
+    msg.className = (sender === 'user') ? 'copilot-msg-user' : 'copilot-msg-bot';
     msg.textContent = text;
     msgBox.appendChild(msg);
     msgBox.scrollTop = msgBox.scrollHeight;
   }
 
   async function callCopilot(endpoint, payload) {
-    const curLang = getChatLang();
-    const t = CHATBOT_I18N[curLang] || CHATBOT_I18N.fr;
+    const lang = getActiveCopilotLang();
+    const t = COPILOT_I18N[lang] || COPILOT_I18N.fr;
     appendMessage('bot', t.analyzing);
+
     const host = (window.location.hostname === 'localhost') ? 'localhost' : '127.0.0.1';
     const altHost = (host === 'localhost') ? '127.0.0.1' : 'localhost';
     const tryFetch = async (targetHost) => {
@@ -222,7 +489,7 @@ document.addEventListener('DOMContentLoaded', function() {
       const data = await resp.json();
       const lastMsg = msgBox.lastChild;
       if (lastMsg) lastMsg.remove();
-      const responseText = data.explanation || data.completion || data.summary || data.response || data.review_comment || data.error || 'Reponse recue';
+      const responseText = data.explanation || data.completion || data.summary || data.response || data.review_comment || data.error || 'OK';
       appendMessage('bot', responseText);
     } catch (err) {
       const lastMsg = msgBox.lastChild;
@@ -246,8 +513,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
   if (explainBtn) {
     explainBtn.addEventListener('click', function() {
-      const curLang = getChatLang();
-      const t = CHATBOT_I18N[curLang] || CHATBOT_I18N.fr;
+      const lang = getActiveCopilotLang();
+      const t = COPILOT_I18N[lang] || COPILOT_I18N.fr;
       const codeBlock = document.querySelector('table.lines-num, pre, code');
       const snippet = codeBlock ? codeBlock.textContent.slice(0, 1000) : 'def main():\n    return True';
       appendMessage('user', t.explainPrompt);
@@ -257,8 +524,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
   if (reviewBtn) {
     reviewBtn.addEventListener('click', function() {
-      const curLang = getChatLang();
-      const t = CHATBOT_I18N[curLang] || CHATBOT_I18N.fr;
+      const lang = getActiveCopilotLang();
+      const t = COPILOT_I18N[lang] || COPILOT_I18N.fr;
       const codeBlock = document.querySelector('table.lines-num, pre, code');
       const snippet = codeBlock ? codeBlock.textContent.slice(0, 1000) : 'import os\nos.system("echo test")';
       appendMessage('user', t.reviewPrompt);
@@ -268,20 +535,20 @@ document.addEventListener('DOMContentLoaded', function() {
 
   if (summaryBtn) {
     summaryBtn.addEventListener('click', function() {
-      const curLang = getChatLang();
-      const t = CHATBOT_I18N[curLang] || CHATBOT_I18N.fr;
+      const lang = getActiveCopilotLang();
+      const t = COPILOT_I18N[lang] || COPILOT_I18N.fr;
       appendMessage('user', t.summaryPrompt);
       callCopilot('copilot/pr-summary/', { diff: '+ print("BantuDevLab sovereign update")', title: 'Mise a jour' });
     });
   }
 
-  // Copilot Session Export (T-FIN-2601)
-  const exportBtn = document.getElementById('copilot-export-btn');
   if (exportBtn) {
     exportBtn.addEventListener('click', async function() {
+      const lang = getActiveCopilotLang();
+      const t = COPILOT_I18N[lang] || COPILOT_I18N.fr;
       const messages = [];
       msgBox.querySelectorAll('div').forEach(el => {
-        const isUser = el.style.alignSelf === 'flex-end';
+        const isUser = el.classList.contains('copilot-msg-user');
         messages.push({
           role: isUser ? 'user' : 'assistant',
           content: el.textContent.trim()
@@ -306,8 +573,6 @@ document.addEventListener('DOMContentLoaded', function() {
         a.remove();
         URL.revokeObjectURL(url);
       } catch (e) {
-        const curLang = getChatLang();
-        const t = CHATBOT_I18N[curLang] || CHATBOT_I18N.fr;
         appendMessage('bot', t.exportSuccess);
       }
     });

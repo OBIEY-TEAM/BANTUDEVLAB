@@ -27,83 +27,11 @@ msgstr "Espace GitLab"
 msgid "FORGE SOUVERAINE"
 msgstr "FORGE SOUVERAINE"
 
-msgid "La Forge Logicielle Souveraine de l'Afrique"
-msgstr "La Forge Logicielle Souveraine de l'Afrique"
-
-msgid "BANTUDEVLAB réunit la robustesse d'un moteur Git distribué, la sécurité mathématique des preuves à divulgation nulle de connaissance (Zero-Knowledge Proofs), et l'intelligence artificielle locale Gemma 5B pour garantir l'indépendance technologique du continent."
-msgstr "BANTUDEVLAB réunit la robustesse d'un moteur Git distribué, la sécurité mathématique des preuves à divulgation nulle de connaissance (Zero-Knowledge Proofs), et l'intelligence artificielle locale Gemma 5B pour garantir l'indépendance technologique du continent."
-
-msgid "Explorer le Tableau de Bord"
-msgstr "Explorer le Tableau de Bord"
-
-msgid "Authentification Zero-Trust (ZKP)"
-msgstr "Authentification Zero-Trust (ZKP)"
-
-msgid "Mode d'Emploi & FAQ"
-msgstr "Mode d'Emploi & FAQ"
-
-msgid "Moteur Git Souverain (Systalink Cloud)"
-msgstr "Moteur Git Souverain (Systalink Cloud)"
-
-msgid "Forge distribuée basée sur Gitea/GitLab CE déployée sur nos serveurs en Afrique. Zéro dépendance vis-à-vis des juridictions extérieures (Cloud Act exempt)."
-msgstr "Forge distribuée basée sur Gitea/GitLab CE déployée sur nos serveurs en Afrique. Zéro dépendance vis-à-vis des juridictions extérieures (Cloud Act exempt)."
-
-msgid "Connexion Gitea : http://localhost:3002/user/login"
-msgstr "Connexion Gitea : http://localhost:3002/user/login"
-
-msgid "Contrôle Panafricain"
-msgstr "Contrôle Panafricain"
-
-msgid "Authentification Zero-Trust ZKP"
-msgstr "Authentification Zero-Trust ZKP"
-
-msgid "Protocole cryptographique de Schnorr / Sigma non-interactif via Fiat-Shamir. Prouvez votre identité sans JAMAIS transmettre votre mot de passe au réseau."
-msgstr "Protocole cryptographique de Schnorr / Sigma non-interactif via Fiat-Shamir. Prouvez votre identité sans JAMAIS transmettre votre mot de passe au réseau."
-
-msgid "Confidentialité Mathématique"
-msgstr "Confidentialité Mathématique"
-
-msgid "IA Locale Gemma 5B Fine-tunée"
-msgstr "IA Locale Gemma 5B Fine-tunée"
-
-msgid "Assistant d'ingénierie logicielle exécuté localement pour auditer le code, détecter les secrets et assister les développeurs sans fuite de code vers l'extérieur."
-msgstr "Assistant d'ingénierie logicielle exécuté localement pour auditer le code, détecter les secrets et assister les développeurs sans fuite de code vers l'extérieur."
-
-msgid "5 Milliards"
-msgstr "5 Milliards"
-
-msgid "Milliards"
-msgstr "Milliards"
-
-msgid "Paramètres Optimisés"
-msgstr "Paramètres Optimisés"
-
-msgid "Nouveau sur BANTUDEVLAB & GitLab ?"
-msgstr "Nouveau sur BANTUDEVLAB & GitLab ?"
-
-msgid "Consultez notre guide complet : création de compte, connexion sans mot de passe Zero-Trust, consultation du code source, clone avec token Git et foire aux questions."
-msgstr "Consultez notre guide complet : création de compte, connexion sans mot de passe Zero-Trust, consultation du code source, clone avec token Git et foire aux questions."
-
-msgid "Consulter la FAQ & Guide"
-msgstr "Consulter la FAQ & Guide"
-
-msgid "Dépôts Souverains Récents"
-msgstr "Dépôts Souverains Récents"
-
-msgid "Initialisation de la synchronisation avec Gitea..."
-msgstr "Initialisation de la synchronisation avec Gitea..."
-
-msgid "Fil d Ariane"
-msgstr "Fil d'Ariane"
-
 msgid "Tableau de Bord Souverain BANTUDEVLAB"
 msgstr "Tableau de Bord Souverain BANTUDEVLAB"
 
 msgid "Surveillance de la forge logicielle, sécurité Zero-Trust et assistance IA locale"
 msgstr "Surveillance de la forge logicielle, sécurité Zero-Trust et assistance IA locale"
-
-msgid "NŒUD SOUVERAIN ACTIF"
-msgstr "NŒUD SOUVERAIN ACTIF"
 
 msgid "Dépôts Actifs"
 msgstr "Dépôts Actifs"
@@ -117,14 +45,11 @@ msgstr "Score de Souveraineté"
 msgid "Audits IA Gemma 5B"
 msgstr "Audits IA Gemma 5B"
 
-msgid "Bascule d'Environnement Forge Souveraine"
-msgstr "Bascule d'Environnement Forge Souveraine"
+msgid "Fil d Ariane"
+msgstr "Fil d Ariane"
 
-msgid "Accédez directement à vos espaces de dépôts Gitea ou GitLab CE."
-msgstr "Accédez directement à vos espaces de dépôts Gitea ou GitLab CE."
-
-msgid "Connexion directe Gitea"
-msgstr "Connexion directe Gitea"
+msgid "NŒUD SOUVERAIN ACTIF"
+msgstr "NŒUD SOUVERAIN ACTIF"
 
 msgid "Dépôts Hébergés sur Gitea Souverain"
 msgstr "Dépôts Hébergés sur Gitea Souverain"
@@ -150,26 +75,56 @@ msgstr "Gitea"
 msgid "Aucun dépôt détecté sur le cluster Gitea local."
 msgstr "Aucun dépôt détecté sur le cluster Gitea local."
 
+msgid "Lancer l'Audit de Sécurité"
+msgstr "Lancer l'Audit de Sécurité"
+
+msgid "Demander l'Avis de Gemma 5B"
+msgstr "Demander l'Avis de Gemma 5B"
+
+msgid "Tester la Latence"
+msgstr "Tester la Latence"
+
+msgid "Actualiser les Métriques"
+msgstr "Actualiser les Métriques"
+
+msgid "Changer de langue"
+msgstr "Changer de langue"
+
+msgid "Basculer thème clair / sombre"
+msgstr "Basculer thème clair / sombre"
+
+msgid "Thème clair activé"
+msgstr "Thème clair activé"
+
+msgid "Thème sombre activé"
+msgstr "Thème sombre activé"
+
+msgid "Vérification Zero-Knowledge Réussie !"
+msgstr "Vérification Zero-Knowledge Réussie !"
+
+msgid "Finaliser l'Inscription Gitea"
+msgstr "Finaliser l'Inscription Gitea"
+
+msgid "Se Connecter sur Gitea"
+msgstr "Se Connecter sur Gitea"
+
+msgid "Bascule d'Environnement Forge Souveraine"
+msgstr "Bascule d'Environnement Forge Souveraine"
+
+msgid "Accédez directement à vos espaces de dépôts Gitea ou GitLab CE."
+msgstr "Accédez directement à vos espaces de dépôts Gitea ou GitLab CE."
+
 msgid "Workbench Souverain & Audit SAST"
 msgstr "Workbench Souverain & Audit SAST"
 
 msgid "Éditeur avec coloration syntaxique & numérotation"
 msgstr "Éditeur avec coloration syntaxique & numérotation"
 
-msgid "Langage"
-msgstr "Langage"
-
 msgid "Prêt"
 msgstr "Prêt"
 
 msgid "Snippet Démo"
 msgstr "Snippet Démo"
-
-msgid "Lancer l'Audit de Sécurité"
-msgstr "Lancer l'Audit de Sécurité"
-
-msgid "Demander l'Avis de Gemma 5B"
-msgstr "Demander l'Avis de Gemma 5B"
 
 msgid "Souveraineté"
 msgstr "Souveraineté"
@@ -195,8 +150,8 @@ msgstr "Moyennes"
 msgid "Vulnérabilités & Fuites Détectées"
 msgstr "Vulnérabilités & Fuites Détectées"
 
-msgid "problème détecté"
-msgstr "problème détecté"
+msgid "0 problème détecté"
+msgstr "0 problème détecté"
 
 msgid "Rapport d'Audit Gemma 5B (Local / On-Premise)"
 msgstr "Rapport d'Audit Gemma 5B (Local / On-Premise)"
@@ -204,80 +159,8 @@ msgstr "Rapport d'Audit Gemma 5B (Local / On-Premise)"
 msgid "Audits Récents"
 msgstr "Audits Récents"
 
+msgid "Fichier :"
+msgstr "Fichier :"
+
 msgid "Aucun audit récent enregistré. Lancez un premier scan !"
 msgstr "Aucun audit récent enregistré. Lancez un premier scan !"
-
-msgid "Indicateurs & Topologie Souveraine Panafricaine"
-msgstr "Indicateurs & Topologie Souveraine Panafricaine"
-
-msgid "Supervision en temps réel des nœuds certifiés et conformité UA 2020-2030."
-msgstr "Supervision en temps réel des nœuds certifiés et conformité UA 2020-2030."
-
-msgid "Tester la Latence"
-msgstr "Tester la Latence"
-
-msgid "Actualiser les Métriques"
-msgstr "Actualiser les Métriques"
-
-msgid "Topologie des Datacenters Certifiés"
-msgstr "Topologie des Datacenters Certifiés"
-
-msgid "Cliquez sur un nœud ou une carte pour inspecter les métriques locales"
-msgstr "Cliquez sur un nœud ou une carte pour inspecter les métriques locales"
-
-msgid "Mesures de Latence Réelle Intra-Afrique (Temps Réel)"
-msgstr "Mesures de Latence Réelle Intra-Afrique (Temps Réel)"
-
-msgid "Nœud"
-msgstr "Nœud"
-
-msgid "Ville"
-msgstr "Ville"
-
-msgid "Pays"
-msgstr "Pays"
-
-msgid "Latence Réelle"
-msgstr "Latence Réelle"
-
-msgid "Statut"
-msgstr "Statut"
-
-msgid "Changer de langue"
-msgstr "Changer de langue"
-
-msgid "Basculer thème clair / sombre"
-msgstr "Basculer thème clair / sombre"
-
-msgid "Thème clair activé"
-msgstr "Thème clair activé"
-
-msgid "Thème sombre activé"
-msgstr "Thème sombre activé"
-
-msgid "Session authentifiée via Zero-Trust ZKP"
-msgstr "Session authentifiée via Zero-Trust ZKP"
-
-msgid "Menu de navigation"
-msgstr "Menu de navigation"
-
-msgid "BANTUDEVLAB - Forge Logicielle Souveraine Africaine"
-msgstr "BANTUDEVLAB - Forge Logicielle Souveraine Africaine"
-
-msgid "Navigation Principale"
-msgstr "Navigation Principale"
-
-msgid "Connexion et bascule sur la forge logicielle Gitea"
-msgstr "Connexion et bascule sur la forge logicielle Gitea"
-
-msgid "Ouvre GitLab dans un nouvel onglet"
-msgstr "Ouvre GitLab dans un nouvel onglet"
-
-msgid "Menu mobile"
-msgstr "Menu mobile"
-
-msgid "Fermer le menu"
-msgstr "Fermer le menu"
-
-msgid "Forge Logicielle Panafricaine & Souveraine. Hébergée sur Systalink Cloud."
-msgstr "Forge Logicielle Panafricaine & Souveraine. Hébergée sur Systalink Cloud."
