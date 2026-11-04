@@ -212,6 +212,54 @@ function copyMnemonicPhrase() {
     }
 }
 
+const DEFAULT_KOUAME_WORDS = [
+    "savanna", "baobab", "sahara", "kilimanjaro", "zambezi", "congo", "senegal",
+    "niger", "atlas", "oasis", "unity", "freedom"
+];
+
+function setMnemonicWords(words) {
+    currentMnemonic = [...words];
+    const grid = document.getElementById('mnemonicWordsGrid');
+    if (grid) {
+        grid.innerHTML = '';
+        currentMnemonic.forEach((word, i) => {
+            const chip = document.createElement('div');
+            chip.tabIndex = 0;
+            chip.setAttribute('role', 'listitem');
+            chip.setAttribute('aria-label', `Mot ${i + 1} : ${word}`);
+            chip.className = 'mnemonic-word-chip';
+            chip.innerHTML = `<span class="mnemonic-num">${i + 1}.</span> <span>${word}</span>`;
+            grid.appendChild(chip);
+        });
+    }
+    const secretInput = document.getElementById('zkpSecret');
+    if (secretInput) {
+        secretInput.value = currentMnemonic.join(' ');
+        updateCryptoStrengthMeter(secretInput.value);
+    }
+}
+
+function validateUsernameClient(rawUsername) {
+    if (!rawUsername || !rawUsername.trim()) {
+        return { valid: false, error: "Identifiant obligatoire (3-32 caractères : lettres, chiffres, '.', '_', '-')." };
+    }
+    const val = rawUsername.trim();
+    if (/\s/.test(val)) {
+        return {
+            valid: false,
+            error: `Identifiant '${val}' invalide : les espaces sont interdits (ex. 'kouali paul' refusé, utilisez 'kouali-paul').`
+        };
+    }
+    const regex = /^[A-Za-z0-9._-]{3,32}$/;
+    if (!regex.test(val)) {
+        return {
+            valid: false,
+            error: `Identifiant '${val}' invalide : doit comporter 3 à 32 caractères autorisés (lettres, chiffres, '.', '_', '-').`
+        };
+    }
+    return { valid: true, username: val };
+}
+
 function generateNewMnemonic() {
     currentMnemonic = [];
     const grid = document.getElementById('mnemonicWordsGrid');
@@ -362,8 +410,15 @@ async function deriveKeyPair(secretStr) {
 }
 
 async function registerZkpIdentity() {
-    const username = document.getElementById('zkpUsername').value;
+    const rawUsername = document.getElementById('zkpUsername').value;
     const secret = document.getElementById('zkpSecret').value;
+    const check = validateUsernameClient(rawUsername);
+    if (!check.valid) {
+        log(`{% icon "triangle-alert" size=18 %} <span style="color:#ef4444; font-weight:bold;">${check.error}</span>`);
+        if (window.showToast) window.showToast(check.error, 'error');
+        return;
+    }
+    const username = check.username;
     log(`Dérivation de la clé publique souveraine pour <b>${username}</b>...`);
     const { x, y } = await deriveKeyPair(secret);
     log(`Clé publique (y = g^x mod p) générée localement.`);
@@ -389,18 +444,38 @@ async function registerZkpIdentity() {
 
 // Initialise mnémonique au chargement
 document.addEventListener('DOMContentLoaded', () => {
-    generateNewMnemonic();
+    const usernameInput = document.getElementById('zkpUsername');
+    if (usernameInput && usernameInput.value === 'kouame_dev') {
+        setMnemonicWords(DEFAULT_KOUAME_WORDS);
+    } else {
+        generateNewMnemonic();
+    }
+    if (usernameInput) {
+        usernameInput.addEventListener('change', function() {
+            if (this.value.trim() === 'kouame_dev') {
+                setMnemonicWords(DEFAULT_KOUAME_WORDS);
+            }
+        });
+    }
 });
 
 async function loginWithZkp() {
+    const rawUsername = document.getElementById('zkpUsername').value;
+    const secret = document.getElementById('zkpSecret').value;
+    const check = validateUsernameClient(rawUsername);
+    if (!check.valid) {
+        log(`{% icon "triangle-alert" size=18 %} <span style="color:#ef4444; font-weight:bold;">${check.error}</span>`);
+        if (window.showToast) window.showToast(check.error, 'error');
+        return;
+    }
+    const username = check.username;
+
     const feedback = document.getElementById('zkpLoadingFeedback');
     const loginBtn = document.getElementById('btnZkpLogin');
     if (feedback) feedback.style.display = 'flex';
     if (loginBtn) loginBtn.disabled = true;
 
     try {
-    const username = document.getElementById('zkpUsername').value;
-    const secret = document.getElementById('zkpSecret').value;
     log(`Demande d'un défi (Challenge nonce) au serveur pour <b>${username}</b>...`);
 
     const chalRes = await fetch('/api/zkp/challenge/', {
@@ -485,13 +560,6 @@ function handleSuccessfulZkpAuth(username, data) {
     }, 1000);
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-    const usernameInput = document.getElementById('zkpUsername');
-    if (usernameInput) {
-        usernameInput.addEventListener('input', function() {
-            this.value = this.value.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9._-]/g, '');
-        });
-    }
-});
+
 </script>
 {% endblock %}
