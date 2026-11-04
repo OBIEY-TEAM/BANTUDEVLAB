@@ -46,6 +46,8 @@ class ZKPRegisterView(APIView):
 
     def post(self, request):
         username = request.data.get("username")
+        if isinstance(username, str):
+            username = username.strip().replace(" ", "-").lower()
         if username is not None and (not isinstance(username, str) or not USERNAME_RE.match(username)):
             return Response(
                 {"error": "username invalide (3-32 caracteres : lettres, chiffres, '.', '_', '-')"},
@@ -197,6 +199,8 @@ class ZKPVerifyView(APIView):
         )
 
         login(request, user)
+        gitea_signup_url = f"http://localhost:3002/user/sign_up?user_name={user.username}"
+        gitea_login_url = "http://localhost:3002/user/login"
         return Response(
             {
                 "success": True,
@@ -206,6 +210,9 @@ class ZKPVerifyView(APIView):
                     "username": user.username,
                     "country_code": identity.country_code,
                 },
+                "redirect_url": gitea_signup_url,
+                "gitea_login_url": gitea_login_url,
+                "gitea_signup_url": gitea_signup_url,
             },
             status=status.HTTP_200_OK,
         )
