@@ -200,7 +200,30 @@
         }
     };
 
-    // Gestion du Thème Clair / Sombre (DES-02)
+    // Language Mapping for BantuDevLab & Gitea Synchronization
+    const GITEA_LANG_MAP = {
+        'fr': 'fr-FR',
+        'en': 'en-US',
+        'sw': 'sw-KE',
+        'pt': 'pt-PT'
+    };
+
+    function syncGiteaLinks(theme, langCode) {
+        const giteaLang = GITEA_LANG_MAP[langCode] || 'fr-FR';
+        const giteaTheme = (theme === 'light') ? 'github' : 'github-dark';
+        
+        // Update all links targeting Gitea on port 3002
+        document.querySelectorAll('a[href*="3002"]').forEach(link => {
+            try {
+                const url = new URL(link.href, window.location.origin);
+                url.searchParams.set('lang', giteaLang);
+                url.searchParams.set('theme', giteaTheme);
+                link.href = url.toString();
+            } catch(e) {}
+        });
+    }
+
+    // Gestion du Thème Clair / Sombre avec Synchronisation Gitea (DES-02)
     (function initTheme() {
         const btn = document.getElementById('themeToggleBtn');
         const iconContainer = document.getElementById('themeIcon');
@@ -213,15 +236,37 @@
             }
         }
 
-        const currentTheme = document.documentElement.getAttribute('data-theme') || 'dark';
-        updateIcon(currentTheme);
+        // Check if theme was saved in localStorage or cookie
+        let savedTheme = 'dark';
+        try {
+            savedTheme = localStorage.getItem('bantu_theme') || 
+                         (document.cookie.includes('theme=github-dark') ? 'dark' : (document.cookie.includes('theme=github') ? 'light' : 'dark'));
+        } catch(e) {}
+
+        document.documentElement.setAttribute('data-theme', savedTheme);
+        updateIcon(savedTheme);
+        
+        const currentLang = document.documentElement.getAttribute('lang') || 'fr';
+        syncGiteaLinks(savedTheme, currentLang);
 
         if (btn) {
             btn.addEventListener('click', function() {
                 const now = document.documentElement.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
                 document.documentElement.setAttribute('data-theme', now);
-                try { localStorage.setItem('bantu_theme', now); } catch(e) {}
+                
+                const giteaTheme = (now === 'light') ? 'github' : 'github-dark';
+                try {
+                    localStorage.setItem('bantu_theme', now);
+                    localStorage.setItem('gitea_theme', giteaTheme);
+                } catch(e) {}
+                
+                // Synchronize cookie for Gitea (shared on localhost)
+                document.cookie = 'theme=' + giteaTheme + ';path=/;max-age=31536000';
+                document.cookie = 'bantu_theme=' + now + ';path=/;max-age=31536000';
+
                 updateIcon(now);
+                syncGiteaLinks(now, currentLang);
+                
                 if (window.showToast) {
                     window.showToast(now === 'light' ? '{% trans "Thème clair activé" %}' : '{% trans "Thème sombre activé" %}', 'info', 2000);
                 }
@@ -229,10 +274,30 @@
         }
     })();
 
-    // Gestion du Menu Déroulant Langue (I18N-02)
+    // Gestion du Menu Déroulant Langue avec Synchronisation Gitea (I18N-02)
     (function initLang() {
         const btn = document.getElementById('langMenuBtn');
         const menu = document.getElementById('langMenu');
+        const form = document.getElementById('setLangForm');
+
+        if (form) {
+            form.querySelectorAll('button[name="language"]').forEach(langBtn => {
+                langBtn.addEventListener('click', function(e) {
+                    const langVal = this.value;
+                    const giteaLang = GITEA_LANG_MAP[langVal] || 'fr-FR';
+                    
+                    try {
+                        localStorage.setItem('bantu_lang_code', langVal);
+                        localStorage.setItem('bantu_gitea_lang', giteaLang);
+                    } catch(e) {}
+                    
+                    // Set Gitea lang cookie on path /
+                    document.cookie = 'lang=' + giteaLang + ';path=/;max-age=31536000';
+                    document.cookie = 'django_language=' + langVal + ';path=/;max-age=31536000';
+                });
+            });
+        }
+
         if (btn && menu) {
             btn.addEventListener('click', function(e) {
                 e.stopPropagation();

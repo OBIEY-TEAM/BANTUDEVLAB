@@ -767,3 +767,81 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 });
 </script>
+
+  // Synchronisation Automatique de Langue et Mode d'Affichage avec BantuDevLab
+  (function initGiteaBantuSync() {
+    // 1. Language Sync
+    const urlParams = new URLSearchParams(window.location.search);
+    const urlLang = urlParams.get('lang');
+    let storedLang = null;
+    try { storedLang = localStorage.getItem('bantu_gitea_lang'); } catch(e) {}
+
+    const targetLang = urlLang || storedLang;
+    if (targetLang) {
+      if (!document.cookie.includes('lang=' + targetLang)) {
+        document.cookie = 'lang=' + targetLang + ';path=/;max-age=31536000';
+        try { localStorage.setItem('bantu_gitea_lang', targetLang); } catch(e) {}
+      }
+    }
+
+    // 2. Theme Sync
+    const urlTheme = urlParams.get('theme');
+    let storedTheme = null;
+    try { storedTheme = localStorage.getItem('bantu_theme'); } catch(e) {}
+
+    if (urlTheme) {
+      const giteaThemeName = (urlTheme === 'github' || urlTheme === 'light') ? 'github' : 'github-dark';
+      document.cookie = 'theme=' + giteaThemeName + ';path=/;max-age=31536000';
+    } else if (storedTheme) {
+      const giteaThemeName = (storedTheme === 'light') ? 'github' : 'github-dark';
+      if (!document.cookie.includes('theme=' + giteaThemeName)) {
+        document.cookie = 'theme=' + giteaThemeName + ';path=/;max-age=31536000';
+      }
+    }
+
+    // 3. Inject Language Quick Switcher in Gitea Header
+    const navBar = document.querySelector('.ui.menu.navbar');
+    if (navBar && !document.getElementById('gitea-bantu-lang-selector')) {
+      const langBox = document.createElement('div');
+      langBox.id = 'gitea-bantu-lang-selector';
+      langBox.style.display = 'inline-flex';
+      langBox.style.alignItems = 'center';
+      langBox.style.gap = '4px';
+      langBox.style.marginRight = '8px';
+      langBox.style.fontSize = '12px';
+
+      const langs = [
+        { code: 'fr', gitea: 'fr-FR', label: 'FR' },
+        { code: 'en', gitea: 'en-US', label: 'EN' },
+        { code: 'sw', gitea: 'sw-KE', label: 'SW' },
+        { code: 'pt', gitea: 'pt-PT', label: 'PT' }
+      ];
+
+      langs.forEach(l => {
+        const a = document.createElement('a');
+        a.href = '#';
+        a.textContent = l.label;
+        a.style.padding = '2px 6px';
+        a.style.borderRadius = '4px';
+        a.style.color = document.cookie.includes('lang=' + l.gitea) ? '#00e5ff' : '#94a3b8';
+        a.style.fontWeight = document.cookie.includes('lang=' + l.gitea) ? 'bold' : 'normal';
+        a.style.border = document.cookie.includes('lang=' + l.gitea) ? '1px solid #00e5ff' : '1px solid transparent';
+        a.style.textDecoration = 'none';
+
+        a.addEventListener('click', function(e) {
+          e.preventDefault();
+          document.cookie = 'lang=' + l.gitea + ';path=/;max-age=31536000';
+          document.cookie = 'django_language=' + l.code + ';path=/;max-age=31536000';
+          try {
+            localStorage.setItem('bantu_lang_code', l.code);
+            localStorage.setItem('bantu_gitea_lang', l.gitea);
+          } catch(e) {}
+          window.location.reload();
+        });
+        langBox.appendChild(a);
+      });
+
+      const rightMenu = navBar.querySelector('.right.menu') || navBar;
+      rightMenu.insertBefore(langBox, rightMenu.firstChild);
+    }
+  })();
