@@ -17,6 +17,7 @@
     </script>
     <link rel="icon" type="image/svg+xml" href="{% static 'img/favicon.svg' %}">
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <script src="{% static 'js/bantu-ecosystem-sync.js' %}"></script>
     {% block extra_head %}{% endblock %}
 </head>
 <body>
@@ -254,15 +255,17 @@
                 const now = document.documentElement.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
                 document.documentElement.setAttribute('data-theme', now);
                 
-                const giteaTheme = (now === 'light') ? 'github' : 'github-dark';
-                try {
-                    localStorage.setItem('bantu_theme', now);
-                    localStorage.setItem('gitea_theme', giteaTheme);
-                } catch(e) {}
-                
-                // Synchronize cookie for Gitea (shared on localhost)
-                document.cookie = 'theme=' + giteaTheme + ';path=/;max-age=31536000';
-                document.cookie = 'bantu_theme=' + now + ';path=/;max-age=31536000';
+                if (window.syncEcosystemChange) {
+                    window.syncEcosystemChange(now, null);
+                } else {
+                    const giteaTheme = (now === 'light') ? 'github' : 'github-dark';
+                    try {
+                        localStorage.setItem('bantu_theme', now);
+                        localStorage.setItem('gitea_theme', giteaTheme);
+                    } catch(e) {}
+                    document.cookie = 'theme=' + giteaTheme + ';path=/;max-age=31536000';
+                    document.cookie = 'bantu_theme=' + now + ';path=/;max-age=31536000';
+                }
 
                 updateIcon(now);
                 syncGiteaLinks(now, currentLang);
@@ -284,16 +287,17 @@
             form.querySelectorAll('button[name="language"]').forEach(langBtn => {
                 langBtn.addEventListener('click', function(e) {
                     const langVal = this.value;
-                    const giteaLang = GITEA_LANG_MAP[langVal] || 'fr-FR';
-                    
-                    try {
-                        localStorage.setItem('bantu_lang_code', langVal);
-                        localStorage.setItem('bantu_gitea_lang', giteaLang);
-                    } catch(e) {}
-                    
-                    // Set Gitea lang cookie on path /
-                    document.cookie = 'lang=' + giteaLang + ';path=/;max-age=31536000';
-                    document.cookie = 'django_language=' + langVal + ';path=/;max-age=31536000';
+                    if (window.syncEcosystemChange) {
+                        window.syncEcosystemChange(null, langVal);
+                    } else {
+                        const giteaLang = GITEA_LANG_MAP[langVal] || 'fr-FR';
+                        try {
+                            localStorage.setItem('bantu_lang_code', langVal);
+                            localStorage.setItem('bantu_gitea_lang', giteaLang);
+                        } catch(e) {}
+                        document.cookie = 'lang=' + giteaLang + ';path=/;max-age=31536000';
+                        document.cookie = 'django_language=' + langVal + ';path=/;max-age=31536000';
+                    }
                 });
             });
         }
