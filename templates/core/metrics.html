@@ -11,15 +11,15 @@
 
     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; flex-wrap: wrap; gap: 1rem;">
         <div>
-            <h2>Indicateurs & Topologie Souveraine Panafricaine</h2>
-            <p style="color: var(--text-muted); margin-top: 0.3rem;">Supervision en temps réel des nœuds certifiés et conformité UA 2020-2030.</p>
+            <h2>{% trans "Indicateurs & Topologie Souveraine Panafricaine" %}</h2>
+            <p style="color: var(--text-muted); margin-top: 0.3rem;">{% trans "Supervision en temps réel des nœuds certifiés et conformité UA 2020-2030." %}</p>
         </div>
         <div style="display: flex; gap: 0.75rem; flex-wrap: wrap;">
             <button class="btn btn-secondary" onclick="simulatePingAllNodes()">
-                {% icon "zap" size=18 %} Tester la Latence
+                {% icon "zap" size=18 %} {% trans "Tester la Latence" %}
             </button>
             <button class="btn btn-primary" id="btnRefreshMetrics" onclick="refreshMetricsData()">
-                {% icon "refresh-cw" size=18 %} Actualiser les Métriques
+                {% icon "refresh-cw" size=18 %} {% trans "Actualiser les Métriques" %}
             </button>
         </div>
     </div>
@@ -27,8 +27,8 @@
     <!-- UI-05: Cartographie Interactive des Nœuds Souverains Africains -->
     <div class="africa-map-wrapper">
         <div style="text-align: center; margin-bottom: 1rem;">
-            <h3 style="margin: 0; color: #fff;">Topologie des Datacenters Certifiés</h3>
-            <p style="font-size: 0.85rem; color: var(--text-muted); margin: 0.2rem 0 0;">Cliquez sur un nœud ou une carte pour inspecter les métriques locales</p>
+            <h3 style="margin: 0; color: #fff;">{% trans "Topologie des Datacenters Certifiés" %}</h3>
+            <p style="font-size: 0.85rem; color: var(--text-muted); margin: 0.2rem 0 0;">{% trans "Cliquez sur un nœud ou une carte pour inspecter les métriques locales" %}</p>
         </div>
 
         <div class="map-svg-container">

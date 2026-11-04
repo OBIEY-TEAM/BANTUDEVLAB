@@ -4,7 +4,7 @@ msgstr ""
 "Language: pt\n"
 
 msgid "Accueil"
-msgstr "Início"
+msgstr "Inicio"
 
 msgid "Tableau de Bord"
 msgstr "Painel de Controle"
@@ -13,7 +13,7 @@ msgid "Souveraineté Numérique"
 msgstr "Soberania Digital"
 
 msgid "Guide & FAQ"
-msgstr "Guia e FAQ"
+msgstr "Guia & FAQ"
 
 msgid "Connexion Zero-Trust"
 msgstr "Login Zero-Trust"
@@ -22,43 +22,118 @@ msgid "Basculer vers Gitea"
 msgstr "Mudar para Gitea"
 
 msgid "Espace GitLab"
-msgstr "Espaço GitLab"
+msgstr "Espaco GitLab"
 
 msgid "FORGE SOUVERAINE"
-msgstr "FORGE SOBERANA"
+msgstr "FORJA SOBERANA"
+
+msgid "La Forge Logicielle Souveraine de l'Afrique"
+msgstr "A Forja Soberana de Software da Africa"
+
+msgid "BANTUDEVLAB réunit la robustesse d'un moteur Git distribué, la sécurité mathématique des preuves à divulgation nulle de connaissance (Zero-Knowledge Proofs), et l'intelligence artificielle locale Gemma 5B pour garantir l'indépendance technologique du continent."
+msgstr "BANTUDEVLAB une a robustez de um motor Git distribuido, a seguranca matematica das Provas de Conhecimento Zero (ZKP), e a IA local Gemma 5B para garantir a independencia tecnologica do continente."
+
+msgid "Explorer le Tableau de Bord"
+msgstr "Explorar o Painel"
+
+msgid "Authentification Zero-Trust (ZKP)"
+msgstr "Autenticacao Zero-Trust (ZKP)"
+
+msgid "Mode d'Emploi & FAQ"
+msgstr "Guia de Uso & FAQ"
+
+msgid "Moteur Git Souverain (Systalink Cloud)"
+msgstr "Motor Git Soberano (Systalink Cloud)"
+
+msgid "Forge distribuée basée sur Gitea/GitLab CE déployée sur nos serveurs en Afrique. Zéro dépendance vis-à-vis des juridictions extérieures (Cloud Act exempt)."
+msgstr "Forja distribuida baseada em Gitea/GitLab CE implantada em servidores na Africa. Zero dependencia de jurisdicoes externas."
+
+msgid "Connexion Gitea : http://localhost:3002/user/login"
+msgstr "Login Gitea : http://localhost:3002/user/login"
+
+msgid "Contrôle Panafricain"
+msgstr "Controle Pan-Africano"
+
+msgid "Authentification Zero-Trust ZKP"
+msgstr "Autenticacao Zero-Trust ZKP"
+
+msgid "Protocole cryptographique de Schnorr / Sigma non-interactif via Fiat-Shamir. Prouvez votre identité sans JAMAIS transmettre votre mot de passe au réseau."
+msgstr "Protocolo criptografico de Schnorr / Sigma nao-interativo via Fiat-Shamir. Prove sua identidade sem NUNCA transmitir sua senha pela rede."
+
+msgid "Confidentialité Mathématique"
+msgstr "Privacidade Matematica"
+
+msgid "IA Locale Gemma 5B Fine-tunée"
+msgstr "IA Local Gemma 5B Otimizada"
+
+msgid "Assistant d'ingénierie logicielle exécuté localement pour auditer le code, détecter les secrets et assister les développeurs sans fuite de code vers l'extérieur."
+msgstr "Assistente de engenharia de software executado localmente para auditar codigo sem vazamento de dados."
+
+msgid "5 Milliards"
+msgstr "5 Bilhoes"
+
+msgid "Milliards"
+msgstr "Bilhoes"
+
+msgid "Paramètres Optimisés"
+msgstr "Parametros Otimizados"
+
+msgid "Nouveau sur BANTUDEVLAB & GitLab ?"
+msgstr "Novo no BANTUDEVLAB & GitLab?"
+
+msgid "Consultez notre guide complet : création de compte, connexion sans mot de passe Zero-Trust, consultation du code source, clone avec token Git et foire aux questions."
+msgstr "Consulte nosso guia completo: criacao de conta, login Zero-Trust sem senha, exploracao de codigo e FAQ."
+
+msgid "Consulter la FAQ & Guide"
+msgstr "Consultar Guia & FAQ"
+
+msgid "Dépôts Souverains Récents"
+msgstr "Repositorios Soberanos Recentes"
+
+msgid "Initialisation de la synchronisation avec Gitea..."
+msgstr "Inicializando sincronizacao com Gitea..."
+
+msgid "Fil d Ariane"
+msgstr "Navegacao Estrutural"
 
 msgid "Tableau de Bord Souverain BANTUDEVLAB"
-msgstr "Painel Soberano BANTUDEVLAB"
+msgstr "Painel de Controle Soberano BANTUDEVLAB"
 
 msgid "Surveillance de la forge logicielle, sécurité Zero-Trust et assistance IA locale"
-msgstr "Monitoramento da forge de software, segurança Zero-Trust e assistência de IA local"
+msgstr "Monitoramento da forja de software, seguranca Zero-Trust e assistencia IA"
+
+msgid "NŒUD SOUVERAIN ACTIF"
+msgstr "NO SOBERANO ATIVO"
 
 msgid "Dépôts Actifs"
-msgstr "Repositórios Ativos"
+msgstr "Repositorios Ativos"
 
 msgid "Identités ZKP"
 msgstr "Identidades ZKP"
 
 msgid "Score de Souveraineté"
-msgstr "Pontuação de Soberania"
+msgstr "Pontuacao de Soberania"
 
 msgid "Audits IA Gemma 5B"
 msgstr "Auditorias IA Gemma 5B"
 
-msgid "Fil d Ariane"
-msgstr "Caminho de Navegação"
+msgid "Bascule d'Environnement Forge Souveraine"
+msgstr "Alternar Ambiente da Forja Soberana"
 
-msgid "NŒUD SOUVERAIN ACTIF"
-msgstr "NÓ SOBERANO ATIVO"
+msgid "Accédez directement à vos espaces de dépôts Gitea ou GitLab CE."
+msgstr "Acesse diretamente os espacos de repositorios Gitea ou GitLab CE."
+
+msgid "Connexion directe Gitea"
+msgstr "Login Direto Gitea"
 
 msgid "Dépôts Hébergés sur Gitea Souverain"
-msgstr "Repositórios Hospedados no Gitea Soberano"
+msgstr "Repositorios Hospedados no Gitea Soberano"
 
 msgid "Données Réelles Gitea API"
 msgstr "Dados Reais da API Gitea"
 
 msgid "Dépôt"
-msgstr "Repositório"
+msgstr "Repositorio"
 
 msgid "Visibilité"
 msgstr "Visibilidade"
@@ -67,49 +142,61 @@ msgid "Branche"
 msgstr "Ramo"
 
 msgid "Action"
-msgstr "Ação"
+msgstr "Acao"
 
 msgid "Gitea"
 msgstr "Gitea"
 
 msgid "Aucun dépôt détecté sur le cluster Gitea local."
-msgstr "Nenhum repositório detectado no cluster Gitea local."
+msgstr "Nenhum repositorio encontrado no cluster Gitea local."
 
 msgid "Lancer l'Audit de Sécurité"
-msgstr "Executar Auditoria de Segurança"
+msgstr "Executar Auditoria de Seguranca"
 
-msgid "Demander l'Avis de Gemma 5B"
-msgstr "Consultar IA Gemma 5B"
+msgid "Indicateurs & Topologie Souveraine Panafricaine"
+msgstr "Indicadores e Topologia Soberana Pan-Africana"
+
+msgid "Supervision en temps réel des nœuds certifiés et conformité UA 2020-2030."
+msgstr "Supervisao em tempo real dos nos certificados e conformidade UA."
 
 msgid "Tester la Latence"
-msgstr "Testar Latência"
+msgstr "Testar Latencia"
 
 msgid "Actualiser les Métriques"
-msgstr "Atualizar Métricas"
+msgstr "Atualizar Metricas"
+
+msgid "Topologie des Datacenters Certifiés"
+msgstr "Topologia de Datacenters Certificados"
+
+msgid "Cliquez sur un nœud ou une carte pour inspecter les métriques locales"
+msgstr "Clique em um no para inspecionar metricas locais"
+
+msgid "Mesures de Latence Réelle Intra-Afrique (Temps Réel)"
+msgstr "Medicoes de Latencia Real Intra-Africa (Tempo Real)"
+
+msgid "Nœud"
+msgstr "No"
+
+msgid "Ville"
+msgstr "Cidade"
+
+msgid "Pays"
+msgstr "Pais"
+
+msgid "Latence Réelle"
+msgstr "Latencia Real"
+
+msgid "Statut"
+msgstr "Status"
 
 msgid "Changer de langue"
-msgstr "Mudar idioma"
+msgstr "Alterar idioma"
 
 msgid "Basculer thème clair / sombre"
 msgstr "Alternar tema claro / escuro"
 
-msgid "Thème clair activé"
-msgstr "Modo claro ativado"
+msgid "Session authentifiée via Zero-Trust ZKP"
+msgstr "Sessao autenticada via Zero-Trust ZKP"
 
-msgid "Thème sombre activé"
-msgstr "Modo escuro ativado"
-
-msgid "Vérification Zero-Knowledge Réussie !"
-msgstr "Verificação Zero-Knowledge Bem-sucedida!"
-
-msgid "Finaliser l'Inscription Gitea"
-msgstr "Concluir Registro no Gitea"
-
-msgid "Se Connecter sur Gitea"
-msgstr "Entrar no Gitea"
-
-msgid "Bascule d'Environnement Forge Souveraine"
-msgstr "Troca de Ambiente da Forge Soberana"
-
-msgid "Accédez directement à vos espaces de dépôts Gitea ou GitLab CE."
-msgstr "Acesse diretamente seus repositórios Gitea ou GitLab CE."
+msgid "Menu de navigation"
+msgstr "Menu de navegacao"

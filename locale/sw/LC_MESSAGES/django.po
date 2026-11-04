@@ -4,13 +4,13 @@ msgstr ""
 "Language: sw\n"
 
 msgid "Accueil"
-msgstr "Nyumbani"
+msgstr "Mwanzo"
 
 msgid "Tableau de Bord"
 msgstr "Dashibodi"
 
 msgid "Souveraineté Numérique"
-msgstr "Ukuu wa Kidijitali"
+msgstr "Uhuru wa Kidijitali"
 
 msgid "Guide & FAQ"
 msgstr "Mwongozo na Maswali"
@@ -19,19 +19,91 @@ msgid "Connexion Zero-Trust"
 msgstr "Kuingia kwa Zero-Trust"
 
 msgid "Basculer vers Gitea"
-msgstr "Badili kwenda Gitea"
+msgstr "Badilisha kwenda Gitea"
 
 msgid "Espace GitLab"
-msgstr "Nafasi ya GitLab"
+msgstr "Sehemu ya GitLab"
 
 msgid "FORGE SOUVERAINE"
-msgstr "FORGE HURU"
+msgstr "JUKWAA LA UHURU"
+
+msgid "La Forge Logicielle Souveraine de l'Afrique"
+msgstr "Jukwaa la Maendeleo la Programu Huru la Afrika"
+
+msgid "BANTUDEVLAB réunit la robustesse d'un moteur Git distribué, la sécurité mathématique des preuves à divulgation nulle de connaissance (Zero-Knowledge Proofs), et l'intelligence artificielle locale Gemma 5B pour garantir l'indépendance technologique du continent."
+msgstr "BANTUDEVLAB inachanganya uimara wa injini ya Git iliyosambazwa, usalama wa hisabati wa Uthibitisho Usio na Maarifa (ZKP), na akili bandia ya kienyeji ya Gemma 5B kulinda uhuru wa kiteknolojia wa bara."
+
+msgid "Explorer le Tableau de Bord"
+msgstr "Chunguza Dashibodi"
+
+msgid "Authentification Zero-Trust (ZKP)"
+msgstr "Uthibitishaji wa Zero-Trust (ZKP)"
+
+msgid "Mode d'Emploi & FAQ"
+msgstr "Mwongozo na Maswali"
+
+msgid "Moteur Git Souverain (Systalink Cloud)"
+msgstr "Injini Huru ya Git (Systalink Cloud)"
+
+msgid "Forge distribuée basée sur Gitea/GitLab CE déployée sur nos serveurs en Afrique. Zéro dépendance vis-à-vis des juridictions extérieures (Cloud Act exempt)."
+msgstr "Jukwaa lililosambazwa kulingana na Gitea/GitLab CE lililowekwa kwenye seva zetu za Afrika. Bila utegemezi wa nje."
+
+msgid "Connexion Gitea : http://localhost:3002/user/login"
+msgstr "Kuingia Gitea : http://localhost:3002/user/login"
+
+msgid "Contrôle Panafricain"
+msgstr "Udhibiti wa Kiafrika"
+
+msgid "Authentification Zero-Trust ZKP"
+msgstr "Uthibitishaji wa Zero-Trust ZKP"
+
+msgid "Protocole cryptographique de Schnorr / Sigma non-interactif via Fiat-Shamir. Prouvez votre identité sans JAMAIS transmettre votre mot de passe au réseau."
+msgstr "Itifaki ya siri ya Schnorr / Sigma bila kuingiliana kupitia Fiat-Shamir. Thibitisha utambulisho wako bila kuweka nenosiri."
+
+msgid "Confidentialité Mathématique"
+msgstr "Faragha ya Kihisabati"
+
+msgid "IA Locale Gemma 5B Fine-tunée"
+msgstr "Akili Bandia ya Kienyeji ya Gemma 5B"
+
+msgid "Assistant d'ingénierie logicielle exécuté localement pour auditer le code, détecter les secrets et assister les développeurs sans fuite de code vers l'extérieur."
+msgstr "Msaidizi wa programu anayeendesha ndani kukagua msimbo na kusaidia watengenezaji bila kutoa data nje."
+
+msgid "5 Milliards"
+msgstr "Bilioni 5"
+
+msgid "Milliards"
+msgstr "Bilioni"
+
+msgid "Paramètres Optimisés"
+msgstr "Vigezo Vilivyoboreshwa"
+
+msgid "Nouveau sur BANTUDEVLAB & GitLab ?"
+msgstr "Mgeni kwenye BANTUDEVLAB & GitLab?"
+
+msgid "Consultez notre guide complet : création de compte, connexion sans mot de passe Zero-Trust, consultation du code source, clone avec token Git et foire aux questions."
+msgstr "Soma mwongozo wetu: ufunguzi wa akaunti, kuingia bila nenosiri, kuvinjari msimbo na maswali."
+
+msgid "Consulter la FAQ & Guide"
+msgstr "Tazama Mwongozo & Maswali"
+
+msgid "Dépôts Souverains Récents"
+msgstr "Hifadhi za Hivi Karibuni za Uhuru"
+
+msgid "Initialisation de la synchronisation avec Gitea..."
+msgstr "Inaanzisha usawazishaji na Gitea..."
+
+msgid "Fil d Ariane"
+msgstr "Njia ya Ukurasa"
 
 msgid "Tableau de Bord Souverain BANTUDEVLAB"
 msgstr "Dashibodi Huru ya BANTUDEVLAB"
 
 msgid "Surveillance de la forge logicielle, sécurité Zero-Trust et assistance IA locale"
-msgstr "Ufuatiliaji wa forge ya programu, usalama wa Zero-Trust na msaada wa AI ya ndani"
+msgstr "Uangalizi wa jukwaa, usalama wa Zero-Trust na msaada wa AI"
+
+msgid "NŒUD SOUVERAIN ACTIF"
+msgstr "KIPANDE CHA UHURU KILICHO HAI"
 
 msgid "Dépôts Actifs"
 msgstr "Hifadhi Zinazofanya Kazi"
@@ -40,16 +112,19 @@ msgid "Identités ZKP"
 msgstr "Vitambulisho vya ZKP"
 
 msgid "Score de Souveraineté"
-msgstr "Alama ya Ukuu"
+msgstr "Alama ya Uhuru"
 
 msgid "Audits IA Gemma 5B"
 msgstr "Ukaguzi wa AI Gemma 5B"
 
-msgid "Fil d Ariane"
-msgstr "Njia ya Ukurasa"
+msgid "Bascule d'Environnement Forge Souveraine"
+msgstr "Badilisha Mazingira ya Hifadhi"
 
-msgid "NŒUD SOUVERAIN ACTIF"
-msgstr "NODI HURU INAYOFANYA KAZI"
+msgid "Accédez directement à vos espaces de dépôts Gitea ou GitLab CE."
+msgstr "Pata nafasi zako za hifadhi za Gitea au GitLab CE."
+
+msgid "Connexion directe Gitea"
+msgstr "Kuingia moja kwa moja Gitea"
 
 msgid "Dépôts Hébergés sur Gitea Souverain"
 msgstr "Hifadhi Zilizowekwa kwenye Gitea Huru"
@@ -67,49 +142,61 @@ msgid "Branche"
 msgstr "Tawi"
 
 msgid "Action"
-msgstr "Kitendo"
+msgstr "Hatua"
 
 msgid "Gitea"
 msgstr "Gitea"
 
 msgid "Aucun dépôt détecté sur le cluster Gitea local."
-msgstr "Hakuna hifadhi iliyopatikana kwenye nguzo ya ndani ya Gitea."
+msgstr "Hakuna hifadhi iliyopatikana kwenye mfumo wa ndani wa Gitea."
 
 msgid "Lancer l'Audit de Sécurité"
 msgstr "Anzisha Ukaguzi wa Usalama"
 
-msgid "Demander l'Avis de Gemma 5B"
-msgstr "Uliza AI Gemma 5B"
+msgid "Indicateurs & Topologie Souveraine Panafricaine"
+msgstr "Viashiria na Muundo wa Uhuru wa Afrika"
+
+msgid "Supervision en temps réel des nœuds certifiés et conformité UA 2020-2030."
+msgstr "Uangalizi wa wakati halisi wa vituo vilivyothibitishwa."
 
 msgid "Tester la Latence"
-msgstr "Pima Ucheleweshaji"
+msgstr "Pima Muda wa Mawasiliano"
 
 msgid "Actualiser les Métriques"
-msgstr "Sasisha Vipimo"
+msgstr "Sasisha Takwimu"
+
+msgid "Topologie des Datacenters Certifiés"
+msgstr "Muundo wa Vituo vya Data Vilivyothibitishwa"
+
+msgid "Cliquez sur un nœud ou une carte pour inspecter les métriques locales"
+msgstr "Bonyeza kituo kuona takwimu za mtaa"
+
+msgid "Mesures de Latence Réelle Intra-Afrique (Temps Réel)"
+msgstr "Vipimo Halisi vya Muda wa Mawasiliano Barani Afrika"
+
+msgid "Nœud"
+msgstr "Kituo"
+
+msgid "Ville"
+msgstr "Mji"
+
+msgid "Pays"
+msgstr "Nchi"
+
+msgid "Latence Réelle"
+msgstr "Muda Halisi"
+
+msgid "Statut"
+msgstr "Hali"
 
 msgid "Changer de langue"
 msgstr "Badilisha lugha"
 
 msgid "Basculer thème clair / sombre"
-msgstr "Badili mandhari ya mwanga / giza"
+msgstr "Badilisha mandhari meusi / meupe"
 
-msgid "Thème clair activé"
-msgstr "Mandhari ya mwanga yamewezeshwa"
+msgid "Session authentifiée via Zero-Trust ZKP"
+msgstr "Kipindi kimethibitishwa kupitia Zero-Trust ZKP"
 
-msgid "Thème sombre activé"
-msgstr "Mandhari ya giza yamewezeshwa"
-
-msgid "Vérification Zero-Knowledge Réussie !"
-msgstr "Uthibitishaji wa Zero-Knowledge Umefaulu!"
-
-msgid "Finaliser l'Inscription Gitea"
-msgstr "Kamilisha Usajili wa Gitea"
-
-msgid "Se Connecter sur Gitea"
-msgstr "Ingia kwenye Gitea"
-
-msgid "Bascule d'Environnement Forge Souveraine"
-msgstr "Badilisha Mazingira ya Forge Huru"
-
-msgid "Accédez directement à vos espaces de dépôts Gitea ou GitLab CE."
-msgstr "Fikia moja kwa moja nafasi zako za hifadhi za Gitea au GitLab CE."
+msgid "Menu de navigation"
+msgstr "Menyu ya urambazaji"
