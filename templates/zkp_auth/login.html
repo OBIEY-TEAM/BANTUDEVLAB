@@ -134,6 +134,31 @@
 
     <!-- Terminal de Logs Cryptographiques -->
     <div id="zkpLog" style="margin-top: 2rem; padding: 1.25rem; background: #080c14; border: 1px solid var(--dark-border); border-radius: 8px; font-family: monospace; font-size: 0.85rem; line-height: 1.5; display: none;"></div>
+
+    <!-- Section Redirection Inscription Gitea Souveraine -->
+    <div id="giteaRedirectSection" style="display: none; margin-top: 2rem; background: linear-gradient(135deg, rgba(16, 185, 129, 0.15), rgba(17, 24, 39, 0.95)); border: 2px solid var(--secondary-emerald); border-radius: 12px; padding: 2rem; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.5);">
+        <div style="margin-bottom: 0.75rem;">
+            {% icon "circle-check" size=48 %}
+        </div>
+        <h3 style="color: var(--secondary-emerald); margin: 0 0 0.5rem; font-size: 1.4rem;">{% trans "Vérification Zero-Knowledge Réussie !" %}</h3>
+        <p style="color: var(--text-muted); font-size: 1rem; max-width: 620px; margin: 0 auto 1.5rem;">
+            {% trans "Votre identité souveraine" %} <b id="giteaUserDisplay" style="color: #fff; font-size: 1.05rem;"></b> {% trans "est authentifiée sans mot de passe. Finalisez ou liez votre compte sur la forge Gitea souveraine." %}
+        </p>
+        <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+            <a id="btnGiteaSignup" href="http://localhost:3002/user/sign_up" target="_blank" rel="noopener noreferrer" class="btn btn-primary" style="padding: 0.85rem 1.6rem; font-size: 1rem; font-weight: 600;">
+                {% icon "user-plus" size=18 %} {% trans "Finaliser l'Inscription Gitea" %}
+            </a>
+            <a id="btnGiteaLogin" href="http://localhost:3002/user/login" target="_blank" rel="noopener noreferrer" class="btn btn-outline" style="border-color: #10b981; color: #10b981; padding: 0.85rem 1.6rem; font-size: 1rem;">
+                {% icon "log-in" size=18 %} {% trans "Se Connecter sur Gitea" %}
+            </a>
+            <a href="{% url 'dashboard' %}" class="btn btn-secondary" style="padding: 0.85rem 1.6rem; font-size: 1rem;">
+                {% icon "landmark" size=18 %} {% trans "Tableau de Bord" %}
+            </a>
+        </div>
+        <p id="countdownRedirectText" style="margin-top: 1.5rem; font-size: 0.9rem; color: var(--primary-african-gold);">
+            {% trans "Redirection automatique vers l'inscription Gitea dans" %} <span id="redirectSecs" style="font-weight: bold; font-size: 1.1rem;">4</span> {% trans "secondes..." %}
+        </p>
+    </div>
 </div>
 {% endblock %}
 
@@ -419,6 +444,7 @@ async function loginWithZkp() {
     if (verifyRes.ok) {
         log(`{% icon "sparkles" size=18 %} <b>Vérification Zero-Knowledge réussie !</b> Accès autorisé sans mot de passe.`);
         if (window.showToast) window.showToast(`Connexion Zero-Trust réussie pour ${username} !`, 'success');
+        handleSuccessfulZkpAuth(username, verifyData);
     } else {
         log(`{% icon "circle-x" size=18 %} Échec de la vérification : ${verifyData.error}`);
         if (window.showToast) window.showToast(`Échec vérification ZKP : ${verifyData.error}`, 'error');
@@ -428,5 +454,44 @@ async function loginWithZkp() {
         if (loginBtn) loginBtn.disabled = false;
     }
 }
+
+function handleSuccessfulZkpAuth(username, data) {
+    const signupUrl = (data && data.gitea_signup_url) ? data.gitea_signup_url : `http://localhost:3002/user/sign_up?user_name=${encodeURIComponent(username)}`;
+    const loginUrl = (data && data.gitea_login_url) ? data.gitea_login_url : 'http://localhost:3002/user/login';
+
+    const section = document.getElementById('giteaRedirectSection');
+    const userDisplay = document.getElementById('giteaUserDisplay');
+    const btnSignup = document.getElementById('btnGiteaSignup');
+    const btnLogin = document.getElementById('btnGiteaLogin');
+    const secsSpan = document.getElementById('redirectSecs');
+
+    if (userDisplay) userDisplay.textContent = username;
+    if (btnSignup) btnSignup.href = signupUrl;
+    if (btnLogin) btnLogin.href = loginUrl;
+
+    if (section) {
+        section.style.display = 'block';
+        section.scrollIntoView({ behavior: 'smooth' });
+    }
+
+    let countdown = 4;
+    const interval = setInterval(() => {
+        countdown--;
+        if (secsSpan) secsSpan.textContent = countdown;
+        if (countdown <= 0) {
+            clearInterval(interval);
+            window.location.href = signupUrl;
+        }
+    }, 1000);
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    const usernameInput = document.getElementById('zkpUsername');
+    if (usernameInput) {
+        usernameInput.addEventListener('input', function() {
+            this.value = this.value.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9._-]/g, '');
+        });
+    }
+});
 </script>
 {% endblock %}
