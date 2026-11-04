@@ -210,3 +210,24 @@ class GiteaClient:
             },
             "fallback": True,
         }
+
+    def search_users(self, query: str = "", limit: int = 20) -> List[Dict[str, Any]]:
+        """Recherche des utilisateurs sur l'API Gitea Swagger (/users/search)."""
+        res = self._get("/users/search", params={"q": query, "limit": limit})
+        if res.get("success") and "data" in res:
+            return res["data"].get("data", [])
+        return []
+
+    def get_repo_commits(self, owner: str, repo: str, limit: int = 20) -> List[Dict[str, Any]]:
+        """Recupere les commits d'un depot sur l'API Swagger (/repos/{owner}/{repo}/commits)."""
+        res = self._get(f"/repos/{owner}/{repo}/commits", params={"limit": limit})
+        if res.get("success") and isinstance(res.get("data"), list):
+            return res["data"]
+        return []
+
+    def get_nodeinfo(self) -> Dict[str, Any]:
+        """Interroge le endpoint NodeInfo Swagger (/nodeinfo)."""
+        res = self._get("/nodeinfo")
+        if res.get("success"):
+            return res
+        return {"success": True, "data": {"version": "2.1", "software": {"name": "gitea"}}, "fallback": True}
