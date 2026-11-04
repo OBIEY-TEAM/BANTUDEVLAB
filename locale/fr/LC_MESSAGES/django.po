@@ -1,0 +1,115 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Language: fr\n"
+
+msgid "Accueil"
+msgstr "Accueil"
+
+msgid "Tableau de Bord"
+msgstr "Tableau de Bord"
+
+msgid "Souveraineté Numérique"
+msgstr "Souveraineté Numérique"
+
+msgid "Guide & FAQ"
+msgstr "Guide & FAQ"
+
+msgid "Connexion Zero-Trust"
+msgstr "Connexion Zero-Trust"
+
+msgid "Basculer vers Gitea"
+msgstr "Basculer vers Gitea"
+
+msgid "Espace GitLab"
+msgstr "Espace GitLab"
+
+msgid "FORGE SOUVERAINE"
+msgstr "FORGE SOUVERAINE"
+
+msgid "Tableau de Bord Souverain BANTUDEVLAB"
+msgstr "Tableau de Bord Souverain BANTUDEVLAB"
+
+msgid "Surveillance de la forge logicielle, sécurité Zero-Trust et assistance IA locale"
+msgstr "Surveillance de la forge logicielle, sécurité Zero-Trust et assistance IA locale"
+
+msgid "Dépôts Actifs"
+msgstr "Dépôts Actifs"
+
+msgid "Identités ZKP"
+msgstr "Identités ZKP"
+
+msgid "Score de Souveraineté"
+msgstr "Score de Souveraineté"
+
+msgid "Audits IA Gemma 5B"
+msgstr "Audits IA Gemma 5B"
+
+msgid "Fil d Ariane"
+msgstr "Fil d Ariane"
+
+msgid "NŒUD SOUVERAIN ACTIF"
+msgstr "NŒUD SOUVERAIN ACTIF"
+
+msgid "Dépôts Hébergés sur Gitea Souverain"
+msgstr "Dépôts Hébergés sur Gitea Souverain"
+
+msgid "Données Réelles Gitea API"
+msgstr "Données Réelles Gitea API"
+
+msgid "Dépôt"
+msgstr "Dépôt"
+
+msgid "Visibilité"
+msgstr "Visibilité"
+
+msgid "Branche"
+msgstr "Branche"
+
+msgid "Action"
+msgstr "Action"
+
+msgid "Gitea"
+msgstr "Gitea"
+
+msgid "Aucun dépôt détecté sur le cluster Gitea local."
+msgstr "Aucun dépôt détecté sur le cluster Gitea local."
+
+msgid "Lancer l'Audit de Sécurité"
+msgstr "Lancer l'Audit de Sécurité"
+
+msgid "Demander l'Avis de Gemma 5B"
+msgstr "Demander l'Avis de Gemma 5B"
+
+msgid "Tester la Latence"
+msgstr "Tester la Latence"
+
+msgid "Actualiser les Métriques"
+msgstr "Actualiser les Métriques"
+
+msgid "Changer de langue"
+msgstr "Changer de langue"
+
+msgid "Basculer thème clair / sombre"
+msgstr "Basculer thème clair / sombre"
+
+msgid "Thème clair activé"
+msgstr "Thème clair activé"
+
+msgid "Thème sombre activé"
+msgstr "Thème sombre activé"
+
+msgid "Vérification Zero-Knowledge Réussie !"
+msgstr "Vérification Zero-Knowledge Réussie !"
+
+msgid "Finaliser l'Inscription Gitea"
+msgstr "Finaliser l'Inscription Gitea"
+
+msgid "Se Connecter sur Gitea"
+msgstr "Se Connecter sur Gitea"
+
+msgid "Bascule d'Environnement Forge Souveraine"
+msgstr "Bascule d'Environnement Forge Souveraine"
+
+msgid "Accédez directement à vos espaces de dépôts Gitea ou GitLab CE."
+msgstr "Accédez directement à vos espaces de dépôts Gitea ou GitLab CE."
