@@ -334,12 +334,55 @@ const COPILOT_I18N = {
 };
 
 function getActiveCopilotLang() {
-  const m = document.cookie.match(/(?:^|;\s*)(bantu_lang|django_language|lang)=([^;]*)/);
-  if (!m) return 'fr';
-  const val = decodeURIComponent(m[2]).toLowerCase();
-  if (val.includes('en')) return 'en';
-  if (val.includes('sw')) return 'sw';
-  if (val.includes('pt')) return 'pt';
+  try {
+    const urlLang = new URLSearchParams(window.location.search).get('lang');
+    if (urlLang) {
+      const l = urlLang.toLowerCase();
+      if (l.startsWith('en')) return 'en';
+      if (l.startsWith('sw')) return 'sw';
+      if (l.startsWith('pt')) return 'pt';
+      if (l.startsWith('fr')) return 'fr';
+    }
+  } catch(e) {}
+
+  try {
+    const lsLang = localStorage.getItem('bantu_lang');
+    if (lsLang && COPILOT_I18N[lsLang]) return lsLang;
+  } catch(e) {}
+
+  function getCookie(name) {
+    const m = document.cookie.match(new RegExp('(?:^|;\\s*)' + name + '=([^;]*)'));
+    return m ? decodeURIComponent(m[1] ? m[1] : '').toLowerCase() : null;
+  }
+
+  const cookieStr = document.cookie;
+  const matchBantu = cookieStr.match(/(?:^|;\s*)bantu_lang=([^;]*)/);
+  if (matchBantu) {
+    const val = decodeURIComponent(matchBantu[1]).toLowerCase();
+    if (val.startsWith('en')) return 'en';
+    if (val.startsWith('sw')) return 'sw';
+    if (val.startsWith('pt')) return 'pt';
+    if (val.startsWith('fr')) return 'fr';
+  }
+
+  const matchDjango = cookieStr.match(/(?:^|;\s*)django_language=([^;]*)/);
+  if (matchDjango) {
+    const val = decodeURIComponent(matchDjango[1]).toLowerCase();
+    if (val.startsWith('en')) return 'en';
+    if (val.startsWith('sw')) return 'sw';
+    if (val.startsWith('pt')) return 'pt';
+    if (val.startsWith('fr')) return 'fr';
+  }
+
+  const matchGitea = cookieStr.match(/(?:^|;\s*)lang=([^;]*)/);
+  if (matchGitea) {
+    const val = decodeURIComponent(matchGitea[1]).toLowerCase();
+    if (val.startsWith('en')) return 'en';
+    if (val.startsWith('sw')) return 'sw';
+    if (val.startsWith('pt')) return 'pt';
+    if (val.startsWith('fr')) return 'fr';
+  }
+
   return 'fr';
 }
 
@@ -377,6 +420,19 @@ function applyCopilotI18n() {
 
 document.addEventListener('DOMContentLoaded', function() {
   applyCopilotI18n();
+
+  window.addEventListener('storage', applyCopilotI18n);
+  window.addEventListener('focus', applyCopilotI18n);
+  try {
+    if (typeof BroadcastChannel !== 'undefined') {
+      const bc = new BroadcastChannel('bantu_ecosystem_sync');
+      bc.onmessage = function(ev) {
+        if (ev.data && ev.data.lang) {
+          applyCopilotI18n();
+        }
+      };
+    }
+  } catch(e) {}
 
   const toggleBtn = document.getElementById('copilot-toggle-btn');
   const copilotWin = document.getElementById('copilot-window');
