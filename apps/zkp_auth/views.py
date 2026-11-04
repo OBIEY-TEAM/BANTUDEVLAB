@@ -63,9 +63,6 @@ class ZKPRegisterView(APIView):
         if not username or not public_key_y:
             return Response({"error": "username et public_key_y sont requis"}, status=status.HTTP_400_BAD_REQUEST)
 
-        if User.objects.filter(username=username).exists():
-            return Response({"error": f"L'utilisateur {username} existe déjà."}, status=status.HTTP_400_BAD_REQUEST)
-
         # Validate that public_key_y is a valid integer hex
         try:
             if not isinstance(public_key_y, str) or len(public_key_y) > MAX_HEX_LEN:
@@ -82,6 +79,23 @@ class ZKPRegisterView(APIView):
                     "error": "Clé publique invalide : n'appartient pas au sous-groupe premier valide (Small Subgroup Protection)."
                 },
                 status=status.HTTP_400_BAD_REQUEST,
+            )
+
+        if User.objects.filter(username=username).exists():
+            user = User.objects.get(username=username)
+            identity, _ = SovereignIdentity.objects.get_or_create(user=user)
+            identity.public_key_y = hex(y_int)[2:]
+            identity.country_code = country_code
+            identity.is_verified = True
+            identity.save()
+            return Response(
+                {
+                    "message": f"Identité souveraine synchronisée avec succès pour {username}.",
+                    "username": user.username,
+                    "country_code": identity.country_code,
+                    "public_key_y": identity.public_key_y,
+                },
+                status=status.HTTP_200_OK,
             )
 
         user = User.objects.create_user(username=username, email=email)
