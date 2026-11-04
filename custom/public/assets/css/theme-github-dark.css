@@ -5,12 +5,12 @@
 
 :root {
   /* GitHub Primer Color Tokens (Dark) */
-  --color-canvas-default: #0d1117;
-  --color-canvas-subtle: #161b22;
+  --color-canvas-default: #020617;
+  --color-canvas-subtle: #070e1e;
   --color-border-default: #30363d;
   --color-border-muted: #21262d;
   --color-neutral-muted: rgba(110, 118, 129, 0.4);
-  --color-accent-fg: #2f81f7;
+  --color-accent-fg: #00e5ff; /* Cyber Cyan */
   --color-accent-emphasis: #1f6feb;
   --color-success-fg: #3fb950;
   --color-success-emphasis: #238636;
@@ -38,7 +38,7 @@
   --color-primary-alpha-20: rgba(46, 160, 67, 0.25);
   --color-primary-alpha-30: rgba(46, 160, 67, 0.35);
 
-  --color-body: #0d1117;
+  --color-body: #020617; /* Deep Cyber Obsidian */
   --color-box-header: #161b22;
   --color-box-body: #0d1117;
   --color-text: #e6edf3;
@@ -49,7 +49,7 @@
   --color-text-dark: #f0f6fc;
 
   --color-footer: #0d1117;
-  --color-navbar: #010409;
+  --color-navbar: #050b18;
   --color-navbar-transparent: rgba(1, 4, 9, 0.9);
   --color-light: #161b22;
   --color-light-mimic-enabled: rgba(255, 255, 255, calc(40 / 255 * 222 / 255 / var(--opacity-boost)));
