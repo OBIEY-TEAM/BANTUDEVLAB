@@ -1,12 +1,23 @@
 :root {
+  /* Charte Graphique Officielle Logo Cyber Panafricain */
+  --neon-blue: #0070f3;
+  --neon-cyan: #00e5ff;
+  --neon-blue-glow: rgba(0, 229, 255, 0.35);
+  --gold-orbit: #f59e0b;
+  --gold-orbit-glow: rgba(245, 158, 11, 0.4);
+  
   --primary-african-gold: #f59e0b;
-  --secondary-emerald: #10b981;
-  --tertiary-terracotta: #dc2626;
-  --dark-bg: #0b0f19;
-  --dark-surface: #111827;
-  --dark-border: #1f2937;
-  --text-main: #f9fafb;
-  --text-muted: #9ca3af;
+  --secondary-emerald: #00e5ff;
+  --tertiary-terracotta: #ef4444;
+  --dark-bg: #020617;
+  --dark-surface: #070e1e;
+  --dark-card: #0b1528;
+  --dark-border: rgba(0, 112, 243, 0.22);
+  --dark-border-glow: rgba(0, 229, 255, 0.45);
+  --text-main: #f8fafc;
+  --text-muted: #94a3b8;
+  --card-bg: #0b1528;
+  --nav-bg: rgba(7, 14, 30, 0.95);
 }
 
 body {
@@ -22,8 +33,9 @@ body {
   justify-content: space-between;
   align-items: center;
   padding: 1rem 2rem;
-  background: rgba(17, 24, 39, 0.95);
-  border-bottom: 2px solid var(--primary-african-gold);
+  background: var(--nav-bg);
+  border-bottom: 2px solid var(--neon-cyan);
+  box-shadow: 0 4px 20px rgba(0, 112, 243, 0.15);
 }
 
 .brand {
@@ -37,12 +49,15 @@ body {
 }
 
 .brand-badge {
-  background: linear-gradient(135deg, var(--primary-african-gold), var(--tertiary-terracotta));
+  background: linear-gradient(135deg, rgba(0, 229, 255, 0.18), rgba(245, 158, 11, 0.18));
+  border: 1px solid var(--neon-cyan);
   padding: 0.2rem 0.6rem;
   border-radius: 6px;
   font-size: 0.75rem;
-  color: #000;
+  color: var(--neon-cyan);
   font-weight: bold;
+  letter-spacing: 0.05em;
+  text-shadow: 0 0 8px rgba(0, 229, 255, 0.5);
 }
 
 .nav-links {
@@ -751,11 +766,18 @@ footer {
 
 /* Thème Clair - Surcharges des variables système */
 [data-theme="light"] {
+  --neon-blue: #0051cc;
+  --neon-cyan: #0088cc;
+  --gold-orbit: #d97706;
+  --primary-african-gold: #d97706;
+  --secondary-emerald: #0070f3;
   --dark-bg: #f8fafc;
   --dark-surface: #ffffff;
-  --dark-border: #e2e8f0;
+  --dark-card: #ffffff;
+  --dark-border: #cbd5e1;
+  --dark-border-glow: rgba(0, 81, 204, 0.35);
   --text-main: #0f172a;
-  --text-muted: #64748b;
+  --text-muted: #475569;
   --nav-bg: rgba(255, 255, 255, 0.96);
   --card-bg: #ffffff;
   --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.08);
