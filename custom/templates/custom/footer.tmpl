@@ -334,6 +334,12 @@ const COPILOT_I18N = {
 };
 
 function getActiveCopilotLang() {
+  function getCookie(name) {
+    const m = document.cookie.match(new RegExp('(?:^|;\\s*)' + name + '=([^;]*)'));
+    return m ? decodeURIComponent(m[1] ? m[1] : '').toLowerCase() : null;
+  }
+
+  // 1. Parametre d'URL ?lang=
   try {
     const urlLang = new URLSearchParams(window.location.search).get('lang');
     if (urlLang) {
@@ -345,54 +351,40 @@ function getActiveCopilotLang() {
     }
   } catch(e) {}
 
-  // Priorite Haute : Langue actuelle de la page Gitea (attribut lang sur <html>)
-  try {
-    const docLang = (document.documentElement.getAttribute('lang') || '').toLowerCase();
-    if (docLang.startsWith('en')) return 'en';
-    if (docLang.startsWith('sw')) return 'sw';
-    if (docLang.startsWith('pt')) return 'pt';
-    if (docLang.startsWith('fr')) return 'fr';
-  } catch(e) {}
-
-  function getCookie(name) {
-    const m = document.cookie.match(new RegExp('(?:^|;\\s*)' + name + '=([^;]*)'));
-    return m ? decodeURIComponent(m[1] ? m[1] : '').toLowerCase() : null;
+  // 2. Cookie de preference utilisateur bantu_lang / django_language (priorite absolue)
+  const bLang = getCookie('bantu_lang') || getCookie('django_language');
+  if (bLang) {
+    if (bLang.startsWith('en')) return 'en';
+    if (bLang.startsWith('sw')) return 'sw';
+    if (bLang.startsWith('pt')) return 'pt';
+    if (bLang.startsWith('fr')) return 'fr';
   }
 
-  const cookieStr = document.cookie;
-  const matchGitea = cookieStr.match(/(?:^|;\s*)lang=([^;]*)/);
-  if (matchGitea) {
-    const val = decodeURIComponent(matchGitea[1]).toLowerCase();
-    if (val.startsWith('en')) return 'en';
-    if (val.startsWith('sw')) return 'sw';
-    if (val.startsWith('pt')) return 'pt';
-    if (val.startsWith('fr')) return 'fr';
+  // 3. Cookie Gitea lang
+  const gLang = getCookie('lang');
+  if (gLang) {
+    if (gLang.startsWith('en')) return 'en';
+    if (gLang.startsWith('sw')) return 'sw';
+    if (gLang.startsWith('pt')) return 'pt';
+    if (gLang.startsWith('fr')) return 'fr';
   }
 
-  const matchDjango = cookieStr.match(/(?:^|;\s*)django_language=([^;]*)/);
-  if (matchDjango) {
-    const val = decodeURIComponent(matchDjango[1]).toLowerCase();
-    if (val.startsWith('en')) return 'en';
-    if (val.startsWith('sw')) return 'sw';
-    if (val.startsWith('pt')) return 'pt';
-    if (val.startsWith('fr')) return 'fr';
-  }
-
-  const matchBantu = cookieStr.match(/(?:^|;\s*)bantu_lang=([^;]*)/);
-  if (matchBantu) {
-    const val = decodeURIComponent(matchBantu[1]).toLowerCase();
-    if (val.startsWith('en')) return 'en';
-    if (val.startsWith('sw')) return 'sw';
-    if (val.startsWith('pt')) return 'pt';
-    if (val.startsWith('fr')) return 'fr';
-  }
-
+  // 4. LocalStorage
   try {
     const lsLang = (localStorage.getItem('bantu_lang') || '').toLowerCase();
     if (lsLang.startsWith('en')) return 'en';
     if (lsLang.startsWith('sw')) return 'sw';
     if (lsLang.startsWith('pt')) return 'pt';
     if (lsLang.startsWith('fr')) return 'fr';
+  } catch(e) {}
+
+  // 5. Attribut lang sur <html>
+  try {
+    const docLang = (document.documentElement.getAttribute('lang') || '').toLowerCase();
+    if (docLang.startsWith('en')) return 'en';
+    if (docLang.startsWith('sw')) return 'sw';
+    if (docLang.startsWith('pt')) return 'pt';
+    if (docLang.startsWith('fr')) return 'fr';
   } catch(e) {}
 
   return 'fr';

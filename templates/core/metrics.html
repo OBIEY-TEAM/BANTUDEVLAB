@@ -137,26 +137,26 @@
                 <div>
                     <h4 id="detailNodeName" style="margin: 0; color: #fff; font-size: 1.1rem;">{% flag "CIV" 22 %} Nœud Central Systalink Cloud - Abidjan</h4>
                     <p id="detailNodeDesc" style="margin: 0.3rem 0 0; font-size: 0.85rem; color: var(--text-muted);">
-                        Hôte principal du moteur Git souverain Gitea, cluster PostgreSQL répliqué et API BantuDevLab.
+                        {% trans 'Hôte principal du moteur Git souverain Gitea, cluster PostgreSQL répliqué et API BantuDevLab.' %}
                     </p>
                 </div>
-                <span id="detailCertification" class="brand-badge">CERTIFIÉ TIER-3 SOUVERAIN</span>
+                <span id="detailCertification" class="brand-badge">{% trans "CERTIFIÉ TIER-3 SOUVERAIN" %}</span>
             </div>
             <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1rem; margin-top: 1rem; padding-top: 1rem; border-top: 1px solid rgba(255,255,255,0.08);">
                 <div>
-                    <span style="font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase;">Latence Locale</span>
+                    <span style="font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase;">{% trans "Latence Locale" %}</span>
                     <div id="detailLatency" style="font-weight: 700; color: var(--secondary-emerald); font-size: 1.1rem;">12 ms</div>
                 </div>
                 <div>
-                    <span style="font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase;">Bande Passante IXP</span>
+                    <span style="font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase;">{% trans "Bande Passante IXP" %}</span>
                     <div id="detailBandwidth" style="font-weight: 700; color: #fff; font-size: 1.1rem;">100 Gbps Local IXP</div>
                 </div>
                 <div>
-                    <span style="font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase;">Protection Légale</span>
+                    <span style="font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase;">{% trans "Protection Légale" %}</span>
                     <div id="detailJurisdiction" style="font-weight: 700; color: var(--primary-african-gold); font-size: 1.1rem;">Droit Ivoirien & UA</div>
                 </div>
                 <div>
-                    <span style="font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase;">Disponibilité SLA</span>
+                    <span style="font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase;">{% trans "Disponibilité SLA" %}</span>
                     <div id="detailUptime" style="font-weight: 700; color: var(--secondary-emerald); font-size: 1.1rem;">99.98%</div>
                 </div>
             </div>
@@ -165,26 +165,26 @@
 
     <!-- Piliers Stratégiques -->
     <div class="card" style="margin-bottom: 1.5rem;">
-        <h3>{% icon "map-pin" size=20 %} Localisation des Données & Hébergement</h3>
-        <p>Les serveurs Git, bases de données relationnelles PostgreSQL et sauvegardes sont hébergés sur l'infrastructure Systalink Cloud en Côte d'Ivoire et au Sénégal.</p>
+        <h3>{% icon "map-pin" size=20 %} {% trans 'Localisation des Données & Hébergement' %}</h3>
+        <p>{% trans "Les serveurs Git, bases de données relationnelles PostgreSQL et sauvegardes sont hébergés sur l'infrastructure Systalink Cloud en Côte d'Ivoire et au Sénégal." %}</p>
         <div style="background: rgba(16, 185, 129, 0.2); border-left: 4px solid var(--secondary-emerald); padding: 0.8rem; margin-top: 1rem; border-radius: 4px;">
-            <strong>Statut : 100% Souverain</strong> — Immunité totale face au CLOUD Act et aux juridictions extraterritoriales.
+            <strong>{% trans 'Statut : 100% Souverain' %}</strong> — {% trans 'Immunité totale face au CLOUD Act et aux juridictions extraterritoriales.' %}
         </div>
     </div>
 
     <div class="card" style="margin-bottom: 1.5rem;">
-        <h3>{% icon "lock" size=20 %} Cryptographie Zero-Knowledge (ZKP)</h3>
-        <p>Preuves de Schnorr non-interactives basées sur Fiat-Shamir garantissant une authentification à divulgation nulle de connaissance. Même en cas de compromission serveur, aucun mot de passe n'existe.</p>
+        <h3>{% icon "lock" size=20 %} {% trans 'Cryptographie Zero-Knowledge (ZKP)' %}</h3>
+        <p>{% trans "Preuves de Schnorr non-interactives basées sur Fiat-Shamir garantissant une authentification à divulgation nulle de connaissance. Même en cas de compromission serveur, aucun mot de passe n'existe." %}</p>
         <div style="background: rgba(245, 158, 11, 0.2); border-left: 4px solid var(--primary-african-gold); padding: 0.8rem; margin-top: 1rem;">
-            <strong>Statut : Cryptographiquement inviolable</strong> — Aucune empreinte secrète conservée.
+            <strong>{% trans 'Statut : Cryptographiquement inviolable' %}</strong> — {% trans 'Aucune empreinte secrète conservée.' %}
         </div>
     </div>
 
     <div class="card">
-        <h3>{% icon "cpu" size=18 %} Intelligence Artificielle Locale (Gemma 5B)</h3>
-        <p>Modèle de fondation Gemma 5B fine-tuné sur les dépôts de code et besoins d'infrastructures télécoms/fintech africaines. Exécution 100% On-Premise / Local.</p>
+        <h3>{% icon "cpu" size=18 %} {% trans 'Intelligence Artificielle Locale (Gemma 5B)' %}</h3>
+        <p>{% trans "Modèle de fondation Gemma 5B fine-tuné sur les dépôts de code et besoins d'infrastructures télécoms/fintech africaines. Exécution 100% On-Premise / Local." %}</p>
         <div style="background: rgba(16, 185, 129, 0.2); border-left: 4px solid var(--secondary-emerald); padding: 0.8rem; margin-top: 1rem;">
-            <strong>Statut : Zéro fuite de télémétrie</strong> — Vos algorithmes critiques restent strictement confidentiels.
+            <strong>{% trans 'Statut : Zéro fuite de télémétrie' %}</strong> — {% trans 'Vos algorithmes critiques restent strictement confidentiels.' %}
         </div>
     </div>
 </div>

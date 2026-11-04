@@ -388,13 +388,13 @@ async function runSecurityScan() {
     const editorStatus = document.getElementById('editorStatus');
 
     if (!code || !code.trim()) {
-        if (window.showToast) window.showToast("Veuillez saisir du code à analyser.", "warning");
+        if (window.showToast) window.showToast(DASHBOARD_I18N.pleaseEnterCode, "warning");
         return;
     }
 
-    editorStatus.textContent = 'Scan en cours...';
+    editorStatus.textContent = DASHBOARD_I18N.scanInProgress;
     editorStatus.style.color = 'var(--primary-african-gold)';
-    if (window.showToast) window.showToast("Analyse par le moteur de sécurité souverain...", "info");
+    if (window.showToast) window.showToast(DASHBOARD_I18N.scanAnalyzing, "info");
 
     try {
         const headers = {'Content-Type': 'application/json'};
@@ -430,11 +430,11 @@ async function runSecurityScan() {
         // Render cards
         renderVulnerabilityCards(data.issues || []);
 
-        editorStatus.textContent = 'Terminé';
+        editorStatus.textContent = DASHBOARD_I18N.scanCompletedStatus;
         editorStatus.style.color = 'var(--secondary-emerald)';
         if (window.showToast) window.showToast(`Scan terminé ! Score de souveraineté : ${data.sovereignty_score}%`, 'success');
     } catch(err) {
-        editorStatus.textContent = 'Erreur';
+        editorStatus.textContent = DASHBOARD_I18N.scanErrorStatus;
         editorStatus.style.color = 'var(--tertiary-terracotta)';
         if (window.showToast) window.showToast(`Erreur du scanner : ${err.message}`, 'error');
     }
@@ -446,13 +446,13 @@ async function runAiReview() {
     const aiContent = document.getElementById('aiReviewContent');
 
     if (!code || !code.trim()) {
-        if (window.showToast) window.showToast("Veuillez saisir du code pour l'audit IA.", "warning");
+        if (window.showToast) window.showToast(DASHBOARD_I18N.pleaseEnterCodeAi, "warning");
         return;
     }
 
     aiSection.style.display = 'block';
-    aiContent.textContent = 'Connexion sécurisée au moteur IA On-Premise Gemma 5B...\n';
-    if (window.showToast) window.showToast("Connexion au flux SSE de Gemma 5B...", "info");
+    aiContent.textContent = DASHBOARD_I18N.aiConnecting + '\n';
+    if (window.showToast) window.showToast(DASHBOARD_I18N.aiConnectingToast, "info");
 
     try {
         const aiHeaders = {
@@ -500,7 +500,7 @@ async function runAiReview() {
                 }
             }
         }
-        if (window.showToast) window.showToast("Revue de code par Gemma 5B complétée.", "success");
+        if (window.showToast) window.showToast(DASHBOARD_I18N.aiCompletedToast, "success");
     } catch(err) {
         aiContent.textContent = 'Erreur lors du streaming SSE: ' + err;
         if (window.showToast) window.showToast(`Erreur SSE: ${err.message}`, 'error');

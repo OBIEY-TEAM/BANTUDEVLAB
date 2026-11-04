@@ -10,10 +10,10 @@
 <div class="zkp-wizard-card">
 
     <div style="text-align: center; margin-bottom: 2rem;">
-        <span class="brand-badge" style="font-size: 0.8rem; margin-bottom: 0.5rem;">PROTOCOLE SCHNORR NIZKP / FIAT-SHAMIR</span>
-        <h2 style="margin: 0.5rem 0;">{% icon "key" size=22 %} Assistant d'Identité & Connexion Zero-Trust</h2>
+        <span class="brand-badge" style="font-size: 0.8rem; margin-bottom: 0.5rem;">{% trans "PROTOCOLE SCHNORR NIZKP / FIAT-SHAMIR" %}</span>
+        <h2 style="margin: 0.5rem 0;">{% icon "key" size=22 %} {% trans "Assistant d'Identité & Connexion Zero-Trust" %}</h2>
         <p style="color: var(--text-muted); font-size: 0.95rem; max-width: 550px; margin: 0 auto;">
-            Générez votre clé souveraine protégée par mnémonique BIP-39 et prouvez mathématiquement votre identité sans jamais exposer de mot de passe.
+            {% trans "Générez votre clé souveraine protégée par mnémonique BIP-39 et prouvez mathématiquement votre identité sans jamais exposer de mot de passe." %}
         </p>
     </div>
 
@@ -21,25 +21,25 @@
     <div class="zkp-steps-nav">
         <div class="zkp-step-indicator active" id="stepIndicator1" tabindex="0" role="button" aria-label="Etape 1 : Identite" onclick="switchWizardStep(1)" onkeydown="if(event.key==='Enter'||event.key===' ') switchWizardStep(1)">
             <div class="zkp-step-circle">1</div>
-            <span class="zkp-step-label">Identité</span>
+            <span class="zkp-step-label">{% trans "Identité" %}</span>
         </div>
         <div class="zkp-step-indicator" id="stepIndicator2" tabindex="0" role="button" aria-label="Etape 2 : Mnemonique" onclick="switchWizardStep(2)" onkeydown="if(event.key==='Enter'||event.key===' ') switchWizardStep(2)">
             <div class="zkp-step-circle">2</div>
-            <span class="zkp-step-label">Mnémonique</span>
+            <span class="zkp-step-label">{% trans "Mnémonique" %}</span>
         </div>
         <div class="zkp-step-indicator" id="stepIndicator3" tabindex="0" role="button" aria-label="Etape 3 : Zero-Trust Auth" onclick="switchWizardStep(3)" onkeydown="if(event.key==='Enter'||event.key===' ') switchWizardStep(3)">
             <div class="zkp-step-circle">3</div>
-            <span class="zkp-step-label">Zero-Trust Auth</span>
+            <span class="zkp-step-label">{% trans "Zero-Trust Auth" %}</span>
         </div>
     </div>
 
     <!-- Step 1: Username & Sovereign Organization -->
     <div id="wizardStep1" class="wizard-step-content">
-        <label style="display: block; margin-bottom: 0.4rem; font-weight: 600;">Nom de Développeur Souverain (Username) :</label>
+        <label style="display: block; margin-bottom: 0.4rem; font-weight: 600;">{% trans "Nom de Développeur Souverain (Username) :" %}</label>
         <input type="text" id="zkpUsername" value="kouame_dev" style="width: 100%; padding: 0.75rem; background: #080c14; border: 1px solid var(--dark-border); color: #fff; border-radius: 8px; font-size: 1rem; box-sizing: border-box;">
 
         <div style="margin-top: 1.25rem;">
-            <label style="display: block; margin-bottom: 0.4rem; font-weight: 600;">Juridiction Continentale (Nœud Souverain) :</label>
+            <label style="display: block; margin-bottom: 0.4rem; font-weight: 600;">{% trans "Juridiction Continentale (Nœud Souverain) :" %}</label>
             <select id="zkpCountry" style="width: 100%; padding: 0.75rem; background: #080c14; border: 1px solid var(--dark-border); color: #fff; border-radius: 8px; font-size: 0.95rem; box-sizing: border-box;">
                 <option value="CIV">Côte d'Ivoire (Systalink Abidjan DC)</option>
                 <option value="SEN">Sénégal (Dakar Sovereign Node)</option>
@@ -50,14 +50,14 @@
         </div>
 
         <div style="margin-top: 2rem; display: flex; justify-content: flex-end;">
-            <button class="btn btn-primary" onclick="switchWizardStep(2)">Suivant : Générer la Clé Souveraine {% icon "arrow-right" size=18 %}</button>
+            <button class="btn btn-primary" onclick="switchWizardStep(2)">{% trans "Suivant : Générer la Clé Souveraine" %} {% icon "arrow-right" size=18 %}</button>
         </div>
     </div>
 
     <!-- Step 2: BIP-39 Mnemonic & Cryptographic Strength Meter -->
     <div id="wizardStep2" class="wizard-step-content" style="display: none;">
         <div style="display: flex; justify-content: space-between; align-items: center;">
-            <label style="font-weight: 600;">Phrase Mnémonique Souveraine (Standard BIP-39) :</label>
+            <label style="font-weight: 600;">{% trans "Phrase Mnémonique Souveraine (Standard BIP-39) :" %}</label>
             <div style="display: flex; gap: 0.5rem; align-items: center;">
                 <button type="button" class="copy-btn" id="copyMnemonicBtn" onclick="copyMnemonicPhrase()">
                     {% icon "copy" size=14 %} <span id="copyMnemonicLabel">{% trans "Copier la phrase" %}</span>
@@ -84,7 +84,7 @@
                     <div id="strengthBar" class="strength-meter-bar"></div>
                 </div>
                 <div class="strength-label">
-                    <span>Force Cryptographique : <strong id="strengthText">Inviolable (256 bits)</strong></span>
+                    <span>{% trans "Force Cryptographique :" %} <strong id="strengthText">{% trans "Inviolable (256 bits)" %}</strong></span>
                     <span id="strengthEntropy">256-bit Entropy</span>
                 </div>
             </div>
@@ -109,7 +109,7 @@
     <!-- Step 3: Zero-Knowledge Proof Authentication -->
     <div id="wizardStep3" class="wizard-step-content" style="display: none;">
         <div style="background: rgba(16, 185, 129, 0.08); border: 1px solid rgba(16, 185, 129, 0.2); border-radius: 10px; padding: 1.25rem; margin-bottom: 1.5rem;">
-            <h4 style="margin: 0 0 0.5rem; color: var(--secondary-emerald);">Authentification Décentralisée Prête</h4>
+            <h4 style="margin: 0 0 0.5rem; color: var(--secondary-emerald);">{% trans "Authentification Décentralisée Prête" %}</h4>
             <p style="font-size: 0.85rem; color: #a7f3d0; margin: 0;">
                 Lors du clic, votre navigateur résout un défi cryptographique avec votre clé privée locale pour prouver la possession de la clé sans jamais la dévoiler au serveur.
             </p>
@@ -124,7 +124,7 @@
         <!-- Feedback d'Etat Interactif & SVG Spinner (T-UX-502) -->
         <div id="zkpLoadingFeedback" style="display: none; align-items: center; justify-content: center; gap: 0.75rem; margin: 1rem 0; padding: 0.85rem; background: rgba(16, 185, 129, 0.1); border: 1px solid var(--accent-color, #10b981); border-radius: 8px; color: var(--text-primary, #fff);">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="animation: spin 1s linear infinite;"><path d="M21 12a9 9 0 1 1-6.219-8.56"></path></svg>
-            <span id="zkpLoadingText">Calcul de la preuve Fiat-Shamir et interrogation du serveur...</span>
+            <span id="zkpLoadingText">{% trans "Calcul de la preuve Fiat-Shamir et interrogation du serveur..." %}</span>
         </div>
 
         <div style="margin-top: 2rem; display: flex; justify-content: flex-start;">

@@ -1,3 +1,16 @@
+<style id="bantu-instant-anti-fouc-css">
+/* Regle critique anti-fouc par defaut : appliquee des le parsing du head */
+html:not([data-theme="light"]):not([data-theme="github"]):not([data-theme="gitea-light"]),
+html:not([data-theme="light"]):not([data-theme="github"]):not([data-theme="gitea-light"]) body {
+  background-color: #020617 !important;
+  color: #f8fafc !important;
+}
+html[data-theme="light"], html[data-theme="github"], html[data-theme="gitea-light"],
+html[data-theme="light"] body, html[data-theme="github"] body, html[data-theme="gitea-light"] body {
+  background-color: #ffffff !important;
+  color: #1f2328 !important;
+}
+</style>
 <script>
 (function() {
   /* Anti-FOUC et Synchronisation Universelle du Theme BantuDevLab + Gitea */
@@ -7,23 +20,26 @@
   }
   var bantuTheme = getCookie('bantu_theme');
   var giteaTheme = getCookie('theme') || getCookie('gitea_theme');
-  var docTheme = document.documentElement.getAttribute('data-theme') || '';
-  var isDark;
+  var isDark = true;
 
-  if (bantuTheme === 'light' || giteaTheme === 'github' || docTheme === 'light' || docTheme === 'github') {
+  if (bantuTheme === 'light' || (!bantuTheme && (giteaTheme === 'github' || giteaTheme === 'gitea-light'))) {
     isDark = false;
-  } else if (bantuTheme === 'dark' || (giteaTheme && giteaTheme.indexOf('dark') !== -1) || (docTheme && docTheme.indexOf('dark') !== -1)) {
-    isDark = true;
   } else {
-    isDark = true; /* mode sombre par defaut souverain */
+    isDark = true; /* mode sombre par defaut */
   }
 
-  /* Appliquer le theme canonique immediatement */
-  document.documentElement.setAttribute('data-theme', isDark ? 'dark' : 'light');
+  /* Appliquer le theme canonique Gitea : 'github-dark' en sombre, 'github' en clair */
+  var targetGiteaTheme = isDark ? 'github-dark' : 'github';
+  var targetBantuTheme = isDark ? 'dark' : 'light';
+
+  document.documentElement.setAttribute('data-theme', targetGiteaTheme);
+  document.documentElement.setAttribute('data-bantu-theme', targetBantuTheme);
   if (isDark) {
     document.documentElement.classList.add('theme-github-dark');
+    document.documentElement.classList.remove('theme-github');
   } else {
     document.documentElement.classList.remove('theme-github-dark');
+    document.documentElement.classList.add('theme-github');
   }
 
   /* Injecter un style inline instantane pour supprimer tout flash blanc/noir */
@@ -45,20 +61,37 @@
     }
   }
 
-  /* Synchronisation immediate de la langue depuis l attribut html ou cookie Gitea */
+  /* Synchronisation immediate de la langue depuis cookies prioritaires vers attribut lang Gitea */
   try {
-    var docLang = (document.documentElement.getAttribute('lang') || '').toLowerCase();
-    var shortLang = 'fr';
-    if (docLang.indexOf('en') === 0) shortLang = 'en';
-    else if (docLang.indexOf('sw') === 0) shortLang = 'sw';
-    else if (docLang.indexOf('pt') === 0) shortLang = 'pt';
-    else if (docLang.indexOf('fr') === 0) shortLang = 'fr';
+    var shortLang = getCookie('bantu_lang') || getCookie('django_language');
+    if (!shortLang) {
+      var gCookie = getCookie('lang');
+      if (gCookie) {
+        if (gCookie.indexOf('en') === 0) shortLang = 'en';
+        else if (gCookie.indexOf('sw') === 0) shortLang = 'sw';
+        else if (gCookie.indexOf('pt') === 0) shortLang = 'pt';
+        else if (gCookie.indexOf('fr') === 0) shortLang = 'fr';
+      }
+    }
+    if (!shortLang) {
+      var docLang = (document.documentElement.getAttribute('lang') || '').toLowerCase();
+      if (docLang.indexOf('en') === 0) shortLang = 'en';
+      else if (docLang.indexOf('sw') === 0) shortLang = 'sw';
+      else if (docLang.indexOf('pt') === 0) shortLang = 'pt';
+      else shortLang = 'fr';
+    }
 
-    var currentBantuLang = getCookie('bantu_lang');
-    if (shortLang && currentBantuLang !== shortLang) {
+    var giteaLang = (shortLang === 'en') ? 'en-US' : (shortLang === 'sw') ? 'sw-KE' : (shortLang === 'pt') ? 'pt-PT' : 'fr-FR';
+    document.documentElement.setAttribute('lang', giteaLang);
+
+    if (getCookie('bantu_lang') !== shortLang) {
       document.cookie = 'bantu_lang=' + shortLang + ';path=/;max-age=31536000';
+    }
+    if (getCookie('django_language') !== shortLang) {
       document.cookie = 'django_language=' + shortLang + ';path=/;max-age=31536000';
-      try { localStorage.setItem('bantu_lang', shortLang); } catch(e) {}
+    }
+    if (getCookie('lang') !== giteaLang) {
+      document.cookie = 'lang=' + giteaLang + ';path=/;max-age=31536000';
     }
   } catch(e) {}
 })();
@@ -1136,6 +1169,73 @@ document.addEventListener('DOMContentLoaded', function() {
       rightMenu.insertBefore(themeBtn, rightMenu.firstChild);
     }
   }
+
+  
+  // 3. Synchronisation Specifique de la Page Apparence (/user/settings/appearance)
+  function setupAppearancePageSync() {
+    if (!window.location.pathname.includes('/user/settings/appearance')) return;
+
+    function captureAndSync() {
+      var themeSelect = document.querySelector('select[name="theme"]');
+      var langSelect = document.querySelector('select[name="language"]') || document.querySelector('select[name="lang"]');
+
+      var chosenTheme = null;
+      var chosenLang = null;
+
+      if (themeSelect && themeSelect.value) {
+        var tVal = themeSelect.value;
+        var isD = (tVal.indexOf('dark') !== -1 || tVal === 'arc-green' || tVal === 'github-dark' || tVal === 'gitea-dark');
+        chosenTheme = isD ? 'dark' : 'light';
+        var gTheme = isD ? 'github-dark' : 'github';
+        document.cookie = 'bantu_theme=' + chosenTheme + ';path=/;max-age=31536000';
+        document.cookie = 'theme=' + gTheme + ';path=/;max-age=31536000';
+        try { localStorage.setItem('bantu_theme', chosenTheme); } catch(e) {}
+      }
+
+      if (langSelect && langSelect.value) {
+        var lVal = langSelect.value;
+        if (lVal.indexOf('en') === 0) chosenLang = 'en';
+        else if (lVal.indexOf('sw') === 0) chosenLang = 'sw';
+        else if (lVal.indexOf('pt') === 0) chosenLang = 'pt';
+        else if (lVal.indexOf('fr') === 0) chosenLang = 'fr';
+
+        if (chosenLang) {
+          var gLang = (chosenLang === 'en') ? 'en-US' : (chosenLang === 'sw') ? 'sw-KE' : (chosenLang === 'pt') ? 'pt-PT' : 'fr-FR';
+          document.cookie = 'bantu_lang=' + chosenLang + ';path=/;max-age=31536000';
+          document.cookie = 'django_language=' + chosenLang + ';path=/;max-age=31536000';
+          document.cookie = 'lang=' + gLang + ';path=/;max-age=31536000';
+          try { localStorage.setItem('bantu_lang', chosenLang); } catch(e) {}
+        }
+      }
+
+      try {
+        if (typeof BroadcastChannel !== 'undefined') {
+          var bc = new BroadcastChannel('bantu_ecosystem_sync');
+          bc.postMessage({
+            type: 'ECOSYSTEM_SYNC',
+            theme: chosenTheme,
+            lang: chosenLang
+          });
+          bc.close();
+        }
+      } catch(e) {}
+    }
+
+    document.addEventListener('change', function(e) {
+      if (e.target && (e.target.name === 'theme' || e.target.name === 'language' || e.target.name === 'lang')) {
+        captureAndSync();
+      }
+    });
+
+    document.querySelectorAll('form').forEach(function(form) {
+      form.addEventListener('submit', function() {
+        captureAndSync();
+      });
+    });
+  }
+
+  setupAppearancePageSync();
+
 
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', setupHeaderControls);
