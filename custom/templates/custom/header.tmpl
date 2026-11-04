@@ -566,16 +566,14 @@ document.addEventListener('DOMContentLoaded', function() {
     toggleBtn.addEventListener('click', function(e) {
       e.preventDefault();
       isDark = !isDark;
-      const targetTheme = isDark ? 'github-dark' : 'github';
-      document.cookie = 'theme=' + targetTheme + ';path=/;max-age=31536000';
-      
-      // Update stylesheets dynamically in DOM
-      document.querySelectorAll('link[rel="stylesheet"]').forEach(l => {
-        if (l.href.includes('theme-github') || l.href.includes('theme-')) {
-          const newHref = isDark ? l.href.replace('theme-github.css', 'theme-github-dark.css') : l.href.replace('theme-github-dark.css', 'theme-github.css');
-          l.href = newHref;
-        }
-      });
+      const targetBantuTheme = isDark ? 'dark' : 'light';
+      if (window.syncEcosystemChange) {
+        window.syncEcosystemChange(targetBantuTheme, null);
+      } else {
+        const targetTheme = isDark ? 'github-dark' : 'github';
+        document.cookie = 'theme=' + targetTheme + ';path=/;max-age=31536000';
+        document.cookie = 'bantu_theme=' + targetBantuTheme + ';path=/;max-age=31536000';
+      }
       updateBtnDisplay();
       window.location.reload();
     });
