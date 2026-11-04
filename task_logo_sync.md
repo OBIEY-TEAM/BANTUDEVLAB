@@ -19,25 +19,25 @@
 - [x] 2.2 Integration du nouveau logo dans les templates de BantuDevLab et de Gitea.
 - [x] 2.3 Charte graphique et tokens CSS derives du logo pour le Mode Sombre Cyber et le Mode Clair Savane sur BantuDevLab et Gitea.
 
-### Tache 3 : Intégration du Logo et de la Charte Graphique sur GitLab Forge (Port 3001)
-- [ ] 3.1 Integrer le logo cyber carte d'Afrique officiel (SVG/PNG/Favicon), les routes statiques (/static/img/logo.svg, /favicon.svg, /static/js/bantu-ecosystem-sync.js) et la charte graphique bicolore (Obsidian / Savane) dans `forge_server.py`.
+### Tache 3 : Integration du Logo et de la Charte Graphique sur GitLab Forge (Port 3001)
+- [x] 3.1 Integrer le logo cyber carte d'Afrique officiel (SVG/PNG/Favicon), les routes statiques (/static/img/logo.svg, /favicon.svg, /static/js/bantu-ecosystem-sync.js) et la charte graphique bicolore (Obsidian / Savane) dans `forge_server.py`.
 
 ### Tache 4 : Synchronisation Universelle de la Langue sur GitLab Forge (Port 3001)
-- [ ] 4.1 Ajouter le dictionnaire complet de traduction quadri-lingue (FR, EN, SW, PT) pour toutes les vues de GitLab Forge (`_render_home_ui`, `_render_gitea_ui`, `_render_repo_ui`).
-- [ ] 4.2 Ajouter le selecteur de langues interactif dans la barre de navigation de GitLab Forge, gerer les cookies (`bantu_lang`, `django_language`, `lang`) et l'API de synchronisation.
+- [x] 4.1 Ajouter le dictionnaire complet de traduction quadri-lingue (FR, EN, SW, PT) pour toutes les vues de GitLab Forge (`_render_home_ui`, `_render_gitea_ui`, `_render_repo_ui`).
+- [x] 4.2 Ajouter le selecteur de langues interactif dans la barre de navigation de GitLab Forge, gerer les cookies (`bantu_lang`, `django_language`, `lang`) et l'API de synchronisation.
 
 ### Tache 5 : Synchronisation Universelle du Mode d'Affichage sur GitLab Forge (Port 3001)
-- [ ] 5.1 Ajouter le bouton de bascule de theme Sombre / Clair dans la barre de navigation de GitLab Forge avec bascule dynamique `[data-theme]` et cookies.
+- [x] 5.1 Ajouter le bouton de bascule de theme Sombre / Clair dans la barre de navigation de GitLab Forge avec bascule dynamique `[data-theme]` et cookies.
 
 ### Tache 6 : Branchement et Liaison Bidirectionnelle "Vis et Versa" sur BantuDevLab (Port 8001) et Gitea (Port 3002)
-- [ ] 6.1 Brancher `bantu-ecosystem-sync.js` dans `templates/base.html` de BantuDevLab pour ecouter les changements locaux et propager aux autres ports.
-- [ ] 6.2 Brancher `bantu-ecosystem-sync.js` dans `custom/templates/custom/header.tmpl` de Gitea (et copie dans `gitea_home/`) pour ecouter et propager les changements locaux.
+- [x] 6.1 Brancher `bantu-ecosystem-sync.js` dans `templates/base.html` de BantuDevLab pour ecouter les changements locaux et propager aux autres ports.
+- [x] 6.2 Brancher `bantu-ecosystem-sync.js` dans `custom/templates/custom/header.tmpl` de Gitea (et copie dans `gitea_home/`) pour ecouter et propager les changements locaux.
 
-### Tache 7 : Tests Automatisés Tri-Écosystème et Validation Zero-Emoji
-- [ ] 7.1 Mettre a jour et executer les tests automatises de conformite du logo, de la synchronisation de langue et du mode d'affichage sur les 3 ecosystemes.
-- [ ] 7.2 Validation stricte de la regle zero-emoji.
+### Tache 7 : Tests Automatises Tri-Ecosysteme et Validation Zero-Emoji
+- [x] 7.1 Mettre a jour et executer les tests automatises de conformite du logo, de la synchronisation de langue et du mode d'affichage sur les 3 ecosystemes.
+- [x] 7.2 Validation stricte de la regle zero-emoji.
 
-### Tache 8 : Clôture, Relance des Processus et Push Git
+### Tache 8 : Cloture, Relance des Processus et Push Git
 - [ ] 8.1 Arreter et relancer les 3 processus locaux (Django sur 8001, GitLab Forge sur 3001, Gitea sur 3002).
 - [ ] 8.2 Valider la reponse HTTP 200 sur les 3 plateformes.
 - [ ] 8.3 Git push vers origin sur develop-jule et design-figma.
