@@ -950,3 +950,53 @@ body {
 
 
 
+
+
+/* ==========================================================================
+   SOLID OPAQUE MODALS & REDUCED WINDOW FIX (T27.7 - ZERO TRANSPARENCY LEAK)
+   ========================================================================== */
+.ui.dimmer {
+  background-color: rgba(1, 4, 9, 0.8) !important;
+  backdrop-filter: blur(3px) !important;
+}
+
+.ui.modal,
+.ui.modal > .header,
+.ui.modal > .content,
+.ui.modal > .actions {
+  background-color: #0d1117 !important;
+  color: #e6edf3 !important;
+  border-color: #30363d !important;
+  opacity: 1 !important;
+}
+
+.ui.modal {
+  border: 1px solid #30363d !important;
+  border-radius: 8px !important;
+  box-shadow: 0 16px 32px rgba(1, 4, 9, 0.6) !important;
+  background: #0d1117 !important;
+}
+
+/* Reduced window, mobile menu, dropdowns & popups - solid opaque dark */
+.ui.dropdown .menu,
+.ui.popup,
+.ui.vertical.menu,
+.mobile-menu,
+.following.bar,
+.ui.attached.menu {
+  background-color: #161b22 !important;
+  color: #e6edf3 !important;
+  border: 1px solid #30363d !important;
+  opacity: 1 !important;
+  box-shadow: 0 8px 24px rgba(1, 4, 9, 0.45) !important;
+}
+
+.ui.dropdown .menu > .item {
+  color: #e6edf3 !important;
+  background-color: #161b22 !important;
+}
+
+.ui.dropdown .menu > .item:hover {
+  background-color: #21262d !important;
+  color: #58a6ff !important;
+}

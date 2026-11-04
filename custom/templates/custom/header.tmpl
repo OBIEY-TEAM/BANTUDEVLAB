@@ -300,6 +300,64 @@ document.addEventListener('DOMContentLoaded', function() {
   }
   applyAfricanLogoToGitea();
 
+  // Gitea Direct Dark / Light Mode Switcher (T27.7)
+  function initGiteaThemeToggle() {
+    const navBar = document.querySelector('.ui.menu.navbar');
+    if (!navBar || document.getElementById('gitea-theme-toggle-btn')) return;
+
+    // Detect current theme from cookies or stylesheet links
+    let isDark = document.cookie.includes('theme=github-dark') || 
+                 document.cookie.includes('theme=gitea-dark') ||
+                 Array.from(document.querySelectorAll('link[rel="stylesheet"]')).some(l => l.href.includes('github-dark'));
+
+    const toggleBtn = document.createElement('button');
+    toggleBtn.id = 'gitea-theme-toggle-btn';
+    toggleBtn.type = 'button';
+    toggleBtn.title = 'Basculer Theme Clair / Sombre';
+    toggleBtn.style.display = 'inline-flex';
+    toggleBtn.style.alignItems = 'center';
+    toggleBtn.style.gap = '6px';
+    toggleBtn.style.padding = '5px 10px';
+    toggleBtn.style.marginLeft = 'auto';
+    toggleBtn.style.marginRight = '8px';
+    toggleBtn.style.borderRadius = '6px';
+    toggleBtn.style.cursor = 'pointer';
+    toggleBtn.style.fontSize = '12px';
+    toggleBtn.style.fontWeight = '500';
+    toggleBtn.style.border = '1px solid var(--color-border-default, #30363d)';
+    toggleBtn.style.background = 'var(--color-canvas-subtle, #161b22)';
+    toggleBtn.style.color = 'var(--color-text, #c9d1d9)';
+
+    function updateBtnDisplay() {
+      toggleBtn.innerHTML = isDark ? 
+        '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg> <span>Clair</span>' : 
+        '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg> <span>Sombre</span>';
+    }
+    updateBtnDisplay();
+
+    toggleBtn.addEventListener('click', function(e) {
+      e.preventDefault();
+      isDark = !isDark;
+      const targetTheme = isDark ? 'github-dark' : 'github';
+      document.cookie = 'theme=' + targetTheme + ';path=/;max-age=31536000';
+      
+      // Update stylesheets dynamically in DOM
+      document.querySelectorAll('link[rel="stylesheet"]').forEach(l => {
+        if (l.href.includes('theme-github') || l.href.includes('theme-')) {
+          const newHref = isDark ? l.href.replace('theme-github.css', 'theme-github-dark.css') : l.href.replace('theme-github-dark.css', 'theme-github.css');
+          l.href = newHref;
+        }
+      });
+      updateBtnDisplay();
+      window.location.reload();
+    });
+
+    const rightMenu = navBar.querySelector('.right.menu') || navBar;
+    rightMenu.insertBefore(toggleBtn, rightMenu.firstChild);
+  }
+  initGiteaThemeToggle();
+
+
   // Inject sovereign Gist shortcut in top navbar if present
   const navContainer = document.querySelector('.ui.secondary.menu') || document.querySelector('.ui.menu.navbar');
   if (navContainer && !document.querySelector('.nav-gist-item')) {
