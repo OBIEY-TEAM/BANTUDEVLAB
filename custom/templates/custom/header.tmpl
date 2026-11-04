@@ -806,40 +806,17 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 </script>
 
-  // Synchronisation Automatique de Langue et Mode d'Affichage avec BantuDevLab
-  (function initGiteaBantuSync() {
-    // 1. Language Sync
-    const urlParams = new URLSearchParams(window.location.search);
-    const urlLang = urlParams.get('lang');
-    let storedLang = null;
-    try { storedLang = localStorage.getItem('bantu_gitea_lang'); } catch(e) {}
-
-    const targetLang = urlLang || storedLang;
-    if (targetLang) {
-      if (!document.cookie.includes('lang=' + targetLang)) {
-        document.cookie = 'lang=' + targetLang + ';path=/;max-age=31536000';
-        try { localStorage.setItem('bantu_gitea_lang', targetLang); } catch(e) {}
-      }
-    }
-
-    // 2. Theme Sync
-    const urlTheme = urlParams.get('theme');
-    let storedTheme = null;
-    try { storedTheme = localStorage.getItem('bantu_theme'); } catch(e) {}
-
-    if (urlTheme) {
-      const giteaThemeName = (urlTheme === 'github' || urlTheme === 'light') ? 'github' : 'github-dark';
-      document.cookie = 'theme=' + giteaThemeName + ';path=/;max-age=31536000';
-    } else if (storedTheme) {
-      const giteaThemeName = (storedTheme === 'light') ? 'github' : 'github-dark';
-      if (!document.cookie.includes('theme=' + giteaThemeName)) {
-        document.cookie = 'theme=' + giteaThemeName + ';path=/;max-age=31536000';
-      }
-    }
-
-    // 3. Inject Language Quick Switcher in Gitea Header
+<script src="/assets/js/bantu-ecosystem-sync.js"></script>
+<script>
+// Synchronisation Automatique de Langue et Mode d'Affichage avec BantuDevLab & GitLab Forge
+(function initGiteaBantuSync() {
+  function setupHeaderControls() {
     const navBar = document.querySelector('.ui.menu.navbar');
-    if (navBar && !document.getElementById('gitea-bantu-lang-selector')) {
+    if (!navBar) return;
+    const rightMenu = navBar.querySelector('.right.menu') || navBar;
+
+    // 1. Language Quick Switcher in Gitea Header
+    if (!document.getElementById('gitea-bantu-lang-selector')) {
       const langBox = document.createElement('div');
       langBox.id = 'gitea-bantu-lang-selector';
       langBox.style.display = 'inline-flex';
@@ -861,25 +838,75 @@ document.addEventListener('DOMContentLoaded', function() {
         a.textContent = l.label;
         a.style.padding = '2px 6px';
         a.style.borderRadius = '4px';
-        a.style.color = document.cookie.includes('lang=' + l.gitea) ? '#00e5ff' : '#94a3b8';
-        a.style.fontWeight = document.cookie.includes('lang=' + l.gitea) ? 'bold' : 'normal';
-        a.style.border = document.cookie.includes('lang=' + l.gitea) ? '1px solid #00e5ff' : '1px solid transparent';
+        const isCurrent = document.cookie.includes('lang=' + l.gitea) || document.cookie.includes('bantu_lang=' + l.code);
+        a.style.color = isCurrent ? '#00e5ff' : '#94a3b8';
+        a.style.fontWeight = isCurrent ? 'bold' : 'normal';
+        a.style.border = isCurrent ? '1px solid #00e5ff' : '1px solid rgba(148, 163, 184, 0.2)';
         a.style.textDecoration = 'none';
+        a.style.cursor = 'pointer';
 
         a.addEventListener('click', function(e) {
           e.preventDefault();
-          document.cookie = 'lang=' + l.gitea + ';path=/;max-age=31536000';
-          document.cookie = 'django_language=' + l.code + ';path=/;max-age=31536000';
-          try {
-            localStorage.setItem('bantu_lang_code', l.code);
-            localStorage.setItem('bantu_gitea_lang', l.gitea);
-          } catch(e) {}
+          if (window.syncEcosystemChange) {
+            window.syncEcosystemChange(null, l.code);
+          } else {
+            document.cookie = 'lang=' + l.gitea + ';path=/;max-age=31536000';
+            document.cookie = 'django_language=' + l.code + ';path=/;max-age=31536000';
+            document.cookie = 'bantu_lang=' + l.code + ';path=/;max-age=31536000';
+          }
           window.location.reload();
         });
         langBox.appendChild(a);
       });
 
-      const rightMenu = navBar.querySelector('.right.menu') || navBar;
       rightMenu.insertBefore(langBox, rightMenu.firstChild);
     }
-  })();
+
+    // 2. Theme Toggle Button in Gitea Header
+    if (!document.getElementById('gitea-theme-toggle-btn')) {
+      const themeBtn = document.createElement('button');
+      themeBtn.id = 'gitea-theme-toggle-btn';
+      themeBtn.type = 'button';
+      themeBtn.style.display = 'inline-flex';
+      themeBtn.style.alignItems = 'center';
+      themeBtn.style.gap = '5px';
+      themeBtn.style.padding = '3px 8px';
+      themeBtn.style.marginRight = '8px';
+      themeBtn.style.borderRadius = '6px';
+      themeBtn.style.background = 'rgba(255, 255, 255, 0.08)';
+      themeBtn.style.border = '1px solid rgba(255, 255, 255, 0.15)';
+      themeBtn.style.color = '#f8fafc';
+      themeBtn.style.fontSize = '12px';
+      themeBtn.style.cursor = 'pointer';
+
+      const isLight = document.cookie.includes('theme=github;') || document.cookie.endsWith('theme=github') || document.cookie.includes('bantu_theme=light');
+      themeBtn.innerHTML = isLight ?
+        '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#0070f3" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg> <span>Sombre</span>' :
+        '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg> <span>Clair</span>';
+
+      themeBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        const currentlyLight = document.cookie.includes('theme=github;') || document.cookie.endsWith('theme=github') || document.cookie.includes('bantu_theme=light');
+        const nextTheme = currentlyLight ? 'dark' : 'light';
+        const nextGiteaTheme = currentlyLight ? 'github-dark' : 'github';
+
+        if (window.syncEcosystemChange) {
+          window.syncEcosystemChange(nextTheme, null);
+        } else {
+          document.cookie = 'theme=' + nextGiteaTheme + ';path=/;max-age=31536000';
+          document.cookie = 'bantu_theme=' + nextTheme + ';path=/;max-age=31536000';
+        }
+        window.location.reload();
+      });
+
+      rightMenu.insertBefore(themeBtn, rightMenu.firstChild);
+    }
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', setupHeaderControls);
+  } else {
+    setupHeaderControls();
+  }
+})();
+</script>
