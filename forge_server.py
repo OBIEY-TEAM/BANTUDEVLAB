@@ -11,6 +11,7 @@ import hashlib
 import hmac
 import json
 import os
+import time
 import re
 import subprocess
 import urllib.parse
@@ -22,6 +23,113 @@ REPOS_DIR = BASE_DIR / "forge_data" / "repos"
 BANTU_CORE_URL = os.environ.get("BANTU_CORE_URL", "http://127.0.0.1:8001")
 WEBHOOK_SECRET = os.environ.get("GITEA_WEBHOOK_SECRET", "bantu_dev_webhook_secret_key_2026")
 PORT = int(os.environ.get("FORGE_PORT", 3001))
+
+FORGE_I18N = {
+    "fr": {
+        "brand_title": "BANTUDEVLAB FORGE GIT",
+        "brand_badge": "FORGE SOUVERAINE",
+        "switch_gitea": "Basculer vers Gitea",
+        "switch_gitlab": "Espace GitLab",
+        "portal_return": "Portail BantuDevLab",
+        "dashboard_audit": "Tableau de Bord & Audit",
+        "hero_title": "Moteur Git Panafricain & Depots Souverains (Production)",
+        "hero_desc": "Forge logicielle distribuee connectee en temps reel au portail BantuDevLab. Protocoles Git Smart HTTP, Zero-Trust ZKP et Webhooks signes HMAC.",
+        "emit_webhook": "Emettre Webhook de Production HMAC vers BantuDevLab",
+        "hosted_repos": "Depots Heberges sur l'Infrastructure Souveraine",
+        "stars": "Etoiles",
+        "forks": "Forks",
+        "tier_badge": "Tier-1 Souverain",
+        "clone_prompt": "Cloner le depot sur votre poste",
+        "zkp_note": "Pour pousser avec ZKP, utilisez votre token souverain genere depuis l'assistant Zero-Trust.",
+        "recent_commits": "Historique Recent des Commits",
+        "by_author": "Par",
+        "theme_toggle": "Mode d'Affichage",
+        "theme_dark": "Sombre",
+        "theme_light": "Clair",
+        "lang_fr": "Francais",
+        "lang_en": "English",
+        "lang_sw": "Kiswahili",
+        "lang_pt": "Portugues",
+    },
+    "en": {
+        "brand_title": "BANTUDEVLAB GIT FORGE",
+        "brand_badge": "SOVEREIGN FORGE",
+        "switch_gitea": "Switch to Gitea",
+        "switch_gitlab": "GitLab Workspace",
+        "portal_return": "BantuDevLab Portal",
+        "dashboard_audit": "Dashboard & Audit",
+        "hero_title": "Pan-African Git Engine & Sovereign Repositories (Production)",
+        "hero_desc": "Distributed software forge connected in real-time to the BantuDevLab portal. Git Smart HTTP protocols, Zero-Trust ZKP and HMAC signed Webhooks.",
+        "emit_webhook": "Emit Production HMAC Webhook to BantuDevLab",
+        "hosted_repos": "Repositories Hosted on Sovereign Infrastructure",
+        "stars": "Stars",
+        "forks": "Forks",
+        "tier_badge": "Tier-1 Sovereign",
+        "clone_prompt": "Clone repository to your workstation",
+        "zkp_note": "To push with ZKP, use your sovereign token generated from the Zero-Trust assistant.",
+        "recent_commits": "Recent Commits History",
+        "by_author": "By",
+        "theme_toggle": "Display Mode",
+        "theme_dark": "Dark",
+        "theme_light": "Light",
+        "lang_fr": "Francais",
+        "lang_en": "English",
+        "lang_sw": "Kiswahili",
+        "lang_pt": "Portugues",
+    },
+    "sw": {
+        "brand_title": "BANTUDEVLAB FORGE GIT",
+        "brand_badge": "JUKWAA LA UHURU",
+        "switch_gitea": "Badilisha kwenda Gitea",
+        "switch_gitlab": "Sehemu ya GitLab",
+        "portal_return": "Tovuti Kuu ya BantuDevLab",
+        "dashboard_audit": "Dashibodi na Ukaguzi",
+        "hero_title": "Injini ya Git ya Afrika na Hifadhi za Uhuru (Uzalishaji)",
+        "hero_desc": "Jukwaa lililosambazwa lililounganishwa kwa wakati halisi na BantuDevLab. Itifaki za Git Smart HTTP, Zero-Trust ZKP na Webhooks za HMAC.",
+        "emit_webhook": "Tuma Webhook ya HMAC kwa BantuDevLab",
+        "hosted_repos": "Hifadhi Zilizowekwa kwenye Miundombinu Huru",
+        "stars": "Nyota",
+        "forks": "Forks",
+        "tier_badge": "Kiwango cha 1 Uhuru",
+        "clone_prompt": "Pakua msimbo kwenye kompyuta yako",
+        "zkp_note": "Kusukuma na ZKP, tumia kitambulisho chako cha siri cha Zero-Trust.",
+        "recent_commits": "Historia ya Hivi Karibuni ya Mabadiliko",
+        "by_author": "Na",
+        "theme_toggle": "Hali ya Skrini",
+        "theme_dark": "Giza",
+        "theme_light": "Mwanga",
+        "lang_fr": "Francais",
+        "lang_en": "English",
+        "lang_sw": "Kiswahili",
+        "lang_pt": "Portugues",
+    },
+    "pt": {
+        "brand_title": "BANTUDEVLAB FORJA GIT",
+        "brand_badge": "FORJA SOBERANA",
+        "switch_gitea": "Mudar para Gitea",
+        "switch_gitlab": "Espaco GitLab",
+        "portal_return": "Portal BantuDevLab",
+        "dashboard_audit": "Painel & Auditoria",
+        "hero_title": "Motor Git Pan-Africano & Repositorios Soberanos (Producao)",
+        "hero_desc": "Forja distribuida conectada em tempo real ao portal BantuDevLab. Protocolos Git Smart HTTP, Zero-Trust ZKP e Webhooks HMAC.",
+        "emit_webhook": "Emitir Webhook HMAC de Producao para BantuDevLab",
+        "hosted_repos": "Repositorios Hospedados na Infraestrutura Soberana",
+        "stars": "Estrelas",
+        "forks": "Forks",
+        "tier_badge": "Tier-1 Soberano",
+        "clone_prompt": "Clonar o repositorio em sua maquina",
+        "zkp_note": "Para enviar com ZKP, use seu token soberano gerado no assistente Zero-Trust.",
+        "recent_commits": "Historico Recente de Commits",
+        "by_author": "Por",
+        "theme_toggle": "Modo de Exibicao",
+        "theme_dark": "Escuro",
+        "theme_light": "Claro",
+        "lang_fr": "Francais",
+        "lang_en": "English",
+        "lang_sw": "Kiswahili",
+        "lang_pt": "Portugues",
+    },
+}
 
 REPO_METADATA = {
     "sovereign-org/afri-fintech-gateway": {
@@ -73,6 +181,46 @@ class SovereignForgeHandler(BaseHTTPRequestHandler):
         self.end_headers()
         self.wfile.write(body)
 
+    def _send_file(self, filepath, content_type):
+        p = Path(filepath)
+        if not p.exists():
+            return self._send_json({"error": "File not found"}, status=404)
+        data = p.read_bytes()
+        self.send_response(200)
+        self.send_header("Content-Type", content_type)
+        self.send_header("Content-Length", str(len(data)))
+        self.send_header("Cache-Control", "no-cache")
+        self.send_header("Access-Control-Allow-Origin", "*")
+        self.end_headers()
+        self.wfile.write(data)
+
+    def _get_lang_and_theme(self):
+        url = urllib.parse.urlparse(self.path)
+        qs = urllib.parse.parse_qs(url.query)
+        cookie_str = self.headers.get("Cookie", "")
+
+        theme = "dark"
+        if "theme" in qs and qs["theme"][0] in ("light", "github"):
+            theme = "light"
+        elif "bantu_theme=light" in cookie_str or "theme=github;" in cookie_str or cookie_str.endswith("theme=github"):
+            theme = "light"
+
+        lang = "fr"
+        if "lang" in qs:
+            val = qs["lang"][0].lower()
+            if "en" in val: lang = "en"
+            elif "sw" in val: lang = "sw"
+            elif "pt" in val: lang = "pt"
+            elif "fr" in val: lang = "fr"
+        elif "bantu_lang=en" in cookie_str or "django_language=en" in cookie_str or "lang=en-US" in cookie_str:
+            lang = "en"
+        elif "bantu_lang=sw" in cookie_str or "django_language=sw" in cookie_str or "lang=sw-KE" in cookie_str:
+            lang = "sw"
+        elif "bantu_lang=pt" in cookie_str or "django_language=pt" in cookie_str or "lang=pt-PT" in cookie_str:
+            lang = "pt"
+
+        return lang, theme
+
     def _send_html(self, html_content, status=200):
         body = html_content.encode("utf-8")
         self.send_response(status)
@@ -96,6 +244,20 @@ class SovereignForgeHandler(BaseHTTPRequestHandler):
         url = urllib.parse.urlparse(self.path)
         path = url.path.rstrip("/")
         urllib.parse.parse_qs(url.query)
+
+        # 0. Static routes for Cyber Logo, Favicon & Sync JS
+        if path in ("/static/img/logo.svg", "/assets/img/logo.svg", "/img/logo.svg", "/logo.svg"):
+            return self._send_file(BASE_DIR / "static" / "img" / "logo.svg", "image/svg+xml")
+        if path in ("/static/img/logo.png", "/assets/img/logo.png", "/img/logo.png", "/logo.png"):
+            return self._send_file(BASE_DIR / "static" / "img" / "logo.png", "image/png")
+        if path in ("/static/img/favicon.svg", "/assets/img/favicon.svg", "/favicon.svg"):
+            return self._send_file(BASE_DIR / "static" / "img" / "favicon.svg", "image/svg+xml")
+        if path in ("/static/js/bantu-ecosystem-sync.js", "/assets/js/bantu-ecosystem-sync.js", "/sync.js"):
+            return self._send_file(BASE_DIR / "static" / "js" / "bantu-ecosystem-sync.js", "application/javascript")
+        if path == "/api/sync/state":
+            lang, theme = self._get_lang_and_theme()
+            return self._send_json({"lang": lang, "theme": theme, "ts": int(time.time() * 1000)})
+
 
         # 1. API: /api/v1/version & /api/v4/version (GitLab CE)
         if path == "/api/v4/version":
@@ -460,19 +622,212 @@ class SovereignForgeHandler(BaseHTTPRequestHandler):
             return {"success": False, "error": str(e)}
 
     # ---------------- UI Templates ----------------
+    def _render_navbar(self, lang, theme, active_view="gitlab"):
+        t = FORGE_I18N.get(lang, FORGE_I18N["fr"])
+        brand_title = t["brand_title"]
+        brand_badge = t["brand_badge"]
+        switch_gitea = t["switch_gitea"]
+        portal_return = t["portal_return"]
+        dashboard_audit = t["dashboard_audit"]
+        theme_toggle = t["theme_toggle"]
+        theme_label = t["theme_light"] if theme == "dark" else t["theme_dark"]
+        
+        theme_icon = """<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>""" if theme == "dark" else """<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#0070f3" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>"""
+
+        sel_fr = "selected" if lang == "fr" else ""
+        sel_en = "selected" if lang == "en" else ""
+        sel_sw = "selected" if lang == "sw" else ""
+        sel_pt = "selected" if lang == "pt" else ""
+
+        return f"""
+    <nav class="navbar">
+        <a href="/" class="brand">
+            <img src="/static/img/logo.svg" width="34" height="34" alt="BantuDevLab Logo" class="brand-logo">
+            <span>{brand_title}</span>
+            <span class="badge">{brand_badge}</span>
+        </a>
+        <div class="nav-controls">
+            <!-- Language selector -->
+            <div class="control-box">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle;margin-right:4px;"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+                <select id="forgeLangSelect" class="sync-select" onchange="changeForgeLang(this.value)">
+                    <option value="fr" {sel_fr}>FR - {t["lang_fr"]}</option>
+                    <option value="en" {sel_en}>EN - {t["lang_en"]}</option>
+                    <option value="sw" {sel_sw}>SW - {t["lang_sw"]}</option>
+                    <option value="pt" {sel_pt}>PT - {t["lang_pt"]}</option>
+                </select>
+            </div>
+
+            <!-- Theme toggle -->
+            <button id="forgeThemeBtn" class="theme-btn" onclick="toggleForgeTheme()" title="{theme_toggle}">
+                {theme_icon}
+                <span id="forgeThemeLabel">{theme_label}</span>
+            </button>
+
+            <!-- Ecosystem navigation links -->
+            <a href="http://localhost:3002/user/login" class="btn btn-outline" style="border-color: var(--cyan); color: var(--cyan);">{switch_gitea} &rarr;</a>
+            <a href="{BANTU_CORE_URL}/" class="btn btn-outline">&larr; {portal_return}</a>
+            <a href="{BANTU_CORE_URL}/dashboard/" class="btn btn-gold">{dashboard_audit}</a>
+        </div>
+    </nav>"""
+
+    def _render_head(self, title, theme):
+        return f"""<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{title}</title>
+    <link rel="icon" type="image/svg+xml" href="/static/img/favicon.svg">
+    <style>
+        :root {{
+            --gold: #f59e0b;
+            --emerald: #10b981;
+            --cyan: #00e5ff;
+            --blue: #0070f3;
+            --bg: #020617;
+            --surface: #070e1e;
+            --surface-card: #0b1528;
+            --border: #1e293b;
+            --text: #f8fafc;
+            --muted: #94a3b8;
+        }}
+        [data-theme="light"] {{
+            --gold: #d97706;
+            --emerald: #059669;
+            --cyan: #0284c7;
+            --blue: #0051cc;
+            --bg: #f8fafc;
+            --surface: #ffffff;
+            --surface-card: #f1f5f9;
+            --border: #cbd5e1;
+            --text: #0f172a;
+            --muted: #64748b;
+        }}
+        body {{
+            margin: 0; font-family: system-ui, -apple-system, sans-serif;
+            background: var(--bg); color: var(--text); line-height: 1.6;
+            transition: background-color 0.2s ease, color 0.2s ease;
+        }}
+        .navbar {{
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 0.85rem 2rem; background: var(--surface); border-bottom: 2px solid var(--gold);
+            flex-wrap: wrap; gap: 1rem;
+        }}
+        .brand {{ display: flex; align-items: center; gap: 0.6rem; font-weight: 800; font-size: 1.15rem; color: var(--text); text-decoration: none; }}
+        .brand-logo {{
+            border-radius: 8px; box-shadow: 0 0 12px rgba(0, 229, 255, 0.45);
+            vertical-align: middle; border: 1px solid rgba(0, 229, 255, 0.3);
+        }}
+        .badge {{ background: var(--gold); color: #000; font-size: 0.72rem; padding: 0.2rem 0.5rem; border-radius: 4px; font-weight: bold; letter-spacing: 0.5px; }}
+        .nav-controls {{ display: flex; gap: 0.75rem; align-items: center; flex-wrap: wrap; }}
+        .control-box {{
+            display: flex; align-items: center; background: var(--surface-card);
+            border: 1px solid var(--border); border-radius: 6px; padding: 0.25rem 0.6rem; color: var(--text);
+        }}
+        .sync-select {{
+            background: transparent; border: none; color: var(--text); font-size: 0.82rem;
+            outline: none; cursor: pointer; font-family: inherit; font-weight: 600;
+        }}
+        .sync-select option {{ background: var(--surface); color: var(--text); }}
+        .theme-btn {{
+            display: inline-flex; align-items: center; gap: 0.4rem; padding: 0.35rem 0.75rem;
+            background: var(--surface-card); border: 1px solid var(--border); border-radius: 6px;
+            color: var(--text); font-size: 0.82rem; font-weight: 600; cursor: pointer; font-family: inherit;
+        }}
+        .theme-btn:hover {{ border-color: var(--cyan); }}
+        .container {{ max-width: 1100px; margin: 2rem auto; padding: 0 1rem; }}
+        .btn {{
+            display: inline-flex; align-items: center; gap: 0.35rem; padding: 0.4rem 0.85rem; border-radius: 6px;
+            font-weight: 600; font-size: 0.84rem; text-decoration: none; cursor: pointer; border: none;
+        }}
+        .btn-gold {{ background: var(--gold); color: #000; }}
+        .btn-gold:hover {{ opacity: 0.9; }}
+        .btn-emerald {{ background: var(--emerald); color: #000; }}
+        .btn-outline {{ background: transparent; border: 1px solid var(--border); color: var(--text); }}
+        .btn-outline:hover {{ border-color: var(--gold); color: var(--gold); }}
+        .hero {{
+            background: radial-gradient(circle at 50% 10%, rgba(245, 158, 11, 0.12), transparent 70%);
+            padding: 2.25rem; border-radius: 12px; border: 1px solid var(--border); margin-bottom: 2rem; text-align: center;
+        }}
+        .repo-card {{
+            background: var(--surface); border: 1px solid var(--border);
+            border-radius: 8px; padding: 1.25rem; margin-bottom: 1rem;
+            transition: transform 0.15s ease, border-color 0.15s ease;
+        }}
+        .repo-card:hover {{ border-color: var(--cyan); transform: translateY(-2px); }}
+        .repo-header {{ display: flex; justify-content: space-between; align-items: center; }}
+        .repo-title {{ font-size: 1.15rem; font-weight: 700; color: var(--gold); text-decoration: none; }}
+        .repo-desc {{ color: var(--muted); margin: 0.5rem 0; font-size: 0.95rem; }}
+        .repo-footer {{ display: flex; gap: 1.5rem; align-items: center; font-size: 0.85rem; color: var(--muted); flex-wrap: wrap; }}
+        .clone-snippet {{ background: var(--surface-card); padding: 0.25rem 0.6rem; border-radius: 4px; color: var(--emerald); font-family: monospace; border: 1px solid var(--border); }}
+    </style>
+</head>"""
+
+    def _render_scripts(self):
+        return """
+    <script src="/static/js/bantu-ecosystem-sync.js"></script>
+    <script>
+    function changeForgeLang(newLang) {
+        if (window.syncEcosystemChange) {
+            window.syncEcosystemChange(null, newLang);
+        } else {
+            document.cookie = 'bantu_lang=' + newLang + ';path=/;max-age=31536000';
+            document.cookie = 'django_language=' + newLang + ';path=/;max-age=31536000';
+            window.location.search = '?lang=' + newLang;
+        }
+    }
+
+    function toggleForgeTheme() {
+        const cur = document.documentElement.getAttribute('data-theme') || 'dark';
+        const next = (cur === 'dark') ? 'light' : 'dark';
+        if (window.syncEcosystemChange) {
+            window.syncEcosystemChange(next, null);
+        } else {
+            document.documentElement.setAttribute('data-theme', next);
+            document.cookie = 'bantu_theme=' + next + ';path=/;max-age=31536000';
+            document.cookie = 'theme=' + (next === 'light' ? 'github' : 'github-dark') + ';path=/;max-age=31536000';
+            const label = document.getElementById('forgeThemeLabel');
+            if (label) label.textContent = (next === 'dark') ? 'Clair' : 'Sombre';
+        }
+    }
+
+    function triggerTestWebhook() {
+        const out = document.getElementById('webhookResult');
+        if (!out) return;
+        out.textContent = "Envoi du webhook HMAC en cours...";
+        fetch('/trigger-webhook', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                repository: { name: 'afri-fintech-gateway' },
+                pusher: { username: 'kouame_dev' },
+                ref: 'refs/heads/main'
+            })
+        })
+        .then(r => r.json())
+        .then(data => {
+            out.textContent = "Webhook acquitte par BantuDevLab Core : " + JSON.stringify(data.bantu_response || data);
+        })
+        .catch(err => {
+            out.textContent = "Erreur webhook : " + err.message;
+        });
+    }
+    </script>"""
+
     def _render_home_ui(self):
+        lang, theme = self._get_lang_and_theme()
+        t = FORGE_I18N.get(lang, FORGE_I18N["fr"])
         repos = self._get_repos_list()
         repos_html = "".join(
             f"""
         <div class="repo-card">
             <div class="repo-header">
                 <a href="/{r["full_name"]}" class="repo-title">{r["full_name"]}</a>
-                <span class="badge">Tier-1 Souverain</span>
+                <span class="badge">{t["tier_badge"]}</span>
             </div>
             <p class="repo-desc">{r["description"]}</p>
             <div class="repo-footer">
-                <span>Stars: {r["stars_count"]}</span>
-                <span>Forks: {r["forks_count"]}</span>
+                <span>{t["stars"]}: {r["stars_count"]}</span>
+                <span>{t["forks"]}: {r["forks_count"]}</span>
                 <code class="clone-snippet">git clone {r["clone_url"]}</code>
             </div>
         </div>
@@ -481,123 +836,47 @@ class SovereignForgeHandler(BaseHTTPRequestHandler):
         )
 
         html = f"""<!DOCTYPE html>
-<html lang="fr" data-theme="dark">
-<head>
-    <meta charset="UTF-8">
-    <title>BANTUDEVLAB — Moteur Forge Git Souveraine</title>
-    <style>
-        :root {{
-            --gold: #f59e0b;
-            --emerald: #10b981;
-            --bg: #0b0f19;
-            --surface: #111827;
-            --border: #1f2937;
-            --text: #f9fafb;
-            --muted: #9ca3af;
-        }}
-        body {{
-            margin: 0; font-family: system-ui, -apple-system, sans-serif;
-            background: var(--bg); color: var(--text); line-height: 1.6;
-        }}
-        .navbar {{
-            display: flex; justify-content: space-between; align-items: center;
-            padding: 1rem 2rem; background: var(--surface); border-bottom: 2px solid var(--gold);
-        }}
-        .brand {{ display: flex; align-items: center; gap: 0.6rem; font-weight: 800; font-size: 1.25rem; color: #fff; text-decoration: none; }}
-        .badge {{ background: var(--gold); color: #000; font-size: 0.75rem; padding: 0.2rem 0.5rem; border-radius: 4px; font-weight: bold; }}
-        .container {{ max-width: 1100px; margin: 2rem auto; padding: 0 1rem; }}
-        .btn {{
-            display: inline-block; padding: 0.5rem 1rem; border-radius: 6px;
-            font-weight: 600; text-decoration: none; cursor: pointer; border: none;
-        }}
-        .btn-gold {{ background: var(--gold); color: #000; }}
-        .btn-outline {{ background: transparent; border: 1px solid var(--border); color: var(--text); }}
-        .btn-outline:hover {{ border-color: var(--gold); color: var(--gold); }}
-        .hero {{
-            background: radial-gradient(circle at 50% 10%, rgba(245, 158, 11, 0.15), transparent 70%);
-            padding: 2.5rem; border-radius: 12px; border: 1px solid var(--border); margin-bottom: 2rem; text-align: center;
-        }}
-        .repo-card {{
-            background: var(--surface); border: 1px solid var(--border);
-            border-radius: 8px; padding: 1.25rem; margin-bottom: 1rem;
-        }}
-        .repo-header {{ display: flex; justify-content: space-between; align-items: center; }}
-        .repo-title {{ font-size: 1.15rem; font-weight: 700; color: var(--gold); text-decoration: none; }}
-        .repo-desc {{ color: var(--muted); margin: 0.5rem 0; font-size: 0.95rem; }}
-        .repo-footer {{ display: flex; gap: 1.5rem; align-items: center; font-size: 0.85rem; color: var(--muted); flex-wrap: wrap; }}
-        .clone-snippet {{ background: #000; padding: 0.25rem 0.6rem; border-radius: 4px; color: var(--emerald); font-family: monospace; }}
-    </style>
-</head>
+<html lang="{lang}" data-theme="{theme}">
+{self._render_head(f"BANTUDEVLAB - {t['brand_title']}", theme)}
 <body>
-    <nav class="navbar">
-        <a href="/" class="brand">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2" style="vertical-align:middle;margin-right:6px;"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
-            <span>BANTUDEVLAB FORGE GIT</span>
-            <span class="badge">SYSTALINK CLOUD</span>
-        </a>
-        <div style="display: flex; gap: 0.8rem; align-items: center;">
-            <a href="http://localhost:3002/user/login" class="btn btn-outline" style="border-color: #10b981; color: #10b981;">Basculer vers Gitea &rarr;</a>
-            <a href="{BANTU_CORE_URL}/" class="btn btn-outline">&larr; Retour au Portail BantuDevLab</a>
-            <a href="{BANTU_CORE_URL}/dashboard/" class="btn btn-gold">Tableau de Bord & Audit</a>
-        </div>
-    </nav>
+    {self._render_navbar(lang, theme, active_view="gitlab")}
 
     <div class="container">
         <div class="hero">
-            <h1 style="margin-top: 0;">Moteur Git Panafricain & Dépôts Souverains (Production)</h1>
+            <h1 style="margin-top: 0;">{t["hero_title"]}</h1>
             <p style="color: var(--muted); max-width: 700px; margin: 0 auto 1.5rem;">
-                Forge logicielle distribuée connectée en temps réel au portail BantuDevLab.
-                Protocoles Git Smart HTTP, Zero-Trust ZKP et Webhooks signés HMAC.
+                {t["hero_desc"]}
             </p>
             <div style="display: flex; gap: 1rem; justify-content: center;">
-                <button class="btn btn-gold" onclick="triggerTestWebhook()">Émettre Webhook de Production HMAC vers BantuDevLab</button>
+                <button class="btn btn-gold" onclick="triggerTestWebhook()">{t["emit_webhook"]}</button>
             </div>
             <div id="webhookResult" style="margin-top: 1rem; font-family: monospace; font-size: 0.85rem; color: var(--emerald);"></div>
         </div>
 
-        <h2>Dépôts Hébergés sur l'Infrastructure Souveraine</h2>
+        <h2>{t["hosted_repos"]}</h2>
         {repos_html}
     </div>
 
-    <script>
-    function triggerTestWebhook() {{
-        const out = document.getElementById('webhookResult');
-        out.textContent = "Envoi du webhook HMAC en cours...";
-        fetch('/trigger-webhook', {{
-            method: 'POST',
-            headers: {{ 'Content-Type': 'application/json' }},
-            body: JSON.stringify({{
-                repository: {{ name: 'afri-fintech-gateway' }},
-                pusher: {{ username: 'kouame_dev' }},
-                ref: 'refs/heads/main'
-            }})
-        }})
-        .then(r => r.json())
-        .then(data => {{
-            out.textContent = "Webhook acquitté par BantuDevLab Core : " + JSON.stringify(data.bantu_response || data);
-        }})
-        .catch(err => {{
-            out.textContent = "Erreur webhook : " + err.message;
-        }});
-    }}
-    </script>
+    {self._render_scripts()}
 </body>
 </html>"""
         return self._send_html(html)
 
     def _render_gitea_ui(self):
+        lang, theme = self._get_lang_and_theme()
+        t = FORGE_I18N.get(lang, FORGE_I18N["fr"])
         repos = self._get_repos_list()
         repos_html = "".join(
             f"""
-        <div class="repo-card" style="border-left: 3px solid #10b981;">
+        <div class="repo-card" style="border-left: 3px solid var(--emerald);">
             <div class="repo-header">
-                <a href="/{r["full_name"]}" class="repo-title" style="color: #10b981;">{r["full_name"]}</a>
-                <span class="badge" style="background: #10b981; color: #000;">Gitea CE Souverain</span>
+                <a href="/{r["full_name"]}" class="repo-title" style="color: var(--emerald);">{r["full_name"]}</a>
+                <span class="badge" style="background: var(--emerald); color: #000;">Gitea CE Souverain</span>
             </div>
             <p class="repo-desc">{r["description"]}</p>
             <div class="repo-footer">
-                <span>Stars: {r["stars_count"]}</span>
-                <span>Forks: {r["forks_count"]}</span>
+                <span>{t["stars"]}: {r["stars_count"]}</span>
+                <span>{t["forks"]}: {r["forks_count"]}</span>
                 <code class="clone-snippet">git clone {r["clone_url"]}</code>
             </div>
         </div>
@@ -606,90 +885,38 @@ class SovereignForgeHandler(BaseHTTPRequestHandler):
         )
 
         html = f"""<!DOCTYPE html>
-<html lang="fr" data-theme="dark">
-<head>
-    <meta charset="UTF-8">
-    <title>Gitea Souverain — BANTUDEVLAB</title>
-    <style>
-        :root {{
-            --emerald: #10b981;
-            --bg: #0b0f19;
-            --surface: #111827;
-            --border: #1f2937;
-            --text: #f9fafb;
-            --muted: #9ca3af;
-        }}
-        body {{
-            margin: 0; font-family: system-ui, -apple-system, sans-serif;
-            background: var(--bg); color: var(--text); line-height: 1.6;
-        }}
-        .navbar {{
-            display: flex; justify-content: space-between; align-items: center;
-            padding: 1rem 2rem; background: var(--surface); border-bottom: 2px solid var(--emerald);
-        }}
-        .brand {{ display: flex; align-items: center; gap: 0.6rem; font-weight: 800; font-size: 1.25rem; color: #fff; text-decoration: none; }}
-        .badge {{ background: var(--emerald); color: #000; font-size: 0.75rem; padding: 0.2rem 0.5rem; border-radius: 4px; font-weight: bold; }}
-        .container {{ max-width: 1100px; margin: 2rem auto; padding: 0 1rem; }}
-        .btn {{
-            display: inline-block; padding: 0.5rem 1rem; border-radius: 6px;
-            font-weight: 600; text-decoration: none; cursor: pointer; border: none;
-        }}
-        .btn-emerald {{ background: var(--emerald); color: #000; }}
-        .btn-outline {{ background: transparent; border: 1px solid var(--border); color: var(--text); }}
-        .btn-outline:hover {{ border-color: var(--emerald); color: var(--emerald); }}
-        .hero {{
-            background: radial-gradient(circle at 50% 10%, rgba(16, 185, 129, 0.15), transparent 70%);
-            padding: 2.5rem; border-radius: 12px; border: 1px solid var(--border); margin-bottom: 2rem; text-align: center;
-        }}
-        .repo-card {{
-            background: var(--surface); border: 1px solid var(--border);
-            border-radius: 8px; padding: 1.25rem; margin-bottom: 1rem;
-        }}
-        .repo-header {{ display: flex; justify-content: space-between; align-items: center; }}
-        .repo-title {{ font-size: 1.15rem; font-weight: 700; text-decoration: none; }}
-        .repo-desc {{ color: var(--muted); margin: 0.5rem 0; font-size: 0.95rem; }}
-        .repo-footer {{ display: flex; gap: 1.5rem; align-items: center; font-size: 0.85rem; color: var(--muted); flex-wrap: wrap; }}
-        .clone-snippet {{ background: #000; padding: 0.25rem 0.6rem; border-radius: 4px; color: var(--emerald); font-family: monospace; }}
-    </style>
-</head>
+<html lang="{lang}" data-theme="{theme}">
+{self._render_head("Gitea Souverain - BANTUDEVLAB", theme)}
 <body>
-    <nav class="navbar">
-        <a href="http://localhost:3002/user/login" class="brand">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2" style="vertical-align:middle;margin-right:6px;"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
-            <span>BANTUDEVLAB GITEA CE</span>
-            <span class="badge">ESPACE GITEA SOUVERAIN</span>
-        </a>
-        <div style="display: flex; gap: 0.8rem; align-items: center;">
-            <a href="/" class="btn btn-outline" style="border-color: #f59e0b; color: #f59e0b;">Basculer sur GitLab &rarr;</a>
-            <a href="{BANTU_CORE_URL}/" class="btn btn-outline">&larr; Retour au Portail BantuDevLab</a>
-            <a href="{BANTU_CORE_URL}/dashboard/" class="btn btn-emerald">Tableau de Bord & Audit</a>
-        </div>
-    </nav>
+    {self._render_navbar(lang, theme, active_view="gitea")}
 
     <div class="container">
-        <div class="hero">
+        <div class="hero" style="background: radial-gradient(circle at 50% 10%, rgba(16, 185, 129, 0.12), transparent 70%);">
             <h1 style="margin-top: 0; color: var(--emerald);">Forge Logicielle Gitea Souveraine</h1>
             <p style="color: var(--muted); max-width: 700px; margin: 0 auto 1.5rem;">
-                Interface légère Gitea CE hébergée sur l'infrastructure continentale Systalink Cloud.
-                API v1 Gitea compatible, Zero-Trust ZKP et Webhooks HMAC-SHA256.
+                {t["hero_desc"]}
             </p>
             <div style="display: flex; gap: 1rem; justify-content: center;">
                 <a href="/api/v1/version" target="_blank" class="btn btn-outline">Consulter Version API v1</a>
-                <a href="/" class="btn btn-emerald">Basculer sur l'Espace GitLab CE</a>
+                <a href="/" class="btn btn-emerald">{t["switch_gitlab"]}</a>
             </div>
         </div>
 
-        <h2>Dépôts Disponibles sur Gitea</h2>
+        <h2>{t["hosted_repos"]}</h2>
         {repos_html}
     </div>
+
+    {self._render_scripts()}
 </body>
 </html>"""
         return self._send_html(html)
 
     def _render_repo_ui(self, owner, repo):
+        lang, theme = self._get_lang_and_theme()
+        t = FORGE_I18N.get(lang, FORGE_I18N["fr"])
         repo_dir = REPOS_DIR / owner / f"{repo}.git"
         if not repo_dir.exists():
-            return self._send_html("Dépôt introuvable", status=404)
+            return self._send_html("Depot introuvable", status=404)
 
         commits = self._get_repo_commits(owner, repo)
         self._get_repo_branches(owner, repo)
@@ -698,7 +925,7 @@ class SovereignForgeHandler(BaseHTTPRequestHandler):
         <li style="padding: 0.5rem 0; border-bottom: 1px solid var(--border); font-size: 0.9rem;">
             <strong>{c["commit"]["message"]}</strong>
             <div style="color: var(--muted); font-size: 0.8rem;">
-                Par {c["commit"]["author"]["name"]} • SHA: <code>{c["sha"][:8]}</code> • {c["commit"]["author"]["date"]}
+                {t["by_author"]} {c["commit"]["author"]["name"]} - SHA: <code>{c["sha"][:8]}</code> - {c["commit"]["author"]["date"]}
             </div>
         </li>
         """
@@ -706,147 +933,33 @@ class SovereignForgeHandler(BaseHTTPRequestHandler):
         )
 
         html = f"""<!DOCTYPE html>
-<html lang="fr" data-theme="dark">
-<head>
-    <meta charset="UTF-8">
-    <title>{owner}/{repo} — BantuDevLab Forge</title>
-    <style>
-        :root {{ --gold: #f59e0b; --emerald: #10b981; --bg: #0b0f19; --surface: #111827; --border: #1f2937; --text: #f9fafb; --muted: #9ca3af; }}
-        body {{ margin: 0; font-family: system-ui, sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; }}
-        .navbar {{ display: flex; justify-content: space-between; align-items: center; padding: 1rem 2rem; background: var(--surface); border-bottom: 2px solid var(--gold); }}
-        .container {{ max-width: 1000px; margin: 2rem auto; padding: 0 1rem; }}
-        .card {{ background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 1.5rem; margin-bottom: 1.5rem; }}
-        .clone-box {{ background: #000; padding: 0.75rem; border-radius: 6px; font-family: monospace; color: var(--emerald); display: flex; justify-content: space-between; }}
-    </style>
-</head>
+<html lang="{lang}" data-theme="{theme}">
+{self._render_head(f"{owner}/{repo} - BantuDevLab Forge", theme)}
 <body>
-    <nav class="navbar">
-        <a href="/" style="color: #fff; font-weight: 800; text-decoration: none;">BANTUDEVLAB FORGE GIT</a>
-        <div style="display: flex; gap: 0.8rem; align-items: center;"><a href="http://localhost:3002/user/login" style="border: 1px solid #10b981; color: #10b981; padding: 0.35rem 0.75rem; border-radius: 6px; text-decoration: none; font-size: 0.85rem;">Basculer vers Gitea &rarr;</a><a href="{BANTU_CORE_URL}/dashboard/" style="color: var(--gold); text-decoration: none; font-weight: bold;">&larr; Tableau de Bord BantuDevLab</a></div>
-    </nav>
+    {self._render_navbar(lang, theme, active_view="repo")}
     <div class="container">
         <h1>{owner}/{repo}</h1>
-        <div class="card">
-            <h3>Cloner le dépôt sur votre poste</h3>
-            <div class="clone-box">
+        <div class="repo-card">
+            <h3>{t["clone_prompt"]}</h3>
+            <div style="background: var(--surface-card); padding: 0.75rem; border-radius: 6px; font-family: monospace; color: var(--emerald); display: flex; justify-content: space-between; border: 1px solid var(--border);">
                 <span>git clone http://localhost:{PORT}/{owner}/{repo}.git</span>
             </div>
             <p style="font-size: 0.85rem; color: var(--muted); margin-top: 0.5rem;">
-                Pour pousser avec ZKP, utilisez votre token souverain généré depuis <a href="{BANTU_CORE_URL}/api/zkp/login-ui/" style="color: var(--gold);">l'assistant Zero-Trust</a>.
+                {t["zkp_note"]}
             </p>
         </div>
-        <div class="card">
-            <h3>Historique Récent des Commits ({len(commits)})</h3>
+        <div class="repo-card">
+            <h3>{t["recent_commits"]} ({len(commits)})</h3>
             <ul style="list-style: none; padding: 0; margin: 0;">
                 {commits_html}
             </ul>
         </div>
     </div>
+
+    {self._render_scripts()}
 </body>
 </html>"""
         return self._send_html(html)
-
-    def _render_gitea_ui(self):
-        repos = self._get_repos_list()
-        repos_html = "".join(
-            f"""
-        <div class="repo-card" style="border-left: 3px solid #10b981;">
-            <div class="repo-header">
-                <a href="/{r["full_name"]}" class="repo-title" style="color: #10b981;">{r["full_name"]}</a>
-                <span class="badge" style="background: #10b981; color: #000;">Gitea CE Souverain</span>
-            </div>
-            <p class="repo-desc">{r["description"]}</p>
-            <div class="repo-footer">
-                <span>Stars: {r["stars_count"]}</span>
-                <span>Forks: {r["forks_count"]}</span>
-                <code class="clone-snippet">git clone {r["clone_url"]}</code>
-            </div>
-        </div>
-        """
-            for r in repos
-        )
-
-        html = f"""<!DOCTYPE html>
-<html lang="fr" data-theme="dark">
-<head>
-    <meta charset="UTF-8">
-    <title>Gitea Souverain — BANTUDEVLAB</title>
-    <style>
-        :root {{
-            --emerald: #10b981;
-            --bg: #0b0f19;
-            --surface: #111827;
-            --border: #1f2937;
-            --text: #f9fafb;
-            --muted: #9ca3af;
-        }}
-        body {{
-            margin: 0; font-family: system-ui, -apple-system, sans-serif;
-            background: var(--bg); color: var(--text); line-height: 1.6;
-        }}
-        .navbar {{
-            display: flex; justify-content: space-between; align-items: center;
-            padding: 1rem 2rem; background: var(--surface); border-bottom: 2px solid var(--emerald);
-        }}
-        .brand {{ display: flex; align-items: center; gap: 0.6rem; font-weight: 800; font-size: 1.25rem; color: #fff; text-decoration: none; }}
-        .badge {{ background: var(--emerald); color: #000; font-size: 0.75rem; padding: 0.2rem 0.5rem; border-radius: 4px; font-weight: bold; }}
-        .container {{ max-width: 1100px; margin: 2rem auto; padding: 0 1rem; }}
-        .btn {{
-            display: inline-block; padding: 0.5rem 1rem; border-radius: 6px;
-            font-weight: 600; text-decoration: none; cursor: pointer; border: none;
-        }}
-        .btn-emerald {{ background: var(--emerald); color: #000; }}
-        .btn-outline {{ background: transparent; border: 1px solid var(--border); color: var(--text); }}
-        .btn-outline:hover {{ border-color: var(--emerald); color: var(--emerald); }}
-        .hero {{
-            background: radial-gradient(circle at 50% 10%, rgba(16, 185, 129, 0.15), transparent 70%);
-            padding: 2.5rem; border-radius: 12px; border: 1px solid var(--border); margin-bottom: 2rem; text-align: center;
-        }}
-        .repo-card {{
-            background: var(--surface); border: 1px solid var(--border);
-            border-radius: 8px; padding: 1.25rem; margin-bottom: 1rem;
-        }}
-        .repo-header {{ display: flex; justify-content: space-between; align-items: center; }}
-        .repo-title {{ font-size: 1.15rem; font-weight: 700; text-decoration: none; }}
-        .repo-desc {{ color: var(--muted); margin: 0.5rem 0; font-size: 0.95rem; }}
-        .repo-footer {{ display: flex; gap: 1.5rem; align-items: center; font-size: 0.85rem; color: var(--muted); flex-wrap: wrap; }}
-        .clone-snippet {{ background: #000; padding: 0.25rem 0.6rem; border-radius: 4px; color: var(--emerald); font-family: monospace; }}
-    </style>
-</head>
-<body>
-    <nav class="navbar">
-        <a href="http://localhost:3002/user/login" class="brand">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2" style="vertical-align:middle;margin-right:6px;"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
-            <span>BANTUDEVLAB GITEA CE</span>
-            <span class="badge">ESPACE GITEA SOUVERAIN</span>
-        </a>
-        <div style="display: flex; gap: 0.8rem; align-items: center;">
-            <a href="/" class="btn btn-outline" style="border-color: #f59e0b; color: #f59e0b;">Basculer sur GitLab &rarr;</a>
-            <a href="{BANTU_CORE_URL}/" class="btn btn-outline">&larr; Retour au Portail BantuDevLab</a>
-            <a href="{BANTU_CORE_URL}/dashboard/" class="btn btn-emerald">Tableau de Bord & Audit</a>
-        </div>
-    </nav>
-
-    <div class="container">
-        <div class="hero">
-            <h1 style="margin-top: 0; color: var(--emerald);">Forge Logicielle Gitea Souveraine</h1>
-            <p style="color: var(--muted); max-width: 700px; margin: 0 auto 1.5rem;">
-                Interface légère Gitea CE hébergée sur l'infrastructure continentale Systalink Cloud.
-                API v1 Gitea compatible, Zero-Trust ZKP et Webhooks HMAC-SHA256.
-            </p>
-            <div style="display: flex; gap: 1rem; justify-content: center;">
-                <a href="/api/v1/version" target="_blank" class="btn btn-outline">Consulter Version API v1</a>
-                <a href="/" class="btn btn-emerald">Basculer sur l'Espace GitLab CE</a>
-            </div>
-        </div>
-
-        <h2>Dépôts Disponibles sur Gitea</h2>
-        {repos_html}
-    </div>
-</body>
-</html>"""
-        return self._send_html(html)
-
 
 def run_server():
     server = ThreadingHTTPServer(("0.0.0.0", PORT), SovereignForgeHandler)
