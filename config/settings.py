@@ -56,8 +56,8 @@ MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "apps.core.middleware.SecurityHeadersMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
-    "apps.core.middleware.EcosystemI18nMiddleware",
     "django.middleware.locale.LocaleMiddleware",  # I18N-01
+    "apps.core.middleware.EcosystemI18nMiddleware",  # Synchronisation universelle
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
