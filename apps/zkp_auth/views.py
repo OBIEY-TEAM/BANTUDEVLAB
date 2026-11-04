@@ -47,7 +47,7 @@ class ZKPRegisterView(APIView):
     def post(self, request):
         username = request.data.get("username")
         if isinstance(username, str):
-            username = username.strip().replace(" ", "-").lower()
+            username = username.strip().lower()
         if username is not None and (not isinstance(username, str) or not USERNAME_RE.match(username)):
             return Response(
                 {"error": "username invalide (3-32 caracteres : lettres, chiffres, '.', '_', '-')"},
@@ -82,20 +82,9 @@ class ZKPRegisterView(APIView):
             )
 
         if User.objects.filter(username=username).exists():
-            user = User.objects.get(username=username)
-            identity, _ = SovereignIdentity.objects.get_or_create(user=user)
-            identity.public_key_y = hex(y_int)[2:]
-            identity.country_code = country_code
-            identity.is_verified = True
-            identity.save()
             return Response(
-                {
-                    "message": f"Identité souveraine synchronisée avec succès pour {username}.",
-                    "username": user.username,
-                    "country_code": identity.country_code,
-                    "public_key_y": identity.public_key_y,
-                },
-                status=status.HTTP_200_OK,
+                {"error": f"L'utilisateur {username} existe déjà."},
+                status=status.HTTP_400_BAD_REQUEST,
             )
 
         user = User.objects.create_user(username=username, email=email)
