@@ -1,3 +1,25 @@
+<script>
+(function() {
+  function getCookie(name) {
+    const m = document.cookie.match(new RegExp('(?:^|;\\s*)' + name + '=([^;]*)'));
+    return m ? decodeURIComponent(m[2]) : null;
+  }
+  const bantuTheme = getCookie('bantu_theme');
+  const giteaTheme = getCookie('theme');
+  const isDark = (bantuTheme === 'dark') || (giteaTheme && giteaTheme.includes('dark')) || (!bantuTheme && !giteaTheme);
+  document.documentElement.setAttribute('data-theme', isDark ? 'dark' : 'light');
+  
+  // Swap theme CSS link immediately if needed
+  const link = document.querySelector('link[rel="stylesheet"][href*="theme-"]');
+  if (link) {
+    const target = isDark ? 'theme-github-dark.css' : 'theme-github.css';
+    if (!link.href.includes(target)) {
+      link.href = link.href.replace(/theme-[a-zA-Z0-9_-]+\.css/, target);
+    }
+  }
+})();
+</script>
+
 <!-- BANTUDEVLAB - GitHub Navigation, Head Enhancements & Command Palette (T-UI-602, T-UI-603, T-COP-703) -->
 <style>
 /* GitHub Global Navigation Bar */
@@ -174,6 +196,171 @@
   opacity: 1 !important;
   border: 1px solid #cbd5e1 !important;
   box-shadow: 0 16px 36px rgba(0, 0, 0, 0.15) !important;
+}
+
+
+/* =========================================================
+   BANTUDEVLAB GITEA DARK & LIGHT MODE PERFECTION
+   ========================================================= */
+html[data-theme="dark"],
+html[data-theme="dark"] body {
+  background-color: #020617 !important;
+  color: #f8fafc !important;
+}
+
+html[data-theme="dark"] .ui.menu.navbar {
+  background-color: #050b18 !important;
+  border-bottom: 2px solid #f59e0b !important;
+}
+
+html[data-theme="dark"] .ui.segment,
+html[data-theme="dark"] .ui.segments,
+html[data-theme="dark"] .ui.card,
+html[data-theme="dark"] .ui.cards > .card,
+html[data-theme="dark"] .ui.table,
+html[data-theme="dark"] .ui.attached.segment,
+html[data-theme="dark"] .ui.attached.header,
+html[data-theme="dark"] .ui.message,
+html[data-theme="dark"] .repository .repo-header,
+html[data-theme="dark"] .repository .repo-content,
+html[data-theme="dark"] .repository .diff-box,
+html[data-theme="dark"] .repository .file-view,
+html[data-theme="dark"] .comment-body,
+html[data-theme="dark"] .timeline-item,
+html[data-theme="dark"] .issue-content,
+html[data-theme="dark"] .repo-header-tabs,
+html[data-theme="dark"] .page-footer {
+  background-color: #070e1e !important;
+  color: #f8fafc !important;
+  border-color: #1e293b !important;
+}
+
+html[data-theme="dark"] .ui.table tr:hover,
+html[data-theme="dark"] .ui.table tr:hover td {
+  background-color: #0b1528 !important;
+  color: #f8fafc !important;
+}
+
+html[data-theme="dark"] .ui.table th,
+html[data-theme="dark"] .ui.table thead th {
+  background-color: #0b1528 !important;
+  color: #f8fafc !important;
+  border-color: #1e293b !important;
+}
+
+html[data-theme="dark"] .ui.table td {
+  border-color: #1e293b !important;
+  color: #e2e8f0 !important;
+}
+
+html[data-theme="dark"] .ui.input input,
+html[data-theme="dark"] input[type="text"],
+html[data-theme="dark"] input[type="password"],
+html[data-theme="dark"] input[type="email"],
+html[data-theme="dark"] input[type="search"],
+html[data-theme="dark"] textarea,
+html[data-theme="dark"] select,
+html[data-theme="dark"] .github-search-input {
+  background-color: #0b1528 !important;
+  color: #f8fafc !important;
+  border: 1px solid #1e293b !important;
+}
+
+html[data-theme="dark"] .ui.input input:focus,
+html[data-theme="dark"] textarea:focus,
+html[data-theme="dark"] .github-search-input:focus {
+  border-color: #00e5ff !important;
+  box-shadow: 0 0 0 2px rgba(0, 229, 255, 0.25) !important;
+}
+
+html[data-theme="dark"] .ui.menu:not(.navbar),
+html[data-theme="dark"] .ui.secondary.menu,
+html[data-theme="dark"] .ui.tabular.menu {
+  background-color: #070e1e !important;
+  color: #f8fafc !important;
+  border-color: #1e293b !important;
+}
+
+html[data-theme="dark"] .ui.menu .item,
+html[data-theme="dark"] .ui.tabular.menu .item {
+  color: #94a3b8 !important;
+}
+
+html[data-theme="dark"] .ui.menu .item:hover,
+html[data-theme="dark"] .ui.tabular.menu .item:hover,
+html[data-theme="dark"] .ui.menu .item.active,
+html[data-theme="dark"] .ui.tabular.menu .item.active {
+  color: #f8fafc !important;
+}
+
+html[data-theme="dark"] .ui.header,
+html[data-theme="dark"] h1,
+html[data-theme="dark"] h2,
+html[data-theme="dark"] h3,
+html[data-theme="dark"] h4,
+html[data-theme="dark"] h5,
+html[data-theme="dark"] strong {
+  color: #f8fafc !important;
+}
+
+html[data-theme="dark"] p,
+html[data-theme="dark"] span:not(.badge):not(.label):not(.ui.label),
+html[data-theme="dark"] label {
+  color: #e2e8f0 !important;
+}
+
+html[data-theme="dark"] a {
+  color: #00e5ff !important;
+}
+
+html[data-theme="dark"] a:hover {
+  color: #38bdf8 !important;
+}
+
+html[data-theme="dark"] .ui.button:not(.primary):not(.green):not(.red):not(.btn-gold) {
+  background-color: #0b1528 !important;
+  color: #f8fafc !important;
+  border: 1px solid #1e293b !important;
+}
+
+html[data-theme="dark"] .ui.button:not(.primary):not(.green):not(.red):not(.btn-gold):hover {
+  background-color: #1e293b !important;
+  border-color: #00e5ff !important;
+}
+
+/* Light mode overrides */
+html[data-theme="light"],
+html[data-theme="light"] body {
+  background-color: #f8fafc !important;
+  color: #0f172a !important;
+}
+
+html[data-theme="light"] .ui.menu.navbar {
+  background-color: #ffffff !important;
+  border-bottom: 2px solid #f59e0b !important;
+}
+
+html[data-theme="light"] .ui.segment,
+html[data-theme="light"] .ui.card,
+html[data-theme="light"] .ui.cards > .card,
+html[data-theme="light"] .ui.table,
+html[data-theme="light"] .page-footer {
+  background-color: #ffffff !important;
+  color: #0f172a !important;
+  border-color: #cbd5e1 !important;
+}
+
+html[data-theme="light"] .ui.input input,
+html[data-theme="light"] textarea,
+html[data-theme="light"] select,
+html[data-theme="light"] .github-search-input {
+  background-color: #ffffff !important;
+  color: #0f172a !important;
+  border-color: #cbd5e1 !important;
+}
+
+html[data-theme="light"] a {
+  color: #0051cc !important;
 }
 
 .ui.dimmer {
@@ -854,7 +1041,9 @@ document.addEventListener('DOMContentLoaded', function() {
             document.cookie = 'django_language=' + l.code + ';path=/;max-age=31536000';
             document.cookie = 'bantu_lang=' + l.code + ';path=/;max-age=31536000';
           }
-          window.location.reload();
+          const u = new URL(window.location.href);
+          u.searchParams.set('lang', l.gitea);
+          window.location.href = u.toString();
         });
         langBox.appendChild(a);
       });
