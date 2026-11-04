@@ -270,6 +270,36 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   });
 
+
+  // Replace Gitea header logo with Sovereign African Continent Logo (T27.6)
+  function applyAfricanLogoToGitea() {
+    const brandLinks = document.querySelectorAll('.ui.menu.navbar .brand, .ui.menu.navbar a[href="/"], .ui.menu.navbar a[href="/explore"]');
+    brandLinks.forEach(link => {
+      const existingImg = link.querySelector('img');
+      const existingSvg = link.querySelector('svg');
+      if (existingImg) {
+        existingImg.src = '/img/logo.svg';
+        existingImg.alt = 'BantuDevLab Carte Afrique';
+        existingImg.style.width = '32px';
+        existingImg.style.height = '32px';
+        existingImg.style.borderRadius = '6px';
+      } else if (existingSvg && !link.querySelector('.africa-logo-injected')) {
+        existingSvg.style.display = 'none';
+        const img = document.createElement('img');
+        img.className = 'africa-logo-injected';
+        img.src = '/img/logo.svg';
+        img.alt = 'BantuDevLab Carte Afrique';
+        img.style.width = '32px';
+        img.style.height = '32px';
+        img.style.borderRadius = '6px';
+        img.style.verticalAlign = 'middle';
+        img.style.marginRight = '8px';
+        link.insertBefore(img, link.firstChild);
+      }
+    });
+  }
+  applyAfricanLogoToGitea();
+
   // Inject sovereign Gist shortcut in top navbar if present
   const navContainer = document.querySelector('.ui.secondary.menu') || document.querySelector('.ui.menu.navbar');
   if (navContainer && !document.querySelector('.nav-gist-item')) {
