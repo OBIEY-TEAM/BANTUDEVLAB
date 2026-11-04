@@ -40,27 +40,27 @@
 
 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
     <div>
-        <h2>Tableau de Bord Souverain BANTUDEVLAB</h2>
-        <p style="color: var(--text-muted);">Surveillance de la forge logicielle, sécurité Zero-Trust et assistance IA locale</p>
+        <h2>{% trans "Tableau de Bord Souverain BANTUDEVLAB" %}</h2>
+        <p style="color: var(--text-muted);">{% trans "Surveillance de la forge logicielle, sécurité Zero-Trust et assistance IA locale" %}</p>
     </div>
-    <span class="brand-badge" style="font-size: 0.9rem; padding: 0.4rem 0.8rem;">NŒUD SOUVERAIN ACTIF</span>
+    <span class="brand-badge" style="font-size: 0.9rem; padding: 0.4rem 0.8rem;">{% trans "NŒUD SOUVERAIN ACTIF" %}</span>
 </div>
 
 <div class="card-grid" style="grid-template-columns: repeat(4, 1fr);">
     <div class="card">
-        <p style="color: var(--text-muted); font-size: 0.85rem;">Dépôts Actifs</p>
+        <p style="color: var(--text-muted); font-size: 0.85rem;">{% trans "Dépôts Actifs" %}</p>
         <span class="stat-number">{{ total_repos }}</span>
     </div>
     <div class="card">
-        <p style="color: var(--text-muted); font-size: 0.85rem;">Identités ZKP</p>
+        <p style="color: var(--text-muted); font-size: 0.85rem;">{% trans "Identités ZKP" %}</p>
         <span class="stat-number">{{ identities_count }}</span>
     </div>
     <div class="card">
-        <p style="color: var(--text-muted); font-size: 0.85rem;">Score de Souveraineté</p>
+        <p style="color: var(--text-muted); font-size: 0.85rem;">{% trans "Score de Souveraineté" %}</p>
         <span class="stat-number">{{ avg_sovereignty }}%</span>
     </div>
     <div class="card">
-        <p style="color: var(--text-muted); font-size: 0.85rem;">Audits IA Gemma 5B</p>
+        <p style="color: var(--text-muted); font-size: 0.85rem;">{% trans "Audits IA Gemma 5B" %}</p>
         <span class="stat-number">{{ interactions_count }}</span>
     </div>
 </div>

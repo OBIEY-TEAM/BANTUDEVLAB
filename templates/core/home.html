@@ -3,11 +3,9 @@
 
 {% block content %}
 <section class="hero">
-    <h1>La Forge Logicielle Souveraine de l'Afrique</h1>
+    <h1>{% trans "La Forge Logicielle Souveraine de l'Afrique" %}</h1>
     <p>
-        BANTUDEVLAB réunit la robustesse d'un moteur Git distribué, la sécurité mathématique
-        des preuves à divulgation nulle de connaissance (Zero-Knowledge Proofs), et l'intelligence artificielle
-        locale Gemma 5B pour garantir l'indépendance technologique du continent.
+        {% trans "BANTUDEVLAB réunit la robustesse d'un moteur Git distribué, la sécurité mathématique des preuves à divulgation nulle de connaissance (Zero-Knowledge Proofs), et l'intelligence artificielle locale Gemma 5B pour garantir l'indépendance technologique du continent." %} 
     </p>
     <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
         <a href="{% url 'dashboard' %}" class="btn btn-primary">{% trans "Explorer le Tableau de Bord" %}</a>
@@ -18,29 +16,29 @@
 
 <div class="card-grid">
     <div class="card">
-        <h3>{% icon "landmark" size=22 %} Moteur Git Souverain (Systalink Cloud)</h3>
-        <p>Forge distribuée basée sur Gitea/GitLab CE déployée sur nos serveurs en Afrique. Zéro dépendance vis-à-vis des juridictions extérieures (Cloud Act exempt).</p>
+        <h3>{% icon "landmark" size=22 %} {% trans "Moteur Git Souverain (Systalink Cloud)" %}</h3>
+        <p>{% trans "Forge distribuée basée sur Gitea/GitLab CE déployée sur nos serveurs en Afrique. Zéro dépendance vis-à-vis des juridictions extérieures (Cloud Act exempt)." %}</p>
         <span class="stat-number">100%</span>
         <div style="margin-top: 0.5rem;">
             <a href="{{ GITEA_LOGIN_URL|default:'http://localhost:3002/user/login' }}" target="_blank" rel="noopener noreferrer" style="color: var(--secondary-emerald); font-size: 0.85rem; text-decoration: underline; display: inline-flex; align-items: center; gap: 0.35rem;">
                 {% icon "external-link" size=14 %} {% trans "Connexion Gitea : http://localhost:3002/user/login" %}
             </a>
         </div>
-        <p style="color: var(--secondary-emerald); font-weight: bold;">Contrôle Panafricain</p>
+        <p style="color: var(--secondary-emerald); font-weight: bold;">{% trans "Contrôle Panafricain" %}</p>
     </div>
 
     <div class="card">
-        <h3>{% icon "key" size=22 %} Authentification Zero-Trust ZKP</h3>
-        <p>Protocole cryptographique de Schnorr / Sigma non-interactif via Fiat-Shamir. Prouvez votre identité sans JAMAIS transmettre votre mot de passe au réseau.</p>
+        <h3>{% icon "key" size=22 %} {% trans "Authentification Zero-Trust ZKP" %}</h3>
+        <p>{% trans "Protocole cryptographique de Schnorr / Sigma non-interactif via Fiat-Shamir. Prouvez votre identité sans JAMAIS transmettre votre mot de passe au réseau." %}</p>
         <span class="stat-number">NIZKP</span>
-        <p style="color: var(--primary-african-gold); font-weight: bold;">Confidentialité Mathématique</p>
+        <p style="color: var(--primary-african-gold); font-weight: bold;">{% trans "Confidentialité Mathématique" %}</p>
     </div>
 
     <div class="card">
-        <h3>{% icon "bot" size=22 %} IA Locale Gemma 5B Fine-tunée</h3>
-        <p>Assistant d'ingénierie logicielle exécuté localement pour auditer le code, détecter les secrets et assister les développeurs sans fuite de code vers l'extérieur.</p>
-        <span class="stat-number">5 Milliards</span>
-        <p style="color: var(--secondary-emerald); font-weight: bold;">Paramètres Optimisés</p>
+        <h3>{% icon "bot" size=22 %} {% trans "IA Locale Gemma 5B Fine-tunée" %}</h3>
+        <p>{% trans "Assistant d'ingénierie logicielle exécuté localement pour auditer le code, détecter les secrets et assister les développeurs sans fuite de code vers l'extérieur." %}</p>
+        <span class="stat-number">5 {% trans "Milliards" %}</span>
+        <p style="color: var(--secondary-emerald); font-weight: bold;">{% trans "Paramètres Optimisés" %}</p>
     </div>
 </div>
 
@@ -60,7 +58,7 @@
 </div>
 
 <div style="margin-top: 3rem;">
-    <h2>Dépôts Souverains Récents</h2>
+    <h2>{% trans "Dépôts Souverains Récents" %}</h2>
     <div class="card-grid">
         {% for repo in featured_repos %}
         <div class="card">
@@ -71,7 +69,7 @@
             </div>
         </div>
         {% empty %}
-        <p>Initialisation de la synchronisation avec Gitea...</p>
+        <p>{% trans "Initialisation de la synchronisation avec Gitea..." %}</p>
         {% endfor %}
     </div>
 </div>
