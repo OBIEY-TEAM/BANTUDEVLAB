@@ -38,6 +38,6 @@
 - [x] 7.2 Validation stricte de la regle zero-emoji.
 
 ### Tache 8 : Cloture, Relance des Processus et Push Git
-- [ ] 8.1 Arreter et relancer les 3 processus locaux (Django sur 8001, GitLab Forge sur 3001, Gitea sur 3002).
-- [ ] 8.2 Valider la reponse HTTP 200 sur les 3 plateformes.
-- [ ] 8.3 Git push vers origin sur develop-jule et design-figma.
+- [x] 8.1 Arreter et relancer les 3 processus locaux (Django sur 8001, GitLab Forge sur 3001, Gitea sur 3002).
+- [x] 8.2 Valider la reponse HTTP 200 sur les 3 plateformes.
+- [x] 8.3 Git push vers origin sur develop-jule et design-figma.
