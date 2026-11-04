@@ -345,9 +345,13 @@ function getActiveCopilotLang() {
     }
   } catch(e) {}
 
+  // Priorite Haute : Langue actuelle de la page Gitea (attribut lang sur <html>)
   try {
-    const lsLang = localStorage.getItem('bantu_lang');
-    if (lsLang && COPILOT_I18N[lsLang]) return lsLang;
+    const docLang = (document.documentElement.getAttribute('lang') || '').toLowerCase();
+    if (docLang.startsWith('en')) return 'en';
+    if (docLang.startsWith('sw')) return 'sw';
+    if (docLang.startsWith('pt')) return 'pt';
+    if (docLang.startsWith('fr')) return 'fr';
   } catch(e) {}
 
   function getCookie(name) {
@@ -356,9 +360,9 @@ function getActiveCopilotLang() {
   }
 
   const cookieStr = document.cookie;
-  const matchBantu = cookieStr.match(/(?:^|;\s*)bantu_lang=([^;]*)/);
-  if (matchBantu) {
-    const val = decodeURIComponent(matchBantu[1]).toLowerCase();
+  const matchGitea = cookieStr.match(/(?:^|;\s*)lang=([^;]*)/);
+  if (matchGitea) {
+    const val = decodeURIComponent(matchGitea[1]).toLowerCase();
     if (val.startsWith('en')) return 'en';
     if (val.startsWith('sw')) return 'sw';
     if (val.startsWith('pt')) return 'pt';
@@ -374,14 +378,22 @@ function getActiveCopilotLang() {
     if (val.startsWith('fr')) return 'fr';
   }
 
-  const matchGitea = cookieStr.match(/(?:^|;\s*)lang=([^;]*)/);
-  if (matchGitea) {
-    const val = decodeURIComponent(matchGitea[1]).toLowerCase();
+  const matchBantu = cookieStr.match(/(?:^|;\s*)bantu_lang=([^;]*)/);
+  if (matchBantu) {
+    const val = decodeURIComponent(matchBantu[1]).toLowerCase();
     if (val.startsWith('en')) return 'en';
     if (val.startsWith('sw')) return 'sw';
     if (val.startsWith('pt')) return 'pt';
     if (val.startsWith('fr')) return 'fr';
   }
+
+  try {
+    const lsLang = (localStorage.getItem('bantu_lang') || '').toLowerCase();
+    if (lsLang.startsWith('en')) return 'en';
+    if (lsLang.startsWith('sw')) return 'sw';
+    if (lsLang.startsWith('pt')) return 'pt';
+    if (lsLang.startsWith('fr')) return 'fr';
+  } catch(e) {}
 
   return 'fr';
 }
@@ -448,6 +460,9 @@ document.addEventListener('DOMContentLoaded', function() {
   function toggleWindow() {
     const isVisible = copilotWin.style.display === 'flex';
     copilotWin.style.display = isVisible ? 'none' : 'flex';
+    if (!isVisible) {
+      applyCopilotI18n();
+    }
   }
 
   if (toggleBtn) toggleBtn.addEventListener('click', toggleWindow);

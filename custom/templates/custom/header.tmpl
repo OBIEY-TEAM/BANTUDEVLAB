@@ -1,34 +1,42 @@
 <script>
 (function() {
-  /* Anti-FOUC : execute avant tout rendu CSS pour eviter le flash blanc/noir */
+  /* Anti-FOUC et Synchronisation Universelle du Theme BantuDevLab + Gitea */
   function getCookie(name) {
     var m = document.cookie.match(new RegExp('(?:^|;\\s*)' + name + '=([^;]*)'));
     return m ? decodeURIComponent(m[1]) : null;
   }
   var bantuTheme = getCookie('bantu_theme');
-  var giteaTheme = getCookie('theme');
+  var giteaTheme = getCookie('theme') || getCookie('gitea_theme');
+  var docTheme = document.documentElement.getAttribute('data-theme') || '';
   var isDark;
-  if (bantuTheme === 'light' || giteaTheme === 'github') {
+
+  if (bantuTheme === 'light' || giteaTheme === 'github' || docTheme === 'light' || docTheme === 'github') {
     isDark = false;
-  } else if (bantuTheme === 'dark' || (giteaTheme && giteaTheme.indexOf('dark') !== -1)) {
+  } else if (bantuTheme === 'dark' || (giteaTheme && giteaTheme.indexOf('dark') !== -1) || (docTheme && docTheme.indexOf('dark') !== -1)) {
     isDark = true;
   } else {
-    isDark = true; /* mode sombre par defaut */
+    isDark = true; /* mode sombre par defaut souverain */
   }
 
-  /* Appliquer data-theme immediatement avant tout CSS */
+  /* Appliquer le theme canonique immediatement */
   document.documentElement.setAttribute('data-theme', isDark ? 'dark' : 'light');
-
-  /* Injecter un style inline instantane pour bloquer le flash de couleur */
-  var s = document.createElement('style');
   if (isDark) {
-    s.textContent = 'html,body{background-color:#020617 !important;color:#f8fafc !important;}';
+    document.documentElement.classList.add('theme-github-dark');
   } else {
-    s.textContent = 'html,body{background-color:#ffffff !important;color:#1f2328 !important;}';
+    document.documentElement.classList.remove('theme-github-dark');
+  }
+
+  /* Injecter un style inline instantane pour supprimer tout flash blanc/noir */
+  var s = document.createElement('style');
+  s.id = 'bantu-instant-anti-fouc';
+  if (isDark) {
+    s.textContent = 'html,body{background-color:#020617 !important;color:#f8fafc !important;} .ui.segment,.ui.card,.page-content{background-color:#070e1e !important;color:#f8fafc !important;}';
+  } else {
+    s.textContent = 'html,body{background-color:#ffffff !important;color:#1f2328 !important;} .ui.segment,.ui.card,.page-content{background-color:#ffffff !important;color:#1f2328 !important;}';
   }
   document.head.appendChild(s);
 
-  /* Basculer le fichier CSS de theme immediatement */
+  /* Basculer le lien de feuille de style Gitea si necessaire */
   var link = document.querySelector('link[rel="stylesheet"][href*="theme-"]');
   if (link) {
     var target = isDark ? 'theme-github-dark.css' : 'theme-github.css';
@@ -36,6 +44,23 @@
       link.href = link.href.replace(/theme-[a-zA-Z0-9_-]+\.css/, target);
     }
   }
+
+  /* Synchronisation immediate de la langue depuis l attribut html ou cookie Gitea */
+  try {
+    var docLang = (document.documentElement.getAttribute('lang') || '').toLowerCase();
+    var shortLang = 'fr';
+    if (docLang.indexOf('en') === 0) shortLang = 'en';
+    else if (docLang.indexOf('sw') === 0) shortLang = 'sw';
+    else if (docLang.indexOf('pt') === 0) shortLang = 'pt';
+    else if (docLang.indexOf('fr') === 0) shortLang = 'fr';
+
+    var currentBantuLang = getCookie('bantu_lang');
+    if (shortLang && currentBantuLang !== shortLang) {
+      document.cookie = 'bantu_lang=' + shortLang + ';path=/;max-age=31536000';
+      document.cookie = 'django_language=' + shortLang + ';path=/;max-age=31536000';
+      try { localStorage.setItem('bantu_lang', shortLang); } catch(e) {}
+    }
+  } catch(e) {}
 })();
 </script>
 
@@ -224,128 +249,128 @@
 /* =========================================================
    BANTUDEVLAB GITEA DARK & LIGHT MODE PERFECTION
    ========================================================= */
-html[data-theme="dark"],
-html[data-theme="dark"] body {
+html:not([data-theme="light"]):not([data-theme="github"]),
+html:not([data-theme="light"]):not([data-theme="github"]) body {
   background-color: #020617 !important;
   color: #f8fafc !important;
 }
 
-html[data-theme="dark"] .ui.menu.navbar {
+html:not([data-theme="light"]):not([data-theme="github"]) .ui.menu.navbar {
   background-color: #050b18 !important;
   border-bottom: 2px solid #f59e0b !important;
 }
 
-html[data-theme="dark"] .ui.segment,
-html[data-theme="dark"] .ui.segments,
-html[data-theme="dark"] .ui.card,
-html[data-theme="dark"] .ui.cards > .card,
-html[data-theme="dark"] .ui.table,
-html[data-theme="dark"] .ui.attached.segment,
-html[data-theme="dark"] .ui.attached.header,
-html[data-theme="dark"] .ui.message,
-html[data-theme="dark"] .repository .repo-header,
-html[data-theme="dark"] .repository .repo-content,
-html[data-theme="dark"] .repository .diff-box,
-html[data-theme="dark"] .repository .file-view,
-html[data-theme="dark"] .comment-body,
-html[data-theme="dark"] .timeline-item,
-html[data-theme="dark"] .issue-content,
-html[data-theme="dark"] .repo-header-tabs,
-html[data-theme="dark"] .page-footer {
+html:not([data-theme="light"]):not([data-theme="github"]) .ui.segment,
+html:not([data-theme="light"]):not([data-theme="github"]) .ui.segments,
+html:not([data-theme="light"]):not([data-theme="github"]) .ui.card,
+html:not([data-theme="light"]):not([data-theme="github"]) .ui.cards > .card,
+html:not([data-theme="light"]):not([data-theme="github"]) .ui.table,
+html:not([data-theme="light"]):not([data-theme="github"]) .ui.attached.segment,
+html:not([data-theme="light"]):not([data-theme="github"]) .ui.attached.header,
+html:not([data-theme="light"]):not([data-theme="github"]) .ui.message,
+html:not([data-theme="light"]):not([data-theme="github"]) .repository .repo-header,
+html:not([data-theme="light"]):not([data-theme="github"]) .repository .repo-content,
+html:not([data-theme="light"]):not([data-theme="github"]) .repository .diff-box,
+html:not([data-theme="light"]):not([data-theme="github"]) .repository .file-view,
+html:not([data-theme="light"]):not([data-theme="github"]) .comment-body,
+html:not([data-theme="light"]):not([data-theme="github"]) .timeline-item,
+html:not([data-theme="light"]):not([data-theme="github"]) .issue-content,
+html:not([data-theme="light"]):not([data-theme="github"]) .repo-header-tabs,
+html:not([data-theme="light"]):not([data-theme="github"]) .page-footer {
   background-color: #070e1e !important;
   color: #f8fafc !important;
   border-color: #1e293b !important;
 }
 
-html[data-theme="dark"] .ui.table tr:hover,
-html[data-theme="dark"] .ui.table tr:hover td {
+html:not([data-theme="light"]):not([data-theme="github"]) .ui.table tr:hover,
+html:not([data-theme="light"]):not([data-theme="github"]) .ui.table tr:hover td {
   background-color: #0b1528 !important;
   color: #f8fafc !important;
 }
 
-html[data-theme="dark"] .ui.table th,
-html[data-theme="dark"] .ui.table thead th {
+html:not([data-theme="light"]):not([data-theme="github"]) .ui.table th,
+html:not([data-theme="light"]):not([data-theme="github"]) .ui.table thead th {
   background-color: #0b1528 !important;
   color: #f8fafc !important;
   border-color: #1e293b !important;
 }
 
-html[data-theme="dark"] .ui.table td {
+html:not([data-theme="light"]):not([data-theme="github"]) .ui.table td {
   border-color: #1e293b !important;
   color: #e2e8f0 !important;
 }
 
-html[data-theme="dark"] .ui.input input,
-html[data-theme="dark"] input[type="text"],
-html[data-theme="dark"] input[type="password"],
-html[data-theme="dark"] input[type="email"],
-html[data-theme="dark"] input[type="search"],
-html[data-theme="dark"] textarea,
-html[data-theme="dark"] select,
-html[data-theme="dark"] .github-search-input {
+html:not([data-theme="light"]):not([data-theme="github"]) .ui.input input,
+html:not([data-theme="light"]):not([data-theme="github"]) input[type="text"],
+html:not([data-theme="light"]):not([data-theme="github"]) input[type="password"],
+html:not([data-theme="light"]):not([data-theme="github"]) input[type="email"],
+html:not([data-theme="light"]):not([data-theme="github"]) input[type="search"],
+html:not([data-theme="light"]):not([data-theme="github"]) textarea,
+html:not([data-theme="light"]):not([data-theme="github"]) select,
+html:not([data-theme="light"]):not([data-theme="github"]) .github-search-input {
   background-color: #0b1528 !important;
   color: #f8fafc !important;
   border: 1px solid #1e293b !important;
 }
 
-html[data-theme="dark"] .ui.input input:focus,
-html[data-theme="dark"] textarea:focus,
-html[data-theme="dark"] .github-search-input:focus {
+html:not([data-theme="light"]):not([data-theme="github"]) .ui.input input:focus,
+html:not([data-theme="light"]):not([data-theme="github"]) textarea:focus,
+html:not([data-theme="light"]):not([data-theme="github"]) .github-search-input:focus {
   border-color: #00e5ff !important;
   box-shadow: 0 0 0 2px rgba(0, 229, 255, 0.25) !important;
 }
 
-html[data-theme="dark"] .ui.menu:not(.navbar),
-html[data-theme="dark"] .ui.secondary.menu,
-html[data-theme="dark"] .ui.tabular.menu {
+html:not([data-theme="light"]):not([data-theme="github"]) .ui.menu:not(.navbar),
+html:not([data-theme="light"]):not([data-theme="github"]) .ui.secondary.menu,
+html:not([data-theme="light"]):not([data-theme="github"]) .ui.tabular.menu {
   background-color: #070e1e !important;
   color: #f8fafc !important;
   border-color: #1e293b !important;
 }
 
-html[data-theme="dark"] .ui.menu .item,
-html[data-theme="dark"] .ui.tabular.menu .item {
+html:not([data-theme="light"]):not([data-theme="github"]) .ui.menu .item,
+html:not([data-theme="light"]):not([data-theme="github"]) .ui.tabular.menu .item {
   color: #94a3b8 !important;
 }
 
-html[data-theme="dark"] .ui.menu .item:hover,
-html[data-theme="dark"] .ui.tabular.menu .item:hover,
-html[data-theme="dark"] .ui.menu .item.active,
-html[data-theme="dark"] .ui.tabular.menu .item.active {
+html:not([data-theme="light"]):not([data-theme="github"]) .ui.menu .item:hover,
+html:not([data-theme="light"]):not([data-theme="github"]) .ui.tabular.menu .item:hover,
+html:not([data-theme="light"]):not([data-theme="github"]) .ui.menu .item.active,
+html:not([data-theme="light"]):not([data-theme="github"]) .ui.tabular.menu .item.active {
   color: #f8fafc !important;
 }
 
-html[data-theme="dark"] .ui.header,
-html[data-theme="dark"] h1,
-html[data-theme="dark"] h2,
-html[data-theme="dark"] h3,
-html[data-theme="dark"] h4,
-html[data-theme="dark"] h5,
-html[data-theme="dark"] strong {
+html:not([data-theme="light"]):not([data-theme="github"]) .ui.header,
+html:not([data-theme="light"]):not([data-theme="github"]) h1,
+html:not([data-theme="light"]):not([data-theme="github"]) h2,
+html:not([data-theme="light"]):not([data-theme="github"]) h3,
+html:not([data-theme="light"]):not([data-theme="github"]) h4,
+html:not([data-theme="light"]):not([data-theme="github"]) h5,
+html:not([data-theme="light"]):not([data-theme="github"]) strong {
   color: #f8fafc !important;
 }
 
-html[data-theme="dark"] p,
-html[data-theme="dark"] span:not(.badge):not(.label):not(.ui.label),
-html[data-theme="dark"] label {
+html:not([data-theme="light"]):not([data-theme="github"]) p,
+html:not([data-theme="light"]):not([data-theme="github"]) span:not(.badge):not(.label):not(.ui.label),
+html:not([data-theme="light"]):not([data-theme="github"]) label {
   color: #e2e8f0 !important;
 }
 
-html[data-theme="dark"] a {
+html:not([data-theme="light"]):not([data-theme="github"]) a {
   color: #00e5ff !important;
 }
 
-html[data-theme="dark"] a:hover {
+html:not([data-theme="light"]):not([data-theme="github"]) a:hover {
   color: #38bdf8 !important;
 }
 
-html[data-theme="dark"] .ui.button:not(.primary):not(.green):not(.red):not(.btn-gold) {
+html:not([data-theme="light"]):not([data-theme="github"]) .ui.button:not(.primary):not(.green):not(.red):not(.btn-gold) {
   background-color: #0b1528 !important;
   color: #f8fafc !important;
   border: 1px solid #1e293b !important;
 }
 
-html[data-theme="dark"] .ui.button:not(.primary):not(.green):not(.red):not(.btn-gold):hover {
+html:not([data-theme="light"]):not([data-theme="github"]) .ui.button:not(.primary):not(.green):not(.red):not(.btn-gold):hover {
   background-color: #1e293b !important;
   border-color: #00e5ff !important;
 }

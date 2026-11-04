@@ -25,8 +25,8 @@
     } catch (e) {}
 
     function getCookie(name) {
-        const m = document.cookie.match(new RegExp('(^|;\\s*)' + name + '=([^;]*)'));
-        return m ? decodeURIComponent(m[2]) : null;
+        const m = document.cookie.match(new RegExp('(?:^|;\\s*)' + name + '=([^;]*)'));
+        return m ? decodeURIComponent(m[1]) : null;
     }
 
     function setCookie(name, val) {
@@ -40,14 +40,35 @@
     }
 
     function getCurrentLang() {
-        const fromCookie = getCookie('bantu_lang') || getCookie('django_language');
-        if (fromCookie) return fromCookie;
+        // 1. Parametre d URL explicite ?lang=
+        try {
+            const u = new URLSearchParams(window.location.search).get('lang');
+            if (u && BANTU_LANG_MAP[u]) return BANTU_LANG_MAP[u];
+        } catch(e) {}
+
+        // 2. Attribut lang de la page active (Gitea / Django)
+        try {
+            const docLang = (document.documentElement.getAttribute('lang') || '').toLowerCase();
+            if (docLang.startsWith('en')) return 'en';
+            if (docLang.startsWith('sw')) return 'sw';
+            if (docLang.startsWith('pt')) return 'pt';
+            if (docLang.startsWith('fr')) return 'fr';
+        } catch(e) {}
+
+        // 3. Cookies Gitea & BantuDevLab
         const giteaCookie = getCookie('lang');
         if (giteaCookie && BANTU_LANG_MAP[giteaCookie]) return BANTU_LANG_MAP[giteaCookie];
+
+        const djangoCookie = getCookie('django_language');
+        if (djangoCookie && BANTU_LANG_MAP[djangoCookie]) return BANTU_LANG_MAP[djangoCookie];
+
+        const bantuCookie = getCookie('bantu_lang');
+        if (bantuCookie && BANTU_LANG_MAP[bantuCookie]) return BANTU_LANG_MAP[bantuCookie];
+
         return 'fr';
     }
 
-    // Publish theme/lang change to all ecosystems
+    // Publier le changement de theme ou de langue sur tout l ecosysteme
     window.syncEcosystemChange = function (newTheme, newLang) {
         const theme = newTheme || getCurrentTheme();
         const lang = newLang || getCurrentLang();
@@ -55,7 +76,7 @@
         const giteaTheme = (theme === 'light') ? 'github' : 'github-dark';
         const ts = Date.now();
 
-        // 1. Write shared cookies across localhost (accessible to ports 8001, 3001, 3002)
+        // 1. Ecrire les cookies partages sur localhost (ports 8001, 3001, 3002)
         setCookie('bantu_theme', theme);
         setCookie('theme', giteaTheme);
         setCookie('gitea_theme', giteaTheme);
@@ -64,7 +85,7 @@
         setCookie('lang', giteaLang);
         setCookie('bantu_sync_ts', ts.toString());
 
-        // 2. Write to localStorage
+        // 2. LocalStorage
         try {
             localStorage.setItem('bantu_theme', theme);
             localStorage.setItem('bantu_lang', lang);
@@ -79,15 +100,20 @@
             } catch (e) {}
         }
 
-        // 4. Update current page DOM immediately
+        // 4. Mettre a jour le DOM local immediatement
         applyThemeLocally(theme);
         updateCrossLinks(theme, lang);
     };
 
     function applyThemeLocally(theme) {
         document.documentElement.setAttribute('data-theme', theme);
+        if (theme === 'dark') {
+            document.documentElement.classList.add('theme-github-dark');
+        } else {
+            document.documentElement.classList.remove('theme-github-dark');
+        }
         
-        // Gitea stylesheet live swap
+        // Echange de feuille de style Gitea
         document.querySelectorAll('link[rel="stylesheet"]').forEach(l => {
             if (l.href && l.href.includes('theme-github')) {
                 const targetHref = (theme === 'light') ? 
@@ -136,10 +162,7 @@
 
     function checkRemoteState() {
         const cookieTheme = getCookie('bantu_theme') || (getCookie('theme') && getCookie('theme').includes('light') ? 'light' : 'dark');
-        let cookieLang = getCookie('bantu_lang') || getCookie('django_language');
-        if (!cookieLang && getCookie('lang')) {
-            cookieLang = BANTU_LANG_MAP[getCookie('lang')] || 'fr';
-        }
+        const cookieLang = getCurrentLang();
 
         let needsLangReload = false;
         if (cookieTheme && cookieTheme !== lastKnownTheme) {
