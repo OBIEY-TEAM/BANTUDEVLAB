@@ -1,31 +1,43 @@
-# Plan d'Execution : Nouveau Logo, Charte Graphique & Synchronisation Langue / Mode d'Affichage (BantuDevLab + Gitea)
+# Plan d'Execution : Nouveau Logo, Charte Graphique & Synchronisation Universelle Tri-Ecosysteme (BantuDevLab + GitLab + Gitea)
 
 ## Objectifs Principaux
-1. Remplacer l'integralite du logo actuel par la nouvelle image officielle : Carte d'Afrique neon cyber avec symbole de code `</>` luminescent et orbite doree panafricaine.
-2. Deriver et appliquer la charte graphique officielle inspiree du logo (Bleu neon `#0070f3`, Cyan `#00e5ff`, Orbite Or `#f59e0b`, Noir spatial `#030712`, Blanc glacier `#f8fafc`).
-3. Rendre la synchronisation de la langue 100% coherente : tout le contenu et tous les onglets de BantuDevLab traduits (FR, EN, SW, PT) et synchronises avec Gitea.
-4. Rendre la synchronisation du mode d'affichage (Sombre / Clair) 100% coherente et persistee entre BantuDevLab et Gitea.
-5. Effectuer un commit pour chaque tache et sous-tache, puis pousser vers origin.
+1. Remplacer l'integralite du logo actuel par la nouvelle image officielle : Carte d'Afrique neon cyber avec symbole de code `</>` luminescent et orbite doree panafricaine sur TOUS les 3 ecosystemes : BantuDevLab (8001), GitLab CE Forge (3001) et Gitea (3002).
+2. Appliquer la charte graphique officielle derivee du logo (Bleu neon `#0070f3`, Cyan `#00e5ff`, Orbite Or `#f59e0b`, Noir spatial `#020617`, Blanc glacier `#f8fafc`) sur les 3 plateformes en mode sombre et clair.
+3. Synchronisation Universelle Bidirectionnelle de la Langue (FR, EN, SW, PT) "VIS ET VERSA" : un changement de langue sur BantuDevLab, GitLab ou Gitea met a jour et synchronise automatiquement tous les autres.
+4. Synchronisation Universelle Bidirectionnelle du Mode d'Affichage (Sombre / Clair) "VIS ET VERSA" : un changement de mode sur BantuDevLab, GitLab ou Gitea applique immediatement le theme a tous les autres sans defaut de transparence.
+5. Effectuer un commit pour chaque tache et sous-tache, tester, relancer les services en local et faire le push sur origin.
 
 ---
 
 ## Taches et Sous-taches
 
-### Tache 1 : Nouveau Logo et Charte Graphique Cyber-Panafricaine
-- [ ] 1.1 Traitement de l'image source, generation des formats optimises (PNG, JPG, SVG vectoriel hybride, favicons) pour BantuDevLab et Gitea.
-- [ ] 1.2 Integration du nouveau logo dans les templates de BantuDevLab (base, africa_logo, navbar, vitrine, dashboard, zkp, souverainete) et de Gitea (header, login, public assets).
-- [ ] 1.3 Charte graphique et tokens CSS derives du logo pour le Mode Sombre Cyber et le Mode Clair Savane sur BantuDevLab et Gitea.
+### Tache 1 : Mise a jour de la feuille de route et du plan de synchronisation Tri-Ecosysteme
+- [x] 1.1 Subdivision detaillee de la synchronisation bidirectionnelle BantuDevLab + GitLab + Gitea dans `task_logo_sync.md`.
 
-### Tache 2 : Synchronisation Complete de la Langue
-- [ ] 2.1 Traduction integrale (i18n) de tous les onglets et contenus de BantuDevLab (FR, EN, SW, PT) sans aucun texte fige.
-- [ ] 2.2 Passerelle de synchronisation de langue bidirectionnelle entre BantuDevLab et Gitea (cookies django_language, cookie Gitea lang, API REST Gitea /api/v1/user).
-- [ ] 2.3 Propagation automatique de la langue lors de la navigation et des redirections vers Gitea.
+### Tache 2 : Nouveau Logo et Charte Graphique Cyber-Panafricaine (BantuDevLab + Gitea)
+- [x] 2.1 Traitement de l'image source, generation des formats optimises (PNG, JPG, SVG vectoriel hybride, favicons) pour BantuDevLab et Gitea.
+- [x] 2.2 Integration du nouveau logo dans les templates de BantuDevLab et de Gitea.
+- [x] 2.3 Charte graphique et tokens CSS derives du logo pour le Mode Sombre Cyber et le Mode Clair Savane sur BantuDevLab et Gitea.
 
-### Tache 3 : Synchronisation Complete du Mode d'Affichage (Sombre / Clair)
-- [ ] 3.1 Gestionnaire de theme unifie BantuDevLab avec persistance cookie/localStorage.
-- [ ] 3.2 Synchronisation du theme avec le cookie et les styles Gitea.
-- [ ] 3.3 Elimination totale des defauts de transparence sur les modales et fenetres reduites.
+### Tache 3 : Intégration du Logo et de la Charte Graphique sur GitLab Forge (Port 3001)
+- [ ] 3.1 Integrer le logo cyber carte d'Afrique officiel (SVG/PNG/Favicon), les routes statiques (/static/img/logo.svg, /favicon.svg, /static/js/bantu-ecosystem-sync.js) et la charte graphique bicolore (Obsidian / Savane) dans `forge_server.py`.
 
-### Tache 4 : Tests, Cloture et Push
-- [ ] 4.1 Tests automatises de la synchronisation de langue, de theme et verification zero-emoji.
-- [ ] 4.2 Push sur origin et validation de sante des 3 services locaux (8001, 3001, 3002).
+### Tache 4 : Synchronisation Universelle de la Langue sur GitLab Forge (Port 3001)
+- [ ] 4.1 Ajouter le dictionnaire complet de traduction quadri-lingue (FR, EN, SW, PT) pour toutes les vues de GitLab Forge (`_render_home_ui`, `_render_gitea_ui`, `_render_repo_ui`).
+- [ ] 4.2 Ajouter le selecteur de langues interactif dans la barre de navigation de GitLab Forge, gerer les cookies (`bantu_lang`, `django_language`, `lang`) et l'API de synchronisation.
+
+### Tache 5 : Synchronisation Universelle du Mode d'Affichage sur GitLab Forge (Port 3001)
+- [ ] 5.1 Ajouter le bouton de bascule de theme Sombre / Clair dans la barre de navigation de GitLab Forge avec bascule dynamique `[data-theme]` et cookies.
+
+### Tache 6 : Branchement et Liaison Bidirectionnelle "Vis et Versa" sur BantuDevLab (Port 8001) et Gitea (Port 3002)
+- [ ] 6.1 Brancher `bantu-ecosystem-sync.js` dans `templates/base.html` de BantuDevLab pour ecouter les changements locaux et propager aux autres ports.
+- [ ] 6.2 Brancher `bantu-ecosystem-sync.js` dans `custom/templates/custom/header.tmpl` de Gitea (et copie dans `gitea_home/`) pour ecouter et propager les changements locaux.
+
+### Tache 7 : Tests Automatisés Tri-Écosystème et Validation Zero-Emoji
+- [ ] 7.1 Mettre a jour et executer les tests automatises de conformite du logo, de la synchronisation de langue et du mode d'affichage sur les 3 ecosystemes.
+- [ ] 7.2 Validation stricte de la regle zero-emoji.
+
+### Tache 8 : Clôture, Relance des Processus et Push Git
+- [ ] 8.1 Arreter et relancer les 3 processus locaux (Django sur 8001, GitLab Forge sur 3001, Gitea sur 3002).
+- [ ] 8.2 Valider la reponse HTTP 200 sur les 3 plateformes.
+- [ ] 8.3 Git push vers origin sur develop-jule et design-figma.
