@@ -1,3 +1,4 @@
+from unittest.mock import patch
 from django.test import TestCase
 
 from apps.gitea_client.client import GiteaClient
@@ -8,9 +9,14 @@ class GiteaClientTestCase(TestCase):
         client = GiteaClient()
         self.assertIsNotNone(client.api_url)
 
-    def test_list_repositories_fallback(self):
+    @patch("apps.gitea_client.client.requests.get")
+    def test_list_repositories_fallback(self, mock_get):
+        mock_get.return_value.status_code = 200
+        mock_get.return_value.json.return_value = {
+            "data": [{"name": "repo-souverain-test", "id": 1}]
+        }
         client = GiteaClient()
-        repos = client.list_repositories()
+        repos = client.list_repositories(use_cache=False)
         self.assertIsInstance(repos, list)
         self.assertGreater(len(repos), 0)
         self.assertIn("name", repos[0])
