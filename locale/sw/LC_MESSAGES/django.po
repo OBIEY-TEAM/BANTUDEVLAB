@@ -200,3 +200,57 @@ msgstr "Kipindi kimethibitishwa kupitia Zero-Trust ZKP"
 
 msgid "Menu de navigation"
 msgstr "Menyu ya urambazaji"
+
+msgid "Workbench Souverain & Audit SAST"
+msgstr "Jukwaa Huru la Kazi na Ukaguzi wa SAST"
+
+msgid "Éditeur avec coloration syntaxique & numérotation"
+msgstr "Kihariri chenye mwangaza wa sintaksia na nambari za mistari"
+
+msgid "Prêt"
+msgstr "Tayari"
+
+msgid "Snippet Démo"
+msgstr "Sampuli ya Nambari"
+
+msgid "Demander l'Avis de Gemma 5B"
+msgstr "Omba Maoni ya AI ya Gemma 5B"
+
+msgid "Souveraineté"
+msgstr "Uhuru wa Kidijitali"
+
+msgid "Analyse Complétée"
+msgstr "Uchambuzi Umekamilika"
+
+msgid "Normes de Souveraineté Numérique ADSS-v1"
+msgstr "Viwango vya Uhuru wa Kidijitali ADSS-v1"
+
+msgid "CONFORME"
+msgstr "INAYOZINGATIA"
+
+msgid "Critiques"
+msgstr "Hatari Kubwa"
+
+msgid "Hautes"
+msgstr "Juu"
+
+msgid "Moyennes"
+msgstr "Kati"
+
+msgid "Vulnérabilités & Fuites Détectées"
+msgstr "Udhaifu na Uvujaji Uliogunduliwa"
+
+msgid "0 problème détecté"
+msgstr "Hakuna tatizo lililogunduliwa"
+
+msgid "Rapport d'Audit Gemma 5B (Local / On-Premise)"
+msgstr "Ripoti ya Ukaguzi wa Gemma 5B (Ndani / On-Premise)"
+
+msgid "Audits Récents"
+msgstr "Ukaguzi wa Hivi Karibuni"
+
+msgid "Fichier :"
+msgstr "Faili:"
+
+msgid "Aucun audit récent enregistré. Lancez un premier scan !"
+msgstr "Hakuna ukaguzi wa hivi karibuni. Anzisha uchunguzi wako wa kwanza!"

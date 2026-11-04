@@ -113,3 +113,54 @@ msgstr "Bascule d'Environnement Forge Souveraine"
 
 msgid "Accédez directement à vos espaces de dépôts Gitea ou GitLab CE."
 msgstr "Accédez directement à vos espaces de dépôts Gitea ou GitLab CE."
+
+msgid "Workbench Souverain & Audit SAST"
+msgstr "Workbench Souverain & Audit SAST"
+
+msgid "Éditeur avec coloration syntaxique & numérotation"
+msgstr "Éditeur avec coloration syntaxique & numérotation"
+
+msgid "Prêt"
+msgstr "Prêt"
+
+msgid "Snippet Démo"
+msgstr "Snippet Démo"
+
+msgid "Souveraineté"
+msgstr "Souveraineté"
+
+msgid "Analyse Complétée"
+msgstr "Analyse Complétée"
+
+msgid "Normes de Souveraineté Numérique ADSS-v1"
+msgstr "Normes de Souveraineté Numérique ADSS-v1"
+
+msgid "CONFORME"
+msgstr "CONFORME"
+
+msgid "Critiques"
+msgstr "Critiques"
+
+msgid "Hautes"
+msgstr "Hautes"
+
+msgid "Moyennes"
+msgstr "Moyennes"
+
+msgid "Vulnérabilités & Fuites Détectées"
+msgstr "Vulnérabilités & Fuites Détectées"
+
+msgid "0 problème détecté"
+msgstr "0 problème détecté"
+
+msgid "Rapport d'Audit Gemma 5B (Local / On-Premise)"
+msgstr "Rapport d'Audit Gemma 5B (Local / On-Premise)"
+
+msgid "Audits Récents"
+msgstr "Audits Récents"
+
+msgid "Fichier :"
+msgstr "Fichier :"
+
+msgid "Aucun audit récent enregistré. Lancez un premier scan !"
+msgstr "Aucun audit récent enregistré. Lancez un premier scan !"
