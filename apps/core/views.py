@@ -57,8 +57,8 @@ FORGE_REPOS_CACHE_KEY = "bantudevlab_forge_repos_cache"
 
 def get_cached_repositories() -> list:
     """
-    T-DEV-502 : Retourne les dépôts Git depuis le cache Redis sans appel direct bloquant
-    aux API distantes GitLab/Gitea. Repli instantané sans latence.
+    Retourne les dépôts Git réels depuis Gitea (API REST v1 souveraine).
+    Supprime toute donnée fictive et met en cache 30s.
     """
     from django.core.cache import cache
 
@@ -66,20 +66,27 @@ def get_cached_repositories() -> list:
     if repos is not None:
         return repos
 
-    cached_gitlab = cache.get(GitLabClient.CACHE_KEY_PROJECTS)
-    if cached_gitlab is not None:
-        return cached_gitlab
-
     cached_gitea = cache.get(GiteaClient.CACHE_KEY_REPOS)
     if cached_gitea is not None:
         return cached_gitea
 
     try:
-        repos = GitLabClient().list_repositories() or GiteaClient().list_repositories() or []
-        cache.set(FORGE_REPOS_CACHE_KEY, repos, 60)
-        return repos
+        repos = GiteaClient().list_repositories(use_cache=False)
+        if repos:
+            cache.set(FORGE_REPOS_CACHE_KEY, repos, 30)
+            return repos
     except Exception:
-        return []
+        pass
+
+    try:
+        repos = GitLabClient().list_repositories() or []
+        if repos:
+            cache.set(FORGE_REPOS_CACHE_KEY, repos, 30)
+            return repos
+    except Exception:
+        pass
+
+    return []
 
 
 def home_view(request):

@@ -101,56 +101,9 @@ class GiteaClient:
         if res.get("success") and "data" in res:
             repos = res["data"].get("data", [])
         else:
-            # Sovereign default mock repositories for demo/hackathon display
-            repos = [
-                {
-                    "id": 1,
-                    "name": "afri-fintech-gateway",
-                    "full_name": "sovereign-org/afri-fintech-gateway",
-                    "description": "Passerelle panafricaine de paiement mobile & interopérabilité souveraine",
-                    "private": False,
-                    "stars_count": 42,
-                    "forks_count": 12,
-                    "open_issues_count": 3,
-                    "owner": {"username": "afri-foundation"},
-                    "clone_url": "https://forge.bantudevlab.africa/sovereign-org/afri-fintech-gateway.git",
-                    "html_url": "https://forge.bantudevlab.africa/sovereign-org/afri-fintech-gateway",
-                    "default_branch": "main",
-                    "sovereignty_level": "Tier-1 Continental",
-                },
-                {
-                    "id": 2,
-                    "name": "agro-sentinel-ai",
-                    "full_name": "sovereign-org/agro-sentinel-ai",
-                    "description": "Modèles de vision embarquée pour la surveillance des récoltes sahéliennes",
-                    "private": False,
-                    "stars_count": 89,
-                    "forks_count": 27,
-                    "open_issues_count": 5,
-                    "owner": {"username": "agro-tech-ci"},
-                    "clone_url": "https://forge.bantudevlab.africa/sovereign-org/agro-sentinel-ai.git",
-                    "html_url": "https://forge.bantudevlab.africa/sovereign-org/agro-sentinel-ai",
-                    "default_branch": "main",
-                    "sovereignty_level": "Tier-1 Continental",
-                },
-                {
-                    "id": 3,
-                    "name": "bantu-zkp-identity",
-                    "full_name": "bantudevlab/bantu-zkp-identity",
-                    "description": "Bibliothèque cryptographique Zero-Knowledge Proof pour l'Afrique de l'Ouest",
-                    "private": False,
-                    "stars_count": 154,
-                    "forks_count": 34,
-                    "open_issues_count": 1,
-                    "owner": {"username": "bantudevlab"},
-                    "clone_url": "https://forge.bantudevlab.africa/bantudevlab/bantu-zkp-identity.git",
-                    "html_url": "https://forge.bantudevlab.africa/bantudevlab/bantu-zkp-identity",
-                    "default_branch": "main",
-                    "sovereignty_level": "Tier-1 Continental",
-                },
-            ]
+            repos = []
 
-        if use_cache:
+        if use_cache and repos:
             cache.set(self.CACHE_KEY_REPOS, repos, self.CACHE_TTL)
         return repos
 
