@@ -31,7 +31,7 @@ if not SECRET_KEY:
 
 # (DEBUG est defini plus haut)
 
-ALLOWED_HOSTS = [h.strip() for h in os.environ.get("ALLOWED_HOSTS", "localhost,127.0.0.1").split(",") if h.strip()]
+ALLOWED_HOSTS = [h.strip() for h in os.environ.get("ALLOWED_HOSTS", "localhost,127.0.0.1,testserver").split(",") if h.strip()]
 
 HAS_DRF_SPECTACULAR = importlib.util.find_spec("drf_spectacular") is not None
 
@@ -56,6 +56,7 @@ MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "apps.core.middleware.SecurityHeadersMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
+    "apps.core.middleware.EcosystemI18nMiddleware",
     "django.middleware.locale.LocaleMiddleware",  # I18N-01
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
@@ -76,6 +77,7 @@ TEMPLATES = [
             "context_processors": [
                 "django.template.context_processors.debug",
                 "django.template.context_processors.request",
+                "django.template.context_processors.i18n",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
                 "apps.core.context_processors.forge_context",

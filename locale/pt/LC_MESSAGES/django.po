@@ -150,62 +150,8 @@ msgstr "Gitea"
 msgid "Aucun dépôt détecté sur le cluster Gitea local."
 msgstr "Nenhum repositorio encontrado no cluster Gitea local."
 
-msgid "Workbench Souverain & Audit SAST"
-msgstr "Bancada Soberana e Auditoria SAST"
-
-msgid "Éditeur avec coloration syntaxique & numérotation"
-msgstr "Editor com realce de sintaxe e numeracao de linhas"
-
-msgid "Langage"
-msgstr "Linguagem"
-
-msgid "Prêt"
-msgstr "Pronto"
-
-msgid "Snippet Démo"
-msgstr "Snippet de Demonstracao"
-
 msgid "Lancer l'Audit de Sécurité"
 msgstr "Executar Auditoria de Seguranca"
-
-msgid "Demander l'Avis de Gemma 5B"
-msgstr "Solicitar Parecer de IA Gemma 5B"
-
-msgid "Souveraineté"
-msgstr "Soberania"
-
-msgid "Analyse Complétée"
-msgstr "Analise Concluida"
-
-msgid "Normes de Souveraineté Numérique ADSS-v1"
-msgstr "Normas de Soberania Digital ADSS-v1"
-
-msgid "CONFORME"
-msgstr "CONFORME"
-
-msgid "Critiques"
-msgstr "Criticas"
-
-msgid "Hautes"
-msgstr "Altas"
-
-msgid "Moyennes"
-msgstr "Medias"
-
-msgid "Vulnérabilités & Fuites Détectées"
-msgstr "Vulnerabilidades e Vazamentos Detectados"
-
-msgid "problème détecté"
-msgstr "problema detectado"
-
-msgid "Rapport d'Audit Gemma 5B (Local / On-Premise)"
-msgstr "Relatorio de Auditoria Gemma 5B (Local / On-Premise)"
-
-msgid "Audits Récents"
-msgstr "Auditorias Recentes"
-
-msgid "Aucun audit récent enregistré. Lancez un premier scan !"
-msgstr "Nenhuma auditoria recente registrada. Execute sua primeira verificacao!"
 
 msgid "Indicateurs & Topologie Souveraine Panafricaine"
 msgstr "Indicadores e Topologia Soberana Pan-Africana"
@@ -249,35 +195,62 @@ msgstr "Alterar idioma"
 msgid "Basculer thème clair / sombre"
 msgstr "Alternar tema claro / escuro"
 
-msgid "Thème clair activé"
-msgstr "Tema claro ativado"
-
-msgid "Thème sombre activé"
-msgstr "Tema escuro ativado"
-
 msgid "Session authentifiée via Zero-Trust ZKP"
 msgstr "Sessao autenticada via Zero-Trust ZKP"
 
 msgid "Menu de navigation"
 msgstr "Menu de navegacao"
 
-msgid "BANTUDEVLAB - Forge Logicielle Souveraine Africaine"
-msgstr "BANTUDEVLAB - Forja Soberana de Software Africana"
+msgid "Workbench Souverain & Audit SAST"
+msgstr "Workbench Soberano & Auditoria SAST"
 
-msgid "Navigation Principale"
-msgstr "Navegacao Principal"
+msgid "Éditeur avec coloration syntaxique & numérotation"
+msgstr "Editor com realce de sintaxe & numeracao de linhas"
 
-msgid "Connexion et bascule sur la forge logicielle Gitea"
-msgstr "Login e mudanca para a forja de software Gitea"
+msgid "Prêt"
+msgstr "Pronto"
 
-msgid "Ouvre GitLab dans un nouvel onglet"
-msgstr "Abre o GitLab em uma nova aba"
+msgid "Snippet Démo"
+msgstr "Snippet de Demonstracao"
 
-msgid "Menu mobile"
-msgstr "Menu movel"
+msgid "Demander l'Avis de Gemma 5B"
+msgstr "Pedir Opiniao do Gemma 5B"
 
-msgid "Fermer le menu"
-msgstr "Fechar menu"
+msgid "Souveraineté"
+msgstr "Soberania"
 
-msgid "Forge Logicielle Panafricaine & Souveraine. Hébergée sur Systalink Cloud."
-msgstr "Forja Soberana e Pan-Africana de Software. Hospedada na Systalink Cloud."
+msgid "Analyse Complétée"
+msgstr "Analise Concluida"
+
+msgid "Normes de Souveraineté Numérique ADSS-v1"
+msgstr "Normas de Soberania Digital ADSS-v1"
+
+msgid "CONFORME"
+msgstr "CONFORME"
+
+msgid "Critiques"
+msgstr "Criticas"
+
+msgid "Hautes"
+msgstr "Altas"
+
+msgid "Moyennes"
+msgstr "Medias"
+
+msgid "Vulnérabilités & Fuites Détectées"
+msgstr "Vulnerabilidades & Vazamentos Detetados"
+
+msgid "0 problème détecté"
+msgstr "0 problemas detetados"
+
+msgid "Rapport d'Audit Gemma 5B (Local / On-Premise)"
+msgstr "Relatorio de Auditoria Gemma 5B (Local / On-Premise)"
+
+msgid "Audits Récents"
+msgstr "Auditorias Recentes"
+
+msgid "Fichier :"
+msgstr "Ficheiro:"
+
+msgid "Aucun audit récent enregistré. Lancez un premier scan !"
+msgstr "Nenhuma auditoria recente registada. Inicie a primeira analise!"

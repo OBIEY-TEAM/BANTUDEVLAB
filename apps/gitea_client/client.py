@@ -150,7 +150,7 @@ class GiteaClient:
         else:
             repos = self._get_fallback_repositories()
 
-        if use_cache and repos:
+        if use_cache:
             cache.set(self.CACHE_KEY_REPOS, repos, self.CACHE_TTL)
         return repos
 
