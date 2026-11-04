@@ -132,8 +132,8 @@
 
         <!-- Workbench avec Éditeur de Code Moderne (UI-01) -->
         <h3 style="margin-top: 2rem; display: flex; align-items: center; justify-content: space-between;">
-            <span>Workbench Souverain & Audit SAST</span>
-            <span style="font-size: 0.8rem; color: var(--text-muted); font-weight: normal;">Éditeur avec coloration syntaxique & numérotation</span>
+            <span>{% trans "Workbench Souverain & Audit SAST" %}</span>
+            <span style="font-size: 0.8rem; color: var(--text-muted); font-weight: normal;">{% trans "Éditeur avec coloration syntaxique & numérotation" %}</span>
         </h3>
 
         <div class="card" style="margin-top: 1rem; padding: 1.25rem;">
@@ -150,8 +150,8 @@
                         </select>
                     </div>
                     <div style="display: flex; gap: 0.75rem; align-items: center;">
-                        <span id="editorStatus" style="font-size: 0.8rem; color: var(--secondary-emerald);">{% icon "dot" size=10 %} Prêt</span>
-                        <button class="btn btn-secondary" style="padding: 0.2rem 0.6rem; font-size: 0.75rem;" onclick="resetEditorSnippet()">Snippet Démo</button>
+                        <span id="editorStatus" style="font-size: 0.8rem; color: var(--secondary-emerald);">{% icon "dot" size=10 %} {% trans "Prêt" %}</span>
+                        <button class="btn btn-secondary" style="padding: 0.2rem 0.6rem; font-size: 0.75rem;" onclick="resetEditorSnippet()">{% trans "Snippet Démo" %}</button>
                     </div>
                 </div>
                 <textarea id="scanCodeInput" class="fallback-code-editor" style="display: none;"></textarea>
@@ -160,10 +160,10 @@
 
             <div style="margin-top: 1.25rem; display: flex; gap: 1rem; flex-wrap: wrap;">
                 <button class="btn btn-primary" onclick="runSecurityScan()">
-                    {% icon "shield" size=18 %} Lancer l'Audit de Sécurité
+                    {% icon "shield" size=18 %} {% trans "Lancer l'Audit de Sécurité" %}
                 </button>
                 <button class="btn btn-secondary" onclick="runAiReview()">
-                    {% icon "bot" size=18 %} Demander l'Avis de Gemma 5B
+                    {% icon "bot" size=18 %} {% trans "Demander l'Avis de Gemma 5B" %}
                 </button>
             </div>
 
@@ -178,31 +178,31 @@
                         </svg>
                         <div class="gauge-inner-text">
                             <div id="gaugeScoreText" class="gauge-percentage">--%</div>
-                            <div class="gauge-sublabel">Souveraineté</div>
+                            <div class="gauge-sublabel">{% trans "Souveraineté" %}</div>
                         </div>
                     </div>
 
                     <div style="flex: 1; margin-left: 2rem;">
                         <div style="display: flex; justify-content: space-between; align-items: center;">
                             <div>
-                                <h4 id="scanStatusTitle" style="margin: 0; font-size: 1.15rem;">Analyse Complétée</h4>
-                                <p id="scanJurisdiction" style="margin: 0.25rem 0 0; font-size: 0.82rem; color: var(--text-muted);">Normes de Souveraineté Numérique ADSS-v1</p>
+                                <h4 id="scanStatusTitle" style="margin: 0; font-size: 1.15rem;">{% trans "Analyse Complétée" %}</h4>
+                                <p id="scanJurisdiction" style="margin: 0.25rem 0 0; font-size: 0.82rem; color: var(--text-muted);">{% trans "Normes de Souveraineté Numérique ADSS-v1" %}</p>
                             </div>
-                            <span id="scanStatusBadge" class="brand-badge">CONFORME</span>
+                            <span id="scanStatusBadge" class="brand-badge">{% trans "CONFORME" %}</span>
                         </div>
 
                         <div class="metrics-pill-grid">
                             <div class="metric-pill">
                                 <span id="pillCriticalCount" class="pill-val severity-pill-critical">0</span>
-                                <span class="pill-lbl">Critiques</span>
+                                <span class="pill-lbl">{% trans "Critiques" %}</span>
                             </div>
                             <div class="metric-pill">
                                 <span id="pillHighCount" class="pill-val severity-pill-high">0</span>
-                                <span class="pill-lbl">Hautes</span>
+                                <span class="pill-lbl">{% trans "Hautes" %}</span>
                             </div>
                             <div class="metric-pill">
                                 <span id="pillMediumCount" class="pill-val severity-pill-medium">0</span>
-                                <span class="pill-lbl">Moyennes</span>
+                                <span class="pill-lbl">{% trans "Moyennes" %}</span>
                             </div>
                         </div>
                     </div>
@@ -211,8 +211,8 @@
                 <!-- Liste Interactive des Vulnérabilités -->
                 <div id="vulnerabilitiesListSection">
                     <h4 style="margin-bottom: 0.75rem; display: flex; align-items: center; justify-content: space-between;">
-                        <span>Vulnérabilités & Fuites Détectées</span>
-                        <span id="issuesCountBadge" style="font-size: 0.8rem; color: var(--text-muted);">0 problème détecté</span>
+                        <span>{% trans "Vulnérabilités & Fuites Détectées" %}</span>
+                        <span id="issuesCountBadge" style="font-size: 0.8rem; color: var(--text-muted);">{% trans "0 problème détecté" %}</span>
                     </h4>
                     <div id="vulnerabilitiesContainer"></div>
                 </div>
@@ -220,14 +220,14 @@
 
             <!-- Affichage Revue IA / Streaming SSE -->
             <div id="aiReviewSection" style="margin-top: 1.5rem; display: none;">
-                <h4 style="margin-bottom: 0.5rem; color: var(--primary-african-gold);">Rapport d'Audit Gemma 5B (Local / On-Premise)</h4>
+                <h4 style="margin-bottom: 0.5rem; color: var(--primary-african-gold);">{% trans "Rapport d'Audit Gemma 5B (Local / On-Premise)" %}</h4>
                 <div id="aiReviewContent" style="padding: 1.25rem; background: #080c14; border: 1px solid var(--dark-border); border-radius: 8px; font-family: monospace; font-size: 0.9rem; line-height: 1.6; white-space: pre-wrap; color: #e2e8f0;"></div>
             </div>
         </div>
     </div>
 
     <div>
-        <h3>Audits Récents</h3>
+        <h3>{% trans "Audits Récents" %}</h3>
         <div style="display: flex; flex-direction: column; gap: 1rem; margin-top: 1rem;">
             {% for audit in audits %}
             <div class="card" style="padding: 1rem;">
@@ -235,12 +235,12 @@
                     <strong>{{ audit.repository_name }}</strong>
                     <span style="color: var(--secondary-emerald); font-weight: bold;">{{ audit.sovereignty_score }}%</span>
                 </div>
-                <p style="font-size: 0.8rem; color: var(--text-muted); margin: 0.3rem 0;">Fichier : {{ audit.file_scanned }}</p>
+                <p style="font-size: 0.8rem; color: var(--text-muted); margin: 0.3rem 0;">{% trans "Fichier :" %} {{ audit.file_scanned }}</p>
                 <span class="brand-badge" style="font-size: 0.7rem;">{{ audit.status_rating }}</span>
             </div>
             {% empty %}
             <div class="card">
-                <p style="color: var(--text-muted); font-size: 0.9rem;">Aucun audit récent enregistré. Lancez un premier scan !</p>
+                <p style="color: var(--text-muted); font-size: 0.9rem;">{% trans "Aucun audit récent enregistré. Lancez un premier scan !" %}</p>
             </div>
             {% endfor %}
         </div>
