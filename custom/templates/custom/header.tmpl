@@ -278,18 +278,18 @@ document.addEventListener('DOMContentLoaded', function() {
       const existingImg = link.querySelector('img');
       const existingSvg = link.querySelector('svg');
       if (existingImg) {
-        existingImg.src = '/img/logo.svg';
+        existingImg.src = '/assets/img/logo.svg';
         existingImg.alt = 'BantuDevLab Carte Afrique';
-        existingImg.style.width = '32px';
+        existingImg.style.width = '36px'; existingImg.style.boxShadow = '0 0 12px rgba(0, 229, 255, 0.45)';
         existingImg.style.height = '32px';
         existingImg.style.borderRadius = '6px';
       } else if (existingSvg && !link.querySelector('.africa-logo-injected')) {
         existingSvg.style.display = 'none';
         const img = document.createElement('img');
         img.className = 'africa-logo-injected';
-        img.src = '/img/logo.svg';
+        img.src = '/assets/img/logo.svg';
         img.alt = 'BantuDevLab Carte Afrique';
-        img.style.width = '32px';
+        img.style.width = '36px'; img.style.boxShadow = '0 0 12px rgba(0, 229, 255, 0.45)';
         img.style.height = '32px';
         img.style.borderRadius = '6px';
         img.style.verticalAlign = 'middle';
