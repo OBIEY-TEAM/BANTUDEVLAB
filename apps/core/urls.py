@@ -11,4 +11,5 @@ urlpatterns = [
     path("sovereignty-metrics/", views.metrics_view, name="sovereignty_metrics"),
     path("faq/", views.faq_view, name="faq"),
     path("api/organizations/", views.SovereignOrganizationListCreateView.as_view(), name="organizations"),
+    path("api/network/latency/", views.NetworkLatencyView.as_view(), name="network_latency"),
 ]
