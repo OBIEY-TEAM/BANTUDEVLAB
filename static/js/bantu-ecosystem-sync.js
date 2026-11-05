@@ -34,9 +34,20 @@
     }
 
     function getCurrentTheme() {
-        return document.documentElement.getAttribute('data-theme') || 
-               getCookie('bantu_theme') || 
-               (getCookie('theme') && getCookie('theme').includes('light') ? 'light' : 'dark');
+        const docTheme = document.documentElement.getAttribute('data-theme');
+        if (docTheme) return docTheme;
+        let lsTheme = null;
+        try {
+            lsTheme = localStorage.getItem('bantu_theme');
+        } catch(e) {}
+        if (lsTheme) return lsTheme;
+        const bCookie = getCookie('bantu_theme');
+        if (bCookie) return bCookie;
+        const gCookie = getCookie('theme') || getCookie('gitea_theme');
+        if (gCookie) {
+            return (gCookie.includes('dark') || gCookie === 'github-dark') ? 'dark' : 'light';
+        }
+        return 'dark';
     }
 
     function getCurrentLang() {
@@ -86,7 +97,15 @@
 
     function applyThemeLocally(theme) {
         document.documentElement.setAttribute('data-theme', theme);
-        
+
+        // Update Anti-FOUC critical styling immediately
+        const antiFouc = document.getElementById('bantu-anti-fouc-critical');
+        if (antiFouc) {
+            const bgBody = (theme === 'dark') ? '#020617' : '#ffffff';
+            const colorBody = (theme === 'dark') ? '#f8fafc' : '#0f172a';
+            antiFouc.innerHTML = 'html, body, .full.height, #wrapper, .page-content { background-color: ' + bgBody + ' !important; color: ' + colorBody + ' !important; }';
+        }
+
         // Gitea stylesheet live swap
         document.querySelectorAll('link[rel="stylesheet"]').forEach(l => {
             if (l.href && l.href.includes('theme-github')) {
@@ -105,12 +124,12 @@
                 '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>';
         }
 
-        // Gitea theme toggle button text update
+        // Gitea theme toggle button text & icon update
         const giteaThemeBtn = document.getElementById('gitea-theme-toggle-btn');
         if (giteaThemeBtn) {
             giteaThemeBtn.innerHTML = (theme === 'dark') ?
                 '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg> <span>Clair</span>' :
-                '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#00e5ff" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg> <span>Sombre</span>';
+                '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#0070f3" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg> <span>Sombre</span>';
         }
     }
 

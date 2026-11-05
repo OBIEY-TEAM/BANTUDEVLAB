@@ -1,6 +1,7 @@
 import struct
 from pathlib import Path
 
+
 def generate_mo(po_path: Path, mo_path: Path):
     lines = po_path.read_text(encoding="utf-8").splitlines()
     entries = {}
@@ -15,14 +16,14 @@ def generate_mo(po_path: Path, mo_path: Path):
         if line.startswith("msgid "):
             if current_msgid is not None and current_msgstr is not None:
                 entries[current_msgid] = current_msgstr
-            current_msgid = line[6:].strip('"').replace('\\"', '"').replace('\\n', '\n')
+            current_msgid = line[6:].strip('"').replace('\\"', '"').replace("\\n", "\n")
             current_msgstr = ""
             state = "msgid"
         elif line.startswith("msgstr "):
-            current_msgstr = line[7:].strip('"').replace('\\"', '"').replace('\\n', '\n')
+            current_msgstr = line[7:].strip('"').replace('\\"', '"').replace("\\n", "\n")
             state = "msgstr"
         elif line.startswith('"') and line.endswith('"'):
-            content = line[1:-1].replace('\\"', '"').replace('\\n', '\n')
+            content = line[1:-1].replace('\\"', '"').replace("\\n", "\n")
             if state == "msgid":
                 current_msgid += content
             elif state == "msgstr":
@@ -65,7 +66,7 @@ def generate_mo(po_path: Path, mo_path: Path):
     header = struct.pack(
         "<Iiiiiii",
         0x950412DE,  # Magic
-        0,           # Version
+        0,  # Version
         num_strings,
         orig_table_offset,
         trans_table_offset,
@@ -85,11 +86,13 @@ def generate_mo(po_path: Path, mo_path: Path):
     mo_path.write_bytes(mo_content)
     print(f"Compiled {po_path} -> {mo_path} ({num_strings} strings)")
 
+
 def compile_all():
     locales_dir = Path("locale")
     for po_file in locales_dir.rglob("*.po"):
         mo_file = po_file.with_suffix(".mo")
         generate_mo(po_file, mo_file)
+
 
 if __name__ == "__main__":
     compile_all()
