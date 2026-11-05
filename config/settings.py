@@ -31,7 +31,9 @@ if not SECRET_KEY:
 
 # (DEBUG est defini plus haut)
 
-ALLOWED_HOSTS = [h.strip() for h in os.environ.get("ALLOWED_HOSTS", "localhost,127.0.0.1,testserver").split(",") if h.strip()]
+ALLOWED_HOSTS = [
+    h.strip() for h in os.environ.get("ALLOWED_HOSTS", "localhost,127.0.0.1,testserver").split(",") if h.strip()
+]
 
 HAS_DRF_SPECTACULAR = importlib.util.find_spec("drf_spectacular") is not None
 

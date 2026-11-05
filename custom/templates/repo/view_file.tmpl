@@ -11,8 +11,8 @@
 .gh-file-tree-sidebar {
   width: 260px;
   min-width: 240px;
-  background: var(--color-canvas-subtle, #f6f8fa);
-  border: 1px solid var(--color-border-default, #d0d7de);
+  background: var(--color-canvas-subtle, var(--color-box-header, #070e1e));
+  border: 1px solid var(--color-border-default, #1e293b);
   border-radius: 6px;
   padding: 8px;
   display: none;
@@ -30,7 +30,7 @@
   align-items: center;
   font-weight: 600;
   padding: 4px 6px;
-  border-bottom: 1px solid var(--color-border-default, #d0d7de);
+  border-bottom: 1px solid var(--color-border-default, #1e293b);
   margin-bottom: 4px;
 }
 
@@ -38,10 +38,11 @@
   width: 100%;
   padding: 4px 8px;
   font-size: 11px;
-  border: 1px solid var(--color-border-default, #d0d7de);
+  border: 1px solid var(--color-border-default, #1e293b);
   border-radius: 4px;
   outline: none;
-  background: var(--color-canvas-default, #ffffff);
+  background: var(--color-input-background, #0b1528);
+  color: var(--color-text, #f8fafc);
 }
 
 .gh-file-tree-item {
@@ -50,18 +51,18 @@
   gap: 6px;
   padding: 4px 6px;
   border-radius: 4px;
-  color: var(--color-text, #1f2328);
+  color: var(--color-text, #f8fafc);
   text-decoration: none;
   cursor: pointer;
 }
 
 .gh-file-tree-item:hover {
-  background: var(--color-canvas-default, #ffffff);
-  color: var(--color-accent-fg, #0969da);
+  background: var(--color-box-body-highlight, #0b1528);
+  color: var(--color-accent-fg, #00e5ff);
 }
 </style>
 
-<div class="file-view-header" style="display: flex; justify-content: space-between; align-items: center; padding: 8px 16px; background-color: var(--color-canvas-subtle, #f6f8fa); border: 1px solid var(--color-border-default, #d0d7de); border-top-left-radius: 6px; border-top-right-radius: 6px; margin-bottom: -1px; font-size: 13px;">
+<div class="file-view-header" style="display: flex; justify-content: space-between; align-items: center; padding: 8px 16px; background-color: var(--color-canvas-subtle, var(--color-box-header, #070e1e)); border: 1px solid var(--color-border-default, #1e293b); border-top-left-radius: 6px; border-top-right-radius: 6px; margin-bottom: -1px; font-size: 13px;">
   <div style="display: flex; align-items: center; gap: 8px; font-weight: 500;">
     <button id="toggle-file-tree-btn" class="ui tiny compact button" style="display: inline-flex; align-items: center; gap: 4px;" title="Afficher/masquer l'arborescence (raccourci 't')">
       <svg height="14" viewBox="0 0 16 16" width="14" fill="currentColor">
