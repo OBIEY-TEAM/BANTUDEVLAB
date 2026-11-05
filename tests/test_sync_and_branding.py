@@ -83,7 +83,7 @@ class SyncAndBrandingTestCase(TestCase):
                 "Workbench Souverain & Audit SAST": "Workbench Souverain & Audit SAST",
                 "Lancer l'Audit de Sécurité": "Lancer l'Audit de Sécurité",
                 "Demander l'Avis de Gemma 5B": "Demander l'Avis de Gemma 5B",
-            }
+            },
         }
         for lang_code, mapping in checks.items():
             activate(lang_code)
@@ -125,6 +125,20 @@ class SyncAndBrandingTestCase(TestCase):
         self.assertIn("gitea-theme-toggle-btn", header_tmpl)
         self.assertIn("syncEcosystemChange", header_tmpl)
         self.assertIn("BANTUDEVLAB GITEA DARK & LIGHT MODE PERFECTION", header_tmpl)
+        self.assertIn("bantu-anti-fouc-critical", header_tmpl)
+
+    def test_gitea_no_white_background_leak_in_dark_mode(self):
+        """Verifie que les templates de depots et header ne fuient pas de blanc en mode sombre."""
+        repo_header = Path("custom/templates/repo/header.tmpl").read_text(encoding="utf-8")
+        repo_view = Path("custom/templates/repo/view_file.tmpl").read_text(encoding="utf-8")
+        dark_css = Path("custom/public/assets/css/theme-github-dark.css").read_text(encoding="utf-8")
+
+        self.assertNotIn("#f6f8fa", repo_header)
+        self.assertNotIn("#f6f8fa", repo_view)
+        self.assertNotIn("background: var(--color-canvas-default, #ffffff)", repo_view)
+        self.assertIn(".repo-header-container", dark_css)
+        self.assertIn(".file-view-header", dark_css)
+        self.assertIn(".gh-file-tree-sidebar", dark_css)
 
     def test_copilot_chatbot_multilingual_and_dark_mode(self):
         """Verifie que le Chat Bot Copilot dans Gitea footer contient les 4 langues et les styles sans fond blanc force."""
