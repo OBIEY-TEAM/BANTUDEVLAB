@@ -1,21 +1,80 @@
+<!-- BANTUDEVLAB Anti-FOUC & Dark Mode Shield (Zero White Flash / Zero White Background) -->
+<style id="bantu-anti-fouc-critical">
+  html[data-theme="dark"],
+  html[data-theme="dark"] body,
+  html[data-theme="dark"] .full.height,
+  html[data-theme="dark"] #wrapper,
+  html[data-theme="dark"] .page-content,
+  html[data-theme="dark"] .ui.container {
+    background-color: #020617 !important;
+    color: #f8fafc !important;
+  }
+  html[data-theme="dark"] .ui.menu.navbar {
+    background-color: #050b18 !important;
+  }
+  html[data-theme="dark"] .repo-header-container,
+  html[data-theme="dark"] .file-view-header,
+  html[data-theme="dark"] .page-footer {
+    background-color: #070e1e !important;
+    border-color: #1e293b !important;
+  }
+  html[data-theme="light"],
+  html[data-theme="light"] body,
+  html[data-theme="light"] .full.height,
+  html[data-theme="light"] #wrapper,
+  html[data-theme="light"] .page-content,
+  html[data-theme="light"] .ui.container {
+    background-color: #ffffff !important;
+    color: #0f172a !important;
+  }
+</style>
 <script>
 (function() {
   function getCookie(name) {
     const m = document.cookie.match(new RegExp('(?:^|;\\s*)' + name + '=([^;]*)'));
-    return m ? decodeURIComponent(m[2]) : null;
+    return m ? decodeURIComponent(m[1]) : null;
   }
-  const bantuTheme = getCookie('bantu_theme');
-  const giteaTheme = getCookie('theme');
-  const isDark = (bantuTheme === 'dark') || (giteaTheme && giteaTheme.includes('dark')) || (!bantuTheme && !giteaTheme);
-  document.documentElement.setAttribute('data-theme', isDark ? 'dark' : 'light');
-  
-  // Swap theme CSS link immediately if needed
-  const link = document.querySelector('link[rel="stylesheet"][href*="theme-"]');
-  if (link) {
-    const target = isDark ? 'theme-github-dark.css' : 'theme-github.css';
-    if (!link.href.includes(target)) {
-      link.href = link.href.replace(/theme-[a-zA-Z0-9_-]+\.css/, target);
+  let isDark = true;
+  try {
+    const lsTheme = localStorage.getItem('bantu_theme');
+    const bantuCookie = getCookie('bantu_theme');
+    const giteaTheme = getCookie('theme') || getCookie('gitea_theme');
+
+    if (lsTheme === 'light' || bantuCookie === 'light' || (giteaTheme && giteaTheme === 'github')) {
+      isDark = false;
+    } else if (lsTheme === 'dark' || bantuCookie === 'dark' || (giteaTheme && giteaTheme.includes('dark'))) {
+      isDark = true;
+    } else {
+      isDark = true;
     }
+  } catch(e) {
+    isDark = true;
+  }
+
+  const themeMode = isDark ? 'dark' : 'light';
+  document.documentElement.setAttribute('data-theme', themeMode);
+
+  // Instant update of critical anti-fouc styling
+  const antiFouc = document.getElementById('bantu-anti-fouc-critical');
+  if (antiFouc) {
+    const bgBody = isDark ? '#020617' : '#ffffff';
+    const colorBody = isDark ? '#f8fafc' : '#0f172a';
+    antiFouc.innerHTML = 'html, body, .full.height, #wrapper, .page-content { background-color: ' + bgBody + ' !important; color: ' + colorBody + ' !important; }';
+  }
+
+  // Ensure theme CSS link is synced immediately
+  function syncThemeLink() {
+    const link = document.querySelector('link[rel="stylesheet"][href*="theme-"]');
+    if (link) {
+      const target = isDark ? 'theme-github-dark.css' : 'theme-github.css';
+      if (!link.href.includes(target)) {
+        link.href = link.href.replace(/theme-[a-zA-Z0-9_-]+\.css/, target);
+      }
+    }
+  }
+  syncThemeLink();
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', syncThemeLink);
   }
 })();
 </script>
@@ -528,58 +587,9 @@ document.addEventListener('DOMContentLoaded', function() {
   }
   applyAfricanLogoToGitea();
 
-  // Gitea Direct Dark / Light Mode Switcher (T27.7)
+  // Gitea Direct Dark / Light Mode Switcher (T27.7) - Delegated to initGiteaBantuSync
   function initGiteaThemeToggle() {
-    const navBar = document.querySelector('.ui.menu.navbar');
-    if (!navBar || document.getElementById('gitea-theme-toggle-btn')) return;
-
-    // Detect current theme from cookies or stylesheet links
-    let isDark = document.cookie.includes('theme=github-dark') || 
-                 document.cookie.includes('theme=gitea-dark') ||
-                 Array.from(document.querySelectorAll('link[rel="stylesheet"]')).some(l => l.href.includes('github-dark'));
-
-    const toggleBtn = document.createElement('button');
-    toggleBtn.id = 'gitea-theme-toggle-btn';
-    toggleBtn.type = 'button';
-    toggleBtn.title = 'Basculer Theme Clair / Sombre';
-    toggleBtn.style.display = 'inline-flex';
-    toggleBtn.style.alignItems = 'center';
-    toggleBtn.style.gap = '6px';
-    toggleBtn.style.padding = '5px 10px';
-    toggleBtn.style.marginLeft = 'auto';
-    toggleBtn.style.marginRight = '8px';
-    toggleBtn.style.borderRadius = '6px';
-    toggleBtn.style.cursor = 'pointer';
-    toggleBtn.style.fontSize = '12px';
-    toggleBtn.style.fontWeight = '500';
-    toggleBtn.style.border = '1px solid var(--color-border-default, #30363d)';
-    toggleBtn.style.background = 'var(--color-canvas-subtle, #161b22)';
-    toggleBtn.style.color = 'var(--color-text, #c9d1d9)';
-
-    function updateBtnDisplay() {
-      toggleBtn.innerHTML = isDark ? 
-        '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg> <span>Clair</span>' : 
-        '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg> <span>Sombre</span>';
-    }
-    updateBtnDisplay();
-
-    toggleBtn.addEventListener('click', function(e) {
-      e.preventDefault();
-      isDark = !isDark;
-      const targetBantuTheme = isDark ? 'dark' : 'light';
-      if (window.syncEcosystemChange) {
-        window.syncEcosystemChange(targetBantuTheme, null);
-      } else {
-        const targetTheme = isDark ? 'github-dark' : 'github';
-        document.cookie = 'theme=' + targetTheme + ';path=/;max-age=31536000';
-        document.cookie = 'bantu_theme=' + targetBantuTheme + ';path=/;max-age=31536000';
-      }
-      updateBtnDisplay();
-      window.location.reload();
-    });
-
-    const rightMenu = navBar.querySelector('.right.menu') || navBar;
-    rightMenu.insertBefore(toggleBtn, rightMenu.firstChild);
+    // Handled in setupHeaderControls to avoid duplicate buttons & white-flash reloads
   }
   initGiteaThemeToggle();
 
@@ -659,15 +669,15 @@ document.addEventListener('DOMContentLoaded', function() {
       barContainer.id = 'gh-tasklist-progress-wrap';
       barContainer.style.margin = '10px 0 16px 0';
       barContainer.style.padding = '8px 12px';
-      barContainer.style.background = 'var(--color-canvas-subtle, #f6f8fa)';
-      barContainer.style.border = '1px solid var(--color-border-default, #d0d7de)';
+      barContainer.style.background = 'var(--color-canvas-subtle, var(--color-box-header, #070e1e))';
+      barContainer.style.border = '1px solid var(--color-border-default, #1e293b)';
       barContainer.style.borderRadius = '6px';
       barContainer.innerHTML = `
-        <div style="display: flex; justify-content: space-between; font-size: 12px; font-weight: 500; margin-bottom: 6px; color: var(--color-text, #1f2328);">
+        <div style="display: flex; justify-content: space-between; font-size: 12px; font-weight: 500; margin-bottom: 6px; color: var(--color-text, #f8fafc);">
           <span id="gh-tasklist-progress-text"></span>
           <span id="gh-tasklist-progress-pct"></span>
         </div>
-        <div style="width: 100%; height: 6px; background-color: var(--color-border-muted, #d0d7de); border-radius: 3px; overflow: hidden;">
+        <div style="width: 100%; height: 6px; background-color: var(--color-border-muted, #1e293b); border-radius: 3px; overflow: hidden;">
           <div id="gh-tasklist-progress-fill" style="height: 100%; background-color: #1f883d; border-radius: 3px; transition: width 0.3s ease;"></div>
         </div>
       `;
@@ -724,16 +734,16 @@ document.addEventListener('DOMContentLoaded', function() {
       const readmeBox = document.createElement('div');
       readmeBox.id = 'gh-profile-readme-card';
       readmeBox.style.margin = '16px 0';
-      readmeBox.style.border = '1px solid var(--color-border-default, #d0d7de)';
+      readmeBox.style.border = '1px solid var(--color-border-default, #1e293b)';
       readmeBox.style.borderRadius = '6px';
-      readmeBox.style.background = 'var(--color-canvas-default, #ffffff)';
+      readmeBox.style.background = 'var(--color-canvas-subtle, var(--color-box-body, #070e1e))';
       readmeBox.style.padding = '16px';
       readmeBox.innerHTML = `
-        <div style="display: flex; justify-content: space-between; align-items: center; padding-bottom: 8px; border-bottom: 1px solid var(--color-border-default, #d0d7de); font-size: 12px; color: var(--color-text-light, #656d76);">
+        <div style="display: flex; justify-content: space-between; align-items: center; padding-bottom: 8px; border-bottom: 1px solid var(--color-border-default, #1e293b); font-size: 12px; color: var(--color-text-light, #94a3b8);">
           <span>${username} / README.md</span>
-          <span style="font-size: 11px; border: 1px solid var(--color-border-default, #d0d7de); border-radius: 4px; padding: 1px 5px;">Special Repository</span>
+          <span style="font-size: 11px; border: 1px solid var(--color-border-default, #1e293b); border-radius: 4px; padding: 1px 5px;">Special Repository</span>
         </div>
-        <div style="padding-top: 12px; font-size: 13px; color: var(--color-text, #1f2328);">
+        <div style="padding-top: 12px; font-size: 13px; color: var(--color-text, #f8fafc);">
           <p>Bienvenue sur le profil de developpeur souverain <strong>${username}</strong> sur BantuDevLab Forge.</p>
         </div>
       `;
@@ -1052,41 +1062,67 @@ document.addEventListener('DOMContentLoaded', function() {
       rightMenu.insertBefore(langBox, rightMenu.firstChild);
     }
 
-    // 2. Theme Toggle Button in Gitea Header
+    // 2. Theme Toggle Button in Gitea Header (Instant Anti-Flash Switcher)
     if (!document.getElementById('gitea-theme-toggle-btn')) {
       const themeBtn = document.createElement('button');
       themeBtn.id = 'gitea-theme-toggle-btn';
       themeBtn.type = 'button';
+      themeBtn.title = 'Basculer Theme Clair / Sombre';
       themeBtn.style.display = 'inline-flex';
       themeBtn.style.alignItems = 'center';
       themeBtn.style.gap = '5px';
       themeBtn.style.padding = '3px 8px';
       themeBtn.style.marginRight = '8px';
       themeBtn.style.borderRadius = '6px';
-      themeBtn.style.background = 'rgba(255, 255, 255, 0.08)';
-      themeBtn.style.border = '1px solid rgba(255, 255, 255, 0.15)';
-      themeBtn.style.color = '#f8fafc';
+      themeBtn.style.background = 'var(--color-canvas-subtle, #161b22)';
+      themeBtn.style.border = '1px solid var(--color-border-default, #30363d)';
+      themeBtn.style.color = 'var(--color-text, #f8fafc)';
       themeBtn.style.fontSize = '12px';
       themeBtn.style.cursor = 'pointer';
 
-      const isLight = document.cookie.includes('theme=github;') || document.cookie.endsWith('theme=github') || document.cookie.includes('bantu_theme=light');
-      themeBtn.innerHTML = isLight ?
-        '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#0070f3" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg> <span>Sombre</span>' :
-        '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg> <span>Clair</span>';
+      function renderThemeBtn(isDark) {
+        themeBtn.innerHTML = isDark ?
+          '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg> <span>Clair</span>' :
+          '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#0070f3" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg> <span>Sombre</span>';
+      }
+
+      const initialDark = (document.documentElement.getAttribute('data-theme') || 'dark') === 'dark';
+      renderThemeBtn(initialDark);
 
       themeBtn.addEventListener('click', function(e) {
         e.preventDefault();
-        const currentlyLight = document.cookie.includes('theme=github;') || document.cookie.endsWith('theme=github') || document.cookie.includes('bantu_theme=light');
-        const nextTheme = currentlyLight ? 'dark' : 'light';
-        const nextGiteaTheme = currentlyLight ? 'github-dark' : 'github';
+        const curTheme = document.documentElement.getAttribute('data-theme') || 'dark';
+        const nextTheme = (curTheme === 'dark') ? 'light' : 'dark';
+        const nextGiteaTheme = (nextTheme === 'dark') ? 'github-dark' : 'github';
+
+        renderThemeBtn(nextTheme === 'dark');
 
         if (window.syncEcosystemChange) {
           window.syncEcosystemChange(nextTheme, null);
         } else {
+          document.documentElement.setAttribute('data-theme', nextTheme);
           document.cookie = 'theme=' + nextGiteaTheme + ';path=/;max-age=31536000';
           document.cookie = 'bantu_theme=' + nextTheme + ';path=/;max-age=31536000';
+          try {
+            localStorage.setItem('bantu_theme', nextTheme);
+          } catch(err) {}
+
+          const antiFouc = document.getElementById('bantu-anti-fouc-critical');
+          if (antiFouc) {
+            const bgBody = (nextTheme === 'dark') ? '#020617' : '#ffffff';
+            const colorBody = (nextTheme === 'dark') ? '#f8fafc' : '#0f172a';
+            antiFouc.innerHTML = 'html, body, .full.height, #wrapper, .page-content { background-color: ' + bgBody + ' !important; color: ' + colorBody + ' !important; }';
+          }
+
+          document.querySelectorAll('link[rel="stylesheet"]').forEach(l => {
+            if (l.href && l.href.includes('theme-github')) {
+              const targetHref = (nextTheme === 'light') ?
+                l.href.replace('theme-github-dark.css', 'theme-github.css') :
+                l.href.replace('theme-github.css', 'theme-github-dark.css');
+              if (l.href !== targetHref) l.href = targetHref;
+            }
+          });
         }
-        window.location.reload();
       });
 
       rightMenu.insertBefore(themeBtn, rightMenu.firstChild);

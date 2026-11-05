@@ -1067,3 +1067,64 @@ body {
 #sovereign-copilot-container #copilot-input::placeholder {
   color: #7d8590 !important;
 }
+
+/* ==========================================================================
+   COMPLETE DARK BACKGROUND COVERAGE (ZERO WHITE FLASH / ZERO WHITE BG LEAK)
+   ========================================================================== */
+html,
+body,
+.full.height,
+#wrapper,
+.page-content,
+.ui.container,
+.ui.page.grid,
+.repository,
+.repository .repo-content,
+.repository.file.list,
+.repository.file.view,
+.repository .file-view,
+.repo-header-container,
+.file-view-header,
+.gh-file-viewer-wrapper,
+.gh-file-tree-sidebar,
+.tab.segment,
+.ui.tab,
+.ui.tabular.menu,
+.ui.attached.segment,
+.ui.bottom.attached.segment,
+.ui.segments {
+  background-color: #020617 !important;
+  color: #f8fafc !important;
+}
+
+.repository .repo-header,
+.repo-header-tabs,
+.repo-header-container,
+.file-view-header,
+.gh-file-tree-sidebar,
+.ui.tabular.menu,
+.ui.segment,
+.ui.attached.header {
+  background-color: #070e1e !important;
+  border-color: #1e293b !important;
+}
+
+.gh-file-tree-item,
+.gh-file-tree-header,
+.gh-file-filter-input {
+  background-color: #0b1528 !important;
+  color: #f8fafc !important;
+  border-color: #1e293b !important;
+}
+
+.gh-file-tree-item:hover {
+  background-color: #161b22 !important;
+  color: #00e5ff !important;
+}
+
+#gh-tasklist-progress-wrap,
+#gh-profile-readme-card {
+  background-color: #070e1e !important;
+  border-color: #1e293b !important;
+  color: #f8fafc !important;
+}

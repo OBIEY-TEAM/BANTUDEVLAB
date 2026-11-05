@@ -1,5 +1,3 @@
-import os
-
 # 1. Update theme-github-dark.css
 css_vars = """
   /* Gitea 1.22+ Standard Variables for Dark Mode */
@@ -37,7 +35,7 @@ css_vars = """
 
 for path in [
     "custom/public/assets/css/theme-github-dark.css",
-    "gitea_home/custom/public/assets/css/theme-github-dark.css"
+    "gitea_home/custom/public/assets/css/theme-github-dark.css",
 ]:
     with open(path, "r", encoding="utf-8") as f:
         content = f.read()
