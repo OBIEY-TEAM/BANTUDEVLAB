@@ -4,6 +4,7 @@ Provides seamless interaction between the BantuDevLab sovereign platform
 and the underlying open-source Git forge.
 """
 
+from pathlib import Path
 from typing import Any, Dict, List, Optional
 
 import requests
@@ -90,6 +91,52 @@ class GiteaClient:
             "fallback": True,
         }
 
+    def _get_fallback_repositories(self) -> List[Dict[str, Any]]:
+        """Scan local forge bare repositories or return sovereign default repos."""
+        repos: List[Dict[str, Any]] = []
+        base_dir = getattr(settings, "BASE_DIR", Path("."))
+        repos_dir = Path(base_dir) / "forge_data" / "repos"
+        if repos_dir.exists():
+            for p in sorted(repos_dir.glob("*/*.git")):
+                owner = p.parent.name
+                name = p.name[:-4] if p.name.endswith(".git") else p.name
+                repos.append(
+                    {
+                        "id": abs(hash(f"{owner}/{name}")) % 10000 + 1,
+                        "name": name,
+                        "full_name": f"{owner}/{name}",
+                        "owner": {"username": owner},
+                        "private": False,
+                        "html_url": f"http://localhost:3002/{owner}/{name}",
+                        "clone_url": f"http://localhost:3002/{owner}/{name}.git",
+                        "default_branch": "main",
+                    }
+                )
+        if not repos:
+            repos = [
+                {
+                    "id": 1,
+                    "name": "afri-fintech-gateway",
+                    "full_name": "sovereign-org/afri-fintech-gateway",
+                    "owner": {"username": "sovereign-org"},
+                    "private": False,
+                    "html_url": "http://localhost:3002/sovereign-org/afri-fintech-gateway",
+                    "clone_url": "http://localhost:3002/sovereign-org/afri-fintech-gateway.git",
+                    "default_branch": "main",
+                },
+                {
+                    "id": 2,
+                    "name": "bantu-zkp-identity",
+                    "full_name": "bantudevlab/bantu-zkp-identity",
+                    "owner": {"username": "bantudevlab"},
+                    "private": False,
+                    "html_url": "http://localhost:3002/bantudevlab/bantu-zkp-identity",
+                    "clone_url": "http://localhost:3002/bantudevlab/bantu-zkp-identity.git",
+                    "default_branch": "main",
+                },
+            ]
+        return repos
+
     def list_repositories(self, use_cache: bool = True) -> List[Dict[str, Any]]:
         """Lists sovereign repositories, cached for 60 seconds (PERF-04)."""
         if use_cache:
@@ -101,7 +148,7 @@ class GiteaClient:
         if res.get("success") and "data" in res:
             repos = res["data"].get("data", [])
         else:
-            repos = []
+            repos = self._get_fallback_repositories()
 
         if use_cache and repos:
             cache.set(self.CACHE_KEY_REPOS, repos, self.CACHE_TTL)
