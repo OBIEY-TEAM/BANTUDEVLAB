@@ -228,6 +228,7 @@ class NetworkLatencyView(APIView):
     """
     Mesure de la latence reseau en temps reel pour les noeuds panafricains et le noeud local.
     """
+
     permission_classes = [AllowAny]
 
     def get(self, request):
@@ -264,10 +265,7 @@ class NetworkLatencyView(APIView):
                 "name": target["name"],
                 "latency_ms": max(1.0, measured_ms),
                 "status": status_str,
-                "measured_at": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())
+                "measured_at": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
             }
 
-        return Response({
-            "nodes": results,
-            "total_roundtrip_ms": round((time.perf_counter() - t0_total) * 1000, 2)
-        })
+        return Response({"nodes": results, "total_roundtrip_ms": round((time.perf_counter() - t0_total) * 1000, 2)})
