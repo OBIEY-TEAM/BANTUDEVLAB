@@ -1,0 +1,33 @@
+name: "Setup BantuDevLab Environment"
+description: "Configure Python, installe les dépendances nécessaires et applique les règles de conformité souveraines BantuDevLab"
+
+inputs:
+  python-version:
+    description: "Version de Python à installer"
+    required: false
+    default: "3.11"
+  check-emoji:
+    description: "Vérifier la politique stricte zero-emoji"
+    required: false
+    default: "true"
+
+runs:
+  using: "composite"
+  steps:
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: ${{ inputs.python-version }}
+        cache: "pip"
+
+    - name: Install Dependencies
+      shell: bash
+      run: |
+        python -m pip install --upgrade pip
+        pip install django djangorestframework requests pytest pytest-django celery python-dotenv drf-spectacular
+
+    - name: Verify Zero Emoji Policy
+      if: inputs.check-emoji == 'true'
+      shell: bash
+      run: |
+        python scripts/check_no_emoji.py

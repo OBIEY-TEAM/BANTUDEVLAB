@@ -1,7 +1,10 @@
-from django.test import TestCase, Client
-from django.utils.translation import activate, gettext as _
 from pathlib import Path
+
+from django.test import Client, TestCase
+from django.utils.translation import activate
+from django.utils.translation import gettext as _
 from PIL import Image
+
 
 class SyncAndBrandingTestCase(TestCase):
     """
