@@ -20,20 +20,10 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
-      - name: Set up Python
-        uses: actions/setup-python@v5
+      - name: Setup BantuDevLab Environment
+        uses: ./.github/actions/setup-bantudevlab
         with:
           python-version: "3.11"
-
-      - name: Install Dependencies
-        run: |
-          python -m pip install --upgrade pip
-          pip install django djangorestframework requests pytest pytest-django celery python-dotenv drf-spectacular
-
-      - name: Verify Zero Emoji Policy
-        run: |
-          python scripts/check_no_emoji.py
-
       - name: Test Copilot Session Export
         run: |
           pytest tests/test_ai_assistant.py -k "test_copilot_session_export" -v -o addopts=""

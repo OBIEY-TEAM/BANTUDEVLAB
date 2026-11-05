@@ -1,5 +1,5 @@
-import os
 from pathlib import Path
+
 
 def create_mockups():
     export_dir = Path("figma_export")
@@ -21,22 +21,22 @@ def create_mockups():
             --border-default: #1f2e4d;
             --border-subtle: #16223a;
             --border-focus: #10b981;
-            
+
             --text-primary: #f8fafc;
             --text-secondary: #94a3b8;
             --text-muted: #64748b;
-            
+
             --gold-primary: #f59e0b;
             --gold-hover: #d97706;
             --gold-subtle: rgba(245, 158, 11, 0.15);
-            
+
             --emerald-primary: #10b981;
             --emerald-hover: #059669;
             --emerald-subtle: rgba(16, 185, 129, 0.15);
-            
+
             --danger-primary: #ef4444;
             --danger-subtle: rgba(239, 68, 68, 0.15);
-            
+
             --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
             --radius-sm: 6px;
@@ -56,19 +56,19 @@ def create_mockups():
             --border-default: #cbd5e1;
             --border-subtle: #e2e8f0;
             --border-focus: #059669;
-            
+
             --text-primary: #0f172a;
             --text-secondary: #334155;
             --text-muted: #64748b;
-            
+
             --gold-primary: #d97706;
             --gold-hover: #b45309;
             --gold-subtle: rgba(217, 119, 6, 0.12);
-            
+
             --emerald-primary: #059669;
             --emerald-hover: #047857;
             --emerald-subtle: rgba(5, 150, 105, 0.12);
-            
+
             --shadow-sm: 0 1px 3px rgba(0,0,0,0.08);
             --shadow-md: 0 4px 12px rgba(0,0,0,0.1);
             --shadow-lg: 0 12px 32px rgba(0,0,0,0.15);
@@ -655,7 +655,7 @@ def create_mockups():
                     <div class="card">
                         <h3>Topologie des Noeuds Souverains</h3>
                         <p style="color: var(--text-secondary); font-size: 0.85rem; margin-top: 0.25rem;">Routage direct BGP panafricain sans transit exterieur.</p>
-                        
+
                         <!-- Visual Continental Map representation -->
                         <div style="background-color: var(--bg-canvas); border-radius: var(--radius-sm); padding: 1.5rem; margin-top: 1rem; text-align: center;">
                             <svg width="220" height="220" viewBox="0 0 120 120" style="margin: 0 auto; display: block;">
@@ -989,7 +989,7 @@ def create_mockups():
                 <div class="card">
                     <h3>Garantie d'Opacite des Modales (Zero Transparence)</h3>
                     <p style="color: var(--text-secondary); font-size: 0.95rem; line-height: 1.6; margin-top: 0.5rem;">
-                        Toutes les fenetres modales, popups et dropdowns de Gitea et BantuDevLab utilisent un arriere-plan 
+                        Toutes les fenetres modales, popups et dropdowns de Gitea et BantuDevLab utilisent un arriere-plan
                         opaque rigide (<code>background-color: var(--bg-surface)</code> avec bordure contrastante et ombre portee <code>var(--shadow-lg)</code>).
                         Aucun texte en arriere-plan n'est visible a travers la modale.
                     </p>
@@ -1180,6 +1180,7 @@ def create_mockups():
     with open(index_path, "w", encoding="utf-8") as f:
         f.write(html_content)
     print(f"Created {index_path} ({len(html_content)} bytes)")
+
 
 if __name__ == "__main__":
     create_mockups()
