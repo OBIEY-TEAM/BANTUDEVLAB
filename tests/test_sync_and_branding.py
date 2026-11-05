@@ -1,9 +1,14 @@
+import struct
 from pathlib import Path
 
 from django.test import Client, TestCase
 from django.utils.translation import activate
 from django.utils.translation import gettext as _
-from PIL import Image
+
+try:
+    from PIL import Image
+except ImportError:
+    Image = None
 
 
 class SyncAndBrandingTestCase(TestCase):
@@ -18,8 +23,16 @@ class SyncAndBrandingTestCase(TestCase):
         """Verifie que les fichiers du nouveau logo existent et sont valides sur BantuDevLab et Gitea."""
         logo_png = Path("static/img/logo.png")
         self.assertTrue(logo_png.exists())
-        with Image.open(logo_png) as img:
-            self.assertEqual(img.size, (512, 512))
+        if Image is not None:
+            with Image.open(logo_png) as img:
+                self.assertEqual(img.size, (512, 512))
+        else:
+            with open(logo_png, "rb") as f:
+                data = f.read(24)
+                self.assertEqual(data[:8], b"\x89PNG\r\n\x1a\n")
+                self.assertEqual(data[12:16], b"IHDR")
+                w, h = struct.unpack(">LL", data[16:24])
+                self.assertEqual((w, h), (512, 512))
 
         logo_svg = Path("static/img/logo.svg")
         self.assertTrue(logo_svg.exists())
