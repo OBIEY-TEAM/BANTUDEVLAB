@@ -3,11 +3,106 @@ from pathlib import Path
 
 # Complete Translation Catalogs for BantuDevLab
 TRANSLATIONS = {
+    "fr": {
+        "Accueil": "Accueil",
+        "Tableau de Bord": "Tableau de Bord",
+        "Souveraineté Numérique": "Souveraineté Numérique",
+        "Guide & FAQ": "Guide & FAQ",
+        "Connexion Zero-Trust": "Connexion Zero-Trust",
+        "Basculer vers Gitea": "Basculer vers Gitea",
+        "Espace GitLab": "Espace GitLab",
+        "FORGE SOUVERAINE": "FORGE SOUVERAINE",
+        "La Forge Logicielle Souveraine de l'Afrique": "La Forge Logicielle Souveraine de l'Afrique",
+        "BANTUDEVLAB réunit la robustesse d'un moteur Git distribué, la sécurité mathématique des preuves à divulgation nulle de connaissance (Zero-Knowledge Proofs), et l'intelligence artificielle locale Gemma 5B pour garantir l'indépendance technologique du continent.": "BANTUDEVLAB réunit la robustesse d'un moteur Git distribué, la sécurité mathématique des preuves à divulgation nulle de connaissance (Zero-Knowledge Proofs), et l'intelligence artificielle locale Gemma 5B pour garantir l'indépendance technologique du continent.",
+        "Explorer le Tableau de Bord": "Explorer le Tableau de Bord",
+        "Authentification Zero-Trust (ZKP)": "Authentification Zero-Trust (ZKP)",
+        "Mode d'Emploi & FAQ": "Mode d'Emploi & FAQ",
+        "Moteur Git Souverain (Systalink Cloud)": "Moteur Git Souverain (Systalink Cloud)",
+        "Forge distribuée basée sur Gitea/GitLab CE déployée sur nos serveurs en Afrique. Zéro dépendance vis-à-vis des juridictions extérieures (Cloud Act exempt).": "Forge distribuée basée sur Gitea/GitLab CE déployée sur nos serveurs en Afrique. Zéro dépendance vis-à-vis des juridictions extérieures (Cloud Act exempt).",
+        "Connexion Gitea : http://localhost:3002/user/login": "Connexion Gitea : http://localhost:3002/user/login",
+        "Contrôle Panafricain": "Contrôle Panafricain",
+        "Authentification Zero-Trust ZKP": "Authentification Zero-Trust ZKP",
+        "Protocole cryptographique de Schnorr / Sigma non-interactif via Fiat-Shamir. Prouvez votre identité sans JAMAIS transmettre votre mot de passe au réseau.": "Protocole cryptographique de Schnorr / Sigma non-interactif via Fiat-Shamir. Prouvez votre identité sans JAMAIS transmettre votre mot de passe au réseau.",
+        "Confidentialité Mathématique": "Confidentialité Mathématique",
+        "IA Locale Gemma 5B Fine-tunée": "IA Locale Gemma 5B Fine-tunée",
+        "Assistant d'ingénierie logicielle exécuté localement pour auditer le code, détecter les secrets et assister les développeurs sans fuite de code vers l'extérieur.": "Assistant d'ingénierie logicielle exécuté localement pour auditer le code, détecter les secrets et assister les développeurs sans fuite de code vers l'extérieur.",
+        "5 Milliards": "5 Milliards",
+        "Milliards": "Milliards",
+        "Paramètres Optimisés": "Paramètres Optimisés",
+        "Nouveau sur BANTUDEVLAB & GitLab ?": "Nouveau sur BANTUDEVLAB & GitLab ?",
+        "Consultez notre guide complet : création de compte, connexion sans mot de passe Zero-Trust, consultation du code source, clone avec token Git et foire aux questions.": "Consultez notre guide complet : création de compte, connexion sans mot de passe Zero-Trust, consultation du code source, clone avec token Git et foire aux questions.",
+        "Consulter la FAQ & Guide": "Consulter la FAQ & Guide",
+        "Dépôts Souverains Récents": "Dépôts Souverains Récents",
+        "Initialisation de la synchronisation avec Gitea...": "Initialisation de la synchronisation avec Gitea...",
+        "Fil d Ariane": "Fil d'Ariane",
+        "Tableau de Bord Souverain BANTUDEVLAB": "Tableau de Bord Souverain BANTUDEVLAB",
+        "Surveillance de la forge logicielle, sécurité Zero-Trust et assistance IA locale": "Surveillance de la forge logicielle, sécurité Zero-Trust et assistance IA locale",
+        "NŒUD SOUVERAIN ACTIF": "NŒUD SOUVERAIN ACTIF",
+        "Dépôts Actifs": "Dépôts Actifs",
+        "Identités ZKP": "Identités ZKP",
+        "Score de Souveraineté": "Score de Souveraineté",
+        "Audits IA Gemma 5B": "Audits IA Gemma 5B",
+        "Bascule d'Environnement Forge Souveraine": "Bascule d'Environnement Forge Souveraine",
+        "Accédez directement à vos espaces de dépôts Gitea ou GitLab CE.": "Accédez directement à vos espaces de dépôts Gitea ou GitLab CE.",
+        "Connexion directe Gitea": "Connexion directe Gitea",
+        "Dépôts Hébergés sur Gitea Souverain": "Dépôts Hébergés sur Gitea Souverain",
+        "Données Réelles Gitea API": "Données Réelles Gitea API",
+        "Dépôt": "Dépôt",
+        "Visibilité": "Visibilité",
+        "Branche": "Branche",
+        "Action": "Action",
+        "Gitea": "Gitea",
+        "Aucun dépôt détecté sur le cluster Gitea local.": "Aucun dépôt détecté sur le cluster Gitea local.",
+        "Workbench Souverain & Audit SAST": "Workbench Souverain & Audit SAST",
+        "Éditeur avec coloration syntaxique & numérotation": "Éditeur avec coloration syntaxique & numérotation",
+        "Langage": "Langage",
+        "Prêt": "Prêt",
+        "Snippet Démo": "Snippet Démo",
+        "Lancer l'Audit de Sécurité": "Lancer l'Audit de Sécurité",
+        "Demander l'Avis de Gemma 5B": "Demander l'Avis de Gemma 5B",
+        "Souveraineté": "Souveraineté",
+        "Analyse Complétée": "Analyse Complétée",
+        "Normes de Souveraineté Numérique ADSS-v1": "Normes de Souveraineté Numérique ADSS-v1",
+        "CONFORME": "CONFORME",
+        "Critiques": "Critiques",
+        "Hautes": "Hautes",
+        "Moyennes": "Moyennes",
+        "Vulnérabilités & Fuites Détectées": "Vulnérabilités & Fuites Détectées",
+        "problème détecté": "problème détecté",
+        "Rapport d'Audit Gemma 5B (Local / On-Premise)": "Rapport d'Audit Gemma 5B (Local / On-Premise)",
+        "Audits Récents": "Audits Récents",
+        "Aucun audit récent enregistré. Lancez un premier scan !": "Aucun audit récent enregistré. Lancez un premier scan !",
+        "Indicateurs & Topologie Souveraine Panafricaine": "Indicateurs & Topologie Souveraine Panafricaine",
+        "Supervision en temps réel des nœuds certifiés et conformité UA 2020-2030.": "Supervision en temps réel des nœuds certifiés et conformité UA 2020-2030.",
+        "Tester la Latence": "Tester la Latence",
+        "Actualiser les Métriques": "Actualiser les Métriques",
+        "Topologie des Datacenters Certifiés": "Topologie des Datacenters Certifiés",
+        "Cliquez sur un nœud ou une carte pour inspecter les métriques locales": "Cliquez sur un nœud ou une carte pour inspecter les métriques locales",
+        "Mesures de Latence Réelle Intra-Afrique (Temps Réel)": "Mesures de Latence Réelle Intra-Afrique (Temps Réel)",
+        "Nœud": "Nœud",
+        "Ville": "Ville",
+        "Pays": "Pays",
+        "Latence Réelle": "Latence Réelle",
+        "Statut": "Statut",
+        "Changer de langue": "Changer de langue",
+        "Basculer thème clair / sombre": "Basculer thème clair / sombre",
+        "Thème clair activé": "Thème clair activé",
+        "Thème sombre activé": "Thème sombre activé",
+        "Session authentifiée via Zero-Trust ZKP": "Session authentifiée via Zero-Trust ZKP",
+        "Menu de navigation": "Menu de navigation",
+        "BANTUDEVLAB - Forge Logicielle Souveraine Africaine": "BANTUDEVLAB - Forge Logicielle Souveraine Africaine",
+        "Navigation Principale": "Navigation Principale",
+        "Connexion et bascule sur la forge logicielle Gitea": "Connexion et bascule sur la forge logicielle Gitea",
+        "Ouvre GitLab dans un nouvel onglet": "Ouvre GitLab dans un nouvel onglet",
+        "Menu mobile": "Menu mobile",
+        "Fermer le menu": "Fermer le menu",
+        "Forge Logicielle Panafricaine & Souveraine. Hébergée sur Systalink Cloud.": "Forge Logicielle Panafricaine & Souveraine. Hébergée sur Systalink Cloud.",
+    },
     "en": {
         "Accueil": "Home",
         "Tableau de Bord": "Dashboard",
         "Souveraineté Numérique": "Digital Sovereignty",
-        "Guide & FAQ": "Guide & FAQ",
+        "Guide & FAQ": "User Guide & FAQ",
         "Connexion Zero-Trust": "Zero-Trust Login",
         "Basculer vers Gitea": "Switch to Gitea",
         "Espace GitLab": "GitLab Workspace",
@@ -53,23 +148,50 @@ TRANSLATIONS = {
         "Action": "Action",
         "Gitea": "Gitea",
         "Aucun dépôt détecté sur le cluster Gitea local.": "No repository detected on local Gitea cluster.",
+        "Workbench Souverain & Audit SAST": "Sovereign Workbench & SAST Audit",
+        "Éditeur avec coloration syntaxique & numérotation": "Editor with syntax highlighting & line numbering",
+        "Langage": "Language",
+        "Prêt": "Ready",
+        "Snippet Démo": "Demo Snippet",
         "Lancer l'Audit de Sécurité": "Run Security Audit",
+        "Demander l'Avis de Gemma 5B": "Request Gemma 5B AI Review",
+        "Souveraineté": "Sovereignty",
+        "Analyse Complétée": "Analysis Completed",
+        "Normes de Souveraineté Numérique ADSS-v1": "ADSS-v1 Digital Sovereignty Standards",
+        "CONFORME": "COMPLIANT",
+        "Critiques": "Critical",
+        "Hautes": "High",
+        "Moyennes": "Medium",
+        "Vulnérabilités & Fuites Détectées": "Vulnerabilities & Leaks Detected",
+        "problème détecté": "issue detected",
+        "Rapport d'Audit Gemma 5B (Local / On-Premise)": "Gemma 5B Audit Report (Local / On-Premise)",
+        "Audits Récents": "Recent Audits",
+        "Aucun audit récent enregistré. Lancez un premier scan !": "No recent audit recorded. Launch your first scan!",
         "Indicateurs & Topologie Souveraine Panafricaine": "Pan-African Sovereign Indicators & Topology",
         "Supervision en temps réel des nœuds certifiés et conformité UA 2020-2030.": "Real-time supervision of certified nodes and AU 2020-2030 compliance.",
         "Tester la Latence": "Test Latency",
         "Actualiser les Métriques": "Refresh Metrics",
-        "Topologie des Datacenters Certifiés": "Certified Datacenters Topology",
+        "Topologie des Datacenters Certifiés": "Topology of Certified Datacenters",
         "Cliquez sur un nœud ou une carte pour inspecter les métriques locales": "Click on a node or card to inspect local metrics",
         "Mesures de Latence Réelle Intra-Afrique (Temps Réel)": "Real Intra-Africa Latency Measurements (Real-Time)",
         "Nœud": "Node",
         "Ville": "City",
         "Pays": "Country",
-        "Latence Réelle": "Real Latency",
+        "Latence Réelle": "Actual Latency",
         "Statut": "Status",
-        "Changer de langue": "Change language",
-        "Basculer thème clair / sombre": "Toggle light / dark theme",
-        "Session authentifiée via Zero-Trust ZKP": "Session authenticated via Zero-Trust ZKP",
-        "Menu de navigation": "Navigation menu"
+        "Changer de langue": "Change Language",
+        "Basculer thème clair / sombre": "Toggle Light / Dark Theme",
+        "Thème clair activé": "Light theme activated",
+        "Thème sombre activé": "Dark theme activated",
+        "Session authentifiée via Zero-Trust ZKP": "Authenticated session via Zero-Trust ZKP",
+        "Menu de navigation": "Navigation Menu",
+        "BANTUDEVLAB - Forge Logicielle Souveraine Africaine": "BANTUDEVLAB - Sovereign African Software Forge",
+        "Navigation Principale": "Main Navigation",
+        "Connexion et bascule sur la forge logicielle Gitea": "Login and switch to Gitea software forge",
+        "Ouvre GitLab dans un nouvel onglet": "Opens GitLab in a new tab",
+        "Menu mobile": "Mobile Menu",
+        "Fermer le menu": "Close Menu",
+        "Forge Logicielle Panafricaine & Souveraine. Hébergée sur Systalink Cloud.": "Pan-African & Sovereign Software Forge. Hosted on Systalink Cloud.",
     },
     "sw": {
         "Accueil": "Mwanzo",
@@ -77,37 +199,37 @@ TRANSLATIONS = {
         "Souveraineté Numérique": "Uhuru wa Kidijitali",
         "Guide & FAQ": "Mwongozo na Maswali",
         "Connexion Zero-Trust": "Kuingia kwa Zero-Trust",
-        "Basculer vers Gitea": "Badilisha kwenda Gitea",
-        "Espace GitLab": "Sehemu ya GitLab",
-        "FORGE SOUVERAINE": "JUKWAA LA UHURU",
-        "La Forge Logicielle Souveraine de l'Afrique": "Jukwaa la Maendeleo la Programu Huru la Afrika",
-        "BANTUDEVLAB réunit la robustesse d'un moteur Git distribué, la sécurité mathématique des preuves à divulgation nulle de connaissance (Zero-Knowledge Proofs), et l'intelligence artificielle locale Gemma 5B pour garantir l'indépendance technologique du continent.": "BANTUDEVLAB inachanganya uimara wa injini ya Git iliyosambazwa, usalama wa hisabati wa Uthibitisho Usio na Maarifa (ZKP), na akili bandia ya kienyeji ya Gemma 5B kulinda uhuru wa kiteknolojia wa bara.",
-        "Explorer le Tableau de Bord": "Chunguza Dashibodi",
+        "Basculer vers Gitea": "Hamia Gitea",
+        "Espace GitLab": "Eneo la GitLab",
+        "FORGE SOUVERAINE": "HIFADHI HURU YA PROGRAMU",
+        "La Forge Logicielle Souveraine de l'Afrique": "Hifadhi Huru ya Programu ya Afrika",
+        "BANTUDEVLAB réunit la robustesse d'un moteur Git distribué, la sécurité mathématique des preuves à divulgation nulle de connaissance (Zero-Knowledge Proofs), et l'intelligence artificielle locale Gemma 5B pour garantir l'indépendance technologique du continent.": "BANTUDEVLAB inaunganisha nguvu ya mfumo wa Git, usalama wa hisabati wa ZKP, na akili bandia ya kienyeji ya Gemma 5B.",
+        "Explorer le Tableau de Bord": "Gundua Dashibodi",
         "Authentification Zero-Trust (ZKP)": "Uthibitishaji wa Zero-Trust (ZKP)",
         "Mode d'Emploi & FAQ": "Mwongozo na Maswali",
-        "Moteur Git Souverain (Systalink Cloud)": "Injini Huru ya Git (Systalink Cloud)",
-        "Forge distribuée basée sur Gitea/GitLab CE déployée sur nos serveurs en Afrique. Zéro dépendance vis-à-vis des juridictions extérieures (Cloud Act exempt).": "Jukwaa lililosambazwa kulingana na Gitea/GitLab CE lililowekwa kwenye seva zetu za Afrika. Bila utegemezi wa nje.",
+        "Moteur Git Souverain (Systalink Cloud)": "Mfumo wa Git Huru (Systalink Cloud)",
+        "Forge distribuée basée sur Gitea/GitLab CE déployée sur nos serveurs en Afrique. Zéro dépendance vis-à-vis des juridictions extérieures (Cloud Act exempt).": "Hifadhi ya programu ya Gitea/GitLab CE iliyowekwa Afrika bila utegemezi wa nje.",
         "Connexion Gitea : http://localhost:3002/user/login": "Kuingia Gitea : http://localhost:3002/user/login",
-        "Contrôle Panafricain": "Udhibiti wa Kiafrika",
-        "Authentification Zero-Trust ZKP": "Uthibitishaji wa Zero-Trust ZKP",
-        "Protocole cryptographique de Schnorr / Sigma non-interactif via Fiat-Shamir. Prouvez votre identité sans JAMAIS transmettre votre mot de passe au réseau.": "Itifaki ya siri ya Schnorr / Sigma bila kuingiliana kupitia Fiat-Shamir. Thibitisha utambulisho wako bila kuweka nenosiri.",
+        "Contrôle Panafricain": "Udhibiti wa Afrika Nzima",
+        "Authentification Zero-Trust ZKP": "Uthibitishaji Zero-Trust ZKP",
+        "Protocole cryptographique de Schnorr / Sigma non-interactif via Fiat-Shamir. Prouvez votre identité sans JAMAIS transmettre votre mot de passe au réseau.": "Itifaki ya Schnorr / Sigma kupitia Fiat-Shamir. Thibitisha utambulisho bila nenosiri kwenye mtandao.",
         "Confidentialité Mathématique": "Faragha ya Kihisabati",
-        "IA Locale Gemma 5B Fine-tunée": "Akili Bandia ya Kienyeji ya Gemma 5B",
-        "Assistant d'ingénierie logicielle exécuté localement pour auditer le code, détecter les secrets et assister les développeurs sans fuite de code vers l'extérieur.": "Msaidizi wa programu anayeendesha ndani kukagua msimbo na kusaidia watengenezaji bila kutoa data nje.",
+        "IA Locale Gemma 5B Fine-tunée": "AI ya Kienyeji ya Gemma 5B",
+        "Assistant d'ingénierie logicielle exécuté localement pour auditer le code, détecter les secrets et assister les développeurs sans fuite de code vers l'extérieur.": "Msaidizi wa programu wa kienyeji anayekagua msimbo bila data kuvuja nje.",
         "5 Milliards": "Bilioni 5",
         "Milliards": "Bilioni",
         "Paramètres Optimisés": "Vigezo Vilivyoboreshwa",
         "Nouveau sur BANTUDEVLAB & GitLab ?": "Mgeni kwenye BANTUDEVLAB & GitLab?",
-        "Consultez notre guide complet : création de compte, connexion sans mot de passe Zero-Trust, consultation du code source, clone avec token Git et foire aux questions.": "Soma mwongozo wetu: ufunguzi wa akaunti, kuingia bila nenosiri, kuvinjari msimbo na maswali.",
+        "Consultez notre guide complet : création de compte, connexion sans mot de passe Zero-Trust, consultation du code source, clone avec token Git et foire aux questions.": "Soma mwongozo wetu kamili: kufungua akaunti, kuingia bila nenosiri, na maswali yanayoulizwa mara kwa mara.",
         "Consulter la FAQ & Guide": "Tazama Mwongozo & Maswali",
-        "Dépôts Souverains Récents": "Hifadhi za Hivi Karibuni za Uhuru",
-        "Initialisation de la synchronisation avec Gitea...": "Inaanzisha usawazishaji na Gitea...",
+        "Dépôts Souverains Récents": "Hifadhi Huru za Hivi Karibuni",
+        "Initialisation de la synchronisation avec Gitea...": "Kuanzisha usawazishaji na Gitea...",
         "Fil d Ariane": "Njia ya Ukurasa",
         "Tableau de Bord Souverain BANTUDEVLAB": "Dashibodi Huru ya BANTUDEVLAB",
-        "Surveillance de la forge logicielle, sécurité Zero-Trust et assistance IA locale": "Uangalizi wa jukwaa, usalama wa Zero-Trust na msaada wa AI",
-        "NŒUD SOUVERAIN ACTIF": "KIPANDE CHA UHURU KILICHO HAI",
-        "Dépôts Actifs": "Hifadhi Zinazofanya Kazi",
-        "Identités ZKP": "Vitambulisho vya ZKP",
+        "Surveillance de la forge logicielle, sécurité Zero-Trust et assistance IA locale": "Uangalizi wa mfumo wa programu, usalama wa Zero-Trust na msaada wa AI",
+        "NŒUD SOUVERAIN ACTIF": "KITUO HURU CHA UTENDAJI",
+        "Dépôts Actifs": "Hifadhi Hai",
+        "Identités ZKP": "Utambulisho vya ZKP",
         "Score de Souveraineté": "Alama ya Uhuru",
         "Audits IA Gemma 5B": "Ukaguzi wa AI Gemma 5B",
         "Bascule d'Environnement Forge Souveraine": "Badilisha Mazingira ya Hifadhi",
@@ -121,7 +243,25 @@ TRANSLATIONS = {
         "Action": "Hatua",
         "Gitea": "Gitea",
         "Aucun dépôt détecté sur le cluster Gitea local.": "Hakuna hifadhi iliyopatikana kwenye mfumo wa ndani wa Gitea.",
+        "Workbench Souverain & Audit SAST": "Dawati Huru na Ukaguzi wa SAST",
+        "Éditeur avec coloration syntaxique & numérotation": "Kihariri chenye rangi ya msimbo na nambari za mistari",
+        "Langage": "Lugha ya Programu",
+        "Prêt": "Tayari",
+        "Snippet Démo": "Msimbo wa Mfano",
         "Lancer l'Audit de Sécurité": "Anzisha Ukaguzi wa Usalama",
+        "Demander l'Avis de Gemma 5B": "Uliza Mapitio ya AI Gemma 5B",
+        "Souveraineté": "Uhuru wa Kidijitali",
+        "Analyse Complétée": "Uchambuzi Umekamilika",
+        "Normes de Souveraineté Numérique ADSS-v1": "Viwango vya Uhuru wa Kidijitali ADSS-v1",
+        "CONFORME": "INAFUATA VIWANGO",
+        "Critiques": "Hatari Kubwa",
+        "Hautes": "Juu",
+        "Moyennes": "Wastani",
+        "Vulnérabilités & Fuites Détectées": "Kasoro na Uvujaji Uliogunduliwa",
+        "problème détecté": "tatizo lililogunduliwa",
+        "Rapport d'Audit Gemma 5B (Local / On-Premise)": "Ripoti ya Ukaguzi wa Gemma 5B (Ndani ya Nchi)",
+        "Audits Récents": "Ukaguzi wa Hivi Karibuni",
+        "Aucun audit récent enregistré. Lancez un premier scan !": "Hakuna ukaguzi wa hivi karibuni. Anzisha ukaguzi wako wa kwanza!",
         "Indicateurs & Topologie Souveraine Panafricaine": "Viashiria na Muundo wa Uhuru wa Afrika",
         "Supervision en temps réel des nœuds certifiés et conformité UA 2020-2030.": "Uangalizi wa wakati halisi wa vituo vilivyothibitishwa.",
         "Tester la Latence": "Pima Muda wa Mawasiliano",
@@ -136,8 +276,17 @@ TRANSLATIONS = {
         "Statut": "Hali",
         "Changer de langue": "Badilisha lugha",
         "Basculer thème clair / sombre": "Badilisha mandhari meusi / meupe",
+        "Thème clair activé": "Mandhari meupe yamewashwa",
+        "Thème sombre activé": "Mandhari meusi yamewashwa",
         "Session authentifiée via Zero-Trust ZKP": "Kipindi kimethibitishwa kupitia Zero-Trust ZKP",
-        "Menu de navigation": "Menyu ya urambazaji"
+        "Menu de navigation": "Menyu ya urambazaji",
+        "BANTUDEVLAB - Forge Logicielle Souveraine Africaine": "BANTUDEVLAB - Hifadhi Huru ya Programu ya Afrika",
+        "Navigation Principale": "Urambazaji Mkuu",
+        "Connexion et bascule sur la forge logicielle Gitea": "Kuingia na kubadili hadi Gitea",
+        "Ouvre GitLab dans un nouvel onglet": "Fungua GitLab kwenye kichupo kipya",
+        "Menu mobile": "Menyu ya Simu",
+        "Fermer le menu": "Funga menyu",
+        "Forge Logicielle Panafricaine & Souveraine. Hébergée sur Systalink Cloud.": "Hifadhi Huru ya Programu Barani Afrika. Imewekwa kwenye Systalink Cloud.",
     },
     "pt": {
         "Accueil": "Inicio",
@@ -189,7 +338,25 @@ TRANSLATIONS = {
         "Action": "Acao",
         "Gitea": "Gitea",
         "Aucun dépôt détecté sur le cluster Gitea local.": "Nenhum repositorio encontrado no cluster Gitea local.",
+        "Workbench Souverain & Audit SAST": "Bancada Soberana e Auditoria SAST",
+        "Éditeur avec coloration syntaxique & numérotation": "Editor com realce de sintaxe e numeracao de linhas",
+        "Langage": "Linguagem",
+        "Prêt": "Pronto",
+        "Snippet Démo": "Snippet de Demonstracao",
         "Lancer l'Audit de Sécurité": "Executar Auditoria de Seguranca",
+        "Demander l'Avis de Gemma 5B": "Solicitar Parecer de IA Gemma 5B",
+        "Souveraineté": "Soberania",
+        "Analyse Complétée": "Analise Concluida",
+        "Normes de Souveraineté Numérique ADSS-v1": "Normas de Soberania Digital ADSS-v1",
+        "CONFORME": "CONFORME",
+        "Critiques": "Criticas",
+        "Hautes": "Altas",
+        "Moyennes": "Medias",
+        "Vulnérabilités & Fuites Détectées": "Vulnerabilidades e Vazamentos Detectados",
+        "problème détecté": "problema detectado",
+        "Rapport d'Audit Gemma 5B (Local / On-Premise)": "Relatorio de Auditoria Gemma 5B (Local / On-Premise)",
+        "Audits Récents": "Auditorias Recentes",
+        "Aucun audit récent enregistré. Lancez un premier scan !": "Nenhuma auditoria recente registrada. Execute sua primeira verificacao!",
         "Indicateurs & Topologie Souveraine Panafricaine": "Indicadores e Topologia Soberana Pan-Africana",
         "Supervision en temps réel des nœuds certifiés et conformité UA 2020-2030.": "Supervisao em tempo real dos nos certificados e conformidade UA.",
         "Tester la Latence": "Testar Latencia",
@@ -204,15 +371,25 @@ TRANSLATIONS = {
         "Statut": "Status",
         "Changer de langue": "Alterar idioma",
         "Basculer thème clair / sombre": "Alternar tema claro / escuro",
+        "Thème clair activé": "Tema claro ativado",
+        "Thème sombre activé": "Tema escuro ativado",
         "Session authentifiée via Zero-Trust ZKP": "Sessao autenticada via Zero-Trust ZKP",
-        "Menu de navigation": "Menu de navegacao"
-    }
+        "Menu de navigation": "Menu de navegacao",
+        "BANTUDEVLAB - Forge Logicielle Souveraine Africaine": "BANTUDEVLAB - Forja Soberana de Software Africana",
+        "Navigation Principale": "Navegacao Principal",
+        "Connexion et bascule sur la forge logicielle Gitea": "Login e mudanca para a forja de software Gitea",
+        "Ouvre GitLab dans un nouvel onglet": "Abre o GitLab em uma nova aba",
+        "Menu mobile": "Menu movel",
+        "Fermer le menu": "Fechar menu",
+        "Forge Logicielle Panafricaine & Souveraine. Hébergée sur Systalink Cloud.": "Forja Soberana e Pan-Africana de Software. Hospedada na Systalink Cloud.",
+    },
 }
+
 
 def generate_mo(entries):
     # Sort entries by msgid
     entries = sorted(entries.items(), key=lambda x: x[0])
-    
+
     header = b"Content-Type: text/plain; charset=UTF-8\n"
     # Prepend empty string header
     all_keys = [b""] + [k.encode("utf-8") for k, _ in entries]
@@ -220,63 +397,65 @@ def generate_mo(entries):
 
     N = len(all_keys)
     # Magic number for GNU gettext .mo (little endian)
-    magic = 0x950412de
+    magic = 0x950412DE
     version = 0
     O_strings = 28
     T_strings = O_strings + (N * 8)
-    
+
     # Calculate tables
     orig_table = []
     trans_table = []
-    
+
     data_start = T_strings + (N * 8)
     curr_offset = data_start
-    
+
     encoded_data = b""
     for k in all_keys:
         orig_table.append((len(k), curr_offset))
         encoded_data += k + b"\x00"
         curr_offset += len(k) + 1
-        
+
     for v in all_vals:
         trans_table.append((len(v), curr_offset))
         encoded_data += v + b"\x00"
         curr_offset += len(v) + 1
-        
+
     header_bytes = struct.pack("<Iiiiiii", magic, version, N, O_strings, T_strings, 0, 0)
-    
-    orig_bytes = b"".join(struct.pack("<ii", l, o) for l, o in orig_table)
-    trans_bytes = b"".join(struct.pack("<ii", l, o) for l, o in trans_table)
-    
+
+    orig_bytes = b"".join(struct.pack("<ii", length, offset) for length, offset in orig_table)
+    trans_bytes = b"".join(struct.pack("<ii", length, offset) for length, offset in trans_table)
+
     return header_bytes + orig_bytes + trans_bytes + encoded_data
+
 
 def build():
     for lang, catalog in TRANSLATIONS.items():
         lang_dir = Path("locale") / lang / "LC_MESSAGES"
         lang_dir.mkdir(parents=True, exist_ok=True)
-        
+
         # Write .po file
         po_lines = [
             'msgid ""',
             'msgstr ""',
             '"Content-Type: text/plain; charset=UTF-8\\n"',
             f'"Language: {lang}\\n"',
-            ""
+            "",
         ]
         for msgid, msgstr in catalog.items():
             po_lines.append(f'msgid "{msgid}"')
             po_lines.append(f'msgstr "{msgstr}"')
             po_lines.append("")
-            
+
         po_path = lang_dir / "django.po"
         po_path.write_text("\n".join(po_lines), encoding="utf-8")
-        
+
         # Write .mo file
         mo_data = generate_mo(catalog)
         mo_path = lang_dir / "django.mo"
         mo_path.write_bytes(mo_data)
-        
+
         print(f"Generated {po_path} and {mo_path} ({len(catalog)} entries)")
+
 
 if __name__ == "__main__":
     build()
