@@ -76,12 +76,6 @@ services:
     depends_on:
       - db
       - redis
-    healthcheck:
-      test: ["CMD-SHELL", "/opt/gitlab/bin/gitlab-healthcheck --fail || exit 1"]
-      interval: 20s
-      timeout: 10s
-      retries: 5
-      start_period: 300s
     security_opt:
       - no-new-privileges:true
     networks:

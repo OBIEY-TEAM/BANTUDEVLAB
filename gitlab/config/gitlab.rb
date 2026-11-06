@@ -1,7 +1,11 @@
 # GitLab Configuration - BantuDevLab Sovereign African Edition
 # Fused with BantuDevLab Core (Zero-Trust ZKP, Gemma 5B, Sovereign SAST)
 
-external_url 'http://localhost:3001'
+external_url 'http://git.cybersocle.site'
+
+nginx['enable'] = true
+nginx['listen_port'] = 80
+nginx['listen_https'] = false
 
 gitlab_rails['gitlab_shell_ssh_port'] = 2222
 gitlab_rails['time_zone'] = 'Africa/Abidjan'
@@ -31,9 +35,8 @@ gitlab_rails['omniauth_providers'] = [
   {
     name: 'bantu_zkp',
     label: 'Connexion Souveraine Zero-Trust ZKP',
-    strategy_class: (defined?(Gitlab::Auth::BantuZkp) ? Gitlab::Auth::BantuZkp : 'Gitlab::Auth::BantuZkp'),
+    strategy_class: 'Gitlab::Auth::BantuZkp', 
     args: {
-      strategy_class: (defined?(Gitlab::Auth::BantuZkp) ? Gitlab::Auth::BantuZkp : 'Gitlab::Auth::BantuZkp'),
       client_id: 'bantu_gitlab_sovereign_client',
       client_secret: ENV['DJANGO_SECRET_KEY'] || '',
       site: 'http://127.0.0.1:8001',
