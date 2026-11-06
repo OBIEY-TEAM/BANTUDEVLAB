@@ -25,8 +25,8 @@ module Gitlab
       option :name, 'bantu_zkp'
 
       option :client_options, {
-        site: 'http://127.0.0.1:8000',
-        authorize_url: '/api/zkp/challenge/',
+        site: 'http://django_app:8000',
+        authorize_url: 'https://cybersocle.site/api/zkp/challenge/',
         token_url: '/api/zkp/verify/',
         user_info_url: '/api/zkp/userinfo/'
       }
