@@ -18,6 +18,7 @@ gitlab_rails['extra_sign_in_text'] = 'Zero-Trust ZKP Sovereign African Authentic
 [
   '/opt/gitlab/embedded/service/gitlab-rails/lib/gitlab/auth/bantu_zkp.rb',
   '/opt/gitlab/embedded/service/gitlab-rails/config/initializers/bantu_zkp.rb',
+  '/opt/gitlab/embedded/service/gitlab-rails/lib/gitlab/auth/bantu_zkp.rb',  
   File.expand_path('../../gitlab/lib/gitlab/auth/bantu_zkp.rb', __dir__ || '.'),
   File.expand_path('../lib/gitlab/auth/bantu_zkp.rb', __dir__ || '.'),
   File.expand_path('./gitlab/lib/gitlab/auth/bantu_zkp.rb', Dir.pwd)
@@ -27,6 +28,8 @@ gitlab_rails['extra_sign_in_text'] = 'Zero-Trust ZKP Sovereign African Authentic
     break
   end
 end
+
+
 
 gitlab_rails['omniauth_enabled'] = true
 gitlab_rails['omniauth_allow_single_sign_on'] = ['bantu_zkp']
@@ -39,7 +42,7 @@ gitlab_rails['omniauth_providers'] = [
     args: {
       client_id: 'bantu_gitlab_sovereign_client',
       client_secret: ENV['DJANGO_SECRET_KEY'] || '',
-      site: 'http://127.0.0.1:8001',
+      site: 'http://127.0.0.1:8000',
       authorize_url: '/api/zkp/challenge/',
       token_url: '/api/zkp/verify/',
       user_info_url: '/api/zkp/userinfo/'
