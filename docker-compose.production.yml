@@ -59,6 +59,7 @@ services:
     image: gitlab/gitlab-ce:16.11.0-ce.0
     container_name: bantudevlab_gitlab_ce
     restart: always
+    shm_size: "512m"
     environment:
       GITLAB_OMNIBUS_CONFIG: |
         from_file('/etc/gitlab/gitlab.rb')
@@ -66,6 +67,8 @@ services:
       GITLAB_WEBHOOK_SECRET: ${GITLAB_WEBHOOK_SECRET}
     volumes:
       - ./gitlab/config/gitlab.rb:/etc/gitlab/gitlab.rb:ro
+      - ./gitlab/lib/gitlab/auth/bantu_zkp.rb:/opt/gitlab/embedded/service/gitlab-rails/lib/gitlab/auth/bantu_zkp.rb:ro
+      - ./gitlab/lib/gitlab/auth/bantu_zkp.rb:/opt/gitlab/embedded/service/gitlab-rails/config/initializers/bantu_zkp.rb:ro
       - gitlab_config:/etc/gitlab
       - gitlab_logs:/var/log/gitlab
       - gitlab_data:/var/opt/gitlab
@@ -74,6 +77,12 @@ services:
     depends_on:
       - db
       - redis
+    healthcheck:
+      test: ["CMD-SHELL", "/opt/gitlab/bin/gitlab-healthcheck --fail || exit 1"]
+      interval: 20s
+      timeout: 10s
+      retries: 5
+      start_period: 300s
     security_opt:
       - no-new-privileges:true
     networks:

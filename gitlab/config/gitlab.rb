@@ -11,6 +11,11 @@ gitlab_rails['instance_name'] = 'BANTUDEVLAB — GitLab Sovereign Panafrican'
 gitlab_rails['extra_sign_in_text'] = 'Zero-Trust ZKP Sovereign African Authentication Enabled'
 
 # Authentication: Integration of Bantu Zero-Knowledge Proof (ZKP) Strategy
+bantu_zkp_strategy_path = '/opt/gitlab/embedded/service/gitlab-rails/lib/gitlab/auth/bantu_zkp.rb'
+if File.exist?(bantu_zkp_strategy_path)
+  require bantu_zkp_strategy_path
+end
+
 gitlab_rails['omniauth_enabled'] = true
 gitlab_rails['omniauth_allow_single_sign_on'] = ['bantu_zkp']
 gitlab_rails['omniauth_block_auto_created_users'] = false
@@ -18,6 +23,7 @@ gitlab_rails['omniauth_providers'] = [
   {
     name: 'bantu_zkp',
     label: 'Connexion Souveraine Zero-Trust ZKP',
+    strategy_class: (defined?(Gitlab::Auth::BantuZkp) ? Gitlab::Auth::BantuZkp : 'Gitlab::Auth::BantuZkp'),
     args: {
       client_id: 'bantu_gitlab_sovereign_client',
       client_secret: ENV['DJANGO_SECRET_KEY'] || '',
@@ -36,3 +42,10 @@ gitlab_rails['ai_assistant_endpoint'] = 'http://127.0.0.1:8001/api/ai/review-pr/
 
 # Webhook Secret Configuration
 gitlab_rails['webhook_secret_token'] = ENV['GITLAB_WEBHOOK_SECRET'] || 'bantu_gitlab_webhook_secret_2026'
+
+# Resource and Worker Optimization (Anti-Crash Loop & OOM Protection)
+puma['worker_processes'] = 2
+puma['min_threads'] = 1
+puma['max_threads'] = 4
+sidekiq['concurrency'] = 5
+prometheus_monitoring['enable'] = false

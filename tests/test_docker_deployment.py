@@ -101,6 +101,9 @@ require "json"
 def external_url(url); end
 gitlab_rails = {}
 gitlab_ci = {}
+puma = {}
+sidekiq = {}
+prometheus_monitoring = {}
 
 eval(File.read(ARGV[0]))
 
@@ -125,6 +128,26 @@ puts "OK"
             )
             self.assertEqual(res.returncode, 0, f"Erreur de syntaxe/évaluation ERB dans gitlab.rb: {res.stderr}")
             self.assertIn("OK", res.stdout)
+
+    def test_gitlab_container_resilience_parameters(self):
+        """Vérifie que le conteneur GitLab Omnibus est durci contre les boucles de crash (shm_size, healthcheck, et montages de stratégie OmniAuth)."""
+        compose_prod = self.root_dir / "docker-compose.production.yml"
+        content = compose_prod.read_text(encoding="utf-8")
+
+        self.assertIn("shm_size:", content, "GitLab Omnibus doit avoir shm_size configuré.")
+        self.assertIn(
+            "/opt/gitlab/bin/gitlab-healthcheck", content, "GitLab doit utiliser le gitlab-healthcheck officiel."
+        )
+        self.assertIn("start_period: 300s", content, "Le start_period de GitLab doit être d'au moins 300s.")
+        self.assertIn(
+            "bantu_zkp.rb", content, "La stratégie OmniAuth Bantu ZKP doit être montée dans le conteneur GitLab."
+        )
+
+        gitlab_rb = self.root_dir / "gitlab" / "config" / "gitlab.rb"
+        gitlab_rb_content = gitlab_rb.read_text(encoding="utf-8")
+        self.assertIn(
+            "strategy_class", gitlab_rb_content, "gitlab.rb doit déclarer strategy_class pour éviter StrategyNotFound."
+        )
 
     def test_docker_compose_cli_validation(self):
         """Valide la syntaxe des compositions via docker compose config si docker est disponible."""
