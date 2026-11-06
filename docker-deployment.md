@@ -41,7 +41,31 @@ Tous les conteneurs sont relies sur un reseau interne securise `sovereign_net` e
 | `bantudevlab_postgres` | Base relationnelle | `5432` | Reseau interne | Stockage PostgreSQL 16 Alpine |
 | `bantudevlab_redis` | Cache & Broker | `6379` | Reseau interne | Broker Redis 7 Alpine |
 | `bantudevlab_celery` | File de taches | - | Reseau interne | Worker asynchrone Celery |
+| `bantudevlab_celery_beat` | Ordonnanceur periodique | - | Reseau interne | Celery Beat periodic scheduler |
+| `bantudevlab_ollama` | Moteur IA locale | - | Reseau interne | Inférence Gemma 2 2B (port 11434) |
+| `bantudevlab_renovate` | Bot dependances | - | Reseau interne | Analyse continue des dependances |
+| `bantudevlab_act_runner` | Runner CI/CD | - | Reseau interne | Execution locale des actions CI |
 | `bantudevlab_gitea_init` | Init automatique | - | One-shot | Creation automatique du compte `bantu_admin` |
+
+---
+
+## 3.bis Deploiement Industriel Haute Disponibilite (Production)
+
+Pour deployer l'architecture durcie 3 tiers avec GitLab CE Omnibus, PgBouncer et terminaison TLS 1.3 Nginx :
+
+```bash
+docker compose -f docker-compose.production.yml --env-file .env.production up -d --build
+```
+
+### Cartographie de Production
+- **Nginx Reverse Proxy** : Ports `8080` (HTTP -> HTTPS) et `8443` (TLS 1.3 durci, certbot LetsEncrypt)
+- **GitLab CE Omnibus** : Service interne `gitlab:80` et SSH sur port `2222`
+- **Django Core** : Service interne `django_app:8000` avec Uvicorn/Gunicorn rootless en lecture seule
+- **PgBouncer** : Port interne `6432` en mode transactionnel
+- **PostgreSQL 16 Alpine** : Port interne `5432` sur `backend_net` isole
+- **Redis 7 Alpine** : Port interne `6379` avec authentification obligatoire et persistance AOF
+- **Celery Worker & Beat** : Traitement asynchrone et ordonnancement de production
+- **Ollama AI** : Inférence souveraine Gemma 2 2B sur réseau interne isolé
 
 ---
 
