@@ -55,7 +55,7 @@ def generate_provenance(files: List[Path], output_dir: Path) -> Dict[str, str]:
         "predicateType": "https://slsa.dev/provenance/v1",
         "predicate": {
             "buildDefinition": {
-                "buildType": "https://bantudevlab.africa/attestation/v1",
+                "buildType": "https://cybersocle.site/attestation/v1",
                 "externalParameters": {
                     "sourceRepository": "https://github.com/OBIEY-TEAM/BANTUDEVLAB",
                     "commit": get_git_commit(),
@@ -66,7 +66,7 @@ def generate_provenance(files: List[Path], output_dir: Path) -> Dict[str, str]:
                 },
             },
             "runDetails": {
-                "builder": {"id": "https://bantudevlab.africa/runners/sovereign"},
+                "builder": {"id": "https://cybersocle.site/runners/sovereign"},
                 "metadata": {
                     "invocationId": f"run-{datetime.datetime.now().strftime('%Y%m%d%H%M%S')}",
                 },

@@ -2,7 +2,7 @@
 # Enregistrement officiel du GitLab Runner Souverain BANTUDEVLAB
 set -euo pipefail
 
-GITLAB_URL="${GITLAB_URL:-https://git.bantudevlab.africa}"
+GITLAB_URL="${GITLAB_URL:-https://cybersocle.site}"
 REGISTRATION_TOKEN="${REGISTRATION_TOKEN:-bantu_runner_registration_token_2026}"
 RUNNER_NAME="bantu-sovereign-runner-abidjan"
 

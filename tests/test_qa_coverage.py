@@ -377,7 +377,7 @@ alias_sys("id")
         # 3. High entropy secret detection & URL ignore
         code_with_high_entropy = """
 secret_token = "aB3+kL9/xY2zmN8qpQ1swZ7pvR4wtE5uK"
-safe_url = "https://sovereign.bantudevlab.africa/api/v1/resource/endpoint"
+safe_url = "https://cybersocle.site/api/v1/resource/endpoint"
 """
         scan_res = SecurityScannerEngine.scan_code("entropy.py", code_with_high_entropy)
         self.assertEqual(scan_res["critical"], 1)

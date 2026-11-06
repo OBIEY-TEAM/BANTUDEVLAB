@@ -177,8 +177,8 @@ class GiteaClient:
                 "full_name": f"sovereign-developer/{name}",
                 "description": description,
                 "private": private,
-                "html_url": f"https://forge.bantudevlab.africa/sovereign-developer/{name}",
-                "clone_url": f"https://forge.bantudevlab.africa/sovereign-developer/{name}.git",
+                "html_url": f"https://cybersocle.site/sovereign-developer/{name}",
+                "clone_url": f"https://cybersocle.site/sovereign-developer/{name}.git",
             },
             "fallback": True,
         }

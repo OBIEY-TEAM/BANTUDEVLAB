@@ -50,8 +50,8 @@ class RepositoryListView(APIView):
             owner=owner_username,
             defaults={
                 "description": description,
-                "html_url": repo_data.get("html_url", f"https://forge.bantudevlab.africa/sovereign-org/{name}"),
-                "clone_url": repo_data.get("clone_url", f"https://forge.bantudevlab.africa/sovereign-org/{name}.git"),
+                "html_url": repo_data.get("html_url", f"https://cybersocle.site/sovereign-org/{name}"),
+                "clone_url": repo_data.get("clone_url", f"https://cybersocle.site/sovereign-org/{name}.git"),
                 "is_private": private,
             },
         )
