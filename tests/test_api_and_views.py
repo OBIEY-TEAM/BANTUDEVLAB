@@ -79,3 +79,19 @@ class ApiViewsTestCase(TestCase):
         resp = self.client.get("/api/forge/status/")
         self.assertEqual(resp.status_code, 200)
         self.assertIn("forge_engine", resp.json())
+
+    def test_healthz_exempt_from_ssl_redirect_and_allows_loopback(self):
+        from django.test import override_settings
+
+        with override_settings(
+            ALLOWED_HOSTS=["cybersocle.site", "127.0.0.1", "localhost"],
+            SECURE_SSL_REDIRECT=True,
+            SECURE_REDIRECT_EXEMPT=[r"^healthz/?$", r"^readyz/?$"],
+        ):
+            loopback_client = Client(headers={"host": "127.0.0.1:8000"})
+            resp_healthz = loopback_client.get("/healthz")
+            self.assertEqual(resp_healthz.status_code, 200)
+            self.assertEqual(resp_healthz.json(), {"status": "ok"})
+
+            resp_readyz = loopback_client.get("/readyz")
+            self.assertIn(resp_readyz.status_code, (200, 503))
