@@ -87,7 +87,6 @@ services:
       - no-new-privileges:true
     networks:
       - app_net
-      - backend_net
 
   # Surcouche Souveraine Django BantuDevLab Core
   django_app:
@@ -117,6 +116,7 @@ services:
     <<: *hardening-rootless
     networks:
       - app_net
+      - backend_net
 
   # File de tâches asynchrones Celery Worker
   celery_worker:

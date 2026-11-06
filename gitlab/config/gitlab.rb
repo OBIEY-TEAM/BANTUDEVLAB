@@ -1,7 +1,7 @@
 # GitLab Configuration - BantuDevLab Sovereign African Edition
 # Fused with BantuDevLab Core (Zero-Trust ZKP, Gemma 5B, Sovereign SAST)
 
-external_url 'http://git.cybersocle.site'
+external_url 'https://git.cybersocle.site'
 
 nginx['enable'] = true
 nginx['listen_port'] = 80
