@@ -149,6 +149,90 @@ puts "OK"
             "strategy_class", gitlab_rb_content, "gitlab.rb doit déclarer strategy_class pour éviter StrategyNotFound."
         )
 
+    def test_bantu_zkp_omniauth_strategy_registration(self):
+        """Vérifie que bantu_zkp.rb s'enregistre dans OmniAuth::Strategies::BantuZkp pour éviter Devise StrategyNotFound."""
+        bantu_zkp_rb = self.root_dir / "gitlab" / "lib" / "gitlab" / "auth" / "bantu_zkp.rb"
+        self.assertTrue(bantu_zkp_rb.exists(), "Le fichier de stratégie bantu_zkp.rb doit exister.")
+
+        content = bantu_zkp_rb.read_text(encoding="utf-8")
+        self.assertIn("class BantuZkp < OmniAuth::Strategies::OAuth2", content)
+        self.assertIn("OmniAuth::Strategies", content)
+        self.assertIn("BantuZkp = ::Gitlab::Auth::BantuZkp", content)
+
+        if subprocess.run(["which", "ruby"], capture_output=True).returncode == 0:
+            ruby_script = """
+module OmniAuth
+  module Strategies
+    class OAuth2
+      def self.option(*args); end
+      def self.uid(&b); end
+      def self.info(&b); end
+      def self.extra(&b); end
+    end
+  end
+end
+$LOADED_FEATURES << 'omniauth-oauth2.rb'
+
+require ARGV[0]
+
+unless defined?(OmniAuth::Strategies::BantuZkp) && OmniAuth::Strategies::BantuZkp == Gitlab::Auth::BantuZkp
+  abort("OmniAuth::Strategies::BantuZkp is not properly defined as Gitlab::Auth::BantuZkp")
+end
+
+puts "STRATEGY_OK"
+"""
+            res = subprocess.run(
+                ["ruby", "-e", ruby_script, str(bantu_zkp_rb)],
+                capture_output=True,
+                text=True,
+            )
+            self.assertEqual(res.returncode, 0, f"Erreur de chargement de la stratégie OmniAuth BantuZkp: {res.stderr}")
+            self.assertIn("STRATEGY_OK", res.stdout)
+
+    def test_gitlab_rb_loads_strategy_class_into_provider_and_args(self):
+        """Vérifie que gitlab.rb résout et configure la stratégie OmniAuth à la fois au niveau provider et dans args."""
+        gitlab_rb = self.root_dir / "gitlab" / "config" / "gitlab.rb"
+
+        if subprocess.run(["which", "ruby"], capture_output=True).returncode == 0:
+            ruby_script = """
+def external_url(*); end
+gitlab_rails = {}
+gitlab_ci = {}
+puma = {}
+sidekiq = {}
+prometheus_monitoring = {}
+
+module OmniAuth
+  module Strategies
+    class OAuth2
+      def self.option(*args); end
+      def self.uid(&b); end
+      def self.info(&b); end
+      def self.extra(&b); end
+    end
+  end
+end
+$LOADED_FEATURES << 'omniauth-oauth2.rb'
+
+eval(File.read(ARGV[0]))
+
+provider = gitlab_rails['omniauth_providers']&.first
+abort("No provider configured") unless provider
+
+abort("Provider name is not bantu_zkp") unless provider[:name] == 'bantu_zkp'
+abort("Strategy class missing in provider") unless provider[:strategy_class].to_s == 'Gitlab::Auth::BantuZkp'
+abort("Strategy class missing in provider args") unless provider[:args][:strategy_class].to_s == 'Gitlab::Auth::BantuZkp'
+
+puts "PROVIDER_OK"
+"""
+            res = subprocess.run(
+                ["ruby", "-e", ruby_script, str(gitlab_rb)],
+                capture_output=True,
+                text=True,
+            )
+            self.assertEqual(res.returncode, 0, f"Erreur de configuration provider dans gitlab.rb: {res.stderr}")
+            self.assertIn("PROVIDER_OK", res.stdout)
+
     def test_docker_compose_cli_validation(self):
         """Valide la syntaxe des compositions via docker compose config si docker est disponible."""
         if subprocess.run(["which", "docker"], capture_output=True).returncode == 0:

@@ -11,9 +11,17 @@ gitlab_rails['instance_name'] = 'BANTUDEVLAB — GitLab Sovereign Panafrican'
 gitlab_rails['extra_sign_in_text'] = 'Zero-Trust ZKP Sovereign African Authentication Enabled'
 
 # Authentication: Integration of Bantu Zero-Knowledge Proof (ZKP) Strategy
-bantu_zkp_strategy_path = '/opt/gitlab/embedded/service/gitlab-rails/lib/gitlab/auth/bantu_zkp.rb'
-if File.exist?(bantu_zkp_strategy_path)
-  require bantu_zkp_strategy_path
+[
+  '/opt/gitlab/embedded/service/gitlab-rails/lib/gitlab/auth/bantu_zkp.rb',
+  '/opt/gitlab/embedded/service/gitlab-rails/config/initializers/bantu_zkp.rb',
+  File.expand_path('../../gitlab/lib/gitlab/auth/bantu_zkp.rb', __dir__ || '.'),
+  File.expand_path('../lib/gitlab/auth/bantu_zkp.rb', __dir__ || '.'),
+  File.expand_path('./gitlab/lib/gitlab/auth/bantu_zkp.rb', Dir.pwd)
+].each do |strategy_file|
+  if File.exist?(strategy_file)
+    require strategy_file
+    break
+  end
 end
 
 gitlab_rails['omniauth_enabled'] = true
@@ -25,6 +33,7 @@ gitlab_rails['omniauth_providers'] = [
     label: 'Connexion Souveraine Zero-Trust ZKP',
     strategy_class: (defined?(Gitlab::Auth::BantuZkp) ? Gitlab::Auth::BantuZkp : 'Gitlab::Auth::BantuZkp'),
     args: {
+      strategy_class: (defined?(Gitlab::Auth::BantuZkp) ? Gitlab::Auth::BantuZkp : 'Gitlab::Auth::BantuZkp'),
       client_id: 'bantu_gitlab_sovereign_client',
       client_secret: ENV['DJANGO_SECRET_KEY'] || '',
       site: 'http://127.0.0.1:8001',
