@@ -20,7 +20,7 @@ gitlab_rails['omniauth_providers'] = [
     label: 'Connexion Souveraine Zero-Trust ZKP',
     args: {
       client_id: 'bantu_gitlab_sovereign_client',
-      client_secret: '<%= ENV["DJANGO_SECRET_KEY"] %>',
+      client_secret: ENV['DJANGO_SECRET_KEY'] || '',
       site: 'http://127.0.0.1:8001',
       authorize_url: '/api/zkp/challenge/',
       token_url: '/api/zkp/verify/',
@@ -35,4 +35,4 @@ gitlab_rails['sast_scanner_endpoint'] = 'http://127.0.0.1:8001/api/security/scan
 gitlab_rails['ai_assistant_endpoint'] = 'http://127.0.0.1:8001/api/ai/review-pr/'
 
 # Webhook Secret Configuration
-gitlab_rails['webhook_secret_token'] = '<%= ENV["GITLAB_WEBHOOK_SECRET"] || "bantu_gitlab_webhook_secret_2026" %>'
+gitlab_rails['webhook_secret_token'] = ENV['GITLAB_WEBHOOK_SECRET'] || 'bantu_gitlab_webhook_secret_2026'
