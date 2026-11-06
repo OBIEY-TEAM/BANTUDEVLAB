@@ -5,18 +5,22 @@ from pathlib import Path
 
 from django.core.exceptions import ImproperlyConfigured
 
-try:
-    from dotenv import load_dotenv
-
-    load_dotenv()
-except (ImportError, ModuleNotFoundError):
-    pass
-
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 TESTING = (
     any(cmd in sys.argv for cmd in ("test", "pytest", "check", "makemigrations", "migrate")) or "pytest" in sys.modules
 )
+
+try:
+    from dotenv import load_dotenv
+
+    # Ne charger .env.production que hors mode TESTING pour preserver SQLite en tests locaux
+    prod_env = BASE_DIR / ".env.production"
+    if prod_env.exists() and not TESTING:
+        load_dotenv(prod_env)
+    load_dotenv(BASE_DIR / ".env")
+except (ImportError, ModuleNotFoundError):
+    pass
 
 # SEC-011: DEBUG desactive par defaut (opt-in explicite pour le developpement).
 DEBUG = os.environ.get("DEBUG", "False").lower() in ("true", "1", "yes")
@@ -94,14 +98,17 @@ ASGI_APPLICATION = "config.asgi.application"
 # Database configuration: support PostgreSQL with SQLite fallback
 DB_ENGINE = os.environ.get("DB_ENGINE", "sqlite")
 if DB_ENGINE == "postgres":
+    _postgres_host = os.environ.get("POSTGRES_HOST", "db")
+    # Aligner le port par defaut sur 6432 si pgbouncer est configure comme host
+    _default_port = "6432" if _postgres_host == "pgbouncer" else "5432"
     DATABASES = {
         "default": {
             "ENGINE": "django.db.backends.postgresql",
             "NAME": os.environ.get("POSTGRES_DB", "bantudevlab"),
             "USER": os.environ.get("POSTGRES_USER", "bantudevlab_admin"),
             "PASSWORD": os.environ.get("POSTGRES_PASSWORD", ""),
-            "HOST": os.environ.get("POSTGRES_HOST", "db"),
-            "PORT": os.environ.get("POSTGRES_PORT", "5432"),
+            "HOST": _postgres_host,
+            "PORT": os.environ.get("POSTGRES_PORT", _default_port),
         }
     }
 else:
