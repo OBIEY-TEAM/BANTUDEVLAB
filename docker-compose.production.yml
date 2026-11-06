@@ -62,6 +62,8 @@ services:
     environment:
       GITLAB_OMNIBUS_CONFIG: |
         from_file('/etc/gitlab/gitlab.rb')
+      DJANGO_SECRET_KEY: ${DJANGO_SECRET_KEY}
+      GITLAB_WEBHOOK_SECRET: ${GITLAB_WEBHOOK_SECRET}
     volumes:
       - ./gitlab/config/gitlab.rb:/etc/gitlab/gitlab.rb:ro
       - gitlab_config:/etc/gitlab
