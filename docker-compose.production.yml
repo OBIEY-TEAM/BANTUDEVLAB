@@ -67,6 +67,7 @@ services:
       GITLAB_WEBHOOK_SECRET: ${GITLAB_WEBHOOK_SECRET}
     volumes:
       - ./gitlab/config/gitlab.rb:/etc/gitlab/gitlab.rb:ro
+      - ./gitlab/config/initializers/bantu_zkp.rb:/opt/gitlab/embedded/service/gitlab-rails/config/initializers/bantu_zkp.rb:ro
       - ./gitlab/lib/gitlab/auth/bantu_zkp.rb:/opt/gitlab/embedded/service/gitlab-rails/lib/gitlab/auth/bantu_zkp.rb:ro
       - gitlab_config:/etc/gitlab
       - gitlab_logs:/var/log/gitlab
@@ -76,6 +77,12 @@ services:
     depends_on:
       - db
       - redis
+    healthcheck:
+      test: ["CMD", "/opt/gitlab/bin/gitlab-healthcheck"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 300s
     security_opt:
       - no-new-privileges:true
     networks:
