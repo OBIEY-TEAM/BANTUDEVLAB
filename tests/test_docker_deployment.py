@@ -73,6 +73,59 @@ class DockerDeploymentConsistencyTestCase(unittest.TestCase):
         content_prod = env_prod.read_text(encoding="utf-8")
         self.assertIn("GEMMA_API_URL=http://ollama:11434/api/generate", content_prod)
 
+    def test_gitlab_configuration_syntax_and_erb_safety(self):
+        """Vérifie la syntaxe Ruby de gitlab.rb et l'absence de balises ERB causant des plantages Omnibus."""
+        gitlab_rb = self.root_dir / "gitlab" / "config" / "gitlab.rb"
+        self.assertTrue(gitlab_rb.exists(), "Le fichier gitlab/config/gitlab.rb doit exister.")
+
+        content = gitlab_rb.read_text(encoding="utf-8")
+        self.assertNotIn(
+            "<%=",
+            content,
+            "gitlab.rb est évalué directement par Chef Ruby et ne doit pas contenir de balises ERB '<%= ... %>'.",
+        )
+        self.assertIn("ENV['DJANGO_SECRET_KEY']", content)
+        self.assertIn("ENV['GITLAB_WEBHOOK_SECRET']", content)
+
+        compose_prod = self.root_dir / "docker-compose.production.yml"
+        compose_content = compose_prod.read_text(encoding="utf-8")
+        self.assertIn("DJANGO_SECRET_KEY: ${DJANGO_SECRET_KEY}", compose_content)
+        self.assertIn("GITLAB_WEBHOOK_SECRET: ${GITLAB_WEBHOOK_SECRET}", compose_content)
+
+        # Si ruby est installé dans l'environnement, simuler la génération et l'évaluation ERB de gitlab.yml
+        if subprocess.run(["which", "ruby"], capture_output=True).returncode == 0:
+            ruby_script = """
+require "erb"
+require "json"
+
+def external_url(url); end
+gitlab_rails = {}
+gitlab_ci = {}
+
+eval(File.read(ARGV[0]))
+
+gitlab_yml_template = <<~YAML
+  production: &base
+    gitlab:
+      host: localhost
+    omniauth:
+      enabled: <%= gitlab_rails["omniauth_enabled"] %>
+      providers: <%= gitlab_rails["omniauth_providers"].to_json %>
+    webhook_secret_token: <%= gitlab_rails["webhook_secret_token"].to_json %>
+YAML
+
+rendered = ERB.new(gitlab_yml_template).result(binding)
+ERB.new(rendered).result
+puts "OK"
+"""
+            res = subprocess.run(
+                ["ruby", "-e", ruby_script, str(gitlab_rb)],
+                capture_output=True,
+                text=True,
+            )
+            self.assertEqual(res.returncode, 0, f"Erreur de syntaxe/évaluation ERB dans gitlab.rb: {res.stderr}")
+            self.assertIn("OK", res.stdout)
+
     def test_docker_compose_cli_validation(self):
         """Valide la syntaxe des compositions via docker compose config si docker est disponible."""
         if subprocess.run(["which", "docker"], capture_output=True).returncode == 0:
