@@ -104,6 +104,7 @@ gitlab_ci = {}
 puma = {}
 sidekiq = {}
 prometheus_monitoring = {}
+nginx = {}
 
 eval(File.read(ARGV[0]))
 
@@ -141,6 +142,11 @@ puts "OK"
         self.assertIn("start_period: 300s", content, "Le start_period de GitLab doit être d'au moins 300s.")
         self.assertIn(
             "bantu_zkp.rb", content, "La stratégie OmniAuth Bantu ZKP doit être montée dans le conteneur GitLab."
+        )
+        self.assertIn(
+            "config/initializers/bantu_zkp.rb",
+            content,
+            "L'initialiseur Rails OmniAuth Bantu ZKP doit être monté dans le conteneur GitLab.",
         )
 
         gitlab_rb = self.root_dir / "gitlab" / "config" / "gitlab.rb"
@@ -201,6 +207,7 @@ gitlab_ci = {}
 puma = {}
 sidekiq = {}
 prometheus_monitoring = {}
+nginx = {}
 
 module OmniAuth
   module Strategies
