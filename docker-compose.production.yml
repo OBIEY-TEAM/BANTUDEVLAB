@@ -4,8 +4,8 @@
 x-django-env: &django-env
   DEBUG: "False"
   DJANGO_SECRET_KEY: ${DJANGO_SECRET_KEY}
-  ALLOWED_HOSTS: ${ALLOWED_HOSTS:-git.bantudevlab.africa,auth.bantudevlab.africa,localhost}
-  CSRF_TRUSTED_ORIGINS: ${CSRF_TRUSTED_ORIGINS:-https://cybersocle.site,https://cybersocle.site}
+  ALLOWED_HOSTS: ${ALLOWED_HOSTS:-cybersocle.site,git.cybersocle.site,git.bantudevlab.africa,auth.bantudevlab.africa,localhost}
+  CSRF_TRUSTED_ORIGINS: ${CSRF_TRUSTED_ORIGINS:-https://cybersocle.site,https://git.cybersocle.site}
   SECURE_SSL_REDIRECT: "True"
   DB_ENGINE: postgres
   POSTGRES_DB: ${POSTGRES_DB:-bantudevlab_prod}
@@ -91,7 +91,7 @@ services:
       - static_volume:/app/staticfiles
     depends_on:
       pgbouncer:
-        condition: service_started
+        condition: service_healthy
       redis:
         condition: service_healthy
     healthcheck:
@@ -116,7 +116,7 @@ services:
       <<: *django-env
     depends_on:
       pgbouncer:
-        condition: service_started
+        condition: service_healthy
       redis:
         condition: service_healthy
     <<: *hardening-rootless
@@ -136,7 +136,7 @@ services:
       DEBUG: "False"
     depends_on:
       pgbouncer:
-        condition: service_started
+        condition: service_healthy
       redis:
         condition: service_healthy
     security_opt:
@@ -155,14 +155,23 @@ services:
       DB_HOST: db
       DB_PORT: "5432"
       DB_NAME: ${POSTGRES_DB:-bantudevlab_prod}
+      LISTEN_ADDR: "0.0.0.0"
+      LISTEN_PORT: "6432"
       POOL_MODE: transaction
       MAX_CLIENT_CONN: "500"
       DEFAULT_POOL_SIZE: "50"
+    volumes:
+      - ./deploy/pgbouncer/pgbouncer.ini:/etc/pgbouncer/pgbouncer.ini:ro
     ports:
       - "127.0.0.1:6432:6432"
     depends_on:
       db:
         condition: service_healthy
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -h 127.0.0.1 -p 6432 || exit 1"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
     security_opt:
       - no-new-privileges:true
     networks:
@@ -226,6 +235,7 @@ services:
       - GEMMA_MODEL=gemma2:2b
     networks:
       - backend_net
+      - app_net
     security_opt:
       - no-new-privileges:true
 
