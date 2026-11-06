@@ -37,6 +37,9 @@ class DockerDeploymentConsistencyTestCase(unittest.TestCase):
         self.assertIn("alias /var/www/static/;", content, "Le chemin static doit correspondre au montage volume Nginx.")
         self.assertIn("proxy_pass http://django_app:8000;", content, "Nginx doit router vers django_app:8000.")
         self.assertIn("proxy_pass http://gitlab:80;", content, "Nginx doit router vers gitlab:80.")
+        self.assertIn(
+            "cybersocle.site", content, "Le domaine cybersocle.site doit être configuré dans les server_name."
+        )
         self.assertIn("auth.bantudevlab.africa", content, "Le domaine auth doit être configuré dans les server_name.")
 
     def test_pgbouncer_configuration_coherence(self):
