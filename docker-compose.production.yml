@@ -68,7 +68,6 @@ services:
     volumes:
       - ./gitlab/config/gitlab.rb:/etc/gitlab/gitlab.rb:ro
       - ./gitlab/lib/gitlab/auth/bantu_zkp.rb:/opt/gitlab/embedded/service/gitlab-rails/lib/gitlab/auth/bantu_zkp.rb:ro
-      - ./gitlab/lib/gitlab/auth/bantu_zkp.rb:/opt/gitlab/embedded/service/gitlab-rails/config/initializers/bantu_zkp.rb:ro
       - gitlab_config:/etc/gitlab
       - gitlab_logs:/var/log/gitlab
       - gitlab_data:/var/opt/gitlab
