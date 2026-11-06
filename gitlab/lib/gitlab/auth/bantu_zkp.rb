@@ -62,7 +62,6 @@ end
 # pour satisfaire la résolution automatique par Devise (Devise::OmniAuth::StrategyNotFound)
 module OmniAuth
   module Strategies
-    autoload :BantuZkp, 'gitlab/auth/bantu_zkp'
+    BantuZkp = ::Gitlab::Auth::BantuZkp unless defined?(OmniAuth::Strategies::BantuZkp)
   end
-  add_strategy(:bantu_zkp, Gitlab::Auth::BantuZkp)
 end
