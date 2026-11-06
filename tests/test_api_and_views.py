@@ -86,12 +86,20 @@ class ApiViewsTestCase(TestCase):
         with override_settings(
             ALLOWED_HOSTS=["cybersocle.site", "127.0.0.1", "localhost"],
             SECURE_SSL_REDIRECT=True,
-            SECURE_REDIRECT_EXEMPT=[r"^healthz/?$", r"^readyz/?$"],
+            SECURE_REDIRECT_EXEMPT=[r"^healthz/?$", r"^readyz/?$", r"^health/?$"],
         ):
             loopback_client = Client(headers={"host": "127.0.0.1:8000"})
             resp_healthz = loopback_client.get("/healthz")
             self.assertEqual(resp_healthz.status_code, 200)
             self.assertEqual(resp_healthz.json(), {"status": "ok"})
+
+            resp_health = loopback_client.get("/health")
+            self.assertEqual(resp_health.status_code, 200)
+            self.assertEqual(resp_health.json(), {"status": "ok"})
+
+            resp_health_slash = loopback_client.get("/health/")
+            self.assertEqual(resp_health_slash.status_code, 200)
+            self.assertEqual(resp_health_slash.json(), {"status": "ok"})
 
             resp_readyz = loopback_client.get("/readyz")
             self.assertIn(resp_readyz.status_code, (200, 503))

@@ -5,15 +5,23 @@ from PIL import Image
 
 
 def generate_logos():
-    # Find source PNG in downloads or user uploaded
+    # Find source PNG in attachments, downloads or local repo
+    possible_sources = [
+        Path("/tmp/file_attachments/Afrique_numérique_futuriste_en_néon-removebg-preview.png"),
+        Path("static/img/Afrique_numérique_futuriste_en_néon-removebg-preview.png"),
+    ]
     downloads = Path(r"C:\Users\User\Downloads")
-    cand = [f for f in downloads.glob("*Afrique*") if "neon" in f.name.lower() or "afrique" in f.name.lower()]
-    if cand:
-        src_path = cand[0]
-    else:
-        src_path = Path(
-            r"C:/Users/User/.gemini/antigravity/brain/8c6ccbc9-5511-49c9-82f8-443790fab289/.user_uploaded/media_1793798339601_cca2f172.jpg"
-        )
+    if downloads.exists():
+        possible_sources.extend(downloads.glob("*Afrique*"))
+
+    src_path = None
+    for cand in possible_sources:
+        if cand.exists():
+            src_path = cand
+            break
+
+    if not src_path:
+        src_path = Path("static/img/logo.png")
 
     print(f"Loading source logo from: {src_path}")
     orig = Image.open(src_path).convert("RGBA")
