@@ -4,6 +4,7 @@
 x-django-env: &django-env
   DEBUG: "False"
   DJANGO_SECRET_KEY: ${DJANGO_SECRET_KEY}
+  XDG_RUNTIME_DIR: /tmp
   ALLOWED_HOSTS: ${ALLOWED_HOSTS:-cybersocle.site,git.cybersocle.site,git.bantudevlab.africa,auth.bantudevlab.africa,localhost}
   CSRF_TRUSTED_ORIGINS: ${CSRF_TRUSTED_ORIGINS:-https://cybersocle.site,https://git.cybersocle.site}
   SECURE_SSL_REDIRECT: "True"
