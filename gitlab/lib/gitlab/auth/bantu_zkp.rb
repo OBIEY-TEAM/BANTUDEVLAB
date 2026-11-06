@@ -25,7 +25,7 @@ module Gitlab
       option :name, 'bantu_zkp'
 
       option :client_options, {
-        site: 'http://127.0.0.1:8001',
+        site: 'http://127.0.0.1:8000',
         authorize_url: '/api/zkp/challenge/',
         token_url: '/api/zkp/verify/',
         user_info_url: '/api/zkp/userinfo/'
