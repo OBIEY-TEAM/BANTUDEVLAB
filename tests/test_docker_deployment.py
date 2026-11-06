@@ -20,6 +20,16 @@ class DockerDeploymentConsistencyTestCase(unittest.TestCase):
         self.assertIn("USER appuser", content, "Le conteneur doit basculer vers un utilisateur non-root.")
         self.assertIn("EXPOSE 8000 3001", content, "Les ports applicatifs 8000 et 3001 doivent être exposés.")
         self.assertIn("uvicorn.workers.UvicornWorker", content, "Gunicorn doit utiliser les workers Uvicorn.")
+        self.assertIn(
+            "--no-control-socket",
+            content,
+            "Gunicorn doit désactiver le socket de contrôle pour fonctionner sur système de fichiers en lecture seule.",
+        )
+        self.assertIn(
+            "XDG_RUNTIME_DIR=/tmp",
+            content,
+            "XDG_RUNTIME_DIR doit pointer vers /tmp pour les environnements durcis rootless.",
+        )
 
     def test_docker_compose_files_exist(self):
         """Vérifie la présence des compositions standard et production."""

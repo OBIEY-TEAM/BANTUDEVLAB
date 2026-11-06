@@ -34,8 +34,9 @@ USER appuser
 # Ports exposes (8000 pour Django, 3001 pour Forge Server)
 EXPOSE 8000 3001
 
-# Variable d'environnement pour le dimensionnement dynamique des workers
-ENV WEB_CONCURRENCY=4
+# Variable d'environnement pour le dimensionnement dynamique des workers et repertoire temporaire
+ENV WEB_CONCURRENCY=4 \
+    XDG_RUNTIME_DIR=/tmp
 
 # Lancement haute performance via Gunicorn avec workers asynchrones Uvicorn (PERF-05)
-CMD ["sh", "-c", "python manage.py migrate && gunicorn config.asgi:application -k uvicorn.workers.UvicornWorker --bind 0.0.0.0:8000 --workers ${WEB_CONCURRENCY:-4} --timeout 120 --access-logfile - --error-logfile -"]
+CMD ["sh", "-c", "python manage.py migrate && gunicorn config.asgi:application -k uvicorn.workers.UvicornWorker --bind 0.0.0.0:8000 --workers ${WEB_CONCURRENCY:-4} --timeout 120 --no-control-socket --access-logfile - --error-logfile -"]
