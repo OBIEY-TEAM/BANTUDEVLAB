@@ -133,7 +133,7 @@ git push -u origin main
 
 ```bash
 # 1. Cloner le projet sur le serveur de production
-git clone https://git.bantudevlab.africa/bantudevlab/bantu-platform.git /opt/bantudevlab
+git clone https://cybersocle.site/bantudevlab/bantu-platform.git /opt/bantudevlab
 cd /opt/bantudevlab
 
 # 2. Configurer les variables d'environnement de production

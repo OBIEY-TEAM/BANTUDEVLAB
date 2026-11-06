@@ -179,7 +179,7 @@ BANTUDEVLAB a pour vocation de devenir le **GitHub/GitLab souverain du continent
 
 ```bash
 # 1. Cloner le référentiel sur le serveur sécurisé
-git clone https://git.bantudevlab.africa/bantudevlab/bantu-platform.git /opt/bantudevlab
+git clone https://cybersocle.site/bantudevlab/bantu-platform.git /opt/bantudevlab
 cd /opt/bantudevlab
 
 # 2. Configurer les variables d'environnement de production

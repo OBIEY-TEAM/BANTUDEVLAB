@@ -62,7 +62,7 @@ def scan_project(root_dir: str = ".") -> int:
                     "driver": {
                         "name": "BantuDevLab Sovereign SAST & Secret Scanner",
                         "version": "1.0.0",
-                        "informationUri": "https://bantudevlab.africa",
+                        "informationUri": "https://cybersocle.site",
                     }
                 },
                 "results": [

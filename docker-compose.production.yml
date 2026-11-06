@@ -5,7 +5,7 @@ x-django-env: &django-env
   DEBUG: "False"
   DJANGO_SECRET_KEY: ${DJANGO_SECRET_KEY}
   ALLOWED_HOSTS: ${ALLOWED_HOSTS:-git.bantudevlab.africa,auth.bantudevlab.africa,localhost}
-  CSRF_TRUSTED_ORIGINS: ${CSRF_TRUSTED_ORIGINS:-https://git.bantudevlab.africa,https://auth.bantudevlab.africa}
+  CSRF_TRUSTED_ORIGINS: ${CSRF_TRUSTED_ORIGINS:-https://cybersocle.site,https://cybersocle.site}
   SECURE_SSL_REDIRECT: "True"
   DB_ENGINE: postgres
   POSTGRES_DB: ${POSTGRES_DB:-bantudevlab_prod}
@@ -13,7 +13,7 @@ x-django-env: &django-env
   POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
   POSTGRES_HOST: pgbouncer
   POSTGRES_PORT: "6432"
-  GITLAB_URL: ${GITLAB_URL:-https://git.bantudevlab.africa}
+  GITLAB_URL: ${GITLAB_URL:-https://cybersocle.site}
   GITLAB_PRIVATE_TOKEN: ${GITLAB_PRIVATE_TOKEN:-}
   GITLAB_WEBHOOK_SECRET: ${GITLAB_WEBHOOK_SECRET}
   REDIS_URL: redis://:${REDIS_PASSWORD}@redis:6379/0
