@@ -11,7 +11,7 @@ fi
 
 echo "[INFO] Lancement du daemon Ollama sur le port 11434..."
 export OLLAMA_HOST="0.0.0.0:11434"
-export OLLAMA_ORIGINS="http://127.0.0.1:8001,http://django_app:8000,https://bantudevlab.africa"
+export OLLAMA_ORIGINS="http://127.0.0.1:8001,http://django_app:8000,https://bantudevlab.africa,https://git.bantudevlab.africa,https://auth.bantudevlab.africa,http://localhost:8001"
 
 # Lancement en arriere-plan
 ollama serve &
