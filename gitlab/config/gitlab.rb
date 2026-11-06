@@ -58,6 +58,6 @@ gitlab_rails['webhook_secret_token'] = ENV['GITLAB_WEBHOOK_SECRET'] || 'bantu_gi
 # Resource and Worker Optimization (Anti-Crash Loop & OOM Protection)
 puma['worker_processes'] = 2
 puma['min_threads'] = 1
-puma['max_threads'] = 4
-sidekiq['concurrency'] = 5
+puma['max_threads'] = 1
+sidekiq['concurrency'] = 2
 prometheus_monitoring['enable'] = false
