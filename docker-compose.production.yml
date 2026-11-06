@@ -11,8 +11,8 @@ x-django-env: &django-env
   POSTGRES_DB: ${POSTGRES_DB:-bantudevlab_prod}
   POSTGRES_USER: ${POSTGRES_USER:-bantudevlab_admin}
   POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
-  POSTGRES_HOST: pgbouncer
-  POSTGRES_PORT: "6432"
+  POSTGRES_HOST: ${POSTGRES_HOST:-db}
+  POSTGRES_PORT: ${POSTGRES_PORT:-5432}
   GITLAB_URL: ${GITLAB_URL:-https://cybersocle.site}
   GITLAB_PRIVATE_TOKEN: ${GITLAB_PRIVATE_TOKEN:-}
   GITLAB_WEBHOOK_SECRET: ${GITLAB_WEBHOOK_SECRET}
@@ -92,15 +92,16 @@ services:
     volumes:
       - static_volume:/app/staticfiles
     depends_on:
-      pgbouncer:
+      db:
         condition: service_healthy
       redis:
         condition: service_healthy
     healthcheck:
-      test: ["CMD", "python", "-c", "import urllib.request,sys; sys.exit(0 if urllib.request.urlopen('http://localhost:8000/readyz', timeout=3).status == 200 else 1)"]
+      test: ["CMD", "python", "-c", "import urllib.request,sys; sys.exit(0 if urllib.request.urlopen('http://localhost:8000/healthz', timeout=3).status == 200 else 1)"]
       interval: 10s
       timeout: 3s
       retries: 5
+      start_period: 40s
     <<: *hardening-rootless
     networks:
       - app_net
@@ -119,7 +120,7 @@ services:
     environment:
       <<: *django-env
     depends_on:
-      pgbouncer:
+      db:
         condition: service_healthy
       redis:
         condition: service_healthy
@@ -141,7 +142,7 @@ services:
       <<: *django-env
       DEBUG: "False"
     depends_on:
-      pgbouncer:
+      db:
         condition: service_healthy
       redis:
         condition: service_healthy
