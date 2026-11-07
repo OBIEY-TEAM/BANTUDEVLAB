@@ -39,6 +39,9 @@ def switch_language_view(request):
 
     response = redirect(next_url)
     if lang_code and check_for_language(lang_code):
+        request.LANGUAGE_CODE = lang_code
+        from django.utils import translation
+        translation.activate(lang_code)
         if hasattr(request, "session"):
             request.session["django_language"] = lang_code
         gitea_map = {"fr": "fr-FR", "en": "en-US", "sw": "sw-KE", "pt": "pt-PT"}

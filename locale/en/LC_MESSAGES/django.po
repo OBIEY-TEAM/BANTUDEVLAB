@@ -1,7 +1,9 @@
 msgid ""
 msgstr ""
-"Content-Type: text/plain; charset=UTF-8\n"
-"Language: en\n"
+"Content-Type: text/plain; charset=UTF-8
+"
+"Language: en
+"
 
 msgid "Accueil"
 msgstr "Home"
@@ -305,3 +307,30 @@ msgstr "Close Menu"
 
 msgid "Forge Logicielle Panafricaine & Souveraine. Hébergée sur Systalink Cloud."
 msgstr "Pan-African & Sovereign Software Forge. Hosted on Systalink Cloud."
+
+msgid "Moteur Git Panafricain & Dépôts Souverains"
+msgstr "Pan-African Git Engine & Sovereign Repositories"
+
+msgid "Demander l'Avis de Gemma"
+msgstr "Ask Gemma Review"
+
+msgid "Finaliser l'inscription sur Gitea"
+msgstr "Complete registration on Gitea"
+
+msgid "Finaliser l'Inscription Gitea"
+msgstr "Complete Gitea Registration"
+
+msgid "Se Connecter sur Gitea"
+msgstr "Sign in to Gitea"
+
+msgid "Privé"
+msgstr "Private"
+
+msgid "Public Souverain"
+msgstr "Sovereign Public"
+
+msgid "Chatbot"
+msgstr "Chatbot"
+
+msgid "Chat Bot"
+msgstr "Chat Bot"

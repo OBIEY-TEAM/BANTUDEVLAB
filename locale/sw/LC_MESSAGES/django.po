@@ -1,7 +1,9 @@
 msgid ""
 msgstr ""
-"Content-Type: text/plain; charset=UTF-8\n"
-"Language: sw\n"
+"Content-Type: text/plain; charset=UTF-8
+"
+"Language: sw
+"
 
 msgid "Accueil"
 msgstr "Mwanzo"
@@ -305,3 +307,30 @@ msgstr "Funga menyu"
 
 msgid "Forge Logicielle Panafricaine & Souveraine. Hébergée sur Systalink Cloud."
 msgstr "Hifadhi Huru ya Programu Barani Afrika. Imewekwa kwenye Systalink Cloud."
+
+msgid "Moteur Git Panafricain & Dépôts Souverains"
+msgstr "Injini ya Git ya Afrika na Hazina Huru"
+
+msgid "Demander l'Avis de Gemma"
+msgstr "Omba Maoni ya Gemma"
+
+msgid "Finaliser l'inscription sur Gitea"
+msgstr "Kamilisha usajili kwenye Gitea"
+
+msgid "Finaliser l'Inscription Gitea"
+msgstr "Kamilisha Usajili wa Gitea"
+
+msgid "Se Connecter sur Gitea"
+msgstr "Ingia kwenye Gitea"
+
+msgid "Privé"
+msgstr "Binafsi"
+
+msgid "Public Souverain"
+msgstr "Umma Huru"
+
+msgid "Chatbot"
+msgstr "Chatbot"
+
+msgid "Chat Bot"
+msgstr "Chat Bot"

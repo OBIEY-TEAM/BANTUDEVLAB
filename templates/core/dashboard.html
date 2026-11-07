@@ -87,7 +87,7 @@
 <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 2rem; margin-top: 2rem;">
     <div>
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
-            <h3 style="margin: 0;">{% icon "package" size=18 %} {% trans "Dépôts Hébergés sur Gitea Souverain" %}</h3>
+            <h3 style="margin: 0;">{% icon "package" size=18 %} {% trans "Moteur Git Panafricain & Dépôts Souverains" %}</h3>
             <span class="brand-badge" style="font-size: 0.75rem;">{% trans "Données Réelles Gitea API" %}</span>
         </div>
         <div class="card" style="margin-top: 1rem;">
@@ -112,7 +112,7 @@
                             {% endif %}
                         </td>
                         <td style="padding: 0.75rem;">
-                            {% if repo.private %}<span style="color: #f87171; font-size: 0.8rem;">Privé</span>{% else %}<span style="color: var(--secondary-emerald); font-size: 0.8rem;">Public Souverain</span>{% endif %}
+                            {% if repo.private %}<span style="color: #f87171; font-size: 0.8rem;">{% trans "Privé" %}</span>{% else %}<span style="color: var(--secondary-emerald); font-size: 0.8rem;">{% trans "Public Souverain" %}</span>{% endif %}
                         </td>
                         <td style="padding: 0.75rem; font-family: monospace; font-size: 0.85rem; color: var(--primary-african-gold);">
                             {{ repo.default_branch|default:"main" }}
@@ -163,7 +163,7 @@
                     {% icon "shield" size=18 %} {% trans "Lancer l'Audit de Sécurité" %}
                 </button>
                 <button class="btn btn-secondary" onclick="runAiReview()">
-                    {% icon "bot" size=18 %} {% trans "Demander l'Avis de Gemma 5B" %}
+                    {% icon "bot" size=18 %} {% trans "Demander l'Avis de Gemma" %}
                 </button>
             </div>
 

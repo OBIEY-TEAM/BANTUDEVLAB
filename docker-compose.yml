@@ -92,6 +92,8 @@ services:
       - GITEA__webhook__ALLOWED_HOST_LIST=django_app,forge_engine,127.0.0.1,localhost,host.docker.internal
     volumes:
       - gitea_data:/data
+      - ./custom:/data/gitea/custom:ro
+      - ./forge_data/repos:/data/git/repositories
     ports:
       - "3002:3000"
       - "2222:2222"
