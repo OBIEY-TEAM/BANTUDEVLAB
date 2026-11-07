@@ -23,7 +23,10 @@ class GiteaClient:
     CACHE_TTL = 60
 
     def __init__(self, api_url: Optional[str] = None, token: Optional[str] = None):
-        self.api_url = (api_url or getattr(settings, "GITEA_API_URL", "http://localhost:3002/api/v1")).rstrip("/")
+        from config.base_urls import GITEA_WEB_URL, build_gitea_url
+
+        default_api = getattr(settings, "GITEA_API_URL", None) or f"{GITEA_WEB_URL}/api/v1"
+        self.api_url = (api_url or default_api).rstrip("/")
         self.token = token or getattr(settings, "GITEA_ADMIN_TOKEN", "")
         self.headers = {
             "Content-Type": "application/json",
@@ -93,6 +96,8 @@ class GiteaClient:
 
     def _get_fallback_repositories(self) -> List[Dict[str, Any]]:
         """Scan local forge bare repositories or return sovereign default repos."""
+        from config.base_urls import build_gitea_url
+
         repos: List[Dict[str, Any]] = []
         base_dir = getattr(settings, "BASE_DIR", Path("."))
         repos_dir = Path(base_dir) / "forge_data" / "repos"
@@ -107,8 +112,8 @@ class GiteaClient:
                         "full_name": f"{owner}/{name}",
                         "owner": {"username": owner},
                         "private": False,
-                        "html_url": f"http://localhost:3002/{owner}/{name}",
-                        "clone_url": f"http://localhost:3002/{owner}/{name}.git",
+                        "html_url": build_gitea_url(f"{owner}/{name}"),
+                        "clone_url": build_gitea_url(f"{owner}/{name}.git"),
                         "default_branch": "main",
                     }
                 )
@@ -120,8 +125,8 @@ class GiteaClient:
                     "full_name": "sovereign-org/afri-fintech-gateway",
                     "owner": {"username": "sovereign-org"},
                     "private": False,
-                    "html_url": "http://localhost:3002/sovereign-org/afri-fintech-gateway",
-                    "clone_url": "http://localhost:3002/sovereign-org/afri-fintech-gateway.git",
+                    "html_url": build_gitea_url("sovereign-org/afri-fintech-gateway"),
+                    "clone_url": build_gitea_url("sovereign-org/afri-fintech-gateway.git"),
                     "default_branch": "main",
                 },
                 {
@@ -130,8 +135,8 @@ class GiteaClient:
                     "full_name": "bantudevlab/bantu-zkp-identity",
                     "owner": {"username": "bantudevlab"},
                     "private": False,
-                    "html_url": "http://localhost:3002/bantudevlab/bantu-zkp-identity",
-                    "clone_url": "http://localhost:3002/bantudevlab/bantu-zkp-identity.git",
+                    "html_url": build_gitea_url("bantudevlab/bantu-zkp-identity"),
+                    "clone_url": build_gitea_url("bantudevlab/bantu-zkp-identity.git"),
                     "default_branch": "main",
                 },
             ]

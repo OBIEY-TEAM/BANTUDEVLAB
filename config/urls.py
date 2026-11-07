@@ -11,6 +11,7 @@ try:
 except (ImportError, ModuleNotFoundError):
     has_spectacular = False
 
+from apps.core.views import switch_language_view
 from apps.zkp_auth.views import ZKPOpenIDConfigurationView
 from config.base_urls import BASE_URL_2, GITEA_WEB_URL
 
@@ -24,6 +25,8 @@ class DynamicGiteaRedirectView(RedirectView):
 
 
 urlpatterns = [
+    path("i18n/setlang/", switch_language_view, name="switch_language_setlang"),
+    path("i18n/switch/", switch_language_view, name="switch_language"),
     path("i18n/", include("django.conf.urls.i18n")),  # I18N-01: Switch langue
     path("admin/", admin.site.urls),
     # Point de decouverte OIDC racine

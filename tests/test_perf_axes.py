@@ -64,7 +64,8 @@ class Axe2PerformanceTestCase(TestCase):
     def test_perf02_gemma_streaming_generator(self):
         assistant = GemmaAssistant()
         code = "def hello():\n    return 'african_sovereign_forge'\n"
-        tokens = list(assistant.stream_analyze_code(code_snippet=code, context="unit_test"))
+        with patch.object(assistant, "api_url", "http://127.0.0.1:9999/api/generate"):
+            tokens = list(assistant.stream_analyze_code(code_snippet=code, context="unit_test"))
         self.assertGreater(len(tokens), 0)
         full_text = "".join(tokens)
         self.assertIn("BantuDevLab AI", full_text)
