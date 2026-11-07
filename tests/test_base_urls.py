@@ -1,7 +1,8 @@
 """
 Tests unitaires et de non-régression pour la gestion centralisée des URLs de base souveraines.
-Vérifie BASE_URL_1 (https://cybersocle.site), BASE_URL_2 (https://git.cybersocle.site)
-et BASE_URL_3 (https://api.cybersocle.site), ainsi que les constructeurs dynamiques d'URLs.
+Vérifie BASE_URL_1 (https://cybersocle.site), BASE_URL_2 (https://git.cybersocle.site),
+BASE_URL_3 (https://api.cybersocle.site), GITEA_WEB_URL, FORGE_INTERNAL_URL, AI_URL,
+ainsi que les constructeurs dynamiques d'URLs et les redirections.
 """
 
 import os
@@ -19,10 +20,13 @@ class BaseUrlsConfigurationTestCase(SimpleTestCase):
     """Vérifie la définition, l'accès et les constructeurs dynamiques des URLs de base."""
 
     def test_default_base_urls_constants(self):
-        """Vérifie que les trois constantes par défaut correspondent aux spécifications."""
+        """Vérifie que les constantes par défaut correspondent aux spécifications."""
         self.assertEqual(bu.DEFAULT_BASE_URL_1, "https://cybersocle.site")
         self.assertEqual(bu.DEFAULT_BASE_URL_2, "https://git.cybersocle.site")
         self.assertEqual(bu.DEFAULT_BASE_URL_3, "https://api.cybersocle.site")
+        self.assertEqual(bu.DEFAULT_GITEA_WEB_URL, "https://gitea.cybersocle.site")
+        self.assertEqual(bu.DEFAULT_FORGE_INTERNAL_URL, "https://forge.cybersocle.site")
+        self.assertEqual(bu.DEFAULT_AI_URL, "https://ai.cybersocle.site")
 
     def test_get_base_urls_dict(self):
         """Vérifie le dictionnaire retourné par get_base_urls()."""
@@ -30,6 +34,9 @@ class BaseUrlsConfigurationTestCase(SimpleTestCase):
         self.assertIn("BASE_URL_1", urls)
         self.assertIn("BASE_URL_2", urls)
         self.assertIn("BASE_URL_3", urls)
+        self.assertIn("GITEA_WEB_URL", urls)
+        self.assertIn("FORGE_INTERNAL_URL", urls)
+        self.assertIn("AI_URL", urls)
         self.assertEqual(urls["BASE_URL_1"], "https://cybersocle.site")
         self.assertEqual(urls["BASE_URL_2"], "https://git.cybersocle.site")
         self.assertEqual(urls["BASE_URL_3"], "https://api.cybersocle.site")
@@ -40,6 +47,9 @@ class BaseUrlsConfigurationTestCase(SimpleTestCase):
         self.assertIn("cybersocle.site", domains)
         self.assertIn("git.cybersocle.site", domains)
         self.assertIn("api.cybersocle.site", domains)
+        self.assertIn("gitea.cybersocle.site", domains)
+        self.assertIn("forge.cybersocle.site", domains)
+        self.assertIn("ai.cybersocle.site", domains)
 
     def test_build_url_helpers(self):
         """Vérifie la construction dynamique des URLs avec ou sans slash initial."""
@@ -54,6 +64,15 @@ class BaseUrlsConfigurationTestCase(SimpleTestCase):
         self.assertEqual(bu.build_api_url(""), "https://api.cybersocle.site")
         self.assertEqual(bu.build_api_url("/v1/scan/"), "https://api.cybersocle.site/v1/scan/")
         self.assertEqual(bu.build_api_url("v1/scan/"), "https://api.cybersocle.site/v1/scan/")
+
+        self.assertEqual(bu.build_gitea_url(""), "https://gitea.cybersocle.site")
+        self.assertEqual(bu.build_gitea_url("/user/login"), "https://gitea.cybersocle.site/user/login")
+
+        self.assertEqual(bu.build_forge_url(""), "https://forge.cybersocle.site")
+        self.assertEqual(bu.build_forge_url("/health"), "https://forge.cybersocle.site/health")
+
+        self.assertEqual(bu.build_ai_url(""), "https://ai.cybersocle.site")
+        self.assertEqual(bu.build_ai_url("/api/tags"), "https://ai.cybersocle.site/api/tags")
 
     def test_env_override_base_urls(self):
         """Vérifie la prise en compte des variables d'environnement."""
@@ -74,7 +93,7 @@ class BaseUrlsConfigurationTestCase(SimpleTestCase):
             self.assertEqual(bu.build_url(b3, "test"), "https://custom-api.africa/test")
 
     def test_context_processor_exposes_base_urls(self):
-        """Vérifie que le processeur de contexte Django expose les trois URLs de base aux templates."""
+        """Vérifie que le processeur de contexte Django expose toutes les URLs de base aux templates."""
         from django.test import RequestFactory
 
         request = RequestFactory().get("/")
@@ -82,6 +101,11 @@ class BaseUrlsConfigurationTestCase(SimpleTestCase):
         self.assertIn("BASE_URL_1", ctx)
         self.assertIn("BASE_URL_2", ctx)
         self.assertIn("BASE_URL_3", ctx)
+        self.assertIn("GITEA_WEB_URL", ctx)
+        self.assertIn("FORGE_INTERNAL_URL", ctx)
+        self.assertIn("AI_URL", ctx)
+        self.assertIn("GITEA_LOGIN_URL", ctx)
+        self.assertIn("GITLAB_URL", ctx)
         self.assertEqual(ctx["BASE_URL_1"], "https://cybersocle.site")
         self.assertEqual(ctx["BASE_URL_2"], "https://git.cybersocle.site")
         self.assertEqual(ctx["BASE_URL_3"], "https://api.cybersocle.site")
@@ -103,5 +127,19 @@ class DynamicUrlIntegrationTestCase(TestCase):
 
     def test_allowed_hosts_includes_all_base_domains(self):
         """Vérifie que ALLOWED_HOSTS inclut les domaines des trois bases URLs."""
-        for domain in ["cybersocle.site", "git.cybersocle.site", "api.cybersocle.site"]:
+        for domain in [
+            "cybersocle.site",
+            "git.cybersocle.site",
+            "api.cybersocle.site",
+            "gitea.cybersocle.site",
+            "forge.cybersocle.site",
+            "ai.cybersocle.site",
+        ]:
             self.assertIn(domain, settings.ALLOWED_HOSTS)
+
+    def test_dynamic_gitea_redirect_view(self):
+        """Vérifie que la vue de redirection /gitea/ redirige vers GITEA_LOGIN_URL sans localhost en dur."""
+        response = self.client.get("/gitea/")
+        self.assertEqual(response.status_code, 302)
+        expected_target = getattr(settings, "GITEA_LOGIN_URL", f"{bu.GITEA_WEB_URL}/user/login")
+        self.assertIn(expected_target, response.headers.get("Location", ""))
