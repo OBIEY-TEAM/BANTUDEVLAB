@@ -28,7 +28,7 @@ class GemmaAssistant:
     )
 
     def __init__(self, api_url: Optional[str] = None, model_name: Optional[str] = None):
-        self.api_url = api_url or getattr(settings, "GEMMA_API_URL", "http://localhost:11434/api/generate")
+        self.api_url = api_url or getattr(settings, "GEMMA_API_URL", "https://ai.cybersocle.site/api/generate")
         self.model_name = model_name or getattr(settings, "GEMMA_MODEL_NAME", "gemma:5b")
 
     def analyze_code(self, code_snippet: str, context: str = "review") -> Dict[str, Any]:

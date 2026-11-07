@@ -22,7 +22,9 @@ class GiteaClient:
     CACHE_TTL = 60
 
     def __init__(self, api_url: Optional[str] = None, token: Optional[str] = None):
-        self.api_url = (api_url or getattr(settings, "GITEA_API_URL", "http://localhost:3002/api/v1")).rstrip("/")
+        self.api_url = (api_url or getattr(settings, "GITEA_API_URL", "https://gitea.cybersocle.site/api/v1")).rstrip(
+            "/"
+        )
         self.token = token or getattr(settings, "GITEA_ADMIN_TOKEN", "")
         self.headers = {
             "Content-Type": "application/json",
