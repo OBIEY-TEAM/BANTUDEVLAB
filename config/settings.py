@@ -206,8 +206,8 @@ CSRF_COOKIE_HTTPONLY = True
 CSRF_COOKIE_SAMESITE = os.environ.get("CSRF_COOKIE_SAMESITE", "Lax" if (DEBUG or TESTING) else "Strict")
 
 # SEC-041: durcissement transport en production (HTTPS strict, HSTS, cookies Secure).
-# Exempter les sondes internes health/healthz/readyz pour permettre les healthchecks de conteneur en HTTP local
-SECURE_REDIRECT_EXEMPT = [r"^healthz/?$", r"^readyz/?$", r"^health/?$"]
+# Exempter les sondes internes health/healthz/readyz et les fichiers statiques pour permettre les requêtes HTTP locales
+SECURE_REDIRECT_EXEMPT = [r"^healthz/?$", r"^readyz/?$", r"^health/?$", r"^static/"]
 
 if not (DEBUG or TESTING):
     SECURE_SSL_REDIRECT = os.environ.get("SECURE_SSL_REDIRECT", "True").lower() in ("true", "1", "yes")
