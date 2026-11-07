@@ -1,7 +1,10 @@
 # GitLab Configuration - BantuDevLab Sovereign African Edition
 # Fused with BantuDevLab Core (Zero-Trust ZKP, Gemma 5B, Sovereign SAST)
 
-external_url 'https://git.cybersocle.site'
+base_url_1 = ENV['BASE_URL_1'] || 'https://cybersocle.site'
+base_url_2 = ENV['BASE_URL_2'] || 'https://git.cybersocle.site'
+
+external_url base_url_2
 
 nginx['enable'] = true
 nginx['listen_port'] = 80
@@ -42,7 +45,7 @@ gitlab_rails['omniauth_providers'] = [
       client_secret: ENV['DJANGO_SECRET_KEY'] || '',
       strategy_class: 'Gitlab::Auth::BantuZkp',
       site: 'http://django_app:8000',
-      authorize_url: 'https://cybersocle.site/api/zkp/challenge/',
+      authorize_url: "#{base_url_1.chomp('/')}/api/zkp/challenge/",
       token_url: '/api/zkp/verify/',
       user_info_url: '/api/zkp/userinfo/'
     }

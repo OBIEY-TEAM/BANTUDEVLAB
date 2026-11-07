@@ -22,11 +22,13 @@ end
 module Gitlab
   module Auth
     class BantuZkp < OmniAuth::Strategies::OAuth2
+      base_portal = (ENV['BASE_URL_1'] || 'https://cybersocle.site').chomp('/')
+
       option :name, 'bantu_zkp'
 
       option :client_options, {
         site: 'http://django_app:8000',
-        authorize_url: 'https://cybersocle.site/api/zkp/challenge/',
+        authorize_url: "#{base_portal}/api/zkp/challenge/",
         token_url: '/api/zkp/verify/',
         user_info_url: '/api/zkp/userinfo/'
       }
