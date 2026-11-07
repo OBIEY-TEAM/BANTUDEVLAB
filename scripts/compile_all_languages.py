@@ -105,7 +105,7 @@ TRANSLATIONS = {
         "Privé": "Privé",
         "Public Souverain": "Public Souverain",
         "Chatbot": "Chatbot",
-        "Chat Bot": "Chat Bot"
+        "Chat Bot": "Chat Bot",
     },
     "en": {
         "Accueil": "Home",
@@ -217,7 +217,7 @@ TRANSLATIONS = {
         "Privé": "Private",
         "Public Souverain": "Sovereign Public",
         "Chatbot": "Chatbot",
-        "Chat Bot": "Chat Bot"
+        "Chat Bot": "Chat Bot",
     },
     "sw": {
         "Accueil": "Mwanzo",
@@ -329,7 +329,7 @@ TRANSLATIONS = {
         "Privé": "Binafsi",
         "Public Souverain": "Umma Huru",
         "Chatbot": "Chatbot",
-        "Chat Bot": "Chat Bot"
+        "Chat Bot": "Chat Bot",
     },
     "pt": {
         "Accueil": "Inicio",
@@ -441,8 +441,8 @@ TRANSLATIONS = {
         "Privé": "Privado",
         "Public Souverain": "Publico Soberano",
         "Chatbot": "Chatbot",
-        "Chat Bot": "Chat Bot"
-    }
+        "Chat Bot": "Chat Bot",
+    },
 }
 
 
@@ -502,8 +502,8 @@ def build():
             "",
         ]
         for msgid, msgstr in catalog.items():
-            clean_id = msgid.replace('\n', ' ')
-            clean_str = msgstr.replace('\n', ' ')
+            clean_id = msgid.replace("\n", " ")
+            clean_str = msgstr.replace("\n", " ")
             po_lines.append(f'msgid "{clean_id}"')
             po_lines.append(f'msgstr "{clean_str}"')
             po_lines.append("")
