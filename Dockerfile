@@ -26,6 +26,7 @@ RUN groupadd -g 1000 appgroup && \
 # Copie du code applicatif et attribution des permissions a appuser
 COPY --chown=appuser:appgroup . /app/
 RUN mkdir -p /app/staticfiles /app/forge_data/repos && \
+    python manage.py collectstatic --no-input && \
     chown -R appuser:appgroup /app
 
 # Bascule vers l'utilisateur non-root
