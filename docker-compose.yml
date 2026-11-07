@@ -77,6 +77,7 @@ services:
       - USER_GID=1000
       - GITEA__database__DB_TYPE=sqlite3
       - GITEA__database__PATH=/data/gitea/gitea.db
+      - GITEA__database__SQLITE_JOURNAL_MODE=WAL
       - GITEA__server__DOMAIN=localhost
       - GITEA__server__HTTP_PORT=3000
       - GITEA__server__ROOT_URL=http://localhost:3002/
@@ -94,6 +95,8 @@ services:
     volumes:
       - gitea_data:/data
       - ./custom:/data/gitea/custom:ro
+      - ./custom/templates:/data/gitea/templates:ro
+      - ./custom/public:/data/gitea/public:ro
       - ./forge_data/repos:/data/git/repositories
     ports:
       - "3002:3000"
@@ -105,7 +108,8 @@ services:
       test: ["CMD-SHELL", "curl -fsS http://localhost:3000/api/healthz || exit 1"]
       interval: 10s
       timeout: 5s
-      retries: 10
+      retries: 15
+      start_period: 120s
     security_opt:
       - no-new-privileges:true
     networks:
