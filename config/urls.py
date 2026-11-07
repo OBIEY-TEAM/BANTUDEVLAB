@@ -1,8 +1,8 @@
 from django.conf import settings
-from django.conf.urls.static import static
 from django.contrib import admin
-from django.urls import include, path
+from django.urls import include, path, re_path
 from django.views.generic import RedirectView
+from django.views.static import serve
 
 try:
     from drf_spectacular.views import SpectacularAPIView, SpectacularRedocView, SpectacularSwaggerView
@@ -48,6 +48,19 @@ if has_spectacular:
         path("api/redoc/", SpectacularRedocView.as_view(url_name="schema"), name="redoc"),
     ]
 
-# Servir les fichiers statiques en mode DEBUG ou TESTING
-if settings.DEBUG or getattr(settings, "TESTING", False):
-    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATICFILES_DIRS[0])
+# Servir les fichiers statiques : fallback robuste avec django.views.static.serve
+# permettant le chargement direct du CSS et des assets statiques dans tous les environnements
+static_doc_root = (
+    settings.STATIC_ROOT
+    if (getattr(settings, "STATIC_ROOT", None) and getattr(settings, "STATIC_ROOT").exists())
+    else settings.STATICFILES_DIRS[0]
+)
+
+urlpatterns += [
+    re_path(
+        r"^%s(?P<path>.*)$" % settings.STATIC_URL.lstrip("/"),
+        serve,
+        {"document_root": static_doc_root},
+        name="static_serve",
+    ),
+]
