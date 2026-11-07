@@ -52,6 +52,8 @@ def scan_project(root_dir: str = ".") -> int:
             except Exception:
                 continue
 
+    from config.base_urls import BASE_URL_1
+
     # Generation du rapport SARIF
     sarif_output = {
         "$schema": SarifReportSerializer.SARIF_SCHEMA,
@@ -62,7 +64,7 @@ def scan_project(root_dir: str = ".") -> int:
                     "driver": {
                         "name": "BantuDevLab Sovereign SAST & Secret Scanner",
                         "version": "1.0.0",
-                        "informationUri": "https://cybersocle.site",
+                        "informationUri": BASE_URL_1,
                     }
                 },
                 "results": [

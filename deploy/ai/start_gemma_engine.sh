@@ -11,7 +11,8 @@ fi
 
 echo "[INFO] Lancement du daemon Ollama sur le port 11434..."
 export OLLAMA_HOST="0.0.0.0:11434"
-export OLLAMA_ORIGINS="http://127.0.0.1:8001,http://django_app:8000,https://cybersocle.site,http://localhost:8001"
+BASE_PORTAL="${BASE_URL_1:-https://cybersocle.site}"
+export OLLAMA_ORIGINS="http://127.0.0.1:8001,http://django_app:8000,${BASE_PORTAL},http://localhost:8001"
 
 # Lancement en arriere-plan
 ollama serve &

@@ -45,13 +45,15 @@ class RepositoryListView(APIView):
             if isinstance(repo_data.get("owner"), dict)
             else "sovereign-org"
         )
+        from config.base_urls import build_portal_url
+
         SovereignRepository.objects.update_or_create(
             name=name,
             owner=owner_username,
             defaults={
                 "description": description,
-                "html_url": repo_data.get("html_url", f"https://cybersocle.site/sovereign-org/{name}"),
-                "clone_url": repo_data.get("clone_url", f"https://cybersocle.site/sovereign-org/{name}.git"),
+                "html_url": repo_data.get("html_url", build_portal_url(f"sovereign-org/{name}")),
+                "clone_url": repo_data.get("clone_url", build_portal_url(f"sovereign-org/{name}.git")),
                 "is_private": private,
             },
         )

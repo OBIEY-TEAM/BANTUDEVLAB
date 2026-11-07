@@ -10,8 +10,22 @@ import datetime
 import hashlib
 import json
 import subprocess
+import sys
 from pathlib import Path
 from typing import Dict, List
+
+# Inclusion dynamique du module de configuration racine
+BASE_DIR = Path(__file__).resolve().parent.parent
+if str(BASE_DIR) not in sys.path:
+    sys.path.insert(0, str(BASE_DIR))
+
+try:
+    from config.base_urls import BASE_URL_1, build_portal_url
+except ImportError:
+    BASE_URL_1 = "https://cybersocle.site"
+
+    def build_portal_url(p=""):
+        return f"{BASE_URL_1.rstrip('/')}/{p.lstrip('/')}" if p else BASE_URL_1
 
 
 def calculate_sha256(file_path: Path) -> str:
@@ -55,7 +69,7 @@ def generate_provenance(files: List[Path], output_dir: Path) -> Dict[str, str]:
         "predicateType": "https://slsa.dev/provenance/v1",
         "predicate": {
             "buildDefinition": {
-                "buildType": "https://cybersocle.site/attestation/v1",
+                "buildType": build_portal_url("attestation/v1"),
                 "externalParameters": {
                     "sourceRepository": "https://github.com/OBIEY-TEAM/BANTUDEVLAB",
                     "commit": get_git_commit(),
@@ -66,7 +80,7 @@ def generate_provenance(files: List[Path], output_dir: Path) -> Dict[str, str]:
                 },
             },
             "runDetails": {
-                "builder": {"id": "https://cybersocle.site/runners/sovereign"},
+                "builder": {"id": build_portal_url("runners/sovereign")},
                 "metadata": {
                     "invocationId": f"run-{datetime.datetime.now().strftime('%Y%m%d%H%M%S')}",
                 },
