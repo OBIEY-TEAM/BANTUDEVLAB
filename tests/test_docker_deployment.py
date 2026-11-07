@@ -39,6 +39,14 @@ class DockerDeploymentConsistencyTestCase(unittest.TestCase):
         self.assertTrue(compose_dev.exists(), "docker-compose.yml doit exister.")
         self.assertTrue(compose_prod.exists(), "docker-compose.production.yml doit exister.")
 
+        dev_content = compose_dev.read_text(encoding="utf-8")
+        self.assertIn(
+            "./custom:/data/gitea/custom", dev_content, "Le dossier custom doit être monté dans le conteneur Gitea."
+        )
+        self.assertIn(
+            "GITEA__ui__DEFAULT_THEME=github-dark", dev_content, "Le thème par défaut Gitea doit être github-dark."
+        )
+
     def test_nginx_configuration_coherence(self):
         """Vérifie la cohérence du fichier Nginx de production avec les conteneurs."""
         nginx_conf = self.root_dir / "deploy" / "nginx" / "bantudevlab.conf"

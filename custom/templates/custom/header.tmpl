@@ -623,6 +623,12 @@ document.addEventListener('DOMContentLoaded', function() {
       logoImg.style.borderRadius = '12px';
       logoImg.style.boxShadow = '0 0 20px rgba(0, 229, 255, 0.45)';
     });
+
+    // 3. Redirection automatique des liens et boutons d'inscription vers la forge officielle
+    const signupLinks = document.querySelectorAll('a[href*="/user/sign_up"], a[href$="/sign_up"], .btn-signup, .user-signup-link');
+    signupLinks.forEach(link => {
+      link.href = 'https://git.cybersocle.site/users/sign_up';
+    });
   }
   applyAfricanLogoToGitea();
 

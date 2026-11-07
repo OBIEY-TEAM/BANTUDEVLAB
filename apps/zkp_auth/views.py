@@ -221,7 +221,7 @@ class ZKPVerifyView(APIView):
         login(request, user)
         from urllib.parse import urlencode
 
-        from config.base_urls import build_gitea_url
+        from config.base_urls import FORGE_SIGNUP_URL, build_gitea_url
 
         # Vérification si un flux OAuth de redirection est actif
         redirect_uri = request.data.get("redirect_uri")
@@ -236,9 +236,15 @@ class ZKPVerifyView(APIView):
                 q_params["state"] = state
             oauth_redirect = f"{redirect_uri}{sep}{urlencode(q_params)}"
 
-        gitea_signup_url = build_gitea_url(f"user/sign_up?user_name={user.username}")
+        # Redirection d'inscription officielle vers la forge souveraine (ex: https://git.cybersocle.site/users/sign_up)
+        forge_signup_url = (
+            f"{FORGE_SIGNUP_URL}?username={user.username}"
+            if "?" not in FORGE_SIGNUP_URL
+            else f"{FORGE_SIGNUP_URL}&username={user.username}"
+        )
+        gitea_signup_url = forge_signup_url
         gitea_login_url = build_gitea_url("user/login")
-        primary_redirect = oauth_redirect or gitea_signup_url
+        primary_redirect = oauth_redirect or forge_signup_url
 
         return Response(
             {
@@ -253,6 +259,7 @@ class ZKPVerifyView(APIView):
                 "oauth_redirect": oauth_redirect,
                 "gitea_login_url": gitea_login_url,
                 "gitea_signup_url": gitea_signup_url,
+                "forge_signup_url": forge_signup_url,
                 "auth_code": auth_code,
             },
             status=status.HTTP_200_OK,

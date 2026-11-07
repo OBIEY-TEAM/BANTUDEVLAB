@@ -145,8 +145,8 @@
             {% trans "Votre identité souveraine" %} <b id="giteaUserDisplay" style="color: #fff; font-size: 1.05rem;"></b> {% trans "est authentifiée sans mot de passe. Finalisez ou liez votre compte sur la forge Gitea souveraine." %}
         </p>
         <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
-            <a id="btnGiteaSignup" href="{{ GITEA_LOGIN_URL|default:BASE_URL_2 }}" target="_blank" rel="noopener noreferrer" class="btn btn-primary" style="padding: 0.85rem 1.6rem; font-size: 1rem; font-weight: 600;">
-                {% icon "user-plus" size=18 %} {% trans "Finaliser l'Inscription Gitea" %}
+            <a id="btnGiteaSignup" href="{{ SIGNUP_URL|default:'https://git.cybersocle.site/users/sign_up' }}" target="_blank" rel="noopener noreferrer" class="btn btn-primary" style="padding: 0.85rem 1.6rem; font-size: 1rem; font-weight: 600;">
+                {% icon "user-plus" size=18 %} {% trans "Finaliser l'Inscription sur Gitea" %}
             </a>
             <a id="btnGiteaLogin" href="{{ GITEA_LOGIN_URL|default:BASE_URL_2 }}" target="_blank" rel="noopener noreferrer" class="btn btn-outline" style="border-color: #10b981; color: #10b981; padding: 0.85rem 1.6rem; font-size: 1rem;">
                 {% icon "log-in" size=18 %} {% trans "Se Connecter sur Gitea" %}
@@ -156,7 +156,7 @@
             </a>
         </div>
         <p id="countdownRedirectText" style="margin-top: 1.5rem; font-size: 0.9rem; color: var(--primary-african-gold);">
-            {% trans "Redirection automatique vers l'inscription Gitea dans" %} <span id="redirectSecs" style="font-weight: bold; font-size: 1.1rem;">4</span> {% trans "secondes..." %}
+            {% trans "Redirection automatique vers l'inscription dans" %} <span id="redirectSecs" style="font-weight: bold; font-size: 1.1rem;">4</span> {% trans "secondes..." %}
         </p>
     </div>
 </div>
@@ -537,10 +537,10 @@ async function loginWithZkp() {
 }
 
 function handleSuccessfulZkpAuth(username, data) {
-    const fallbackSignup = '{{ GITEA_LOGIN_URL|default:BASE_URL_2 }}';
+    const defaultSignup = '{{ SIGNUP_URL|default:"https://git.cybersocle.site/users/sign_up" }}';
     const fallbackLogin = '{{ GITEA_LOGIN_URL|default:BASE_URL_2 }}';
-    const primaryRedirect = (data && data.redirect_url) ? data.redirect_url : (data && data.gitea_signup_url ? data.gitea_signup_url : fallbackSignup);
-    const signupUrl = (data && data.gitea_signup_url) ? data.gitea_signup_url : fallbackSignup;
+    const primaryRedirect = (data && data.redirect_url) ? data.redirect_url : ((data && (data.forge_signup_url || data.gitea_signup_url)) ? (data.forge_signup_url || data.gitea_signup_url) : defaultSignup);
+    const signupUrl = (data && (data.forge_signup_url || data.gitea_signup_url)) ? (data.forge_signup_url || data.gitea_signup_url) : defaultSignup;
     const loginUrl = (data && data.gitea_login_url) ? data.gitea_login_url : fallbackLogin;
 
     const section = document.getElementById('giteaRedirectSection');
@@ -550,7 +550,12 @@ function handleSuccessfulZkpAuth(username, data) {
     const secsSpan = document.getElementById('redirectSecs');
 
     if (userDisplay) userDisplay.textContent = username;
-    if (btnSignup) btnSignup.href = primaryRedirect;
+    if (btnSignup) {
+        btnSignup.href = signupUrl;
+        btnSignup.onclick = function() {
+            window.location.href = signupUrl;
+        };
+    }
     if (btnLogin) btnLogin.href = loginUrl;
 
     if (section) {

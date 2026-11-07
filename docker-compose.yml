@@ -89,9 +89,12 @@ services:
       - GITEA__security__SECRET_KEY=bantu_gitea_secret_key_2026_sovereign_africa
       - GITEA__service__DISABLE_REGISTRATION=false
       - GITEA__service__ENABLE_CAPTCHA=false
+      - GITEA__ui__THEMES=gitea-auto,gitea-light,gitea-dark,github,github-dark
+      - GITEA__ui__DEFAULT_THEME=github-dark
       - GITEA__webhook__ALLOWED_HOST_LIST=django_app,forge_engine,127.0.0.1,localhost,host.docker.internal
     volumes:
       - gitea_data:/data
+      - ./custom:/data/gitea/custom:ro
     ports:
       - "3002:3000"
       - "2222:2222"

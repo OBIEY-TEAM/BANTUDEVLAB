@@ -22,6 +22,7 @@ DEFAULT_BASE_URL_1 = "https://cybersocle.site"
 DEFAULT_BASE_URL_2 = "https://git.cybersocle.site"
 DEFAULT_BASE_URL_3 = "https://api.cybersocle.site"
 
+DEFAULT_FORGE_SIGNUP_URL = f"{DEFAULT_BASE_URL_2}/users/sign_up"
 DEFAULT_GITEA_WEB_URL = "https://gitea.cybersocle.site"
 DEFAULT_FORGE_INTERNAL_URL = "https://forge.cybersocle.site"
 DEFAULT_AI_URL = "https://ai.cybersocle.site"
@@ -31,6 +32,10 @@ BASE_URL_1 = os.environ.get("BASE_URL_1", DEFAULT_BASE_URL_1).rstrip("/")
 BASE_URL_2 = os.environ.get("BASE_URL_2", DEFAULT_BASE_URL_2).rstrip("/")
 BASE_URL_3 = os.environ.get("BASE_URL_3", DEFAULT_BASE_URL_3).rstrip("/")
 
+FORGE_SIGNUP_URL = os.environ.get(
+    "FORGE_SIGNUP_URL",
+    os.environ.get("GITLAB_SIGNUP_URL", f"{BASE_URL_2}/users/sign_up"),
+).rstrip("/")
 GITEA_WEB_URL = os.environ.get("GITEA_WEB_URL", os.environ.get("GITEA_EXTERNAL_URL", DEFAULT_GITEA_WEB_URL)).rstrip("/")
 FORGE_INTERNAL_URL = os.environ.get("FORGE_INTERNAL_URL", DEFAULT_FORGE_INTERNAL_URL).rstrip("/")
 AI_URL = os.environ.get("AI_URL", os.environ.get("GEMMA_API_URL", DEFAULT_AI_URL)).rstrip("/")
@@ -42,6 +47,7 @@ def get_base_urls() -> dict[str, str]:
         "BASE_URL_1": BASE_URL_1,
         "BASE_URL_2": BASE_URL_2,
         "BASE_URL_3": BASE_URL_3,
+        "FORGE_SIGNUP_URL": FORGE_SIGNUP_URL,
         "GITEA_WEB_URL": GITEA_WEB_URL,
         "FORGE_INTERNAL_URL": FORGE_INTERNAL_URL,
         "AI_URL": AI_URL,

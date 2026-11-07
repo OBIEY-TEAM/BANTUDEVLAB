@@ -6,6 +6,7 @@ from config.base_urls import (
     BASE_URL_2,
     BASE_URL_3,
     FORGE_INTERNAL_URL,
+    FORGE_SIGNUP_URL,
     GITEA_WEB_URL,
 )
 
@@ -13,6 +14,7 @@ from config.base_urls import (
 def forge_context(request):
     """Fournit les URLs et métadonnées de la Forge Git Souveraine aux templates."""
     gitea_external = getattr(settings, "GITEA_EXTERNAL_URL", GITEA_WEB_URL).rstrip("/")
+    signup_url = getattr(settings, "FORGE_SIGNUP_URL", FORGE_SIGNUP_URL)
     return {
         "BASE_URL_1": getattr(settings, "BASE_URL_1", BASE_URL_1),
         "BASE_URL_2": getattr(settings, "BASE_URL_2", BASE_URL_2),
@@ -20,6 +22,9 @@ def forge_context(request):
         "PORTAL_URL": getattr(settings, "BASE_URL_1", BASE_URL_1),
         "FORGE_URL": getattr(settings, "BASE_URL_2", BASE_URL_2),
         "API_URL": getattr(settings, "BASE_URL_3", BASE_URL_3),
+        "FORGE_SIGNUP_URL": signup_url,
+        "SIGNUP_URL": signup_url,
+        "GITEA_SIGNUP_URL": signup_url,
         "GITEA_WEB_URL": getattr(settings, "GITEA_WEB_URL", GITEA_WEB_URL),
         "FORGE_INTERNAL_URL": getattr(settings, "FORGE_INTERNAL_URL", FORGE_INTERNAL_URL),
         "AI_URL": getattr(settings, "AI_URL", AI_URL),
