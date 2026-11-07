@@ -50,14 +50,14 @@
         {% icon "git-branch" size=22 %}
         <div>
             <strong style="color: #10b981;">{% trans "Bascule d'Environnement Forge Souveraine" %}</strong>
-            <p style="margin: 0; font-size: 0.85rem; color: var(--text-muted);">{% trans "Accédez directement à vos espaces de dépôts Gitea ou GitLab CE." %} <span style="opacity: 0.8; font-family: monospace; font-size: 0.8rem;">(Gitea : <a href="{{ GITEA_LOGIN_URL|default:'http://localhost:3002/user/login' }}" target="_blank" rel="noopener noreferrer" style="color: #10b981; text-decoration: underline;">http://localhost:3002/user/login</a>)</span></p>
+            <p style="margin: 0; font-size: 0.85rem; color: var(--text-muted);">{% trans "Accédez directement à vos espaces de dépôts Gitea ou GitLab CE." %} <span style="opacity: 0.8; font-family: monospace; font-size: 0.8rem;">(Gitea : <a href="{{ GITEA_LOGIN_URL|default:GITEA_WEB_URL }}" target="_blank" rel="noopener noreferrer" style="color: #10b981; text-decoration: underline;">{{ GITEA_LOGIN_URL|default:GITEA_WEB_URL }}</a>)</span></p>
         </div>
     </div>
     <div style="display: flex; gap: 0.8rem;">
-        <a href="{{ GITEA_LOGIN_URL|default:'http://localhost:3002/user/login' }}" target="_blank" rel="noopener noreferrer" class="btn btn-outline" style="border-color: #10b981; color: #10b981;" title="{% trans 'Connexion directe Gitea' %}">
+        <a href="{{ GITEA_LOGIN_URL|default:GITEA_WEB_URL }}" target="_blank" rel="noopener noreferrer" class="btn btn-outline" style="border-color: #10b981; color: #10b981;" title="{% trans 'Connexion directe Gitea' %}">
             {% icon "git-branch" size=14 %} {% trans "Basculer vers Gitea" %}
         </a>
-        <a href="{{ GITLAB_URL|default:'http://localhost:3001' }}" target="_blank" rel="noopener noreferrer" class="btn btn-primary">
+        <a href="{{ GITLAB_URL|default:BASE_URL_2 }}" target="_blank" rel="noopener noreferrer" class="btn btn-primary">
             {% icon "code" size=14 %} {% trans "Espace GitLab" %}
         </a>
     </div>

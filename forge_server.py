@@ -19,7 +19,9 @@ from pathlib import Path
 
 BASE_DIR = Path(__file__).resolve().parent
 REPOS_DIR = BASE_DIR / "forge_data" / "repos"
-BANTU_CORE_URL = os.environ.get("BANTU_CORE_URL", "http://127.0.0.1:8001")
+BANTU_CORE_URL = os.environ.get("BASE_URL_1", os.environ.get("BANTU_CORE_URL", "https://cybersocle.site")).rstrip("/")
+GITEA_LOGIN_URL = os.environ.get("GITEA_LOGIN_URL", "https://gitea.cybersocle.site/user/login")
+FORGE_PUBLIC_URL = os.environ.get("BASE_URL_2", "https://git.cybersocle.site").rstrip("/")
 WEBHOOK_SECRET = os.environ.get("GITEA_WEBHOOK_SECRET", "bantu_dev_webhook_secret_key_2026")
 PORT = int(os.environ.get("FORGE_PORT", 3001))
 
@@ -97,6 +99,10 @@ class SovereignForgeHandler(BaseHTTPRequestHandler):
         path = url.path.rstrip("/")
         urllib.parse.parse_qs(url.query)
 
+        # 0. Health checks (unauthenticated JSON)
+        if path in ("/health", "/healthz", "/readyz"):
+            return self._send_json({"status": "ok", "service": "forge-engine", "health": "healthy"})
+
         # 1. API: /api/v1/version & /api/v4/version (GitLab CE)
         if path == "/api/v4/version":
             return self._send_json(
@@ -173,7 +179,7 @@ class SovereignForgeHandler(BaseHTTPRequestHandler):
         # 7. UI: Web Pages
         if path.rstrip("/") in ("/gitea", "/switch-gitea", "/basculer-gitea"):
             self.send_response(302)
-            self.send_header("Location", "http://localhost:3002/user/login")
+            self.send_header("Location", GITEA_LOGIN_URL)
             self.end_headers()
             return
 
@@ -536,7 +542,7 @@ class SovereignForgeHandler(BaseHTTPRequestHandler):
             <span class="badge">SYSTALINK CLOUD</span>
         </a>
         <div style="display: flex; gap: 0.8rem; align-items: center;">
-            <a href="http://localhost:3002/user/login" class="btn btn-outline" style="border-color: #10b981; color: #10b981;">Basculer vers Gitea &rarr;</a>
+            <a href="{GITEA_LOGIN_URL}" class="btn btn-outline" style="border-color: #10b981; color: #10b981;">Basculer vers Gitea &rarr;</a>
             <a href="{BANTU_CORE_URL}/" class="btn btn-outline">&larr; Retour au Portail BantuDevLab</a>
             <a href="{BANTU_CORE_URL}/dashboard/" class="btn btn-gold">Tableau de Bord & Audit</a>
         </div>
@@ -654,7 +660,7 @@ class SovereignForgeHandler(BaseHTTPRequestHandler):
 </head>
 <body>
     <nav class="navbar">
-        <a href="http://localhost:3002/user/login" class="brand">
+        <a href="{GITEA_LOGIN_URL}" class="brand">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2" style="vertical-align:middle;margin-right:6px;"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
             <span>BANTUDEVLAB GITEA CE</span>
             <span class="badge">ESPACE GITEA SOUVERAIN</span>
@@ -722,7 +728,7 @@ class SovereignForgeHandler(BaseHTTPRequestHandler):
 <body>
     <nav class="navbar">
         <a href="/" style="color: #fff; font-weight: 800; text-decoration: none;">BANTUDEVLAB FORGE GIT</a>
-        <div style="display: flex; gap: 0.8rem; align-items: center;"><a href="http://localhost:3002/user/login" style="border: 1px solid #10b981; color: #10b981; padding: 0.35rem 0.75rem; border-radius: 6px; text-decoration: none; font-size: 0.85rem;">Basculer vers Gitea &rarr;</a><a href="{BANTU_CORE_URL}/dashboard/" style="color: var(--gold); text-decoration: none; font-weight: bold;">&larr; Tableau de Bord BantuDevLab</a></div>
+        <div style="display: flex; gap: 0.8rem; align-items: center;"><a href="{GITEA_LOGIN_URL}" style="border: 1px solid #10b981; color: #10b981; padding: 0.35rem 0.75rem; border-radius: 6px; text-decoration: none; font-size: 0.85rem;">Basculer vers Gitea &rarr;</a><a href="{BANTU_CORE_URL}/dashboard/" style="color: var(--gold); text-decoration: none; font-weight: bold;">&larr; Tableau de Bord BantuDevLab</a></div>
     </nav>
     <div class="container">
         <h1>{owner}/{repo}</h1>
@@ -815,7 +821,7 @@ class SovereignForgeHandler(BaseHTTPRequestHandler):
 </head>
 <body>
     <nav class="navbar">
-        <a href="http://localhost:3002/user/login" class="brand">
+        <a href="{GITEA_LOGIN_URL}" class="brand">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2" style="vertical-align:middle;margin-right:6px;"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
             <span>BANTUDEVLAB GITEA CE</span>
             <span class="badge">ESPACE GITEA SOUVERAIN</span>

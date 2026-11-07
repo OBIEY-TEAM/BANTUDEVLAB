@@ -21,7 +21,7 @@ class GitLabClient:
     CACHE_TTL = 60
 
     def __init__(self, url: Optional[str] = None, private_token: Optional[str] = None):
-        self.url = (url or getattr(settings, "GITLAB_URL", "http://localhost:3001")).rstrip("/")
+        self.url = (url or getattr(settings, "GITLAB_URL", "https://git.cybersocle.site")).rstrip("/")
         self.token = private_token or getattr(settings, "GITLAB_PRIVATE_TOKEN", "")
         try:
             self.gl = gitlab.Gitlab(self.url, private_token=self.token or None, timeout=5)

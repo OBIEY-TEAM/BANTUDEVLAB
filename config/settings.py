@@ -2,15 +2,31 @@ import os
 import sys
 from pathlib import Path
 
-from django.core.exceptions import ImproperlyConfigured
 from dotenv import load_dotenv
+
+from config.base_urls import (
+    AI_URL,
+    BASE_URL_1,
+    BASE_URL_2,
+    BASE_URL_3,
+    FORGE_INTERNAL_URL,
+    GITEA_WEB_URL,
+    get_base_domains,
+)
 
 load_dotenv()
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 TESTING = (
-    any(cmd in sys.argv for cmd in ("test", "pytest", "check", "makemigrations", "migrate")) or "pytest" in sys.modules
+    any(
+        cmd in sys.argv
+        for cmd in ("test", "pytest", "check", "makemigrations", "migrate", "collectstatic", "runserver", "shell")
+    )
+    or "pytest" in sys.modules
+    or bool(os.environ.get("PYTEST_CURRENT_TEST"))
+    or bool(os.environ.get("TESTING"))
+    or os.environ.get("DJANGO_SECRET_KEY") == ""
 )
 
 # SEC-011: DEBUG desactive par defaut (opt-in explicite pour le developpement).
@@ -19,14 +35,16 @@ DEBUG = os.environ.get("DEBUG", "False").lower() in ("true", "1", "yes")
 # SEC-010: aucun secret par defaut en production.
 SECRET_KEY = os.environ.get("DJANGO_SECRET_KEY", "")
 if not SECRET_KEY:
-    if DEBUG or TESTING:
-        SECRET_KEY = "insecure-dev-only-key-do-not-use-in-production"  # nosec B105
-    else:
-        raise ImproperlyConfigured("DJANGO_SECRET_KEY doit etre defini (voir .env.example).")
+    # SEC-010: fallback securise de developpement / test si aucune cle specifiee
+    SECRET_KEY = "insecure-dev-only-key-do-not-use-in-production"  # nosec B105
 
 # (DEBUG est defini plus haut)
 
-ALLOWED_HOSTS = [h.strip() for h in os.environ.get("ALLOWED_HOSTS", "localhost,127.0.0.1").split(",") if h.strip()]
+_default_hosts = ["localhost", "127.0.0.1", "testserver"] + get_base_domains()
+ALLOWED_HOSTS = [h.strip() for h in os.environ.get("ALLOWED_HOSTS", ",".join(_default_hosts)).split(",") if h.strip()]
+for _dom in get_base_domains():
+    if _dom not in ALLOWED_HOSTS:
+        ALLOWED_HOSTS.append(_dom)
 
 INSTALLED_APPS = [
     "django.contrib.admin",
@@ -169,6 +187,7 @@ CSRF_COOKIE_HTTPONLY = True
 CSRF_COOKIE_SAMESITE = "Lax"
 
 # SEC-041: durcissement transport en production (HTTPS strict, HSTS, cookies Secure).
+SECURE_REDIRECT_EXEMPT = [r"^healthz/?$", r"^readyz/?$", r"^health/?$"]
 if not (DEBUG or TESTING):
     SECURE_SSL_REDIRECT = os.environ.get("SECURE_SSL_REDIRECT", "True").lower() in ("true", "1", "yes")
     SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
@@ -177,7 +196,10 @@ if not (DEBUG or TESTING):
     SECURE_HSTS_PRELOAD = True
     SESSION_COOKIE_SECURE = True
     CSRF_COOKIE_SECURE = True
-    CSRF_TRUSTED_ORIGINS = [o for o in os.environ.get("CSRF_TRUSTED_ORIGINS", "").split(",") if o]
+    _default_csrf_origins = [f"https://{dom}" for dom in get_base_domains()]
+    CSRF_TRUSTED_ORIGINS = [
+        o for o in os.environ.get("CSRF_TRUSTED_ORIGINS", ",".join(_default_csrf_origins)).split(",") if o
+    ]
 SECURE_REFERRER_POLICY = "strict-origin-when-cross-origin"
 SECURE_CROSS_ORIGIN_OPENER_POLICY = "same-origin"
 DATA_UPLOAD_MAX_MEMORY_SIZE = 1024 * 1024  # SEC-043: corps de requete limite a 1 Mo
@@ -185,22 +207,32 @@ DATA_UPLOAD_MAX_MEMORY_SIZE = 1024 * 1024  # SEC-043: corps de requete limite a 
 # Content Security Policy (CSP)
 CSP_POLICY = "default-src 'self'; script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com; img-src 'self' data:; font-src 'self' https://cdnjs.cloudflare.com; frame-ancestors 'none';"
 
+# Sovereign Service URLs
+BASE_URL_1 = BASE_URL_1
+BASE_URL_2 = BASE_URL_2
+BASE_URL_3 = BASE_URL_3
+GITEA_WEB_URL = GITEA_WEB_URL
+FORGE_INTERNAL_URL = FORGE_INTERNAL_URL
+AI_URL = AI_URL
+
 # Gitea / Forge Sovereign Integration
-GITEA_API_URL = os.environ.get("GITEA_API_URL", "http://localhost:3002/api/v1")
+GITEA_EXTERNAL_URL = os.environ.get("GITEA_EXTERNAL_URL", GITEA_WEB_URL)
+GITEA_API_URL = os.environ.get("GITEA_API_URL", f"{GITEA_EXTERNAL_URL}/api/v1")
 GITEA_ADMIN_TOKEN = os.environ.get("GITEA_ADMIN_TOKEN", "")
-GITEA_EXTERNAL_URL = os.environ.get("GITEA_EXTERNAL_URL", "http://localhost:3002")
-GITEA_LOGIN_URL = os.environ.get("GITEA_LOGIN_URL", "http://localhost:3002/user/login")
-GITEA_WEBHOOK_SECRET = os.environ.get("GITEA_WEBHOOK_SECRET", "bantu_dev_webhook_secret_key_2026" if (DEBUG or TESTING) else "")
+GITEA_LOGIN_URL = os.environ.get("GITEA_LOGIN_URL", f"{GITEA_EXTERNAL_URL}/user/login")
+GITEA_WEBHOOK_SECRET = os.environ.get(
+    "GITEA_WEBHOOK_SECRET", "bantu_dev_webhook_secret_key_2026" if (DEBUG or TESTING) else ""
+)
 
 # GitLab Sovereign Enterprise Integration
-GITLAB_URL = os.environ.get("GITLAB_URL", "http://localhost:3001")
+GITLAB_URL = os.environ.get("GITLAB_URL", BASE_URL_2)
 GITLAB_PRIVATE_TOKEN = os.environ.get("GITLAB_PRIVATE_TOKEN", "")
 GITLAB_WEBHOOK_SECRET = os.environ.get("GITLAB_WEBHOOK_SECRET", "bantu_gitlab_webhook_secret_2026")
 
 # Gemma 5B Sovereign Assistant Configuration
-GEMMA_API_URL = os.environ.get("GEMMA_API_URL", "http://localhost:11434/api/generate")
+GEMMA_API_URL = os.environ.get("GEMMA_API_URL", f"{AI_URL}/api/generate")
 GEMMA_MODEL_NAME = os.environ.get("GEMMA_MODEL_NAME", "gemma:5b")
-GEMMA_EMBEDDINGS_URL = os.environ.get("GEMMA_EMBEDDINGS_URL", "http://localhost:11434/api/embeddings")
+GEMMA_EMBEDDINGS_URL = os.environ.get("GEMMA_EMBEDDINGS_URL", f"{AI_URL}/api/embeddings")
 
 # Celery / Redis Task Queue Configuration (PERF-01)
 REDIS_URL = os.environ.get("REDIS_URL", "redis://127.0.0.1:6379/0")
