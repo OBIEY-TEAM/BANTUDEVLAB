@@ -1,6 +1,7 @@
 """Tests de validation et de cohérence pour les déploiements Docker de BANTUDEVLAB."""
 
 import os
+import shutil
 import subprocess
 import unittest
 from pathlib import Path
@@ -94,7 +95,7 @@ class DockerDeploymentConsistencyTestCase(unittest.TestCase):
         self.assertIn("GITLAB_WEBHOOK_SECRET: ${GITLAB_WEBHOOK_SECRET}", compose_content)
 
         # Si ruby est installé dans l'environnement, simuler la génération et l'évaluation ERB de gitlab.yml
-        if subprocess.run(["which", "ruby"], capture_output=True).returncode == 0:
+        if shutil.which("ruby") is not None:
             ruby_script = """
 require "erb"
 require "json"
@@ -166,7 +167,7 @@ puts "OK"
         self.assertIn("OmniAuth::Strategies", content)
         self.assertIn("BantuZkp = ::Gitlab::Auth::BantuZkp", content)
 
-        if subprocess.run(["which", "ruby"], capture_output=True).returncode == 0:
+        if shutil.which("ruby") is not None:
             ruby_script = """
 module OmniAuth
   module Strategies
@@ -200,7 +201,7 @@ puts "STRATEGY_OK"
         """Vérifie que gitlab.rb résout et configure la stratégie OmniAuth à la fois au niveau provider et dans args."""
         gitlab_rb = self.root_dir / "gitlab" / "config" / "gitlab.rb"
 
-        if subprocess.run(["which", "ruby"], capture_output=True).returncode == 0:
+        if shutil.which("ruby") is not None:
             ruby_script = """
 def external_url(*); end
 gitlab_rails = {}
@@ -243,7 +244,7 @@ puts "PROVIDER_OK"
 
     def test_docker_compose_cli_validation(self):
         """Valide la syntaxe des compositions via docker compose config si docker est disponible."""
-        if subprocess.run(["which", "docker"], capture_output=True).returncode == 0:
+        if shutil.which("docker") is not None:
             res_dev = subprocess.run(
                 ["docker", "compose", "--env-file", ".env.example", "config", "--quiet"],
                 cwd=self.root_dir,

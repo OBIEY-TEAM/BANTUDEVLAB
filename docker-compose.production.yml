@@ -1,28 +1,15 @@
-# BANTUDEVLAB — Composition de Production Industrielle Durcie avec GitLab CE Omnibus
+# BANTUDEVLAB — Composition de Production Industrielle Durcie (Portail Django + Gitea + Forge + GitLab CE Omnibus)
 # T-DOC-401 & T-DOC-402: Déploiement souverain, isolation réseau 3 tiers, rootless, read-only et PgBouncer
 
 x-django-env: &django-env
   DEBUG: "False"
-  DJANGO_SECRET_KEY: ${DJANGO_SECRET_KEY}
   XDG_RUNTIME_DIR: /tmp
-  BASE_URL_1: ${BASE_URL_1:-https://cybersocle.site}
-  BASE_URL_2: ${BASE_URL_2:-https://git.cybersocle.site}
-  BASE_URL_3: ${BASE_URL_3:-https://api.cybersocle.site}
-  ALLOWED_HOSTS: ${ALLOWED_HOSTS:-cybersocle.site,git.cybersocle.site,api.cybersocle.site,git.bantudevlab.africa,auth.bantudevlab.africa,localhost,127.0.0.1}
-  CSRF_TRUSTED_ORIGINS: ${CSRF_TRUSTED_ORIGINS:-https://cybersocle.site,https://git.cybersocle.site,https://api.cybersocle.site}
-  SECURE_SSL_REDIRECT: "True"
   DB_ENGINE: postgres
-  POSTGRES_DB: ${POSTGRES_DB:-bantudevlab_prod}
-  POSTGRES_USER: ${POSTGRES_USER:-bantudevlab_admin}
-  POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
-  POSTGRES_HOST: ${POSTGRES_HOST:-db}
-  POSTGRES_PORT: ${POSTGRES_PORT:-5432}
-  GITLAB_URL: ${GITLAB_URL:-https://cybersocle.site}
-  GITLAB_PRIVATE_TOKEN: ${GITLAB_PRIVATE_TOKEN:-}
-  GITLAB_WEBHOOK_SECRET: ${GITLAB_WEBHOOK_SECRET}
-  REDIS_URL: redis://:${REDIS_PASSWORD}@redis:6379/0
-  CELERY_BROKER_URL: redis://:${REDIS_PASSWORD}@redis:6379/0
-  CELERY_RESULT_BACKEND: redis://:${REDIS_PASSWORD}@redis:6379/0
+  POSTGRES_HOST: db
+  POSTGRES_PORT: "5432"
+  GITEA_API_URL: ${GITEA_API_URL:-http://gitea:3000/api/v1}
+  GITEA_EXTERNAL_URL: ${GITEA_EXTERNAL_URL:-http://localhost:3002}
+  GITEA_LOGIN_URL: ${GITEA_LOGIN_URL:-http://localhost:3002/user/login}
   GEMMA_API_URL: ${GEMMA_API_URL:-http://ollama:11434/api/generate}
   GEMMA_MODEL_NAME: ${GEMMA_MODEL_NAME:-gemma2:2b}
 
@@ -42,11 +29,10 @@ services:
     container_name: bantudevlab_nginx
     restart: always
     ports:
-      - "127.0.0.1:8080:80"
-      - "127.0.0.1:8443:443"
+      - "127.0.0.1:${NGINX_HTTP_PORT:-8080}:80"
+      - "127.0.0.1:${NGINX_HTTPS_PORT:-8443}:443"
     volumes:
       - ./deploy/nginx/bantudevlab.conf:/etc/nginx/conf.d/default.conf:ro
-      - /etc/letsencrypt:/etc/letsencrypt:ro
       - static_volume:/var/www/static:ro
     depends_on:
       - django_app
@@ -63,6 +49,8 @@ services:
     container_name: bantudevlab_gitlab_ce
     restart: always
     shm_size: "512m"
+    env_file:
+      - ${ENV_FILE:-.env.production}
     environment:
       GITLAB_OMNIBUS_CONFIG: |
         from_file('/etc/gitlab/gitlab.rb')
@@ -91,7 +79,97 @@ services:
     networks:
       - app_net
 
-  # Surcouche Souveraine Django BantuDevLab Core
+  # Moteur Git Officiel Gitea avec Thème & Synchronisation Linguistique Souveraine (port hôte 3002)
+  gitea:
+    image: gitea/gitea:1.22
+    container_name: bantudevlab_gitea_prod
+    restart: always
+    environment:
+      - USER_UID=1000
+      - USER_GID=1000
+      - GITEA__database__DB_TYPE=sqlite3
+      - GITEA__database__PATH=/data/gitea/gitea.db
+      - GITEA__server__DOMAIN=localhost
+      - GITEA__server__HTTP_PORT=3000
+      - GITEA__server__ROOT_URL=http://localhost:3002/
+      - GITEA__server__LANDING_PAGE=explore
+      - GITEA__server__SSH_PORT=2222
+      - GITEA__ui__DEFAULT_THEME=github-dark
+      - GITEA__ui__THEMES=gitea-auto,gitea-light,gitea-dark,github,github-dark
+      - GITEA__i18n__LANGS=fr-FR,en-US,sw-KE,pt-PT
+      - GITEA__i18n__NAMES=Français,English,Kiswahili,Português
+      - GITEA__security__INSTALL_LOCK=true
+      - GITEA__security__SECRET_KEY=bantu_gitea_secret_key_2026_sovereign_africa
+      - GITEA__service__DISABLE_REGISTRATION=false
+      - GITEA__service__ENABLE_CAPTCHA=false
+      - GITEA__webhook__ALLOWED_HOST_LIST=django_app,forge_engine,127.0.0.1,localhost,host.docker.internal
+    volumes:
+      - gitea_production_data:/data
+      - ./custom:/data/gitea/custom:ro
+      - ./forge_data/repos:/data/git/repositories
+    ports:
+      - "3002:3000"
+      - "2223:2222"
+    healthcheck:
+      test: ["CMD-SHELL", "curl -fsS http://localhost:3000/api/healthz || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+    security_opt:
+      - no-new-privileges:true
+    networks:
+      - app_net
+      - backend_net
+
+  # Initialisation automatique du compte administrateur Gitea
+  gitea_init:
+    image: gitea/gitea:1.22
+    container_name: bantudevlab_gitea_init_prod
+    restart: "no"
+    depends_on:
+      gitea:
+        condition: service_healthy
+    volumes:
+      - gitea_production_data:/data
+    entrypoint:
+      - "sh"
+      - "-c"
+      - |
+        sleep 2
+        su-exec git gitea --work-path /data/gitea admin user create --username bantu_admin --password BantuAdmin2026! --email admin@bantudevlab.africa --admin 2>/dev/null || gitea --work-path /data admin user create --username bantu_admin --password BantuAdmin2026! --email admin@bantudevlab.africa --admin 2>/dev/null || true
+        echo "Gitea admin user ready."
+    networks:
+      - app_net
+      - backend_net
+
+  # Moteur Forge Git Souveraine (port hôte 3001)
+  forge_engine:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: bantudevlab_forge_prod
+    restart: always
+    command: ["python", "forge_server.py"]
+    ports:
+      - "3001:3001"
+    env_file:
+      - ${ENV_FILE:-.env.production}
+    environment:
+      PORT: "3001"
+      BANTU_CORE_URL: "http://localhost:8002"
+      BANTU_CORE_INTERNAL_URL: "http://django_app:8000"
+      GITEA_EXTERNAL_URL: "http://localhost:3002"
+      GITEA_LOGIN_URL: "http://localhost:3002/user/login"
+      GITEA_WEBHOOK_SECRET: ${GITEA_WEBHOOK_SECRET:-bantu_dev_webhook_secret_key_2026}
+    volumes:
+      - forge_production_repos:/app/forge_data/repos
+    security_opt:
+      - no-new-privileges:true
+    networks:
+      - app_net
+      - backend_net
+
+  # Surcouche Souveraine Django BantuDevLab Core (port hôte 8002 + interne 8000)
   django_app:
     build:
       context: .
@@ -102,7 +180,9 @@ services:
       - ${ENV_FILE:-.env.production}
     environment:
       <<: *django-env
-      WEB_CONCURRENCY: "8"
+      WEB_CONCURRENCY: "4"
+    ports:
+      - "${DJANGO_HOST_PORT:-8002}:8000"
     volumes:
       - static_volume:/app/staticfiles
     depends_on:
@@ -128,7 +208,7 @@ services:
       dockerfile: Dockerfile
     container_name: bantudevlab_celery_prod
     restart: always
-    command: celery -A config worker --loglevel=info --concurrency=8
+    command: celery -A config worker --loglevel=info --concurrency=4
     env_file:
       - ${ENV_FILE:-.env.production}
     environment:
@@ -149,7 +229,7 @@ services:
       dockerfile: Dockerfile
     container_name: bantudevlab_celery_beat_prod
     restart: always
-    command: ["celery", "-A", "config", "beat", "--loglevel=info"]
+    command: ["celery", "-A", "config", "beat", "--loglevel=info", "-s", "/tmp/celerybeat-schedule"]
     env_file:
       - ${ENV_FILE:-.env.production}
     environment:
@@ -173,16 +253,17 @@ services:
     env_file:
       - ${ENV_FILE:-.env.production}
     environment:
-      DB_USER: ${POSTGRES_USER:-bantudevlab_admin}
-      DB_PASSWORD: ${POSTGRES_PASSWORD}
-      DB_HOST: db
-      DB_PORT: "5432"
-      DB_NAME: ${POSTGRES_DB:-bantudevlab_prod}
       LISTEN_ADDR: "0.0.0.0"
       LISTEN_PORT: "6432"
       POOL_MODE: transaction
       MAX_CLIENT_CONN: "500"
       DEFAULT_POOL_SIZE: "50"
+    entrypoint:
+      - "sh"
+      - "-c"
+      - |
+        printf '"%s" "%s"\n' "$${POSTGRES_USER:-bantudevlab_admin}" "$${POSTGRES_PASSWORD:-sovereign_pass_2025}" > /tmp/userlist.txt
+        exec /usr/bin/pgbouncer /etc/pgbouncer/pgbouncer.ini
     volumes:
       - ./deploy/pgbouncer/pgbouncer.ini:/etc/pgbouncer/pgbouncer.ini:ro
     ports:
@@ -207,14 +288,10 @@ services:
     restart: always
     env_file:
       - ${ENV_FILE:-.env.production}
-    environment:
-      POSTGRES_DB: ${POSTGRES_DB:-bantudevlab_prod}
-      POSTGRES_USER: ${POSTGRES_USER:-bantudevlab_admin}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
     volumes:
       - postgres_production_data:/var/lib/postgresql/data
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER:-bantudevlab_admin} -d $${POSTGRES_DB:-bantudevlab_prod}"]
       interval: 10s
       timeout: 5s
       retries: 5
@@ -230,16 +307,14 @@ services:
     restart: always
     env_file:
       - ${ENV_FILE:-.env.production}
-    command: ["redis-server", "--requirepass", "${REDIS_PASSWORD}", "--appendonly", "yes"]
+    command: ["sh", "-c", "redis-server --requirepass \"$${REDIS_PASSWORD:-sovereign_redis_pass_2025}\" --appendonly yes"]
     volumes:
       - redis_production_data:/data
     healthcheck:
-      test: ["CMD-SHELL", "redis-cli -a \"$$REDIS_PASSWORD\" ping | grep PONG"]
+      test: ["CMD-SHELL", "redis-cli -a \"$${REDIS_PASSWORD:-sovereign_redis_pass_2025}\" ping | grep PONG"]
       interval: 10s
       timeout: 3s
       retries: 5
-    environment:
-      REDIS_PASSWORD: ${REDIS_PASSWORD}
     security_opt:
       - no-new-privileges:true
     networks:
@@ -272,6 +347,8 @@ volumes:
   gitlab_config:
   gitlab_logs:
   gitlab_data:
+  gitea_production_data:
+  forge_production_repos:
   static_volume:
   ollama_production_models:
 
@@ -279,7 +356,7 @@ networks:
   # Réseau 1 : Exposition Internet publique via Nginx
   frontend_net:
     driver: bridge
-  # Réseau 2 : Couche applicative interne (Nginx <-> Django, GitLab)
+  # Réseau 2 : Couche applicative interne (Nginx <-> Django, GitLab, Gitea, Forge)
   app_net:
     driver: bridge
   # Réseau 3 : Couche données isolée sans accès sortant (Postgres, Redis, PgBouncer)

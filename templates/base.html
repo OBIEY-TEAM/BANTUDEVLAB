@@ -176,7 +176,7 @@
         content.appendChild(msg);
         const closeBtn = document.createElement('button');
         closeBtn.className = 'toast-close';
-        closeBtn.setAttribute('aria-label', 'Fermer');
+        closeBtn.setAttribute('aria-label', '{% trans "Fermer" %}');
         closeBtn.textContent = '\u00d7';
         closeBtn.addEventListener('click', () => toast.remove());
         toast.append(iconWrap, content, closeBtn);
@@ -287,6 +287,9 @@
             form.querySelectorAll('button[name="language"]').forEach(langBtn => {
                 langBtn.addEventListener('click', function(e) {
                     const langVal = this.value;
+                    try {
+                        sessionStorage.setItem('bantu_lang_toast', langVal);
+                    } catch(err) {}
                     if (window.syncEcosystemChange) {
                         window.syncEcosystemChange(null, langVal);
                     } else {

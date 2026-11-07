@@ -75,16 +75,17 @@ services:
     environment:
       - USER_UID=1000
       - USER_GID=1000
-      - GITEA__database__DB_TYPE=postgres
-      - GITEA__database__HOST=db:5432
-      - GITEA__database__NAME=${POSTGRES_DB:-bantudevlab}
-      - GITEA__database__USER=${POSTGRES_USER:-bantudevlab_admin}
-      - GITEA__database__PASSWD=${POSTGRES_PASSWORD:-sovereign_pass_2025}
+      - GITEA__database__DB_TYPE=sqlite3
+      - GITEA__database__PATH=/data/gitea/gitea.db
       - GITEA__server__DOMAIN=localhost
       - GITEA__server__HTTP_PORT=3000
       - GITEA__server__ROOT_URL=http://localhost:3002/
       - GITEA__server__LANDING_PAGE=explore
       - GITEA__server__SSH_PORT=2222
+      - GITEA__ui__DEFAULT_THEME=github-dark
+      - GITEA__ui__THEMES=gitea-auto,gitea-light,gitea-dark,github,github-dark
+      - GITEA__i18n__LANGS=fr-FR,en-US,sw-KE,pt-PT
+      - GITEA__i18n__NAMES=Français,English,Kiswahili,Português
       - GITEA__security__INSTALL_LOCK=true
       - GITEA__security__SECRET_KEY=bantu_gitea_secret_key_2026_sovereign_africa
       - GITEA__service__DISABLE_REGISTRATION=false
@@ -126,7 +127,7 @@ services:
       - "-c"
       - |
         sleep 2
-        gitea --work-path /data admin user create --username bantu_admin --password BantuAdmin2026! --email admin@bantudevlab.africa --admin 2>/dev/null || true
+        su-exec git gitea --work-path /data/gitea admin user create --username bantu_admin --password BantuAdmin2026! --email admin@bantudevlab.africa --admin 2>/dev/null || gitea --work-path /data admin user create --username bantu_admin --password BantuAdmin2026! --email admin@bantudevlab.africa --admin 2>/dev/null || true
         echo "Gitea admin user ready."
     networks:
       - sovereign_net
@@ -152,7 +153,7 @@ services:
       gitea:
         condition: service_healthy
     healthcheck:
-      test: ["CMD", "curl", "-fsS", "http://localhost:8000/"]
+      test: ["CMD", "curl", "-fsS", "http://127.0.0.1:8000/healthz"]
       interval: 15s
       timeout: 5s
       retries: 5
@@ -222,8 +223,6 @@ services:
       - backend_net
     <<: *hardening
 
-
-
   # Service Renovate Bot (Equivalent Dependabot pour Gitea - T-SEC-602)
   renovate:
     image: renovate/renovate:latest
@@ -269,7 +268,7 @@ services:
       dockerfile: Dockerfile
     container_name: bantudevlab_celery_beat
     restart: always
-    command: ["celery", "-A", "config", "beat", "--loglevel=info"]
+    command: ["celery", "-A", "config", "beat", "--loglevel=info", "-s", "/tmp/celerybeat-schedule"]
     environment:
       <<: *django-env
       DEBUG: "False"

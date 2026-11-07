@@ -10,26 +10,26 @@
 <div class="zkp-wizard-card">
 
     <div style="text-align: center; margin-bottom: 2rem;">
-        <span class="brand-badge" style="font-size: 0.8rem; margin-bottom: 0.5rem;">PROTOCOLE SCHNORR NIZKP / FIAT-SHAMIR</span>
-        <h2 style="margin: 0.5rem 0;">{% icon "key" size=22 %} Assistant d'Identité & Connexion Zero-Trust</h2>
+        <span class="brand-badge" style="font-size: 0.8rem; margin-bottom: 0.5rem;">{% trans "PROTOCOLE SCHNORR NIZKP / FIAT-SHAMIR" %}</span>
+        <h2 style="margin: 0.5rem 0;">{% icon "key" size=22 %} {% trans "Assistant d'Identité & Connexion Zero-Trust" %}</h2>
         <p style="color: var(--text-muted); font-size: 0.95rem; max-width: 550px; margin: 0 auto;">
-            Générez votre clé souveraine protégée par mnémonique BIP-39 et prouvez mathématiquement votre identité sans jamais exposer de mot de passe.
+            {% trans "Générez votre clé souveraine protégée par mnémonique BIP-39 et prouvez mathématiquement votre identité sans jamais exposer de mot de passe." %}
         </p>
     </div>
 
     <!-- Wizard Step Navigation (UI-03) -->
     <div class="zkp-steps-nav">
-        <div class="zkp-step-indicator active" id="stepIndicator1" tabindex="0" role="button" aria-label="Etape 1 : Identite" onclick="switchWizardStep(1)" onkeydown="if(event.key==='Enter'||event.key===' ') switchWizardStep(1)">
+        <div class="zkp-step-indicator active" id="stepIndicator1" tabindex="0" role="button" aria-label="{% trans 'Etape 1 : Identite' %}" onclick="switchWizardStep(1)" onkeydown="if(event.key==='Enter'||event.key===' ') switchWizardStep(1)">
             <div class="zkp-step-circle">1</div>
-            <span class="zkp-step-label">Identité</span>
+            <span class="zkp-step-label">{% trans "Identité" %}</span>
         </div>
-        <div class="zkp-step-indicator" id="stepIndicator2" tabindex="0" role="button" aria-label="Etape 2 : Mnemonique" onclick="switchWizardStep(2)" onkeydown="if(event.key==='Enter'||event.key===' ') switchWizardStep(2)">
+        <div class="zkp-step-indicator" id="stepIndicator2" tabindex="0" role="button" aria-label="{% trans 'Etape 2 : Mnemonique' %}" onclick="switchWizardStep(2)" onkeydown="if(event.key==='Enter'||event.key===' ') switchWizardStep(2)">
             <div class="zkp-step-circle">2</div>
-            <span class="zkp-step-label">Mnémonique</span>
+            <span class="zkp-step-label">{% trans "Mnémonique" %}</span>
         </div>
-        <div class="zkp-step-indicator" id="stepIndicator3" tabindex="0" role="button" aria-label="Etape 3 : Zero-Trust Auth" onclick="switchWizardStep(3)" onkeydown="if(event.key==='Enter'||event.key===' ') switchWizardStep(3)">
+        <div class="zkp-step-indicator" id="stepIndicator3" tabindex="0" role="button" aria-label="{% trans 'Etape 3 : Zero-Trust Auth' %}" onclick="switchWizardStep(3)" onkeydown="if(event.key==='Enter'||event.key===' ') switchWizardStep(3)">
             <div class="zkp-step-circle">3</div>
-            <span class="zkp-step-label">Zero-Trust Auth</span>
+            <span class="zkp-step-label">{% trans "Zero-Trust Auth" %}</span>
         </div>
     </div>
 
@@ -57,25 +57,25 @@
     <!-- Step 2: BIP-39 Mnemonic & Cryptographic Strength Meter -->
     <div id="wizardStep2" class="wizard-step-content" style="display: none;">
         <div style="display: flex; justify-content: space-between; align-items: center;">
-            <label style="font-weight: 600;">Phrase Mnémonique Souveraine (Standard BIP-39) :</label>
+            <label style="font-weight: 600;">{% trans "Phrase Mnémonique Souveraine (Standard BIP-39) :" %}</label>
             <div style="display: flex; gap: 0.5rem; align-items: center;">
                 <button type="button" class="copy-btn" id="copyMnemonicBtn" onclick="copyMnemonicPhrase()">
                     {% icon "copy" size=14 %} <span id="copyMnemonicLabel">{% trans "Copier la phrase" %}</span>
                 </button>
                 <button class="btn btn-secondary" style="padding: 0.3rem 0.7rem; font-size: 0.8rem;" onclick="generateNewMnemonic()">
-                    {% icon "refresh-cw" size=18 %} Regénérer (12 Mots)
+                    {% icon "refresh-cw" size=18 %} {% trans "Regénérer (12 Mots)" %}
                 </button>
             </div>
         </div>
         <p style="font-size: 0.82rem; color: var(--text-muted); margin: 0.3rem 0 0.75rem;">
-            Ces 12 mots permettent de régénérer mathématiquement votre clé privée de signature ZKP dans n'importe quel terminal sécurisé.
+            {% trans "Ces 12 mots permettent de régénérer mathématiquement votre clé privée de signature ZKP dans n'importe quel terminal sécurisé." %}
         </p>
 
         <!-- Grille des 12 Mots Mnémoniques -->
         <div id="mnemonicWordsGrid" class="mnemonic-grid"></div>
 
         <div style="margin-top: 1.5rem;">
-            <label style="display: block; margin-bottom: 0.4rem; font-weight: 600;">Secret Privé Dérivé (Ne quitte JAMAIS votre navigateur) :</label>
+            <label style="display: block; margin-bottom: 0.4rem; font-weight: 600;">{% trans "Secret Privé Dérivé (Ne quitte JAMAIS votre navigateur) :" %}</label>
             <input type="password" id="zkpSecret" style="width: 100%; padding: 0.75rem; background: #080c14; border: 1px solid var(--dark-border); color: #10b981; font-family: monospace; border-radius: 8px; box-sizing: border-box;" oninput="updateCryptoStrengthMeter(this.value)">
 
             <!-- Jauge de Force Cryptographique (UI-03) -->
@@ -84,7 +84,7 @@
                     <div id="strengthBar" class="strength-meter-bar"></div>
                 </div>
                 <div class="strength-label">
-                    <span>Force Cryptographique : <strong id="strengthText">Inviolable (256 bits)</strong></span>
+                    <span>{% trans "Force Cryptographique :" %} <strong id="strengthText">{% trans "Inviolable (256 bits)" %}</strong></span>
                     <span id="strengthEntropy">256-bit Entropy</span>
                 </div>
             </div>
@@ -93,42 +93,42 @@
         <!-- Bouton Téléchargement Clé Privée Protégée -->
         <div style="margin-top: 1.5rem; display: flex; gap: 1rem; flex-wrap: wrap;">
             <button class="btn btn-secondary" onclick="downloadSovereignKeyFile()">
-                {% icon "download" size=18 %} Télécharger Fichier Clé Souveraine (.json)
+                {% icon "download" size=18 %} {% trans "Télécharger Fichier Clé Souveraine (.json)" %}
             </button>
             <button class="btn btn-primary" onclick="registerZkpIdentity()">
-                {% icon "save" size=18 %} Enregistrer Identité sur BantuDevLab
+                {% icon "save" size=18 %} {% trans "Enregistrer Identité sur BantuDevLab" %}
             </button>
         </div>
 
         <div style="margin-top: 2rem; display: flex; justify-content: space-between;">
-            <button class="btn btn-secondary" onclick="switchWizardStep(1)">{% icon "arrow-left" size=18 %} Précédent</button>
-            <button class="btn btn-primary" onclick="switchWizardStep(3)">Passer à la Connexion {% icon "arrow-right" size=18 %}</button>
+            <button class="btn btn-secondary" onclick="switchWizardStep(1)">{% icon "arrow-left" size=18 %} {% trans "Précédent" %}</button>
+            <button class="btn btn-primary" onclick="switchWizardStep(3)">{% trans "Passer à la Connexion" %} {% icon "arrow-right" size=18 %}</button>
         </div>
     </div>
 
     <!-- Step 3: Zero-Knowledge Proof Authentication -->
     <div id="wizardStep3" class="wizard-step-content" style="display: none;">
         <div style="background: rgba(16, 185, 129, 0.08); border: 1px solid rgba(16, 185, 129, 0.2); border-radius: 10px; padding: 1.25rem; margin-bottom: 1.5rem;">
-            <h4 style="margin: 0 0 0.5rem; color: var(--secondary-emerald);">Authentification Décentralisée Prête</h4>
+            <h4 style="margin: 0 0 0.5rem; color: var(--secondary-emerald);">{% trans "Authentification Décentralisée Prête" %}</h4>
             <p style="font-size: 0.85rem; color: #a7f3d0; margin: 0;">
-                Lors du clic, votre navigateur résout un défi cryptographique avec votre clé privée locale pour prouver la possession de la clé sans jamais la dévoiler au serveur.
+                {% trans "Lors du clic, votre navigateur résout un défi cryptographique avec votre clé privée locale pour prouver la possession de la clé sans jamais la dévoiler au serveur." %}
             </p>
         </div>
 
         <div style="display: flex; gap: 1rem;">
             <button class="btn btn-primary" id="btnZkpLogin" style="flex: 1; padding: 0.85rem;" onclick="loginWithZkp()">
-                {% icon "log-in" size=18 %} Prouver mon Identité (Connexion Zero-Trust)
+                {% icon "log-in" size=18 %} {% trans "Prouver mon Identité (Connexion Zero-Trust)" %}
             </button>
         </div>
 
         <!-- Feedback d'Etat Interactif & SVG Spinner (T-UX-502) -->
         <div id="zkpLoadingFeedback" style="display: none; align-items: center; justify-content: center; gap: 0.75rem; margin: 1rem 0; padding: 0.85rem; background: rgba(16, 185, 129, 0.1); border: 1px solid var(--accent-color, #10b981); border-radius: 8px; color: var(--text-primary, #fff);">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="animation: spin 1s linear infinite;"><path d="M21 12a9 9 0 1 1-6.219-8.56"></path></svg>
-            <span id="zkpLoadingText">Calcul de la preuve Fiat-Shamir et interrogation du serveur...</span>
+            <span id="zkpLoadingText">{% trans "Calcul de la preuve Fiat-Shamir et interrogation du serveur..." %}</span>
         </div>
 
         <div style="margin-top: 2rem; display: flex; justify-content: flex-start;">
-            <button class="btn btn-secondary" onclick="switchWizardStep(2)">{% icon "arrow-left" size=18 %} Revenir au Mnémonique</button>
+            <button class="btn btn-secondary" onclick="switchWizardStep(2)">{% icon "arrow-left" size=18 %} {% trans "Revenir au Mnémonique" %}</button>
         </div>
     </div>
 
@@ -202,11 +202,11 @@ function copyMnemonicPhrase() {
             const btn = document.getElementById('copyMnemonicBtn');
             const label = document.getElementById('copyMnemonicLabel');
             if (btn) btn.classList.add('copied');
-            if (label) label.textContent = 'Copié !';
-            if (window.showToast) window.showToast('Phrase de 12 mots copiée !', 'success', 2000);
+            if (label) label.textContent = '{% trans "Copié !" %}';
+            if (window.showToast) window.showToast('{% trans "Phrase de 12 mots copiée !" %}', 'success', 2000);
             setTimeout(() => {
                 if (btn) btn.classList.remove('copied');
-                if (label) label.textContent = 'Copier la phrase';
+                if (label) label.textContent = '{% trans "Copier la phrase" %}';
             }, 2000);
         });
     }
@@ -226,7 +226,7 @@ function setMnemonicWords(words) {
             const chip = document.createElement('div');
             chip.tabIndex = 0;
             chip.setAttribute('role', 'listitem');
-            chip.setAttribute('aria-label', `Mot ${i + 1} : ${word}`);
+            chip.setAttribute('aria-label', `{% trans "Mot" %} ${i + 1} : ${word}`);
             chip.className = 'mnemonic-word-chip';
             chip.innerHTML = `<span class="mnemonic-num">${i + 1}.</span> <span>${word}</span>`;
             grid.appendChild(chip);
@@ -241,20 +241,20 @@ function setMnemonicWords(words) {
 
 function validateUsernameClient(rawUsername) {
     if (!rawUsername || !rawUsername.trim()) {
-        return { valid: false, error: "Identifiant obligatoire (3-32 caractères : lettres, chiffres, '.', '_', '-')." };
+        return { valid: false, error: "{% trans 'Identifiant obligatoire (3-32 caractères : lettres, chiffres, point, tiret).' %}" };
     }
     const val = rawUsername.trim();
     if (/\s/.test(val)) {
         return {
             valid: false,
-            error: `Identifiant '${val}' invalide : les espaces sont interdits (ex. 'kouali paul' refusé, utilisez 'kouali-paul').`
+            error: `{% trans "Identifiant invalide : les espaces sont interdits." %} (${val})`
         };
     }
     const regex = /^[A-Za-z0-9._-]{3,32}$/;
     if (!regex.test(val)) {
         return {
             valid: false,
-            error: `Identifiant '${val}' invalide : doit comporter 3 à 32 caractères autorisés (lettres, chiffres, '.', '_', '-').`
+            error: `{% trans "Identifiant invalide : doit comporter 3 à 32 caractères autorisés." %} (${val})`
         };
     }
     return { valid: true, username: val };
@@ -273,10 +273,10 @@ function generateNewMnemonic() {
         const chip = document.createElement('div');
         chip.tabIndex = 0;
         chip.setAttribute('role', 'listitem');
-        chip.setAttribute('aria-label', `Mot ${i + 1} : ${word}`);
+        chip.setAttribute('aria-label', `{% trans "Mot" %} ${i + 1} : ${word}`);
         chip.onkeydown = (e) => {
             if (e.key === 'Enter' || e.key === ' ') {
-                if (window.showToast) window.showToast(`Mot ${i + 1} : ${word}`, 'info', 1500);
+                if (window.showToast) window.showToast(`{% trans "Mot" %} ${i + 1} : ${word}`, 'info', 1500);
             }
         };
         chip.className = 'mnemonic-word-chip';
@@ -288,7 +288,7 @@ function generateNewMnemonic() {
     const secretInput = document.getElementById('zkpSecret');
     secretInput.value = currentMnemonic.join(' ');
     updateCryptoStrengthMeter(secretInput.value);
-    if (window.showToast) window.showToast("Nouvelle phrase mnémonique générée (12 mots).", "info");
+    if (window.showToast) window.showToast("{% trans 'Nouvelle phrase mnémonique générée (12 mots).' %}", "info");
 }
 
 function updateCryptoStrengthMeter(val) {
@@ -298,7 +298,7 @@ function updateCryptoStrengthMeter(val) {
     if (!val) {
         bar.style.width = '0%';
         bar.style.backgroundColor = '#ef4444';
-        label.textContent = 'Vide';
+        label.textContent = '{% trans "Vide" %}';
         entropy.textContent = '0-bit';
         return;
     }
@@ -309,27 +309,27 @@ function updateCryptoStrengthMeter(val) {
     if (words >= 12 || len >= 32) {
         bar.style.width = '100%';
         bar.style.backgroundColor = 'var(--secondary-emerald)';
-        label.textContent = 'Inviolable Souverain';
+        label.textContent = '{% trans "Inviolable Souverain" %}';
         label.style.color = 'var(--secondary-emerald)';
         entropy.textContent = '256-bit Entropy (BIP-39)';
     } else if (words >= 6 || len >= 18) {
         bar.style.width = '70%';
         bar.style.backgroundColor = 'var(--primary-african-gold)';
-        label.textContent = 'Fort';
+        label.textContent = '{% trans "Fort" %}';
         label.style.color = 'var(--primary-african-gold)';
         entropy.textContent = '128-bit Entropy';
     } else if (len >= 8) {
         bar.style.width = '40%';
         bar.style.backgroundColor = '#fb923c';
-        label.textContent = 'Moyen';
+        label.textContent = '{% trans "Moyen" %}';
         label.style.color = '#fb923c';
         entropy.textContent = '64-bit Entropy';
     } else {
         bar.style.width = '15%';
         bar.style.backgroundColor = '#ef4444';
-        label.textContent = 'Faible';
+        label.textContent = '{% trans "Faible" %}';
         label.style.color = '#ef4444';
-        entropy.textContent = 'Faible';
+        entropy.textContent = '{% trans "Faible" %}';
     }
 }
 
@@ -339,7 +339,7 @@ async function downloadSovereignKeyFile() {
     const country = document.getElementById('zkpCountry').value;
 
     if (!username || !secret) {
-        if (window.showToast) window.showToast("Veuillez renseigner votre identifiant et votre secret.", "warning");
+        if (window.showToast) window.showToast("{% trans 'Veuillez renseigner votre identifiant et votre secret.' %}", "warning");
         return;
     }
 
@@ -367,8 +367,8 @@ async function downloadSovereignKeyFile() {
     document.body.removeChild(a);
     URL.revokeObjectURL(url);
 
-    if (window.showToast) window.showToast(`Identité souveraine téléchargée : ${a.download}`, "success");
-    log(`Fichier d'identité souveraine exporté pour <b>${username}</b>.`);
+    if (window.showToast) window.showToast(`{% trans "Identité souveraine téléchargée :" %} ${a.download}`, "success");
+    log(`{% trans "Fichier d identité souveraine exporté pour" %} <b>${username}</b>.`);
 }
 
 function log(msg) {
@@ -419,9 +419,9 @@ async function registerZkpIdentity() {
         return;
     }
     const username = check.username;
-    log(`Dérivation de la clé publique souveraine pour <b>${username}</b>...`);
+    log(`{% trans "Dérivation de la clé publique souveraine pour" %} <b>${username}</b>...`);
     const { x, y } = await deriveKeyPair(secret);
-    log(`Clé publique (y = g^x mod p) générée localement.`);
+    log(`{% trans "Clé publique (y = g^x mod p) générée localement." %}`);
 
     const res = await fetch('/api/zkp/register/', {
         method: 'POST',
@@ -434,12 +434,12 @@ async function registerZkpIdentity() {
     });
     const data = await res.json();
     if (res.ok) {
-        log(`{% icon "circle-check" size=18 %} Enregistrement ZKP réussi ! Aucune information secrète n'a quitté votre machine.`);
-        if (window.showToast) window.showToast(`Identité ZKP pour '${username}' enregistrée avec succès !`, 'success');
+        log(`{% icon "circle-check" size=18 %} {% trans "Enregistrement ZKP réussi ! Aucune information secrète n a quitté votre machine." %}`);
+        if (window.showToast) window.showToast(`{% trans "Identité ZKP enregistrée avec succès !" %} (${username})`, 'success');
         handleSuccessfulZkpAuth(username, data);
     } else {
-        log(`{% icon "triangle-alert" size=18 %} ${data.error || 'Erreur d\'enregistrement'}`);
-        if (window.showToast) window.showToast(`Erreur : ${data.error || 'Échec de l\'enregistrement'}`, 'error');
+        log(`{% icon "triangle-alert" size=18 %} ${data.error || "{% trans 'Erreur d enregistrement' %}"}`);
+        if (window.showToast) window.showToast(`{% trans "Erreur :" %} ${data.error || "{% trans 'Échec de l enregistrement' %}"}`, 'error');
     }
 }
 
@@ -477,7 +477,7 @@ async function loginWithZkp() {
     if (loginBtn) loginBtn.disabled = true;
 
     try {
-    log(`Demande d'un défi (Challenge nonce) au serveur pour <b>${username}</b>...`);
+    log(`{% trans "Demande d un défi (Challenge nonce) au serveur pour" %} <b>${username}</b>...`);
 
     const chalRes = await fetch('/api/zkp/challenge/', {
         method: 'POST',
@@ -486,12 +486,12 @@ async function loginWithZkp() {
     });
     const chalData = await chalRes.json();
     if (!chalRes.ok) {
-        log(`{% icon "circle-x" size=18 %} Erreur défi: ${chalData.error}`);
+        log(`{% icon "circle-x" size=18 %} {% trans "Erreur défi:" %} ${chalData.error}`);
         return;
     }
 
     const nonce = chalData.challenge_nonce;
-    log(`Challenge reçu : ${nonce.slice(0, 16)}...`);
+    log(`{% trans "Challenge reçu :" %} ${nonce.slice(0, 16)}...`);
 
     // Prover calculates ZKP
     const { x, y } = await deriveKeyPair(secret);
@@ -504,7 +504,7 @@ async function loginWithZkp() {
     const c = BigInt("0x" + cHash) % Q;
     const s = ((v - (c * x)) % Q + Q) % Q;
 
-    log(`Preuve (t, s) calculée. Envoi de la preuve au serveur pour vérification...`);
+    log(`{% trans "Preuve (t, s) calculée. Envoi de la preuve au serveur pour vérification..." %}`);
 
     const urlParams = new URLSearchParams(window.location.search);
     const redirectUri = urlParams.get('redirect_uri');
@@ -524,12 +524,12 @@ async function loginWithZkp() {
     });
     const verifyData = await verifyRes.json();
     if (verifyRes.ok) {
-        log(`{% icon "sparkles" size=18 %} <b>Vérification Zero-Knowledge réussie !</b> Accès autorisé sans mot de passe.`);
-        if (window.showToast) window.showToast(`Connexion Zero-Trust réussie pour ${username} !`, 'success');
+        log(`{% icon "sparkles" size=18 %} <b>{% trans "Vérification Zero-Knowledge réussie !" %}</b> {% trans "Accès autorisé sans mot de passe." %}`);
+        if (window.showToast) window.showToast(`{% trans "Connexion Zero-Trust réussie pour" %} ${username} !`, 'success');
         handleSuccessfulZkpAuth(username, verifyData);
     } else {
-        log(`{% icon "circle-x" size=18 %} Échec de la vérification : ${verifyData.error}`);
-        if (window.showToast) window.showToast(`Échec vérification ZKP : ${verifyData.error}`, 'error');
+        log(`{% icon "circle-x" size=18 %} {% trans "Échec de la vérification :" %} ${verifyData.error}`);
+        if (window.showToast) window.showToast(`{% trans "Échec vérification ZKP :" %} ${verifyData.error}`, 'error');
     }
     } finally {
         if (feedback) feedback.style.display = 'none';

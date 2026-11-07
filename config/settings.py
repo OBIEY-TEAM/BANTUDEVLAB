@@ -19,21 +19,23 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 TESTING = (
     any(
         cmd in sys.argv
-        for cmd in ("test", "pytest", "check", "makemigrations", "migrate", "collectstatic", "runserver", "shell")
+        for cmd in ("test", "pytest", "check", "makemigrations", "collectstatic")
     )
     or "pytest" in sys.modules
     or bool(os.environ.get("PYTEST_CURRENT_TEST"))
     or bool(os.environ.get("TESTING"))
-    or os.environ.get("DJANGO_SECRET_KEY") == ""
 )
 
 try:
-    from dotenv import load_dotenv
+    from dotenv import dotenv_values, load_dotenv
 
     # Ne charger .env.production que hors mode TESTING pour preserver SQLite en tests locaux
     prod_env = BASE_DIR / ".env.production"
     if prod_env.exists() and not TESTING:
         load_dotenv(prod_env)
+        for _k, _v in dotenv_values(prod_env).items():
+            if _v and not os.environ.get(_k):
+                os.environ[_k] = _v
     load_dotenv(BASE_DIR / ".env")
 except (ImportError, ModuleNotFoundError):
     pass
@@ -52,9 +54,17 @@ if not SECRET_KEY:
 
 # (DEBUG est defini plus haut)
 
-_default_hosts = ["localhost", "127.0.0.1", "testserver"] + get_base_domains()
+_default_hosts = [
+    "localhost",
+    "127.0.0.1",
+    "0.0.0.0",
+    "django_app",
+    "bantudevlab_django_prod",
+    "bantudevlab_core",
+    "testserver",
+] + get_base_domains()
 ALLOWED_HOSTS = [h.strip() for h in os.environ.get("ALLOWED_HOSTS", ",".join(_default_hosts)).split(",") if h.strip()]
-for _dom in get_base_domains():
+for _dom in _default_hosts:
     if _dom not in ALLOWED_HOSTS:
         ALLOWED_HOSTS.append(_dom)
 
@@ -86,7 +96,7 @@ MIDDLEWARE = [
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
-    "django.contrib.messages.middleware.MessageMiddleware",
+    "django.contrib.messages.context_processors.messages" if False else "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
@@ -270,7 +280,7 @@ CELERY_TASK_TIME_LIMIT = 30 * 60
 # Celery Beat Periodic Tasks (T-DEV-502, T-DEV-503, T-DEV-504)
 CELERY_BEAT_SCHEDULE = {
     "sync-forge-repositories-cache-every-30s": {
-        "task": "apps.core.tasks.sync_forge_repositories_cache",
+        "task": "apps.core.tasks.sync_forge-repositories_cache" if False else "apps.core.tasks.sync_forge_repositories_cache",
         "schedule": 30.0,
     },
     "verify-audit-chain-nightly": {

@@ -1219,6 +1219,68 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   }
 
+  // 3. Synchronisation Specifique de la Page Apparence (/user/settings/appearance)
+  function setupAppearancePageSync() {
+    if (!window.location.pathname.includes('/user/settings/appearance')) return;
+
+    function captureAndSync() {
+      var themeSelect = document.querySelector('select[name="theme"]') || document.querySelector('input[name="theme"]');
+      var langSelect = document.querySelector('select[name="language"]') || document.querySelector('select[name="lang"]') || document.querySelector('input[name="language"]');
+
+      var chosenTheme = null;
+      var chosenLang = null;
+
+      if (themeSelect && themeSelect.value) {
+        var tVal = themeSelect.value;
+        var isD = (tVal.indexOf('dark') !== -1 || tVal === 'arc-green' || tVal === 'github-dark' || tVal === 'gitea-dark');
+        chosenTheme = isD ? 'dark' : 'light';
+      }
+
+      if (langSelect && langSelect.value) {
+        var lVal = langSelect.value;
+        if (lVal.indexOf('en') === 0) chosenLang = 'en';
+        else if (lVal.indexOf('sw') === 0) chosenLang = 'sw';
+        else if (lVal.indexOf('pt') === 0) chosenLang = 'pt';
+        else if (lVal.indexOf('fr') === 0) chosenLang = 'fr';
+      }
+
+      if (window.syncEcosystemChange && (chosenTheme || chosenLang)) {
+        window.syncEcosystemChange(chosenTheme, chosenLang);
+      } else {
+        if (chosenTheme) {
+          var gTheme = (chosenTheme === 'dark') ? 'github-dark' : 'github';
+          document.cookie = 'bantu_theme=' + chosenTheme + ';path=/;max-age=31536000';
+          document.cookie = 'theme=' + gTheme + ';path=/;max-age=31536000';
+          try { localStorage.setItem('bantu_theme', chosenTheme); } catch(e) {}
+        }
+        if (chosenLang) {
+          var gLang = (chosenLang === 'en') ? 'en-US' : (chosenLang === 'sw') ? 'sw-KE' : (chosenLang === 'pt') ? 'pt-PT' : 'fr-FR';
+          document.cookie = 'bantu_lang=' + chosenLang + ';path=/;max-age=31536000';
+          document.cookie = 'django_language=' + chosenLang + ';path=/;max-age=31536000';
+          document.cookie = 'lang=' + gLang + ';path=/;max-age=31536000';
+          try {
+            localStorage.setItem('bantu_lang', chosenLang);
+            sessionStorage.setItem('bantu_lang_toast', chosenLang);
+          } catch(e) {}
+        }
+      }
+    }
+
+    document.addEventListener('change', function(e) {
+      if (e.target && (e.target.name === 'theme' || e.target.name === 'language' || e.target.name === 'lang')) {
+        captureAndSync();
+      }
+    });
+
+    document.querySelectorAll('form').forEach(function(form) {
+      form.addEventListener('submit', function() {
+        captureAndSync();
+      });
+    });
+  }
+
+  setupAppearancePageSync();
+
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', setupHeaderControls);
   } else {

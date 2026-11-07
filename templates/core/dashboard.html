@@ -306,7 +306,7 @@ function resetEditorSnippet() {
     } else {
         document.getElementById('scanCodeInput').value = DEFAULT_SNIPPET;
     }
-    if (window.showToast) window.showToast('Code de démonstration rechargé.', 'info');
+    if (window.showToast) window.showToast('{% trans "Code de démonstration rechargé." %}', 'info');
 }
 
 // UI-02: Visual Dashboard Updates & Circular Gauge
@@ -338,8 +338,8 @@ function renderVulnerabilityCards(issues) {
     if (!issues || issues.length === 0) {
         container.innerHTML = `
             <div style="padding: 1.5rem; text-align: center; background: rgba(16, 185, 129, 0.1); border: 1px solid var(--secondary-emerald); border-radius: 8px; color: #a7f3d0;">
-                <p style="font-weight: 600; margin: 0;">{% icon "circle-check" size=20 %} Aucune vulnérabilité détectée !</p>
-                <p style="font-size: 0.85rem; margin: 0.3rem 0 0; opacity: 0.85;">Le code respecte strictement les critères de souveraineté panafricaine.</p>
+                <p style="font-weight: 600; margin: 0;">{% icon "circle-check" size=20 %} {% trans "Aucune vulnérabilité détectée !" %}</p>
+                <p style="font-size: 0.85rem; margin: 0.3rem 0 0; opacity: 0.85;">{% trans "Le code respecte strictement les critères de souveraineté panafricaine." %}</p>
             </div>
         `;
         return;
@@ -355,8 +355,8 @@ function renderVulnerabilityCards(issues) {
         card.innerHTML = `
             <div class="vulnerability-header">
                 <div>
-                    <strong style="color: #fff; font-size: 0.95rem;">${issue.description || 'Vulnérabilité'}</strong>
-                    <span style="font-size: 0.8rem; color: var(--text-muted); margin-left: 0.5rem;">Ligne ${issue.line || '?'}</span>
+                    <strong style="color: #fff; font-size: 0.95rem;">${issue.description || '{% trans "Vulnérabilité" %}'}</strong>
+                    <span style="font-size: 0.8rem; color: var(--text-muted); margin-left: 0.5rem;">{% trans "Ligne" %} ${issue.line || '?'}</span>
                 </div>
                 <span class="severity-badge ${badgeClass}">${issue.severity || 'UNKNOWN'}</span>
             </div>
@@ -364,7 +364,7 @@ function renderVulnerabilityCards(issues) {
             ${issue.recommendation ? `
                 <div class="vuln-recommendation">
                     <span>{% icon "lightbulb" size=18 %}</span>
-                    <span><strong>Recommandation Souveraine :</strong> ${escapeHtml(issue.recommendation)}</span>
+                    <span><strong>{% trans "Recommandation Souveraine :" %}</strong> ${escapeHtml(issue.recommendation)}</span>
                 </div>
             ` : ''}
         `;
@@ -388,13 +388,13 @@ async function runSecurityScan() {
     const editorStatus = document.getElementById('editorStatus');
 
     if (!code || !code.trim()) {
-        if (window.showToast) window.showToast("Veuillez saisir du code à analyser.", "warning");
+        if (window.showToast) window.showToast("{% trans 'Veuillez saisir du code à analyser.' %}", "warning");
         return;
     }
 
-    editorStatus.textContent = 'Scan en cours...';
+    editorStatus.textContent = '{% trans "Scan en cours..." %}';
     editorStatus.style.color = 'var(--primary-african-gold)';
-    if (window.showToast) window.showToast("Analyse par le moteur de sécurité souverain...", "info");
+    if (window.showToast) window.showToast("{% trans 'Analyse par le moteur de sécurité souverain...' %}", "info");
 
     try {
         const headers = {'Content-Type': 'application/json'};
@@ -409,7 +409,7 @@ async function runSecurityScan() {
         const data = await res.json();
 
         if (!res.ok) {
-            throw new Error(data.error || 'Erreur lors du scan');
+            throw new Error(data.error || '{% trans "Erreur lors du scan" %}');
         }
 
         visualBox.style.display = 'block';
@@ -421,7 +421,7 @@ async function runSecurityScan() {
         document.getElementById('pillCriticalCount').textContent = data.critical || 0;
         document.getElementById('pillHighCount').textContent = data.high || 0;
         document.getElementById('pillMediumCount').textContent = data.medium || 0;
-        document.getElementById('issuesCountBadge').textContent = `${data.total_issues || 0} problème(s) identifié(s)`;
+        document.getElementById('issuesCountBadge').textContent = `${data.total_issues || 0} {% trans "problème(s) identifié(s)" %}`;
 
         // Update status rating
         const ratingBadge = document.getElementById('scanStatusBadge');
@@ -430,13 +430,13 @@ async function runSecurityScan() {
         // Render cards
         renderVulnerabilityCards(data.issues || []);
 
-        editorStatus.textContent = 'Terminé';
+        editorStatus.textContent = '{% trans "Terminé" %}';
         editorStatus.style.color = 'var(--secondary-emerald)';
-        if (window.showToast) window.showToast(`Scan terminé ! Score de souveraineté : ${data.sovereignty_score}%`, 'success');
+        if (window.showToast) window.showToast(`{% trans "Scan terminé ! Score de souveraineté :" %} ${data.sovereignty_score}%`, 'success');
     } catch(err) {
-        editorStatus.textContent = 'Erreur';
+        editorStatus.textContent = '{% trans "Erreur" %}';
         editorStatus.style.color = 'var(--tertiary-terracotta)';
-        if (window.showToast) window.showToast(`Erreur du scanner : ${err.message}`, 'error');
+        if (window.showToast) window.showToast(`{% trans "Erreur du scanner :" %} ${err.message}`, 'error');
     }
 }
 
@@ -446,13 +446,13 @@ async function runAiReview() {
     const aiContent = document.getElementById('aiReviewContent');
 
     if (!code || !code.trim()) {
-        if (window.showToast) window.showToast("Veuillez saisir du code pour l'audit IA.", "warning");
+        if (window.showToast) window.showToast("{% trans 'Veuillez saisir du code pour l audit IA.' %}", "warning");
         return;
     }
 
     aiSection.style.display = 'block';
-    aiContent.textContent = 'Connexion sécurisée au moteur IA On-Premise Gemma 5B...\n';
-    if (window.showToast) window.showToast("Connexion au flux SSE de Gemma 5B...", "info");
+    aiContent.textContent = '{% trans "Connexion sécurisée au moteur IA On-Premise Gemma 5B..." %}\n';
+    if (window.showToast) window.showToast("{% trans 'Connexion au flux SSE de Gemma 5B...' %}", "info");
 
     try {
         const aiHeaders = {
@@ -470,7 +470,7 @@ async function runAiReview() {
 
         if (!response.ok) {
             aiContent.textContent = 'Erreur HTTP: ' + response.status;
-            if (window.showToast) window.showToast(`Erreur de connexion IA: HTTP ${response.status}`, 'error');
+            if (window.showToast) window.showToast(`{% trans "Erreur de connexion IA: HTTP" %} ${response.status}`, 'error');
             return;
         }
 
@@ -500,10 +500,10 @@ async function runAiReview() {
                 }
             }
         }
-        if (window.showToast) window.showToast("Revue de code par Gemma 5B complétée.", "success");
+        if (window.showToast) window.showToast("{% trans 'Revue de code par Gemma 5B complétée.' %}", "success");
     } catch(err) {
-        aiContent.textContent = 'Erreur lors du streaming SSE: ' + err;
-        if (window.showToast) window.showToast(`Erreur SSE: ${err.message}`, 'error');
+        aiContent.textContent = '{% trans "Erreur lors du streaming SSE:" %} ' + err;
+        if (window.showToast) window.showToast(`{% trans "Erreur SSE:" %} ${err.message}`, 'error');
     }
 }
 

@@ -90,8 +90,8 @@
                     <strong>{% flag "CIV" 22 %} Abidjan</strong>
                     <span id="latency-abidjan" class="latency-badge">12 ms</span>
                 </div>
-                <div style="font-size: 0.8rem; color: var(--text-muted);">Datacenter Systalink Tier-3</div>
-                <div style="font-size: 0.75rem; color: var(--secondary-emerald); margin-top: 0.4rem;">{% icon "dot" size=10 %} Actif & Opérationnel</div>
+                <div style="font-size: 0.8rem; color: var(--text-muted);">{% trans "Datacenter Systalink Tier-3" %}</div>
+                <div style="font-size: 0.75rem; color: var(--secondary-emerald); margin-top: 0.4rem;">{% icon "dot" size=10 %} {% trans "Actif & Opérationnel" %}</div>
             </div>
 
             <div id="card-dakar" class="node-card" tabindex="0" role="button" onkeydown="if(event.key==='Enter'||event.key===' ') selectNode('dakar')">
@@ -99,8 +99,8 @@
                     <strong>{% flag "SEN" 22 %} Dakar</strong>
                     <span id="latency-dakar" class="latency-badge">18 ms</span>
                 </div>
-                <div style="font-size: 0.8rem; color: var(--text-muted);">Sovereign IXP Hub Tier-3</div>
-                <div style="font-size: 0.75rem; color: var(--secondary-emerald); margin-top: 0.4rem;">{% icon "dot" size=10 %} Actif & Opérationnel</div>
+                <div style="font-size: 0.8rem; color: var(--text-muted);">{% trans "Sovereign IXP Hub Tier-3" %}</div>
+                <div style="font-size: 0.75rem; color: var(--secondary-emerald); margin-top: 0.4rem;">{% icon "dot" size=10 %} {% trans "Actif & Opérationnel" %}</div>
             </div>
 
             <div id="card-lagos" class="node-card" tabindex="0" role="button" onkeydown="if(event.key==='Enter'||event.key===' ') selectNode('lagos')">
@@ -108,8 +108,8 @@
                     <strong>{% flag "NGA" 22 %} Lagos</strong>
                     <span id="latency-lagos" class="latency-badge">24 ms</span>
                 </div>
-                <div style="font-size: 0.8rem; color: var(--text-muted);">West Africa Interconnect Tier-4</div>
-                <div style="font-size: 0.75rem; color: var(--secondary-emerald); margin-top: 0.4rem;">{% icon "dot" size=10 %} Actif & Opérationnel</div>
+                <div style="font-size: 0.8rem; color: var(--text-muted);">{% trans "West Africa Interconnect Tier-4" %}</div>
+                <div style="font-size: 0.75rem; color: var(--secondary-emerald); margin-top: 0.4rem;">{% icon "dot" size=10 %} {% trans "Actif & Opérationnel" %}</div>
             </div>
 
             <div id="card-kigali" class="node-card" tabindex="0" role="button" onkeydown="if(event.key==='Enter'||event.key===' ') selectNode('kigali')">
@@ -117,8 +117,8 @@
                     <strong>{% flag "RWA" 22 %} Kigali</strong>
                     <span id="latency-kigali" class="latency-badge">31 ms</span>
                 </div>
-                <div style="font-size: 0.8rem; color: var(--text-muted);">Innovation City DC Tier-3</div>
-                <div style="font-size: 0.75rem; color: var(--secondary-emerald); margin-top: 0.4rem;">{% icon "dot" size=10 %} Actif & Opérationnel</div>
+                <div style="font-size: 0.8rem; color: var(--text-muted);">{% trans "Innovation City DC Tier-3" %}</div>
+                <div style="font-size: 0.75rem; color: var(--secondary-emerald); margin-top: 0.4rem;">{% icon "dot" size=10 %} {% trans "Actif & Opérationnel" %}</div>
             </div>
 
             <div id="card-nairobi" class="node-card" tabindex="0" role="button" onkeydown="if(event.key==='Enter'||event.key===' ') selectNode('nairobi')">
@@ -126,8 +126,8 @@
                     <strong>{% flag "KEN" 22 %} Nairobi</strong>
                     <span id="latency-nairobi" class="latency-badge">29 ms</span>
                 </div>
-                <div style="font-size: 0.8rem; color: var(--text-muted);">East Africa Gateway Tier-3</div>
-                <div style="font-size: 0.75rem; color: var(--secondary-emerald); margin-top: 0.4rem;">{% icon "dot" size=10 %} Actif & Opérationnel</div>
+                <div style="font-size: 0.8rem; color: var(--text-muted);">{% trans "East Africa Gateway Tier-3" %}</div>
+                <div style="font-size: 0.75rem; color: var(--secondary-emerald); margin-top: 0.4rem;">{% icon "dot" size=10 %} {% trans "Actif & Opérationnel" %}</div>
             </div>
         </div>
 
@@ -135,28 +135,28 @@
         <div id="nodeDetailsBanner" class="node-details-banner">
             <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 1rem;">
                 <div>
-                    <h4 id="detailNodeName" style="margin: 0; color: #fff; font-size: 1.1rem;">{% flag "CIV" 22 %} Nœud Central Systalink Cloud - Abidjan</h4>
+                    <h4 id="detailNodeName" style="margin: 0; color: #fff; font-size: 1.1rem;">{% flag "CIV" 22 %} {% trans "Nœud Central Systalink Cloud - Abidjan" %}</h4>
                     <p id="detailNodeDesc" style="margin: 0.3rem 0 0; font-size: 0.85rem; color: var(--text-muted);">
-                        Hôte principal du moteur Git souverain Gitea, cluster PostgreSQL répliqué et API BantuDevLab.
+                        {% trans "Hôte principal du moteur Git souverain Gitea, cluster PostgreSQL répliqué et API BantuDevLab." %}
                     </p>
                 </div>
-                <span id="detailCertification" class="brand-badge">CERTIFIÉ TIER-3 SOUVERAIN</span>
+                <span id="detailCertification" class="brand-badge">{% trans "CERTIFIÉ TIER-3 SOUVERAIN" %}</span>
             </div>
             <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1rem; margin-top: 1rem; padding-top: 1rem; border-top: 1px solid rgba(255,255,255,0.08);">
                 <div>
-                    <span style="font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase;">Latence Locale</span>
+                    <span style="font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase;">{% trans "Latence Locale" %}</span>
                     <div id="detailLatency" style="font-weight: 700; color: var(--secondary-emerald); font-size: 1.1rem;">12 ms</div>
                 </div>
                 <div>
-                    <span style="font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase;">Bande Passante IXP</span>
+                    <span style="font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase;">{% trans "Bande Passante IXP" %}</span>
                     <div id="detailBandwidth" style="font-weight: 700; color: #fff; font-size: 1.1rem;">100 Gbps Local IXP</div>
                 </div>
                 <div>
-                    <span style="font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase;">Protection Légale</span>
-                    <div id="detailJurisdiction" style="font-weight: 700; color: var(--primary-african-gold); font-size: 1.1rem;">Droit Ivoirien & UA</div>
+                    <span style="font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase;">{% trans "Protection Légale" %}</span>
+                    <div id="detailJurisdiction" style="font-weight: 700; color: var(--primary-african-gold); font-size: 1.1rem;">{% trans "Droit Ivoirien & UA" %}</div>
                 </div>
                 <div>
-                    <span style="font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase;">Disponibilité SLA</span>
+                    <span style="font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase;">{% trans "Disponibilité SLA" %}</span>
                     <div id="detailUptime" style="font-weight: 700; color: var(--secondary-emerald); font-size: 1.1rem;">99.98%</div>
                 </div>
             </div>
@@ -165,26 +165,26 @@
 
     <!-- Piliers Stratégiques -->
     <div class="card" style="margin-bottom: 1.5rem;">
-        <h3>{% icon "map-pin" size=20 %} Localisation des Données & Hébergement</h3>
-        <p>Les serveurs Git, bases de données relationnelles PostgreSQL et sauvegardes sont hébergés sur l'infrastructure Systalink Cloud en Côte d'Ivoire et au Sénégal.</p>
+        <h3>{% icon "map-pin" size=20 %} {% trans "Localisation des Données & Hébergement" %}</h3>
+        <p>{% trans "Les serveurs Git, bases de données relationnelles PostgreSQL et sauvegardes sont hébergés sur l'infrastructure Systalink Cloud en Côte d'Ivoire et au Sénégal." %}</p>
         <div style="background: rgba(16, 185, 129, 0.2); border-left: 4px solid var(--secondary-emerald); padding: 0.8rem; margin-top: 1rem; border-radius: 4px;">
-            <strong>Statut : 100% Souverain</strong> — Immunité totale face au CLOUD Act et aux juridictions extraterritoriales.
+            <strong>{% trans "Statut : 100% Souverain" %}</strong> — {% trans "Immunité totale face au CLOUD Act et aux juridictions extraterritoriales." %}
         </div>
     </div>
 
     <div class="card" style="margin-bottom: 1.5rem;">
-        <h3>{% icon "lock" size=20 %} Cryptographie Zero-Knowledge (ZKP)</h3>
-        <p>Preuves de Schnorr non-interactives basées sur Fiat-Shamir garantissant une authentification à divulgation nulle de connaissance. Même en cas de compromission serveur, aucun mot de passe n'existe.</p>
+        <h3>{% icon "lock" size=20 %} {% trans "Cryptographie Zero-Knowledge (ZKP)" %}</h3>
+        <p>{% trans "Preuves de Schnorr non-interactives basées sur Fiat-Shamir garantissant une authentification à divulgation nulle de connaissance. Même en cas de compromission serveur, aucun mot de passe n'existe." %}</p>
         <div style="background: rgba(245, 158, 11, 0.2); border-left: 4px solid var(--primary-african-gold); padding: 0.8rem; margin-top: 1rem;">
-            <strong>Statut : Cryptographiquement inviolable</strong> — Aucune empreinte secrète conservée.
+            <strong>{% trans "Statut : Cryptographiquement inviolable" %}</strong> — {% trans "Aucune empreinte secrète conservée." %}
         </div>
     </div>
 
     <div class="card">
-        <h3>{% icon "cpu" size=18 %} Intelligence Artificielle Locale (Gemma 5B)</h3>
-        <p>Modèle de fondation Gemma 5B fine-tuné sur les dépôts de code et besoins d'infrastructures télécoms/fintech africaines. Exécution 100% On-Premise / Local.</p>
+        <h3>{% icon "cpu" size=18 %} {% trans "Intelligence Artificielle Locale (Gemma 5B)" %}</h3>
+        <p>{% trans "Modèle de fondation Gemma 5B fine-tuné sur les dépôts de code et besoins d'infrastructures télécoms/fintech africaines. Exécution 100% On-Premise / Local." %}</p>
         <div style="background: rgba(16, 185, 129, 0.2); border-left: 4px solid var(--secondary-emerald); padding: 0.8rem; margin-top: 1rem;">
-            <strong>Statut : Zéro fuite de télémétrie</strong> — Vos algorithmes critiques restent strictement confidentiels.
+            <strong>{% trans "Statut : Zéro fuite de télémétrie" %}</strong> — {% trans "Vos algorithmes critiques restent strictement confidentiels." %}
         </div>
     </div>
 </div>
@@ -195,57 +195,57 @@
 const NODES_DATA = {
     abidjan: {
         flag: '{% flag "CIV" 22 %}',
-        name: "Systalink Cloud Datacenter - Abidjan",
-        country: "Côte d'Ivoire",
-        desc: "Nœud central de la forge souveraine : héberge le moteur Gitea CE, les référentiels Git maîtres et le pipeline de fine-tuning Gemma 5B.",
-        certification: "CERTIFIÉ TIER-3 SOUVERAIN",
+        name: '{% trans "Systalink Cloud Datacenter - Abidjan" %}',
+        country: "{% trans 'Côte d Ivoire' %}",
+        desc: '{% trans "Nœud central de la forge souveraine : héberge le moteur Gitea CE, les référentiels Git maîtres et le pipeline de fine-tuning Gemma 5B." %}',
+        certification: '{% trans "CERTIFIÉ TIER-3 SOUVERAIN" %}',
         latency: 12,
         bandwidth: "100 Gbps Local IXP (CI-IXP)",
-        jurisdiction: "Droit Ivoirien & Cadre UA",
+        jurisdiction: '{% trans "Droit Ivoirien & Cadre UA" %}',
         uptime: "99.98%"
     },
     dakar: {
         flag: '{% flag "SEN" 22 %}',
-        name: "Sovereign IXP Datacenter - Dakar",
-        country: "Sénégal",
-        desc: "Centre d'interconnexion pour l'Afrique de l'Ouest francophone, nœud de réplication chiffrée ZKP et miroirs de sécurité.",
-        certification: "CERTIFIÉ TIER-3 SOUVERAIN",
+        name: '{% trans "Sovereign IXP Datacenter - Dakar" %}',
+        country: '{% trans "Sénégal" %}',
+        desc: "{% trans 'Centre d interconnexion pour l Afrique de l Ouest francophone, nœud de réplication chiffrée ZKP et miroirs de sécurité.' %}",
+        certification: '{% trans "CERTIFIÉ TIER-3 SOUVERAIN" %}',
         latency: 18,
         bandwidth: "80 Gbps SENIX IXP",
-        jurisdiction: "Droit Sénégalais & CEDEAO",
+        jurisdiction: '{% trans "Droit Sénégalais & CEDEAO" %}',
         uptime: "99.95%"
     },
     lagos: {
         flag: '{% flag "NGA" 22 %}',
-        name: "MainOne Datacenter Gateway - Lagos",
-        country: "Nigeria",
-        desc: "Hub majeur de connectivité pour les fintechs et startups d'Afrique de l'Ouest, hébergeant des miroirs rapides de paquets.",
-        certification: "CERTIFIÉ TIER-4 DATACENTER",
+        name: '{% trans "MainOne Datacenter Gateway - Lagos" %}',
+        country: '{% trans "Nigeria" %}',
+        desc: "{% trans 'Hub majeur de connectivité pour les fintechs et startups d Afrique de l Ouest, hébergeant des miroirs rapides de paquets.' %}",
+        certification: '{% trans "CERTIFIÉ TIER-4 DATACENTER" %}',
         latency: 24,
         bandwidth: "200 Gbps NGIX IXP",
-        jurisdiction: "Droit Nigérian (NDPR)",
+        jurisdiction: '{% trans "Droit Nigérian (NDPR)" %}',
         uptime: "99.99%"
     },
     kigali: {
         flag: '{% flag "RWA" 22 %}',
-        name: "Kigali Innovation City DC - Kigali",
-        country: "Rwanda",
-        desc: "Pôle d'innovation panafricain pour le calcul distribué, l'audit IA local et l'hébergement des architectures souveraines.",
-        certification: "CERTIFIÉ TIER-3 SOUVERAIN",
+        name: '{% trans "Kigali Innovation City DC - Kigali" %}',
+        country: '{% trans "Rwanda" %}',
+        desc: "{% trans 'Pôle d innovation panafricain pour le calcul distribué, l audit IA local et l hébergement des architectures souveraines.' %}",
+        certification: '{% trans "CERTIFIÉ TIER-3 SOUVERAIN" %}',
         latency: 31,
         bandwidth: "50 Gbps RINEX IXP",
-        jurisdiction: "Droit Rwandais & Smart Africa",
+        jurisdiction: '{% trans "Droit Rwandais & Smart Africa" %}',
         uptime: "99.96%"
     },
     nairobi: {
         flag: '{% flag "KEN" 22 %}',
-        name: "East Africa Gateway - Nairobi",
-        country: "Kenya",
-        desc: "Passerelle souveraine d'Afrique de l'Est pour les services financiers mobiles, M-Pesa connectors et pipelines CI/CD.",
-        certification: "CERTIFIÉ TIER-3 SOUVERAIN",
+        name: '{% trans "East Africa Gateway - Nairobi" %}',
+        country: '{% trans "Kenya" %}',
+        desc: "{% trans 'Passerelle souveraine d Afrique de l Est pour les services financiers mobiles, M-Pesa connectors et pipelines CI/CD.' %}",
+        certification: '{% trans "CERTIFIÉ TIER-3 SOUVERAIN" %}',
         latency: 29,
         bandwidth: "120 Gbps KIXP",
-        jurisdiction: "Droit Kényan & EAC",
+        jurisdiction: '{% trans "Droit Kényan & EAC" %}',
         uptime: "99.97%"
     }
 };
@@ -276,12 +276,12 @@ function selectNode(key) {
     document.getElementById('detailUptime').textContent = data.uptime;
 
     if (window.showToast) {
-        window.showToast(`Nœud sélectionné : ${data.country} (${data.latency} ms)`, 'info');
+        window.showToast(`{% trans "Nœud sélectionné :" %} ${data.country} (${data.latency} ms)`, 'info');
     }
 }
 
 async function simulatePingAllNodes() {
-    if (window.showToast) window.showToast("Mesure de la latence reseau en temps reel (Ping RTT)...", "info", 2000);
+    if (window.showToast) window.showToast("{% trans 'Mesure de la latence reseau en temps reel (Ping RTT)...' %}", "info", 2000);
 
     const tStart = performance.now();
     try {
@@ -309,7 +309,7 @@ async function simulatePingAllNodes() {
         }
 
         if (window.showToast) {
-            window.showToast(`Latence mesuree en temps reel : RTT local ${clientRtt} ms.`, "success", 2500);
+            window.showToast(`{% trans "Latence mesuree en temps reel : RTT local" %} ${clientRtt} ms.`, "success", 2500);
         }
     } catch (err) {
         // Fallback mesure client-side RTT directe
@@ -320,7 +320,7 @@ async function simulatePingAllNodes() {
             if (b) b.textContent = `${fallbackRtt} ms`;
         }
         if (window.showToast) {
-            window.showToast(`Latence directe RTT : ${fallbackRtt} ms.`, "info", 2000);
+            window.showToast(`{% trans "Latence directe RTT :" %} ${fallbackRtt} ms.`, "info", 2000);
         }
     }
 }
@@ -328,13 +328,13 @@ async function simulatePingAllNodes() {
 async function refreshMetricsData() {
     const btn = document.getElementById('btnRefreshMetrics');
     if (btn) btn.disabled = true;
-    if (window.showToast) window.showToast("Actualisation des metriques souveraines...", "info", 1500);
+    if (window.showToast) window.showToast("{% trans 'Actualisation des metriques souveraines...' %}", "info", 1500);
     try {
         await Promise.all([
             fetch('/readyz'),
             simulatePingAllNodes()
         ]);
-        if (window.showToast) window.showToast("Metriques et latences actualisees en direct.", "success", 2000);
+        if (window.showToast) window.showToast("{% trans 'Metriques et latences actualisees en direct.' %}", "success", 2000);
     } catch (e) {
         await simulatePingAllNodes();
     } finally {
