@@ -20,8 +20,8 @@
         <p>{% trans "Forge distribuée basée sur Gitea/GitLab CE déployée sur nos serveurs en Afrique. Zéro dépendance vis-à-vis des juridictions extérieures (Cloud Act exempt)." %}</p>
         <span class="stat-number">100%</span>
         <div style="margin-top: 0.5rem;">
-            <a href="{{ GITEA_LOGIN_URL|default:'http://localhost:3002/user/login' }}" target="_blank" rel="noopener noreferrer" style="color: var(--secondary-emerald); font-size: 0.85rem; text-decoration: underline; display: inline-flex; align-items: center; gap: 0.35rem;">
-                {% icon "external-link" size=14 %} {% trans "Connexion Gitea : http://localhost:3002/user/login" %}
+            <a href="{{ GITEA_LOGIN_URL|default:BASE_URL_2 }}" target="_blank" rel="noopener noreferrer" style="color: var(--secondary-emerald); font-size: 0.85rem; text-decoration: underline; display: inline-flex; align-items: center; gap: 0.35rem;">
+                {% icon "external-link" size=14 %} {% trans "Connexion Gitea" %} ({{ GITEA_LOGIN_URL|default:BASE_URL_2 }})
             </a>
         </div>
         <p style="color: var(--secondary-emerald); font-weight: bold;">{% trans "Contrôle Panafricain" %}</p>

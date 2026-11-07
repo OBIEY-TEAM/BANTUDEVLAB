@@ -18,9 +18,17 @@ import urllib.parse
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 
+try:
+    from config.base_urls import BASE_URL_1, BASE_URL_2, GITEA_WEB_URL
+except ImportError:
+    BASE_URL_1 = os.environ.get("BASE_URL_1", "https://cybersocle.site")
+    BASE_URL_2 = os.environ.get("BASE_URL_2", "https://git.cybersocle.site")
+    GITEA_WEB_URL = os.environ.get("GITEA_WEB_URL", "https://gitea.cybersocle.site")
+
 BASE_DIR = Path(__file__).resolve().parent
 REPOS_DIR = BASE_DIR / "forge_data" / "repos"
-BANTU_CORE_URL = os.environ.get("BANTU_CORE_URL", "http://127.0.0.1:8001")
+BANTU_CORE_URL = os.environ.get("BANTU_CORE_URL", BASE_URL_1)
+GITEA_LOGIN_URL = os.environ.get("GITEA_LOGIN_URL", f"{GITEA_WEB_URL}/user/login")
 WEBHOOK_SECRET = os.environ.get("GITEA_WEBHOOK_SECRET", "bantu_dev_webhook_secret_key_2026")
 PORT = int(os.environ.get("FORGE_PORT", 3001))
 
@@ -249,6 +257,10 @@ class SovereignForgeHandler(BaseHTTPRequestHandler):
         path = url.path.rstrip("/")
         urllib.parse.parse_qs(url.query)
 
+        # 0. Health probes (unauthenticated JSON)
+        if path in ("/health", "/healthz", "/readyz"):
+            return self._send_json({"status": "ok", "service": "forge-engine", "health": "healthy"})
+
         # 0. Static routes for Cyber Logo, Favicon & Sync JS
         if path in ("/static/img/logo.svg", "/assets/img/logo.svg", "/img/logo.svg", "/logo.svg"):
             return self._send_file(BASE_DIR / "static" / "img" / "logo.svg", "image/svg+xml")
@@ -338,7 +350,7 @@ class SovereignForgeHandler(BaseHTTPRequestHandler):
         # 7. UI: Web Pages
         if path.rstrip("/") in ("/gitea", "/switch-gitea", "/basculer-gitea"):
             self.send_response(302)
-            self.send_header("Location", "http://localhost:3002/user/login")
+            self.send_header("Location", GITEA_LOGIN_URL)
             self.end_headers()
             return
 
@@ -672,7 +684,7 @@ class SovereignForgeHandler(BaseHTTPRequestHandler):
             </button>
 
             <!-- Ecosystem navigation links -->
-            <a href="http://localhost:3002/user/login" class="btn btn-outline" style="border-color: var(--cyan); color: var(--cyan);">{switch_gitea} &rarr;</a>
+            <a href="{GITEA_LOGIN_URL}" class="btn btn-outline" style="border-color: var(--cyan); color: var(--cyan);">{switch_gitea} &rarr;</a>
             <a href="{BANTU_CORE_URL}/" class="btn btn-outline">&larr; {portal_return}</a>
             <a href="{BANTU_CORE_URL}/dashboard/" class="btn btn-gold">{dashboard_audit}</a>
         </div>
