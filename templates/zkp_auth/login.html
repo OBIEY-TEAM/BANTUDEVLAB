@@ -145,10 +145,10 @@
             {% trans "Votre identité souveraine" %} <b id="giteaUserDisplay" style="color: #fff; font-size: 1.05rem;"></b> {% trans "est authentifiée sans mot de passe. Finalisez ou liez votre compte sur la forge Gitea souveraine." %}
         </p>
         <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
-            <a id="btnGiteaSignup" href="https://git.cybersocle.site/users/sign_up" target="_blank" rel="noopener noreferrer" class="btn btn-primary" style="padding: 0.85rem 1.6rem; font-size: 1rem; font-weight: 600;">
+            <a id="btnGiteaSignup" href="{{ GITEA_EXTERNAL_URL|default:'https://git.cybersocle.site' }}/user/sign_up" target="_blank" rel="noopener noreferrer" class="btn btn-primary" style="padding: 0.85rem 1.6rem; font-size: 1rem; font-weight: 600;">
                 {% icon "user-plus" size=18 %} {% trans "Finaliser l'inscription sur Gitea" %}
             </a>
-            <a id="btnGiteaLogin" href="https://git.cybersocle.site/users/sign_in" target="_blank" rel="noopener noreferrer" class="btn btn-outline" style="border-color: #10b981; color: #10b981; padding: 0.85rem 1.6rem; font-size: 1rem;">
+            <a id="btnGiteaLogin" href="{{ GITEA_LOGIN_URL|default:'https://git.cybersocle.site/user/login' }}" target="_blank" rel="noopener noreferrer" class="btn btn-outline" style="border-color: #10b981; color: #10b981; padding: 0.85rem 1.6rem; font-size: 1rem;">
                 {% icon "log-in" size=18 %} {% trans "Se Connecter sur Gitea" %}
             </a>
             <a href="{% url 'dashboard' %}" class="btn btn-secondary" style="padding: 0.85rem 1.6rem; font-size: 1rem;">
@@ -538,8 +538,8 @@ async function loginWithZkp() {
 }
 
 function handleSuccessfulZkpAuth(username, data) {
-    const fallbackSignup = 'https://git.cybersocle.site/users/sign_up';
-    const fallbackLogin = 'https://git.cybersocle.site/users/sign_in';
+    const fallbackSignup = '{{ GITEA_EXTERNAL_URL|default:"https://git.cybersocle.site" }}/user/sign_up';
+    const fallbackLogin = '{{ GITEA_LOGIN_URL|default:"https://git.cybersocle.site/user/login" }}';
     const primaryRedirect = (data && data.redirect_url) ? data.redirect_url : (data && data.gitea_signup_url ? data.gitea_signup_url : fallbackSignup);
     const signupUrl = (data && data.gitea_signup_url) ? data.gitea_signup_url : fallbackSignup;
     const loginUrl = (data && data.gitea_login_url) ? data.gitea_login_url : fallbackLogin;

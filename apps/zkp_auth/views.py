@@ -236,8 +236,10 @@ class ZKPVerifyView(APIView):
                 q_params["state"] = state
             oauth_redirect = f"{redirect_uri}{sep}{urlencode(q_params)}"
 
-        gitea_signup_url = build_gitea_url(f"user/sign_up?user_name={user.username}")
-        gitea_login_url = build_gitea_url("user/login")
+        from django.conf import settings
+        gitea_ext = getattr(settings, "GITEA_EXTERNAL_URL", "https://git.cybersocle.site").rstrip("/")
+        gitea_signup_url = f"{gitea_ext}/user/sign_up?user_name={user.username}"
+        gitea_login_url = getattr(settings, "GITEA_LOGIN_URL", f"{gitea_ext}/user/login")
         primary_redirect = oauth_redirect or gitea_signup_url
 
         return Response(

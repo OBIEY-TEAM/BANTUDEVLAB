@@ -28,7 +28,7 @@ except ImportError:
 BASE_DIR = Path(__file__).resolve().parent
 REPOS_DIR = BASE_DIR / "forge_data" / "repos"
 BANTU_CORE_URL = os.environ.get("BANTU_CORE_URL", BASE_URL_1)
-GITEA_LOGIN_URL = os.environ.get("GITEA_LOGIN_URL", f"{GITEA_WEB_URL}/user/login")
+GITEA_LOGIN_URL = os.environ.get("GITEA_LOGIN_URL", f"{BASE_URL_2}/user/login")
 WEBHOOK_SECRET = os.environ.get("GITEA_WEBHOOK_SECRET", "bantu_dev_webhook_secret_key_2026")
 PORT = int(os.environ.get("FORGE_PORT", 3001))
 

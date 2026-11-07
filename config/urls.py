@@ -18,6 +18,7 @@ from config.base_urls import BASE_URL_2, GITEA_WEB_URL
 
 class DynamicGiteaRedirectView(RedirectView):
     permanent = False
+    query_string = True
 
     def get_redirect_url(self, *args, **kwargs):
         gitea_url = getattr(settings, "GITEA_LOGIN_URL", f"{GITEA_WEB_URL}/user/login")

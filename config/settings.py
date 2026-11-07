@@ -247,8 +247,8 @@ FORGE_INTERNAL_URL = FORGE_INTERNAL_URL
 AI_URL = AI_URL
 SOVEREIGN_BASE_URLS = get_base_urls()
 
-# Gitea / Forge Sovereign Integration
-GITEA_EXTERNAL_URL = os.environ.get("GITEA_EXTERNAL_URL", GITEA_WEB_URL)
+# Gitea / Forge Sovereign Integration — rattaché à BASE_URL_2 (https://git.cybersocle.site) en production
+GITEA_EXTERNAL_URL = os.environ.get("GITEA_EXTERNAL_URL", BASE_URL_2).rstrip("/")
 GITEA_API_URL = os.environ.get("GITEA_API_URL", f"{GITEA_EXTERNAL_URL}/api/v1")
 GITEA_ADMIN_TOKEN = os.environ.get("GITEA_ADMIN_TOKEN", "")
 GITEA_LOGIN_URL = os.environ.get("GITEA_LOGIN_URL", f"{GITEA_EXTERNAL_URL}/user/login")

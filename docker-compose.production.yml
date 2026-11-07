@@ -7,9 +7,10 @@ x-django-env: &django-env
   DB_ENGINE: postgres
   POSTGRES_HOST: db
   POSTGRES_PORT: "5432"
-  GITEA_API_URL: ${GITEA_API_URL:-http://gitea:3000/api/v1}
-  GITEA_EXTERNAL_URL: ${GITEA_EXTERNAL_URL:-http://localhost:3002}
-  GITEA_LOGIN_URL: ${GITEA_LOGIN_URL:-http://localhost:3002/user/login}
+  GITEA_API_URL: http://gitea:3000/api/v1
+  GITEA_WEB_URL: https://git.cybersocle.site
+  GITEA_EXTERNAL_URL: https://git.cybersocle.site
+  GITEA_LOGIN_URL: https://git.cybersocle.site/user/login
   GEMMA_API_URL: ${GEMMA_API_URL:-http://ollama:11434/api/generate}
   GEMMA_MODEL_NAME: ${GEMMA_MODEL_NAME:-gemma2:2b}
 
@@ -36,6 +37,7 @@ services:
       - static_volume:/var/www/static:ro
     depends_on:
       - django_app
+      - gitea
       - gitlab
     security_opt:
       - no-new-privileges:true
@@ -79,7 +81,7 @@ services:
     networks:
       - app_net
 
-  # Moteur Git Officiel Gitea avec Thème & Synchronisation Linguistique Souveraine (port hôte 3002)
+  # Moteur Git Officiel Gitea rattaché à https://git.cybersocle.site/ (port hôte 3002 -> conteneur 3000)
   gitea:
     image: gitea/gitea:1.22
     container_name: bantudevlab_gitea_prod
@@ -90,9 +92,9 @@ services:
       - GITEA__database__DB_TYPE=sqlite3
       - GITEA__database__PATH=/data/gitea/gitea.db
       - GITEA__database__SQLITE_JOURNAL_MODE=WAL
-      - GITEA__server__DOMAIN=localhost
+      - GITEA__server__DOMAIN=${GITEA_DOMAIN:-git.cybersocle.site}
       - GITEA__server__HTTP_PORT=3000
-      - GITEA__server__ROOT_URL=http://localhost:3002/
+      - GITEA__server__ROOT_URL=${GITEA_ROOT_URL:-https://git.cybersocle.site/}
       - GITEA__server__LANDING_PAGE=explore
       - GITEA__server__SSH_PORT=2222
       - GITEA__ui__DEFAULT_THEME=github-dark
@@ -103,7 +105,7 @@ services:
       - GITEA__security__SECRET_KEY=bantu_gitea_secret_key_2026_sovereign_africa
       - GITEA__service__DISABLE_REGISTRATION=false
       - GITEA__service__ENABLE_CAPTCHA=false
-      - GITEA__webhook__ALLOWED_HOST_LIST=django_app,forge_engine,127.0.0.1,localhost,host.docker.internal
+      - GITEA__webhook__ALLOWED_HOST_LIST=django_app,forge_engine,127.0.0.1,localhost,host.docker.internal,cybersocle.site,git.cybersocle.site
     volumes:
       - gitea_production_data:/data
       - ./custom:/data/gitea/custom:ro
@@ -160,10 +162,10 @@ services:
       - ${ENV_FILE:-.env.production}
     environment:
       PORT: "3001"
-      BANTU_CORE_URL: "http://localhost:8002"
+      BANTU_CORE_URL: ${BASE_URL_1:-https://cybersocle.site}
       BANTU_CORE_INTERNAL_URL: "http://django_app:8000"
-      GITEA_EXTERNAL_URL: "http://localhost:3002"
-      GITEA_LOGIN_URL: "http://localhost:3002/user/login"
+      GITEA_EXTERNAL_URL: https://git.cybersocle.site
+      GITEA_LOGIN_URL: https://git.cybersocle.site/user/login
       GITEA_WEBHOOK_SECRET: ${GITEA_WEBHOOK_SECRET:-bantu_dev_webhook_secret_key_2026}
     volumes:
       - forge_production_repos:/app/forge_data/repos

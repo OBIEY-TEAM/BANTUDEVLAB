@@ -99,6 +99,9 @@
 
     function setCookie(name, val) {
         document.cookie = name + '=' + encodeURIComponent(val) + ';path=/;max-age=31536000';
+        if (window.location.hostname && window.location.hostname.endsWith('cybersocle.site')) {
+            document.cookie = name + '=' + encodeURIComponent(val) + ';domain=.cybersocle.site;path=/;max-age=31536000;SameSite=Lax';
+        }
     }
 
     function getCurrentTheme() {
@@ -217,11 +220,12 @@
 
         document.querySelectorAll('a').forEach(a => {
             const h = a.href || '';
-            if (h.includes(':3002') || h.includes(':3001') || h.includes(':8001')) {
+            const isGitea = h.includes(':3002') || h.includes('git.cybersocle.site') || h.includes('gitea.cybersocle.site') || h.includes('/user/login') || h.includes('/user/sign_up');
+            if (isGitea || h.includes(':3001') || h.includes(':8001') || h.includes(':8002') || h.includes('cybersocle.site')) {
                 try {
                     const u = new URL(h, window.location.origin);
-                    u.searchParams.set('lang', (h.includes(':3002') ? giteaLang : lang));
-                    u.searchParams.set('theme', (h.includes(':3002') ? giteaTheme : theme));
+                    u.searchParams.set('lang', (isGitea ? giteaLang : lang));
+                    u.searchParams.set('theme', (isGitea ? giteaTheme : theme));
                     a.href = u.toString();
                 } catch (e) {}
             }
