@@ -219,8 +219,9 @@ class ZKPVerifyView(APIView):
         )
 
         login(request, user)
-        from config.base_urls import GITEA_WEB_URL, build_gitea_url
         from urllib.parse import urlencode
+
+        from config.base_urls import build_gitea_url
 
         # Vérification si un flux OAuth de redirection est actif
         redirect_uri = request.data.get("redirect_uri")
