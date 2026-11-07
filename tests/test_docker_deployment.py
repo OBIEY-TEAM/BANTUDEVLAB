@@ -1,5 +1,6 @@
 """Tests de validation et de cohérence pour les déploiements Docker de BANTUDEVLAB."""
 
+import os
 import subprocess
 import unittest
 from pathlib import Path
@@ -251,19 +252,24 @@ puts "PROVIDER_OK"
             )
             self.assertEqual(res_dev.returncode, 0, f"Erreur docker compose config dev: {res_dev.stderr}")
 
+            env_file = ".env.production" if (self.root_dir / ".env.production").exists() else ".env.production.example"
+            prod_cmd = [
+                "docker",
+                "compose",
+                "-f",
+                "docker-compose.production.yml",
+                "--env-file",
+                env_file,
+                "config",
+                "--quiet",
+            ]
+            env_override = os.environ.copy()
+            env_override["ENV_FILE"] = env_file
             res_prod = subprocess.run(
-                [
-                    "docker",
-                    "compose",
-                    "-f",
-                    "docker-compose.production.yml",
-                    "--env-file",
-                    ".env.production.example",
-                    "config",
-                    "--quiet",
-                ],
+                prod_cmd,
                 cwd=self.root_dir,
                 capture_output=True,
                 text=True,
+                env=env_override,
             )
             self.assertEqual(res_prod.returncode, 0, f"Erreur docker compose config prod: {res_prod.stderr}")

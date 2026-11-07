@@ -35,22 +35,22 @@
 
     <!-- Step 1: Username & Sovereign Organization -->
     <div id="wizardStep1" class="wizard-step-content">
-        <label style="display: block; margin-bottom: 0.4rem; font-weight: 600;">Nom de Développeur Souverain (Username) :</label>
+        <label style="display: block; margin-bottom: 0.4rem; font-weight: 600;">{% trans "Nom de Développeur Souverain (Username)" %} :</label>
         <input type="text" id="zkpUsername" value="kouame_dev" style="width: 100%; padding: 0.75rem; background: #080c14; border: 1px solid var(--dark-border); color: #fff; border-radius: 8px; font-size: 1rem; box-sizing: border-box;">
 
         <div style="margin-top: 1.25rem;">
-            <label style="display: block; margin-bottom: 0.4rem; font-weight: 600;">Juridiction Continentale (Nœud Souverain) :</label>
+            <label style="display: block; margin-bottom: 0.4rem; font-weight: 600;">{% trans "Juridiction Continentale (Nœud Souverain)" %} :</label>
             <select id="zkpCountry" style="width: 100%; padding: 0.75rem; background: #080c14; border: 1px solid var(--dark-border); color: #fff; border-radius: 8px; font-size: 0.95rem; box-sizing: border-box;">
-                <option value="CIV">Côte d'Ivoire (Systalink Abidjan DC)</option>
-                <option value="SEN">Sénégal (Dakar Sovereign Node)</option>
-                <option value="NGA">Nigeria (Lagos Datacenter)</option>
-                <option value="KEN">Kenya (Nairobi IXP Hub)</option>
-                <option value="RWA">Rwanda (Kigali Innovation City)</option>
+                <option value="CIV">{% trans "Côte d'Ivoire (Systalink Abidjan DC)" %}</option>
+                <option value="SEN">{% trans "Sénégal (Dakar Sovereign Node)" %}</option>
+                <option value="NGA">{% trans "Nigeria (Lagos Datacenter)" %}</option>
+                <option value="KEN">{% trans "Kenya (Nairobi IXP Hub)" %}</option>
+                <option value="RWA">{% trans "Rwanda (Kigali Innovation City)" %}</option>
             </select>
         </div>
 
         <div style="margin-top: 2rem; display: flex; justify-content: flex-end;">
-            <button class="btn btn-primary" onclick="switchWizardStep(2)">Suivant : Générer la Clé Souveraine {% icon "arrow-right" size=18 %}</button>
+            <button class="btn btn-primary" onclick="switchWizardStep(2)">{% trans "Suivant : Générer la Clé Souveraine" %} {% icon "arrow-right" size=18 %}</button>
         </div>
     </div>
 
@@ -505,6 +505,10 @@ async function loginWithZkp() {
 
     log(`Preuve (t, s) calculée. Envoi de la preuve au serveur pour vérification...`);
 
+    const urlParams = new URLSearchParams(window.location.search);
+    const redirectUri = urlParams.get('redirect_uri');
+    const stateParam = urlParams.get('state');
+
     const verifyRes = await fetch('/api/zkp/verify/', {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
@@ -513,6 +517,8 @@ async function loginWithZkp() {
             challenge_nonce: nonce,
             commitment_t: "0x" + t.toString(16),
             response_s: "0x" + s.toString(16),
+            redirect_uri: redirectUri,
+            state: stateParam
         })
     });
     const verifyData = await verifyRes.json();
@@ -533,6 +539,7 @@ async function loginWithZkp() {
 function handleSuccessfulZkpAuth(username, data) {
     const fallbackSignup = '{{ GITEA_LOGIN_URL|default:BASE_URL_2 }}';
     const fallbackLogin = '{{ GITEA_LOGIN_URL|default:BASE_URL_2 }}';
+    const primaryRedirect = (data && data.redirect_url) ? data.redirect_url : (data && data.gitea_signup_url ? data.gitea_signup_url : fallbackSignup);
     const signupUrl = (data && data.gitea_signup_url) ? data.gitea_signup_url : fallbackSignup;
     const loginUrl = (data && data.gitea_login_url) ? data.gitea_login_url : fallbackLogin;
 
@@ -543,7 +550,7 @@ function handleSuccessfulZkpAuth(username, data) {
     const secsSpan = document.getElementById('redirectSecs');
 
     if (userDisplay) userDisplay.textContent = username;
-    if (btnSignup) btnSignup.href = signupUrl;
+    if (btnSignup) btnSignup.href = primaryRedirect;
     if (btnLogin) btnLogin.href = loginUrl;
 
     if (section) {
@@ -551,13 +558,13 @@ function handleSuccessfulZkpAuth(username, data) {
         section.scrollIntoView({ behavior: 'smooth' });
     }
 
-    let countdown = 4;
+    let countdown = 3;
     const interval = setInterval(() => {
         countdown--;
         if (secsSpan) secsSpan.textContent = countdown;
         if (countdown <= 0) {
             clearInterval(interval);
-            window.location.href = signupUrl;
+            window.location.href = primaryRedirect;
         }
     }, 1000);
 }

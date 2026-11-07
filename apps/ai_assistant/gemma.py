@@ -41,7 +41,7 @@ class GemmaAssistant:
             f"{self.SYSTEM_PROMPT}\n\n"
             f"TÂCHE: Analyse et recommandation technique ({context})\n"
             f"CODE À ANALYSER:\n```\n{code_snippet}\n```\n\n"
-            f"Fournis une analyse structurée : Points forts, Vulnérabilités potentielles, Recommandation de souveraineté et Correctif proposé.<end_of_turn>\n"
+            f"Fournis une analyse structurée : Points forts, Vulnérabilités potentielles, Recommandation de souveraineté et Correctif proposé en signant 'BantuDevLab AI'.<end_of_turn>\n"
             f"<start_of_turn>model\n"
         )
 
@@ -138,6 +138,7 @@ class GemmaAssistant:
 
         response = None
         try:
+            timeout_val = 0.5 if getattr(settings, "TESTING", False) else 10
             response = requests.post(
                 self.api_url,
                 json={
@@ -147,7 +148,7 @@ class GemmaAssistant:
                     "options": {"temperature": 0.15, "top_p": 0.9, "num_predict": 1024},
                 },
                 stream=True,
-                timeout=10,
+                timeout=timeout_val,
             )
             if response.status_code == 200:
                 try:

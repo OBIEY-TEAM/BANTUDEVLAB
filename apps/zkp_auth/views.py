@@ -113,12 +113,29 @@ class ZKPChallengeView(APIView):
     Protects against user enumeration by returning a consistent response structure,
     status code (200 OK), and uniform timing whether the user exists or not.
     Throttled to 5 req/min.
+
+    Supports GET requests for browser-based OAuth/OIDC authorization flow
+    (e.g., from GitLab / Gitea login buttons), redirecting to the interactive
+    ZKP authentication wizard (login-ui/) while preserving query parameters.
     """
 
     permission_classes = [AllowAny]
 
     throttle_classes = [ScopedRateThrottle]
     throttle_scope = "zkp"
+
+    def get(self, request):
+        """
+        Permet l'accès direct via navigateur depuis les boutons OmniAuth / OAuth2
+        en affichant l'interface interactive de connexion Zero-Trust.
+        """
+        query_string = request.META.get("QUERY_STRING", "")
+        redirect_target = "/api/zkp/login-ui/"
+        if query_string:
+            redirect_target = f"{redirect_target}?{query_string}"
+        from django.shortcuts import redirect
+
+        return redirect(redirect_target)
 
     def post(self, request):
         username = request.data.get("username")
@@ -202,8 +219,27 @@ class ZKPVerifyView(APIView):
         )
 
         login(request, user)
-        gitea_signup_url = f"http://localhost:3002/user/sign_up?user_name={user.username}"
-        gitea_login_url = "http://localhost:3002/user/login"
+        from urllib.parse import urlencode
+
+        from config.base_urls import build_gitea_url
+
+        # Vérification si un flux OAuth de redirection est actif
+        redirect_uri = request.data.get("redirect_uri")
+        state = request.data.get("state")
+        auth_code = secrets.token_hex(20)
+
+        oauth_redirect = None
+        if redirect_uri:
+            sep = "&" if "?" in redirect_uri else "?"
+            q_params = {"code": auth_code}
+            if state:
+                q_params["state"] = state
+            oauth_redirect = f"{redirect_uri}{sep}{urlencode(q_params)}"
+
+        gitea_signup_url = build_gitea_url(f"user/sign_up?user_name={user.username}")
+        gitea_login_url = build_gitea_url("user/login")
+        primary_redirect = oauth_redirect or gitea_signup_url
+
         return Response(
             {
                 "success": True,
@@ -213,9 +249,11 @@ class ZKPVerifyView(APIView):
                     "username": user.username,
                     "country_code": identity.country_code,
                 },
-                "redirect_url": gitea_signup_url,
+                "redirect_url": primary_redirect,
+                "oauth_redirect": oauth_redirect,
                 "gitea_login_url": gitea_login_url,
                 "gitea_signup_url": gitea_signup_url,
+                "auth_code": auth_code,
             },
             status=status.HTTP_200_OK,
         )

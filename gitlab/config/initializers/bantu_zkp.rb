@@ -27,7 +27,7 @@ module Gitlab
 
       option :client_options, {
         site: 'http://django_app:8000',
-        authorize_url: "#{base_portal}/api/zkp/challenge/",
+        authorize_url: "#{base_portal}/api/zkp/login-ui/",
         token_url: '/api/zkp/verify/',
         user_info_url: '/api/zkp/userinfo/'
       }
