@@ -85,11 +85,7 @@ class EcosystemI18nMiddleware:
         target_lang = None
 
         # 1. Priorite : parametre POST ou GET 'language' / 'lang'
-        explicit_lang = (
-            request.POST.get("language")
-            or request.GET.get("language")
-            or request.GET.get("lang")
-        )
+        explicit_lang = request.POST.get("language") or request.GET.get("language") or request.GET.get("lang")
         if explicit_lang and explicit_lang in GITEA_TO_DJANGO_LANG:
             target_lang = GITEA_TO_DJANGO_LANG[explicit_lang]
 

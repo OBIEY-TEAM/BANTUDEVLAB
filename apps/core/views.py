@@ -41,6 +41,7 @@ def switch_language_view(request):
     if lang_code and check_for_language(lang_code):
         request.LANGUAGE_CODE = lang_code
         from django.utils import translation
+
         translation.activate(lang_code)
         if hasattr(request, "session"):
             request.session["django_language"] = lang_code
