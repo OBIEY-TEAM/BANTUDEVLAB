@@ -169,6 +169,8 @@ class GiteaClient:
 
         if res.get("success"):
             return res
+        from config.base_urls import build_portal_url
+
         return {
             "success": True,
             "data": {
@@ -177,8 +179,8 @@ class GiteaClient:
                 "full_name": f"sovereign-developer/{name}",
                 "description": description,
                 "private": private,
-                "html_url": f"https://cybersocle.site/sovereign-developer/{name}",
-                "clone_url": f"https://cybersocle.site/sovereign-developer/{name}.git",
+                "html_url": build_portal_url(f"sovereign-developer/{name}"),
+                "clone_url": build_portal_url(f"sovereign-developer/{name}.git"),
             },
             "fallback": True,
         }
