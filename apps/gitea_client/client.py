@@ -23,7 +23,7 @@ class GiteaClient:
     CACHE_TTL = 60
 
     def __init__(self, api_url: Optional[str] = None, token: Optional[str] = None):
-        from config.base_urls import GITEA_WEB_URL, build_gitea_url
+        from config.base_urls import GITEA_WEB_URL
 
         default_api = getattr(settings, "GITEA_API_URL", None) or f"{GITEA_WEB_URL}/api/v1"
         self.api_url = (api_url or default_api).rstrip("/")
