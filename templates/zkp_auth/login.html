@@ -145,10 +145,10 @@
             {% trans "Votre identité souveraine" %} <b id="giteaUserDisplay" style="color: #fff; font-size: 1.05rem;"></b> {% trans "est authentifiée sans mot de passe. Finalisez ou liez votre compte sur la forge Gitea souveraine." %}
         </p>
         <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
-            <a id="btnGiteaSignup" href="{{ GITEA_LOGIN_URL|default:BASE_URL_2 }}" target="_blank" rel="noopener noreferrer" class="btn btn-primary" style="padding: 0.85rem 1.6rem; font-size: 1rem; font-weight: 600;">
-                {% icon "user-plus" size=18 %} {% trans "Finaliser l'Inscription Gitea" %}
+            <a id="btnGiteaSignup" href="https://git.cybersocle.site/users/sign_up" target="_blank" rel="noopener noreferrer" class="btn btn-primary" style="padding: 0.85rem 1.6rem; font-size: 1rem; font-weight: 600;">
+                {% icon "user-plus" size=18 %} {% trans "Finaliser l'inscription sur Gitea" %}
             </a>
-            <a id="btnGiteaLogin" href="{{ GITEA_LOGIN_URL|default:BASE_URL_2 }}" target="_blank" rel="noopener noreferrer" class="btn btn-outline" style="border-color: #10b981; color: #10b981; padding: 0.85rem 1.6rem; font-size: 1rem;">
+            <a id="btnGiteaLogin" href="https://git.cybersocle.site/users/sign_in" target="_blank" rel="noopener noreferrer" class="btn btn-outline" style="border-color: #10b981; color: #10b981; padding: 0.85rem 1.6rem; font-size: 1rem;">
                 {% icon "log-in" size=18 %} {% trans "Se Connecter sur Gitea" %}
             </a>
             <a href="{% url 'dashboard' %}" class="btn btn-secondary" style="padding: 0.85rem 1.6rem; font-size: 1rem;">
@@ -436,6 +436,7 @@ async function registerZkpIdentity() {
     if (res.ok) {
         log(`{% icon "circle-check" size=18 %} Enregistrement ZKP réussi ! Aucune information secrète n'a quitté votre machine.`);
         if (window.showToast) window.showToast(`Identité ZKP pour '${username}' enregistrée avec succès !`, 'success');
+        handleSuccessfulZkpAuth(username, data);
     } else {
         log(`{% icon "triangle-alert" size=18 %} ${data.error || 'Erreur d\'enregistrement'}`);
         if (window.showToast) window.showToast(`Erreur : ${data.error || 'Échec de l\'enregistrement'}`, 'error');
@@ -537,8 +538,8 @@ async function loginWithZkp() {
 }
 
 function handleSuccessfulZkpAuth(username, data) {
-    const fallbackSignup = '{{ GITEA_LOGIN_URL|default:BASE_URL_2 }}';
-    const fallbackLogin = '{{ GITEA_LOGIN_URL|default:BASE_URL_2 }}';
+    const fallbackSignup = 'https://git.cybersocle.site/users/sign_up';
+    const fallbackLogin = 'https://git.cybersocle.site/users/sign_in';
     const primaryRedirect = (data && data.redirect_url) ? data.redirect_url : (data && data.gitea_signup_url ? data.gitea_signup_url : fallbackSignup);
     const signupUrl = (data && data.gitea_signup_url) ? data.gitea_signup_url : fallbackSignup;
     const loginUrl = (data && data.gitea_login_url) ? data.gitea_login_url : fallbackLogin;

@@ -27,15 +27,15 @@ def generate_logos():
     orig = Image.open(src_path).convert("RGBA")
     w, h = orig.size
 
-    # Create a square canvas to keep aspect ratio centered
+    # Create a square canvas to keep aspect ratio centered with pure transparency
     max_dim = max(w, h)
-    # Background color from corners of image
-    bg_color = (2, 6, 23, 255)  # Deep obsidian dark #020617
+    # 100% transparent background (alpha = 0)
+    bg_color = (0, 0, 0, 0)
 
     square_img = Image.new("RGBA", (max_dim, max_dim), bg_color)
     offset_x = (max_dim - w) // 2
     offset_y = (max_dim - h) // 2
-    square_img.paste(orig, (offset_x, offset_y))
+    square_img.paste(orig, (offset_x, offset_y), orig)
 
     # Destinations
     dest_dirs = [Path("static/img"), Path("custom/public/assets/img"), Path("gitea_home/custom/public/assets/img")]
@@ -59,23 +59,21 @@ def generate_logos():
     logo_512.save(b512, format="PNG", optimize=True)
     b64_str = base64.b64encode(b512.getvalue()).decode("ascii")
 
-    # Generate crisp SVG embedding the high-resolution logo
+    # Generate crisp transparent SVG embedding the high-resolution logo without solid rectangle
     svg_content = f"""<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="100%" height="100%">
   <defs>
     <filter id="neonGlow" x="-20%" y="-20%" width="140%" height="140%">
       <feDropShadow dx="0" dy="0" stdDeviation="8" flood-color="#00e5ff" flood-opacity="0.6"/>
     </filter>
   </defs>
-  <rect width="512" height="512" rx="48" fill="#020617"/>
   <image href="data:image/png;base64,{b64_str}" width="512" height="512" filter="url(#neonGlow)"/>
 </svg>"""
 
-    # Favicon SVG
+    # Favicon SVG (transparent)
     b32 = io.BytesIO()
     logo_64.save(b32, format="PNG", optimize=True)
     b64_fav = base64.b64encode(b32.getvalue()).decode("ascii")
     fav_svg = f"""<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="100%" height="100%">
-  <rect width="64" height="64" rx="12" fill="#020617"/>
   <image href="data:image/png;base64,{b64_fav}" width="64" height="64"/>
 </svg>"""
 

@@ -97,6 +97,15 @@ TRANSLATIONS = {
         "Menu mobile": "Menu mobile",
         "Fermer le menu": "Fermer le menu",
         "Forge Logicielle Panafricaine & Souveraine. Hébergée sur Systalink Cloud.": "Forge Logicielle Panafricaine & Souveraine. Hébergée sur Systalink Cloud.",
+        "Moteur Git Panafricain & Dépôts Souverains": "Moteur Git Panafricain & Dépôts Souverains",
+        "Demander l'Avis de Gemma": "Demander l'Avis de Gemma",
+        "Finaliser l'inscription sur Gitea": "Finaliser l'inscription sur Gitea",
+        "Finaliser l'Inscription Gitea": "Finaliser l'Inscription Gitea",
+        "Se Connecter sur Gitea": "Se Connecter sur Gitea",
+        "Privé": "Privé",
+        "Public Souverain": "Public Souverain",
+        "Chatbot": "Chatbot",
+        "Chat Bot": "Chat Bot",
     },
     "en": {
         "Accueil": "Home",
@@ -200,6 +209,15 @@ TRANSLATIONS = {
         "Menu mobile": "Mobile Menu",
         "Fermer le menu": "Close Menu",
         "Forge Logicielle Panafricaine & Souveraine. Hébergée sur Systalink Cloud.": "Pan-African & Sovereign Software Forge. Hosted on Systalink Cloud.",
+        "Moteur Git Panafricain & Dépôts Souverains": "Pan-African Git Engine & Sovereign Repositories",
+        "Demander l'Avis de Gemma": "Ask Gemma Review",
+        "Finaliser l'inscription sur Gitea": "Complete registration on Gitea",
+        "Finaliser l'Inscription Gitea": "Complete Gitea Registration",
+        "Se Connecter sur Gitea": "Sign in to Gitea",
+        "Privé": "Private",
+        "Public Souverain": "Sovereign Public",
+        "Chatbot": "Chatbot",
+        "Chat Bot": "Chat Bot",
     },
     "sw": {
         "Accueil": "Mwanzo",
@@ -303,6 +321,15 @@ TRANSLATIONS = {
         "Menu mobile": "Menyu ya Simu",
         "Fermer le menu": "Funga menyu",
         "Forge Logicielle Panafricaine & Souveraine. Hébergée sur Systalink Cloud.": "Hifadhi Huru ya Programu Barani Afrika. Imewekwa kwenye Systalink Cloud.",
+        "Moteur Git Panafricain & Dépôts Souverains": "Injini ya Git ya Afrika na Hazina Huru",
+        "Demander l'Avis de Gemma": "Omba Maoni ya Gemma",
+        "Finaliser l'inscription sur Gitea": "Kamilisha usajili kwenye Gitea",
+        "Finaliser l'Inscription Gitea": "Kamilisha Usajili wa Gitea",
+        "Se Connecter sur Gitea": "Ingia kwenye Gitea",
+        "Privé": "Binafsi",
+        "Public Souverain": "Umma Huru",
+        "Chatbot": "Chatbot",
+        "Chat Bot": "Chat Bot",
     },
     "pt": {
         "Accueil": "Inicio",
@@ -406,6 +433,15 @@ TRANSLATIONS = {
         "Menu mobile": "Menu movel",
         "Fermer le menu": "Fechar menu",
         "Forge Logicielle Panafricaine & Souveraine. Hébergée sur Systalink Cloud.": "Forja Soberana e Pan-Africana de Software. Hospedada na Systalink Cloud.",
+        "Moteur Git Panafricain & Dépôts Souverains": "Motor Git Pan-Africano & Repositorios Soberanos",
+        "Demander l'Avis de Gemma": "Pedir Opiniao do Gemma",
+        "Finaliser l'inscription sur Gitea": "Finalizar inscricao no Gitea",
+        "Finaliser l'Inscription Gitea": "Finalizar Inscricao no Gitea",
+        "Se Connecter sur Gitea": "Entrar no Gitea",
+        "Privé": "Privado",
+        "Public Souverain": "Publico Soberano",
+        "Chatbot": "Chatbot",
+        "Chat Bot": "Chat Bot",
     },
 }
 
@@ -461,13 +497,15 @@ def build():
         po_lines = [
             'msgid ""',
             'msgstr ""',
-            '"Content-Type: text/plain; charset=UTF-8\\n"',
-            f'"Language: {lang}\\n"',
+            '"Content-Type: text/plain; charset=UTF-8\n"',
+            f'"Language: {lang}\n"',
             "",
         ]
         for msgid, msgstr in catalog.items():
-            po_lines.append(f'msgid "{msgid}"')
-            po_lines.append(f'msgstr "{msgstr}"')
+            clean_id = msgid.replace("\n", " ")
+            clean_str = msgstr.replace("\n", " ")
+            po_lines.append(f'msgid "{clean_id}"')
+            po_lines.append(f'msgstr "{clean_str}"')
             po_lines.append("")
 
         po_path = lang_dir / "django.po"

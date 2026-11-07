@@ -50,9 +50,26 @@
   html[data-theme="light"] .full.height,
   html[data-theme="light"] #wrapper,
   html[data-theme="light"] .page-content,
-  html[data-theme="light"] .ui.container {
+  html[data-theme="light"] .ui.container,
+  html[data-theme="light"] .ui.grid,
+  html[data-theme="light"] .ui.segment,
+  html[data-theme="light"] .ui.segments,
+  html[data-theme="light"] .ui.cards,
+  html[data-theme="light"] .ui.card,
+  html[data-theme="light"] .ui.table,
+  html[data-theme="light"] .ui.form {
     background-color: #ffffff !important;
     color: #0f172a !important;
+  }
+  html[data-theme="light"] .ui.menu.navbar {
+    background-color: #ffffff !important;
+    border-bottom: 2px solid #f59e0b !important;
+  }
+  html[data-theme="light"] .repo-header-container,
+  html[data-theme="light"] .file-view-header,
+  html[data-theme="light"] .page-footer {
+    background-color: #f8fafc !important;
+    border-color: #cbd5e1 !important;
   }
 </style>
 <script>
@@ -256,35 +273,69 @@
 }
 
 /* Guarantee 100% Solid Opacity on all Modals & Reduced Windows (No Transparency Bug) */
-.ui.modal,
-.ui.modal > .header,
-.ui.modal > .content,
-.ui.modal > .actions,
-.ui.dropdown .menu,
-.ui.popup,
-.command-palette-box,
-.modal,
-.modal-content,
-.modal-dialog {
-  background-color: var(--color-canvas-subtle, #070e1e) !important;
-  color: var(--color-text, #f8fafc) !important;
+html:not([data-theme="light"]) .ui.modal,
+html:not([data-theme="light"]) .ui.modal > .header,
+html:not([data-theme="light"]) .ui.modal > .content,
+html:not([data-theme="light"]) .ui.modal > .actions,
+html:not([data-theme="light"]) .ui.dropdown .menu,
+html:not([data-theme="light"]) .ui.dropdown .menu > .item,
+html:not([data-theme="light"]) .ui.popup,
+html:not([data-theme="light"]) .ui.vertical.menu,
+html:not([data-theme="light"]) .mobile-menu,
+html:not([data-theme="light"]) .following.bar,
+html:not([data-theme="light"]) .ui.attached.menu,
+html:not([data-theme="light"]) .command-palette-box,
+html:not([data-theme="light"]) .modal,
+html:not([data-theme="light"]) .modal-content,
+html:not([data-theme="light"]) .modal-dialog,
+html[data-theme="dark"] .ui.modal,
+html[data-theme="dark"] .ui.modal > .header,
+html[data-theme="dark"] .ui.modal > .content,
+html[data-theme="dark"] .ui.modal > .actions,
+html[data-theme="dark"] .ui.dropdown .menu,
+html[data-theme="dark"] .ui.dropdown .menu > .item,
+html[data-theme="dark"] .ui.popup,
+html[data-theme="dark"] .ui.vertical.menu,
+html[data-theme="dark"] .mobile-menu,
+html[data-theme="dark"] .following.bar,
+html[data-theme="dark"] .ui.attached.menu,
+html[data-theme="dark"] .command-palette-box,
+html[data-theme="dark"] .modal,
+html[data-theme="dark"] .modal-content,
+html[data-theme="dark"] .modal-dialog {
+  background-color: #070e1e !important;
+  color: #f8fafc !important;
   opacity: 1 !important;
-  border: 1px solid var(--color-border-default, rgba(0, 112, 243, 0.35)) !important;
+  border: 1px solid #1e293b !important;
   box-shadow: 0 16px 36px rgba(0, 0, 0, 0.8) !important;
 }
 
-[data-theme="light"] .ui.modal,
-[data-theme="light"] .ui.modal > .header,
-[data-theme="light"] .ui.modal > .content,
-[data-theme="light"] .ui.modal > .actions,
-[data-theme="light"] .ui.dropdown .menu,
-[data-theme="light"] .ui.popup,
-[data-theme="light"] .command-palette-box {
+html:not([data-theme="light"]) .ui.dropdown .menu > .item:hover,
+html[data-theme="dark"] .ui.dropdown .menu > .item:hover {
+  background-color: #0f172a !important;
+  color: #00e5ff !important;
+}
+
+html[data-theme="light"] .ui.modal,
+html[data-theme="light"] .ui.modal > .header,
+html[data-theme="light"] .ui.modal > .content,
+html[data-theme="light"] .ui.modal > .actions,
+html[data-theme="light"] .ui.dropdown .menu,
+html[data-theme="light"] .ui.dropdown .menu > .item,
+html[data-theme="light"] .ui.popup,
+html[data-theme="light"] .ui.vertical.menu,
+html[data-theme="light"] .mobile-menu,
+html[data-theme="light"] .command-palette-box {
   background-color: #ffffff !important;
   color: #0f172a !important;
   opacity: 1 !important;
   border: 1px solid #cbd5e1 !important;
   box-shadow: 0 16px 36px rgba(0, 0, 0, 0.15) !important;
+}
+
+html[data-theme="light"] .ui.dropdown .menu > .item:hover {
+  background-color: #f1f5f9 !important;
+  color: #0051cc !important;
 }
 
 

@@ -84,10 +84,10 @@ class EcosystemI18nMiddleware:
 
         target_lang = None
 
-        # 1. Priorite : parametre d'URL ?lang=
-        param_lang = request.GET.get("lang")
-        if param_lang and param_lang in GITEA_TO_DJANGO_LANG:
-            target_lang = GITEA_TO_DJANGO_LANG[param_lang]
+        # 1. Priorite : parametre POST ou GET 'language' / 'lang'
+        explicit_lang = request.POST.get("language") or request.GET.get("language") or request.GET.get("lang")
+        if explicit_lang and explicit_lang in GITEA_TO_DJANGO_LANG:
+            target_lang = GITEA_TO_DJANGO_LANG[explicit_lang]
 
         # 2. Priorite : cookie bantudevlab explicite
         if not target_lang:
@@ -114,7 +114,13 @@ class EcosystemI18nMiddleware:
         response = self.get_response(request)
 
         # Synchroniser tous les cookies de langue dans la reponse HTTP
-        active_lang = getattr(request, "LANGUAGE_CODE", None) or translation.get_language() or "fr"
+        resp_lang = None
+        if hasattr(response, "cookies") and response.cookies.get("django_language"):
+            resp_lang = response.cookies["django_language"].value
+        elif hasattr(response, "cookies") and response.cookies.get("bantu_lang"):
+            resp_lang = response.cookies["bantu_lang"].value
+
+        active_lang = resp_lang or getattr(request, "LANGUAGE_CODE", None) or translation.get_language() or "fr"
         active_short = GITEA_TO_DJANGO_LANG.get(active_lang, "fr")
         active_gitea = DJANGO_TO_GITEA_LANG.get(active_short, "fr-FR")
 
