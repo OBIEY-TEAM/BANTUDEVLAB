@@ -1,7 +1,10 @@
+from django.conf import settings
 from django.db.models import Avg, Count
 from django.http import JsonResponse
-from django.shortcuts import render
+from django.shortcuts import redirect, render
+from django.utils.translation import check_for_language
 from django.views.decorators.cache import cache_page
+from django.views.decorators.csrf import csrf_exempt
 from rest_framework import status
 from rest_framework.permissions import AllowAny, IsAdminUser, IsAuthenticated
 from rest_framework.response import Response
@@ -14,6 +17,37 @@ from apps.security_scanner.models import SecurityAuditReport
 from apps.zkp_auth.models import SovereignIdentity
 
 from .models import SovereignOrganization
+
+
+@csrf_exempt
+def switch_language_view(request):
+    """
+    Vue souveraine de changement de langue robuste et sans erreur CSRF 403.
+    Prend en charge GET et POST, valide la langue choisie (fr, en, sw, pt),
+    définit les cookies django_language, bantu_lang et lang pour synchroniser
+    tout l'écosystème (Django, GitLab, Gitea) et redirige vers l'URL précédente.
+    """
+    from django.utils.http import url_has_allowed_host_and_scheme
+
+    lang_code = request.POST.get("language") or request.GET.get("language") or request.GET.get("lang")
+    next_url = request.POST.get("next") or request.GET.get("next") or request.META.get("HTTP_REFERER") or "/"
+
+    if not url_has_allowed_host_and_scheme(
+        url=next_url, allowed_hosts=set(settings.ALLOWED_HOSTS), require_https=request.is_secure()
+    ):
+        next_url = "/"
+
+    response = redirect(next_url)
+    if lang_code and check_for_language(lang_code):
+        if hasattr(request, "session"):
+            request.session["django_language"] = lang_code
+        gitea_map = {"fr": "fr-FR", "en": "en-US", "sw": "sw-KE", "pt": "pt-PT"}
+        gitea_lang = gitea_map.get(lang_code, "fr-FR")
+        response.set_cookie(settings.LANGUAGE_COOKIE_NAME, lang_code, max_age=31536000, samesite="Lax")
+        response.set_cookie("django_language", lang_code, max_age=31536000, samesite="Lax")
+        response.set_cookie("bantu_lang", lang_code, max_age=31536000, samesite="Lax")
+        response.set_cookie("lang", gitea_lang, max_age=31536000, samesite="Lax")
+    return response
 
 
 def _positive_int(value, default):

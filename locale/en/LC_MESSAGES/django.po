@@ -90,6 +90,30 @@ msgstr "Browse FAQ & Guide"
 msgid "Dépôts Souverains Récents"
 msgstr "Recent Sovereign Repositories"
 
+msgid "Nom de Développeur Souverain (Username)"
+msgstr "Sovereign Developer Username"
+
+msgid "Juridiction Continentale (Nœud Souverain)"
+msgstr "Continental Jurisdiction (Sovereign Node)"
+
+msgid "Côte d'Ivoire (Systalink Abidjan DC)"
+msgstr "Ivory Coast (Systalink Abidjan DC)"
+
+msgid "Sénégal (Dakar Sovereign Node)"
+msgstr "Senegal (Dakar Sovereign Node)"
+
+msgid "Nigeria (Lagos Datacenter)"
+msgstr "Nigeria (Lagos Datacenter)"
+
+msgid "Kenya (Nairobi IXP Hub)"
+msgstr "Kenya (Nairobi IXP Hub)"
+
+msgid "Rwanda (Kigali Innovation City)"
+msgstr "Rwanda (Kigali Innovation City)"
+
+msgid "Suivant : Générer la Clé Souveraine"
+msgstr "Next: Generate Sovereign Key"
+
 msgid "Initialisation de la synchronisation avec Gitea..."
 msgstr "Initializing synchronization with Gitea..."
 
@@ -150,68 +174,23 @@ msgstr "Gitea"
 msgid "Aucun dépôt détecté sur le cluster Gitea local."
 msgstr "No repository detected on local Gitea cluster."
 
-msgid "Lancer l'Audit de Sécurité"
-msgstr "Run Security Audit"
-
-msgid "Indicateurs & Topologie Souveraine Panafricaine"
-msgstr "Pan-African Sovereign Indicators & Topology"
-
-msgid "Supervision en temps réel des nœuds certifiés et conformité UA 2020-2030."
-msgstr "Real-time supervision of certified nodes and AU 2020-2030 compliance."
-
-msgid "Tester la Latence"
-msgstr "Test Latency"
-
-msgid "Actualiser les Métriques"
-msgstr "Refresh Metrics"
-
-msgid "Topologie des Datacenters Certifiés"
-msgstr "Certified Datacenters Topology"
-
-msgid "Cliquez sur un nœud ou une carte pour inspecter les métriques locales"
-msgstr "Click on a node or card to inspect local metrics"
-
-msgid "Mesures de Latence Réelle Intra-Afrique (Temps Réel)"
-msgstr "Real Intra-Africa Latency Measurements (Real-Time)"
-
-msgid "Nœud"
-msgstr "Node"
-
-msgid "Ville"
-msgstr "City"
-
-msgid "Pays"
-msgstr "Country"
-
-msgid "Latence Réelle"
-msgstr "Real Latency"
-
-msgid "Statut"
-msgstr "Status"
-
-msgid "Changer de langue"
-msgstr "Change language"
-
-msgid "Basculer thème clair / sombre"
-msgstr "Toggle light / dark theme"
-
-msgid "Session authentifiée via Zero-Trust ZKP"
-msgstr "Session authenticated via Zero-Trust ZKP"
-
-msgid "Menu de navigation"
-msgstr "Navigation menu"
-
 msgid "Workbench Souverain & Audit SAST"
 msgstr "Sovereign Workbench & SAST Audit"
 
 msgid "Éditeur avec coloration syntaxique & numérotation"
 msgstr "Editor with syntax highlighting & line numbering"
 
+msgid "Langage"
+msgstr "Language"
+
 msgid "Prêt"
 msgstr "Ready"
 
 msgid "Snippet Démo"
 msgstr "Demo Snippet"
+
+msgid "Lancer l'Audit de Sécurité"
+msgstr "Run Security Audit"
 
 msgid "Demander l'Avis de Gemma 5B"
 msgstr "Ask Gemma 5B Review"
@@ -220,7 +199,7 @@ msgid "Souveraineté"
 msgstr "Sovereignty"
 
 msgid "Analyse Complétée"
-msgstr "Scan Completed"
+msgstr "Analysis Completed"
 
 msgid "Normes de Souveraineté Numérique ADSS-v1"
 msgstr "ADSS-v1 Digital Sovereignty Standards"
@@ -240,8 +219,8 @@ msgstr "Medium"
 msgid "Vulnérabilités & Fuites Détectées"
 msgstr "Vulnerabilities & Leaks Detected"
 
-msgid "0 problème détecté"
-msgstr "0 issues detected"
+msgid "problème détecté"
+msgstr "issue detected"
 
 msgid "Rapport d'Audit Gemma 5B (Local / On-Premise)"
 msgstr "Gemma 5B Audit Report (Local / On-Premise)"
@@ -249,8 +228,80 @@ msgstr "Gemma 5B Audit Report (Local / On-Premise)"
 msgid "Audits Récents"
 msgstr "Recent Audits"
 
-msgid "Fichier :"
-msgstr "File:"
-
 msgid "Aucun audit récent enregistré. Lancez un premier scan !"
 msgstr "No recent audit recorded. Launch your first scan!"
+
+msgid "Indicateurs & Topologie Souveraine Panafricaine"
+msgstr "Pan-African Sovereign Indicators & Topology"
+
+msgid "Supervision en temps réel des nœuds certifiés et conformité UA 2020-2030."
+msgstr "Real-time supervision of certified nodes and AU 2020-2030 compliance."
+
+msgid "Tester la Latence"
+msgstr "Test Latency"
+
+msgid "Actualiser les Métriques"
+msgstr "Refresh Metrics"
+
+msgid "Topologie des Datacenters Certifiés"
+msgstr "Topology of Certified Datacenters"
+
+msgid "Cliquez sur un nœud ou une carte pour inspecter les métriques locales"
+msgstr "Click on a node or card to inspect local metrics"
+
+msgid "Mesures de Latence Réelle Intra-Afrique (Temps Réel)"
+msgstr "Real Intra-Africa Latency Measurements (Real-Time)"
+
+msgid "Nœud"
+msgstr "Node"
+
+msgid "Ville"
+msgstr "City"
+
+msgid "Pays"
+msgstr "Country"
+
+msgid "Latence Réelle"
+msgstr "Actual Latency"
+
+msgid "Statut"
+msgstr "Status"
+
+msgid "Changer de langue"
+msgstr "Change Language"
+
+msgid "Basculer thème clair / sombre"
+msgstr "Toggle Light / Dark Theme"
+
+msgid "Thème clair activé"
+msgstr "Light theme activated"
+
+msgid "Thème sombre activé"
+msgstr "Dark theme activated"
+
+msgid "Session authentifiée via Zero-Trust ZKP"
+msgstr "Authenticated session via Zero-Trust ZKP"
+
+msgid "Menu de navigation"
+msgstr "Navigation Menu"
+
+msgid "BANTUDEVLAB - Forge Logicielle Souveraine Africaine"
+msgstr "BANTUDEVLAB - Sovereign African Software Forge"
+
+msgid "Navigation Principale"
+msgstr "Main Navigation"
+
+msgid "Connexion et bascule sur la forge logicielle Gitea"
+msgstr "Login and switch to Gitea software forge"
+
+msgid "Ouvre GitLab dans un nouvel onglet"
+msgstr "Opens GitLab in a new tab"
+
+msgid "Menu mobile"
+msgstr "Mobile Menu"
+
+msgid "Fermer le menu"
+msgstr "Close Menu"
+
+msgid "Forge Logicielle Panafricaine & Souveraine. Hébergée sur Systalink Cloud."
+msgstr "Pan-African & Sovereign Software Forge. Hosted on Systalink Cloud."

@@ -99,7 +99,7 @@ services:
     container_name: bantudevlab_django_prod
     restart: always
     env_file:
-      - .env.production
+      - ${ENV_FILE:-.env.production}
     environment:
       <<: *django-env
       WEB_CONCURRENCY: "8"
@@ -130,7 +130,7 @@ services:
     restart: always
     command: celery -A config worker --loglevel=info --concurrency=8
     env_file:
-      - .env.production
+      - ${ENV_FILE:-.env.production}
     environment:
       <<: *django-env
     depends_on:
@@ -151,7 +151,7 @@ services:
     restart: always
     command: ["celery", "-A", "config", "beat", "--loglevel=info"]
     env_file:
-      - .env.production
+      - ${ENV_FILE:-.env.production}
     environment:
       <<: *django-env
       DEBUG: "False"
@@ -171,7 +171,7 @@ services:
     container_name: bantudevlab_pgbouncer
     restart: always
     env_file:
-      - .env.production
+      - ${ENV_FILE:-.env.production}
     environment:
       DB_USER: ${POSTGRES_USER:-bantudevlab_admin}
       DB_PASSWORD: ${POSTGRES_PASSWORD}
@@ -206,7 +206,7 @@ services:
     container_name: bantudevlab_postgres_prod
     restart: always
     env_file:
-      - .env.production
+      - ${ENV_FILE:-.env.production}
     environment:
       POSTGRES_DB: ${POSTGRES_DB:-bantudevlab_prod}
       POSTGRES_USER: ${POSTGRES_USER:-bantudevlab_admin}
@@ -229,7 +229,7 @@ services:
     container_name: bantudevlab_redis_prod
     restart: always
     env_file:
-      - .env.production
+      - ${ENV_FILE:-.env.production}
     command: ["redis-server", "--requirepass", "${REDIS_PASSWORD}", "--appendonly", "yes"]
     volumes:
       - redis_production_data:/data

@@ -1,20 +1,47 @@
 <!-- BANTUDEVLAB Anti-FOUC & Dark Mode Shield (Zero White Flash / Zero White Background) -->
 <style id="bantu-anti-fouc-critical">
+  html:not([data-theme="light"]),
+  html:not([data-theme="light"]) body,
+  html:not([data-theme="light"]) .full.height,
+  html:not([data-theme="light"]) #wrapper,
+  html:not([data-theme="light"]) .page-content,
+  html:not([data-theme="light"]) .ui.container,
+  html:not([data-theme="light"]) .ui.grid,
+  html:not([data-theme="light"]) .ui.segment,
+  html:not([data-theme="light"]) .ui.segments,
+  html:not([data-theme="light"]) .ui.cards,
+  html:not([data-theme="light"]) .ui.card,
+  html:not([data-theme="light"]) .ui.table,
+  html:not([data-theme="light"]) .ui.form {
+    background-color: #020617 !important;
+    color: #f8fafc !important;
+  }
   html[data-theme="dark"],
   html[data-theme="dark"] body,
   html[data-theme="dark"] .full.height,
   html[data-theme="dark"] #wrapper,
   html[data-theme="dark"] .page-content,
-  html[data-theme="dark"] .ui.container {
+  html[data-theme="dark"] .ui.container,
+  html[data-theme="dark"] .ui.grid,
+  html[data-theme="dark"] .ui.segment,
+  html[data-theme="dark"] .ui.segments,
+  html[data-theme="dark"] .ui.cards,
+  html[data-theme="dark"] .ui.card,
+  html[data-theme="dark"] .ui.table,
+  html[data-theme="dark"] .ui.form {
     background-color: #020617 !important;
     color: #f8fafc !important;
   }
-  html[data-theme="dark"] .ui.menu.navbar {
+  html[data-theme="dark"] .ui.menu.navbar,
+  html:not([data-theme="light"]) .ui.menu.navbar {
     background-color: #050b18 !important;
   }
   html[data-theme="dark"] .repo-header-container,
   html[data-theme="dark"] .file-view-header,
-  html[data-theme="dark"] .page-footer {
+  html[data-theme="dark"] .page-footer,
+  html:not([data-theme="light"]) .repo-header-container,
+  html:not([data-theme="light"]) .file-view-header,
+  html:not([data-theme="light"]) .page-footer {
     background-color: #070e1e !important;
     border-color: #1e293b !important;
   }
@@ -558,8 +585,9 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 
 
-  // Replace Gitea header logo with Sovereign African Continent Logo (T27.6)
+  // Replace Gitea header & sign-in logo with Sovereign African Continent Logo (T27.6)
   function applyAfricanLogoToGitea() {
+    // 1. Barre de navigation principale
     const brandLinks = document.querySelectorAll('.ui.menu.navbar .brand, .ui.menu.navbar a[href="/"], .ui.menu.navbar a[href="/explore"]');
     brandLinks.forEach(link => {
       const existingImg = link.querySelector('img');
@@ -583,6 +611,17 @@ document.addEventListener('DOMContentLoaded', function() {
         img.style.marginRight = '8px';
         link.insertBefore(img, link.firstChild);
       }
+    });
+
+    // 2. Page de connexion / inscription (/user/login, /users/sign_in, /user/sign_up)
+    const signinLogos = document.querySelectorAll('.ui.container.signin img, .page-content.user.signin img, .ui.middle.aligned.center.aligned.grid img, .signin .header img');
+    signinLogos.forEach(logoImg => {
+      logoImg.src = '/assets/img/logo.svg';
+      logoImg.alt = 'BantuDevLab Sovereign Logo';
+      logoImg.style.maxWidth = '120px';
+      logoImg.style.height = 'auto';
+      logoImg.style.borderRadius = '12px';
+      logoImg.style.boxShadow = '0 0 20px rgba(0, 229, 255, 0.45)';
     });
   }
   applyAfricanLogoToGitea();
