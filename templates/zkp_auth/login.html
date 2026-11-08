@@ -446,14 +446,15 @@ async function registerZkpIdentity() {
 // Initialise mnémonique au chargement
 document.addEventListener('DOMContentLoaded', () => {
     const usernameInput = document.getElementById('zkpUsername');
-    if (usernameInput && usernameInput.value === 'kouame_dev') {
+    if (usernameInput && (usernameInput.value === 'kouame_dev' || usernameInput.value === 'bantu_admin')) {
         setMnemonicWords(DEFAULT_KOUAME_WORDS);
     } else {
         generateNewMnemonic();
     }
     if (usernameInput) {
         usernameInput.addEventListener('change', function() {
-            if (this.value.trim() === 'kouame_dev') {
+            const v = this.value.trim();
+            if (v === 'kouame_dev' || v === 'bantu_admin') {
                 setMnemonicWords(DEFAULT_KOUAME_WORDS);
             }
         });

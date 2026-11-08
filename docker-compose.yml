@@ -131,8 +131,11 @@ services:
       - "-c"
       - |
         sleep 2
-        su-exec git gitea --work-path /data/gitea admin user create --username bantu_admin --password BantuAdmin2026! --email admin@bantudevlab.africa --admin 2>/dev/null || gitea --work-path /data admin user create --username bantu_admin --password BantuAdmin2026! --email admin@bantudevlab.africa --admin 2>/dev/null || true
-        echo "Gitea admin user ready."
+        su-exec git gitea --work-path /data/gitea admin user create --username bantu_admin --password BantuAdmin2026! --email admin@bantudevlab.africa --admin --must-change-password=false 2>/dev/null || true
+        su-exec git gitea --work-path /data/gitea admin user change-password --username bantu_admin --password BantuAdmin2026! --must-change-password=false 2>/dev/null || true
+        su-exec git gitea --work-path /data/gitea admin user create --username kouame_dev --password BantuAdmin2026! --email kouame_dev@bantudevlab.africa --admin --must-change-password=false 2>/dev/null || true
+        su-exec git gitea --work-path /data/gitea admin user change-password --username kouame_dev --password BantuAdmin2026! --must-change-password=false 2>/dev/null || true
+        echo "Gitea admin users (bantu_admin / kouame_dev) ready."
     networks:
       - sovereign_net
       - backend_net

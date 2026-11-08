@@ -141,6 +141,7 @@ class GemmaCodeReviewView(APIView):
 class GemmaStatusView(APIView):
     """Returns local Gemma 2 2B AI model state and sovereign configuration."""
 
+    authentication_classes = []
     permission_classes = [AllowAny]
 
     def get(self, request):
@@ -161,6 +162,7 @@ class CopilotExplainView(APIView):
     T-COP-701 : Point d'acces Copilot pour expliquer un fragment de code ou fichier.
     """
 
+    authentication_classes = []
     permission_classes = [AllowAny]
 
     def post(self, request):
@@ -185,6 +187,7 @@ class CopilotCompleteView(APIView):
     T-COP-701 : Point d'acces Copilot pour l'autocompletion de code.
     """
 
+    authentication_classes = []
     permission_classes = [AllowAny]
 
     def post(self, request):
@@ -209,6 +212,7 @@ class CopilotPRSummaryView(APIView):
     T-COP-701 : Point d'acces Copilot pour la synthese de Pull Request.
     """
 
+    authentication_classes = []
     permission_classes = [AllowAny]
 
     def post(self, request):
@@ -228,6 +232,7 @@ class CopilotPRReviewBotView(APIView):
     T-PR-801 : Declenchement de la revue automatique d'une Pull Request par le bot Copilot souverain.
     """
 
+    authentication_classes = []
     permission_classes = [AllowAny]
 
     def post(self, request):
@@ -266,6 +271,7 @@ class CopilotExportView(APIView):
     Supporte les formats Markdown (.md) et JSON (.json).
     """
 
+    authentication_classes = []
     permission_classes = [AllowAny]
 
     def post(self, request):
@@ -312,6 +318,7 @@ class CopilotReviewView(APIView):
     Point d'acces Copilot public pour l'audit de securite interactif depuis l'interface forge.
     """
 
+    authentication_classes = []
     permission_classes = [AllowAny]
 
     def post(self, request):

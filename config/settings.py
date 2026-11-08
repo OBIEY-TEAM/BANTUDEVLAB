@@ -29,14 +29,16 @@ TESTING = (
 try:
     from dotenv import dotenv_values, load_dotenv
 
-    # Ne charger .env.production que hors mode TESTING pour preserver SQLite en tests locaux
+    # Charger d'abord .env (local), puis .env.production en fallback des clés manquantes hors TESTING
+    local_env = BASE_DIR / ".env"
+    if local_env.exists():
+        load_dotenv(local_env)
     prod_env = BASE_DIR / ".env.production"
     if prod_env.exists() and not TESTING:
-        load_dotenv(prod_env)
+        load_dotenv(prod_env, override=False)
         for _k, _v in dotenv_values(prod_env).items():
             if _v and not os.environ.get(_k):
                 os.environ[_k] = _v
-    load_dotenv(BASE_DIR / ".env")
 except (ImportError, ModuleNotFoundError):
     pass
 
@@ -125,8 +127,12 @@ WSGI_APPLICATION = "config.wsgi.application"
 ASGI_APPLICATION = "config.asgi.application"
 
 # Database configuration: support PostgreSQL with SQLite fallback
+_has_pg_driver = (
+    importlib.util.find_spec("psycopg") is not None
+    or importlib.util.find_spec("psycopg2") is not None
+)
 DB_ENGINE = os.environ.get("DB_ENGINE", "sqlite")
-if DB_ENGINE == "postgres":
+if DB_ENGINE == "postgres" and (_has_pg_driver or TESTING):
     _postgres_host = os.environ.get("POSTGRES_HOST", "db")
     # Aligner le port par defaut sur 6432 si pgbouncer est configure comme host
     _default_port = "6432" if _postgres_host == "pgbouncer" else "5432"

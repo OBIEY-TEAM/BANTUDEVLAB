@@ -40,4 +40,4 @@ ENV WEB_CONCURRENCY=4 \
     XDG_RUNTIME_DIR=/tmp
 
 # Lancement haute performance via Gunicorn avec workers asynchrones Uvicorn (PERF-05)
-CMD ["sh", "-c", "python manage.py migrate --noinput && gunicorn config.asgi:application -k uvicorn.workers.UvicornWorker --bind 0.0.0.0:8000 --workers ${WEB_CONCURRENCY:-4} --timeout 120 --worker-tmp-dir /tmp --no-control-socket --access-logfile - --error-logfile -"]
+CMD ["sh", "-c", "python manage.py migrate --noinput && python manage.py init_sovereign_admin && gunicorn config.asgi:application -k uvicorn.workers.UvicornWorker --bind 0.0.0.0:8000 --workers ${WEB_CONCURRENCY:-4} --timeout 120 --worker-tmp-dir /tmp --no-control-socket --access-logfile - --error-logfile -"]
