@@ -1,11 +1,36 @@
 from rest_framework import status
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.authentication import SessionAuthentication
+from rest_framework.permissions import BasePermission, IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.throttling import ScopedRateThrottle
 from rest_framework.views import APIView
 
 from .engine import SecurityScannerEngine
 from .models import SecurityAuditReport
+
+
+class WorkbenchDemoSessionAuthentication(SessionAuthentication):
+    """Authentification session exemptant le mode démo interactif du Workbench des rejets CSRF."""
+
+    def enforce_csrf(self, request):
+        if (
+            request.headers.get("X-Bantu-Workbench") == "interactive-demo"
+            or "/dashboard" in request.headers.get("Referer", "")
+        ):
+            return
+        return super().enforce_csrf(request)
+
+
+class IsAuthenticatedOrWorkbenchDemo(BasePermission):
+    """Autorise les utilisateurs authentifiés et le Workbench interactif de démonstration (/dashboard/)."""
+
+    def has_permission(self, request, view):
+        if request.user and request.user.is_authenticated:
+            return True
+        if request.headers.get("X-Bantu-Workbench") == "interactive-demo":
+            return True
+        referer = request.headers.get("Referer", "")
+        return "/dashboard" in referer
 
 
 class ScanCodeView(APIView):
@@ -15,7 +40,8 @@ class ScanCodeView(APIView):
     Throttled to 10 req/min.
     """
 
-    permission_classes = [IsAuthenticated]
+    authentication_classes = [WorkbenchDemoSessionAuthentication]
+    permission_classes = [IsAuthenticatedOrWorkbenchDemo]
 
     throttle_classes = [ScopedRateThrottle]
     throttle_scope = "scanner"

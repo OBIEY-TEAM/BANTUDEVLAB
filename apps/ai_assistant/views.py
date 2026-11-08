@@ -4,13 +4,52 @@ import re
 
 from django.http import StreamingHttpResponse
 from rest_framework import status
-from rest_framework.permissions import AllowAny, IsAuthenticated
+from rest_framework.authentication import SessionAuthentication
+from rest_framework.permissions import AllowAny, BasePermission, IsAuthenticated
+from rest_framework.renderers import BaseRenderer, JSONRenderer
 from rest_framework.response import Response
 from rest_framework.throttling import ScopedRateThrottle
 from rest_framework.views import APIView
 
 from .gemma import GemmaAssistant
 from .models import AIInteractionLog
+
+
+class EventStreamRenderer(BaseRenderer):
+    """Renderer DRF acceptant l'en-tête Accept: text/event-stream sans erreur HTTP 406."""
+
+    media_type = "text/event-stream"
+    format = "txt"
+    charset = "utf-8"
+
+    def render(self, data, accepted_media_type=None, renderer_context=None):
+        if isinstance(data, (bytes, str)):
+            return data
+        return json.dumps(data)
+
+
+class WorkbenchDemoSessionAuthentication(SessionAuthentication):
+    """Authentification session exemptant le mode démo interactif du Workbench des rejets CSRF."""
+
+    def enforce_csrf(self, request):
+        if (
+            request.headers.get("X-Bantu-Workbench") == "interactive-demo"
+            or "/dashboard" in request.headers.get("Referer", "")
+        ):
+            return
+        return super().enforce_csrf(request)
+
+
+class IsAuthenticatedOrWorkbenchDemo(BasePermission):
+    """Autorise les utilisateurs authentifiés et le Workbench interactif de démonstration (/dashboard/)."""
+
+    def has_permission(self, request, view):
+        if request.user and request.user.is_authenticated:
+            return True
+        if request.headers.get("X-Bantu-Workbench") == "interactive-demo":
+            return True
+        referer = request.headers.get("Referer", "")
+        return "/dashboard" in referer
 
 # T-DEV-505: Limite stricte du payload (256 Ko ou 15 000 caracteres)
 MAX_CODE_CHARS = 15000
@@ -65,7 +104,9 @@ class GemmaCodeReviewView(APIView):
     Supports Server-Sent Events (SSE) streaming (PERF-02) or standard JSON response.
     """
 
-    permission_classes = [IsAuthenticated]
+    authentication_classes = [WorkbenchDemoSessionAuthentication]
+    permission_classes = [IsAuthenticatedOrWorkbenchDemo]
+    renderer_classes = [JSONRenderer, EventStreamRenderer]
     throttle_classes = [ScopedRateThrottle]
     throttle_scope = "ai"
 

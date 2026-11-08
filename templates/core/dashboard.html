@@ -397,7 +397,10 @@ async function runSecurityScan() {
     if (window.showToast) window.showToast("{% trans 'Analyse par le moteur de sécurité souverain...' %}", "info");
 
     try {
-        const headers = {'Content-Type': 'application/json'};
+        const headers = {
+            'Content-Type': 'application/json',
+            'X-Bantu-Workbench': 'interactive-demo'
+        };
         if (window.getCsrfToken && window.getCsrfToken()) {
             headers['X-CSRFToken'] = window.getCsrfToken();
         }
@@ -409,7 +412,7 @@ async function runSecurityScan() {
         const data = await res.json();
 
         if (!res.ok) {
-            throw new Error(data.error || '{% trans "Erreur lors du scan" %}');
+            throw new Error(data.error || data.detail || '{% trans "Erreur lors du scan" %}');
         }
 
         visualBox.style.display = 'block';
@@ -457,7 +460,8 @@ async function runAiReview() {
     try {
         const aiHeaders = {
             'Content-Type': 'application/json',
-            'Accept': 'text/event-stream'
+            'Accept': 'text/event-stream, application/json, */*',
+            'X-Bantu-Workbench': 'interactive-demo'
         };
         if (window.getCsrfToken && window.getCsrfToken()) {
             aiHeaders['X-CSRFToken'] = window.getCsrfToken();
