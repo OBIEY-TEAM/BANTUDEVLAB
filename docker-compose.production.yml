@@ -38,7 +38,7 @@ services:
     depends_on:
       - django_app
       - gitea
-      - gitlab
+      - forge_engine
     security_opt:
       - no-new-privileges:true
     networks:
@@ -175,7 +175,7 @@ services:
       - app_net
       - backend_net
 
-  # Surcouche Souveraine Django BantuDevLab Core (port hôte 8002 + interne 8000)
+  # Surcouche Souveraine Django BantuDevLab Core (port hôte 8001 + interne 8000)
   django_app:
     build:
       context: .
@@ -188,7 +188,7 @@ services:
       <<: *django-env
       WEB_CONCURRENCY: "4"
     ports:
-      - "${DJANGO_HOST_PORT:-8002}:8000"
+      - "${DJANGO_HOST_PORT:-8001}:8000"
     volumes:
       - static_volume:/app/staticfiles
     depends_on:
