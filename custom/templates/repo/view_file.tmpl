@@ -60,6 +60,26 @@
   background: var(--color-box-body-highlight, #0b1528);
   color: var(--color-accent-fg, #00e5ff);
 }
+
+@media (max-width: 768px) {
+  .gh-file-viewer-wrapper {
+    flex-direction: column;
+  }
+  .gh-file-tree-sidebar {
+    width: 100%;
+    min-width: 0;
+    max-height: 45vh;
+  }
+  .file-view-header {
+    flex-wrap: wrap;
+    gap: 8px;
+    padding: 8px 10px !important;
+  }
+  .file-actions {
+    flex-wrap: wrap;
+    width: 100%;
+  }
+}
 </style>
 
 <div class="file-view-header" style="display: flex; justify-content: space-between; align-items: center; padding: 8px 16px; background-color: var(--color-canvas-subtle, var(--color-box-header, #070e1e)); border: 1px solid var(--color-border-default, #1e293b); border-top-left-radius: 6px; border-top-right-radius: 6px; margin-bottom: -1px; font-size: 13px;">

@@ -56,9 +56,9 @@
 
     <!-- Step 2: BIP-39 Mnemonic & Cryptographic Strength Meter -->
     <div id="wizardStep2" class="wizard-step-content" style="display: none;">
-        <div style="display: flex; justify-content: space-between; align-items: center;">
+        <div class="zkp-step2-header">
             <label style="font-weight: 600;">{% trans "Phrase Mnémonique Souveraine (Standard BIP-39) :" %}</label>
-            <div style="display: flex; gap: 0.5rem; align-items: center;">
+            <div style="display: flex; gap: 0.5rem; align-items: center; flex-wrap: wrap;">
                 <button type="button" class="copy-btn" id="copyMnemonicBtn" onclick="copyMnemonicPhrase()">
                     {% icon "copy" size=14 %} <span id="copyMnemonicLabel">{% trans "Copier la phrase" %}</span>
                 </button>
@@ -100,7 +100,7 @@
             </button>
         </div>
 
-        <div style="margin-top: 2rem; display: flex; justify-content: space-between;">
+        <div class="zkp-nav-buttons">
             <button class="btn btn-secondary" onclick="switchWizardStep(1)">{% icon "arrow-left" size=18 %} {% trans "Précédent" %}</button>
             <button class="btn btn-primary" onclick="switchWizardStep(3)">{% trans "Passer à la Connexion" %} {% icon "arrow-right" size=18 %}</button>
         </div>

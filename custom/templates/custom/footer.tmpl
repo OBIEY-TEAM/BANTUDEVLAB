@@ -55,8 +55,8 @@
 
 #copilot-window {
   display: none;
-  width: 380px;
-  height: 480px;
+  width: min(380px, calc(100vw - 24px));
+  height: min(480px, calc(100vh - 96px));
   background: #070e1e;
   border: 1px solid #1e293b;
   border-radius: 12px;
@@ -208,6 +208,20 @@
 }
 #copilot-send-btn:hover {
   background: #059669;
+}
+@media (max-width: 480px) {
+  #sovereign-copilot-container {
+    right: 12px;
+    bottom: 12px;
+  }
+  #copilot-window {
+    width: calc(100vw - 24px);
+    height: min(440px, calc(100vh - 84px));
+  }
+  .page-footer-container {
+    padding: 20px 12px;
+    text-align: center;
+  }
 }
 </style>
 

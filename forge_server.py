@@ -773,11 +773,28 @@ class SovereignForgeHandler(BaseHTTPRequestHandler):
             transition: transform 0.15s ease, border-color 0.15s ease;
         }}
         .repo-card:hover {{ border-color: var(--cyan); transform: translateY(-2px); }}
-        .repo-header {{ display: flex; justify-content: space-between; align-items: center; }}
-        .repo-title {{ font-size: 1.15rem; font-weight: 700; color: var(--gold); text-decoration: none; }}
+        .repo-header {{ display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem; }}
+        .repo-title {{ font-size: 1.15rem; font-weight: 700; color: var(--gold); text-decoration: none; word-break: break-word; }}
         .repo-desc {{ color: var(--muted); margin: 0.5rem 0; font-size: 0.95rem; }}
         .repo-footer {{ display: flex; gap: 1.5rem; align-items: center; font-size: 0.85rem; color: var(--muted); flex-wrap: wrap; }}
-        .clone-snippet {{ background: var(--surface-card); padding: 0.25rem 0.6rem; border-radius: 4px; color: var(--emerald); font-family: monospace; border: 1px solid var(--border); }}
+        .clone-snippet {{ background: var(--surface-card); padding: 0.25rem 0.6rem; border-radius: 4px; color: var(--emerald); font-family: monospace; border: 1px solid var(--border); max-width: 100%; overflow-x: auto; word-break: break-all; }}
+        *, *::before, *::after {{ box-sizing: border-box; }}
+        html, body {{ max-width: 100vw; overflow-x: hidden; }}
+        @media (min-width: 1600px) {{
+            .container {{ max-width: 1440px; }}
+        }}
+        @media (max-width: 768px) {{
+            .navbar {{ padding: 0.75rem 1rem; }}
+            .nav-controls {{ width: 100%; justify-content: flex-start; gap: 0.5rem; }}
+            .hero {{ padding: 1.5rem 1rem; }}
+            .hero h1 {{ font-size: 1.5rem; }}
+            .repo-card {{ padding: 1rem; }}
+            .repo-footer {{ gap: 0.75rem; }}
+        }}
+        @media (max-width: 480px) {{
+            .brand .badge {{ display: none; }}
+            .nav-controls .btn {{ width: 100%; justify-content: center; text-align: center; }}
+        }}
     </style>
 </head>"""
 

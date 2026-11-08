@@ -267,3 +267,38 @@ class Axe4UITestCase(TestCase):
         self.assertIn("T-DRF-2302", header_tmpl)
         self.assertIn("Ready for review", header_tmpl)
         self.assertIn("Draft pull requests cannot be merged", header_tmpl)
+
+    def test_responsive_multi_screen_breakpoints_across_all_interfaces(self):
+        """Vérifie la présence des règles CSS responsives multi-écrans (280px à 4K) sur toutes les interfaces."""
+        from pathlib import Path
+
+        style_css = Path("static/css/style.css").read_text(encoding="utf-8")
+        for bp in [
+            "min-width: 1600px",
+            "max-width: 1200px",
+            "max-width: 992px",
+            "max-width: 768px",
+            "max-width: 576px",
+            "max-width: 380px",
+            ".dashboard-kpi-grid",
+            ".dashboard-main-grid",
+            ".table-responsive",
+        ]:
+            self.assertIn(bp, style_css)
+
+        resp_dash = self.client.get(reverse("dashboard"))
+        dash_html = resp_dash.content.decode("utf-8")
+        self.assertIn("dashboard-kpi-grid", dash_html)
+        self.assertIn("dashboard-main-grid", dash_html)
+        self.assertIn("table-responsive", dash_html)
+
+        header_tmpl = Path("custom/templates/custom/header.tmpl").read_text(encoding="utf-8")
+        self.assertIn("max-width: 768px", header_tmpl)
+        self.assertIn("max-width: 480px", header_tmpl)
+
+        footer_tmpl = Path("custom/templates/custom/footer.tmpl").read_text(encoding="utf-8")
+        self.assertIn("calc(100vw - 24px)", footer_tmpl)
+
+        forge_py = Path("forge_server.py").read_text(encoding="utf-8")
+        self.assertIn("max-width: 768px", forge_py)
+        self.assertIn("max-width: 480px", forge_py)
