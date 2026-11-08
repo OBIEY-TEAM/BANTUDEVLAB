@@ -9,12 +9,27 @@ from .engine import SecurityScannerEngine
 from .models import SecurityAuditReport
 
 
+def resolve_scanner_lang(request) -> str:
+    """Détermine la langue active de la requête (fr, en, sw, pt) pour synchroniser les réponses SAST."""
+    raw = (
+        (request.data.get("lang") if hasattr(request, "data") and isinstance(request.data, dict) else None)
+        or request.query_params.get("lang")
+        or request.COOKIES.get("bantu_lang")
+        or request.COOKIES.get("django_language")
+        or request.COOKIES.get("lang")
+        or getattr(request, "LANGUAGE_CODE", None)
+        or request.headers.get("Accept-Language", "fr")
+    )
+    code = str(raw or "fr").lower().strip()[:2]
+    return code if code in ("fr", "en", "sw", "pt") else "fr"
+
+
 class WorkbenchDemoSessionAuthentication(SessionAuthentication):
     """Authentification session exemptant le mode démo interactif du Workbench des rejets CSRF."""
 
     def enforce_csrf(self, request):
         if (
-            request.headers.get("X-Bantu-Workbench") == "interactive-demo"
+            request.headers.get("X-Bantu-Workbench") in ("interactive-demo", "gitea-repo-terminal")
             or "/dashboard" in request.headers.get("Referer", "")
         ):
             return
@@ -22,12 +37,12 @@ class WorkbenchDemoSessionAuthentication(SessionAuthentication):
 
 
 class IsAuthenticatedOrWorkbenchDemo(BasePermission):
-    """Autorise les utilisateurs authentifiés et le Workbench interactif de démonstration (/dashboard/)."""
+    """Autorise les utilisateurs authentifiés et le Workbench interactif / terminal Gitea."""
 
     def has_permission(self, request, view):
         if request.user and request.user.is_authenticated:
             return True
-        if request.headers.get("X-Bantu-Workbench") == "interactive-demo":
+        if request.headers.get("X-Bantu-Workbench") in ("interactive-demo", "gitea-repo-terminal"):
             return True
         referer = request.headers.get("Referer", "")
         return "/dashboard" in referer
@@ -50,6 +65,7 @@ class ScanCodeView(APIView):
         content = request.data.get("content")
         filename = request.data.get("filename", "snippet.py")
         repository_name = request.data.get("repository_name", "sovereign-repo")
+        lang = resolve_scanner_lang(request)
 
         if not content:
             return Response({"error": "content est requis pour le scan"}, status=status.HTTP_400_BAD_REQUEST)
@@ -75,7 +91,7 @@ class ScanCodeView(APIView):
                 status=status.HTTP_202_ACCEPTED,
             )
 
-        result = SecurityScannerEngine.scan_code(filename=filename, content=content)
+        result = SecurityScannerEngine.scan_code(filename=filename, content=content, lang=lang)
 
         # Store persistent audit report
         SecurityAuditReport.objects.create(

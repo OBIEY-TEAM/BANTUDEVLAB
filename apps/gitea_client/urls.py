@@ -10,4 +10,6 @@ urlpatterns = [
     path("webhook/", views.GiteaWebhookReceiverView.as_view(), name="gitea_webhook"),
     path("webhooks/redeliver/", views.WebhookRedeliverView.as_view(), name="webhook_redeliver"),
     path("sync/", views.GiteaSyncView.as_view(), name="gitea_sync"),
+    path("repo-explorer/", views.RepoExplorerView.as_view(), name="repo_explorer"),
+    path("repo-analyze/", views.RepoCommandAnalyzeView.as_view(), name="repo_analyze"),
 ]

@@ -15,6 +15,21 @@ from .gemma import GemmaAssistant
 from .models import AIInteractionLog
 
 
+def resolve_ai_lang(request) -> str:
+    """Détermine la langue active (fr, en, sw, pt) pour synchroniser les réponses de Gemma."""
+    raw = (
+        (request.data.get("lang") if hasattr(request, "data") and isinstance(request.data, dict) else None)
+        or request.query_params.get("lang")
+        or request.COOKIES.get("bantu_lang")
+        or request.COOKIES.get("django_language")
+        or request.COOKIES.get("lang")
+        or getattr(request, "LANGUAGE_CODE", None)
+        or request.headers.get("Accept-Language", "fr")
+    )
+    code = str(raw or "fr").lower().strip()[:2]
+    return code if code in ("fr", "en", "sw", "pt") else "fr"
+
+
 class EventStreamRenderer(BaseRenderer):
     """Renderer DRF acceptant l'en-tête Accept: text/event-stream sans erreur HTTP 406."""
 
@@ -33,7 +48,7 @@ class WorkbenchDemoSessionAuthentication(SessionAuthentication):
 
     def enforce_csrf(self, request):
         if (
-            request.headers.get("X-Bantu-Workbench") == "interactive-demo"
+            request.headers.get("X-Bantu-Workbench") in ("interactive-demo", "gitea-repo-terminal")
             or "/dashboard" in request.headers.get("Referer", "")
         ):
             return
@@ -46,7 +61,7 @@ class IsAuthenticatedOrWorkbenchDemo(BasePermission):
     def has_permission(self, request, view):
         if request.user and request.user.is_authenticated:
             return True
-        if request.headers.get("X-Bantu-Workbench") == "interactive-demo":
+        if request.headers.get("X-Bantu-Workbench") in ("interactive-demo", "gitea-repo-terminal"):
             return True
         referer = request.headers.get("Referer", "")
         return "/dashboard" in referer
@@ -114,17 +129,19 @@ class GemmaCodeReviewView(APIView):
         """Allows SSE streaming via EventSource (GET /api/ai/review/?code=...&context=...)."""
         code_snippet = request.query_params.get("code")
         context = request.query_params.get("context", "review")
+        lang = resolve_ai_lang(request)
         error = validate_input(code_snippet, context)
         if error:
             return Response({"error": error}, status=status.HTTP_400_BAD_REQUEST)
         sanitized_code = sanitize_pii_and_secrets(code_snippet)
-        return self._stream_response(sanitized_code, context)
+        return self._stream_response(sanitized_code, context, lang=lang)
 
     def post(self, request):
         code_snippet = request.data.get("code")
         context = request.data.get("context", "review")
         stream = request.data.get("stream", None)
         accept_header = request.headers.get("Accept", "")
+        lang = resolve_ai_lang(request)
 
         error = validate_input(code_snippet, context)
         if error:
@@ -135,10 +152,10 @@ class GemmaCodeReviewView(APIView):
         # SSE Stream requested either via param stream=True or Accept: text/event-stream
         is_sse = stream is True or "text/event-stream" in accept_header
         if is_sse:
-            return self._stream_response(sanitized_code, context)
+            return self._stream_response(sanitized_code, context, lang=lang)
 
         assistant = GemmaAssistant()
-        result = assistant.analyze_code(code_snippet=sanitized_code, context=context)
+        result = assistant.analyze_code(code_snippet=sanitized_code, context=context, lang=lang)
 
         # Log AI interaction
         AIInteractionLog.objects.create(
@@ -150,13 +167,13 @@ class GemmaCodeReviewView(APIView):
 
         return Response(result, status=status.HTTP_200_OK)
 
-    def _stream_response(self, code_snippet: str, context: str):
+    def _stream_response(self, code_snippet: str, context: str, lang: str = "fr"):
         assistant = GemmaAssistant()
 
         def event_stream():
             collected_chunks = []
             try:
-                for chunk in assistant.stream_analyze_code(code_snippet=code_snippet, context=context):
+                for chunk in assistant.stream_analyze_code(code_snippet=code_snippet, context=context, lang=lang):
                     collected_chunks.append(chunk)
                     yield f"data: {json.dumps({'token': chunk, 'done': False})}\n\n"
                 full_response = "".join(collected_chunks)
@@ -167,7 +184,7 @@ class GemmaCodeReviewView(APIView):
                     ai_response=full_response,
                     model_used=assistant.model_name,
                 )
-                yield f"data: {json.dumps({'token': '', 'done': True, 'full_response': full_response})}\n\n"
+                yield f"data: {json.dumps({'token': '', 'done': True, 'full_response': full_response, 'lang': lang})}\n\n"
             except Exception:
                 # SEC-043: ne jamais exposer le detail d'une exception interne au client.
                 logger.exception("Erreur pendant le streaming Gemma")
@@ -219,7 +236,9 @@ class CopilotExplainView(APIView):
 
         sanitized_code = sanitize_pii_and_secrets(code)
         assistant = GemmaAssistant()
-        result = assistant.explain_code(code_snippet=sanitized_code, language=language)
+        result = assistant.explain_code(
+            code_snippet=sanitized_code, language=language, lang=resolve_ai_lang(request)
+        )
         return Response(result, status=status.HTTP_200_OK)
 
 
@@ -264,7 +283,9 @@ class CopilotPRSummaryView(APIView):
 
         sanitized_diff = sanitize_pii_and_secrets(diff)
         assistant = GemmaAssistant()
-        result = assistant.generate_pr_summary(diff_content=sanitized_diff, pr_title=title)
+        result = assistant.generate_pr_summary(
+            diff_content=sanitized_diff, pr_title=title, lang=resolve_ai_lang(request)
+        )
         return Response(result, status=status.HTTP_200_OK)
 
 
@@ -370,5 +391,7 @@ class CopilotReviewView(APIView):
 
         sanitized_code = sanitize_pii_and_secrets(code)
         assistant = GemmaAssistant()
-        result = assistant.analyze_code(code_snippet=sanitized_code, context=context)
+        result = assistant.analyze_code(
+            code_snippet=sanitized_code, context=context, lang=resolve_ai_lang(request)
+        )
         return Response(result, status=status.HTTP_200_OK)

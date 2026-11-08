@@ -3,8 +3,8 @@
   <div style="max-width: 1280px; margin: 0 auto; padding: 0 16px;">
     <!-- Repo title, badges and actions bar -->
     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; flex-wrap: wrap; gap: 12px;">
-      <div style="display: flex; align-items: center; gap: 8px; font-size: 18px;">
-        <svg height="16" viewBox="0 0 16 16" width="16" fill="var(--color-text-light, #94a3b8)"><path d="M2 2.5A2.5 2.5 0 0 1 4.5 0h8.75a.75.75 0 0 1 .75.75v12.5a.75.75 0 0 1-.75.75h-2.5a.75.75 0 0 1 0-1.5h1.75v-2h-8a1 1 0 0 0-.714 1.7.75.75 0 1 1-1.072 1.05A2.495 2.495 0 0 1 2 11.5Zm10.5-1h-8a1 1 0 0 0-1 1v6.708A2.486 2.486 0 0 1 4.5 9h8ZM5 12.25a.25.25 0 0 1 .25-.25h3.5a.25.25 0 0 1 .25.25v3.25a.25.25 0 0 1-.4.2l-1.45-1.087a.249.249 0 0 0-.3 0L5.4 15.7a.25.25 0 0 1-.4-.2Z"></path></svg>
+      <div style="display: flex; align-items: center; gap: 8px; font-size: 18px; flex-wrap: wrap;">
+        <svg height="16" viewBox="0 0 16 16" width="16" fill="var(--color-text-light, #94a3b8)"><path d="M2 2.5A2.5 2.5 0 0 1 4.5 0h8.75a.75.75 0 0 1 .75.75v12.5a.75.75 0 0 1-.75.75h-2.5a.75.75 0 0 1 0-1.5h1.75v-2h-8a1 1 0 0 0-.714 1.7.75.75 0 1 1-1.072 1.05A2.495 2.495 0 0 1 2 11.5Zm10.5-1h-8a1 1 0 0 0-1 1v6.708A2.486 2.486 0 0 1 4.5 9h8ZM5 12.25a.25.25 0 0 1 .25-.25h3.5a.25.75 0 0 1 .25.25v3.25a.25.25 0 0 1-.4.2l-1.45-1.087a.249.249 0 0 0-.3 0L5.4 15.7a.25.25 0 0 1-.4-.2Z"></path></svg>
         <span style="font-weight: 400; color: var(--color-accent-fg, #00e5ff);"><a href="{{.RepoOwner.HomeLink}}">{{.RepoOwner.Name}}</a></span>
         <span style="color: var(--color-text-light, #94a3b8);">/</span>
         <span style="font-weight: 600; color: var(--color-accent-fg, #00e5ff);"><a href="{{.RepoLink}}">{{.Repository.Name}}</a></span>
@@ -15,8 +15,16 @@
         {{end}}
       </div>
 
-      <!-- T-EXT-602 : Bouton GitHub Codespaces / IDE Web -->
-      <div style="display: flex; align-items: center; gap: 8px;">
+      <!-- Actions Souveraines sur chaque depot : Run Security Audit, Ask Gemma Review & Codespaces / IDE -->
+      <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
+        <button type="button" id="repo-run-security-btn" class="bantu-pro-action-btn bantu-pro-btn-security" onclick="if(window.openBantuCommandTerminal) window.openBantuCommandTerminal('security', '{{.RepoOwner.Name}}/{{.Repository.Name}}', '{{.BranchName}}');" title="Run Security Audit (SAST) sur ce dépôt">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+          <span class="bantu-i18n-security-label">Run Security Audit</span>
+        </button>
+        <button type="button" id="repo-ask-gemma-btn" class="bantu-pro-action-btn bantu-pro-btn-gemma" onclick="if(window.openBantuCommandTerminal) window.openBantuCommandTerminal('gemma', '{{.RepoOwner.Name}}/{{.Repository.Name}}', '{{.BranchName}}');" title="Ask Gemma Review (IA) sur ce dépôt">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="4" y="4" width="16" height="16" rx="2"></rect><rect x="9" y="9" width="6" height="6"></rect></svg>
+          <span class="bantu-i18n-gemma-label">Ask Gemma Review</span>
+        </button>
         <a id="repo-codespaces-btn" class="ui small button green" href="https://cybersocle.site/dashboard/" onclick="if(window.location.hostname==='localhost'||window.location.hostname==='127.0.0.1'){this.href='http://'+window.location.hostname+':8001/dashboard/';}" target="_blank" rel="noopener noreferrer" title="Ouvrir le code dans l'IDE Web souverain (Codespaces)">
           <svg height="14" viewBox="0 0 16 16" width="14" fill="currentColor" style="vertical-align: text-bottom; margin-right: 4px;"><path d="M0 2.75C0 1.784.784 1 1.75 1h12.5c.966 0 1.75.784 1.75 1.75v10.5A1.75 1.75 0 0 1 14.25 15H1.75A1.75 1.75 0 0 1 0 13.75Zm1.75-.25a.25.25 0 0 0-.25.25v10.5c0 .138.112.25.25.25h12.5a.25.25 0 0 0 .25-.25V2.75a.25.25 0 0 0-.25-.25ZM7.28 7.78a.75.75 0 0 1 0 1.06l-2.25 2.25a.75.75 0 0 1-1.06-1.06L5.69 8.25 3.97 6.53a.75.75 0 0 1 1.06-1.06Zm2.47 3.97a.75.75 0 0 1 .75-.75h2.5a.75.75 0 0 1 0 1.5h-2.5a.75.75 0 0 1-.75-.75Z"></path></svg>
           Codespaces / IDE

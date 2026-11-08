@@ -4,6 +4,7 @@ import re
 
 from django.conf import settings
 from rest_framework import status
+from rest_framework.authentication import SessionAuthentication
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -12,6 +13,34 @@ from .client import GiteaClient
 from .models import SovereignRepository
 
 SLUG_RE = re.compile(r"^[A-Za-z0-9_.-]{1,100}$")  # SEC-046: evite toute injection de chemin vers Gitea
+
+
+class CsrfExemptSessionAuthentication(SessionAuthentication):
+    """Permet l'exécution des commandes du terminal Gitea et Workbench sans rejet CSRF."""
+
+    def enforce_csrf(self, request):
+        return
+
+
+def _add_cors(response: Response) -> Response:
+    response["Access-Control-Allow-Origin"] = "*"
+    response["Access-Control-Allow-Methods"] = "GET, POST, OPTIONS"
+    response["Access-Control-Allow-Headers"] = "Content-Type, Authorization, X-CSRFToken, X-Bantu-Workbench"
+    return response
+
+
+def _resolve_lang(request) -> str:
+    raw = (
+        (request.data.get("lang") if hasattr(request, "data") and isinstance(request.data, dict) else None)
+        or request.query_params.get("lang")
+        or request.COOKIES.get("bantu_lang")
+        or request.COOKIES.get("django_language")
+        or request.COOKIES.get("lang")
+        or getattr(request, "LANGUAGE_CODE", None)
+        or request.headers.get("Accept-Language", "fr")
+    )
+    code = str(raw or "fr").lower().strip()[:2]
+    return code if code in ("fr", "en", "sw", "pt") else "fr"
 
 
 class RepositoryListView(APIView):
@@ -224,4 +253,235 @@ class WebhookRedeliverView(APIView):
                 "message": f"Livraison webhook '{event_type}' rejouee avec succes",
             },
             status=status.HTTP_200_OK,
+        )
+
+
+class RepoExplorerView(APIView):
+    """
+    Retourne la liste des dépôts Gitea, les branches d'un dépôt sélectionné,
+    ainsi que l'arborescence de ses fichiers pour le Terminal Souverain (Run Security Audit / Ask Gemma).
+    """
+
+    authentication_classes = [CsrfExemptSessionAuthentication]
+    permission_classes = [AllowAny]
+
+    def options(self, request, *args, **kwargs):
+        return _add_cors(Response({}, status=status.HTTP_200_OK))
+
+    def get(self, request):
+        client = GiteaClient()
+        repos = client.list_repositories(use_cache=False)
+
+        # Fusionner les dépôts enregistrés en base SovereignRepository s'ils ne sont pas encore dans la liste
+        known_names = {r.get("full_name") for r in repos if r.get("full_name")}
+        for db_repo in SovereignRepository.objects.all()[:30]:
+            full = f"{db_repo.owner}/{db_repo.name}"
+            if full not in known_names:
+                repos.append(
+                    {
+                        "id": db_repo.id + 5000,
+                        "name": db_repo.name,
+                        "full_name": full,
+                        "owner": {"username": db_repo.owner},
+                        "private": db_repo.is_private,
+                        "html_url": db_repo.html_url,
+                        "default_branch": "main",
+                    }
+                )
+                known_names.add(full)
+
+        selected_repo = request.query_params.get("repo", "").strip("/")
+        if not selected_repo and repos:
+            selected_repo = repos[0].get("full_name", "sovereign-org/afri-fintech-gateway")
+
+        if "/" in selected_repo:
+            owner, repo_name = selected_repo.split("/", 1)
+        else:
+            owner, repo_name = "sovereign-org", (selected_repo or "afri-fintech-gateway")
+            selected_repo = f"{owner}/{repo_name}"
+
+        # S'assurer que le dépôt courant passé par Gitea figure dans la liste
+        if selected_repo not in known_names:
+            repos.insert(
+                0,
+                {
+                    "id": 9999,
+                    "name": repo_name,
+                    "full_name": selected_repo,
+                    "owner": {"username": owner},
+                    "private": False,
+                    "default_branch": "main",
+                },
+            )
+
+        branches_raw = client.get_repository_branches(owner, repo_name)
+        branches = [b.get("name", "main") for b in branches_raw if isinstance(b, dict) and b.get("name")]
+        if not branches:
+            branches = ["main", "develop"]
+
+        selected_branch = request.query_params.get("branch", "").strip() or branches[0]
+        if selected_branch not in branches:
+            branches.insert(0, selected_branch)
+
+        files = client.get_repository_tree(owner, repo_name, branch=selected_branch)
+
+        return _add_cors(
+            Response(
+                {
+                    "repositories": [
+                        {
+                            "full_name": r.get("full_name", f"sovereign-org/{r.get('name', 'repo')}"),
+                            "name": r.get("name", "repo"),
+                            "default_branch": r.get("default_branch", "main"),
+                        }
+                        for r in repos
+                    ],
+                    "selected_repo": selected_repo,
+                    "branches": branches,
+                    "selected_branch": selected_branch,
+                    "files": files,
+                },
+                status=status.HTTP_200_OK,
+            )
+        )
+
+
+class RepoCommandAnalyzeView(APIView):
+    """
+    Exécute la commande structurée du Terminal Souverain (Run Security Audit ou Ask Gemma Review)
+    sur un dépôt, une branche et un fichier (ou tous les fichiers '*') dans la langue active (fr, en, sw, pt).
+    """
+
+    authentication_classes = [CsrfExemptSessionAuthentication]
+    permission_classes = [AllowAny]
+
+    def options(self, request, *args, **kwargs):
+        return _add_cors(Response({}, status=status.HTTP_200_OK))
+
+    def post(self, request):
+        from apps.ai_assistant.gemma import GemmaAssistant
+        from apps.ai_assistant.models import AIInteractionLog
+        from apps.ai_assistant.views import sanitize_pii_and_secrets
+        from apps.security_scanner.engine import SecurityScannerEngine
+        from apps.security_scanner.models import SecurityAuditReport
+
+        action = str(request.data.get("action", "security")).lower().strip()
+        repository = str(request.data.get("repository", "sovereign-org/afri-fintech-gateway")).strip("/")
+        branch = str(request.data.get("branch", "main")).strip() or "main"
+        file_path = str(request.data.get("file_path", "*")).strip() or "*"
+        lang = _resolve_lang(request)
+
+        if "/" in repository:
+            owner, repo_name = repository.split("/", 1)
+        else:
+            owner, repo_name = "sovereign-org", repository
+            repository = f"{owner}/{repo_name}"
+
+        client = GiteaClient()
+        if file_path in ("*", "ALL", "all"):
+            all_files = client.get_repository_tree(owner, repo_name, branch=branch)
+            target_files = [
+                f
+                for f in all_files
+                if not f.lower().endswith((".png", ".jpg", ".jpeg", ".gif", ".ico", ".woff", ".woff2", ".ttf"))
+            ][:10]
+            if not target_files:
+                target_files = list(client.DEFAULT_DEMO_FILES.keys())
+        else:
+            target_files = [file_path]
+
+        if action in ("gemma", "ai", "review"):
+            combined_parts = []
+            for fp in target_files:
+                raw_content = client.get_file_content(owner, repo_name, branch, fp)
+                combined_parts.append(f"# --- FILE: {fp} (branch: {branch}) ---\n{raw_content[:3000]}")
+            combined_code = sanitize_pii_and_secrets("\n\n".join(combined_parts)[:14000])
+            assistant = GemmaAssistant()
+            ai_res = assistant.analyze_code(
+                code_snippet=combined_code,
+                context=f"repo:{repository}@{branch}:{file_path}",
+                lang=lang,
+            )
+            AIInteractionLog.objects.create(
+                query_context=f"repo_review:{repository}",
+                prompt_snippet=combined_code[:500],
+                ai_response=ai_res.get("response", ""),
+                model_used=ai_res.get("model", "gemma2:2b"),
+            )
+            cmd_str = f"gemma-review --repo={repository} --branch={branch} --target={file_path}"
+            return _add_cors(
+                Response(
+                    {
+                        "success": True,
+                        "action": "gemma",
+                        "command": cmd_str,
+                        "repository": repository,
+                        "branch": branch,
+                        "file_path": file_path,
+                        "files_analyzed": target_files,
+                        "lang": lang,
+                        "model": ai_res.get("model", "gemma2:2b"),
+                        "response": ai_res.get("response", ""),
+                    },
+                    status=status.HTTP_200_OK,
+                )
+            )
+
+        # Action: Run Security Audit (SAST)
+        aggregated_issues = []
+        for fp in target_files:
+            raw_content = client.get_file_content(owner, repo_name, branch, fp)
+            scan_res = SecurityScannerEngine.scan_code(filename=fp, content=raw_content, lang=lang)
+            aggregated_issues.extend(scan_res.get("issues", []))
+
+        critical_count = sum(1 for i in aggregated_issues if i.get("severity") == "CRITICAL")
+        high_count = sum(1 for i in aggregated_issues if i.get("severity") == "HIGH")
+        medium_count = sum(1 for i in aggregated_issues if i.get("severity") == "MEDIUM")
+        deductions = (critical_count * 25) + (high_count * 15) + (medium_count * 5)
+        score = max(0, 100 - deductions)
+
+        status_rating = "EXCELLENT"
+        if score < 50:
+            status_rating = "CRITICAL_RISK"
+        elif score < 75:
+            status_rating = "WARNING"
+        elif score < 90:
+            status_rating = "GOOD"
+
+        SecurityAuditReport.objects.create(
+            repository_name=repository,
+            file_scanned=file_path if file_path != "*" else f"* ({len(target_files)} files)",
+            total_issues=len(aggregated_issues),
+            critical_count=critical_count,
+            high_count=high_count,
+            medium_count=medium_count,
+            sovereignty_score=score,
+            status_rating=status_rating,
+            raw_findings=aggregated_issues,
+        )
+
+        msg_meta = SecurityScannerEngine.I18N_MESSAGES.get(lang, SecurityScannerEngine.I18N_MESSAGES["fr"])
+        cmd_str = f"security-audit --repo={repository} --branch={branch} --target={file_path}"
+        return _add_cors(
+            Response(
+                {
+                    "success": True,
+                    "action": "security",
+                    "command": cmd_str,
+                    "repository": repository,
+                    "branch": branch,
+                    "file_path": file_path,
+                    "files_analyzed": target_files,
+                    "lang": lang,
+                    "total_issues": len(aggregated_issues),
+                    "critical": critical_count,
+                    "high": high_count,
+                    "medium": medium_count,
+                    "sovereignty_score": score,
+                    "status_rating": status_rating,
+                    "jurisdiction": msg_meta["jurisdiction"],
+                    "issues": aggregated_issues,
+                },
+                status=status.HTTP_200_OK,
+            )
         )

