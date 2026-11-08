@@ -1187,14 +1187,15 @@ document.addEventListener('DOMContentLoaded', function() {
 </script>
 
 <script src="/assets/js/bantu-ecosystem-sync.js"></script>
+<script src="/static/js/bantu-command-terminal.js" defer></script>
 <script src="/assets/js/bantu-command-terminal.js" defer></script>
 <script>
 // Synchronisation Automatique de Langue et Mode d'Affichage avec BantuDevLab & GitLab Forge
 (function initGiteaBantuSync() {
   function setupHeaderControls() {
-    const navBar = document.querySelector('.ui.menu.navbar');
+    const navBar = document.querySelector('nav#navbar, #navbar, .ui.menu.navbar');
     if (!navBar) return;
-    const rightMenu = navBar.querySelector('.right.menu') || navBar;
+    const rightMenu = navBar.querySelector('.navbar-right, .right.menu') || navBar;
 
     // 1. Language Quick Switcher in Gitea Header
     if (!document.getElementById('gitea-bantu-lang-selector')) {

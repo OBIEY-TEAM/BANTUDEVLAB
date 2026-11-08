@@ -38,7 +38,7 @@
 
     <div class="faq-accordion-group">
         <!-- Q1 : Comment créer un compte GitLab ? -->
-        <details class="faq-item" open id="faq-create-account">
+        <details class="faq-item" id="faq-create-account">
             <summary class="faq-summary">
                 <span class="faq-summary-title">
                     <span class="faq-badge">1</span>
@@ -75,7 +75,7 @@
         </details>
 
         <!-- Q2 : Comment se connecter ? -->
-        <details class="faq-item" open id="faq-login">
+        <details class="faq-item" id="faq-login">
             <summary class="faq-summary">
                 <span class="faq-summary-title">
                     <span class="faq-badge">2</span>
@@ -107,7 +107,7 @@
         </details>
 
         <!-- Q3 : Comment consulter et cloner le code source ? -->
-        <details class="faq-item" open id="faq-view-source">
+        <details class="faq-item" id="faq-view-source">
             <summary class="faq-summary">
                 <span class="faq-summary-title">
                     <span class="faq-badge">3</span>
@@ -358,7 +358,11 @@
             const text = item.textContent.toLowerCase();
             if (!query || text.includes(query)) {
                 item.style.display = '';
-                if (query) item.setAttribute('open', '');
+                if (query) {
+                    item.setAttribute('open', '');
+                } else {
+                    item.removeAttribute('open');
+                }
             } else {
                 item.style.display = 'none';
             }

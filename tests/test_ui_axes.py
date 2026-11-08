@@ -443,3 +443,27 @@ class Axe4UITestCase(TestCase):
             gemma_data = gemma_resp.json()
             self.assertEqual(gemma_data["action"], "gemma")
             self.assertIn("response", gemma_data)
+
+
+    def test_faq_three_steps_closed_by_default_and_gitea_headbar_explore_alignment(self):
+        """Vérifie que les 3 étapes fondamentales de la FAQ sont fermées par défaut et que la barre d'en-tête Gitea place les actions après [Explore]."""
+        from pathlib import Path
+
+        resp_faq = self.client.get(reverse("faq"))
+        self.assertEqual(resp_faq.status_code, 200)
+        faq_html = resp_faq.content.decode("utf-8")
+        self.assertIn('<details class="faq-item" id="faq-create-account">', faq_html)
+        self.assertIn('<details class="faq-item" id="faq-login">', faq_html)
+        self.assertIn('<details class="faq-item" id="faq-view-source">', faq_html)
+        self.assertNotIn('<details class="faq-item" open id="faq-create-account">', faq_html)
+        self.assertNotIn('<details class="faq-item" open id="faq-login">', faq_html)
+        self.assertNotIn('<details class="faq-item" open id="faq-view-source">', faq_html)
+
+        terminal_js = Path("static/js/bantu-command-terminal.js").read_text(encoding="utf-8")
+        self.assertIn("nav#navbar .navbar-left", terminal_js)
+        self.assertIn('a.item[href*="/explore"]', terminal_js)
+        self.assertIn("fetchLiveGiteaData", terminal_js)
+
+        nginx_conf = Path("deploy/nginx/bantudevlab.conf").read_text(encoding="utf-8")
+        self.assertIn("sub_filter '</head>'", nginx_conf)
+        self.assertIn("/static/js/bantu-command-terminal.js", nginx_conf)

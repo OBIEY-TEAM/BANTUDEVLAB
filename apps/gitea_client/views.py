@@ -378,7 +378,16 @@ class RepoCommandAnalyzeView(APIView):
             repository = f"{owner}/{repo_name}"
 
         client = GiteaClient()
-        if file_path in ("*", "ALL", "all"):
+        provided_files = request.data.get("files_content")
+        provided_map = {}
+        if isinstance(provided_files, list):
+            for item in provided_files:
+                if isinstance(item, dict) and item.get("path") and isinstance(item.get("content"), str):
+                    provided_map[str(item["path"])] = item["content"]
+
+        if provided_map:
+            target_files = list(provided_map.keys())[:10]
+        elif file_path in ("*", "ALL", "all"):
             all_files = client.get_repository_tree(owner, repo_name, branch=branch)
             target_files = [
                 f
@@ -393,7 +402,7 @@ class RepoCommandAnalyzeView(APIView):
         if action in ("gemma", "ai", "review"):
             combined_parts = []
             for fp in target_files:
-                raw_content = client.get_file_content(owner, repo_name, branch, fp)
+                raw_content = provided_map.get(fp) or client.get_file_content(owner, repo_name, branch, fp)
                 combined_parts.append(f"# --- FILE: {fp} (branch: {branch}) ---\n{raw_content[:3000]}")
             combined_code = sanitize_pii_and_secrets("\n\n".join(combined_parts)[:14000])
             assistant = GemmaAssistant()
@@ -430,7 +439,7 @@ class RepoCommandAnalyzeView(APIView):
         # Action: Run Security Audit (SAST)
         aggregated_issues = []
         for fp in target_files:
-            raw_content = client.get_file_content(owner, repo_name, branch, fp)
+            raw_content = provided_map.get(fp) or client.get_file_content(owner, repo_name, branch, fp)
             scan_res = SecurityScannerEngine.scan_code(filename=fp, content=raw_content, lang=lang)
             aggregated_issues.extend(scan_res.get("issues", []))
 

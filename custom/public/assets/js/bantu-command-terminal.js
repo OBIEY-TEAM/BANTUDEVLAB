@@ -1,18 +1,22 @@
 /**
  * BANTUDEVLAB - Sovereign Command Prompt Terminal & Top-Up Analysis Interface
  * Provides:
- * 1. Pro Action Buttons ("Run Security Audit" & "Ask Gemma Review") right after the Logo in the top navbar
- *    and on every Gitea Repository header / Dashboard repo row.
+ * 1. Pro Action Buttons ("Run Security Audit" & "Ask Gemma Review") in the Gitea headbar right after [Explore]
+ *    on the exact same horizontal alignment as the logo, in the Django navbar right after the logo,
+ *    and on every Gitea Repository header / Dashboard repository list item.
  * 2. Structured Command Prompt Terminal (Zero free-text input):
- *    - '+' Button to configure target options:
- *      * Repository selector (--repo)
- *      * Branch selector (--branch)
- *      * File or All Files (*) selector (--target)
- *    - 'Execute' Button to run SAST Security Audit or Gemma 2 2B / 5B AI Review on the selected repo/branch/files.
- * 3. Top-Up Results Interface & Multi-lingual synchronization (fr, en, sw, pt).
+ *    - '+' Button (#bantu-cmd-plus-btn) to configure target options:
+ *      * Repository selector (#bantu-cmd-repo-select)
+ *      * Branch selector (#bantu-cmd-branch-select)
+ *      * File or All Files (*) selector (#bantu-cmd-file-select)
+ *    - 'Execute' Button (#bantu-cmd-exec-btn) to run SAST Security Audit or Gemma AI Review.
+ * 3. Top-Up Results Interface (#bantu-cmd-results-panel) & Multi-lingual synchronization (fr, en, sw, pt).
  */
 (function () {
   "use strict";
+
+  if (window.__BANTU_CMD_TERMINAL_READY__) return;
+  window.__BANTU_CMD_TERMINAL_READY__ = true;
 
   var TERMINAL_I18N = {
     fr: {
@@ -152,6 +156,17 @@
     return TERMINAL_I18N[code] ? code : "fr";
   }
 
+  function isGiteaHost() {
+    var h = window.location.hostname;
+    var p = window.location.port;
+    return (
+      h.indexOf("git.") === 0 ||
+      h.indexOf("gitea.") === 0 ||
+      p === "3002" ||
+      !!document.querySelector("nav#navbar, .page-content.repository, meta[name='author'][content='Gitea']")
+    );
+  }
+
   function getApiBaseCandidates() {
     var list = [""];
     var host = window.location.hostname;
@@ -226,11 +241,24 @@
       "org",
       "repo",
       "i18n",
+      "-",
     ];
     var parts = path.split("/");
     if (parts.length >= 2 && reserved.indexOf(parts[0].toLowerCase()) === -1) {
       var repoClean = parts[1].replace(/\.git$/, "");
-      return parts[0] + "/" + repoClean;
+      if (repoClean && reserved.indexOf(repoClean.toLowerCase()) === -1) {
+        return parts[0] + "/" + repoClean;
+      }
+    }
+    return "";
+  }
+
+  function detectCurrentBranchFromUrl() {
+    var path = window.location.pathname.replace(/^\/+|\/+$/g, "");
+    var parts = path.split("/");
+    // /owner/repo/src/branch/main/... or /owner/repo/commits/branch/main
+    if (parts.length >= 5 && (parts[2] === "src" || parts[2] === "commits") && parts[3] === "branch") {
+      return decodeURIComponent(parts[4]);
     }
     return "";
   }
@@ -248,6 +276,7 @@
     repo: "",
     branch: "main",
     file: "*",
+    filesList: [],
     optionsExpanded: true,
   };
 
@@ -256,14 +285,15 @@
     var style = document.createElement("style");
     style.id = "bantu-cmd-terminal-styles";
     style.textContent =
-      ".bantu-pro-actions-group{display:inline-flex;align-items:center;gap:6px;margin-left:10px;margin-right:8px;flex-wrap:wrap;}" +
-      ".bantu-pro-action-btn{display:inline-flex;align-items:center;gap:6px;padding:5px 11px;border-radius:6px;font-size:12px;font-weight:700;cursor:pointer;transition:all 0.15s ease;text-decoration:none;white-space:nowrap;line-height:1.2;font-family:inherit;}" +
-      ".bantu-pro-btn-security{background:rgba(245,158,11,0.14);color:#f59e0b !important;border:1px solid rgba(245,158,11,0.55);}" +
-      ".bantu-pro-btn-security:hover{background:#f59e0b;color:#020617 !important;box-shadow:0 0 12px rgba(245,158,11,0.45);}" +
-      ".bantu-pro-btn-gemma{background:rgba(0,229,255,0.12);color:#00e5ff !important;border:1px solid rgba(0,229,255,0.5);}" +
-      ".bantu-pro-btn-gemma:hover{background:#00e5ff;color:#020617 !important;box-shadow:0 0 12px rgba(0,229,255,0.45);}" +
-      "[data-theme='light'] .bantu-pro-btn-security{background:#fffbeb;color:#b45309 !important;border-color:#f59e0b;}" +
-      "[data-theme='light'] .bantu-pro-btn-gemma{background:#eff6ff;color:#0051cc !important;border-color:#3b82f6;}" +
+      ".bantu-pro-actions-group{display:inline-flex !important;align-items:center !important;align-self:center !important;gap:8px !important;margin:0 6px 0 8px !important;padding:0 !important;flex-wrap:nowrap;vertical-align:middle !important;flex-shrink:0;}" +
+      "#navbar .navbar-left .bantu-pro-actions-group,nav#navbar .bantu-pro-actions-group{display:inline-flex !important;align-items:center !important;align-self:center !important;height:auto !important;margin-left:8px !important;}" +
+      ".bantu-pro-action-btn{display:inline-flex !important;align-items:center !important;justify-content:center !important;gap:6px !important;padding:5px 11px !important;border-radius:6px !important;font-size:12px !important;font-weight:700 !important;cursor:pointer !important;transition:all 0.15s ease !important;text-decoration:none !important;white-space:nowrap !important;line-height:1.2 !important;font-family:system-ui,-apple-system,sans-serif !important;}" +
+      ".bantu-pro-btn-security{background:rgba(245,158,11,0.16) !important;color:#f59e0b !important;border:1px solid rgba(245,158,11,0.65) !important;}" +
+      ".bantu-pro-btn-security:hover{background:#f59e0b !important;color:#020617 !important;box-shadow:0 0 12px rgba(245,158,11,0.45) !important;}" +
+      ".bantu-pro-btn-gemma{background:rgba(0,229,255,0.14) !important;color:#00e5ff !important;border:1px solid rgba(0,229,255,0.6) !important;}" +
+      ".bantu-pro-btn-gemma:hover{background:#00e5ff !important;color:#020617 !important;box-shadow:0 0 12px rgba(0,229,255,0.45) !important;}" +
+      "[data-theme='light'] .bantu-pro-btn-security{background:#fffbeb !important;color:#b45309 !important;border-color:#f59e0b !important;}" +
+      "[data-theme='light'] .bantu-pro-btn-gemma{background:#eff6ff !important;color:#0051cc !important;border-color:#3b82f6 !important;}" +
       "#bantu-command-terminal-modal{display:none;position:fixed;inset:0;z-index:150000;background:rgba(2,6,23,0.78);backdrop-filter:blur(5px);align-items:flex-start;justify-content:center;padding:2.5vh 12px;overflow-y:auto;}" +
       "#bantu-command-terminal-modal.open{display:flex;}" +
       ".bantu-term-window{width:min(920px,96vw);background:#050b18;border:1px solid #00e5ff;border-radius:12px;box-shadow:0 20px 60px rgba(0,0,0,0.85),0 0 25px rgba(0,229,255,0.18);color:#f8fafc;overflow:hidden;font-family:'JetBrains Mono','Fira Code',Consolas,monospace;animation:bantuSlideTopUp 0.2s ease-out;}" +
@@ -284,8 +314,9 @@
       ".bantu-term-select{width:100%;padding:8px 10px;border-radius:6px;background:#020617 !important;color:#f8fafc !important;border:1px solid #1e293b !important;font-size:13px;outline:none;cursor:pointer;}" +
       ".bantu-term-select:focus{border-color:#00e5ff !important;}" +
       ".bantu-term-results-topup{padding:16px;max-height:62vh;overflow-y:auto;background:#050b18;font-family:system-ui,-apple-system,sans-serif;}" +
-      "@media (max-width:768px){.bantu-term-options-bar{grid-template-columns:1fr;}.bantu-pro-actions-group{margin-left:4px;}}" +
-      "@media (max-width:480px){.bantu-pro-action-btn span.bantu-btn-text-short{display:inline;}.bantu-term-prompt-row{padding:10px;}.bantu-term-exec-btn{width:100%;justify-content:center;}}";
+      ".bantu-gitea-repo-banner{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 14px;margin:10px 0;background:rgba(7,14,30,0.9);border:1px solid rgba(0,229,255,0.35);border-radius:8px;flex-wrap:wrap;}" +
+      "@media (max-width:768px){.bantu-term-options-bar{grid-template-columns:1fr;}.bantu-pro-actions-group{margin-left:4px !important;gap:4px !important;flex-wrap:wrap;}}" +
+      "@media (max-width:480px){.bantu-pro-action-btn{padding:4px 7px !important;font-size:11px !important;}.bantu-term-prompt-row{padding:10px;}.bantu-term-exec-btn{width:100%;justify-content:center;}}";
     document.head.appendChild(style);
   }
 
@@ -336,8 +367,8 @@
       '      <strong id="bantu-term-modal-title" style="font-size:12px;color:#00e5ff;letter-spacing:0.04em;"></strong>' +
       "    </div>" +
       '    <div style="display:flex;align-items:center;gap:6px;">' +
-      '      <button type="button" id="bantu-switch-mode-security" class="bantu-pro-action-btn bantu-pro-btn-security" style="padding:3px 9px;font-size:11px;">Run Security Audit</button>' +
-      '      <button type="button" id="bantu-switch-mode-gemma" class="bantu-pro-action-btn bantu-pro-btn-gemma" style="padding:3px 9px;font-size:11px;">Ask Gemma Review</button>' +
+      '      <button type="button" id="bantu-switch-mode-security" class="bantu-pro-action-btn bantu-pro-btn-security" style="padding:3px 9px !important;font-size:11px !important;">Run Security Audit</button>' +
+      '      <button type="button" id="bantu-switch-mode-gemma" class="bantu-pro-action-btn bantu-pro-btn-gemma" style="padding:3px 9px !important;font-size:11px !important;">Ask Gemma Review</button>' +
       '      <button type="button" id="bantu-term-close-btn" style="background:transparent;border:1px solid #334155;color:#94a3b8;border-radius:6px;padding:3px 9px;font-size:12px;cursor:pointer;">Esc</button>' +
       "    </div>" +
       "  </div>" +
@@ -448,6 +479,142 @@
     updatePromptPreview();
   }
 
+  async function fetchLiveGiteaData(preferredRepo, preferredBranch) {
+    if (!isGiteaHost()) return null;
+    try {
+      var repoMap = {};
+      var repoList = [];
+
+      // 1. Try logged-in user repos first (includes private repos created by the dev)
+      try {
+        var rUser = await fetch("/api/v1/user/repos?limit=50", { credentials: "same-origin" });
+        if (rUser.ok) {
+          var uData = await rUser.json();
+          if (Array.isArray(uData)) {
+            uData.forEach(function (r) {
+              if (r && r.full_name && !repoMap[r.full_name]) {
+                repoMap[r.full_name] = true;
+                repoList.push({
+                  full_name: r.full_name,
+                  name: r.name,
+                  default_branch: r.default_branch || "main",
+                });
+              }
+            });
+          }
+        }
+      } catch (e1) {}
+
+      // 2. Also search public/visible repos on Gitea
+      try {
+        var rSearch = await fetch("/api/v1/repos/search?limit=50", { credentials: "same-origin" });
+        if (rSearch.ok) {
+          var sData = await rSearch.json();
+          var arr = (sData && sData.data) || [];
+          arr.forEach(function (r) {
+            if (r && r.full_name && !repoMap[r.full_name]) {
+              repoMap[r.full_name] = true;
+              repoList.push({
+                full_name: r.full_name,
+                name: r.name,
+                default_branch: r.default_branch || "main",
+              });
+            }
+          });
+        }
+      } catch (e2) {}
+
+      // 3. Also scan repo links visible on current Gitea DOM (Dashboard / Explore)
+      document.querySelectorAll("a[href]").forEach(function (a) {
+        var href = a.getAttribute("href") || "";
+        var m = href.match(/^\/([A-Za-z0-9_.-]+)\/([A-Za-z0-9_.-]+)$/);
+        if (m) {
+          var owner = m[1];
+          var rname = m[2];
+          var reserved = [
+            "explore",
+            "user",
+            "admin",
+            "api",
+            "assets",
+            "static",
+            "org",
+            "repo",
+            "notifications",
+            "milestones",
+            "issues",
+            "pulls",
+          ];
+          if (reserved.indexOf(owner.toLowerCase()) === -1 && reserved.indexOf(rname.toLowerCase()) === -1) {
+            var full = owner + "/" + rname;
+            if (!repoMap[full]) {
+              repoMap[full] = true;
+              repoList.push({ full_name: full, name: rname, default_branch: "main" });
+            }
+          }
+        }
+      });
+
+      var selectedRepo = preferredRepo || detectCurrentRepoFromUrl() || (repoList[0] && repoList[0].full_name) || "";
+      if (selectedRepo && !repoMap[selectedRepo]) {
+        repoList.unshift({
+          full_name: selectedRepo,
+          name: selectedRepo.split("/")[1] || selectedRepo,
+          default_branch: "main",
+        });
+      }
+
+      if (!selectedRepo) return null;
+
+      var branches = [];
+      try {
+        var rBr = await fetch("/api/v1/repos/" + selectedRepo + "/branches", { credentials: "same-origin" });
+        if (rBr.ok) {
+          var brData = await rBr.json();
+          if (Array.isArray(brData)) {
+            brData.forEach(function (b) {
+              if (b && b.name) branches.push(b.name);
+            });
+          }
+        }
+      } catch (e3) {}
+      if (!branches.length) branches = ["main", "master", "develop"];
+
+      var selectedBranch = preferredBranch || detectCurrentBranchFromUrl() || branches[0] || "main";
+      if (branches.indexOf(selectedBranch) === -1) {
+        branches.unshift(selectedBranch);
+      }
+
+      var files = [];
+      try {
+        var rTree = await fetch(
+          "/api/v1/repos/" + selectedRepo + "/git/trees/" + encodeURIComponent(selectedBranch) + "?recursive=1",
+          { credentials: "same-origin" }
+        );
+        if (rTree.ok) {
+          var treeData = await rTree.json();
+          if (treeData && Array.isArray(treeData.tree)) {
+            treeData.tree.forEach(function (node) {
+              if (node && node.type === "blob" && node.path) {
+                files.push(node.path);
+              }
+            });
+          }
+        }
+      } catch (e4) {}
+
+      return {
+        repositories: repoList,
+        selected_repo: selectedRepo,
+        branches: branches,
+        selected_branch: selectedBranch,
+        files: files,
+      };
+    } catch (err) {
+      return null;
+    }
+  }
+
   async function loadExplorerData(preferredRepo, preferredBranch) {
     var lang = getActiveLang();
     var t = TERMINAL_I18N[lang];
@@ -462,34 +629,82 @@
     var qs = q.length ? "?" + q.join("&") : "";
 
     try {
-      var data = await fetchApiWithFallback("/api/forge/repo-explorer/" + qs, {
-        method: "GET",
-        headers: { Accept: "application/json" },
-      });
+      var liveGitea = await fetchLiveGiteaData(preferredRepo, preferredBranch);
+      var backendData = null;
+      try {
+        backendData = await fetchApiWithFallback("/api/forge/repo-explorer/" + qs, {
+          method: "GET",
+          headers: { Accept: "application/json" },
+        });
+      } catch (beErr) {}
 
-      var repos = data.repositories || [];
+      var data = liveGitea || backendData;
+      if (!data) throw new Error("No explorer source");
+
+      // Merge repositories from live Gitea and backend
+      var mergedRepos = [];
+      var seenRepos = {};
+      if (liveGitea && Array.isArray(liveGitea.repositories)) {
+        liveGitea.repositories.forEach(function (r) {
+          if (r && r.full_name && !seenRepos[r.full_name]) {
+            seenRepos[r.full_name] = true;
+            mergedRepos.push(r);
+          }
+        });
+      }
+      if (backendData && Array.isArray(backendData.repositories)) {
+        backendData.repositories.forEach(function (r) {
+          if (r && r.full_name && !seenRepos[r.full_name]) {
+            seenRepos[r.full_name] = true;
+            mergedRepos.push(r);
+          }
+        });
+      }
+
+      var selectedRepo =
+        preferredRepo ||
+        (liveGitea && liveGitea.selected_repo) ||
+        (backendData && backendData.selected_repo) ||
+        (mergedRepos[0] && mergedRepos[0].full_name) ||
+        "sovereign-org/afri-fintech-gateway";
+
       repoSel.innerHTML = "";
-      repos.forEach(function (r) {
+      mergedRepos.forEach(function (r) {
         var opt = document.createElement("option");
         opt.value = r.full_name;
         opt.textContent = r.full_name;
-        if (r.full_name === data.selected_repo) opt.selected = true;
+        if (r.full_name === selectedRepo) opt.selected = true;
         repoSel.appendChild(opt);
       });
-      state.repo = data.selected_repo || (repos[0] && repos[0].full_name) || "sovereign-org/afri-fintech-gateway";
+      state.repo = selectedRepo;
 
-      var branches = data.branches || ["main"];
+      var branches =
+        (liveGitea && liveGitea.branches && liveGitea.branches.length ? liveGitea.branches : null) ||
+        (backendData && backendData.branches) ||
+        ["main"];
+      var selectedBranch =
+        preferredBranch ||
+        (liveGitea && liveGitea.selected_branch) ||
+        (backendData && backendData.selected_branch) ||
+        branches[0] ||
+        "main";
+
       branchSel.innerHTML = "";
       branches.forEach(function (b) {
         var opt = document.createElement("option");
         opt.value = b;
         opt.textContent = b;
-        if (b === data.selected_branch) opt.selected = true;
+        if (b === selectedBranch) opt.selected = true;
         branchSel.appendChild(opt);
       });
-      state.branch = data.selected_branch || branches[0] || "main";
+      state.branch = selectedBranch;
 
-      var files = data.files || [];
+      var files =
+        (liveGitea && liveGitea.files && liveGitea.files.length ? liveGitea.files : null) ||
+        (backendData && backendData.files) ||
+        [];
+      state.filesList = files;
+
       fileSel.innerHTML = "";
       var allOpt = document.createElement("option");
       allOpt.value = "*";
@@ -523,6 +738,35 @@
     }
   }
 
+  async function fetchGiteaRepoFilesContent(repo, branch, targetFile) {
+    if (!isGiteaHost() || !repo) return [];
+    var targets = [];
+    if (targetFile && targetFile !== "*") {
+      targets = [targetFile];
+    } else if (Array.isArray(state.filesList) && state.filesList.length) {
+      targets = state.filesList
+        .filter(function (f) {
+          return !/\.(png|jpg|jpeg|gif|ico|woff|woff2|ttf|pdf|zip|tar|gz)$/i.test(f);
+        })
+        .slice(0, 8);
+    }
+    var results = [];
+    for (var i = 0; i < targets.length; i++) {
+      var fp = targets[i];
+      try {
+        var rawUrl = "/" + repo + "/raw/branch/" + encodeURIComponent(branch) + "/" + fp;
+        var res = await fetch(rawUrl, { credentials: "same-origin" });
+        if (res.ok) {
+          var txt = await res.text();
+          if (txt && txt.indexOf("<!DOCTYPE html>") === -1) {
+            results.push({ path: fp, content: txt.slice(0, 6000) });
+          }
+        }
+      } catch (e) {}
+    }
+    return results;
+  }
+
   async function executeCommandAnalysis() {
     var lang = getActiveLang();
     var t = TERMINAL_I18N[lang];
@@ -554,6 +798,7 @@
     );
 
     try {
+      var liveFilesContent = await fetchGiteaRepoFilesContent(state.repo, state.branch, state.file);
       var payload = {
         action: state.action,
         repository: state.repo,
@@ -561,6 +806,10 @@
         file_path: state.file,
         lang: lang,
       };
+      if (liveFilesContent && liveFilesContent.length) {
+        payload.files_content = liveFilesContent;
+      }
+
       var data = await fetchApiWithFallback("/api/forge/repo-analyze/", {
         method: "POST",
         headers: {
@@ -704,7 +953,8 @@
     modal.classList.add("open");
 
     var targetRepo = preferredRepo || detectCurrentRepoFromUrl() || "";
-    loadExplorerData(targetRepo, preferredBranch || "").then(function () {
+    var targetBranch = preferredBranch || detectCurrentBranchFromUrl() || "";
+    loadExplorerData(targetRepo, targetBranch).then(function () {
       if (autoExec) {
         executeCommandAnalysis();
       }
@@ -716,43 +966,61 @@
     if (modal) modal.classList.remove("open");
   }
 
+  function buildProButtonsHtml(t, secId, gemmaId) {
+    return (
+      '<button type="button" ' +
+      (secId ? 'id="' + secId + '" ' : "") +
+      'class="bantu-pro-action-btn bantu-pro-btn-security" title="Run Security Audit (SAST)">' +
+      '  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>' +
+      '  <span class="bantu-i18n-security-label">' +
+      escapeHtml(t.btnSecurity) +
+      "</span>" +
+      "</button>" +
+      '<button type="button" ' +
+      (gemmaId ? 'id="' + gemmaId + '" ' : "") +
+      'class="bantu-pro-action-btn bantu-pro-btn-gemma" title="Ask Gemma Review (AI)">' +
+      '  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="4" y="4" width="16" height="16" rx="2"></rect><rect x="9" y="9" width="6" height="6"></rect></svg>' +
+      '  <span class="bantu-i18n-gemma-label">' +
+      escapeHtml(t.btnGemma) +
+      "</span>" +
+      "</button>"
+    );
+  }
+
   function injectNavbarButtonsAfterLogo() {
     injectStyles();
     var lang = getActiveLang();
     var t = TERMINAL_I18N[lang];
 
-    // 1. Gitea Top Navbar (.ui.menu.navbar) right after the brand/logo
-    var giteaNav = document.querySelector(".ui.menu.navbar");
-    if (giteaNav && !document.getElementById("bantu-gitea-nav-pro-actions")) {
+    // 1. Gitea 1.22 Headbar (nav#navbar .navbar-left) or legacy (.ui.menu.navbar)
+    // Placed right after [Explore] on the exact same horizontal alignment with the logo
+    var giteaLeftNav = document.querySelector(
+      "nav#navbar .navbar-left, #navbar .navbar-left, .ui.menu.navbar .navbar-left, nav#navbar, #navbar, .ui.menu.navbar"
+    );
+    if (giteaLeftNav && !document.getElementById("bantu-gitea-nav-pro-actions")) {
       var group = document.createElement("div");
       group.id = "bantu-gitea-nav-pro-actions";
-      group.className = "bantu-pro-actions-group";
-      group.innerHTML =
-        '<button type="button" id="bantu-nav-security-btn" class="bantu-pro-action-btn bantu-pro-btn-security" title="Run Security Audit (SAST)">' +
-        '  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>' +
-        '  <span class="bantu-i18n-security-label">' +
-        escapeHtml(t.btnSecurity) +
-        "</span>" +
-        "</button>" +
-        '<button type="button" id="bantu-nav-gemma-btn" class="bantu-pro-action-btn bantu-pro-btn-gemma" title="Ask Gemma Review (AI)">' +
-        '  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="4" y="4" width="16" height="16" rx="2"></rect><rect x="9" y="9" width="6" height="6"></rect></svg>' +
-        '  <span class="bantu-i18n-gemma-label">' +
-        escapeHtml(t.btnGemma) +
-        "</span>" +
-        "</button>";
+      group.className = "item bantu-pro-actions-group";
+      group.innerHTML = buildProButtonsHtml(t, "bantu-nav-security-btn", "bantu-nav-gemma-btn");
 
-      var brandItem = giteaNav.querySelector(".item.brand, a.item[href='/']");
-      if (brandItem && brandItem.nextSibling) {
-        brandItem.parentNode.insertBefore(group, brandItem.nextSibling);
+      var exploreItem = giteaLeftNav.querySelector('a.item[href*="/explore"], a[href*="/explore"]');
+      var brandItem = giteaLeftNav.querySelector("#navbar-logo, .item.brand, a.item[href='/']");
+
+      if (exploreItem) {
+        exploreItem.insertAdjacentElement("afterend", group);
+      } else if (brandItem) {
+        brandItem.insertAdjacentElement("afterend", group);
       } else {
-        giteaNav.insertBefore(group, giteaNav.firstChild);
+        giteaLeftNav.appendChild(group);
       }
 
-      group.querySelector("#bantu-nav-security-btn").addEventListener("click", function () {
-        openCommandTerminal("security", detectCurrentRepoFromUrl(), "");
+      group.querySelector("#bantu-nav-security-btn").addEventListener("click", function (e) {
+        e.preventDefault();
+        openCommandTerminal("security", detectCurrentRepoFromUrl(), detectCurrentBranchFromUrl());
       });
-      group.querySelector("#bantu-nav-gemma-btn").addEventListener("click", function () {
-        openCommandTerminal("gemma", detectCurrentRepoFromUrl(), "");
+      group.querySelector("#bantu-nav-gemma-btn").addEventListener("click", function (e) {
+        e.preventDefault();
+        openCommandTerminal("gemma", detectCurrentRepoFromUrl(), detectCurrentBranchFromUrl());
       });
     }
 
@@ -762,21 +1030,95 @@
       var dGroup = document.createElement("div");
       dGroup.id = "bantu-django-nav-pro-actions";
       dGroup.className = "bantu-pro-actions-group";
-      dGroup.innerHTML =
-        '<button type="button" class="bantu-pro-action-btn bantu-pro-btn-security" onclick="window.openBantuCommandTerminal(\'security\')">' +
-        '  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>' +
-        '  <span class="bantu-i18n-security-label">' +
-        escapeHtml(t.btnSecurity) +
-        "</span>" +
-        "</button>" +
-        '<button type="button" class="bantu-pro-action-btn bantu-pro-btn-gemma" onclick="window.openBantuCommandTerminal(\'gemma\')">' +
-        '  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="4" y="4" width="16" height="16" rx="2"></rect><rect x="9" y="9" width="6" height="6"></rect></svg>' +
-        '  <span class="bantu-i18n-gemma-label">' +
-        escapeHtml(t.btnGemma) +
-        "</span>" +
-        "</button>";
-      djangoBrand.parentNode.insertBefore(dGroup, djangoBrand.nextSibling);
+      dGroup.innerHTML = buildProButtonsHtml(t, "bantu-django-security-btn", "bantu-django-gemma-btn");
+      djangoBrand.insertAdjacentElement("afterend", dGroup);
+
+      dGroup.querySelector("#bantu-django-security-btn").addEventListener("click", function () {
+        openCommandTerminal("security", "", "");
+      });
+      dGroup.querySelector("#bantu-django-gemma-btn").addEventListener("click", function () {
+        openCommandTerminal("gemma", "", "");
+      });
     }
+
+    // 3. Inject into Gitea Repository Page Header & Dashboard Repo Lists
+    injectGiteaRepoAndDashboardActions();
+  }
+
+  function injectGiteaRepoAndDashboardActions() {
+    if (!isGiteaHost()) return;
+    var lang = getActiveLang();
+    var t = TERMINAL_I18N[lang];
+    var currentRepo = detectCurrentRepoFromUrl();
+    var currentBranch = detectCurrentBranchFromUrl();
+
+    // A. On any Gitea Repository Page (/owner/repo), inject into repo header if not already present
+    if (
+      currentRepo &&
+      !document.getElementById("repo-run-security-btn") &&
+      !document.getElementById("bantu-gitea-repo-header-actions")
+    ) {
+      var repoHeaderTarget = document.querySelector(
+        ".repo-button-row, .repo-header .flex-item-trailing, .repo-title-wrap, .repository .ui.container > .ui.grid"
+      );
+      if (repoHeaderTarget) {
+        var rGroup = document.createElement("div");
+        rGroup.id = "bantu-gitea-repo-header-actions";
+        rGroup.className = "bantu-pro-actions-group";
+        rGroup.innerHTML = buildProButtonsHtml(t, "repo-run-security-btn", "repo-ask-gemma-btn");
+        repoHeaderTarget.insertBefore(rGroup, repoHeaderTarget.firstChild);
+
+        rGroup.querySelector("#repo-run-security-btn").addEventListener("click", function (e) {
+          e.preventDefault();
+          openCommandTerminal("security", currentRepo, currentBranch);
+        });
+        rGroup.querySelector("#repo-ask-gemma-btn").addEventListener("click", function (e) {
+          e.preventDefault();
+          openCommandTerminal("gemma", currentRepo, currentBranch);
+        });
+      }
+    }
+
+    // B. On Gitea Dashboard & Explore repository lists, attach quick action buttons to each repo row
+    var repoLinks = document.querySelectorAll(
+      ".dashboard-repos a[href], .repo-owner-name-list a[href], .flex-list .flex-item-title a[href], .ui.repository.list .item a.name[href]"
+    );
+    repoLinks.forEach(function (link) {
+      if (link.getAttribute("data-bantu-actions-bound") === "1") return;
+      var href = link.getAttribute("href") || "";
+      var m = href.match(/^\/([A-Za-z0-9_.-]+)\/([A-Za-z0-9_.-]+)$/);
+      if (!m) return;
+      var fullRepo = m[1] + "/" + m[2];
+      link.setAttribute("data-bantu-actions-bound", "1");
+
+      var row = link.closest("li, .flex-item, .item") || link.parentElement;
+      if (!row || row.querySelector(".bantu-inline-repo-actions")) return;
+
+      var inlineBox = document.createElement("span");
+      inlineBox.className = "bantu-inline-repo-actions";
+      inlineBox.style.cssText = "display:inline-flex;align-items:center;gap:4px;margin-left:8px;vertical-align:middle;";
+      inlineBox.innerHTML =
+        '<button type="button" class="bantu-pro-action-btn bantu-pro-btn-security" style="padding:2px 7px !important;font-size:10px !important;" title="Run Security Audit on ' +
+        escapeHtml(fullRepo) +
+        '">SAST</button>' +
+        '<button type="button" class="bantu-pro-action-btn bantu-pro-btn-gemma" style="padding:2px 7px !important;font-size:10px !important;" title="Ask Gemma Review on ' +
+        escapeHtml(fullRepo) +
+        '">Gemma</button>';
+
+      var btns = inlineBox.querySelectorAll("button");
+      btns[0].addEventListener("click", function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        openCommandTerminal("security", fullRepo, "");
+      });
+      btns[1].addEventListener("click", function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        openCommandTerminal("gemma", fullRepo, "");
+      });
+
+      link.insertAdjacentElement("afterend", inlineBox);
+    });
   }
 
   document.addEventListener("keydown", function (e) {
@@ -787,9 +1129,24 @@
   window.closeBantuCommandTerminal = closeCommandTerminal;
   window.refreshBantuTerminalLang = applyTerminalI18n;
 
-  if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", injectNavbarButtonsAfterLogo);
-  } else {
+  function boot() {
     injectNavbarButtonsAfterLogo();
+    // Observe Vue/HTMX dynamic renders on Gitea Dashboard
+    if (typeof MutationObserver !== "undefined" && document.body) {
+      var obs = new MutationObserver(function () {
+        if (!document.getElementById("bantu-gitea-nav-pro-actions")) {
+          injectNavbarButtonsAfterLogo();
+        } else {
+          injectGiteaRepoAndDashboardActions();
+        }
+      });
+      obs.observe(document.body, { childList: true, subtree: true });
+    }
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", boot);
+  } else {
+    boot();
   }
 })();
