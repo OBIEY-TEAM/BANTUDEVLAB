@@ -1,7 +1,7 @@
 # FICHE OFFICIELLE DE SOUMISSION — CONCOURS CADEV 2026 (SYSTALINK)
 
 **Projet :** BANTUDEVLAB — Forge Logicielle Souveraine Panafricaine  
-**Équipe candidate :** Équipe MIABE / BANTUDEVLAB (Christ Dany Obiey et collaborateurs)  
+**Équipe candidate :** Équipe CYBERSOCLE (Christ Dany Obiey et membres de l'équipe CYBERSOCLE)  
 **Événement :** Concours CADEV 2026 — Systalink Cloud  
 **Date limite de soumission :** 15 novembre 2026, 23h59 GMT (heure de Dakar)  
 **URL de production :** https://cybersocle.site (Portail Central & API) / https://git.cybersocle.site (Forge Gitea CE)  
@@ -17,25 +17,25 @@ L'Afrique subit une dépendance numérique critique vis-à-vis des plateformes �
 ### Solution Apportée : BANTUDEVLAB
 BANTUDEVLAB est une forge logicielle panafricaine souveraine d'échange de code, conçue « par les développeurs, pour les développeurs », alliant :
 1. **Un moteur Git distribué et léger** s'appuyant sur Gitea CE et une passerelle multi-forges.
-2. **Une authentification Zero-Trust sans mot de passe** fondée sur les preuves à divulgation nulle de connaissance (Zero-Knowledge Proofs - protocole de Schnorr non-interactif via Fiat-Shamir sur RFC 3526 MODP 2048 bits).
-3. **Un scanner d'analyse statique SAST intégré** calculant en continu un score de souveraineté numérique (0 à 100%) avec calcul d'entropie de Shannon et export aux normes standard OASIS SARIF 2.1.0 et GitLab SAST.
-4. **Un assistant d'ingénierie logicielle IA local (Gemma 2 2B)** exécuté sur conteneur d'inférence Ollama au sein du datacenter sans transfert de données vers l'extérieur.
-5. **Une expérience utilisateur moderne multi-écrans** intégrant un terminal de commande pro sans saisie libre, un éditeur CodeMirror et la synchronisation en 4 langues (Français, Anglais, Swahili, Portugais).
+2. **Une authentification Zero-Trust sans mot de passe** fondée sur les preuves à divulgation nulle de connaissance (Zero-Knowledge Proofs - protocole de Schnorr non-interactif via Fiat-Shamir sur groupe RFC 3526 MODP 2048 bits).
+3. **Un scanner d'analyse statique SAST intégré** calculant en continu un score de souveraineté numérique (0 à 100%) avec calcul d'entropie de Shannon ($H \ge 3.8$) et export aux normes standard OASIS SARIF 2.1.0 et GitLab SAST (`gl-sast-report.json`).
+4. **Un assistant d'ingénierie logicielle IA local (Gemma 2 2B)** exécuté sur conteneur d'inférence Ollama au sein de l'infrastructure sans transfert de données vers l'extérieur.
+5. **Une expérience utilisateur moderne multi-écrans** intégrant un terminal de commande pro sans saisie libre, un éditeur CodeMirror et la synchronisation en 4 langues (Français, Anglais, Kiswahili, Portugais).
 
 ---
 
 ## b) Déclaration de Titularité des Droits
 
-Les soussignés, membres de l'équipe candidate BANTUDEVLAB, déclarent sur l'honneur que le projet présenté a été entièrement conçu, développé et réalisé à titre personnel et indépendant, **hors de toute mission, contrat de travail, mandat ou commande émanant d'un employeur, client ou établissement d'enseignement**. L'ensemble des droits de propriété intellectuelle afférents au projet appartient exclusivement aux membres de l'équipe sous licence permissive MIT.
+Les soussignés, membres de l'équipe candidate **CYBERSOCLE**, déclarent sur l'honneur que le projet BantuDevLab a été entièrement conçu, développé et réalisé à titre personnel et indépendant, **hors de toute mission, contrat de travail, mandat ou commande émanant d'un employeur, client ou établissement d'enseignement**. L'ensemble des droits de propriété intellectuelle afférents au projet appartient exclusivement aux membres de l'équipe CYBERSOCLE sous licence permissive MIT.
 
-### Tableau d'engagement et de confirmation par les membres :
+### Tableau d'engagement et de confirmation par les membres de l'équipe CYBERSOCLE :
 
 | Nom et Prénom | Rôle dans le projet | Statut d'indépendance | Signature / Confirmation | Date |
 | :--- | :--- | :--- | :--- | :--- |
 | **Christ Dany Obiey** | Porteur de projet & Lead Dev | [À compléter et confirmer par le membre] | [Signature / Mention « Lu et approuvé »] | [Date] |
-| **[Membre 2 - Nom Prénom]** | [Rôle : Crypto / Backend / UI] | [À compléter et confirmer par chaque membre] | [Signature / Mention « Lu et approuvé »] | [Date] |
-| **[Membre 3 - Nom Prénom]** | [Rôle : DevOps / QA] | [À compléter et confirmer par chaque membre] | [Signature / Mention « Lu et approuvé »] | [Date] |
-| **[Membre 4 - Nom Prénom]** | [Rôle : Sécurité / Documentation] | [À compléter et confirmer par chaque membre] | [Signature / Mention « Lu et approuvé »] | [Date] |
+| **[Membre 2 - Nom Prénom]** | [Rôle : Cryptographie / Backend] | [À compléter et confirmer par chaque membre] | [Signature / Mention « Lu et approuvé »] | [Date] |
+| **[Membre 3 - Nom Prénom]** | [Rôle : Infrastructure / DevOps] | [À compléter et confirmer par chaque membre] | [Signature / Mention « Lu et approuvé »] | [Date] |
+| **[Membre 4 - Nom Prénom]** | [Rôle : Frontend / QA / Sécurité] | [À compléter et confirmer par chaque membre] | [Signature / Mention « Lu et approuvé »] | [Date] |
 
 ---
 
@@ -43,7 +43,7 @@ Les soussignés, membres de l'équipe candidate BANTUDEVLAB, déclarent sur l'ho
 
 Conformément au règlement de la CADEV 2026, l'inventaire exhaustif des composants tiers utilisés dans le projet, de leurs versions et de leurs licences est reproduit ci-après :
 
-## 2. Inventaire des Composants d'Infrastructure et Frontend
+### 1. Composants d'Infrastructure et Frontend
 
 | Composant | Version | Licence Détectée | Rôle / Usage | Statut CADEV 2026 | Notes & Plan de Remplacement |
 | :--- | :--- | :--- | :--- | :--- | :--- |
@@ -56,13 +56,9 @@ Conformément au règlement de la CADEV 2026, l'inventaire exhaustif des composa
 | **Nginx** | `1.27-alpine` | 2-Clause BSD License | Reverse Proxy & TLS 1.3 Gateway | **OK (Permissif)** | Licence permissive 2-Clause BSD. |
 | **Ollama (moteur d'inférence)** | `latest` | MIT License | Serveur d'inférence IA locale | **OK (Permissif)** | Le logiciel Ollama est distribué sous licence MIT permissive. |
 | **Gemma 2 2B (modèle IA Google)** | `2B-IT (quantifié Q4_K_M)` | Gemma Terms of Use (Google) | Modèle de poids d'IA | **À vérifier / Conforme aux CGU (Non redistribué)** | Exécuté localement sans redistribution. Non qualifié de permissif (conditions d'utilisation spécifiques Google). Non bloquant car exécuté localement comme un modèle tiers. |
-| **CodeMirror 5** | `5.65.16` | MIT License | Composant Frontend / Éditeur de code | **OK (Permissif)** | Auto-hébergé dans static/vendor/codemirror/ sous licence MIT (Marijn Haverbeke). |
+| **CodeMirror 5** | `5.65.16` | MIT License | Composant Frontend / Éditeur de code | **OK (Permissif)** | Auto-hébergé dans `static/vendor/codemirror/` sous licence MIT (Marijn Haverbeke). |
 
----
-
-## 3. Inventaire Complet des Dépendances Python (Directes et Transitives)
-
-Inventaire généré dans l'environnement virtuel du projet (`.venv`) via `pip-licenses` :
+### 2. Dépendances Python (Directes et Transitives)
 
 | Paquet Python | Version | Licence Déclarée | Statut CADEV 2026 | Site Officiel / Référentiel | Remarques |
 | :--- | :--- | :--- | :--- | :--- | :--- |
@@ -98,8 +94,11 @@ Inventaire généré dans l'environnement virtuel du projet (`.venv`) via `pip-l
 | **mdurl** | `0.1.2` | MIT License | **OK (Permissif)** | [mdurl](https://github.com/executablebooks/mdurl) | Licence libre permissive conforme au règlement CADEV 2026. |
 | **packaging** | `26.3` | Apache-2.0 OR BSD-2-Clause | **OK (Permissif)** | [packaging](https://github.com/pypa/packaging) | Licence libre permissive conforme au règlement CADEV 2026. |
 | **pillow** | `13.0.0` | MIT-CMU | **OK (Permissif)** | [pillow](https://python-pillow.org) | Licence libre permissive conforme au règlement CADEV 2026. |
+| **pip** | `25.2` | MIT | **OK (Permissif)** | [pip](https://pip.pypa.io) | Outil de gestion des paquets Python sous licence libre MIT. |
+| **pip-licenses** | `5.5.5` | MIT | **OK (Permissif)** | [pip-licenses](https://github.com/raimon49/pip-licenses) | Outil d'audit des licences logicielles sous licence libre MIT. |
 | **playwright** | `1.64.1` | Apache-2.0 | **OK (Permissif)** | [playwright](https://github.com/Microsoft/playwright-python) | Licence libre permissive conforme au règlement CADEV 2026. |
 | **pluggy** | `1.7.0` | MIT License | **OK (Permissif)** | [pluggy](https://github.com/pytest-dev/pluggy) | Licence libre permissive conforme au règlement CADEV 2026. |
+| **prettytable** | `3.18.0` | BSD-3-Clause | **OK (Permissif)** | [prettytable](https://github.com/jazzband/prettytable) | Affichage tabulaire sous licence libre BSD-3-Clause. |
 | **prompt_toolkit** | `3.0.53` | BSD License | **OK (Permissif)** | [prompt_toolkit](https://github.com/prompt-toolkit/python-prompt-toolkit) | Licence libre permissive conforme au règlement CADEV 2026. |
 | **psycopg2-binary** | `2.9.13` | LGPL-3.0-or-later with exceptions | **À remplacer (Bloquant CADEV)** | [psycopg2-binary](https://psycopg.org/) | Pilote PostgreSQL officiel sous licence LGPLv3. Django dépend de psycopg2/psycopg3 (tous deux LGPL). Remplacement permissif proposé : pg8000 (BSD-3-Clause) ou SQLite (Public Domain). |
 | **pycparser** | `3.12` | BSD-3-Clause | **OK (Permissif)** | [pycparser](https://github.com/eliben/pycparser) | Licence libre permissive conforme au règlement CADEV 2026. |
@@ -110,9 +109,9 @@ Inventaire généré dans l'environnement virtuel du projet (`.venv`) via `pip-l
 | **pytest-django** | `4.14.0` | BSD License | **OK (Permissif)** | [pytest-django](https://github.com/pytest-dev/pytest-django) | Licence libre permissive conforme au règlement CADEV 2026. |
 | **python-dateutil** | `4.0.0` | BSD-3-Clause | **OK (Permissif)** | [python-dateutil](https://github.com/dateutil/dateutil) | Licence libre permissive conforme au règlement CADEV 2026. |
 | **python-dotenv** | `1.2.4` | BSD-3-Clause | **OK (Permissif)** | [python-dotenv](https://github.com/theskumar/python-dotenv) | Licence libre permissive conforme au règlement CADEV 2026. |
-| **python-gitlab** | `8.6.0` | LGPL-3.0-or-later | **À remplacer (Bloquant CADEV)** | [python-gitlab](https://github.com/python-gitlab/python-gitlab) | SDK d'intégration GitLab API v4. Remplacement permissif sans risque proposé : appels HTTP directs via 'requests' (Apache 2.0). |
+| **python-gitlab** | `8.6.0` | LGPL-3.0-or-later | **À remplacer (Bloquant CADEV)** | [python-gitlab](https://github.com/python-gitlab/python-gitlab) | SDK d'intégration GitLab API v4 sous licence LGPLv3. Remplacement permissif sans risque proposé : appels HTTP directs via 'requests' (Apache 2.0). |
 | **PyYAML** | `6.0.3` | MIT License | **OK (Permissif)** | [PyYAML](https://pyyaml.org/) | Licence libre permissive conforme au règlement CADEV 2026. |
-| **redis** | `8.1.0` | MIT | **OK (Permissif)** | [redis](https://github.com/redis/redis-py) | Licence libre permissive conforme au règlement CADEV 2026. |
+| **redis** | `8.1.0` | MIT | **OK (Permissif)** | [redis](https://github.com/redis/redis-py) | Bibliothèque cliente Python sous licence MIT. Le serveur Redis >= 7.4 (non-BSD) a été remplacé par Valkey 7.2 (BSD-3). |
 | **referencing** | `0.37.0` | MIT | **OK (Permissif)** | [referencing](https://github.com/python-jsonschema/referencing) | Licence libre permissive conforme au règlement CADEV 2026. |
 | **requests** | `2.34.2` | Apache Software License | **OK (Permissif)** | [requests](https://github.com/psf/requests) | Licence libre permissive conforme au règlement CADEV 2026. |
 | **requests-toolbelt** | `1.0.0` | Apache Software License | **OK (Permissif)** | [requests-toolbelt](https://toolbelt.readthedocs.io/) | Licence libre permissive conforme au règlement CADEV 2026. |
@@ -128,13 +127,7 @@ Inventaire généré dans l'environnement virtuel du projet (`.venv`) via `pip-l
 | **urllib3** | `2.8.0` | MIT | **OK (Permissif)** | [urllib3](https://github.com/urllib3/urllib3/blob/main/CHANGES.rst) | Licence libre permissive conforme au règlement CADEV 2026. |
 | **uvicorn** | `0.54.0` | BSD-3-Clause | **OK (Permissif)** | [uvicorn](https://uvicorn.dev/) | Licence libre permissive conforme au règlement CADEV 2026. |
 | **vine** | `5.1.0` | BSD License | **OK (Permissif)** | [vine](https://github.com/celery/vine) | Licence libre permissive conforme au règlement CADEV 2026. |
-
----
-
-> **Précision réglementaire sur les composants identifiés :**
-> - **Redis vs Valkey :** Le service de cache et broker a été basculé vers **Valkey 7.2 (BSD-3-Clause)** pour garantir une stricte conformité open-source suite au changement de licence de Redis 7.4+.
-> - **Pilote PostgreSQL (`psycopg2-binary`) :** Sous licence LGPL with exceptions. Composant indispensable au framework standard Django pour le dialogue avec PostgreSQL. L'équipe a documenté ce point et propose comme alternative permissive `pg8000` (BSD-3-Clause) ou SQLite (Domaine Public).
-> - **Client GitLab (`python-gitlab`) :** Sous licence LGPLv3. Alternative permissive prête : appels HTTP directs via `requests` (Apache-2.0).
+| **wcwidth** | `0.9.4` | MIT | **OK (Permissif)** | [wcwidth](https://github.com/jquast/wcwidth) | Calcul de largeur de caractères sous licence libre MIT. |
 
 ---
 
@@ -143,14 +136,14 @@ Inventaire généré dans l'environnement virtuel du projet (`.venv`) via `pip-l
 ### 1. Modèle d'Inférence Embarqué dans le Produit (Gemma 2 2B)
 - **Modèle :** Google Gemma 2 2B Instruct (`gemma2:2b`), quantifié en 4-bit (GGUF Q4_K_M).
 - **Moteur d'exécution :** Ollama (logiciel sous licence MIT).
-- **Statut de licence :** Le modèle Gemma est régi par les **Gemma Terms of Use** de Google (conditions d'utilisation et politique d'usage responsable). **Il n'est pas qualifié de licence permissive.**
+- **Statut de licence :** Le modèle Gemma est régi par les **Gemma Terms of Use de Google** (conditions d'utilisation et politique d'usage responsable). **Il n'est pas qualifié de licence permissive.**
 - **Modalité d'exécution :** Le modèle est exécuté **strictement en local** sur le serveur d'hébergement. Aucune donnée utilisateur, aucun extrait de code source ni métadonnée n'est transmis à Google ni à aucun tiers externe. Les poids du modèle ne sont pas redistribués dans le dépôt Git de BantuDevLab.
 - **Rôle applicatif :** Revue automatique de sécurité de code (analyse SAST souveraine, explications pédagogiques de failles, résumé de Pull Requests).
 
 ### 2. Outils d'Aide au Développement Utilisés par l'Équipe
 - **Outils utilisés :** Assistants IA de complétion de code et d'aide à la conception (Claude Code, Antigravity AI, GitHub Copilot).
 - **Parties du projet concernées :** Génération des stubs de tests unitaires, factorisation des structures CSS responsives, documentation technique et matrices de conformité.
-- **Maîtrise du code :** L'équipe certifie avoir relu, testé, débogué et validé l'intégralité du code livré. L'équipe maîtrise 100% de la logique métier, de l'implémentation cryptographique ZKP Schnorr, des algorithmes de calcul d'entropie Shannon et des contrôles d'accès multi-tenants.
+- **Maîtrise du code :** L'équipe CYBERSOCLE certifie avoir relu, testé, débogué et validé l'intégralité du code livré. L'équipe maîtrise 100% de la logique métier, de l'implémentation cryptographique ZKP Schnorr, des algorithmes de calcul d'entropie Shannon et des contrôles d'accès multi-tenants.
 
 ---
 
@@ -161,7 +154,7 @@ Inventaire généré dans l'environnement virtuel du projet (`.venv`) via `pip-l
 - **Achat du domaine :** Domaine acheté via l'infrastructure partenaire Systalink / Datacloud.
 - **Serveur d'hébergement :** Serveur Privé Virtuel (VPS Hostinger sous Ubuntu 24.04 LTS), assurant l'exécution des conteneurs durcis Docker (Django, Gitea CE, Valkey, PostgreSQL, Ollama, Nginx TLS 1.3).
 
-### 2. Traçabilité des Commandes Datacloud (À compléter par l'équipe) :
+### 2. Traçabilité des Commandes Datacloud (À compléter par l'équipe CYBERSOCLE) :
 - **Identifiant / Compte client Datacloud :** `[À compléter : identifiant client Datacloud]`
 - **Numéro de référence de commande du domaine / service :** `[À compléter : Référence de commande Datacloud / Systalink]`
 - **Date de souscription :** `[À compléter : Date exacte d'achat]`
@@ -169,26 +162,26 @@ Inventaire généré dans l'environnement virtuel du projet (`.venv`) via `pip-l
 
 ---
 
-## f) Historique de Développement : Ce qui a été créé par l'Équipe vs Composants Existants
+## f) Historique de Développement : Ce qui a été créé par l'Équipe CYBERSOCLE vs Composants Existants
 
 ### 1. Chronologie Réelle issue de l'Historique Git
-- **Date du premier commit :** 31 octobre 2026 (`b0fa102` et `d04ed7f`).
-- **Période active de développement :** 31 octobre 2026 au 11 novembre 2026.
-- **Volume d'historique :** Plus de 50 commits structurés et audités documentant chaque étape d'implémentation.
+- **Date du premier commit :** 31 octobre 2026 (`b0fa102ec01065d0b9a788363b3d4c03b2f99535`).
+- **Période active de développement :** 31 octobre 2026 au 12 novembre 2026.
+- **Volume d'historique :** 257 commits structurés et audités documentant chaque étape d'implémentation.
 
 ### 2. Ce qui provient de Composants Tiers Éprouvés (Open-Source)
 - **Framework Web :** Django 5.2 & Django REST Framework (licence BSD-3-Clause).
 - **Forge Git Engine :** Gitea CE 1.22 (licence MIT) avec intégration via API REST v1 et webhooks.
 - **Serveur HTTP / Reverse Proxy :** Nginx 1.27-alpine (licence 2-Clause BSD) avec terminaison TLS 1.3.
-- **Cache & Broker :** Valkey 7.2-alpine (licence BSD-3-Clause, fork Linux Foundation).
+- **Cache & Broker :** Valkey 7.2-alpine (licence BSD-3-Clause, fork Linux Foundation sous gouvernance ouverte).
 - **Base de Données :** PostgreSQL 16-alpine (licence PostgreSQL).
 - **Moteur d'Inférence :** Ollama (licence MIT).
 - **Éditeur de Code Web :** CodeMirror 5 (licence MIT).
 
-### 3. Ce qui a été Entièrement Créé et Développé par l'Équipe
-- **Moteur Cryptographique Zero-Trust ZKP (`apps/zkp_auth/crypto.py`) :** Implémentation complète de Schnorr NIZKP (RFC 3526 MODP 2048-bit, challenge Fiat-Shamir, vérification stricte du sous-groupe premier $y^q \equiv 1 \pmod p$, génération BIP-39 12 mots, nonces atomiques avec protection anti-rejeu et génération de jetons CLI Git signés).
-- **Scanner SAST & Moteur de Souveraineté (`apps/security_scanner/engine.py`) :** Détection de secrets par entropie de Shannon, détection de patterns de vulnérabilités multi-langages (Python, Dockerfile, YAML, JavaScript), calcul du score de souveraineté numérique africaine (ADSS-v1) et sérialisation SARIF 2.1.0 et gl-sast-report.json.
+### 3. Ce qui a été Entièrement Créé et Développé par l'Équipe CYBERSOCLE
+- **Moteur Cryptographique Zero-Trust ZKP (`apps/zkp_auth/crypto.py`) :** Implémentation complète de Schnorr NIZKP (RFC 3526 MODP 2048-bit, challenge Fiat-Shamir, validation stricte du sous-groupe premier $y^q \equiv 1 \pmod p$, génération BIP-39 12 mots, nonces atomiques avec protection anti-rejeu et génération de jetons CLI Git signés).
+- **Scanner SAST & Moteur de Souveraineté (`apps/security_scanner/engine.py`) :** Détection de secrets par calcul d'entropie de Shannon ($H \ge 3.8$), détection de patterns de vulnérabilités multi-langages (Python, Dockerfile, YAML, JavaScript), calcul du score de souveraineté numérique africaine (ADSS-v1) et sérialisation conforme OASIS SARIF 2.1.0 et `gl-sast-report.json`.
 - **Terminal de Commande Prompt Pro (`static/js/bantu-command-terminal.js`) :** Interface interactive sans zone de texte libre, avec navigation structurée par sélecteurs (+, Dépôt, Branche, Fichier, Exécuter) et panneau de restitution Top-Up.
 - **Surcouche d'Intégration et Synchronisation d'Écosystème (`static/js/bantu-ecosystem-sync.js`) :** Synchronisation bidirectionnelle instantanée de thèmes et de langues (FR, EN, SW, PT) entre le portail Django et la forge Gitea.
-- **Modèle de Données et Audit Trail Conforme Convention de Malabo 2014 (`apps/core/audit.py`) :** Journal d'audit immuable avec chaînage cryptographique SHA-256.
+- **Modèle de Données et Audit Trail Conforme Convention de Malabo 2014 (`apps/core/audit.py`) :** Journal d'audit immuable avec chaînage cryptographique SHA-256 (`previous_hash -> hash`).
 - **Ensemble des Templates, Thèmes et Composants Graphiques :** Intégration sur-mesure Primer, suppression totale des emojis au profit de pictogrammes SVG accessibles, et jauge vectorielle circulaire de souveraineté.
