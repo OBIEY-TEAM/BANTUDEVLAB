@@ -100,7 +100,7 @@ flowchart TD
 | **Cryptographie** | Cryptography 50+, hashlib | Zero-Knowledge Proofs Schnorr/Fiat-Shamir, SHA-256 Chained Audit |
 | **Serveur ASGI/WSGI** | Gunicorn + Uvicorn Workers | Serveur d'application durci avec dimensionnement dynamique |
 | **Interface Utilisateur** | Primer CSS, SVG natifs, CodeMirror | Équivalence visuelle GitHub, thème sombre/clair, sans CDN |
-| **Assurance Qualité** | Pytest, Coverage (> 95%), Ruff, Bandit | Analyse statique, fuzzing cryptographique, tests end-to-end |
+| **Assurance Qualité** | Pytest, Coverage (95.6% démontrée, 201 tests), Ruff, Bandit | Analyse statique, fuzzing cryptographique, tests end-to-end |
 
 ---
 
