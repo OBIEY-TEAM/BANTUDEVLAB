@@ -8,8 +8,10 @@
         {% trans "BANTUDEVLAB réunit la robustesse d'un moteur Git distribué, la sécurité mathématique des preuves à divulgation nulle de connaissance (Zero-Knowledge Proofs), et l'intelligence artificielle locale Gemma 2 2B pour garantir l'indépendance technologique du continent." %} 
     </p>
     <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
-        <a href="{% url 'dashboard' %}" class="btn btn-primary">{% trans "Explorer le Tableau de Bord" %}</a>
-        <a href="{% url 'zkp_auth:zkp_login_page' %}" class="btn btn-secondary">{% trans "Authentification Zero-Trust (ZKP)" %}</a>
+        <a href="{% url 'zkp_auth:zkp_login_page' %}?demo=cadev" class="btn btn-primary" style="background: linear-gradient(135deg, #10b981, #059669); border: none; font-weight: 600;">
+            {% icon "zap" size=18 %} {% trans "Parcours Démo Évaluateur CADEV 2026 (1-Clic)" %}
+        </a>
+        <a href="{% url 'dashboard' %}" class="btn btn-secondary">{% trans "Explorer le Tableau de Bord" %}</a>
         <a href="{% url 'faq' %}" class="btn btn-secondary">{% icon "help-circle" size=18 %} {% trans "Mode d'Emploi & FAQ" %}</a>
     </div>
 </section>

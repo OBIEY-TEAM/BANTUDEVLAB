@@ -1,8 +1,9 @@
 """
-Commande d'initialisation automatique des comptes administrateurs par defaut BANTUDEVLAB.
+Commande d'initialisation automatique des comptes administrateurs et evaluateur CADEV 2026 par defaut BANTUDEVLAB.
 Cree et met a jour de maniere idempotente :
 1. bantu_admin (Superutilisateur Django + Identite ZKP Souveraine)
 2. kouame_dev (Superutilisateur / Developpeur Souverain par defaut de l'assistant ZKP)
+3. cadev_evaluator (Compte de demonstration sans mot de passe / ZKP pour l'evaluateur du concours)
 """
 
 import os
@@ -17,7 +18,7 @@ DEFAULT_ADMIN_MNEMONIC = "savanna baobab sahara kilimanjaro zambezi congo senega
 
 
 class Command(BaseCommand):
-    help = "Initialise les comptes administrateurs par defaut (bantu_admin et kouame_dev) avec mot de passe et cle ZKP."
+    help = "Initialise les comptes souverains par defaut (bantu_admin, kouame_dev et cadev_evaluator) avec cle ZKP."
 
     def handle(self, *args, **options):
         admin_username = os.environ.get("BANTU_DEFAULT_ADMIN_USER", "bantu_admin")
@@ -31,6 +32,7 @@ class Command(BaseCommand):
         accounts = [
             (admin_username, admin_email, admin_password, "CIV"),
             ("kouame_dev", "kouame_dev@bantudevlab.africa", admin_password, "CIV"),
+            ("cadev_evaluator", "evaluator@cadev2026.africa", "CadevEvaluator2026!", "SEN"),
         ]
 
         for username, email, password, country in accounts:
@@ -61,6 +63,6 @@ class Command(BaseCommand):
 
         self.stdout.write(
             self.style.SUCCESS(
-                f"Comptes administrateurs souverains prets : {admin_username} / kouame_dev (ZKP + Django Admin)."
+                f"Comptes souverains prets : {admin_username} / kouame_dev / cadev_evaluator (ZKP + Django Admin)."
             )
         )

@@ -17,6 +17,20 @@
         </p>
     </div>
 
+        <!-- Banniere Parcours Evaluation CADEV 2026 (Demo 1-Clic) -->
+    <div class="demo-evaluator-card" style="margin-bottom: 1.5rem; background: linear-gradient(135deg, rgba(16, 185, 129, 0.12), rgba(245, 158, 11, 0.08)); border: 1px solid var(--secondary-emerald); border-radius: 10px; padding: 1.25rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap;">
+        <div style="min-width: 250px; flex: 1;">
+            <span class="brand-badge" style="background: rgba(16, 185, 129, 0.2); color: #10b981; font-size: 0.75rem; margin-bottom: 0.25rem;">{% trans "PARCOURS D'ÉVALUATION CADEV 2026" %}</span>
+            <h4 style="margin: 0.25rem 0; color: #fff; font-size: 1.05rem;">{% icon "sparkles" size=18 %} {% trans "Compte Démo Évaluateur (Connexion en 1 Clic)" %}</h4>
+            <p style="margin: 0; font-size: 0.85rem; color: var(--text-muted);">
+                {% trans "Compte préconfiguré :" %} <code style="color: #10b981;">cadev_evaluator</code> | {% trans "Protocole Zero-Trust Schnorr NIZKP sans mot de passe." %}
+            </p>
+        </div>
+        <button type="button" class="btn btn-primary" id="btnQuickDemo" onclick="quickDemoLogin()" style="padding: 0.75rem 1.4rem; font-weight: 600; white-space: nowrap; background: linear-gradient(135deg, #10b981, #059669); border: none;">
+            {% icon "zap" size=18 %} {% trans "Connexion Démo 1-Clic" %}
+        </button>
+    </div>
+
     <!-- Wizard Step Navigation (UI-03) -->
     <div class="zkp-steps-nav">
         <div class="zkp-step-indicator active" id="stepIndicator1" tabindex="0" role="button" aria-label="{% trans 'Etape 1 : Identite' %}" onclick="switchWizardStep(1)" onkeydown="if(event.key==='Enter'||event.key===' ') switchWizardStep(1)">
@@ -145,7 +159,10 @@
             {% trans "Votre identité souveraine" %} <b id="giteaUserDisplay" style="color: #fff; font-size: 1.05rem;"></b> {% trans "est authentifiée sans mot de passe. Finalisez ou liez votre compte sur la forge Gitea souveraine." %}
         </p>
         <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
-            <a id="btnGiteaSignup" href="{{ GITEA_EXTERNAL_URL|default:'https://git.cybersocle.site' }}/user/sign_up" target="_blank" rel="noopener noreferrer" class="btn btn-primary" style="padding: 0.85rem 1.6rem; font-size: 1rem; font-weight: 600;">
+            <a href="{% url 'dashboard' %}#new-repo" class="btn btn-primary" style="background: linear-gradient(135deg, #10b981, #059669); border: none; padding: 0.85rem 1.6rem; font-size: 1rem; font-weight: 600;">
+                {% icon "plus-circle" size=18 %} {% trans "Créer un Dépôt de Démonstration" %}
+            </a>
+            <a id="btnGiteaSignup" href="{{ GITEA_EXTERNAL_URL|default:'https://git.cybersocle.site' }}/user/sign_up" target="_blank" rel="noopener noreferrer" class="btn btn-secondary" style="padding: 0.85rem 1.6rem; font-size: 1rem;">
                 {% icon "user-plus" size=18 %} {% trans "Finaliser l'inscription sur Gitea" %}
             </a>
             <a id="btnGiteaLogin" href="{{ GITEA_LOGIN_URL|default:'https://git.cybersocle.site/user/login' }}" target="_blank" rel="noopener noreferrer" class="btn btn-outline" style="border-color: #10b981; color: #10b981; padding: 0.85rem 1.6rem; font-size: 1rem;">
@@ -537,6 +554,30 @@ async function loginWithZkp() {
         if (loginBtn) loginBtn.disabled = false;
     }
 }
+
+
+async function quickDemoLogin() {
+    const userEl = document.getElementById('zkpUsername');
+    const secretEl = document.getElementById('zkpSecret');
+    if (userEl) userEl.value = 'cadev_evaluator';
+    const demoMnemonic = "savanna baobab sahara kilimanjaro zambezi congo senegal niger atlas oasis unity freedom";
+    if (secretEl) secretEl.value = demoMnemonic;
+    if (typeof setMnemonicWords === 'function') {
+        setMnemonicWords(demoMnemonic.split(' '));
+    }
+    switchWizardStep(3);
+    const logEl = document.getElementById('zkpLog');
+    if (logEl) logEl.style.display = 'block';
+    log(`{% trans "Initialisation rapide du compte démo évaluateur CADEV 2026 (cadev_evaluator)..." %}`);
+    await loginWithZkp();
+}
+
+window.addEventListener('DOMContentLoaded', () => {
+    const params = new URLSearchParams(window.location.search);
+    if (params.get('demo') === 'cadev') {
+        setTimeout(quickDemoLogin, 500);
+    }
+});
 
 function handleSuccessfulZkpAuth(username, data) {
     const fallbackSignup = '{{ GITEA_EXTERNAL_URL|default:"https://git.cybersocle.site" }}/user/sign_up';

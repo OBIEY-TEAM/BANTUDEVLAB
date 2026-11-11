@@ -37,6 +37,40 @@
     </p>
 
     <div class="faq-accordion-group">
+        <!-- Q-DEMO : Parcours Démo Évaluateur CADEV 2026 -->
+        <details class="faq-item" id="faq-cadev-demo" open>
+            <summary class="faq-summary" style="background: linear-gradient(135deg, rgba(16, 185, 129, 0.15), rgba(245, 158, 11, 0.08)); border-left: 4px solid #10b981;">
+                <span class="faq-summary-title">
+                    <span class="faq-badge" style="background: #10b981; color: #000; font-weight: bold;">DEMO</span>
+                    <strong>{% trans "Évaluateur CADEV 2026 : Comment tester l'ensemble du parcours sans friction ?" %}</strong>
+                </span>
+                <span class="faq-chevron">{% icon "chevron-down" size=18 %}</span>
+            </summary>
+            <div class="faq-content">
+                <p>
+                    {% trans "Bienvenue au jury et aux évaluateurs du concours CADEV 2026 (Systalink Cloud). Voici le parcours pas-à-pas pour évaluer BantuDevLab en toute autonomie :" %}
+                </p>
+                <div class="faq-steps-list">
+                    <div class="faq-step-item">
+                        <strong>{% trans "1. Connexion Zero-Trust immédiate :" %}</strong>
+                        <p>{% trans "Ouvrez la page de connexion ZKP et cliquez sur le bouton « Connexion Démo 1-Clic ». Le compte " %}<code>cadev_evaluator</code>{% trans " s'authentifie instantanément via la preuve mathématique de Schnorr (RFC 3526 MODP 2048 bits) sans transmettre aucun mot de passe." %}</p>
+                    </div>
+                    <div class="faq-step-item" style="margin-top: 0.75rem;">
+                        <strong>{% trans "2. Consultation de la FAQ et conformité :" %}</strong>
+                        <p>{% trans "Cette section détaille les principes Zero-Trust, l'absence de dépendance aux CDN tiers, la politique Zéro-Emoji et la bascule vers le cache permissif Valkey 7.2 (BSD-3-Clause) en remplacement de Redis." %}</p>
+                    </div>
+                    <div class="faq-step-item" style="margin-top: 0.75rem;">
+                        <strong>{% trans "3. Création d'un dépôt de démonstration :" %}</strong>
+                        <p>{% trans "Sur le Tableau de Bord, cliquez sur « Créer un Dépôt de Démonstration ». Renseignez le nom (ex: demo-cadev-2026) et validez. Le dépôt est créé sur la forge souveraine et apparaît immédiatement avec ses actions de sécurité." %}</p>
+                    </div>
+                    <div class="faq-step-item" style="margin-top: 0.75rem;">
+                        <strong>{% trans "4. Audit SAST et Revue IA Locale Gemma 2 2B :" %}</strong>
+                        <p>{% trans "Sur n'importe quel dépôt, cliquez sur « Run Security Audit » pour calculer l'entropie de Shannon ($H \ge 3.8$) ou « Ask Gemma Review » pour invoquer le modèle compact local exécuté sur conteneur Ollama." %}</p>
+                    </div>
+                </div>
+            </div>
+        </details>
+
         <!-- Q1 : Comment créer un compte GitLab ? -->
         <details class="faq-item" id="faq-create-account">
             <summary class="faq-summary">
@@ -156,6 +190,40 @@
     </p>
 
     <div class="faq-accordion-group">
+        <!-- Q-DEMO : Parcours Démo Évaluateur CADEV 2026 -->
+        <details class="faq-item" id="faq-cadev-demo" open>
+            <summary class="faq-summary" style="background: linear-gradient(135deg, rgba(16, 185, 129, 0.15), rgba(245, 158, 11, 0.08)); border-left: 4px solid #10b981;">
+                <span class="faq-summary-title">
+                    <span class="faq-badge" style="background: #10b981; color: #000; font-weight: bold;">DEMO</span>
+                    <strong>{% trans "Évaluateur CADEV 2026 : Comment tester l'ensemble du parcours sans friction ?" %}</strong>
+                </span>
+                <span class="faq-chevron">{% icon "chevron-down" size=18 %}</span>
+            </summary>
+            <div class="faq-content">
+                <p>
+                    {% trans "Bienvenue au jury et aux évaluateurs du concours CADEV 2026 (Systalink Cloud). Voici le parcours pas-à-pas pour évaluer BantuDevLab en toute autonomie :" %}
+                </p>
+                <div class="faq-steps-list">
+                    <div class="faq-step-item">
+                        <strong>{% trans "1. Connexion Zero-Trust immédiate :" %}</strong>
+                        <p>{% trans "Ouvrez la page de connexion ZKP et cliquez sur le bouton « Connexion Démo 1-Clic ». Le compte " %}<code>cadev_evaluator</code>{% trans " s'authentifie instantanément via la preuve mathématique de Schnorr (RFC 3526 MODP 2048 bits) sans transmettre aucun mot de passe." %}</p>
+                    </div>
+                    <div class="faq-step-item" style="margin-top: 0.75rem;">
+                        <strong>{% trans "2. Consultation de la FAQ et conformité :" %}</strong>
+                        <p>{% trans "Cette section détaille les principes Zero-Trust, l'absence de dépendance aux CDN tiers, la politique Zéro-Emoji et la bascule vers le cache permissif Valkey 7.2 (BSD-3-Clause) en remplacement de Redis." %}</p>
+                    </div>
+                    <div class="faq-step-item" style="margin-top: 0.75rem;">
+                        <strong>{% trans "3. Création d'un dépôt de démonstration :" %}</strong>
+                        <p>{% trans "Sur le Tableau de Bord, cliquez sur « Créer un Dépôt de Démonstration ». Renseignez le nom (ex: demo-cadev-2026) et validez. Le dépôt est créé sur la forge souveraine et apparaît immédiatement avec ses actions de sécurité." %}</p>
+                    </div>
+                    <div class="faq-step-item" style="margin-top: 0.75rem;">
+                        <strong>{% trans "4. Audit SAST et Revue IA Locale Gemma 2 2B :" %}</strong>
+                        <p>{% trans "Sur n'importe quel dépôt, cliquez sur « Run Security Audit » pour calculer l'entropie de Shannon ($H \ge 3.8$) ou « Ask Gemma Review » pour invoquer le modèle compact local exécuté sur conteneur Ollama." %}</p>
+                    </div>
+                </div>
+            </div>
+        </details>
+
         <!-- Q4 : Qu'est-ce que l'authentification Zero-Trust ZKP ? -->
         <details class="faq-item">
             <summary class="faq-summary">

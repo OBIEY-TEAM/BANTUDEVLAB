@@ -46,6 +46,7 @@ def _resolve_lang(request) -> str:
 class RepositoryListView(APIView):
     """Lists repositories from Gitea forge with sovereign metadata."""
 
+    authentication_classes = [CsrfExemptSessionAuthentication]
     permission_classes = [IsAuthenticated]
 
     def get(self, request):
