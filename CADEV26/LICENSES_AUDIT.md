@@ -1,25 +1,29 @@
 # Audit Exhaustif des Licences Logicielles — BANTUDEVLAB (CADEV 2026)
 
-> **Conformité au règlement CADEV 2026 (Systalink) :**
-> Le règlement stipule que tout composant sous licence GPL, AGPL ou LGPL rend le projet irrecevable.
-> Seules les licences permissives (**MIT, Apache 2.0, BSD 2/3-Clause, PSF, ISC, Public Domain**) sont strictement admises.
-> Date d'audit : 11 novembre 2026 — Inventaire généré via `pip-licenses` et inspection approfondie de l'écosystème.
+> **Équipe candidate : CYBERSOCLE**  
+> **Projet :** BANTUDEVLAB — Forge Logicielle Souveraine Panafricaine  
+> **Conformité au règlement CADEV 2026 (Systalink) :**  
+> Le règlement stipule que tout composant sous licence GPL, AGPL ou LGPL rend le projet irrecevable.  
+> Seules les licences permissives (**MIT, Apache 2.0, BSD 2/3-Clause, PSF, ISC, Public Domain**) sont strictement admises.  
+> Date d'audit : 12 novembre 2026 — Inventaire généré via `pip-licenses` et inspection approfondie de l'écosystème.
+
+---
 
 ## 1. Synthèse Exécutive de Conformité
 
 | Catégorie | Total Composants | Conformes (Permissifs) | Bloquants identifiés | À vérifier / Exceptions |
 | :--- | :---: | :---: | :---: | :---: |
-| **Dépendances Python (directes + transitives)** | 62 | 59 | 2 (`psycopg2-binary`, `python-gitlab`) | 1 (`certifi` - MPL 2.0) |
+| **Dépendances Python (directes + transitives)** | 66 | 63 | 2 (`psycopg2-binary`, `python-gitlab`) | 1 (`certifi` - MPL 2.0) |
 | **Infrastructure, Moteurs & Frontend** | 10 | 8 | 1 (`redis:7-alpine` remplacé par Valkey) | 1 (`gemma2:2b` - Google Terms) |
 
 ### Points d'Attention Majeurs & Mesures Prises
 
 1. **Bascule immédiate de Redis vers Valkey 7.2 (BSD-3-Clause) :**
-   - **Constat :** Depuis la version 7.4, Redis n'est plus distribué sous licence open-source BSD libre (passage sous licence double RSALv2 / SSPLv1).
+   - **Constat :** Depuis la version 7.4, Redis n'est plus distribué sous licence open-source BSD libre (passage sous double licence RSALv2 / SSPLv1).
    - **Mesure appliquée :** Remplacement immédiat dans `docker-compose.yml` et `docker-compose.production.yml` par **Valkey** (`valkey/valkey:7.2-alpine`), le fork communautaire sous égide de la **Linux Foundation** sous licence **BSD-3-Clause** stricte. Valkey est un *drop-in replacement* 100% compatible protocolairement et fonctionnellement avec Celery et Django-Redis.
 
 2. **Composant bloquant `psycopg2-binary` (LGPL with exceptions) :**
-   - **Constat :** Le driver PostgreSQL historique de Django `psycopg2-binary` (et son successeur `psycopg` v3) est sous licence GNU LGPL. Le backend PostgreSQL natif de Django s'appuie exclusivement sur l'un de ces deux pilotes.
+   - **Constat :** Le driver PostgreSQL historique de Django `psycopg2-binary` (ainsi que `psycopg` v3) est sous licence GNU LGPL. Le backend PostgreSQL standard de Django s'appuie sur ce pilote.
    - **Remplacement permissif proposé :** Le pilote pur Python **`pg8000`** (distribué sous licence **BSD-3-Clause**) ou l'utilisation du backend SQLite (Domaine Public) pour les démonstrations autonomes.
    - **Évaluation du risque :** Remplacer le driver de base de données à quelques jours de la soumission présente un risque critique d'instabilité sur le schéma relationnel et les transactions de production. Conformément à la règle de prudence (« *Sinon, liste-le sans le modifier* »), `psycopg2-binary` est documenté comme composant bloquant avec son plan de transition sans altération prématurée de l'ORM.
 
@@ -28,7 +32,7 @@
    - **Remplacement permissif proposé :** Appels HTTP directs via la bibliothèque **`requests`** (déjà incluse sous licence **Apache 2.0**), exactement comme l'implémentation de référence de `GiteaClient` (`apps/gitea_client/client.py`) qui n'embarque aucun SDK externe et reste 100% Apache-2.0.
 
 4. **Modèle de langage Google Gemma 2 2B (Ollama) :**
-   - **Statut :** Le logiciel Ollama est sous licence **MIT**. Le modèle de poids `gemma2:2b` est régi par les **Gemma Terms of Use de Google**. Il n'est pas redistribué dans le code source de BantuDevLab mais téléchargé localement sur le nœud d'inférence. Il ne doit pas être qualifié de permissif.
+   - **Statut :** Le logiciel d'inférence Ollama est sous licence **MIT**. Le modèle de poids `gemma2:2b` est régi par les **Gemma Terms of Use de Google**. Il n'est pas redistribué dans le code source de BantuDevLab mais téléchargé localement sur le serveur d'inférence. Il ne doit pas être qualifié de permissif.
 
 ---
 
@@ -45,13 +49,13 @@
 | **Nginx** | `1.27-alpine` | 2-Clause BSD License | Reverse Proxy & TLS 1.3 Gateway | **OK (Permissif)** | Licence permissive 2-Clause BSD. |
 | **Ollama (moteur d'inférence)** | `latest` | MIT License | Serveur d'inférence IA locale | **OK (Permissif)** | Le logiciel Ollama est distribué sous licence MIT permissive. |
 | **Gemma 2 2B (modèle IA Google)** | `2B-IT (quantifié Q4_K_M)` | Gemma Terms of Use (Google) | Modèle de poids d'IA | **À vérifier / Conforme aux CGU (Non redistribué)** | Exécuté localement sans redistribution. Non qualifié de permissif (conditions d'utilisation spécifiques Google). Non bloquant car exécuté localement comme un modèle tiers. |
-| **CodeMirror 5** | `5.65.16` | MIT License | Composant Frontend / Éditeur de code | **OK (Permissif)** | Auto-hébergé dans static/vendor/codemirror/ sous licence MIT (Marijn Haverbeke). |
+| **CodeMirror 5** | `5.65.16` | MIT License | Composant Frontend / Éditeur de code | **OK (Permissif)** | Auto-hébergé dans `static/vendor/codemirror/` sous licence MIT (Marijn Haverbeke). Zéro CDN tiers. |
 
 ---
 
 ## 3. Inventaire Complet des Dépendances Python (Directes et Transitives)
 
-Inventaire généré dans l'environnement virtuel du projet (`.venv`) via `pip-licenses` :
+Inventaire exhaustif généré dans l'environnement virtuel du projet (`.venv`) via `pip-licenses` et introspection `importlib.metadata` :
 
 | Paquet Python | Version | Licence Déclarée | Statut CADEV 2026 | Site Officiel / Référentiel | Remarques |
 | :--- | :--- | :--- | :--- | :--- | :--- |
@@ -87,8 +91,11 @@ Inventaire généré dans l'environnement virtuel du projet (`.venv`) via `pip-l
 | **mdurl** | `0.1.2` | MIT License | **OK (Permissif)** | [mdurl](https://github.com/executablebooks/mdurl) | Licence libre permissive conforme au règlement CADEV 2026. |
 | **packaging** | `26.3` | Apache-2.0 OR BSD-2-Clause | **OK (Permissif)** | [packaging](https://github.com/pypa/packaging) | Licence libre permissive conforme au règlement CADEV 2026. |
 | **pillow** | `13.0.0` | MIT-CMU | **OK (Permissif)** | [pillow](https://python-pillow.org) | Licence libre permissive conforme au règlement CADEV 2026. |
+| **pip** | `25.2` | MIT | **OK (Permissif)** | [pip](https://pip.pypa.io) | Outil de gestion des paquets Python sous licence libre MIT. |
+| **pip-licenses** | `5.5.5` | MIT | **OK (Permissif)** | [pip-licenses](https://github.com/raimon49/pip-licenses) | Outil d'audit des licences logicielles sous licence libre MIT. |
 | **playwright** | `1.64.1` | Apache-2.0 | **OK (Permissif)** | [playwright](https://github.com/Microsoft/playwright-python) | Licence libre permissive conforme au règlement CADEV 2026. |
 | **pluggy** | `1.7.0` | MIT License | **OK (Permissif)** | [pluggy](https://github.com/pytest-dev/pluggy) | Licence libre permissive conforme au règlement CADEV 2026. |
+| **prettytable** | `3.18.0` | BSD-3-Clause | **OK (Permissif)** | [prettytable](https://github.com/jazzband/prettytable) | Affichage tabulaire sous licence libre BSD-3-Clause. |
 | **prompt_toolkit** | `3.0.53` | BSD License | **OK (Permissif)** | [prompt_toolkit](https://github.com/prompt-toolkit/python-prompt-toolkit) | Licence libre permissive conforme au règlement CADEV 2026. |
 | **psycopg2-binary** | `2.9.13` | LGPL-3.0-or-later with exceptions | **À remplacer (Bloquant CADEV)** | [psycopg2-binary](https://psycopg.org/) | Pilote PostgreSQL officiel sous licence LGPLv3. Django dépend de psycopg2/psycopg3 (tous deux LGPL). Remplacement permissif proposé : pg8000 (BSD-3-Clause) ou SQLite (Public Domain). |
 | **pycparser** | `3.12` | BSD-3-Clause | **OK (Permissif)** | [pycparser](https://github.com/eliben/pycparser) | Licence libre permissive conforme au règlement CADEV 2026. |
@@ -99,9 +106,9 @@ Inventaire généré dans l'environnement virtuel du projet (`.venv`) via `pip-l
 | **pytest-django** | `4.14.0` | BSD License | **OK (Permissif)** | [pytest-django](https://github.com/pytest-dev/pytest-django) | Licence libre permissive conforme au règlement CADEV 2026. |
 | **python-dateutil** | `4.0.0` | BSD-3-Clause | **OK (Permissif)** | [python-dateutil](https://github.com/dateutil/dateutil) | Licence libre permissive conforme au règlement CADEV 2026. |
 | **python-dotenv** | `1.2.4` | BSD-3-Clause | **OK (Permissif)** | [python-dotenv](https://github.com/theskumar/python-dotenv) | Licence libre permissive conforme au règlement CADEV 2026. |
-| **python-gitlab** | `8.6.0` | LGPL-3.0-or-later | **À remplacer (Bloquant CADEV)** | [python-gitlab](https://github.com/python-gitlab/python-gitlab) | SDK d'intégration GitLab API v4. Remplacement permissif sans risque proposé : appels HTTP directs via 'requests' (Apache 2.0). |
+| **python-gitlab** | `8.6.0` | LGPL-3.0-or-later | **À remplacer (Bloquant CADEV)** | [python-gitlab](https://github.com/python-gitlab/python-gitlab) | SDK d'intégration GitLab API v4 sous licence LGPLv3. Remplacement permissif sans risque proposé : appels HTTP directs via 'requests' (Apache 2.0). |
 | **PyYAML** | `6.0.3` | MIT License | **OK (Permissif)** | [PyYAML](https://pyyaml.org/) | Licence libre permissive conforme au règlement CADEV 2026. |
-| **redis** | `8.1.0` | MIT | **OK (Permissif)** | [redis](https://github.com/redis/redis-py) | Licence libre permissive conforme au règlement CADEV 2026. |
+| **redis** | `8.1.0` | MIT | **OK (Permissif)** | [redis](https://github.com/redis/redis-py) | Bibliothèque cliente Python sous licence MIT. Le serveur Redis >= 7.4 (non-BSD) a été remplacé par Valkey 7.2 (BSD-3). |
 | **referencing** | `0.37.0` | MIT | **OK (Permissif)** | [referencing](https://github.com/python-jsonschema/referencing) | Licence libre permissive conforme au règlement CADEV 2026. |
 | **requests** | `2.34.2` | Apache Software License | **OK (Permissif)** | [requests](https://github.com/psf/requests) | Licence libre permissive conforme au règlement CADEV 2026. |
 | **requests-toolbelt** | `1.0.0` | Apache Software License | **OK (Permissif)** | [requests-toolbelt](https://toolbelt.readthedocs.io/) | Licence libre permissive conforme au règlement CADEV 2026. |
@@ -117,6 +124,7 @@ Inventaire généré dans l'environnement virtuel du projet (`.venv`) via `pip-l
 | **urllib3** | `2.8.0` | MIT | **OK (Permissif)** | [urllib3](https://github.com/urllib3/urllib3/blob/main/CHANGES.rst) | Licence libre permissive conforme au règlement CADEV 2026. |
 | **uvicorn** | `0.54.0` | BSD-3-Clause | **OK (Permissif)** | [uvicorn](https://uvicorn.dev/) | Licence libre permissive conforme au règlement CADEV 2026. |
 | **vine** | `5.1.0` | BSD License | **OK (Permissif)** | [vine](https://github.com/celery/vine) | Licence libre permissive conforme au règlement CADEV 2026. |
+| **wcwidth** | `0.9.4` | MIT | **OK (Permissif)** | [wcwidth](https://github.com/jquast/wcwidth) | Calcul de largeur de caractères sous licence libre MIT. |
 
 ---
 
