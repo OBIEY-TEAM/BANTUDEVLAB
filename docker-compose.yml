@@ -48,16 +48,16 @@ services:
     networks:
       - backend_net
 
-  # Broker Redis & Cache
+  # Broker Valkey (Remplacement permissif BSD-3 de Redis pour CADEV 2026) & Cache
   redis:
-    image: redis:7-alpine
+    image: valkey/valkey:7.2-alpine
     container_name: bantudevlab_redis
     restart: always
-    command: ["redis-server", "--requirepass", "${REDIS_PASSWORD:-sovereign_redis_pass_2025}"]
+    command: ["valkey-server", "--requirepass", "${REDIS_PASSWORD:-sovereign_redis_pass_2025}"]
     volumes:
       - redis_data:/data
     healthcheck:
-      test: ["CMD-SHELL", "redis-cli -a \"$$REDIS_PASSWORD\" ping | grep PONG"]
+      test: ["CMD-SHELL", "valkey-cli -a \"$$REDIS_PASSWORD\" ping | grep PONG || redis-cli -a \"$$REDIS_PASSWORD\" ping | grep PONG"]
       interval: 5s
       timeout: 3s
       retries: 5

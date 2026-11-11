@@ -311,18 +311,18 @@ services:
     networks:
       - backend_net
 
-  # Cache Redis sécurisé & Broker Celery
+  # Cache Valkey sécurisé (Remplacement permissif BSD-3 de Redis pour CADEV 2026) & Broker Celery
   redis:
-    image: redis:7-alpine
+    image: valkey/valkey:7.2-alpine
     container_name: bantudevlab_redis_prod
     restart: always
     env_file:
       - ${ENV_FILE:-.env.production}
-    command: ["sh", "-c", "redis-server --requirepass \"$${REDIS_PASSWORD:-sovereign_redis_pass_2025}\" --appendonly yes"]
+    command: ["sh", "-c", "valkey-server --requirepass \"$${REDIS_PASSWORD:-sovereign_redis_pass_2025}\" --appendonly yes"]
     volumes:
       - redis_production_data:/data
     healthcheck:
-      test: ["CMD-SHELL", "redis-cli -a \"$${REDIS_PASSWORD:-sovereign_redis_pass_2025}\" ping | grep PONG"]
+      test: ["CMD-SHELL", "valkey-cli -a \"$${REDIS_PASSWORD:-sovereign_redis_pass_2025}\" ping | grep PONG || redis-cli -a \"$${REDIS_PASSWORD:-sovereign_redis_pass_2025}\" ping | grep PONG"]
       interval: 10s
       timeout: 3s
       retries: 5
