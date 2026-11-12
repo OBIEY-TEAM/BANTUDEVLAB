@@ -35,6 +35,10 @@ jobs:
         run: |
           bandit -c pyproject.toml -r apps config
 
+      - name: License Compliance Check (CADEV 2026 Art. 6)
+        run: |
+          python scripts/check_licenses.py
+
   test:
     name: Tests Unitaires, Fuzzing & Couverture Stricte (QA-01, QA-02, QA-03)
     needs: lint_and_security
@@ -53,7 +57,7 @@ jobs:
       - name: Install Dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install -r requirements.txt
+          pip install -r requirements.txt -r requirements-dev.txt
           python -m playwright install --with-deps chromium
 
       - name: Django System Checks

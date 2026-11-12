@@ -1,0 +1,4 @@
+# Pilote PostgreSQL optionnel pour environnements de production
+# Attention : sous licence LGPL-3.0. Non inclus dans le build soumis CADEV 2026.
+# Le build standard CADEV 2026 utilise SQLite (Standard Library, Domaine Public).
+psycopg2-binary>=2.9.9

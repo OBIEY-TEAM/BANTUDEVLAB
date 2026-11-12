@@ -18,26 +18,26 @@ class GitLabClientTestCase(TestCase):
         self.assertEqual(client.url, "http://test-gitlab.local:3001")
         self.assertEqual(client.token, "secret-token-123")
 
-    @patch("gitlab.Gitlab")
-    def test_gitlab_client_list_repositories_with_sdk(self, mock_gitlab_cls):
-        mock_gl = MagicMock()
-        mock_p1 = MagicMock()
-        mock_p1.id = 101
-        mock_p1.name = "afri-fintech-gateway"
-        mock_p1.path_with_namespace = "sovereign-org/afri-fintech-gateway"
-        mock_p1.description = "Passerelle bancaire panafricaine"
-        mock_p1.star_count = 12
-        mock_p1.forks_count = 4
-        mock_p1.web_url = "http://localhost:3001/sovereign-org/afri-fintech-gateway"
-        mock_p1.http_url_to_repo = "http://localhost:3001/sovereign-org/afri-fintech-gateway.git"
-        mock_p1.default_branch = "main"
-
-        mock_gl.projects.list.return_value = [mock_p1]
-        mock_gitlab_cls.return_value = mock_gl
+    @patch("requests.get")
+    def test_gitlab_client_list_repositories_with_sdk(self, mock_requests_get):
+        mock_resp = MagicMock()
+        mock_resp.status_code = 200
+        mock_resp.json.return_value = [
+            {
+                "id": 101,
+                "name": "afri-fintech-gateway",
+                "path_with_namespace": "sovereign-org/afri-fintech-gateway",
+                "description": "Passerelle bancaire panafricaine",
+                "star_count": 12,
+                "forks_count": 4,
+                "web_url": "http://localhost:3001/sovereign-org/afri-fintech-gateway",
+                "http_url_to_repo": "http://localhost:3001/sovereign-org/afri-fintech-gateway.git",
+                "default_branch": "main",
+            }
+        ]
+        mock_requests_get.return_value = mock_resp
 
         client = GitLabClient()
-        client.gl = mock_gl
-
         repos = client.list_repositories()
         self.assertEqual(len(repos), 1)
         self.assertEqual(repos[0]["id"], 101)
@@ -69,7 +69,6 @@ class GitLabClientTestCase(TestCase):
         mock_requests_get.return_value = mock_resp
 
         client = GitLabClient()
-        client.gl = None  # Simule l'échec ou l'absence du SDK
 
         repos = client.list_repositories()
         self.assertEqual(len(repos), 1)

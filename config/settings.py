@@ -128,7 +128,7 @@ ASGI_APPLICATION = "config.asgi.application"
 # Database configuration: support PostgreSQL with SQLite fallback
 _has_pg_driver = importlib.util.find_spec("psycopg") is not None or importlib.util.find_spec("psycopg2") is not None
 DB_ENGINE = os.environ.get("DB_ENGINE", "sqlite")
-if DB_ENGINE == "postgres" and (_has_pg_driver or TESTING):
+if DB_ENGINE == "postgres" and _has_pg_driver:
     _postgres_host = os.environ.get("POSTGRES_HOST", "db")
     # Aligner le port par defaut sur 6432 si pgbouncer est configure comme host
     _default_port = "6432" if _postgres_host == "pgbouncer" else "5432"
