@@ -453,7 +453,6 @@ async function registerZkpIdentity() {
     if (res.ok) {
         log(`{% icon "circle-check" size=18 %} {% trans "Enregistrement ZKP réussi ! Aucune information secrète n a quitté votre machine." %}`);
         if (window.showToast) window.showToast(`{% trans "Identité ZKP enregistrée avec succès !" %} (${username})`, 'success');
-        handleSuccessfulZkpAuth(username, data);
     } else {
         log(`{% icon "triangle-alert" size=18 %} ${data.error || "{% trans 'Erreur d enregistrement' %}"}`);
         if (window.showToast) window.showToast(`{% trans "Erreur :" %} ${data.error || "{% trans 'Échec de l enregistrement' %}"}`, 'error');
@@ -601,15 +600,22 @@ function handleSuccessfulZkpAuth(username, data) {
         section.scrollIntoView({ behavior: 'smooth' });
     }
 
-    let countdown = 3;
-    const interval = setInterval(() => {
-        countdown--;
-        if (secsSpan) secsSpan.textContent = countdown;
-        if (countdown <= 0) {
-            clearInterval(interval);
-            window.location.href = primaryRedirect;
+    if (data && data.oauth_redirect) {
+        let countdown = 3;
+        const interval = setInterval(() => {
+            countdown--;
+            if (secsSpan) secsSpan.textContent = countdown;
+            if (countdown <= 0) {
+                clearInterval(interval);
+                window.location.href = data.oauth_redirect;
+            }
+        }, 1000);
+    } else {
+        const countdownText = document.getElementById('countdownRedirectText');
+        if (countdownText) {
+            countdownText.style.display = 'none';
         }
-    }, 1000);
+    }
 }
 
 

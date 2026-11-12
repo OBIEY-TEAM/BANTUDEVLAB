@@ -82,7 +82,7 @@ class PlaywrightE2ETestCase(StaticLiveServerTestCase):
         # Attendre le message de succès dans les logs
         self.page.wait_for_selector("#zkpLog")
         self.page.wait_for_function(
-            "() => document.getElementById('zkpLog').innerText.includes('Enregistrement ZKP réussi')"
+            "() => { const el = document.getElementById('zkpLog'); return el ? el.innerText.includes('Enregistrement ZKP réussi') : false; }"
         )
 
         # 4. Étape 3 : Authentification Zero-Trust (Résolution Fiat-Shamir)
@@ -92,7 +92,7 @@ class PlaywrightE2ETestCase(StaticLiveServerTestCase):
 
         # Attendre le message de confirmation de connexion ZKP
         self.page.wait_for_function(
-            "() => document.getElementById('zkpLog').innerText.includes('Vérification Zero-Knowledge réussie')"
+            "() => { const el = document.getElementById('zkpLog'); return el ? el.innerText.includes('Vérification Zero-Knowledge réussie') : false; }"
         )
 
         # 5. Navigation vers le Workbench Souverain sur le Dashboard
