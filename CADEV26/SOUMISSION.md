@@ -1,7 +1,9 @@
 # FICHE OFFICIELLE DE SOUMISSION — CONCOURS CADEV 2026 (SYSTALINK)
 
 **Projet :** BANTUDEVLAB — Forge Logicielle Souveraine Panafricaine  
-**Équipe candidate :** Équipe CYBERSOCLE (Christ Dany Obiey et membres de l'équipe CYBERSOCLE)  
+**Équipe candidate :** Équipe CYBERSOCLE  
+- **Capitaine d'équipe :** OBIEY Christ Dany
+- **Membre de l'équipe :** MAMPOUYA Alicia Syrianne  
 **Événement :** Concours CADEV 2026 — Systalink Cloud  
 **Date limite de soumission :** 15 novembre 2026, 23h59 GMT (heure de Dakar)  
 **URL de production :** https://cybersocle.site (Portail Central & API) / https://git.cybersocle.site (Forge Gitea CE)  
@@ -26,16 +28,18 @@ BANTUDEVLAB est une forge logicielle panafricaine souveraine d'échange de code,
 
 ## b) Déclaration de Titularité des Droits
 
-Les soussignés, membres de l'équipe candidate **CYBERSOCLE**, déclarent sur l'honneur que le projet BantuDevLab a été entièrement conçu, développé et réalisé à titre personnel et indépendant, **hors de toute mission, contrat de travail, mandat ou commande émanant d'un employeur, client ou établissement d'enseignement**. L'ensemble des droits de propriété intellectuelle afférents au projet appartient exclusivement aux membres de l'équipe CYBERSOCLE sous licence permissive MIT.
+Les soussignés, membres de l'équipe candidate **CYBERSOCLE** :
+1. **OBIEY Christ Dany** (Capitaine d'équipe)
+2. **MAMPOUYA Alicia Syrianne** (Membre d'équipe)
+
+déclarent sur l'honneur que le projet BantuDevLab a été entièrement conçu, développé et réalisé à titre personnel et indépendant, **hors de toute mission, contrat de travail, mandat ou commande émanant d'un employeur, client ou établissement d'enseignement**. L'ensemble des droits de propriété intellectuelle afférents au projet appartient exclusivement aux membres de l'équipe CYBERSOCLE sous licence permissive MIT.
 
 ### Tableau d'engagement et de confirmation par les membres de l'équipe CYBERSOCLE :
 
 | Nom et Prénom | Rôle dans le projet | Statut d'indépendance | Signature / Confirmation | Date |
 | :--- | :--- | :--- | :--- | :--- |
-| **Christ Dany Obiey** | Porteur de projet & Lead Dev | [À compléter et confirmer par le membre] | [Signature / Mention « Lu et approuvé »] | [Date] |
-| **[Membre 2 - Nom Prénom]** | [Rôle : Cryptographie / Backend] | [À compléter et confirmer par chaque membre] | [Signature / Mention « Lu et approuvé »] | [Date] |
-| **[Membre 3 - Nom Prénom]** | [Rôle : Infrastructure / DevOps] | [À compléter et confirmer par chaque membre] | [Signature / Mention « Lu et approuvé »] | [Date] |
-| **[Membre 4 - Nom Prénom]** | [Rôle : Frontend / QA / Sécurité] | [À compléter et confirmer par chaque membre] | [Signature / Mention « Lu et approuvé »] | [Date] |
+| **OBIEY Christ Dany** | **Capitaine d'équipe**, Porteur de projet & Lead Architect / Fullstack | Projet conçu et développé à titre personnel hors mission employeur, client ou école | [Signature / Mention « Lu et approuvé »] | 12 novembre 2026 |
+| **MAMPOUYA Alicia Syrianne** | **Membre d'équipe**, Ingénierie logicielle / QA & Sécurité | Projet conçu et développé à titre personnel hors mission employeur, client ou école | [Signature / Mention « Lu et approuvé »] | 12 novembre 2026 |
 
 ---
 

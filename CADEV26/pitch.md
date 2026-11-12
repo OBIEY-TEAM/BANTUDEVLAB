@@ -1,6 +1,8 @@
 # Dossier Stratégique CADEV 2026 : BANTUDEVLAB / SysteLink Cloud Africain
 
-**Auteur principal :** Christ Dany Obiey et l'équipe MIABE (Lauréats 1er Prix Hackathon MIABE 2026)
+**Auteurs :** Équipe CYBERSOCLE  
+- **Capitaine d'équipe :** OBIEY Christ Dany  
+- **Membre de l'équipe :** MAMPOUYA Alicia Syrianne  
 **Événement :** Systalink Challenge / CADEV 2026 (29 sept. – 15 nov. 2026)
 **Thème officiel :** « Construire la plateforme d'échange africaine, pour les devs, par les devs »
 **Positionnement :** Forge logicielle panafricaine souveraine (Alternative locale à GitHub / GitLab avec Zero-Trust ZKP, scanner SAST Shannon SARIF 2.1.0 et IA d'audit in-forge Gemma 2 2B quantifiée en local).
@@ -109,7 +111,7 @@ L'évaluation lucide des deux ébauches de pitch précédentes révèle des faib
 ## 3. Pitch Professionnel Hackathon CADEV 2026 (5 Minutes Chronométrées)
 
 **Format :** Soutenance orale de 5 minutes avec démonstration live intégrée.
-**Intervenant :** Christ Dany Obiey, Lead Développeur BantuDevLab (Équipe MIABE).
+**Intervenants :** OBIEY Christ Dany (Capitaine & Lead Développeur) et MAMPOUYA Alicia Syrianne (Équipe CYBERSOCLE).
 
 ---
 
@@ -123,7 +125,7 @@ L'évaluation lucide des deux ébauches de pitch précédentes révèle des faib
 >
 > Nous payons une bande passante sous-marine prohibitive pour pousser du code chez des hyperscalers tiers, tandis que nos institutions manquent aux exigences de la Convention de Malabo sur la territorialité des données.
 >
-> Je m'appelle Christ Dany Obiey, développeur à Pointe-Noire, lauréat du 1er prix du Hackathon MIABE 2026. Avec mon équipe, nous avons refusé cette fatalité. Voici **BANTUDEVLAB** : la première forge logicielle souveraine panafricaine, conçue par les développeurs africains, pour les développeurs africains. »
+> Je m'appelle Christ Dany Obiey, développeur à Pointe-Noire, capitaine de l'équipe CYBERSOCLE, aux côtés de ma co-équipière Alicia Syrianne Mampouya. Avec notre équipe, nous avons refusé cette fatalité. Voici **BANTUDEVLAB** : la première forge logicielle souveraine panafricaine, conçue par les développeurs africains, pour les développeurs africains. »
 
 ---
 

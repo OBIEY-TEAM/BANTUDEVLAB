@@ -2,6 +2,8 @@
 
 **Projet :** BANTUDEVLAB — Forge Logicielle Souveraine Panafricaine  
 **Équipe candidate :** Équipe CYBERSOCLE  
+- **Capitaine d'équipe :** OBIEY Christ Dany
+- **Membre de l'équipe :** MAMPOUYA Alicia Syrianne  
 **Organisateur & Événement :** Systalink Cloud — Concours CADEV 2026  
 **Date limite impérative :** Dimanche 15 novembre 2026, 23h59 GMT (heure de Dakar)  
 **URL de Production :** https://cybersocle.site / https://git.cybersocle.site  
@@ -22,12 +24,12 @@ L'intégralité du dépôt BantuDevLab a été audité, durci et aligné avec le
 
 ### TÂCHE 2 — Fichier LICENSE à la racine
 - Fichier `LICENSE` sous licence permissive **MIT** standard ajouté à la racine du dépôt.
-- Titularité attribuée à l'**Équipe CYBERSOCLE** avec variable réservée pour les signatures et noms des membres.
+- Titularité attribuée à l'**Équipe CYBERSOCLE** : **OBIEY Christ Dany (Capitaine)** et **MAMPOUYA Alicia Syrianne**.
 
 ### TÂCHE 3 — Fiche officielle de soumission (`CADEV26/SOUMISSION.md`)
 - Document structuré respectant scrupuleusement les points **a)** à **f)** exigés par le règlement de Systalink :
   - **a) Présentation :** Enjeux de cyber-souveraineté africaine, convention de Malabo, architecture Django + Gitea CE + ZKP Schnorr + SAST Shannon + IA locale Gemma 2 2B.
-  - **b) Déclaration de titularité :** Conception indépendante hors mission d'employeur, client ou école, avec tableau d'engagement pour chaque membre de l'équipe CYBERSOCLE.
+  - **b) Déclaration de titularité :** Conception indépendante hors mission d'employeur, client ou école, avec tableau d'engagement pour les deux membres de l'équipe CYBERSOCLE (OBIEY Christ Dany [Capitaine] et MAMPOUYA Alicia Syrianne).
   - **c) Composants & licences :** Tableau exhaustif reproduisant l'audit de licences.
   - **d) Déclaration IA :** Précision sur l'inférence locale Gemma 2 2B, utilisation des outils d'aide au développement (Claude Code, Antigravity AI, GitHub Copilot) et maîtrise intégrale du code source par l'équipe.
   - **e) Déploiement :** Domaines `cybersocle.site` / `git.cybersocle.site` (Systalink / Datacloud) et cluster conteneurisé sur VPS Hostinger.
@@ -79,9 +81,11 @@ Avant le **dimanche 15 novembre 2026 à 23h59 GMT (heure de Dakar)**, les membre
 
 ### Action 2 : Déclarations de Titularité et Signatures de l'Équipe
 1. Ouvrir le fichier [`CADEV26/SOUMISSION.md`](file:///c:/Users/User/Desktop/AGENT/BANTUDEVLAB/CADEV26/SOUMISSION.md) à la section **b)**.
-2. Remplir le tableau avec l'identité de chaque membre de l'équipe CYBERSOCLE (Nom, Prénom, rôle exact, confirmation sur l'honneur de développement hors mission d'employeur ou d'établissement).
-3. Faire apposer par chaque membre la mention manuscrite ou électronique « Lu et approuvé ».
-4. Dans le fichier [`LICENSE`](file:///c:/Users/User/Desktop/AGENT/BANTUDEVLAB/LICENSE) à la racine du dépôt, remplacer la mention `[Nom du titulaire / Noms des membres de l'équipe CYBERSOCLE à compléter]` par la liste définitive des titulaires de droits de l'équipe CYBERSOCLE.
+2. Le tableau comporte déjà l'identité officielle des membres de l'équipe CYBERSOCLE :
+   - **OBIEY Christ Dany** (Capitaine d'équipe, Porteur de projet & Lead Architect / Fullstack)
+   - **MAMPOUYA Alicia Syrianne** (Membre d'équipe, Ingénierie logicielle / QA & Sécurité)
+3. Faire apposer par chaque membre sa signature finale (mention manuscrite ou électronique « Lu et approuvé »).
+4. Le fichier [`LICENSE`](file:///c:/Users/User/Desktop/AGENT/BANTUDEVLAB/LICENSE) à la racine du dépôt a été actualisé au nom de l'Équipe CYBERSOCLE (OBIEY Christ Dany [Capitaine], MAMPOUYA Alicia Syrianne).
 
 ### Action 3 : Envoi du Dossier Officiel par Email à Systalink
 Transmettre la candidature officielle avant l'heure limite par courrier électronique :
@@ -117,8 +121,9 @@ Transmettre la candidature officielle avant l'heure limite par courrier électro
   Restant à votre entière disposition pour toute démonstration complémentaire.
 
   Très cordialement,
-  L'Équipe CYBERSOCLE
-  Contact principal : Christ Dany Obiey (obieychristdany@gmail.com)
+  L'Équipe CYBERSOCLE :
+  - OBIEY Christ Dany (Capitaine d'équipe & Lead Architect / Fullstack - obieychristdany@gmail.com)
+  - MAMPOUYA Alicia Syrianne (Membre d'équipe - Ingénierie logicielle / QA & Sécurité)
   ```
 - **Pièces jointes obligatoires à attacher au courriel :**
   1. `CADEV26/SOUMISSION.md` (converti en PDF ou au format Markdown dument signé)
@@ -132,5 +137,5 @@ Transmettre la candidature officielle avant l'heure limite par courrier électro
 
 Conformément à la règle d'intégrité (« *ne devine pas, signale ce que tu ne peux pas vérifier* ») :
 1. **Facturation Datacloud :** L'assistant n'a pas accès au compte bancaire ni au portail privé client Systalink de l'équipe pour extraire le numéro de facture ou le bon de commande.
-2. **Identité légale des membres secondaires :** Seul le nom du lead dev (Christ Dany Obiey) est présent dans les logs git et la documentation. L'identité des éventuels co-équipiers doit être inscrite directement par l'équipe.
+2. **Identité légale des membres :** Les membres de l'équipe CYBERSOCLE sont désormais formellement enregistrés : OBIEY Christ Dany (Capitaine) et MAMPOUYA Alicia Syrianne.
 3. **Position discrétionnaire du jury sur `psycopg2` :** Seul le comité d'organisation CADEV 2026 (`cadev@systalink.com`) est habilité à valider l'exception pour le pilote de base de données PostgreSQL de Django.
