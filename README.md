@@ -24,7 +24,8 @@
 11. [API et Documentation Interactive](#api-et-documentation-interactive)
 12. [Interface Souveraine et Charte Graphique](#interface-souveraine-et-charte-graphique)
 13. [Tests, CI/CD et Qualité](#tests-cicd-et-qualité)
-14. [Index de la Documentation](#index-de-la-documentation)
+14. [Outils Utilisés](#outils-utilisés)
+15. [Index de la Documentation](#index-de-la-documentation)
 
 ---
 
@@ -331,6 +332,12 @@ Sur l'instance Gitea souveraine, 4 workflows peuvent apparaître en statut **« 
      docker compose up -d act_runner
      ```
   4. Dès connexion du conteneur au socket Docker, les tâches en attente sont immédiatement dépilées et exécutées.
+
+---
+
+## Outils Utilisés
+
+Le développement de BantuDevLab s'appuie sur des éditeurs de code assistés par IA (Antigravity IA, Jules IA), un outil d'aide à la rédaction et planification (Claude IA), et GitHub pour le versionnement du code source. Le modèle local Gemma 2 2B est un composant applicatif intégré au produit final et non un outil de développement. Pour le détail exhaustif des interventions et la déclaration réglementaire de l'Article 6, se référer à [`CADEV26/SOUMISSION.md`](CADEV26/SOUMISSION.md).
 
 ---
 
