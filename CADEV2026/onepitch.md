@@ -6,6 +6,7 @@
 **Projet :** BANTUDEVLAB — Forge Logicielle Souveraine Panafricaine  
 **Concours :** CADEV 2026 (Systalink Cloud) — Date limite : 15 novembre 2026, 23h59 GMT  
 **Accès en ligne :** https://cybersocle.site | https://git.cybersocle.site  
+**Code source public :** https://git.cybersocle.site/obiey-code/bantudevlab.git (branche `main` : https://git.cybersocle.site/obiey-code/bantudevlab/commits/branch/main)  
 
 ---
 

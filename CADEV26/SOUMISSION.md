@@ -7,7 +7,9 @@
 **Événement :** Concours CADEV 2026 — Systalink Cloud  
 **Date limite de soumission :** 15 novembre 2026, 23h59 GMT (heure de Dakar)  
 **URL de production :** https://cybersocle.site (Portail Central & API) / https://git.cybersocle.site (Forge Gitea CE)  
-**Dépôt source :** https://github.com/OBIEY-TEAM/BANTUDEVLAB  
+**Dépôt source public (Forge souveraine Gitea) :** https://git.cybersocle.site/obiey-code/bantudevlab.git  
+**Accès Web aux commits (branche `main`) :** https://git.cybersocle.site/obiey-code/bantudevlab/commits/branch/main  
+**Miroir de réplication GitHub :** https://github.com/OBIEY-TEAM/BANTUDEVLAB  
 
 ---
 

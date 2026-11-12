@@ -2,6 +2,11 @@
 
 > **BANTUDEVLAB** centralise le code des développeurs africains sur une infrastructure souveraine et sécurisée : moteur Git résilient (Gitea / GitLab), authentification Zero-Trust sans mot de passe par preuve à divulgation nulle de connaissance (ZKP), scanner de sécurité et d'entropie de Shannon (SAST / SARIF 2.1.0), et assistant IA local (Gemma 2 2B) optimisé pour l'inférence locale et l'embarqué sans dépendance externe.
 
+- **Dépôt officiel (Forge souveraine Gitea) :** [https://git.cybersocle.site/obiey-code/bantudevlab.git](https://git.cybersocle.site/obiey-code/bantudevlab.git)
+- **Accès web & Commits (branche `main`) :** [https://git.cybersocle.site/obiey-code/bantudevlab/commits/branch/main](https://git.cybersocle.site/obiey-code/bantudevlab/commits/branch/main)
+- **Portail souverain en ligne :** [https://cybersocle.site](https://cybersocle.site)
+- **Miroir GitHub :** [https://github.com/OBIEY-TEAM/BANTUDEVLAB](https://github.com/OBIEY-TEAM/BANTUDEVLAB)
+
 ---
 
 ## Sommaire

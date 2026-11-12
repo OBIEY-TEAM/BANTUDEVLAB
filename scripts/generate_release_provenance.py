@@ -71,7 +71,7 @@ def generate_provenance(files: List[Path], output_dir: Path) -> Dict[str, str]:
             "buildDefinition": {
                 "buildType": build_portal_url("attestation/v1"),
                 "externalParameters": {
-                    "sourceRepository": "https://github.com/OBIEY-TEAM/BANTUDEVLAB",
+                    "sourceRepository": "https://git.cybersocle.site/obiey-code/bantudevlab.git",
                     "commit": get_git_commit(),
                 },
                 "internalParameters": {
