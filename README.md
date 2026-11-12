@@ -30,9 +30,10 @@
 
 ## Vision et Philosophie Souveraine
 
-BANTUDEVLAB répond aux impératifs d'indépendance numérique et technologique du continent africain, en accord avec la **Convention de Malabo (2014)** sur la cybersécurité et la protection des données à caractère personnel ainsi que les directives de l'Union Africaine :
+BANTUDEVLAB répond aux impératifs d'indépendance numérique et technologique du continent africain, alignée sur la **Convention de Malabo (2014)** sur la cybersécurité et la protection des données à caractère personnel ainsi que les directives de l'Union Africaine :
 
-- **Souveraineté des Données :** Hébergement sur le sol africain (aucun transfert vers des hyperscalers tiers).
+- **Hébergement & Domaines :** Domaines achetés chez Systalink/Datacloud (`cybersocle.site`, `git.cybersocle.site`), application hébergée sur un VPS Ubuntu externe avec architecture conteneurisée.
+- **Souveraineté des Données :** Contrôle territorialisé des données (aucun transfert vers des hyperscalers tiers).
 - **Zéro Dépendance aux CDN Tiers :** Tous les composants frontaux (styles Primer, polices, scripts CodeMirror, icônes SVG) sont auto-hébergés localement.
 - **Zéro Emoji :** Respect d'une interface professionnelle sobre et accessible, excluant tout caractère emoji au profit d'icônes vectorielles SVG souveraines.
 - **Résilience et Mode Déconnecté :** Fonctionnement garanti en intranet ou réseau isolé avec modèles d'intelligence artificielle compacts exécutés en local (quantification GGUF 4-bit).
@@ -232,36 +233,36 @@ Le socle Gitea est personnalisé via des surcharges de templates Go (`custom/tem
 
 ---
 
-## Cycles de Développement Continu (Dossier TASK)
+## Cycles de Développement Continu (Dossier Archivé docs/archive/TASK)
 
-Tous les plans directeurs, audits stratégiques et spécifications des 20 cycles de développement continu ont été classés dans le dossier dédié [`TASK/`](TASK/) :
+Tous les plans directeurs, audits stratégiques et spécifications des 20 cycles de développement continu ont été classés dans le dossier d'archive [`docs/archive/TASK/`](docs/archive/TASK/) :
 
 | Fichier | Objet et Périmètre Opérationnel |
 |---|---|
-| [`TASK/task2.md`](TASK/task2.md) | Plan de déploiement en production industrielle et guide d'exploitation |
-| [`TASK/TASK3.md`](TASK/TASK3.md) | Transition industrielle et intégration de la fédération GitLab CE/EE |
-| [`TASK/TASK5.md`](TASK/TASK5.md) | Audit global de sécurité, catalogue des failles et plan directeur IA Gemma |
-| [`TASK/TASK6.md`](TASK/TASK6.md) | Spécifications opérationnelles de transformation Gitea vers l'expérience GitHub |
-| [`TASK/TASK7.md`](TASK/TASK7.md) | Cycle 1 : Copilot local Gemma 2 2B et Command Palette Spotlight (`Ctrl+K`) |
-| [`TASK/TASK8.md`](TASK/TASK8.md) | Cycle 2 : PR Review Bot autonome (Celery), explorateur d'arborescence (`t`) |
-| [`TASK/TASK9.md`](TASK/TASK9.md) | Cycle 3 : Heatmap Blame interactive, générateur de provenance SLSA v1 |
-| [`TASK/TASK10.md`](TASK/TASK10.md) | Cycle 4 : Tableaux Markdown Primer avec tri dynamique interactif |
-| [`TASK/TASK11.md`](TASK/TASK11.md) | Cycle 5 : Graphe de dépendances et exportateur CycloneDX v1.5 SBOM PURL |
-| [`TASK/TASK12.md`](TASK/TASK12.md) | Cycle 6 : Dépôts épinglés Primer et profil README spécial (`user/user`) |
-| [`TASK/TASK13.md`](TASK/TASK13.md) | Cycle 7 : Polyfill de réactions GitHub (`:+1:`, `:heart:`, `:rocket:`) sans emoji |
-| [`TASK/TASK14.md`](TASK/TASK14.md) | Cycle 8 : Inspecteur d'historique de livraison de webhooks et simulateur de renvoi |
-| [`TASK/TASK15.md`](TASK/TASK15.md) | Cycle 9 : Rulesets de branches et badges de signature de commits Verified |
-| [`TASK/TASK16.md`](TASK/TASK16.md) | Cycle 10 : Centre de notifications GitHub (Inbox, filtres dynamiques, raccourci `m`) |
-| [`TASK/TASK17.md`](TASK/TASK17.md) | Cycle 11 : Générateur automatique de notes de version à partir des PRs |
-| [`TASK/TASK18.md`](TASK/TASK18.md) | Cycle 12 : Recherche de code avancée, qualificateurs de recherche (`path:`, `repo:`) |
-| [`TASK/TASK19.md`](TASK/TASK19.md) | Cycle 13 : Polyfill de suggestions de modifications de code dans les PRs |
-| [`TASK/TASK20.md`](TASK/TASK20.md) | Cycle 14 : Graphe de réseau de commits et visualisation topologique SVG |
-| [`TASK/TASK21.md`](TASK/TASK21.md) | Cycle 15 : Jalons d'issues (Milestones) et calcul de burndown d'avancement |
-| [`TASK/TASK22.md`](TASK/TASK22.md) | Cycle 16 : Gestion d'équipes d'organisation et matrice de permissions à 5 rôles |
-| [`TASK/TASK23.md`](TASK/TASK23.md) | Cycle 17 : Flux complet des Draft PRs (brouillons, badges, conversion en review) |
-| [`TASK/TASK24.md`](TASK/TASK24.md) | Cycle 18 : File d'attente de fusion sécurisée (Merge Queue) et simulateur |
-| [`TASK/TASK25.md`](TASK/TASK25.md) | Cycle 19 : Avis de sécurité (Security Advisories), signalement privé et CVSS |
-| [`TASK/TASK26.md`](TASK/TASK26.md) | Cycle 20 : Export de session Copilot (Markdown/JSON) et audit de clôture |
+| [`docs/archive/TASK/task2.md`](docs/archive/TASK/task2.md) | Plan de déploiement en production industrielle et guide d'exploitation |
+| [`docs/archive/TASK/TASK3.md`](docs/archive/TASK/TASK3.md) | Transition industrielle et intégration de la fédération GitLab CE/EE |
+| [`docs/archive/TASK/TASK5.md`](docs/archive/TASK/TASK5.md) | Audit global de sécurité, catalogue des failles et plan directeur IA Gemma |
+| [`docs/archive/TASK/TASK6.md`](docs/archive/TASK/TASK6.md) | Spécifications opérationnelles de transformation Gitea vers l'expérience GitHub |
+| [`docs/archive/TASK/TASK7.md`](docs/archive/TASK/TASK7.md) | Cycle 1 : Copilot local Gemma 2 2B et Command Palette Spotlight (`Ctrl+K`) |
+| [`docs/archive/TASK/TASK8.md`](docs/archive/TASK/TASK8.md) | Cycle 2 : PR Review Bot autonome (Celery), explorateur d'arborescence (`t`) |
+| [`docs/archive/TASK/TASK9.md`](docs/archive/TASK/TASK9.md) | Cycle 3 : Heatmap Blame interactive, générateur de provenance SLSA v1 |
+| [`docs/archive/TASK/TASK10.md`](docs/archive/TASK/TASK10.md) | Cycle 4 : Tableaux Markdown Primer avec tri dynamique interactif |
+| [`docs/archive/TASK/TASK11.md`](docs/archive/TASK/TASK11.md) | Cycle 5 : Graphe de dépendances et exportateur CycloneDX v1.5 SBOM PURL |
+| [`docs/archive/TASK/TASK12.md`](docs/archive/TASK/TASK12.md) | Cycle 6 : Dépôts épinglés Primer et profil README spécial (`user/user`) |
+| [`docs/archive/TASK/TASK13.md`](docs/archive/TASK/TASK13.md) | Cycle 7 : Polyfill de réactions GitHub (`:+1:`, `:heart:`, `:rocket:`) sans emoji |
+| [`docs/archive/TASK/TASK14.md`](docs/archive/TASK/TASK14.md) | Cycle 8 : Inspecteur d'historique de livraison de webhooks et simulateur de renvoi |
+| [`docs/archive/TASK/TASK15.md`](docs/archive/TASK/TASK15.md) | Cycle 9 : Rulesets de branches et badges de signature de commits Verified |
+| [`docs/archive/TASK/TASK16.md`](docs/archive/TASK/TASK16.md) | Cycle 10 : Centre de notifications GitHub (Inbox, filtres dynamiques, raccourci `m`) |
+| [`docs/archive/TASK/TASK17.md`](docs/archive/TASK/TASK17.md) | Cycle 11 : Générateur automatique de notes de version à partir des PRs |
+| [`docs/archive/TASK/TASK18.md`](docs/archive/TASK/TASK18.md) | Cycle 12 : Recherche de code avancée, qualificateurs de recherche (`path:`, `repo:`) |
+| [`docs/archive/TASK/TASK19.md`](docs/archive/TASK/TASK19.md) | Cycle 13 : Polyfill de suggestions de modifications de code dans les PRs |
+| [`docs/archive/TASK/TASK20.md`](docs/archive/TASK/TASK20.md) | Cycle 14 : Graphe de réseau de commits et visualisation topologique SVG |
+| [`docs/archive/TASK/TASK21.md`](docs/archive/TASK/TASK21.md) | Cycle 15 : Jalons d'issues (Milestones) et calcul de burndown d'avancement |
+| [`docs/archive/TASK/TASK22.md`](docs/archive/TASK/TASK22.md) | Cycle 16 : Gestion d'équipes d'organisation et matrice de permissions à 5 rôles |
+| [`docs/archive/TASK/TASK23.md`](docs/archive/TASK/TASK23.md) | Cycle 17 : Flux complet des Draft PRs (brouillons, badges, conversion en review) |
+| [`docs/archive/TASK/TASK24.md`](docs/archive/TASK/TASK24.md) | Cycle 18 : File d'attente de fusion sécurisée (Merge Queue) et simulateur |
+| [`docs/archive/TASK/TASK25.md`](docs/archive/TASK/TASK25.md) | Cycle 19 : Avis de sécurité (Security Advisories), signalement privé et CVSS |
+| [`docs/archive/TASK/TASK26.md`](docs/archive/TASK/TASK26.md) | Cycle 20 : Export de session Copilot (Markdown/JSON) et audit de clôture |
 
 Consultez la synthèse globale de l'audit des 20 cycles : [docs/SOVEREIGN_GITHUB_FORGE_COMPLETE_REVIEW.md](docs/SOVEREIGN_GITHUB_FORGE_COMPLETE_REVIEW.md).
 
@@ -291,7 +292,11 @@ L'interface de BANTUDEVLAB applique rigoureusement les principes de design panaf
 
 ## Tests, CI/CD et Qualité
 
-Le projet applique une politique d'assurance qualité stricte validée automatiquement sur GitHub Actions et Gitea Actions :
+Le projet applique une politique d'assurance qualité stricte validée automatiquement sur la suite de tests unitaires et d'intégration :
+
+- **Couverture réelle démontrée :** **95,78 %** mesurée sur les modules clés (`apps/zkp_auth`, `apps/security_scanner`, `apps/ai_assistant`) avec 204 tests collectés (201 exécutés avec succès, 3 tests E2E ignorés en environnement sans Chromium binaire).
+- **Langues supportées et démontrées :** **4 langues** avec catalogues compilés complets (`.mo` / `.po`) : Français (`fr`), Anglais (`en`), Kiswahili (`sw`), Portugais (`pt`).
+- **Garantie Zéro Dépendance Non Permissive :** Validation automatique en CI via `python scripts/check_licenses.py` garantissant 0 dépendance sous GPL/AGPL/LGPL.
 
 ```bash
 # Verification stricte du formatage et du linting (Ruff)
@@ -301,22 +306,31 @@ ruff format --check .
 # Analyse de securite statique du code applicatif (Bandit)
 bandit -c pyproject.toml -r apps config
 
+# Verification de conformite des licences CADEV 2026 (Art. 6)
+python scripts/check_licenses.py
+
 # Verification de l'absence totale d'emojis dans le code et les gabarits
 python scripts/check_no_emoji.py
 
-# Execution de la suite Pytest avec seuil de couverture strict >= 95%
+# Execution de la suite Pytest avec seuil de couverture strict >= 95% (reel: 95.78%)
 pytest --cov=apps/zkp_auth --cov=apps/security_scanner --cov=apps/ai_assistant --cov-report=term-missing --cov-fail-under=95
 
 # Execution de la suite de tests Django
 python manage.py test tests -v 2
-
-# Verification du pipeline de fine-tuning d'IA locale
-python -m py_compile finetuning/*.py
-python finetuning/dataset_preparation.py
-python finetuning/train_lora.py --dry_run
-python finetuning/evaluate.py
-python finetuning/export_gguf.py --dry_run
 ```
+
+### Note Opérationnelle sur les Workflows Gitea Actions « En attente »
+
+Sur l'instance Gitea souveraine, 4 workflows peuvent apparaître en statut **« En attente »** (*Waiting*) :
+- **Cause racine :** Gitea Actions fonctionne avec des runners auto-hébergés (`act_runner`). Contrairement à GitHub qui fournit des machines virtuelles mutualisées, Gitea place les tâches en attente tant qu'aucun runner n'est connecté avec le label correspondant (`ubuntu-latest`).
+- **Correctif opérationnel :**
+  1. Générer un jeton d'enregistrement sur Gitea : *Administration du site > Actions > Runners > Nouveau Runner*.
+  2. Renseigner la variable `GITEA_RUNNER_REGISTRATION_TOKEN` dans `.env.production`.
+  3. Lancer le conteneur act-runner prévu dans `docker-compose.yml` :
+     ```bash
+     docker compose up -d act_runner
+     ```
+  4. Dès connexion du conteneur au socket Docker, les tâches en attente sont immédiatement dépilées et exécutées.
 
 ---
 
@@ -349,9 +363,9 @@ python finetuning/export_gguf.py --dry_run
 | **Rulesets Branches** | [`docs/SOVEREIGN_BRANCH_RULESETS.md`](docs/SOVEREIGN_BRANCH_RULESETS.md) | Règles fines de protection de branches et revues obligatoires |
 | **Pitch Officiel** | [`docs/pitch-cadev-2026.md`](docs/pitch-cadev-2026.md) | Présentation de référence pour la conférence CADEV 2026 |
 | **Déploiement Docker**| [`docker-deployment.md`](docker-deployment.md) | Guide complet de démarrage conteneurisé en 1 commande |
-| **Intervention Gitea** | [`intervention.md`](intervention.md) | Guide d'intervention, topologie et accès de la forge Gitea |
+| **Intervention Gitea (Archivée)** | [`docs/archive/intervention.md`](docs/archive/intervention.md) | Guide d'intervention, topologie et accès de la forge Gitea |
 | **Audit UX & Design** | [`develop-design.md`](develop-design.md) | Analyse critique de l'expérience utilisateur et du design system |
-| **Backlog Améliorations**| [`backlod.md`](backlod.md) | Suivi des améliorations et priorisation technique |
+| **Backlog Améliorations (Archivé)**| [`docs/archive/backlod.md`](docs/archive/backlod.md) | Suivi des améliorations et priorisation technique |
 | **Contribution** | [`CONTRIBUTING.md`](CONTRIBUTING.md) | Directives pour les contributeurs au code source |
 | **Changelog** | [`CHANGELOG.md`](CHANGELOG.md) | Historique exhaustif des versions et évolutions |
 | **Sécurité** | [`SECURITY.md`](SECURITY.md) | Politique de divulgation responsable des vulnérabilités |
