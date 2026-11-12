@@ -97,7 +97,7 @@ L'évaluation lucide des deux ébauches de pitch précédentes révèle des faib
 ### Diagnostic de la Version 1 (Format 10 minutes)
 1. **Dispersion et rythme léthargique :** Un pitch de 10 minutes avec une accroche de 45 secondes et 1 minute 15 sur le problème perd l'attention du jury. Les jurys de hackathons (Systalink / CADEV) évaluent l'efficacité en moins de 5 minutes.
 2. **Le piège de l'objection d'hébergement :** Le pitch indiquait candidement « Gitea déployé en [VPS / serveur local, à préciser] » et ouvrait le flanc à la question assassine : *« Pourquoi votre démo souveraine tourne-t-elle sur un VPS externe étranger (Hostinger) plutôt que sur Systalink ? »*.
-3. **Flou cryptographique et technique :** L'authentification ZKP était mentionnée comme une intention philosophique sans citer les preuves mathématiques (Schnorr, RFC 3526, non-rejeu par nonces atomiques, sous-groupe premier).
+3. **Flou cryptographique et technique :** L'authentification ZKP était mentionnée comme une intention philosophique sans citer les garanties cryptographiques formelles (Schnorr, RFC 3526, non-rejeu par nonces atomiques, sous-groupe premier).
 4. **Survol de l'IA (mention non calibrée Gemma 5B) :** L'annonce d'un modèle « Gemma 5B » non réaliste sur petit serveur laissait planer le doute sur la faisabilité matérielle et masquait le travail d'ingénierie réel fait sur `gemma2:2b` quantifié en 4-bit (GGUF Q4_K_M).
 5. **Détails futiles :** S'attarder sur « le choix de la langue et le thème sombre/clair » dans les premières minutes banalise le projet au rang de simple maquette web.
 
@@ -125,7 +125,7 @@ L'évaluation lucide des deux ébauches de pitch précédentes révèle des faib
 >
 > Nous payons une bande passante sous-marine prohibitive pour pousser du code chez des hyperscalers tiers, tandis que nos institutions manquent aux exigences de la Convention de Malabo sur la territorialité des données.
 >
-> Je m'appelle Christ Dany Obiey, développeur à Pointe-Noire, capitaine de l'équipe CYBERSOCLE, aux côtés de ma co-équipière Alicia Syrianne Mampouya. Avec notre équipe, nous avons refusé cette fatalité. Voici **BANTUDEVLAB** : la première forge logicielle souveraine panafricaine, conçue par les développeurs africains, pour les développeurs africains. »
+> Je m'appelle Christ Dany Obiey, développeur à Pointe-Noire, capitaine de l'équipe CYBERSOCLE, aux côtés de ma co-équipière Alicia Syrianne Mampouya. Avec notre équipe, nous avons refusé cette fatalité. Voici **BANTUDEVLAB** : une forge logicielle souveraine panafricaine, conçue par les développeurs africains, pour les développeurs africains. »
 
 ---
 
@@ -133,24 +133,24 @@ L'évaluation lucide des deux ébauches de pitch précédentes révèle des faib
 
 > « Notre dépendance aux plateformes comme GitHub et GitLab engendre trois ruptures critiques pour le continent :
 >
-> - **Première rupture : L'extraterritorialité du code.** Nos dépôts sensibles, nos brevets logiciels et nos secrets industriels échappent à toute souveraineté juridique locale.
-> - **Deuxième rupture : La vulnérabilité de l'identité.** Les mots de passe et les jetons d'accès API traditionnels circulent en clair sur les réseaux et sont régulièrement dérobés par ingénierie sociale ou attaques de type "Man-in-the-Middle".
-> - **Troisième rupture : La fuite intellectuelle vers l'IA.** Lorsque nos développeurs utilisent des assistants de code hébergés dans le Cloud public, chaque ligne de code stratégique traverse les frontières pour entraîner des modèles fermés hors d'Afrique. »
+> - **Rupture 1 : L'extraterritorialité du code.** Nos dépôts sensibles, nos brevets logiciels et nos secrets industriels échappent à toute souveraineté juridique locale.
+> - **Rupture 2 : La vulnérabilité de l'identité.** Les mots de passe et les jetons d'accès API traditionnels circulent en clair sur les réseaux et sont régulièrement dérobés par ingénierie sociale ou attaques de type "Man-in-the-Middle".
+> - **Rupture 3 : La fuite intellectuelle vers l'IA.** Lorsque nos développeurs utilisent des assistants de code hébergés dans le Cloud public, chaque ligne de code stratégique traverse les frontières pour entraîner des modèles fermés hors d'Afrique. »
 
 ---
 
-### [1:15 – 2:30] 3. La Solution BANTUDEVLAB : Les Trois Piliers Inviolables
+### [1:15 – 2:30] 3. La Solution BANTUDEVLAB : Les Trois Piliers Robustes et Vérifiables
 
-> « BANTUDEVLAB transforme radicalement cette donne en combinant un moteur Git ultra-performant (Gitea / GitLab CE) et une surcouche de gouvernance souveraine industrielle en Python/Django, bâtie sur trois piliers inviolables :
+> « BANTUDEVLAB transforme radicalement cette donne en combinant un moteur Git ultra-performant (Gitea CE) et une surcouche de gouvernance souveraine industrielle en Python/Django, bâtie sur trois piliers robustes et vérifiables :
 >
 > - **Pilier 1 : La Souveraineté de l'Infrastructure et des Données.**
->   BANTUDEVLAB est 100 % autonome, conteneurisé avec Docker, PgBouncer, PostgreSQL et Redis. Déployé aujourd'hui en totale indépendance et taillé pour être hébergé sur les infrastructures panafricaines de **Systalink Cloud**. L'intégralité des dépôts reste sous juridiction africaine, avec un chaînage cryptographique SHA-256 garantissant un journal d'audit immuable conforme à la Convention de Malabo.
+>   BANTUDEVLAB est 100 % autonome, conteneurisé avec Docker, PgBouncer, PostgreSQL et Valkey. Déployé avec des domaines achetés chez Systalink/Datacloud et une application hébergée sur un VPS Ubuntu externe. L'intégralité des dépôts reste sous juridiction africaine, avec un chaînage cryptographique SHA-256 garantissant un journal d'audit immuable aligné sur la Convention de Malabo.
 >
 > - **Pilier 2 : La Sécurité Zero-Trust par Preuve à Divulgation Nulle (ZKP).**
->   Nous éliminons les mots de passe. L'authentification repose sur le protocole mathématique de **Schnorr (groupe RFC 3526 MODP 2048 bits)** avec transformée de Fiat-Shamir. L'utilisateur prouve qu'il détient son secret sans jamais le transmettre au serveur. Même en cas de compromission totale de l'infrastructure, aucun mot de passe ne peut fuiter car aucun mot de passe n'existe sur le serveur. Ce protocole protège également l'émission des jetons d'accès Git CLI (`tea` et `git-credential`).
+>   Nous éliminons les mots de passe. L'authentification repose sur le protocole mathématique de **Schnorr (groupe RFC 3526 MODP 2048 bits)** avec transformée de Fiat-Shamir. L'utilisateur prouve qu'il détient son secret sans jamais le transmettre au serveur. Même en cas de compromission de l'infrastructure, aucun mot de passe ne peut fuiter car aucun mot de passe n'existe sur le serveur. Ce protocole protège également l'émission des jetons d'accès Git CLI (`tea` et `git-credential`).
 >
-> - **Pilier 3 : L'Intelligence Artificielle "In-Forge" 100 % Locale (Gemma 2 2B).**
->   Notre innovation majeure : intégrer directement au cœur de la forge le modèle de langage **Gemma 2 2B Instruct de Google**, quantifié en 4-bit (GGUF Q4_K_M). L'IA audite chaque commit et chaque Pull Request en tâche d'arrière-plan Celery, détecte les secrets enfouis grâce à notre scanner d'entropie de Shannon, et propose des correctifs en un clic. Pas une seule ligne de code ne quitte notre infrastructure. »
+> - **Pilier 3 : L'Intelligence Artificielle d'Aide à la Revue 100 % Locale (Gemma 2 2B via Ollama).**
+>   Intégration d'un petit modèle local d'aide au développement : le modèle **Gemma 2 2B Instruct de Google** (sous conditions d'utilisation Google Gemma Terms, exécuté localement sans redistribution). L'IA audite les commits et Pull Requests en tâche d'arrière-plan Celery, détecte les secrets enfouis grâce à notre scanner d'entropie de Shannon, et propose des suggestions de revue sans qu'aucune ligne de code ne quitte l'infrastructure. »
 
 ---
 
@@ -176,12 +176,12 @@ L'évaluation lucide des deux ébauches de pitch précédentes révèle des faib
 
 ---
 
-### [4:05 – 4:40] 6. Modèle Économique et Vision d'Avenir avec Systalink Cloud
+### [4:05 – 4:40] 6. Modèle Économique et Vision d'Avenir avec Systalink / Datacloud
 
 > « Notre modèle de durabilité est clair :
 > - **Gratuit et ouvert :** Pour tous les développeurs individuels, étudiants et communautés open source africaines.
 > - **Offres Entreprises & Souveraineté Dédiée :** Abonnements de conformité, instances privées durcies, clusters d'inférence GPU pour banques centrales, ministères et grands groupes de télécommunications.
-> - **Alliance avec Systalink Cloud :** Le partenariat naturel avec Systalink permettra de déployer des nœuds de forge interconnectés à Abidjan, Dakar, Lagos, Nairobi et Kigali, éliminant la latence et offrant une réplication inter-régionale native. »
+> - **Alliance avec Systalink / Datacloud :** Le partenariat avec Systalink permettra de déployer des nœuds de forge interconnectés à Abidjan, Dakar, Lagos, Nairobi et Kigali, éliminant la latence et offrant une réplication inter-régionale native sur les infrastructures Datacloud. »
 
 ---
 
@@ -206,7 +206,7 @@ L'évaluation lucide des deux ébauches de pitch précédentes révèle des faib
 | **0:25 – 0:55** | Clic sur *Connexion Souveraine*. Wizard ZKP : génération des 12 mots BIP-39, calcul de la clé publique $y = g^x \pmod p$. Clic sur *Prouver mon identité*. Validation instantanée et toast de succès. | « Fini les mots de passe vulnérables. L'authentification repose sur une preuve de Schnorr Zero-Knowledge (groupe RFC 3526). Mon navigateur prouve la connaissance de la clé privée sans la transmettre. Le serveur vérifie l'équation mathématique : accès validé sans compromission possible. » | Jauge d'entropie, consommation atomique du challenge nonce unique. |
 | **0:55 – 1:35** | Redirection vers le Dashboard. Vue sur les dépôts souverains synchronisés avec Gitea. Ouverture d'un dépôt (`afri-fintech-gateway`). Édition d'un fichier avec CodeMirror embarqué. | « Je bascule directement dans ma forge. Mes dépôts sont synchronisés en temps réel avec le moteur Gitea local. Pas d'attente, pas de transfert à l'autre bout de la planète. Je peux naviguer dans l'arborescence, inspecter les branches et éditer mon code en local. » | Éditeur CodeMirror, arborescence interactive, raccourci clavier `t`. |
 | **1:35 – 2:15** | Dans le Workbench Souverain, collage d'un code Python contenant une clé secrète en dur (`sk_live_...`) et un `SELECT * FROM users WHERE id=` concaténé. Clic sur *Lancer l'Audit SAST*. | « Démonstration de notre scanner SAST souverain : en une fraction de seconde, le moteur calcule l'entropie de Shannon des chaînes, détecte les secrets enfouis et les injections SQL, calcule notre score de souveraineté et produit un rapport au standard OASIS SARIF 2.1.0 prêt pour la CI. » | Score de souveraineté dynamique, cartes interactives des failles, bouton d'export SARIF. |
-| **2:15 – 2:45** | Clic sur *Revue par Gemma 2 2B*. L'IA locale répond en streaming continu sans accès Internet. Proposition d'un patch de sécurité immédiat. | « Voici notre rupture : l'assistant d'IA local Gemma 2 2B Instruct. Exécuté localement en 4-bit GGUF via Ollama, il analyse le diff en direct, signale la faille et génère la correction sans qu'un seul octet ne quitte notre machine. » | Flux SSE continu, suggestion de code nettoyé, zéro appel réseau extérieur. |
+| **2:15 – 2:45** | Clic sur *Revue par Gemma 2 2B*. L'IA locale répond en streaming continu sans accès Internet. Proposition d'un patch de sécurité immédiat. | « Voici notre modèle d'aide au développement : l'assistant d'IA local Gemma 2 2B Instruct. Exécuté localement via Ollama, il analyse le diff en direct, signale la faille et propose des suggestions de revue sans qu'aucun octet ne quitte notre machine. » | Flux SSE continu, suggestion de code nettoyé, zéro appel réseau extérieur. |
 | **2:45 – 3:00** | Ouverture de l'onglet `/metrics/` : visualisation de la carte interactive des 5 nœuds panafricains et latence mesurée en direct (< 15 ms). | « Enfin, notre télémétrie en temps réel montre l'avantage stratégique de la proximité : une latence sous les 20 ms contre plus de 200 ms vers l'étranger. BANTUDEVLAB : par les devs, pour les devs. » | Carte interactive SVG, jauges de latence vertes, journal chaîné SHA-256. |
 
 ---
@@ -215,8 +215,8 @@ L'évaluation lucide des deux ébauches de pitch précédentes révèle des faib
 
 ### Catégorie A : Infrastructure & Hébergement
 
-**Question 1 : Pourquoi votre démonstration tourne-t-elle sur un VPS autonome et comment s'articule le partenariat avec Systalink Cloud ?**
-> *Réponse du Lead :* « C'est un choix délibéré d'architecture industrielle. Nous avons conteneurisé l'intégralité de la plateforme (Django, Gitea, PostgreSQL, PgBouncer, Redis, Celery) sous Docker Compose afin qu'elle soit totalement agnostique de l'infrastructure hôte. Le VPS nous a permis de prototyper et de valider à 100 % les 6 axes d'industrialisation en toute autonomie. L'infrastructure cible naturelle pour le déploiement à grande échelle est **Systalink Cloud**. Grâce à notre architecture conteneurisée, la migration vers Systalink s'opère en une seule commande `docker compose up -d`, concrétisant l'objectif du challenge CADEV. »
+**Question 1 : Comment est hébergée votre application et comment s'articule l'usage des services Systalink / Datacloud ?**
+> *Réponse du Lead :* « Nos domaines de production officiels (`cybersocle.site` et `git.cybersocle.site`) ont été achetés chez Systalink / Datacloud. Pour cette phase de validation, l'application est hébergée sur un VPS Ubuntu externe avec une architecture entièrement conteneurisée sous Docker Compose (Django, Gitea CE, Valkey, PostgreSQL, PgBouncer, Nginx). Cette portabilité garantit une transition sans friction vers les infrastructures Datacloud de Systalink pour le passage à l'échelle panafricain. »
 
 **Question 2 : Que se passe-t-il en cas de coupure de fibre sous-marine ou de connectivité internationale dégradée ?**
 > *Réponse du Lead :* « C'est l'essence même de notre conception. Git est par essence un système distribué : chaque développeur détient l'historique complet en local. De plus, notre moteur de forge et notre assistant d'IA Gemma 2 2B tournent localement sur le réseau ou en intranet. Même si l'ensemble de la connectivité internationale vers l'Europe ou les États-Unis est rompue, les équipes africaines continuent de commiter, pusher, auditer et collaborer sans interruption. »

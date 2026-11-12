@@ -184,10 +184,10 @@ Ce document définit l'ensemble des tâches, sous-tâches techniques et configur
 
 | Statut | Signification |
 |---|---|
-| ✅ Natif | Disponible dans Gitea sans outil supplémentaire |
-| 🟡 Partiel | Disponible, mais avec des différences ou des limites |
-| 🔧 Tiers | Pas de fonction native, à compléter avec un outil externe |
-| ❌ Absent | Aucun équivalent direct |
+| [OK] Natif | Disponible dans Gitea sans outil supplémentaire |
+| [Partiel] Partiel | Disponible, mais avec des différences ou des limites |
+| [Tiers] Tiers | Pas de fonction native, à compléter avec un outil externe |
+| [Absent] Absent | Aucun équivalent direct |
 
 ---
 
@@ -195,108 +195,108 @@ Ce document définit l'ensemble des tâches, sous-tâches techniques et configur
 
 | GitHub | Gitea | Statut | Notes |
 |---|---|---|---|
-| Dépôts publics / privés | Dépôts publics / privés | ✅ Natif | Visibilité réglable par dépôt et par organisation |
-| Fork | Fork | ✅ Natif | |
-| Stars / Watch | Stars / Watch | ✅ Natif | |
-| Dépôts modèles (template repository) | Dépôts modèles | ✅ Natif | Case « Modèle » dans les paramètres du dépôt |
-| Git LFS | Git LFS | ✅ Natif | À activer côté serveur (`[server] LFS_START_SERVER = true`) |
-| Miroirs de dépôts | Miroirs push / pull | ✅ Natif | Utile pour synchroniser avec GitHub |
-| Migration depuis une autre forge | Migration (GitHub, GitLab, Gogs, Gitea, etc.) | ✅ Natif | Peut importer tickets, PR, labels, jalons, releases, wiki |
-| Releases et tags | Releases et tags | ✅ Natif | Pièces jointes supportées |
-| Signature de commits (GPG / SSH) | GPG / SSH | ✅ Natif | Badge « Vérifié » affiché |
-| Deploy keys | Clés de déploiement | ✅ Natif | |
-| Recherche de code | Indexeur de code | ✅ Natif | Bleve (défaut) ou Elasticsearch / Meilisearch selon version |
-| Dépôts archivés | Archivage | ✅ Natif | |
+| Dépôts publics / privés | Dépôts publics / privés | [OK] Natif | Visibilité réglable par dépôt et par organisation |
+| Fork | Fork | [OK] Natif | |
+| Stars / Watch | Stars / Watch | [OK] Natif | |
+| Dépôts modèles (template repository) | Dépôts modèles | [OK] Natif | Case « Modèle » dans les paramètres du dépôt |
+| Git LFS | Git LFS | [OK] Natif | À activer côté serveur (`[server] LFS_START_SERVER = true`) |
+| Miroirs de dépôts | Miroirs push / pull | [OK] Natif | Utile pour synchroniser avec GitHub |
+| Migration depuis une autre forge | Migration (GitHub, GitLab, Gogs, Gitea, etc.) | [OK] Natif | Peut importer tickets, PR, labels, jalons, releases, wiki |
+| Releases et tags | Releases et tags | [OK] Natif | Pièces jointes supportées |
+| Signature de commits (GPG / SSH) | GPG / SSH | [OK] Natif | Badge « Vérifié » affiché |
+| Deploy keys | Clés de déploiement | [OK] Natif | |
+| Recherche de code | Indexeur de code | [OK] Natif | Bleve (défaut) ou Elasticsearch / Meilisearch selon version |
+| Dépôts archivés | Archivage | [OK] Natif | |
 
 ## 2. Collaboration
 
 | GitHub | Gitea | Statut | Notes |
 |---|---|---|---|
-| Pull Requests | Pull Requests | ✅ Natif | Revues, commentaires en ligne, suggestions |
-| Pull Requests en brouillon (Draft) | Préfixe `WIP:` / `Draft:` dans le titre | 🟡 Partiel | Pas de vrai statut « brouillon » identique à GitHub |
-| Modes de fusion (merge, squash, rebase) | Merge, rebase, rebase + merge, squash, fast-forward only | ✅ Natif | |
-| Auto-merge | Fusion automatique quand les contrôles réussissent | ✅ Natif | |
-| Merge queue | — | ❌ Absent | À contourner par des règles de protection de branche strictes |
-| Issues | Tickets (issues) | ✅ Natif | Labels, jalons, assignations, dépendances, suivi du temps |
-| Formulaires de tickets (issue forms YAML) | Issue forms YAML | ✅ Natif | Dossier `.gitea/ISSUE_TEMPLATE/` (ou `.github/`) |
-| Templates de PR | `PULL_REQUEST_TEMPLATE.md` | ✅ Natif | Dossier `.gitea/` ou `.github/` |
-| GitHub Projects | Projets (tableaux Kanban) | 🟡 Partiel | Moins riche (pas de vues Table / Roadmap, pas de champs personnalisés) |
-| Milestones | Jalons | ✅ Natif | |
-| Labels | Labels | ✅ Natif | Labels d'organisation supportés |
-| Wiki | Wiki | ✅ Natif | Dépôt Git séparé |
-| GitHub Discussions | — | ❌ Absent | Alternatives : tickets avec label, wiki, ou Discourse |
-| Réactions, mentions, Markdown | Réactions, mentions, Markdown | ✅ Natif | Mermaid, LaTeX et listes de tâches supportés |
-| Notifications | Notifications | ✅ Natif | Web et e-mail |
-| Organisations et équipes | Organisations et équipes | ✅ Natif | Permissions par équipe et par unité (code, tickets, PR, etc.) |
-| GitHub Sponsors | — | ❌ Absent | |
+| Pull Requests | Pull Requests | [OK] Natif | Revues, commentaires en ligne, suggestions |
+| Pull Requests en brouillon (Draft) | Préfixe `WIP:` / `Draft:` dans le titre | [Partiel] Partiel | Pas de vrai statut « brouillon » identique à GitHub |
+| Modes de fusion (merge, squash, rebase) | Merge, rebase, rebase + merge, squash, fast-forward only | [OK] Natif | |
+| Auto-merge | Fusion automatique quand les contrôles réussissent | [OK] Natif | |
+| Merge queue | — | [Absent] Absent | À contourner par des règles de protection de branche strictes |
+| Issues | Tickets (issues) | [OK] Natif | Labels, jalons, assignations, dépendances, suivi du temps |
+| Formulaires de tickets (issue forms YAML) | Issue forms YAML | [OK] Natif | Dossier `.gitea/ISSUE_TEMPLATE/` (ou `.github/`) |
+| Templates de PR | `PULL_REQUEST_TEMPLATE.md` | [OK] Natif | Dossier `.gitea/` ou `.github/` |
+| GitHub Projects | Projets (tableaux Kanban) | [Partiel] Partiel | Moins riche (pas de vues Table / Roadmap, pas de champs personnalisés) |
+| Milestones | Jalons | [OK] Natif | |
+| Labels | Labels | [OK] Natif | Labels d'organisation supportés |
+| Wiki | Wiki | [OK] Natif | Dépôt Git séparé |
+| GitHub Discussions | — | [Absent] Absent | Alternatives : tickets avec label, wiki, ou Discourse |
+| Réactions, mentions, Markdown | Réactions, mentions, Markdown | [OK] Natif | Mermaid, LaTeX et listes de tâches supportés |
+| Notifications | Notifications | [OK] Natif | Web et e-mail |
+| Organisations et équipes | Organisations et équipes | [OK] Natif | Permissions par équipe et par unité (code, tickets, PR, etc.) |
+| GitHub Sponsors | — | [Absent] Absent | |
 
 ## 3. Qualité et sécurité du code
 
 | GitHub | Gitea | Statut | Notes |
 |---|---|---|---|
-| Protection de branches | Protection de branches | ✅ Natif | Revues obligatoires, statuts requis, liste blanche de push, commits signés |
-| Rulesets | — | ❌ Absent | Gitea utilise des règles de protection par motif de branche |
-| CODEOWNERS | CODEOWNERS | ✅ Natif | Selon version récente |
-| Protection des tags | Protection des tags | ✅ Natif | |
-| Dependabot (mises à jour) | — | 🔧 Tiers | **Renovate** (compatible Gitea) |
-| Dependabot alerts / Dependency graph | — | 🔧 Tiers | Trivy, OSV-Scanner, Renovate |
-| Code scanning (CodeQL) | — | 🔧 Tiers | Semgrep, SonarQube, Trivy dans les pipelines |
-| Secret scanning | — | 🔧 Tiers | Gitleaks, TruffleHog dans les pipelines ou en pre-commit |
-| Security advisories | — | ❌ Absent | Utiliser des tickets confidentiels / un processus interne |
-| Authentification à deux facteurs | TOTP et WebAuthn | ✅ Natif | Peut être rendue obligatoire |
+| Protection de branches | Protection de branches | [OK] Natif | Revues obligatoires, statuts requis, liste blanche de push, commits signés |
+| Rulesets | — | [Absent] Absent | Gitea utilise des règles de protection par motif de branche |
+| CODEOWNERS | CODEOWNERS | [OK] Natif | Selon version récente |
+| Protection des tags | Protection des tags | [OK] Natif | |
+| Dependabot (mises à jour) | — | [Tiers] Tiers | **Renovate** (compatible Gitea) |
+| Dependabot alerts / Dependency graph | — | [Tiers] Tiers | Trivy, OSV-Scanner, Renovate |
+| Code scanning (CodeQL) | — | [Tiers] Tiers | Semgrep, SonarQube, Trivy dans les pipelines |
+| Secret scanning | — | [Tiers] Tiers | Gitleaks, TruffleHog dans les pipelines ou en pre-commit |
+| Security advisories | — | [Absent] Absent | Utiliser des tickets confidentiels / un processus interne |
+| Authentification à deux facteurs | TOTP et WebAuthn | [OK] Natif | Peut être rendue obligatoire |
 
 ## 4. CI/CD et automatisation
 
 | GitHub | Gitea | Statut | Notes |
 |---|---|---|---|
-| GitHub Actions | Gitea Actions | 🟡 Partiel | Syntaxe YAML très proche ; certaines actions et contextes diffèrent |
-| Runners hébergés par GitHub | — | ❌ Absent | Vous hébergez vos propres runners |
-| Runners auto-hébergés | `act_runner` | ✅ Natif | Docker, hôte ou LXC ; enregistrement par jeton |
-| Workflows dans `.github/workflows/` | `.gitea/workflows/` ou `.github/workflows/` | ✅ Natif | Les deux dossiers sont lus |
-| Secrets et variables | Secrets et variables | ✅ Natif | Niveaux utilisateur, organisation et dépôt |
-| Actions du Marketplace | Actions depuis GitHub ou une instance configurée | 🟡 Partiel | Paramètre `DEFAULT_ACTIONS_URL` ; pas de Marketplace propre |
-| Artefacts | Artefacts | 🟡 Partiel | Selon version, `upload-artifact` / `download-artifact` v4 peuvent ne pas être supportés : tester la v3 |
-| Cache d'actions | Cache | ✅ Natif | |
-| Workflows réutilisables / actions composites | Supportés selon version | 🟡 Partiel | À tester sur votre version |
-| Environments et protections de déploiement | — | 🟡 Partiel | Fonctionnalité limitée par rapport à GitHub |
-| Webhooks | Webhooks | ✅ Natif | Slack, Discord, Matrix, Telegram, Teams, etc. |
+| GitHub Actions | Gitea Actions | [Partiel] Partiel | Syntaxe YAML très proche ; certaines actions et contextes diffèrent |
+| Runners hébergés par GitHub | — | [Absent] Absent | Vous hébergez vos propres runners |
+| Runners auto-hébergés | `act_runner` | [OK] Natif | Docker, hôte ou LXC ; enregistrement par jeton |
+| Workflows dans `.github/workflows/` | `.gitea/workflows/` ou `.github/workflows/` | [OK] Natif | Les deux dossiers sont lus |
+| Secrets et variables | Secrets et variables | [OK] Natif | Niveaux utilisateur, organisation et dépôt |
+| Actions du Marketplace | Actions depuis GitHub ou une instance configurée | [Partiel] Partiel | Paramètre `DEFAULT_ACTIONS_URL` ; pas de Marketplace propre |
+| Artefacts | Artefacts | [Partiel] Partiel | Selon version, `upload-artifact` / `download-artifact` v4 peuvent ne pas être supportés : tester la v3 |
+| Cache d'actions | Cache | [OK] Natif | |
+| Workflows réutilisables / actions composites | Supportés selon version | [Partiel] Partiel | À tester sur votre version |
+| Environments et protections de déploiement | — | [Partiel] Partiel | Fonctionnalité limitée par rapport à GitHub |
+| Webhooks | Webhooks | [OK] Natif | Slack, Discord, Matrix, Telegram, Teams, etc. |
 
 ## 5. Paquets et artefacts
 
 | GitHub | Gitea | Statut | Notes |
 |---|---|---|---|
-| GitHub Packages | Package Registry | ✅ Natif | Activé par défaut |
-| Docker / OCI (ghcr.io) | Registre de conteneurs | ✅ Natif | `docker login <votre-domaine>` |
-| npm | npm | ✅ Natif | |
-| PyPI | PyPI | ✅ Natif | |
-| Maven / Gradle | Maven | ✅ Natif | |
-| NuGet | NuGet | ✅ Natif | |
-| RubyGems | RubyGems | ✅ Natif | |
-| Cargo, Composer, Go, Helm, Debian, RPM, Alpine, Generic, etc. | Supportés | ✅ Natif | Liste exacte selon version |
+| GitHub Packages | Package Registry | [OK] Natif | Activé par défaut |
+| Docker / OCI (ghcr.io) | Registre de conteneurs | [OK] Natif | `docker login <votre-domaine>` |
+| npm | npm | [OK] Natif | |
+| PyPI | PyPI | [OK] Natif | |
+| Maven / Gradle | Maven | [OK] Natif | |
+| NuGet | NuGet | [OK] Natif | |
+| RubyGems | RubyGems | [OK] Natif | |
+| Cargo, Composer, Go, Helm, Debian, RPM, Alpine, Generic, etc. | Supportés | [OK] Natif | Liste exacte selon version |
 
 ## 6. Hébergement et environnement de développement
 
 | GitHub | Gitea | Statut | Notes |
 |---|---|---|---|
-| GitHub Pages | — | 🔧 Tiers | Serveur Pages tiers (ex. celui de Codeberg) ou déploiement via Actions vers Nginx |
-| Codespaces | — | 🔧 Tiers | Coder, DevPod, code-server auto-hébergés |
-| GitHub Copilot | — | 🔧 Tiers | Assistants IA auto-hébergés (ex. Tabby, Continue) |
-| Gist | — | 🔧 Tiers | Opengist (auto-hébergé) |
-| GitHub CLI (`gh`) | `tea` | 🟡 Partiel | CLI officielle de Gitea |
-| API REST | API REST (Swagger intégré) | ✅ Natif | `/api/swagger` |
-| API GraphQL | — | ❌ Absent | |
-| GitHub Apps / OAuth Apps | Applications OAuth2 | 🟡 Partiel | Pas de modèle « GitHub App » complet |
+| GitHub Pages | — | [Tiers] Tiers | Serveur Pages tiers (ex. celui de Codeberg) ou déploiement via Actions vers Nginx |
+| Codespaces | — | [Tiers] Tiers | Coder, DevPod, code-server auto-hébergés |
+| GitHub Copilot | — | [Tiers] Tiers | Assistants IA auto-hébergés (ex. Tabby, Continue) |
+| Gist | — | [Tiers] Tiers | Opengist (auto-hébergé) |
+| GitHub CLI (`gh`) | `tea` | [Partiel] Partiel | CLI officielle de Gitea |
+| API REST | API REST (Swagger intégré) | [OK] Natif | `/api/swagger` |
+| API GraphQL | — | [Absent] Absent | |
+| GitHub Apps / OAuth Apps | Applications OAuth2 | [Partiel] Partiel | Pas de modèle « GitHub App » complet |
 
 ## 7. Authentification et administration
 
 | GitHub | Gitea | Statut | Notes |
 |---|---|---|---|
-| SSO (SAML / OIDC) | OAuth2, OpenID Connect, LDAP | ✅ Natif | SAML selon version |
-| Connexion via GitHub, Google, etc. | Fournisseurs OAuth2 externes | ✅ Natif | |
-| Gestion des utilisateurs et quotas | Panneau d'administration | ✅ Natif | |
-| Audit log | Journaux système | 🟡 Partiel | Moins détaillé que l'audit log GitHub Enterprise |
-| Insights (graphiques) | Activité, contributeurs, fréquence de code | 🟡 Partiel | Moins complet |
-| Sauvegarde | `gitea dump` | ✅ Natif | |
+| SSO (SAML / OIDC) | OAuth2, OpenID Connect, LDAP | [OK] Natif | SAML selon version |
+| Connexion via GitHub, Google, etc. | Fournisseurs OAuth2 externes | [OK] Natif | |
+| Gestion des utilisateurs et quotas | Panneau d'administration | [OK] Natif | |
+| Audit log | Journaux système | [Partiel] Partiel | Moins détaillé que l'audit log GitHub Enterprise |
+| Insights (graphiques) | Activité, contributeurs, fréquence de code | [Partiel] Partiel | Moins complet |
+| Sauvegarde | `gitea dump` | [OK] Natif | |
 
 ## 8. Apparence : se rapprocher du GitHub actuel
 

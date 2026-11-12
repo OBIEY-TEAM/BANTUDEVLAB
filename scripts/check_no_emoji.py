@@ -27,7 +27,11 @@ def iter_files():
         if path.is_file():
             yield path
         elif path.is_dir():
-            yield from (p for p in path.rglob("*") if p.is_file() and p.suffix in SUFFIXES)
+            yield from (
+                p
+                for p in path.rglob("*")
+                if p.is_file() and p.suffix in SUFFIXES and "archive" not in p.parts
+            )
 
 
 def find_emojis(paths):
