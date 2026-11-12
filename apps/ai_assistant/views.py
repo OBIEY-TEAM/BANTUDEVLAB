@@ -5,7 +5,7 @@ import re
 from django.http import StreamingHttpResponse
 from rest_framework import status
 from rest_framework.authentication import SessionAuthentication
-from rest_framework.permissions import AllowAny, BasePermission, IsAuthenticated
+from rest_framework.permissions import AllowAny, BasePermission
 from rest_framework.renderers import BaseRenderer, JSONRenderer
 from rest_framework.response import Response
 from rest_framework.throttling import ScopedRateThrottle
@@ -47,10 +47,10 @@ class WorkbenchDemoSessionAuthentication(SessionAuthentication):
     """Authentification session exemptant le mode démo interactif du Workbench des rejets CSRF."""
 
     def enforce_csrf(self, request):
-        if (
-            request.headers.get("X-Bantu-Workbench") in ("interactive-demo", "gitea-repo-terminal")
-            or "/dashboard" in request.headers.get("Referer", "")
-        ):
+        if request.headers.get("X-Bantu-Workbench") in (
+            "interactive-demo",
+            "gitea-repo-terminal",
+        ) or "/dashboard" in request.headers.get("Referer", ""):
             return
         return super().enforce_csrf(request)
 
@@ -65,6 +65,7 @@ class IsAuthenticatedOrWorkbenchDemo(BasePermission):
             return True
         referer = request.headers.get("Referer", "")
         return "/dashboard" in referer
+
 
 # T-DEV-505: Limite stricte du payload (256 Ko ou 15 000 caracteres)
 MAX_CODE_CHARS = 15000
@@ -236,9 +237,7 @@ class CopilotExplainView(APIView):
 
         sanitized_code = sanitize_pii_and_secrets(code)
         assistant = GemmaAssistant()
-        result = assistant.explain_code(
-            code_snippet=sanitized_code, language=language, lang=resolve_ai_lang(request)
-        )
+        result = assistant.explain_code(code_snippet=sanitized_code, language=language, lang=resolve_ai_lang(request))
         return Response(result, status=status.HTTP_200_OK)
 
 
@@ -391,7 +390,5 @@ class CopilotReviewView(APIView):
 
         sanitized_code = sanitize_pii_and_secrets(code)
         assistant = GemmaAssistant()
-        result = assistant.analyze_code(
-            code_snippet=sanitized_code, context=context, lang=resolve_ai_lang(request)
-        )
+        result = assistant.analyze_code(code_snippet=sanitized_code, context=context, lang=resolve_ai_lang(request))
         return Response(result, status=status.HTTP_200_OK)

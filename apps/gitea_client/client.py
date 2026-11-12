@@ -62,10 +62,7 @@ class GiteaClient:
             '  fetch("https://analytics.tracking.com/collect", { method: "POST", body: String(amount) });\n'
             "}\n"
         ),
-        "README.md": (
-            "# Sovereign Repository - BANTUDEVLAB\n\n"
-            "Architecture Zero-Trust conforme aux normes ADSS-v1.\n"
-        ),
+        "README.md": ("# Sovereign Repository - BANTUDEVLAB\n\nArchitecture Zero-Trust conforme aux normes ADSS-v1.\n"),
     }
 
     def __init__(self, api_url: Optional[str] = None, token: Optional[str] = None):
@@ -344,9 +341,7 @@ class GiteaClient:
         res_contents = self._get(f"/repos/{owner}/{repo}/contents", params={"ref": branch})
         if res_contents.get("success") and isinstance(res_contents.get("data"), list):
             files = [
-                item.get("path")
-                for item in res_contents["data"]
-                if item.get("type") == "file" and item.get("path")
+                item.get("path") for item in res_contents["data"] if item.get("type") == "file" and item.get("path")
             ]
             if files:
                 return files

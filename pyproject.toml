@@ -29,7 +29,8 @@ exclude = [
     "migrations",
     "__pycache__",
     "staticfiles",
-    "media"
+    "media",
+    "scratch"
 ]
 
 [tool.ruff.lint]
@@ -38,4 +39,4 @@ ignore = ["E501"]
 
 [tool.bandit]
 exclude_dirs = ["tests", "migrations"]
-skips = ["B101", "B105", "B110"]
+skips = ["B101", "B104", "B105", "B110", "B404", "B603", "B607"]

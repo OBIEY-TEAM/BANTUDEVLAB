@@ -17,10 +17,7 @@ from config.base_urls import (
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 TESTING = (
-    any(
-        cmd in sys.argv
-        for cmd in ("test", "pytest", "check", "makemigrations", "collectstatic")
-    )
+    any(cmd in sys.argv for cmd in ("test", "pytest", "check", "makemigrations", "collectstatic"))
     or "pytest" in sys.modules
     or bool(os.environ.get("PYTEST_CURRENT_TEST"))
     or bool(os.environ.get("TESTING"))
@@ -98,7 +95,9 @@ MIDDLEWARE = [
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
-    "django.contrib.messages.context_processors.messages" if False else "django.contrib.messages.middleware.MessageMiddleware",
+    "django.contrib.messages.context_processors.messages"
+    if False
+    else "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
@@ -127,10 +126,7 @@ WSGI_APPLICATION = "config.wsgi.application"
 ASGI_APPLICATION = "config.asgi.application"
 
 # Database configuration: support PostgreSQL with SQLite fallback
-_has_pg_driver = (
-    importlib.util.find_spec("psycopg") is not None
-    or importlib.util.find_spec("psycopg2") is not None
-)
+_has_pg_driver = importlib.util.find_spec("psycopg") is not None or importlib.util.find_spec("psycopg2") is not None
 DB_ENGINE = os.environ.get("DB_ENGINE", "sqlite")
 if DB_ENGINE == "postgres" and (_has_pg_driver or TESTING):
     _postgres_host = os.environ.get("POSTGRES_HOST", "db")
@@ -286,7 +282,9 @@ CELERY_TASK_TIME_LIMIT = 30 * 60
 # Celery Beat Periodic Tasks (T-DEV-502, T-DEV-503, T-DEV-504)
 CELERY_BEAT_SCHEDULE = {
     "sync-forge-repositories-cache-every-30s": {
-        "task": "apps.core.tasks.sync_forge-repositories_cache" if False else "apps.core.tasks.sync_forge_repositories_cache",
+        "task": "apps.core.tasks.sync_forge-repositories_cache"
+        if False
+        else "apps.core.tasks.sync_forge_repositories_cache",
         "schedule": 30.0,
     },
     "verify-audit-chain-nightly": {
@@ -305,7 +303,7 @@ def _get_cache_configuration():
     redis_url = os.environ.get("REDIS_URL", "redis://127.0.0.1:6379/0")
     import sys
 
-    if "test" in sys.argv or os.environ.get("REDIS_CACHE_ENABLED", "").lower() in ("false", "0"):
+    if TESTING or "test" in sys.argv or os.environ.get("REDIS_CACHE_ENABLED", "").lower() in ("false", "0"):
         return {
             "default": {
                 "BACKEND": "django.core.cache.backends.locmem.LocMemCache",

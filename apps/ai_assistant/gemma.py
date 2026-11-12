@@ -259,12 +259,19 @@ class GemmaAssistant:
             recommendations.append(t["secret_rec"])
 
         if (
-            "from " in lower_code and ":latest" in lower_code
-        ) or "user root" in lower_code or "chmod 777" in lower_code or ("curl " in lower_code and "| sh" in lower_code):
+            ("from " in lower_code and ":latest" in lower_code)
+            or "user root" in lower_code
+            or "chmod 777" in lower_code
+            or ("curl " in lower_code and "| sh" in lower_code)
+        ):
             analysis.append(t["docker_find"])
             recommendations.append(t["docker_rec"])
 
-        if "privileged: true" in lower_code or "allow_failure: true" in lower_code or "network_mode: host" in lower_code:
+        if (
+            "privileged: true" in lower_code
+            or "allow_failure: true" in lower_code
+            or "network_mode: host" in lower_code
+        ):
             analysis.append(t["yaml_find"])
             recommendations.append(t["yaml_rec"])
 
@@ -399,9 +406,7 @@ class GemmaAssistant:
         return {
             "success": True,
             "model": f"{self.model_name} (Sovereign Engine)",
-            "explanation": t["explain_tpl"].format(
-                lang_label=language or "code", lines=len(code_snippet.splitlines())
-            ),
+            "explanation": t["explain_tpl"].format(lang_label=language or "code", lines=len(code_snippet.splitlines())),
             "lang": lang_code,
             "mode": "sovereign_local_engine",
         }

@@ -221,8 +221,6 @@ class ZKPVerifyView(APIView):
         login(request, user)
         from urllib.parse import urlencode
 
-        from config.base_urls import build_gitea_url
-
         # Vérification si un flux OAuth de redirection est actif
         redirect_uri = request.data.get("redirect_uri")
         state = request.data.get("state")
@@ -237,6 +235,7 @@ class ZKPVerifyView(APIView):
             oauth_redirect = f"{redirect_uri}{sep}{urlencode(q_params)}"
 
         from django.conf import settings
+
         gitea_ext = getattr(settings, "GITEA_EXTERNAL_URL", "https://git.cybersocle.site").rstrip("/")
         gitea_signup_url = f"{gitea_ext}/user/sign_up?user_name={user.username}"
         gitea_login_url = getattr(settings, "GITEA_LOGIN_URL", f"{gitea_ext}/user/login")

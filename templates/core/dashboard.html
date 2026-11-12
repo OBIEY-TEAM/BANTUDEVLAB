@@ -252,40 +252,6 @@ window.addEventListener('DOMContentLoaded', () => {
 }
 </style>
 
-<!-- Modal Creation Depot de Demonstration (CADEV 2026) -->
-<div id="modalNewRepo" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.75); z-index: 10000; align-items: center; justify-content: center; backdrop-filter: blur(4px);">
-    <div style="background: #0d1117; border: 1px solid var(--dark-border); border-radius: 12px; width: 90%; max-width: 520px; padding: 1.75rem; box-shadow: 0 20px 40px rgba(0,0,0,0.6);">
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.25rem;">
-            <h3 style="margin: 0; display: flex; align-items: center; gap: 0.5rem; color: #fff;">
-                {% icon "package" size=20 %} {% trans "Nouveau Dépôt de Démonstration" %}
-            </h3>
-            <button type="button" onclick="closeNewRepoModal()" style="background: none; border: none; color: var(--text-muted); font-size: 1.25rem; cursor: pointer;">✕</button>
-        </div>
-        <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1.25rem;">
-            {% trans "Initialisez un dépôt souverain sur la forge Gitea avec branche principale par défaut et traçabilité dans l'Audit Trail immuable." %}
-        </p>
-        <div style="margin-bottom: 1rem;">
-            <label style="display: block; font-size: 0.85rem; font-weight: 600; margin-bottom: 0.35rem; color: #fff;">{% trans "Nom du Dépôt :" %}</label>
-            <input type="text" id="modalRepoName" value="demo-cadev-sovereign" style="width: 100%; padding: 0.65rem; background: #080c14; border: 1px solid var(--dark-border); color: #fff; border-radius: 6px; font-size: 0.95rem; box-sizing: border-box;">
-        </div>
-        <div style="margin-bottom: 1rem;">
-            <label style="display: block; font-size: 0.85rem; font-weight: 600; margin-bottom: 0.35rem; color: #fff;">{% trans "Description :" %}</label>
-            <input type="text" id="modalRepoDesc" value="Dépôt souverain de test créé pour l'évaluation CADEV 2026" style="width: 100%; padding: 0.65rem; background: #080c14; border: 1px solid var(--dark-border); color: #fff; border-radius: 6px; font-size: 0.95rem; box-sizing: border-box;">
-        </div>
-        <div style="margin-bottom: 1.5rem; display: flex; align-items: center; gap: 0.5rem;">
-            <input type="checkbox" id="modalRepoPrivate">
-            <label for="modalRepoPrivate" style="font-size: 0.85rem; color: var(--text-muted); cursor: pointer;">{% trans "Dépôt privé (accès restreint à l'organisation)" %}</label>
-        </div>
-        <div id="modalRepoFeedback" style="display: none; padding: 0.6rem; border-radius: 6px; font-size: 0.85rem; margin-bottom: 1rem;"></div>
-        <div style="display: flex; justify-content: flex-end; gap: 0.75rem;">
-            <button type="button" class="btn btn-secondary" onclick="closeNewRepoModal()">{% trans "Annuler" %}</button>
-            <button type="button" class="btn btn-primary" id="btnSubmitNewRepo" onclick="submitNewDemoRepo()" style="background: linear-gradient(135deg, #10b981, #059669); border: none;">
-                {% icon "check" size=16 %} {% trans "Créer le Dépôt Immédiatement" %}
-            </button>
-        </div>
-    </div>
-</div>
-
 {% endblock %}
 
 {% block content %}
@@ -528,7 +494,7 @@ window.addEventListener('DOMContentLoaded', () => {
             <h3 style="margin: 0; display: flex; align-items: center; gap: 0.5rem; color: #fff;">
                 {% icon "package" size=20 %} {% trans "Nouveau Dépôt de Démonstration" %}
             </h3>
-            <button type="button" onclick="closeNewRepoModal()" style="background: none; border: none; color: var(--text-muted); font-size: 1.25rem; cursor: pointer;">✕</button>
+            <button type="button" onclick="closeNewRepoModal()" style="background: none; border: none; color: var(--text-muted); font-size: 1.25rem; cursor: pointer;">{% icon "x" size=20 %}</button>
         </div>
         <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1.25rem;">
             {% trans "Initialisez un dépôt souverain sur la forge Gitea avec branche principale par défaut et traçabilité dans l'Audit Trail immuable." %}
@@ -1119,39 +1085,5 @@ window.addEventListener('DOMContentLoaded', () => {
 });
 
 </script>
-
-<!-- Modal Creation Depot de Demonstration (CADEV 2026) -->
-<div id="modalNewRepo" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.75); z-index: 10000; align-items: center; justify-content: center; backdrop-filter: blur(4px);">
-    <div style="background: #0d1117; border: 1px solid var(--dark-border); border-radius: 12px; width: 90%; max-width: 520px; padding: 1.75rem; box-shadow: 0 20px 40px rgba(0,0,0,0.6);">
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.25rem;">
-            <h3 style="margin: 0; display: flex; align-items: center; gap: 0.5rem; color: #fff;">
-                {% icon "package" size=20 %} {% trans "Nouveau Dépôt de Démonstration" %}
-            </h3>
-            <button type="button" onclick="closeNewRepoModal()" style="background: none; border: none; color: var(--text-muted); font-size: 1.25rem; cursor: pointer;">✕</button>
-        </div>
-        <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1.25rem;">
-            {% trans "Initialisez un dépôt souverain sur la forge Gitea avec branche principale par défaut et traçabilité dans l'Audit Trail immuable." %}
-        </p>
-        <div style="margin-bottom: 1rem;">
-            <label style="display: block; font-size: 0.85rem; font-weight: 600; margin-bottom: 0.35rem; color: #fff;">{% trans "Nom du Dépôt :" %}</label>
-            <input type="text" id="modalRepoName" value="demo-cadev-sovereign" style="width: 100%; padding: 0.65rem; background: #080c14; border: 1px solid var(--dark-border); color: #fff; border-radius: 6px; font-size: 0.95rem; box-sizing: border-box;">
-        </div>
-        <div style="margin-bottom: 1rem;">
-            <label style="display: block; font-size: 0.85rem; font-weight: 600; margin-bottom: 0.35rem; color: #fff;">{% trans "Description :" %}</label>
-            <input type="text" id="modalRepoDesc" value="Dépôt souverain de test créé pour l'évaluation CADEV 2026" style="width: 100%; padding: 0.65rem; background: #080c14; border: 1px solid var(--dark-border); color: #fff; border-radius: 6px; font-size: 0.95rem; box-sizing: border-box;">
-        </div>
-        <div style="margin-bottom: 1.5rem; display: flex; align-items: center; gap: 0.5rem;">
-            <input type="checkbox" id="modalRepoPrivate">
-            <label for="modalRepoPrivate" style="font-size: 0.85rem; color: var(--text-muted); cursor: pointer;">{% trans "Dépôt privé (accès restreint à l'organisation)" %}</label>
-        </div>
-        <div id="modalRepoFeedback" style="display: none; padding: 0.6rem; border-radius: 6px; font-size: 0.85rem; margin-bottom: 1rem;"></div>
-        <div style="display: flex; justify-content: flex-end; gap: 0.75rem;">
-            <button type="button" class="btn btn-secondary" onclick="closeNewRepoModal()">{% trans "Annuler" %}</button>
-            <button type="button" class="btn btn-primary" id="btnSubmitNewRepo" onclick="submitNewDemoRepo()" style="background: linear-gradient(135deg, #10b981, #059669); border: none;">
-                {% icon "check" size=16 %} {% trans "Créer le Dépôt Immédiatement" %}
-            </button>
-        </div>
-    </div>
-</div>
 
 {% endblock %}

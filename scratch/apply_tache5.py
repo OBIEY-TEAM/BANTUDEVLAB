@@ -241,7 +241,7 @@ if "id=\"modalNewRepo\"" not in dash_c:
 faq_path = Path("templates/core/faq.html")
 faq_c = faq_path.read_text(encoding="utf-8")
 
-faq_demo_card = """        <!-- Q-DEMO : Parcours Démo Évaluateur CADEV 2026 -->
+faq_demo_card = r"""        <!-- Q-DEMO : Parcours Démo Évaluateur CADEV 2026 -->
         <details class="faq-item" id="faq-cadev-demo" open>
             <summary class="faq-summary" style="background: linear-gradient(135deg, rgba(16, 185, 129, 0.15), rgba(245, 158, 11, 0.08)); border-left: 4px solid #10b981;">
                 <span class="faq-summary-title">

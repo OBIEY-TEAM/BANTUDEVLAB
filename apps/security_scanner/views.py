@@ -28,10 +28,10 @@ class WorkbenchDemoSessionAuthentication(SessionAuthentication):
     """Authentification session exemptant le mode démo interactif du Workbench des rejets CSRF."""
 
     def enforce_csrf(self, request):
-        if (
-            request.headers.get("X-Bantu-Workbench") in ("interactive-demo", "gitea-repo-terminal")
-            or "/dashboard" in request.headers.get("Referer", "")
-        ):
+        if request.headers.get("X-Bantu-Workbench") in (
+            "interactive-demo",
+            "gitea-repo-terminal",
+        ) or "/dashboard" in request.headers.get("Referer", ""):
             return
         return super().enforce_csrf(request)
 
