@@ -2,8 +2,8 @@
 
 **Projet :** BANTUDEVLAB — Forge Logicielle Souveraine Panafricaine  
 **Équipe candidate :** Équipe CYBERSOCLE  
-- **Capitaine d'équipe :** OBIEY Christ Dany  
-- **Membre de l'équipe :** MAMPOUYA Alicia Syrianne  
+- **Capitaine d'équipe :** OBIEY Christ Dany (Lead Architecture & Développement Fullstack)  
+- **Membre de l'équipe :** MAMPOUYA Alicia Syrianne (Présentation vidéo démo & parcours utilisateur)  
 **Événement :** Concours CADEV 2026 — Systalink Cloud  
 **Date limite de soumission :** 15 novembre 2026 à 17 h 00 GMT  
 **URL de production :** https://cybersocle.site (Portail Central & API) / https://git.cybersocle.site (Forge Gitea CE)  
@@ -31,8 +31,8 @@ BANTUDEVLAB est une forge logicielle panafricaine souveraine d'échange et de re
 ## b) Déclaration de Titularité des Droits
 
 Les soussignés, membres de l'équipe candidate **CYBERSOCLE** :
-1. **OBIEY Christ Dany** (Capitaine d'équipe)
-2. **MAMPOUYA Alicia Syrianne** (Membre de l'équipe)
+1. **OBIEY Christ Dany** (Capitaine d'équipe, Lead Architecture & Développement Fullstack)
+2. **MAMPOUYA Alicia Syrianne** (Membre de l'équipe, Présentation vidéo démo & parcours utilisateur)
 
 déclarent sur l'honneur que le projet BANTUDEVLAB a été conçu, développé et réalisé à titre personnel et indépendant, **hors de toute mission, contrat de travail, mandat ou commande émanant d'un employeur, client ou établissement d'enseignement**. L'ensemble des droits d'auteur et de propriété intellectuelle afférents au code original développé appartient exclusivement aux membres de l'équipe CYBERSOCLE et est mis à disposition sous licence permissive MIT.
 
@@ -41,7 +41,7 @@ déclarent sur l'honneur que le projet BANTUDEVLAB a été conçu, développé e
 | Nom et Prénom | Rôle dans le projet | Statut d'indépendance | Signature / Mention | Date de signature |
 | :--- | :--- | :--- | :--- | :--- |
 | **OBIEY Christ Dany** | **Capitaine d'équipe**, Architecture & Développement Fullstack | Travaux réalisés à titre personnel et indépendant hors contrat employeur/client | [À signer par OBIEY Christ Dany : Mention « Lu et approuvé »] | [Date à compléter : JJ/MM/2026] |
-| **MAMPOUYA Alicia Syrianne** | **Membre de l'équipe**, Ingénierie logicielle, QA & Sécurité | Travaux réalisés à titre personnel et indépendant hors contrat employeur/client | [À signer par MAMPOUYA Alicia Syrianne : Mention « Lu et approuvé »] | [Date à compléter : JJ/MM/2026] |
+| **MAMPOUYA Alicia Syrianne** | **Membre de l'équipe**, Présentation vidéo démo & parcours utilisateur | Travaux réalisés à titre personnel et indépendant hors contrat employeur/client | [À signer par MAMPOUYA Alicia Syrianne : Mention « Lu et approuvé »] | [Date à compléter : JJ/MM/2026] |
 
 ---
 
@@ -90,22 +90,33 @@ L'inventaire complet des paquets d'exécution comprend 12 dépendances directes 
 
 ---
 
-## d) Déclaration sur l'Usage de l'Intelligence Artificielle
+## d) Déclaration d'Usage de l'Intelligence Artificielle et des Outils
 
-### 1. Modèle d'Inférence Embarqué dans le Produit (Gemma 2 2B)
-- **Modèle sélectionné :** Google Gemma 2 2B Instruct (`gemma2:2b`), quantifié en 4-bit (GGUF Q4_K_M).
-- **Moteur d'exécution :** Ollama (logiciel open-source sous licence MIT).
-- **Statut légal et licence :** Le modèle Gemma est régi par les **Google Gemma Terms of Use** (conditions d'utilisation et politique d'usage responsable de Google). **Ce modèle n'est pas qualifié de licence permissive au sens de l'Article 6 du concours.**
-- **Modalité d'exécution stricte :** Le modèle est exécuté **exclusivement en local on-premise** sur le serveur d'hébergement. Aucune donnée utilisateur, aucun extrait de code source ni télémétrie n'est envoyé à Google ou à un tiers externe. Les poids binaires du modèle ne sont pas redistribués dans le dépôt Git de BantuDevLab.
-- **Rôle applicatif exact :** Outil d'assistance au développement et à la revue de code (analyse de patterns de sécurité, explication de vulnérabilités, proposition d'optimisations). **Ce modèle 2B constitue une aide au développeur et ne remplace pas l'ingénieur humain ni la validation manuelle.**
+Conformément à l'Article 6 du règlement du concours CADEV 2026, l'usage de l'intelligence artificielle est libre mais doit être déclaré de manière transparente, en précisant les outils mobilisés, les parties du projet concernées et le niveau d'intervention.
 
-### 2. Outils d'Aide au Développement Utilisés par l'Équipe
-- **Outils utilisés lors de la phase de conception :**  
-  `[À compléter par l'équipe : ex. Claude Code, ChatGPT, GitHub Copilot, Antigravity AI, etc.]`
-- **Périmètre d'usage des assistants IA :**  
-  `[À compléter par l'équipe : ex. Aide à la structuration des stubs de tests, relecture de documentation, prototypage de styles CSS]`
-- **Maîtrise du code livré :**  
-  L'équipe CYBERSOCLE atteste et certifie avoir conçu, structuré, relu, testé et validé l'intégralité du code livré dans le dépôt. L'équipe maîtrise 100% de la logique métier, du protocole cryptographique Schnorr NIZKP, des algorithmes d'analyse SAST et de calcul d'entropie Shannon, ainsi que de l'architecture générale.
+### 1. Distinction Fondamentale : Outil de Développement vs Modèle Intégré au Produit
+- **Gemma 2 2B (via Ollama) :** Ne constitue **pas** un outil d'aide au développement utilisé pour concevoir le projet. Il s'agit d'un **composant technique intégré à la solution livrée**, exécuté localement on-premise pour fournir une aide à la revue de code aux utilisateurs de la forge. Il est régi par les *Google Gemma Terms of Use* et n'est pas redistribué dans le code source.
+- **GitHub :** Plateforme de versionnement et miroir de continuité Git (`https://github.com/OBIEY-TEAM/BANTUDEVLAB`). Il s'agit d'un outil de gestion de version et d'hébergement, et **non d'un outil d'intelligence artificielle**.
+
+### 2. Tableau de Déclaration des Outils Utilisés par l'Équipe
+
+| Outil | Catégorie / Rôle | Parties du projet concernées | Niveau d'intervention | Validation humaine |
+| :--- | :--- | :--- | :--- | :--- |
+| **Jules IA** | Éditeur de code assisté par IA | Intégration GitLab et transition prod (PR #10, #11, branches `jules-*`), feuille de route `TASK5.md` pour `gemma2:2b`, dossier stratégique / pitch (PR #24), correctifs `/health`, assets logos (PR #36), alignement URLs souveraines, flux ZKP UI et anti-FOUC (PR #41) ; autres parties à confirmer par l'équipe | Génération de correctifs, refactorisation UI, documentation de tâches | 100% relu, testé et fusionné manuellement par OBIEY Christ Dany via Pull Requests |
+| **Antigravity IA** | Éditeur de code assisté par IA | Audits de conformité licences (scripts `check_licenses.py`, `check_no_emoji.py`), refactorisation client `requests` (`apps/gitlab_client`), séparation `requirements-dev.txt`, fiabilisation tests unitaires et documentation `CADEV26/` ; autres parties à confirmer par l'équipe | Génération d'outillage d'audit, assistance au refactoring et aux tests | 100% relu, validé par suite de tests automatisés et approuvé par OBIEY Christ Dany |
+| **Claude IA** | Rédaction de textes, compréhension, planification | Structuration des documents de synthèse, planification des étapes de conformité, analyse comparative de licences et argumentation de souveraineté ; autres parties à confirmer par l'équipe | Planification, compréhension de texte, rédaction documentaire | 100% relu, vérifié et validé par l'équipe CYBERSOCLE |
+| **GitHub** *(Outil de versionnement, non IA)* | Forge Git et miroir de continuité | Synchronisation et versionnement du code source, gestion des Pull Requests | Gestion de version et hébergement | Utilisation humaine directe |
+
+### 3. Engagement de Maîtrise, Relecture et Responsabilité de l'Équipe
+
+L'équipe CYBERSOCLE certifie sur l'honneur qu'aucun code n'a été intégré à l'aveugle. L'équipe comprend, relit, teste et assume l'intégralité de la solution livrée, incluant l'architecture globale, la logique métier applicative, l'implémentation cryptographique du protocole Schnorr Zero-Knowledge Proof, les algorithmes d'analyse statique SAST et de calcul d'entropie de Shannon ($H \ge 3.8$), ainsi que l'ensemble des gabarits et configurations d'infrastructure.
+
+### Tableau de confirmation et signatures :
+
+| Membre de l'équipe | Rôle dans l'équipe | Déclaration d'engagement | Signature | Date |
+| :--- | :--- | :--- | :--- | :--- |
+| **OBIEY Christ Dany** | **Capitaine d'équipe**, Lead Architecture & Développement Fullstack | Je certifie comprendre, avoir relu, testé et assumer l'ensemble de la solution technique livrée | [Signature d'OBIEY Christ Dany] | [Date : JJ/MM/2026] |
+| **MAMPOUYA Alicia Syrianne** | **Membre de l'équipe**, Présentation vidéo démo & parcours utilisateur | Je certifie valider le parcours utilisateur, la présentation de démonstration et assumer la solution livrée | [Signature de MAMPOUYA Alicia Syrianne] | [Date : JJ/MM/2026] |
 
 ---
 
