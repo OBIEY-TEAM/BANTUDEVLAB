@@ -15,13 +15,13 @@
         {{end}}
       </div>
 
-      <!-- Actions Souveraines sur chaque depot : Run Security Audit, Ask Gemma Review & Codespaces / IDE -->
+      <!-- Actions Souveraines sur chaque depot : Run Security Review, Ask Gemma Review & Codespaces / IDE -->
       <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
-        <button type="button" id="repo-run-security-btn" class="bantu-pro-action-btn bantu-pro-btn-security" onclick="if(window.openBantuCommandTerminal) window.openBantuCommandTerminal('security', '{{.RepoOwner.Name}}/{{.Repository.Name}}', '{{.BranchName}}');" title="Run Security Audit (SAST) sur ce dépôt">
+        <button type="button" id="repo-run-security-btn" class="bantu-pro-action-btn bantu-pro-btn-security" onclick="if(window.openBantuCommandTerminal) window.openBantuCommandTerminal('security', '{{.RepoOwner.Name}}/{{.Repository.Name}}', '{{.BranchName}}', true);" title="Run Security Review (SAST) sur ce dépôt">
           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
-          <span class="bantu-i18n-security-label">Run Security Audit</span>
+          <span class="bantu-i18n-security-label">Run Security Review</span>
         </button>
-        <button type="button" id="repo-ask-gemma-btn" class="bantu-pro-action-btn bantu-pro-btn-gemma" onclick="if(window.openBantuCommandTerminal) window.openBantuCommandTerminal('gemma', '{{.RepoOwner.Name}}/{{.Repository.Name}}', '{{.BranchName}}');" title="Ask Gemma Review (IA) sur ce dépôt">
+        <button type="button" id="repo-ask-gemma-btn" class="bantu-pro-action-btn bantu-pro-btn-gemma" onclick="if(window.openBantuCommandTerminal) window.openBantuCommandTerminal('gemma', '{{.RepoOwner.Name}}/{{.Repository.Name}}', '{{.BranchName}}', true);" title="Ask Gemma Review (IA) sur ce dépôt">
           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="4" y="4" width="16" height="16" rx="2"></rect><rect x="9" y="9" width="6" height="6"></rect></svg>
           <span class="bantu-i18n-gemma-label">Ask Gemma Review</span>
         </button>

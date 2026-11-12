@@ -256,11 +256,16 @@
   function detectCurrentBranchFromUrl() {
     var path = window.location.pathname.replace(/^\/+|\/+$/g, "");
     var parts = path.split("/");
-    // /owner/repo/src/branch/main/... or /owner/repo/commits/branch/main
+    // 1. /owner/repo/src/branch/<name>/... or /owner/repo/commits/branch/<name>
     if (parts.length >= 5 && (parts[2] === "src" || parts[2] === "commits") && parts[3] === "branch") {
       return decodeURIComponent(parts[4]);
     }
-    return "";
+    // 2. Gitea UI branch dropdown selector
+    var branchEl = document.querySelector(".choose.branch .text, #branch-select .text, .branch-dropdown .text, [data-branch]");
+    if (branchEl && branchEl.textContent && branchEl.textContent.trim()) {
+      return branchEl.textContent.trim();
+    }
+    return "main";
   }
 
   function escapeHtml(str) {
@@ -1070,13 +1075,63 @@
 
         rGroup.querySelector("#repo-run-security-btn").addEventListener("click", function (e) {
           e.preventDefault();
-          openCommandTerminal("security", currentRepo, currentBranch);
+          openCommandTerminal("security", currentRepo, currentBranch, true);
         });
         rGroup.querySelector("#repo-ask-gemma-btn").addEventListener("click", function (e) {
           e.preventDefault();
-          openCommandTerminal("gemma", currentRepo, currentBranch);
+          openCommandTerminal("gemma", currentRepo, currentBranch, true);
         });
       }
+    }
+
+    // C. On Gitea Branches List Page (/owner/repo/branches), attach action buttons to each branch item
+    if (window.location.pathname.indexOf("/branches") !== -1 || document.querySelector(".branch-list, .repository.branches")) {
+      var branchItems = document.querySelectorAll(
+        "table tbody tr, .ui.table tbody tr, .branch-row, .flex-list .flex-item"
+      );
+      branchItems.forEach(function (row) {
+        if (row.getAttribute("data-bantu-branch-actions") === "1") return;
+        var bLink = row.querySelector("a[href*='/src/branch/'], a.branch-name, td.name a");
+        if (!bLink) return;
+        var bHref = bLink.getAttribute("href") || "";
+        var bMatch = bHref.match(/\/src\/branch\/([^/?#]+)/);
+        var branchName = bMatch ? decodeURIComponent(bMatch[1]) : bLink.textContent.trim();
+        if (!branchName) return;
+        row.setAttribute("data-bantu-branch-actions", "1");
+
+        var targetCell = row.querySelector("td:last-child, .flex-item-trailing") || bLink.parentElement;
+        if (!targetCell || targetCell.querySelector(".bantu-branch-actions-wrap")) return;
+
+        var wrap = document.createElement("span");
+        wrap.className = "bantu-branch-actions-wrap";
+        wrap.style.cssText = "display:inline-flex;align-items:center;gap:6px;margin-left:8px;vertical-align:middle;";
+        wrap.innerHTML =
+          '<button type="button" class="bantu-pro-action-btn bantu-pro-btn-security" style="padding:2px 8px !important;font-size:11px !important;" title="Run Security Review sur la branche ' +
+          escapeHtml(branchName) +
+          '">' +
+          '  <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg> ' +
+          '  <span>Review</span>' +
+          "</button>" +
+          '<button type="button" class="bantu-pro-action-btn bantu-pro-btn-gemma" style="padding:2px 8px !important;font-size:11px !important;" title="Ask Gemma Review sur la branche ' +
+          escapeHtml(branchName) +
+          '">' +
+          '  <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="4" y="4" width="16" height="16" rx="2"></rect><rect x="9" y="9" width="6" height="6"></rect></svg> ' +
+          '  <span>Gemma</span>' +
+          "</button>";
+
+        var bBtns = wrap.querySelectorAll("button");
+        bBtns[0].addEventListener("click", function (e) {
+          e.preventDefault();
+          e.stopPropagation();
+          openCommandTerminal("security", currentRepo, branchName, true);
+        });
+        bBtns[1].addEventListener("click", function (e) {
+          e.preventDefault();
+          e.stopPropagation();
+          openCommandTerminal("gemma", currentRepo, branchName, true);
+        });
+        targetCell.appendChild(wrap);
+      });
     }
 
     // B. On Gitea Dashboard & Explore repository lists, attach quick action buttons to each repo row
