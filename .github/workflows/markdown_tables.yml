@@ -1,0 +1,28 @@
+name: Sovereign Markdown Tables & Primer Verification
+
+on:
+  push:
+    branches: [ "main", "develop*", "feature/*" ]
+    paths:
+      - "custom/public/assets/css/**"
+      - "custom/templates/custom/**"
+      - ".github/workflows/markdown_tables.yml"
+  pull_request:
+    branches: [ "main", "develop*" ]
+
+jobs:
+  tables-verify:
+    name: Verify Primer Markdown Tables and Sorting
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup BantuDevLab Environment
+        uses: ./.github/actions/setup-bantudevlab
+        with:
+          python-version: "3.11"
+      - name: Test Markdown Table Rendering & Script
+        run: |
+          pytest tests/test_ui_axes.py -k "markdown_table" -v -o addopts=""

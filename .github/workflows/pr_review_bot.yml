@@ -1,0 +1,28 @@
+name: Sovereign Pull Request Review Bot CI
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+  push:
+    branches: [ "main", "develop*", "feature/*" ]
+    paths:
+      - "apps/ai_assistant/tasks.py"
+      - "apps/ai_assistant/views.py"
+      - ".github/workflows/pr_review_bot.yml"
+
+jobs:
+  pr-review-audit:
+    name: Autonomous PR Review Bot Verification
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup BantuDevLab Environment
+        uses: ./.github/actions/setup-bantudevlab
+        with:
+          python-version: "3.11"
+      - name: Execute PR Review Bot Test Suite
+        run: |
+          pytest tests/test_ai_assistant.py -k "pr_review_bot" -v -o addopts=""

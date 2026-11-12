@@ -1,0 +1,56 @@
+name: BantuDevLab Sovereign CI (GitHub & Gitea Actions Compatible)
+
+on:
+  push:
+    branches: [ main, develop, develop-jule ]
+  pull_request:
+    branches: [ main, develop, develop-jule ]
+  workflow_dispatch:
+
+jobs:
+  test-and-lint:
+    name: Code Quality and Sovereign Security
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: "pip"
+
+      - name: Install Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install ruff bandit pytest pytest-django pytest-cov requests
+
+      - name: Check Zero Emoji Policy
+        run: |
+          python scripts/check_no_emoji.py
+
+      - name: Static Security Scan (Bandit SAST)
+        run: |
+          bandit -r apps config -lll
+
+      - name: Lint and Format Verification (Ruff)
+        run: |
+          ruff check .
+          ruff format --check .
+
+      - name: Run Test Suite
+        env:
+          DJANGO_SETTINGS_MODULE: config.settings
+          SECRET_KEY: ci_secret_key_test_bantudevlab_2026
+          TESTING: "True"
+        run: |
+          pytest --cov=apps/zkp_auth --cov=apps/security_scanner --cov=apps/ai_assistant --cov-fail-under=95
+
+      - name: Upload Test Coverage Artifact
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: code-coverage-report
+          path: .coverage
+          retention-days: 14

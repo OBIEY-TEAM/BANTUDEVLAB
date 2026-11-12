@@ -1,0 +1,1384 @@
+<!-- BANTUDEVLAB Anti-FOUC & Dark Mode Shield (Zero White Flash / Zero White Background) -->
+<style id="bantu-anti-fouc-critical">
+  html:not([data-theme="light"]),
+  html:not([data-theme="light"]) body,
+  html:not([data-theme="light"]) .full.height,
+  html:not([data-theme="light"]) #wrapper,
+  html:not([data-theme="light"]) .page-content,
+  html:not([data-theme="light"]) .ui.container,
+  html:not([data-theme="light"]) .ui.grid,
+  html:not([data-theme="light"]) .ui.segment,
+  html:not([data-theme="light"]) .ui.segments,
+  html:not([data-theme="light"]) .ui.cards,
+  html:not([data-theme="light"]) .ui.card,
+  html:not([data-theme="light"]) .ui.table,
+  html:not([data-theme="light"]) .ui.form {
+    background-color: #020617 !important;
+    color: #f8fafc !important;
+  }
+  html[data-theme="dark"],
+  html[data-theme="dark"] body,
+  html[data-theme="dark"] .full.height,
+  html[data-theme="dark"] #wrapper,
+  html[data-theme="dark"] .page-content,
+  html[data-theme="dark"] .ui.container,
+  html[data-theme="dark"] .ui.grid,
+  html[data-theme="dark"] .ui.segment,
+  html[data-theme="dark"] .ui.segments,
+  html[data-theme="dark"] .ui.cards,
+  html[data-theme="dark"] .ui.card,
+  html[data-theme="dark"] .ui.table,
+  html[data-theme="dark"] .ui.form {
+    background-color: #020617 !important;
+    color: #f8fafc !important;
+  }
+  html[data-theme="dark"] .ui.menu.navbar,
+  html:not([data-theme="light"]) .ui.menu.navbar {
+    background-color: #050b18 !important;
+  }
+  html[data-theme="dark"] .repo-header-container,
+  html[data-theme="dark"] .file-view-header,
+  html[data-theme="dark"] .page-footer,
+  html:not([data-theme="light"]) .repo-header-container,
+  html:not([data-theme="light"]) .file-view-header,
+  html:not([data-theme="light"]) .page-footer {
+    background-color: #070e1e !important;
+    border-color: #1e293b !important;
+  }
+  html[data-theme="light"],
+  html[data-theme="light"] body,
+  html[data-theme="light"] .full.height,
+  html[data-theme="light"] #wrapper,
+  html[data-theme="light"] .page-content,
+  html[data-theme="light"] .ui.container,
+  html[data-theme="light"] .ui.grid,
+  html[data-theme="light"] .ui.segment,
+  html[data-theme="light"] .ui.segments,
+  html[data-theme="light"] .ui.cards,
+  html[data-theme="light"] .ui.card,
+  html[data-theme="light"] .ui.table,
+  html[data-theme="light"] .ui.form {
+    background-color: #ffffff !important;
+    color: #0f172a !important;
+  }
+  html[data-theme="light"] .ui.menu.navbar {
+    background-color: #ffffff !important;
+    border-bottom: 2px solid #f59e0b !important;
+  }
+  html[data-theme="light"] .repo-header-container,
+  html[data-theme="light"] .file-view-header,
+  html[data-theme="light"] .page-footer {
+    background-color: #f8fafc !important;
+    border-color: #cbd5e1 !important;
+  }
+</style>
+<script>
+(function() {
+  function getCookie(name) {
+    const m = document.cookie.match(new RegExp('(?:^|;\\s*)' + name + '=([^;]*)'));
+    return m ? decodeURIComponent(m[1]) : null;
+  }
+  let isDark = true;
+  try {
+    const lsTheme = localStorage.getItem('bantu_theme');
+    const bantuCookie = getCookie('bantu_theme');
+    const giteaTheme = getCookie('theme') || getCookie('gitea_theme');
+
+    if (lsTheme === 'light' || bantuCookie === 'light' || (giteaTheme && giteaTheme === 'github')) {
+      isDark = false;
+    } else if (lsTheme === 'dark' || bantuCookie === 'dark' || (giteaTheme && giteaTheme.includes('dark'))) {
+      isDark = true;
+    } else {
+      isDark = true;
+    }
+  } catch(e) {
+    isDark = true;
+  }
+
+  const themeMode = isDark ? 'dark' : 'light';
+  document.documentElement.setAttribute('data-theme', themeMode);
+
+  // Instant update of critical anti-fouc styling
+  const antiFouc = document.getElementById('bantu-anti-fouc-critical');
+  if (antiFouc) {
+    const bgBody = isDark ? '#020617' : '#ffffff';
+    const colorBody = isDark ? '#f8fafc' : '#0f172a';
+    antiFouc.innerHTML = 'html, body, .full.height, #wrapper, .page-content { background-color: ' + bgBody + ' !important; color: ' + colorBody + ' !important; }';
+  }
+
+  // Ensure theme CSS link is synced immediately
+  function syncThemeLink() {
+    const link = document.querySelector('link[rel="stylesheet"][href*="theme-"]');
+    if (link) {
+      const target = isDark ? 'theme-github-dark.css' : 'theme-github.css';
+      if (!link.href.includes(target)) {
+        link.href = link.href.replace(/theme-[a-zA-Z0-9_-]+\.css/, target);
+      }
+    }
+  }
+  syncThemeLink();
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', syncThemeLink);
+  }
+})();
+</script>
+
+<!-- BANTUDEVLAB - GitHub Navigation, Head Enhancements & Command Palette (T-UI-602, T-UI-603, T-COP-703) -->
+<style>
+/* GitHub Global Navigation Bar */
+.ui.menu.navbar {
+  height: 56px !important;
+  padding: 0 16px !important;
+  display: flex !important;
+  align-items: center !important;
+}
+
+/* GitHub Global Search Bar */
+.github-search-input {
+  background-color: var(--color-input-background, #0b1528) !important;
+  border: 1px solid var(--color-input-border, #1e293b) !important;
+  border-radius: 6px !important;
+  color: var(--color-input-text, #f8fafc) !important;
+  padding: 5px 12px !important;
+  font-size: 13px !important;
+  width: 280px !important;
+  transition: width 0.2s ease, border-color 0.2s ease;
+}
+
+.github-search-input:focus {
+  width: 360px !important;
+  border-color: #00e5ff !important;
+  background-color: var(--color-input-background, #0b1528) !important;
+  color: var(--color-input-text, #f8fafc) !important;
+  box-shadow: 0 0 0 2px rgba(0, 229, 255, 0.25) !important;
+}
+
+.github-search-kbd {
+  font-size: 11px;
+  border: 1px solid var(--color-border-default, #1e293b);
+  border-radius: 4px;
+  padding: 1px 4px;
+  margin-left: 6px;
+  color: var(--color-text-light, #94a3b8);
+}
+
+/* GitHub Repository Tabs Alignment */
+.repo-header-tabs {
+  background-color: var(--color-box-header, #070e1e) !important;
+  border-bottom: 1px solid var(--color-border-default, #1e293b) !important;
+  padding: 0 16px;
+  display: flex;
+  gap: 8px;
+}
+
+.repo-tab-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 12px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--color-text-light, #94a3b8) !important;
+  border-bottom: 2px solid transparent;
+  text-decoration: none;
+  transition: color 0.15s ease, border-color 0.15s ease;
+}
+
+.repo-tab-item:hover {
+  color: var(--color-text, #f8fafc) !important;
+  border-bottom-color: #00e5ff !important;
+}
+
+.repo-tab-item.active {
+  color: var(--color-text, #f8fafc) !important;
+  font-weight: 600;
+  border-bottom-color: #f59e0b !important;
+}
+
+/* GitHub Modern Command Palette Modal (T-COP-703) */
+#github-command-palette-modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background-color: rgba(2, 6, 23, 0.75);
+  backdrop-filter: blur(4px);
+  z-index: 100000;
+  align-items: flex-start;
+  justify-content: center;
+  padding-top: 10vh;
+}
+
+.command-palette-box {
+  width: 640px;
+  max-width: 90vw;
+  background: var(--color-box-body, #070e1e) !important;
+  color: var(--color-text, #f8fafc) !important;
+  border: 1px solid var(--color-border-default, #1e293b) !important;
+  border-radius: 12px;
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.8);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.command-palette-input-wrap {
+  display: flex;
+  align-items: center;
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--color-border-default, #1e293b);
+  gap: 10px;
+}
+
+.command-palette-input {
+  flex: 1;
+  border: none;
+  outline: none;
+  font-size: 15px;
+  background: transparent;
+  color: var(--color-text, #f8fafc) !important;
+}
+
+.command-palette-list {
+  max-height: 340px;
+  overflow-y: auto;
+  padding: 6px 0;
+  list-style: none;
+  margin: 0;
+}
+
+.command-palette-item {
+  padding: 10px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 13px;
+  color: var(--color-text, #f8fafc) !important;
+  cursor: pointer;
+  transition: background-color 0.1s ease;
+}
+
+.command-palette-item:hover, .command-palette-item.active {
+  background-color: var(--color-box-body-highlight, #0b1528) !important;
+  color: #00e5ff !important;
+}
+
+.command-palette-footer {
+  padding: 8px 16px;
+  background: var(--color-box-header, #050b18) !important;
+  border-top: 1px solid var(--color-border-default, #1e293b) !important;
+  font-size: 11px;
+  color: var(--color-text-light, #94a3b8) !important;
+  display: flex;
+  gap: 16px;
+}
+
+/* Guarantee 100% Solid Opacity on all Modals & Reduced Windows (No Transparency Bug) */
+html:not([data-theme="light"]) .ui.modal,
+html:not([data-theme="light"]) .ui.modal > .header,
+html:not([data-theme="light"]) .ui.modal > .content,
+html:not([data-theme="light"]) .ui.modal > .actions,
+html:not([data-theme="light"]) .ui.dropdown .menu,
+html:not([data-theme="light"]) .ui.dropdown .menu > .item,
+html:not([data-theme="light"]) .ui.popup,
+html:not([data-theme="light"]) .ui.vertical.menu,
+html:not([data-theme="light"]) .mobile-menu,
+html:not([data-theme="light"]) .following.bar,
+html:not([data-theme="light"]) .ui.attached.menu,
+html:not([data-theme="light"]) .command-palette-box,
+html:not([data-theme="light"]) .modal,
+html:not([data-theme="light"]) .modal-content,
+html:not([data-theme="light"]) .modal-dialog,
+html[data-theme="dark"] .ui.modal,
+html[data-theme="dark"] .ui.modal > .header,
+html[data-theme="dark"] .ui.modal > .content,
+html[data-theme="dark"] .ui.modal > .actions,
+html[data-theme="dark"] .ui.dropdown .menu,
+html[data-theme="dark"] .ui.dropdown .menu > .item,
+html[data-theme="dark"] .ui.popup,
+html[data-theme="dark"] .ui.vertical.menu,
+html[data-theme="dark"] .mobile-menu,
+html[data-theme="dark"] .following.bar,
+html[data-theme="dark"] .ui.attached.menu,
+html[data-theme="dark"] .command-palette-box,
+html[data-theme="dark"] .modal,
+html[data-theme="dark"] .modal-content,
+html[data-theme="dark"] .modal-dialog {
+  background-color: #070e1e !important;
+  color: #f8fafc !important;
+  opacity: 1 !important;
+  border: 1px solid #1e293b !important;
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.8) !important;
+}
+
+html:not([data-theme="light"]) .ui.dropdown .menu > .item:hover,
+html[data-theme="dark"] .ui.dropdown .menu > .item:hover {
+  background-color: #0f172a !important;
+  color: #00e5ff !important;
+}
+
+html[data-theme="light"] .ui.modal,
+html[data-theme="light"] .ui.modal > .header,
+html[data-theme="light"] .ui.modal > .content,
+html[data-theme="light"] .ui.modal > .actions,
+html[data-theme="light"] .ui.dropdown .menu,
+html[data-theme="light"] .ui.dropdown .menu > .item,
+html[data-theme="light"] .ui.popup,
+html[data-theme="light"] .ui.vertical.menu,
+html[data-theme="light"] .mobile-menu,
+html[data-theme="light"] .command-palette-box {
+  background-color: #ffffff !important;
+  color: #0f172a !important;
+  opacity: 1 !important;
+  border: 1px solid #cbd5e1 !important;
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.15) !important;
+}
+
+html[data-theme="light"] .ui.dropdown .menu > .item:hover {
+  background-color: #f1f5f9 !important;
+  color: #0051cc !important;
+}
+
+
+/* =========================================================
+   BANTUDEVLAB GITEA DARK & LIGHT MODE PERFECTION
+   ========================================================= */
+html[data-theme="dark"],
+html[data-theme="dark"] body {
+  background-color: #020617 !important;
+  color: #f8fafc !important;
+}
+
+html[data-theme="dark"] .ui.menu.navbar {
+  background-color: #050b18 !important;
+  border-bottom: 2px solid #f59e0b !important;
+}
+
+html[data-theme="dark"] .ui.segment,
+html[data-theme="dark"] .ui.segments,
+html[data-theme="dark"] .ui.card,
+html[data-theme="dark"] .ui.cards > .card,
+html[data-theme="dark"] .ui.table,
+html[data-theme="dark"] .ui.attached.segment,
+html[data-theme="dark"] .ui.attached.header,
+html[data-theme="dark"] .ui.message,
+html[data-theme="dark"] .repository .repo-header,
+html[data-theme="dark"] .repository .repo-content,
+html[data-theme="dark"] .repository .diff-box,
+html[data-theme="dark"] .repository .file-view,
+html[data-theme="dark"] .comment-body,
+html[data-theme="dark"] .timeline-item,
+html[data-theme="dark"] .issue-content,
+html[data-theme="dark"] .repo-header-tabs,
+html[data-theme="dark"] .page-footer {
+  background-color: #070e1e !important;
+  color: #f8fafc !important;
+  border-color: #1e293b !important;
+}
+
+html[data-theme="dark"] .ui.table tr:hover,
+html[data-theme="dark"] .ui.table tr:hover td {
+  background-color: #0b1528 !important;
+  color: #f8fafc !important;
+}
+
+html[data-theme="dark"] .ui.table th,
+html[data-theme="dark"] .ui.table thead th {
+  background-color: #0b1528 !important;
+  color: #f8fafc !important;
+  border-color: #1e293b !important;
+}
+
+html[data-theme="dark"] .ui.table td {
+  border-color: #1e293b !important;
+  color: #e2e8f0 !important;
+}
+
+html[data-theme="dark"] .ui.input input,
+html[data-theme="dark"] input[type="text"],
+html[data-theme="dark"] input[type="password"],
+html[data-theme="dark"] input[type="email"],
+html[data-theme="dark"] input[type="search"],
+html[data-theme="dark"] textarea,
+html[data-theme="dark"] select,
+html[data-theme="dark"] .github-search-input {
+  background-color: #0b1528 !important;
+  color: #f8fafc !important;
+  border: 1px solid #1e293b !important;
+}
+
+html[data-theme="dark"] .ui.input input:focus,
+html[data-theme="dark"] textarea:focus,
+html[data-theme="dark"] .github-search-input:focus {
+  border-color: #00e5ff !important;
+  box-shadow: 0 0 0 2px rgba(0, 229, 255, 0.25) !important;
+}
+
+html[data-theme="dark"] .ui.menu:not(.navbar),
+html[data-theme="dark"] .ui.secondary.menu,
+html[data-theme="dark"] .ui.tabular.menu {
+  background-color: #070e1e !important;
+  color: #f8fafc !important;
+  border-color: #1e293b !important;
+}
+
+html[data-theme="dark"] .ui.menu .item,
+html[data-theme="dark"] .ui.tabular.menu .item {
+  color: #94a3b8 !important;
+}
+
+html[data-theme="dark"] .ui.menu .item:hover,
+html[data-theme="dark"] .ui.tabular.menu .item:hover,
+html[data-theme="dark"] .ui.menu .item.active,
+html[data-theme="dark"] .ui.tabular.menu .item.active {
+  color: #f8fafc !important;
+}
+
+html[data-theme="dark"] .ui.header,
+html[data-theme="dark"] h1,
+html[data-theme="dark"] h2,
+html[data-theme="dark"] h3,
+html[data-theme="dark"] h4,
+html[data-theme="dark"] h5,
+html[data-theme="dark"] strong {
+  color: #f8fafc !important;
+}
+
+html[data-theme="dark"] p,
+html[data-theme="dark"] span:not(.badge):not(.label):not(.ui.label),
+html[data-theme="dark"] label {
+  color: #e2e8f0 !important;
+}
+
+html[data-theme="dark"] a {
+  color: #00e5ff !important;
+}
+
+html[data-theme="dark"] a:hover {
+  color: #38bdf8 !important;
+}
+
+html[data-theme="dark"] .ui.button:not(.primary):not(.green):not(.red):not(.btn-gold) {
+  background-color: #0b1528 !important;
+  color: #f8fafc !important;
+  border: 1px solid #1e293b !important;
+}
+
+html[data-theme="dark"] .ui.button:not(.primary):not(.green):not(.red):not(.btn-gold):hover {
+  background-color: #1e293b !important;
+  border-color: #00e5ff !important;
+}
+
+/* Light mode overrides */
+html[data-theme="light"],
+html[data-theme="light"] body {
+  background-color: #f8fafc !important;
+  color: #0f172a !important;
+}
+
+html[data-theme="light"] .ui.menu.navbar {
+  background-color: #ffffff !important;
+  border-bottom: 2px solid #f59e0b !important;
+}
+
+html[data-theme="light"] .ui.segment,
+html[data-theme="light"] .ui.card,
+html[data-theme="light"] .ui.cards > .card,
+html[data-theme="light"] .ui.table,
+html[data-theme="light"] .page-footer {
+  background-color: #ffffff !important;
+  color: #0f172a !important;
+  border-color: #cbd5e1 !important;
+}
+
+html[data-theme="light"] .ui.input input,
+html[data-theme="light"] textarea,
+html[data-theme="light"] select,
+html[data-theme="light"] .github-search-input {
+  background-color: #ffffff !important;
+  color: #0f172a !important;
+  border-color: #cbd5e1 !important;
+}
+
+html[data-theme="light"] a {
+  color: #0051cc !important;
+}
+
+.ui.dimmer {
+  background-color: rgba(2, 6, 23, 0.75) !important;
+  backdrop-filter: blur(4px) !important;
+}
+
+/* =========================================================
+   BANTUDEVLAB GITEA MULTI-SCREEN RESPONSIVENESS (280px -> 4K)
+   ========================================================= */
+html, body {
+  max-width: 100vw !important;
+  overflow-x: hidden !important;
+}
+
+.ui.table,
+.markdown table {
+  display: block;
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+@media (min-width: 1600px) {
+  .ui.container:not(.fluid) {
+    width: 1440px !important;
+    max-width: 92vw !important;
+  }
+}
+
+@media (max-width: 1024px) {
+  .ui.menu.navbar {
+    height: auto !important;
+    min-height: 56px !important;
+    flex-wrap: wrap !important;
+    padding: 8px 12px !important;
+    gap: 6px !important;
+  }
+  .github-search-input,
+  .github-search-input:focus {
+    width: 200px !important;
+    max-width: 100% !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .ui.container {
+    width: 100% !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    padding-left: 10px !important;
+    padding-right: 10px !important;
+  }
+  .github-search-input,
+  .github-search-input:focus {
+    width: 100% !important;
+  }
+  .repo-header-tabs {
+    padding: 0 8px !important;
+    gap: 2px !important;
+    overflow-x: auto !important;
+    white-space: nowrap !important;
+    -webkit-overflow-scrolling: touch;
+  }
+  .repo-tab-item {
+    padding: 8px 10px !important;
+    font-size: 13px !important;
+    flex-shrink: 0 !important;
+  }
+  .command-palette-box {
+    width: calc(100vw - 20px) !important;
+    max-width: calc(100vw - 20px) !important;
+  }
+  .command-palette-footer {
+    flex-wrap: wrap !important;
+    gap: 8px !important;
+  }
+  #gitea-bantu-lang-selector {
+    margin-right: 4px !important;
+  }
+  #gitea-theme-toggle-btn span {
+    display: none !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .ui.grid > .column:not(.row),
+  .ui.grid > .row > .column {
+    width: 100% !important;
+    padding-left: 0.5rem !important;
+    padding-right: 0.5rem !important;
+  }
+  .gh-draft-banner {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 8px !important;
+  }
+}
+
+</style>
+
+<!-- Command Palette Markup -->
+<div id="github-command-palette-modal">
+  <div class="command-palette-box">
+    <div class="command-palette-input-wrap">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" style="color: #656d76;">
+        <path d="M10.68 11.74a6 6 0 0 1-7.922-8.982 6 6 0 0 1 8.982 7.922l3.04 3.04a.749.749 0 0 1-.326 1.275.749.749 0 0 1-.734-.215ZM11.5 7a4.5 4.5 0 1 0-9 0 4.5 4.5 0 0 0 9 0Z"></path>
+      </svg>
+      <input id="palette-search-input" class="command-palette-input" placeholder="Type a command or search (Code, Issues, PRs, Copilot)..." autocomplete="off" />
+      <span class="github-search-kbd">Esc</span>
+    </div>
+    <ul id="palette-command-list" class="command-palette-list">
+      <li class="command-palette-item" data-action="nav-code">
+        <span>&gt; Jump to Code</span>
+        <span class="github-search-kbd">G C</span>
+      </li>
+      <li class="command-palette-item" data-action="nav-issues">
+        <span>&gt; Jump to Issues</span>
+        <span class="github-search-kbd">G I</span>
+      </li>
+      <li class="command-palette-item" data-action="nav-pulls">
+        <span>&gt; Jump to Pull Requests</span>
+        <span class="github-search-kbd">G P</span>
+      </li>
+      <li class="command-palette-item" data-action="nav-actions">
+        <span>&gt; Jump to Actions / CI</span>
+        <span class="github-search-kbd">G A</span>
+      </li>
+      <li class="command-palette-item" data-action="ask-copilot">
+        <span>&gt; Ask Sovereign Copilot AI</span>
+        <span class="github-search-kbd">Ctrl+I</span>
+      </li>
+      <li class="command-palette-item" data-action="open-codespaces">
+        <span>&gt; Open in Web IDE / Codespaces</span>
+        <span class="github-search-kbd">.</span>
+      </li>
+      <li class="command-palette-item" data-action="open-gists">
+        <span>&gt; Open Sovereign Gists</span>
+        <span class="github-search-kbd">G S</span>
+      </li>
+      <li class="command-palette-item" data-action="toggle-theme">
+        <span>&gt; Switch Theme (Light / Dark)</span>
+        <span class="github-search-kbd">T</span>
+      </li>
+    </ul>
+    <div class="command-palette-footer">
+      <span>Fleches Haut/Bas pour naviguer</span>
+      <span>Entree pour executer</span>
+      <span>Echap pour fermer</span>
+    </div>
+  </div>
+</div>
+
+<script>
+// GitHub Global Keyboard Shortcuts ('/' for search focus, 'Ctrl+K' for command palette)
+document.addEventListener('keydown', function(e) {
+  // Command Palette Ctrl+K / Cmd+K (T-COP-703)
+  if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') {
+    e.preventDefault();
+    toggleCommandPalette();
+    return;
+  }
+
+  // Escape to close command palette
+  if (e.key === 'Escape') {
+    const modal = document.getElementById('github-command-palette-modal');
+    if (modal && modal.style.display === 'flex') {
+      modal.style.display = 'none';
+      return;
+    }
+  }
+
+  if (e.key === '/' && !['INPUT', 'TEXTAREA'].includes(document.activeElement.tagName)) {
+    const searchInput = document.querySelector('input[name="q"], .github-search-input, #search-input');
+    if (searchInput) {
+      e.preventDefault();
+      searchInput.focus();
+      searchInput.select();
+    }
+  }
+});
+
+function toggleCommandPalette() {
+  const modal = document.getElementById('github-command-palette-modal');
+  const input = document.getElementById('palette-search-input');
+  if (!modal) return;
+  const isHidden = modal.style.display !== 'flex';
+  modal.style.display = isHidden ? 'flex' : 'none';
+  if (isHidden && input) {
+    input.value = '';
+    filterPaletteCommands('');
+    setTimeout(() => input.focus(), 50);
+  }
+}
+
+function filterPaletteCommands(term) {
+  const items = document.querySelectorAll('#palette-command-list .command-palette-item');
+  items.forEach(item => {
+    const text = item.textContent.toLowerCase();
+    item.style.display = text.includes(term.toLowerCase()) ? 'flex' : 'none';
+  });
+}
+
+// GitHub Flavored Markdown Alerts Client-Side Polyfill (T-UI-603)
+document.addEventListener('DOMContentLoaded', function() {
+  const alertTypes = {
+    '[!NOTE]': { className: 'markdown-alert markdown-alert-note', title: 'Note' },
+    '[!TIP]': { className: 'markdown-alert markdown-alert-tip', title: 'Tip' },
+    '[!IMPORTANT]': { className: 'markdown-alert markdown-alert-important', title: 'Important' },
+    '[!WARNING]': { className: 'markdown-alert markdown-alert-warning', title: 'Warning' },
+    '[!CAUTION]': { className: 'markdown-alert markdown-alert-caution', title: 'Caution' }
+  };
+
+  document.querySelectorAll('blockquote').forEach(function(bq) {
+    const firstP = bq.querySelector('p');
+    if (!firstP) return;
+    const text = firstP.innerHTML.trim();
+    for (const [tag, conf] of Object.entries(alertTypes)) {
+      if (text.startsWith(tag)) {
+        bq.className = conf.className;
+        firstP.innerHTML = `<div class="markdown-alert-title">${conf.title}</div>` + text.slice(tag.length).trim();
+        break;
+      }
+    }
+  });
+
+
+  // Replace Gitea header & sign-in logo with Sovereign African Continent Logo (T27.6)
+  function applyAfricanLogoToGitea() {
+    // 1. Barre de navigation principale
+    const brandLinks = document.querySelectorAll('.ui.menu.navbar .brand, .ui.menu.navbar a[href="/"], .ui.menu.navbar a[href="/explore"]');
+    brandLinks.forEach(link => {
+      const existingImg = link.querySelector('img');
+      const existingSvg = link.querySelector('svg');
+      if (existingImg) {
+        existingImg.src = '/assets/img/logo.svg';
+        existingImg.alt = 'BantuDevLab Carte Afrique';
+        existingImg.style.width = '36px'; existingImg.style.boxShadow = '0 0 12px rgba(0, 229, 255, 0.45)';
+        existingImg.style.height = '32px';
+        existingImg.style.borderRadius = '6px';
+      } else if (existingSvg && !link.querySelector('.africa-logo-injected')) {
+        existingSvg.style.display = 'none';
+        const img = document.createElement('img');
+        img.className = 'africa-logo-injected';
+        img.src = '/assets/img/logo.svg';
+        img.alt = 'BantuDevLab Carte Afrique';
+        img.style.width = '36px'; img.style.boxShadow = '0 0 12px rgba(0, 229, 255, 0.45)';
+        img.style.height = '32px';
+        img.style.borderRadius = '6px';
+        img.style.verticalAlign = 'middle';
+        img.style.marginRight = '8px';
+        link.insertBefore(img, link.firstChild);
+      }
+    });
+
+    // 2. Page de connexion / inscription (/user/login, /users/sign_in, /user/sign_up)
+    const signinLogos = document.querySelectorAll('.ui.container.signin img, .page-content.user.signin img, .ui.middle.aligned.center.aligned.grid img, .signin .header img');
+    signinLogos.forEach(logoImg => {
+      logoImg.src = '/assets/img/logo.svg';
+      logoImg.alt = 'BantuDevLab Sovereign Logo';
+      logoImg.style.maxWidth = '120px';
+      logoImg.style.height = 'auto';
+      logoImg.style.borderRadius = '12px';
+      logoImg.style.boxShadow = '0 0 20px rgba(0, 229, 255, 0.45)';
+    });
+  }
+  applyAfricanLogoToGitea();
+
+  // Gitea Direct Dark / Light Mode Switcher (T27.7) - Delegated to initGiteaBantuSync
+  function initGiteaThemeToggle() {
+    // Handled in setupHeaderControls to avoid duplicate buttons & white-flash reloads
+  }
+  initGiteaThemeToggle();
+
+
+  // Inject sovereign Gist shortcut in top navbar if present
+  const navContainer = document.querySelector('.ui.secondary.menu') || document.querySelector('.ui.menu.navbar');
+  if (navContainer && !document.querySelector('.nav-gist-item')) {
+    const gistLink = document.createElement('a');
+    gistLink.className = 'item nav-gist-item';
+    gistLink.href = 'http://localhost:6157/';
+    gistLink.target = '_blank';
+    gistLink.rel = 'noopener noreferrer';
+    gistLink.textContent = 'Gists';
+    navContainer.appendChild(gistLink);
+  }
+
+  // Command palette live filtering & actions
+  const paletteInput = document.getElementById('palette-search-input');
+  if (paletteInput) {
+    paletteInput.addEventListener('input', function(e) {
+      filterPaletteCommands(e.target.value);
+    });
+  }
+
+  const modal = document.getElementById('github-command-palette-modal');
+  if (modal) {
+    modal.addEventListener('click', function(e) {
+      if (e.target === modal) modal.style.display = 'none';
+    });
+  }
+
+  document.querySelectorAll('#palette-command-list .command-palette-item').forEach(item => {
+    item.addEventListener('click', function() {
+      const action = item.getAttribute('data-action');
+      if (modal) modal.style.display = 'none';
+      if (action === 'nav-code') window.location.href = window.location.pathname.replace(/\/issues|\/pulls|\/actions.*/, '');
+      if (action === 'nav-issues') window.location.href = window.location.pathname.replace(/\/issues|\/pulls|\/actions.*/, '') + '/issues';
+      if (action === 'nav-pulls') window.location.href = window.location.pathname.replace(/\/issues|\/pulls|\/actions.*/, '') + '/pulls';
+      if (action === 'nav-actions') window.location.href = window.location.pathname.replace(/\/issues|\/pulls|\/actions.*/, '') + '/actions';
+      if (action === 'ask-copilot') {
+        const copilotBtn = document.getElementById('copilot-toggle-btn');
+        if (copilotBtn) copilotBtn.click();
+      }
+      if (action === 'open-codespaces') window.open('http://localhost:8443/', '_blank');
+      if (action === 'open-gists') window.open('http://localhost:6157/', '_blank');
+      if (action === 'toggle-theme') {
+        const themeBtn = document.querySelector('.theme-toggle, [data-theme]');
+        if (themeBtn) themeBtn.click();
+      }
+    });
+  });
+
+  // GitHub Style Markdown Task List Progress Bar (T-TSK-903)
+  function updateTaskListProgress() {
+    const taskLists = document.querySelectorAll('.comment-body ul:has(input[type="checkbox"]), .issue-content ul:has(input[type="checkbox"])');
+    if (!taskLists.length) return;
+
+    let total = 0;
+    let completed = 0;
+    taskLists.forEach(ul => {
+      const inputs = ul.querySelectorAll('input[type="checkbox"]');
+      total += inputs.length;
+      inputs.forEach(inp => {
+        if (inp.checked) completed++;
+        inp.removeEventListener('change', updateTaskListProgress);
+        inp.addEventListener('change', updateTaskListProgress);
+      });
+    });
+
+    if (total === 0) return;
+
+    let barContainer = document.getElementById('gh-tasklist-progress-wrap');
+    if (!barContainer) {
+      const headerTarget = document.querySelector('.issue-title, .comment-header, .timeline-item');
+      if (!headerTarget) return;
+      barContainer = document.createElement('div');
+      barContainer.id = 'gh-tasklist-progress-wrap';
+      barContainer.style.margin = '10px 0 16px 0';
+      barContainer.style.padding = '8px 12px';
+      barContainer.style.background = 'var(--color-canvas-subtle, var(--color-box-header, #070e1e))';
+      barContainer.style.border = '1px solid var(--color-border-default, #1e293b)';
+      barContainer.style.borderRadius = '6px';
+      barContainer.innerHTML = `
+        <div style="display: flex; justify-content: space-between; font-size: 12px; font-weight: 500; margin-bottom: 6px; color: var(--color-text, #f8fafc);">
+          <span id="gh-tasklist-progress-text"></span>
+          <span id="gh-tasklist-progress-pct"></span>
+        </div>
+        <div style="width: 100%; height: 6px; background-color: var(--color-border-muted, #1e293b); border-radius: 3px; overflow: hidden;">
+          <div id="gh-tasklist-progress-fill" style="height: 100%; background-color: #1f883d; border-radius: 3px; transition: width 0.3s ease;"></div>
+        </div>
+      `;
+      headerTarget.insertAdjacentElement('afterend', barContainer);
+    }
+
+    const pct = Math.round((completed / total) * 100);
+    const textEl = document.getElementById('gh-tasklist-progress-text');
+    const pctEl = document.getElementById('gh-tasklist-progress-pct');
+    const fillEl = document.getElementById('gh-tasklist-progress-fill');
+    if (textEl) textEl.textContent = `${completed} of ${total} tasks completed`;
+    if (pctEl) pctEl.textContent = `${pct}%`;
+    if (fillEl) fillEl.style.width = `${pct}%`;
+  }
+
+  updateTaskListProgress();
+
+  // GitHub Modern Interactive Markdown Table Sorting (T-TAB-1002)
+  document.querySelectorAll('.markdown table, .markup table').forEach(table => {
+    const headers = table.querySelectorAll('th');
+    headers.forEach((th, colIdx) => {
+      th.style.cursor = 'pointer';
+      th.title = 'Cliquer pour trier cette colonne';
+      th.addEventListener('click', function() {
+        const tbody = table.querySelector('tbody') || table;
+        const rows = Array.from(tbody.querySelectorAll('tr')).filter(r => !r.querySelector('th'));
+        const isAsc = th.getAttribute('data-sort') !== 'asc';
+
+        headers.forEach(h => h.removeAttribute('data-sort'));
+        th.setAttribute('data-sort', isAsc ? 'asc' : 'desc');
+
+        rows.sort((a, b) => {
+          const valA = (a.children[colIdx]?.textContent || '').trim();
+          const valB = (b.children[colIdx]?.textContent || '').trim();
+          const numA = parseFloat(valA);
+          const numB = parseFloat(valB);
+          if (!isNaN(numA) && !isNaN(numB)) {
+            return isAsc ? numA - numB : numB - numA;
+          }
+          return isAsc ? valA.localeCompare(valB) : valB.localeCompare(valA);
+        });
+
+        rows.forEach(r => tbody.appendChild(r));
+      });
+    });
+  });
+
+  // GitHub Modern Profile README.md Enhancement (T-PRF-1202)
+  const profileContainer = document.querySelector('.user.profile, .ui.container.user-profile');
+  if (profileContainer) {
+    const usernameEl = document.querySelector('.profile-avatar-name, .username, h2.ui.header');
+    const username = usernameEl ? usernameEl.textContent.trim() : '';
+    if (username && !document.getElementById('gh-profile-readme-card')) {
+      const readmeBox = document.createElement('div');
+      readmeBox.id = 'gh-profile-readme-card';
+      readmeBox.style.margin = '16px 0';
+      readmeBox.style.border = '1px solid var(--color-border-default, #1e293b)';
+      readmeBox.style.borderRadius = '6px';
+      readmeBox.style.background = 'var(--color-canvas-subtle, var(--color-box-body, #070e1e))';
+      readmeBox.style.padding = '16px';
+      readmeBox.innerHTML = `
+        <div style="display: flex; justify-content: space-between; align-items: center; padding-bottom: 8px; border-bottom: 1px solid var(--color-border-default, #1e293b); font-size: 12px; color: var(--color-text-light, #94a3b8);">
+          <span>${username} / README.md</span>
+          <span style="font-size: 11px; border: 1px solid var(--color-border-default, #1e293b); border-radius: 4px; padding: 1px 5px;">Special Repository</span>
+        </div>
+        <div style="padding-top: 12px; font-size: 13px; color: var(--color-text, #f8fafc);">
+          <p>Bienvenue sur le profil de developpeur souverain <strong>${username}</strong> sur BantuDevLab Forge.</p>
+        </div>
+      `;
+      const repoListTarget = document.querySelector('.ui.tab[data-tab="overview"], .user-profile-content') || profileContainer;
+      repoListTarget.prepend(readmeBox);
+    }
+  }
+
+  // GitHub Accessible Reaction Shortcodes Polyfill (T-REA-1302)
+  const shortcodeMap = {
+    ':+1:': '[+1]',
+    ':thumbsup:': '[+1]',
+    ':-1:': '[-1]',
+    ':thumbsdown:': '[-1]',
+    ':heart:': '[Heart]',
+    ':rocket:': '[Rocket]',
+    ':eyes:': '[Eyes]',
+    ':tada:': '[Hooray]',
+    ':hooray:': '[Hooray]',
+    ':sparkles:': '[Sparkles]'
+  };
+
+  document.querySelectorAll('.comment-body, .issue-content, .commit-summary, .commit-body').forEach(el => {
+    let html = el.innerHTML;
+    let modified = false;
+    for (const [code, replacement] of Object.entries(shortcodeMap)) {
+      if (html.includes(code)) {
+        html = html.replaceAll(code, `<span class="gh-reaction-tag">${replacement}</span>`);
+        modified = true;
+      }
+    }
+    if (modified) el.innerHTML = html;
+  });
+
+  // GitHub Notifications Modern Inbox & Filter Tabs (T-NTF-1602)
+  const isNotificationsPage = window.location.pathname.includes('/notifications') || document.querySelector('.notifications-list');
+  if (isNotificationsPage) {
+    const notifContainer = document.querySelector('.notifications-list, .user.notification') || document.querySelector('.ui.container');
+    if (notifContainer && !document.getElementById('gh-notif-nav')) {
+      const navBar = document.createElement('div');
+      navBar.id = 'gh-notif-nav';
+      navBar.className = 'gh-notifications-nav';
+      navBar.innerHTML = `
+        <a class="gh-filter-tab active" data-filter="all" href="#all">Inbox <span class="gh-filter-badge">All</span></a>
+        <a class="gh-filter-tab" data-filter="unread" href="#unread">Unread <span class="gh-filter-badge">New</span></a>
+        <a class="gh-filter-tab" data-filter="participating" href="#participating">Participating</a>
+        <a class="gh-filter-tab" data-filter="mentioned" href="#mentioned">Mentioned</a>
+      `;
+
+      navBar.querySelectorAll('.gh-filter-tab').forEach(tab => {
+        tab.addEventListener('click', (e) => {
+          e.preventDefault();
+          navBar.querySelectorAll('.gh-filter-tab').forEach(t => t.classList.remove('active'));
+          tab.classList.add('active');
+          const filter = tab.dataset.filter;
+          document.querySelectorAll('.gh-notification-item, .item.notification-item').forEach(item => {
+            if (filter === 'all') {
+              item.style.display = '';
+            } else if (filter === 'unread') {
+              item.style.display = item.classList.contains('gh-notification-unread') || item.classList.contains('unread') ? '' : 'none';
+            } else if (filter === 'participating') {
+              item.style.display = item.textContent.toLowerCase().includes('participat') ? '' : 'none';
+            } else if (filter === 'mentioned') {
+              item.style.display = item.textContent.toLowerCase().includes('mention') || item.textContent.includes('@') ? '' : 'none';
+            }
+          });
+        });
+      });
+
+      notifContainer.parentNode.insertBefore(navBar, notifContainer);
+    }
+
+    // Keyboard shortcut 'm' to mark notifications as read
+    document.addEventListener('keydown', (e) => {
+      if (e.target.matches('input, textarea, [contenteditable="true"]')) return;
+      if (e.key === 'm' || e.key === 'M') {
+        const markReadBtn = document.querySelector('button[name="action"][value="read"], .mark-read-button, .btn-mark-all-read');
+        if (markReadBtn) {
+          markReadBtn.click();
+        }
+      }
+    });
+  }
+
+  // GitHub Advanced Code Search Qualifiers Helper (T-SRC-1802)
+  const searchInput = document.querySelector('input[name="q"], .github-search-input');
+  if (searchInput && searchInput.parentElement) {
+    searchInput.parentElement.style.position = 'relative';
+    const popover = document.createElement('div');
+    popover.id = 'gh-search-qualifiers-popover';
+    popover.className = 'gh-search-qualifiers-popover';
+    popover.style.display = 'none';
+    popover.innerHTML = `
+      <div class="gh-qualifier-item" data-insert="path:"><span>Filtrer par chemin</span><span class="gh-qualifier-badge">path:</span></div>
+      <div class="gh-qualifier-item" data-insert="extension:"><span>Filtrer par extension</span><span class="gh-qualifier-badge">extension:</span></div>
+      <div class="gh-qualifier-item" data-insert="symbol:"><span>Recherche par symbole</span><span class="gh-qualifier-badge">symbol:</span></div>
+      <div class="gh-qualifier-item" data-insert="repo:"><span>Cibler un depot</span><span class="gh-qualifier-badge">repo:</span></div>
+      <div class="gh-qualifier-item" data-insert="lang:"><span>Langage</span><span class="gh-qualifier-badge">lang:</span></div>
+    `;
+    searchInput.parentElement.appendChild(popover);
+
+    searchInput.addEventListener('focus', () => {
+      popover.style.display = 'block';
+    });
+
+    popover.querySelectorAll('.gh-qualifier-item').forEach(item => {
+      item.addEventListener('mousedown', (e) => {
+        e.preventDefault();
+        const prefix = item.dataset.insert;
+        searchInput.value = (searchInput.value.trim() + ' ' + prefix).trimStart();
+        searchInput.focus();
+        popover.style.display = 'none';
+      });
+    });
+
+    document.addEventListener('click', (e) => {
+      if (!searchInput.contains(e.target) && !popover.contains(e.target)) {
+        popover.style.display = 'none';
+      }
+    });
+  }
+
+  // GitHub Pull Request Suggested Changes Polyfill (T-SUG-1902)
+  document.querySelectorAll('pre code').forEach(codeEl => {
+    const isSuggestion = codeEl.classList.contains('language-suggestion') ||
+                         codeEl.parentElement.classList.contains('language-suggestion') ||
+                         codeEl.textContent.trim().startsWith('```suggestion');
+    if (isSuggestion && !codeEl.closest('.gh-suggestion-box')) {
+      const rawText = codeEl.textContent.replace(/^```suggestion\s*/, '').replace(/```$/, '').trim();
+      const preEl = codeEl.parentElement;
+      const box = document.createElement('div');
+      box.className = 'gh-suggestion-box';
+      box.innerHTML = `
+        <div class="gh-suggestion-header">
+          <span>Suggested change</span>
+          <button type="button" class="gh-suggestion-btn" data-applied="false">Apply suggestion</button>
+        </div>
+        <div class="gh-suggestion-body">${rawText}</div>
+      `;
+
+      const btn = box.querySelector('.gh-suggestion-btn');
+      btn.addEventListener('click', () => {
+        if (navigator.clipboard) {
+          navigator.clipboard.writeText(rawText);
+        }
+        btn.textContent = 'Applied';
+        btn.style.borderColor = '#2da44e';
+        btn.style.color = '#1a7f37';
+        btn.disabled = true;
+      });
+
+      preEl.replaceWith(box);
+    }
+  });
+
+  // GitHub Modern Commit Network Graph Enhancer (T-GRP-2002)
+  const graphContainer = document.querySelector('#git-graph-container, #rel-container, .graph-inner, svg.graph');
+  if (graphContainer) {
+    const primerPalette = ['#0969da', '#1a7f37', '#8250df', '#bc4c00', '#cf222e'];
+    const svgEl = graphContainer.tagName.toLowerCase() === 'svg' ? graphContainer : graphContainer.querySelector('svg');
+    if (svgEl) {
+      svgEl.classList.add('gh-graph-canvas');
+      const parentWrap = svgEl.parentElement;
+      if (parentWrap && !parentWrap.classList.contains('gh-graph-container')) {
+        parentWrap.classList.add('gh-graph-container');
+      }
+
+      // Enhance commit dots
+      svgEl.querySelectorAll('circle').forEach((circle, idx) => {
+        circle.classList.add('gh-graph-dot');
+        const color = primerPalette[idx % primerPalette.length];
+        if (!circle.getAttribute('fill') || circle.getAttribute('fill') === 'currentColor') {
+          circle.setAttribute('fill', color);
+        }
+      });
+
+      // Enhance branch tags
+      document.querySelectorAll('.graph-label, .branch-tag, .flow-tag').forEach(tag => {
+        tag.classList.add('gh-graph-branch-tag');
+      });
+    }
+  }
+
+  // GitHub Modern Milestone Progress Calculator (T-MLS-2102)
+  const isMilestonesView = window.location.pathname.includes('/milestone') || document.querySelector('.milestone-list');
+  if (isMilestonesView) {
+    document.querySelectorAll('.milestone-item, .milestones-list .item, .milestone-card').forEach(item => {
+      item.classList.add('gh-milestone-card');
+      const text = item.textContent;
+      const openMatch = text.match(/(\d+)\s*(ouvert|open)/i);
+      const closedMatch = text.match(/(\d+)\s*(ferm[ée]|closed)/i);
+      const openCount = openMatch ? parseInt(openMatch[1], 10) : 0;
+      const closedCount = closedMatch ? parseInt(closedMatch[1], 10) : 0;
+      const total = openCount + closedCount;
+      const pct = total > 0 ? Math.round((closedCount / total) * 100) : 0;
+
+      let progressWrap = item.querySelector('.gh-milestone-progress-bar');
+      if (!progressWrap) {
+        progressWrap = document.createElement('div');
+        progressWrap.className = 'gh-milestone-progress-bar';
+        progressWrap.innerHTML = `<div class="gh-milestone-progress-fill" style="width: ${pct}%"></div>`;
+
+        const metaEl = document.createElement('div');
+        metaEl.className = 'gh-milestone-meta';
+        metaEl.innerHTML = `<span><strong>${pct}%</strong> complete</span> <span>${openCount} open</span> <span>${closedCount} closed</span>`;
+
+        const targetCol = item.querySelector('.milestone-progress, .right.floated, .content') || item;
+        targetCol.appendChild(progressWrap);
+        targetCol.appendChild(metaEl);
+      }
+    });
+  }
+
+  // GitHub Draft Pull Requests & Ready for Review Flow (T-DRF-2302)
+  const isPullRequestPage = window.location.pathname.includes('/pulls/');
+  if (isPullRequestPage) {
+    const titleHeader = document.querySelector('.issue-title-header, .header-wrapper, .issue-title');
+    const isDraft = document.title.includes('WIP:') ||
+                    (titleHeader && (titleHeader.textContent.includes('WIP:') || titleHeader.textContent.includes('Draft:')));
+
+    if (isDraft) {
+      // Inject Draft badge
+      const stateBadge = document.querySelector('.ui.label.green, .issue-state-badge');
+      if (stateBadge && !document.querySelector('.gh-draft-badge')) {
+        const draftBadge = document.createElement('span');
+        draftBadge.className = 'gh-draft-badge';
+        draftBadge.textContent = 'Draft';
+        stateBadge.replaceWith(draftBadge);
+      }
+
+      // Inject Draft banner above merge box
+      const mergeBox = document.querySelector('.gh-merge-box, .merge-section, #issue-comment-box');
+      if (mergeBox && !document.querySelector('.gh-draft-banner')) {
+        const banner = document.createElement('div');
+        banner.className = 'gh-draft-banner';
+        banner.innerHTML = `
+          <div>
+            <strong>This pull request is still a work in progress.</strong>
+            <p style="margin: 2px 0 0; font-size: 12px; color: var(--color-text-light, #656d76);">Draft pull requests cannot be merged until marked as ready.</p>
+          </div>
+          <button type="button" class="gh-ready-for-review-btn" id="btn-ready-review">Ready for review</button>
+        `;
+
+        const btn = banner.querySelector('#btn-ready-review');
+        btn.addEventListener('click', () => {
+          const wipForm = document.querySelector('form[action*="/toggle_wip"], button[name="toggle_wip"]');
+          if (wipForm) {
+            wipForm.click ? wipForm.click() : wipForm.submit();
+          } else {
+            banner.remove();
+          }
+        });
+
+        mergeBox.parentNode.insertBefore(banner, mergeBox);
+      }
+    }
+  }
+});
+</script>
+
+<script src="/assets/js/bantu-ecosystem-sync.js"></script>
+<script src="/static/js/bantu-command-terminal.js" defer></script>
+<script src="/assets/js/bantu-command-terminal.js" defer></script>
+<script>
+// Synchronisation Automatique de Langue et Mode d'Affichage avec BantuDevLab & GitLab Forge
+(function initGiteaBantuSync() {
+  function setupHeaderControls() {
+    const navBar = document.querySelector('nav#navbar, #navbar, .ui.menu.navbar');
+    if (!navBar) return;
+    const rightMenu = navBar.querySelector('.navbar-right, .right.menu') || navBar;
+
+    // 1. Language Quick Switcher in Gitea Header
+    if (!document.getElementById('gitea-bantu-lang-selector')) {
+      const langBox = document.createElement('div');
+      langBox.id = 'gitea-bantu-lang-selector';
+      langBox.style.display = 'inline-flex';
+      langBox.style.alignItems = 'center';
+      langBox.style.gap = '4px';
+      langBox.style.marginRight = '8px';
+      langBox.style.fontSize = '12px';
+
+      const langs = [
+        { code: 'fr', gitea: 'fr-FR', label: 'FR' },
+        { code: 'en', gitea: 'en-US', label: 'EN' },
+        { code: 'sw', gitea: 'sw-KE', label: 'SW' },
+        { code: 'pt', gitea: 'pt-PT', label: 'PT' }
+      ];
+
+      langs.forEach(l => {
+        const a = document.createElement('a');
+        a.href = '#';
+        a.textContent = l.label;
+        a.style.padding = '2px 6px';
+        a.style.borderRadius = '4px';
+        const isCurrent = document.cookie.includes('lang=' + l.gitea) || document.cookie.includes('bantu_lang=' + l.code);
+        a.style.color = isCurrent ? '#00e5ff' : '#94a3b8';
+        a.style.fontWeight = isCurrent ? 'bold' : 'normal';
+        a.style.border = isCurrent ? '1px solid #00e5ff' : '1px solid rgba(148, 163, 184, 0.2)';
+        a.style.textDecoration = 'none';
+        a.style.cursor = 'pointer';
+
+        a.addEventListener('click', function(e) {
+          e.preventDefault();
+          if (window.syncEcosystemChange) {
+            window.syncEcosystemChange(null, l.code);
+          } else {
+            document.cookie = 'lang=' + l.gitea + ';path=/;max-age=31536000';
+            document.cookie = 'django_language=' + l.code + ';path=/;max-age=31536000';
+            document.cookie = 'bantu_lang=' + l.code + ';path=/;max-age=31536000';
+          }
+          const u = new URL(window.location.href);
+          u.searchParams.set('lang', l.gitea);
+          window.location.href = u.toString();
+        });
+        langBox.appendChild(a);
+      });
+
+      rightMenu.insertBefore(langBox, rightMenu.firstChild);
+    }
+
+    // 2. Theme Toggle Button in Gitea Header (Instant Anti-Flash Switcher)
+    if (!document.getElementById('gitea-theme-toggle-btn')) {
+      const themeBtn = document.createElement('button');
+      themeBtn.id = 'gitea-theme-toggle-btn';
+      themeBtn.type = 'button';
+      themeBtn.title = 'Basculer Theme Clair / Sombre';
+      themeBtn.style.display = 'inline-flex';
+      themeBtn.style.alignItems = 'center';
+      themeBtn.style.gap = '5px';
+      themeBtn.style.padding = '3px 8px';
+      themeBtn.style.marginRight = '8px';
+      themeBtn.style.borderRadius = '6px';
+      themeBtn.style.background = 'var(--color-canvas-subtle, #161b22)';
+      themeBtn.style.border = '1px solid var(--color-border-default, #30363d)';
+      themeBtn.style.color = 'var(--color-text, #f8fafc)';
+      themeBtn.style.fontSize = '12px';
+      themeBtn.style.cursor = 'pointer';
+
+      function renderThemeBtn(isDark) {
+        themeBtn.innerHTML = isDark ?
+          '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg> <span>Clair</span>' :
+          '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#0070f3" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg> <span>Sombre</span>';
+      }
+
+      const initialDark = (document.documentElement.getAttribute('data-theme') || 'dark') === 'dark';
+      renderThemeBtn(initialDark);
+
+      themeBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        const curTheme = document.documentElement.getAttribute('data-theme') || 'dark';
+        const nextTheme = (curTheme === 'dark') ? 'light' : 'dark';
+        const nextGiteaTheme = (nextTheme === 'dark') ? 'github-dark' : 'github';
+
+        renderThemeBtn(nextTheme === 'dark');
+
+        if (window.syncEcosystemChange) {
+          window.syncEcosystemChange(nextTheme, null);
+        } else {
+          document.documentElement.setAttribute('data-theme', nextTheme);
+          document.cookie = 'theme=' + nextGiteaTheme + ';path=/;max-age=31536000';
+          document.cookie = 'bantu_theme=' + nextTheme + ';path=/;max-age=31536000';
+          try {
+            localStorage.setItem('bantu_theme', nextTheme);
+          } catch(err) {}
+
+          const antiFouc = document.getElementById('bantu-anti-fouc-critical');
+          if (antiFouc) {
+            const bgBody = (nextTheme === 'dark') ? '#020617' : '#ffffff';
+            const colorBody = (nextTheme === 'dark') ? '#f8fafc' : '#0f172a';
+            antiFouc.innerHTML = 'html, body, .full.height, #wrapper, .page-content { background-color: ' + bgBody + ' !important; color: ' + colorBody + ' !important; }';
+          }
+
+          document.querySelectorAll('link[rel="stylesheet"]').forEach(l => {
+            if (l.href && l.href.includes('theme-github')) {
+              const targetHref = (nextTheme === 'light') ?
+                l.href.replace('theme-github-dark.css', 'theme-github.css') :
+                l.href.replace('theme-github.css', 'theme-github-dark.css');
+              if (l.href !== targetHref) l.href = targetHref;
+            }
+          });
+        }
+      });
+
+      rightMenu.insertBefore(themeBtn, rightMenu.firstChild);
+    }
+  }
+
+  // 3. Synchronisation Specifique de la Page Apparence (/user/settings/appearance)
+  function setupAppearancePageSync() {
+    if (!window.location.pathname.includes('/user/settings/appearance')) return;
+
+    function captureAndSync() {
+      var themeSelect = document.querySelector('select[name="theme"]') || document.querySelector('input[name="theme"]');
+      var langSelect = document.querySelector('select[name="language"]') || document.querySelector('select[name="lang"]') || document.querySelector('input[name="language"]');
+
+      var chosenTheme = null;
+      var chosenLang = null;
+
+      if (themeSelect && themeSelect.value) {
+        var tVal = themeSelect.value;
+        var isD = (tVal.indexOf('dark') !== -1 || tVal === 'arc-green' || tVal === 'github-dark' || tVal === 'gitea-dark');
+        chosenTheme = isD ? 'dark' : 'light';
+      }
+
+      if (langSelect && langSelect.value) {
+        var lVal = langSelect.value;
+        if (lVal.indexOf('en') === 0) chosenLang = 'en';
+        else if (lVal.indexOf('sw') === 0) chosenLang = 'sw';
+        else if (lVal.indexOf('pt') === 0) chosenLang = 'pt';
+        else if (lVal.indexOf('fr') === 0) chosenLang = 'fr';
+      }
+
+      if (window.syncEcosystemChange && (chosenTheme || chosenLang)) {
+        window.syncEcosystemChange(chosenTheme, chosenLang);
+      } else {
+        if (chosenTheme) {
+          var gTheme = (chosenTheme === 'dark') ? 'github-dark' : 'github';
+          document.cookie = 'bantu_theme=' + chosenTheme + ';path=/;max-age=31536000';
+          document.cookie = 'theme=' + gTheme + ';path=/;max-age=31536000';
+          try { localStorage.setItem('bantu_theme', chosenTheme); } catch(e) {}
+        }
+        if (chosenLang) {
+          var gLang = (chosenLang === 'en') ? 'en-US' : (chosenLang === 'sw') ? 'sw-KE' : (chosenLang === 'pt') ? 'pt-PT' : 'fr-FR';
+          document.cookie = 'bantu_lang=' + chosenLang + ';path=/;max-age=31536000';
+          document.cookie = 'django_language=' + chosenLang + ';path=/;max-age=31536000';
+          document.cookie = 'lang=' + gLang + ';path=/;max-age=31536000';
+          try {
+            localStorage.setItem('bantu_lang', chosenLang);
+            sessionStorage.setItem('bantu_lang_toast', chosenLang);
+          } catch(e) {}
+        }
+      }
+    }
+
+    document.addEventListener('change', function(e) {
+      if (e.target && (e.target.name === 'theme' || e.target.name === 'language' || e.target.name === 'lang')) {
+        captureAndSync();
+      }
+    });
+
+    document.querySelectorAll('form').forEach(function(form) {
+      form.addEventListener('submit', function() {
+        captureAndSync();
+      });
+    });
+  }
+
+  setupAppearancePageSync();
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', setupHeaderControls);
+  } else {
+    setupHeaderControls();
+  }
+})();
+</script>

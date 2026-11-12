@@ -1,0 +1,991 @@
+/* ==========================================================================
+   BANTUDEVLAB - Theme GitHub Light (GitHub Primer Design Tokens)
+   Compatible Gitea 1.22+ / Aligné sur GitHub Moderne
+   ========================================================================== */
+
+:root {
+  /* GitHub Primer Color Tokens (Light) */
+  --color-canvas-default: #ffffff;
+  --color-canvas-subtle: #f6f8fa;
+  --color-border-default: #d0d7de;
+  --color-border-muted: hsla(210, 18%, 87%, 1);
+  --color-neutral-muted: rgba(175, 184, 193, 0.2);
+  --color-accent-fg: #0969da;
+  --color-accent-emphasis: #0969da;
+  --color-success-fg: #1a7f37;
+  --color-success-emphasis: #1f883d;
+  --color-attention-fg: #9a6700;
+  --color-attention-emphasis: #bf8700;
+  --color-severe-fg: #bc4c00;
+  --color-danger-fg: #cf222e;
+  --color-danger-emphasis: #cf222e;
+  --color-done-fg: #8250df;
+  --color-done-emphasis: #8250df;
+
+  /* Gitea Internal Mapping to GitHub Primer */
+  --color-primary: #1f883d;
+  --color-primary-contrast: #ffffff;
+  --color-primary-dark-1: #1a7f37;
+  --color-primary-dark-2: #156c2e;
+  --color-primary-dark-3: #115724;
+  --color-primary-dark-4: #0d421b;
+  --color-primary-light-1: #2da44e;
+  --color-primary-light-2: #4ac26b;
+  --color-primary-light-3: #8add9e;
+  --color-primary-light-4: #cbf4c9;
+  --color-primary-light-5: #eafbe7;
+  --color-primary-alpha-10: rgba(31, 136, 61, 0.1);
+  --color-primary-alpha-20: rgba(31, 136, 61, 0.2);
+  --color-primary-alpha-30: rgba(31, 136, 61, 0.3);
+
+  --color-body: #ffffff;
+  --color-box-header: #f6f8fa;
+  --color-box-body: #ffffff;
+  --color-text: #1f2328;
+  --color-text-light: #656d76;
+  --color-text-light-1: #656d76;
+  --color-text-light-2: #656d76;
+  --color-text-light-3: #8c959f;
+  --color-text-dark: #1f2328;
+
+  --color-footer: #f6f8fa;
+  --color-navbar: #f6f8fa;
+  --color-navbar-transparent: rgba(246, 248, 250, 0.9);
+  --color-light: #f6f8fa;
+  --color-light-mimic-enabled: rgba(0, 0, 0, calc(40 / 255 * 222 / 255 / var(--opacity-boost)));
+  --color-light-border: #d0d7de;
+
+  --color-secondary: #f6f8fa;
+  --color-secondary-bg: #f6f8fa;
+  --color-secondary-border: #d0d7de;
+  --color-secondary-border-dark-1: #afb8c1;
+  --color-secondary-border-dark-2: #8c959f;
+  --color-secondary-hover: #f3f4f6;
+  --color-secondary-active: #ebecf0;
+
+  --color-hover: #f3f4f6;
+  --color-active: #ebecf0;
+  --color-border: #d0d7de;
+  --color-border-subtle: #ebecf0;
+
+  --color-red: #cf222e;
+  --color-orange: #bc4c00;
+  --color-yellow: #9a6700;
+  --color-green: #1a7f37;
+  --color-teal: #1b7c83;
+  --color-blue: #0969da;
+  --color-purple: #8250df;
+
+  /* Typography Stack - GitHub Native */
+  --fonts-regular: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+  --fonts-monospace: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
+  --border-radius: 6px;
+  --border-radius-medium: 6px;
+}
+
+body {
+  font-family: var(--fonts-regular);
+  color: var(--color-text);
+  background-color: var(--color-body);
+}
+
+/* GitHub Style Top Navigation */
+.ui.menu.navbar {
+  background-color: #f6f8fa !important;
+  border-bottom: 1px solid #d0d7de !important;
+  box-shadow: none !important;
+}
+
+/* GitHub Style Repository Header & Tabs */
+.ui.tabular.menu {
+  border-bottom: 1px solid #d0d7de !important;
+}
+
+.ui.tabular.menu .item {
+  border: none !important;
+  border-bottom: 2px solid transparent !important;
+  color: #656d76 !important;
+  font-weight: 500 !important;
+  padding: 8px 16px !important;
+  border-radius: 0 !important;
+}
+
+.ui.tabular.menu .item.active {
+  border-bottom: 2px solid #fd8c73 !important;
+  color: #1f2328 !important;
+  font-weight: 600 !important;
+  background: transparent !important;
+}
+
+.ui.tabular.menu .item:hover {
+  border-bottom: 2px solid #d0d7de !important;
+  color: #1f2328 !important;
+}
+
+/* GitHub Style Buttons */
+.ui.button {
+  border-radius: 6px !important;
+  font-weight: 500 !important;
+  box-shadow: 0 1px 0 rgba(27, 31, 36, 0.04) !important;
+  border: 1px solid #d0d7de !important;
+}
+
+.ui.button.primary, .ui.button.green {
+  background-color: #1f883d !important;
+  color: #ffffff !important;
+  border-color: rgba(27, 31, 36, 0.15) !important;
+  box-shadow: 0 1px 0 rgba(27, 31, 36, 0.1) !important;
+}
+
+.ui.button.primary:hover, .ui.button.green:hover {
+  background-color: #1a7f37 !important;
+}
+
+/* GitHub Style Rounded Counter Badges */
+.ui.label, .counter {
+  border-radius: 20px !important;
+  font-weight: 500 !important;
+  font-size: 12px !important;
+  background-color: rgba(175, 184, 193, 0.2) !important;
+  color: #1f2328 !important;
+}
+
+/* GitHub Style Panels / Segments */
+.ui.segment {
+  border-radius: 6px !important;
+  border: 1px solid #d0d7de !important;
+  box-shadow: none !important;
+}
+
+/* GitHub Flavored Markdown Alerts (T-UI-603) */
+.markdown-alert, blockquote.alert-note, blockquote.alert-tip, blockquote.alert-important, blockquote.alert-warning, blockquote.alert-caution {
+  padding: 8px 16px !important;
+  margin-bottom: 16px !important;
+  border-left: 0.25em solid #0969da !important;
+  border-radius: 0 6px 6px 0 !important;
+  background-color: var(--color-canvas-subtle, #f6f8fa) !important;
+}
+
+.markdown-alert-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 600;
+  font-size: 14px;
+  margin-bottom: 4px;
+}
+
+.markdown-alert-note { border-left-color: #0969da !important; }
+.markdown-alert-note .markdown-alert-title { color: #0969da; }
+
+.markdown-alert-tip { border-left-color: #1a7f37 !important; }
+.markdown-alert-tip .markdown-alert-title { color: #1a7f37; }
+
+.markdown-alert-important { border-left-color: #8250df !important; }
+.markdown-alert-important .markdown-alert-title { color: #8250df; }
+
+.markdown-alert-warning { border-left-color: #9a6700 !important; }
+.markdown-alert-warning .markdown-alert-title { color: #9a6700; }
+
+.markdown-alert-caution { border-left-color: #cf222e !important; }
+.markdown-alert-caution .markdown-alert-title { color: #cf222e; }
+
+/* GitHub Rounded Star / Fork / Watch Buttons */
+.repo-buttons .ui.labeled.button, .ui.buttons .ui.button {
+  border-radius: 6px !important;
+  font-size: 12px !important;
+  font-weight: 500 !important;
+}
+
+.repo-buttons .ui.basic.label {
+  border-radius: 0 6px 6px 0 !important;
+  border-left: 0 !important;
+  background: var(--color-canvas-default, #ffffff) !important;
+  color: var(--color-text, #1f2328) !important;
+  font-weight: 600 !important;
+  padding: 4px 8px !important;
+}
+
+/* GitHub Modern Pull Request Merge Box & Status Checks (T-PR-802) */
+.gh-merge-box, .ui.segment.branch-status, .diff-detail-box.merge-box {
+  border: 1px solid var(--color-border-default, #d0d7de) !important;
+  border-radius: 8px !important;
+  background-color: var(--color-canvas-default, #ffffff) !important;
+  padding: 16px !important;
+  margin-top: 16px !important;
+  box-shadow: 0 1px 3px rgba(31, 35, 40, 0.12) !important;
+}
+
+.gh-merge-box.clean, .branch-status.clean {
+  border-left: 5px solid #1a7f37 !important;
+}
+
+.gh-merge-box.conflict, .branch-status.conflict {
+  border-left: 5px solid #cf222e !important;
+}
+
+.gh-merge-box.checking, .branch-status.checking {
+  border-left: 5px solid #bf8700 !important;
+}
+
+.gh-status-check-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--color-border-muted, #afb8c1);
+  font-size: 13px;
+}
+
+.gh-status-check-item:last-child {
+  border-bottom: none;
+}
+
+.gh-status-check-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 500;
+}
+
+.gh-status-check-badge.success {
+  color: #1a7f37;
+  font-weight: 600;
+}
+
+.gh-status-check-badge.failure {
+  color: #cf222e;
+  font-weight: 600;
+}
+
+.gh-status-check-badge.pending {
+  color: #bf8700;
+  font-weight: 600;
+}
+
+.gh-merge-action-bar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding-top: 12px;
+  margin-top: 12px;
+  border-top: 1px solid var(--color-border-default, #d0d7de);
+}
+
+.gh-merge-btn-primary {
+  background-color: #1f883d !important;
+  color: #ffffff !important;
+  border-radius: 6px !important;
+  font-weight: 600 !important;
+  padding: 7px 16px !important;
+  border: 1px solid rgba(31, 35, 40, 0.15) !important;
+  box-shadow: 0 1px 0 rgba(31, 35, 40, 0.1) !important;
+}
+
+.gh-merge-btn-primary:hover {
+  background-color: #1a7f37 !important;
+}
+
+/* GitHub Interactive Blame View & Heatmap Gradient (T-BLM-901) */
+.blame .lines-blame, .file-view.blame table {
+  border-collapse: separate !important;
+  border-spacing: 0 !important;
+}
+
+.blame-commit, .lines-blame td.blame-line {
+  position: relative !important;
+  padding: 4px 12px !important;
+  font-size: 12px !important;
+  border-bottom: 1px solid var(--color-border-muted, #afb8c1) !important;
+  background-color: var(--color-canvas-subtle, #f6f8fa) !important;
+}
+
+.gh-blame-heat-marker, .blame-heat-gradient {
+  display: inline-block;
+  width: 4px;
+  height: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+.gh-blame-heat-marker.heat-new { background-color: #0969da; }
+.gh-blame-heat-marker.heat-mid { background-color: #8250df; }
+.gh-blame-heat-marker.heat-old { background-color: #afb8c1; }
+
+.blame-commit-author {
+  font-weight: 600;
+  color: var(--color-text, #1f2328);
+}
+
+.blame-commit-date {
+  color: var(--color-text-light, #656d76);
+  font-size: 11px;
+  margin-left: 6px;
+}
+
+.blame-commit-message {
+  color: var(--color-text, #1f2328);
+  margin-top: 2px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 320px;
+}
+
+/* GitHub Modern Markdown Tables (T-TAB-1001) */
+.markdown table, .markup table {
+  border-spacing: 0 !important;
+  border-collapse: collapse !important;
+  display: block !important;
+  width: max-content !important;
+  max-width: 100% !important;
+  overflow: auto !important;
+  margin-top: 0 !important;
+  margin-bottom: 16px !important;
+}
+
+.markdown table th, .markup table th {
+  font-weight: 600 !important;
+  padding: 6px 13px !important;
+  border: 1px solid var(--color-border-default, #d0d7de) !important;
+  background-color: var(--color-canvas-subtle, #f6f8fa) !important;
+  color: var(--color-text, #1f2328) !important;
+}
+
+.markdown table td, .markup table td {
+  padding: 6px 13px !important;
+  border: 1px solid var(--color-border-default, #d0d7de) !important;
+}
+
+.markdown table tr:nth-child(2n), .markup table tr:nth-child(2n) {
+  background-color: var(--color-canvas-subtle, #f6f8fa) !important;
+}
+
+/* GitHub Pinned Repositories & Language Dots (T-PRF-1201) */
+.gh-pinned-repo-grid {
+  display: grid !important;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)) !important;
+  gap: 16px !important;
+  margin-top: 12px !important;
+  margin-bottom: 24px !important;
+}
+
+.gh-pinned-repo-card {
+  border: 1px solid var(--color-border-default, #d0d7de) !important;
+  border-radius: 6px !important;
+  padding: 16px !important;
+  background-color: var(--color-canvas-default, #ffffff) !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: space-between !important;
+  transition: border-color 0.15s ease !important;
+}
+
+.gh-pinned-repo-card:hover {
+  border-color: var(--color-accent-fg, #0969da) !important;
+}
+
+.gh-pinned-repo-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.gh-pinned-repo-desc {
+  font-size: 12px;
+  color: var(--color-text-light, #656d76);
+  margin-top: 8px;
+  margin-bottom: 12px;
+  flex: 1;
+}
+
+.gh-pinned-repo-meta {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  font-size: 12px;
+  color: var(--color-text-light, #656d76);
+}
+
+.repo-language-color {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  margin-right: 4px;
+}
+
+.repo-lang-python { background-color: #3572A5; }
+.repo-lang-javascript { background-color: #f1e05a; }
+.repo-lang-typescript { background-color: #3178c6; }
+.repo-lang-go { background-color: #00ADD8; }
+.repo-lang-rust { background-color: #dea584; }
+.repo-lang-html { background-color: #e34c26; }
+
+/* GitHub Accessible Text Reactions & Badges (T-REA-1301) */
+.gh-reactions-container, .ui.labeled.button.reaction-button {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+  margin-top: 6px !important;
+}
+
+.gh-reaction-btn, .reaction-button {
+  background-color: var(--color-canvas-subtle, #f6f8fa) !important;
+  border: 1px solid var(--color-border-default, #d0d7de) !important;
+  border-radius: 20px !important;
+  padding: 2px 8px !important;
+  font-size: 11px !important;
+  font-weight: 600 !important;
+  color: var(--color-text, #1f2328) !important;
+  cursor: pointer !important;
+  transition: background-color 0.15s ease, border-color 0.15s ease !important;
+}
+
+.gh-reaction-btn:hover, .reaction-button:hover {
+  background-color: var(--color-canvas-default, #ffffff) !important;
+  border-color: var(--color-accent-fg, #0969da) !important;
+}
+
+.gh-reaction-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.gh-reaction-tag {
+  font-size: 11px;
+  font-weight: 600;
+  padding: 1px 6px;
+  border-radius: 12px;
+  background: var(--color-neutral-muted, rgba(175,184,193,0.2));
+  color: var(--color-text, #1f2328);
+}
+
+/* GitHub Webhook Deliveries & Status Pills (T-WHK-1402) */
+.gh-webhook-delivery-list {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 8px !important;
+  margin-top: 12px !important;
+}
+
+.gh-webhook-delivery-item {
+  border: 1px solid var(--color-border-default, #d0d7de) !important;
+  border-radius: 6px !important;
+  padding: 10px 14px !important;
+  background-color: var(--color-canvas-default, #ffffff) !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  font-size: 13px !important;
+}
+
+.gh-status-pill {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 4px !important;
+  font-size: 11px !important;
+  font-weight: 600 !important;
+  padding: 2px 8px !important;
+  border-radius: 12px !important;
+}
+
+.gh-status-pill.success {
+  background-color: rgba(46, 160, 67, 0.15) !important;
+  color: #1a7f37 !important;
+}
+
+.gh-status-pill.failure {
+  background-color: rgba(248, 81, 73, 0.15) !important;
+  color: #cf222e !important;
+}
+
+/* GitHub Verified & Unverified Commit Badges (T-BRN-1501) */
+.gh-commit-badge, .ui.label.text.green, .commit-status-badge {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 4px !important;
+  font-size: 11px !important;
+  font-weight: 600 !important;
+  padding: 1px 7px !important;
+  border-radius: 12px !important;
+  text-decoration: none !important;
+  border: 1px solid transparent !important;
+}
+
+.gh-commit-badge.verified, .ui.label.text.green {
+  border-color: #2da44e !important;
+  color: #1a7f37 !important;
+  background-color: rgba(46, 160, 67, 0.1) !important;
+}
+
+.gh-commit-badge.unverified {
+  border-color: var(--color-border-default, #d0d7de) !important;
+  color: var(--color-text-light, #656d76) !important;
+  background-color: var(--color-canvas-subtle, #f6f8fa) !important;
+}
+
+/* GitHub Notifications Inbox & Filter Tabs (T-NTF-1601) */
+.gh-notifications-nav {
+  display: flex !important;
+  gap: 8px !important;
+  border-bottom: 1px solid var(--color-border-default, #d0d7de) !important;
+  padding-bottom: 8px !important;
+  margin-bottom: 16px !important;
+}
+
+.gh-notifications-nav .gh-filter-tab {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+  padding: 6px 12px !important;
+  font-size: 13px !important;
+  font-weight: 500 !important;
+  color: var(--color-text-light, #656d76) !important;
+  border-radius: 6px !important;
+  cursor: pointer !important;
+  text-decoration: none !important;
+}
+
+.gh-notifications-nav .gh-filter-tab:hover,
+.gh-notifications-nav .gh-filter-tab.active {
+  background-color: var(--color-canvas-subtle, #f6f8fa) !important;
+  color: var(--color-text-default, #1f2328) !important;
+  font-weight: 600 !important;
+}
+
+.gh-filter-badge {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  min-width: 18px !important;
+  height: 18px !important;
+  padding: 0 6px !important;
+  font-size: 11px !important;
+  font-weight: 600 !important;
+  border-radius: 9px !important;
+  background-color: rgba(175, 184, 193, 0.2) !important;
+  color: var(--color-text-light, #656d76) !important;
+}
+
+.gh-notification-item {
+  display: flex !important;
+  align-items: flex-start !important;
+  gap: 12px !important;
+  padding: 12px 16px !important;
+  border-bottom: 1px solid var(--color-border-muted, #d8dee4) !important;
+  transition: background-color 0.15s ease !important;
+}
+
+.gh-notification-item:hover {
+  background-color: var(--color-canvas-subtle, #f6f8fa) !important;
+}
+
+.gh-notification-item.gh-notification-unread {
+  background-color: rgba(9, 105, 218, 0.04) !important;
+  border-left: 3px solid #0969da !important;
+}
+
+/* GitHub Advanced Code Search & Qualifiers Popover (T-SRC-1801) */
+.gh-search-qualifiers-popover {
+  position: absolute !important;
+  top: 100% !important;
+  left: 0 !important;
+  width: 320px !important;
+  background-color: var(--color-canvas-default, #ffffff) !important;
+  border: 1px solid var(--color-border-default, #d0d7de) !important;
+  border-radius: 6px !important;
+  box-shadow: 0 8px 24px rgba(140, 149, 159, 0.2) !important;
+  padding: 8px 0 !important;
+  z-index: 1000 !important;
+  margin-top: 4px !important;
+}
+
+.gh-qualifier-item {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  padding: 6px 12px !important;
+  cursor: pointer !important;
+  font-size: 12px !important;
+  color: var(--color-text-default, #1f2328) !important;
+}
+
+.gh-qualifier-item:hover {
+  background-color: var(--color-canvas-subtle, #f6f8fa) !important;
+}
+
+.gh-qualifier-badge {
+  font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace !important;
+  font-size: 11px !important;
+  padding: 2px 6px !important;
+  border-radius: 4px !important;
+  background-color: rgba(175, 184, 193, 0.2) !important;
+  color: var(--color-accent-fg, #0969da) !important;
+  font-weight: 600 !important;
+}
+
+/* GitHub Pull Request Suggested Changes Widget (T-SUG-1901) */
+.gh-suggestion-box {
+  border: 1px solid var(--color-border-default, #d0d7de) !important;
+  border-radius: 6px !important;
+  overflow: hidden !important;
+  margin: 12px 0 !important;
+  background-color: var(--color-canvas-default, #ffffff) !important;
+}
+
+.gh-suggestion-header {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  padding: 8px 12px !important;
+  background-color: var(--color-canvas-subtle, #f6f8fa) !important;
+  border-bottom: 1px solid var(--color-border-default, #d0d7de) !important;
+  font-size: 12px !important;
+  font-weight: 600 !important;
+  color: var(--color-text-default, #1f2328) !important;
+}
+
+.gh-suggestion-body {
+  font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace !important;
+  font-size: 12px !important;
+  line-height: 1.5 !important;
+  background-color: rgba(46, 160, 67, 0.08) !important;
+  padding: 10px 12px !important;
+  color: #1a7f37 !important;
+  white-space: pre-wrap !important;
+  border-left: 3px solid #2da44e !important;
+}
+
+.gh-suggestion-btn {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 4px !important;
+  font-size: 12px !important;
+  font-weight: 500 !important;
+  padding: 3px 10px !important;
+  border-radius: 6px !important;
+  border: 1px solid var(--color-border-default, #d0d7de) !important;
+  background-color: var(--color-btn-bg, #f6f8fa) !important;
+  color: var(--color-text-default, #1f2328) !important;
+  cursor: pointer !important;
+  transition: background-color 0.1s ease !important;
+}
+
+.gh-suggestion-btn:hover {
+  background-color: rgba(46, 160, 67, 0.15) !important;
+  border-color: #2da44e !important;
+  color: #1a7f37 !important;
+}
+
+/* GitHub Modern Commit Graph & Topology (T-GRP-2001) */
+.gh-graph-container {
+  overflow-x: auto !important;
+  padding: 16px !important;
+  background-color: var(--color-canvas-default, #ffffff) !important;
+  border: 1px solid var(--color-border-default, #d0d7de) !important;
+  border-radius: 6px !important;
+  margin: 16px 0 !important;
+}
+
+.gh-graph-dot {
+  r: 4 !important;
+  transition: r 0.15s ease, stroke-width 0.15s ease !important;
+  cursor: pointer !important;
+}
+
+.gh-graph-dot:hover {
+  r: 6 !important;
+  stroke: #ffffff !important;
+  stroke-width: 2 !important;
+}
+
+.gh-graph-branch-tag {
+  display: inline-flex !important;
+  align-items: center !important;
+  font-size: 11px !important;
+  font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace !important;
+  font-weight: 600 !important;
+  padding: 2px 8px !important;
+  border-radius: 12px !important;
+  background-color: var(--color-canvas-subtle, #f6f8fa) !important;
+  border: 1px solid var(--color-border-default, #d0d7de) !important;
+  color: var(--color-text-default, #1f2328) !important;
+}
+
+/* GitHub Milestones & Burndown Progress (T-MLS-2101) */
+.gh-milestone-card {
+  padding: 16px !important;
+  border: 1px solid var(--color-border-default, #d0d7de) !important;
+  border-radius: 6px !important;
+  margin-bottom: 16px !important;
+  background-color: var(--color-canvas-default, #ffffff) !important;
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+}
+
+.gh-milestone-progress-bar {
+  height: 8px !important;
+  background-color: var(--color-canvas-subtle, #f6f8fa) !important;
+  border-radius: 4px !important;
+  overflow: hidden !important;
+  border: 1px solid var(--color-border-default, #d0d7de) !important;
+  width: 240px !important;
+  margin: 6px 0 !important;
+}
+
+.gh-milestone-progress-fill {
+  height: 100% !important;
+  background-color: #2da44e !important;
+  transition: width 0.3s ease !important;
+}
+
+.gh-milestone-meta {
+  font-size: 12px !important;
+  color: var(--color-text-light, #656d76) !important;
+  display: flex !important;
+  gap: 12px !important;
+  align-items: center !important;
+}
+
+/* GitHub Organization Teams & Role Matrix (T-ORG-2201) */
+.gh-team-card {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  padding: 12px 16px !important;
+  border: 1px solid var(--color-border-default, #d0d7de) !important;
+  border-radius: 6px !important;
+  margin-bottom: 10px !important;
+  background-color: var(--color-canvas-default, #ffffff) !important;
+}
+
+.gh-role-badge {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 4px !important;
+  font-size: 11px !important;
+  font-weight: 600 !important;
+  padding: 2px 8px !important;
+  border-radius: 12px !important;
+  text-decoration: none !important;
+  border: 1px solid transparent !important;
+}
+
+.gh-role-badge.triage {
+  background-color: rgba(9, 105, 218, 0.1) !important;
+  color: #0969da !important;
+  border-color: rgba(9, 105, 218, 0.3) !important;
+}
+
+.gh-role-badge.maintain {
+  background-color: rgba(130, 80, 223, 0.1) !important;
+  color: #8250df !important;
+  border-color: rgba(130, 80, 223, 0.3) !important;
+}
+
+.gh-role-badge.admin {
+  background-color: rgba(207, 34, 46, 0.1) !important;
+  color: #cf222e !important;
+  border-color: rgba(207, 34, 46, 0.3) !important;
+}
+
+/* GitHub Draft Pull Requests & Ready for Review (T-DRF-2301) */
+.gh-draft-badge {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+  font-size: 13px !important;
+  font-weight: 600 !important;
+  padding: 4px 10px !important;
+  border-radius: 20px !important;
+  background-color: var(--color-canvas-subtle, #f6f8fa) !important;
+  border: 1px solid var(--color-border-default, #d0d7de) !important;
+  color: var(--color-text-light, #656d76) !important;
+}
+
+.gh-draft-banner {
+  padding: 12px 16px !important;
+  border: 1px solid var(--color-border-default, #d0d7de) !important;
+  border-radius: 6px !important;
+  background-color: var(--color-canvas-subtle, #f6f8fa) !important;
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  margin: 12px 0 !important;
+}
+
+.gh-ready-for-review-btn {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 4px !important;
+  font-size: 12px !important;
+  font-weight: 600 !important;
+  padding: 4px 12px !important;
+  border-radius: 6px !important;
+  border: 1px solid #2da44e !important;
+  background-color: #2da44e !important;
+  color: #ffffff !important;
+  cursor: pointer !important;
+  transition: opacity 0.15s ease !important;
+}
+
+.gh-ready-for-review-btn:hover {
+  opacity: 0.9 !important;
+}
+
+/* GitHub Merge Queue & Status Badges (T-MRG-2401) */
+.gh-merge-queue-badge {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+  font-size: 11px !important;
+  font-weight: 600 !important;
+  padding: 3px 8px !important;
+  border-radius: 12px !important;
+  background-color: rgba(9, 105, 218, 0.1) !important;
+  color: #0969da !important;
+  border: 1px solid rgba(9, 105, 218, 0.3) !important;
+}
+
+.gh-merge-queue-box {
+  padding: 16px !important;
+  border: 1px solid var(--color-border-default, #d0d7de) !important;
+  border-radius: 6px !important;
+  background-color: var(--color-canvas-default, #ffffff) !important;
+  margin: 16px 0 !important;
+}
+
+.gh-merge-queue-item {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  padding: 8px 12px !important;
+  border-bottom: 1px solid var(--color-border-muted, #d8dee4) !important;
+  font-size: 13px !important;
+}
+
+.gh-merge-queue-item:last-child {
+  border-bottom: none !important;
+}
+
+/* GitHub Security Advisories & Severity Badges (T-SEC-2501) */
+.gh-advisory-card {
+  padding: 16px !important;
+  border: 1px solid var(--color-border-default, #d0d7de) !important;
+  border-radius: 6px !important;
+  margin-bottom: 12px !important;
+  background-color: var(--color-canvas-default, #ffffff) !important;
+}
+
+.gh-severity-badge {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 4px !important;
+  font-size: 11px !important;
+  font-weight: 700 !important;
+  padding: 2px 8px !important;
+  border-radius: 12px !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.5px !important;
+}
+
+.gh-severity-badge.critical {
+  background-color: rgba(207, 34, 46, 0.15) !important;
+  color: #cf222e !important;
+  border: 1px solid rgba(207, 34, 46, 0.3) !important;
+}
+
+.gh-severity-badge.high {
+  background-color: rgba(188, 76, 0, 0.15) !important;
+  color: #bc4c00 !important;
+  border: 1px solid rgba(188, 76, 0, 0.3) !important;
+}
+
+.gh-severity-badge.medium {
+  background-color: rgba(154, 103, 0, 0.15) !important;
+  color: #9a6700 !important;
+  border: 1px solid rgba(154, 103, 0, 0.3) !important;
+}
+
+.gh-severity-badge.low {
+  background-color: rgba(9, 105, 218, 0.15) !important;
+  color: #0969da !important;
+  border: 1px solid rgba(9, 105, 218, 0.3) !important;
+}
+
+.gh-confidential-banner {
+  padding: 12px 16px !important;
+  border: 1px solid rgba(188, 76, 0, 0.3) !important;
+  border-radius: 6px !important;
+  background-color: rgba(188, 76, 0, 0.08) !important;
+  color: #7d4e00 !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 12px !important;
+  margin-bottom: 16px !important;
+}
+
+
+
+
+
+
+
+
+
+
+
+/* ==========================================================================
+   SOLID OPAQUE MODALS & REDUCED WINDOW FIX (T27.7 - ZERO TRANSPARENCY LEAK)
+   ========================================================================== */
+.ui.dimmer {
+  background-color: rgba(27, 31, 36, 0.65) !important;
+  backdrop-filter: blur(2px) !important;
+}
+
+.ui.modal,
+.ui.modal > .header,
+.ui.modal > .content,
+.ui.modal > .actions {
+  background-color: #ffffff !important;
+  color: #1f2328 !important;
+  border-color: #d0d7de !important;
+  opacity: 1 !important;
+}
+
+.ui.modal {
+  border: 1px solid #d0d7de !important;
+  border-radius: 8px !important;
+  box-shadow: 0 16px 32px rgba(1, 4, 9, 0.28) !important;
+  background: #ffffff !important;
+}
+
+/* Reduced window, mobile menu, dropdowns & popups - solid opaque */
+.ui.dropdown .menu,
+.ui.popup,
+.ui.vertical.menu,
+.mobile-menu,
+.following.bar,
+.ui.attached.menu {
+  background-color: #ffffff !important;
+  color: #1f2328 !important;
+  border: 1px solid #d0d7de !important;
+  opacity: 1 !important;
+  box-shadow: 0 8px 24px rgba(140, 149, 159, 0.2) !important;
+}
+
+.ui.dropdown .menu > .item {
+  color: #1f2328 !important;
+  background-color: #ffffff !important;
+}
+
+.ui.dropdown .menu > .item:hover {
+  background-color: #f6f8fa !important;
+  color: #0969da !important;
+}

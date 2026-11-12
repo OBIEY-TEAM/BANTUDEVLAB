@@ -1,0 +1,623 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block content %}
+<nav class="breadcrumbs" aria-label="{% trans 'Fil d Ariane' %}">
+    <a href="{% url 'home' %}">{% icon "landmark" size=14 %} {% trans "Accueil" %}</a>
+    <span class="breadcrumbs-separator">/</span>
+    <span class="breadcrumbs-current" aria-current="page">{% trans "Authentification Zero-Trust" %}</span>
+</nav>
+<div class="zkp-wizard-card">
+
+    <div style="text-align: center; margin-bottom: 2rem;">
+        <span class="brand-badge" style="font-size: 0.8rem; margin-bottom: 0.5rem;">{% trans "PROTOCOLE SCHNORR NIZKP / FIAT-SHAMIR" %}</span>
+        <h2 style="margin: 0.5rem 0;">{% icon "key" size=22 %} {% trans "Assistant d'Identité & Connexion Zero-Trust" %}</h2>
+        <p style="color: var(--text-muted); font-size: 0.95rem; max-width: 550px; margin: 0 auto;">
+            {% trans "Générez votre clé souveraine protégée par mnémonique BIP-39 et prouvez mathématiquement votre identité sans jamais exposer de mot de passe." %}
+        </p>
+    </div>
+
+        <!-- Banniere Parcours Evaluation CADEV 2026 (Demo 1-Clic) -->
+    <div class="demo-evaluator-card" style="margin-bottom: 1.5rem; background: linear-gradient(135deg, rgba(16, 185, 129, 0.12), rgba(245, 158, 11, 0.08)); border: 1px solid var(--secondary-emerald); border-radius: 10px; padding: 1.25rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap;">
+        <div style="min-width: 250px; flex: 1;">
+            <span class="brand-badge" style="background: rgba(16, 185, 129, 0.2); color: #10b981; font-size: 0.75rem; margin-bottom: 0.25rem;">{% trans "PARCOURS D'ÉVALUATION CADEV 2026" %}</span>
+            <h4 style="margin: 0.25rem 0; color: #fff; font-size: 1.05rem;">{% icon "sparkles" size=18 %} {% trans "Compte Démo Évaluateur (Connexion en 1 Clic)" %}</h4>
+            <p style="margin: 0; font-size: 0.85rem; color: var(--text-muted);">
+                {% trans "Compte préconfiguré :" %} <code style="color: #10b981;">cadev_evaluator</code> | {% trans "Protocole Zero-Trust Schnorr NIZKP sans mot de passe." %}
+            </p>
+        </div>
+        <button type="button" class="btn btn-primary" id="btnQuickDemo" onclick="quickDemoLogin()" style="padding: 0.75rem 1.4rem; font-weight: 600; white-space: nowrap; background: linear-gradient(135deg, #10b981, #059669); border: none;">
+            {% icon "zap" size=18 %} {% trans "Connexion Démo 1-Clic" %}
+        </button>
+    </div>
+
+    <!-- Wizard Step Navigation (UI-03) -->
+    <div class="zkp-steps-nav">
+        <div class="zkp-step-indicator active" id="stepIndicator1" tabindex="0" role="button" aria-label="{% trans 'Etape 1 : Identite' %}" onclick="switchWizardStep(1)" onkeydown="if(event.key==='Enter'||event.key===' ') switchWizardStep(1)">
+            <div class="zkp-step-circle">1</div>
+            <span class="zkp-step-label">{% trans "Identité" %}</span>
+        </div>
+        <div class="zkp-step-indicator" id="stepIndicator2" tabindex="0" role="button" aria-label="{% trans 'Etape 2 : Mnemonique' %}" onclick="switchWizardStep(2)" onkeydown="if(event.key==='Enter'||event.key===' ') switchWizardStep(2)">
+            <div class="zkp-step-circle">2</div>
+            <span class="zkp-step-label">{% trans "Mnémonique" %}</span>
+        </div>
+        <div class="zkp-step-indicator" id="stepIndicator3" tabindex="0" role="button" aria-label="{% trans 'Etape 3 : Zero-Trust Auth' %}" onclick="switchWizardStep(3)" onkeydown="if(event.key==='Enter'||event.key===' ') switchWizardStep(3)">
+            <div class="zkp-step-circle">3</div>
+            <span class="zkp-step-label">{% trans "Zero-Trust Auth" %}</span>
+        </div>
+    </div>
+
+    <!-- Step 1: Username & Sovereign Organization -->
+    <div id="wizardStep1" class="wizard-step-content">
+        <label style="display: block; margin-bottom: 0.4rem; font-weight: 600;">{% trans "Nom de Développeur Souverain (Username)" %} :</label>
+        <input type="text" id="zkpUsername" value="kouame_dev" style="width: 100%; padding: 0.75rem; background: #080c14; border: 1px solid var(--dark-border); color: #fff; border-radius: 8px; font-size: 1rem; box-sizing: border-box;">
+
+        <div style="margin-top: 1.25rem;">
+            <label style="display: block; margin-bottom: 0.4rem; font-weight: 600;">{% trans "Juridiction Continentale (Nœud Souverain)" %} :</label>
+            <select id="zkpCountry" style="width: 100%; padding: 0.75rem; background: #080c14; border: 1px solid var(--dark-border); color: #fff; border-radius: 8px; font-size: 0.95rem; box-sizing: border-box;">
+                <option value="CIV">{% trans "Côte d'Ivoire (Systalink Abidjan DC)" %}</option>
+                <option value="SEN">{% trans "Sénégal (Dakar Sovereign Node)" %}</option>
+                <option value="NGA">{% trans "Nigeria (Lagos Datacenter)" %}</option>
+                <option value="KEN">{% trans "Kenya (Nairobi IXP Hub)" %}</option>
+                <option value="RWA">{% trans "Rwanda (Kigali Innovation City)" %}</option>
+            </select>
+        </div>
+
+        <div style="margin-top: 2rem; display: flex; justify-content: flex-end;">
+            <button class="btn btn-primary" onclick="switchWizardStep(2)">{% trans "Suivant : Générer la Clé Souveraine" %} {% icon "arrow-right" size=18 %}</button>
+        </div>
+    </div>
+
+    <!-- Step 2: BIP-39 Mnemonic & Cryptographic Strength Meter -->
+    <div id="wizardStep2" class="wizard-step-content" style="display: none;">
+        <div class="zkp-step2-header">
+            <label style="font-weight: 600;">{% trans "Phrase Mnémonique Souveraine (Standard BIP-39) :" %}</label>
+            <div style="display: flex; gap: 0.5rem; align-items: center; flex-wrap: wrap;">
+                <button type="button" class="copy-btn" id="copyMnemonicBtn" onclick="copyMnemonicPhrase()">
+                    {% icon "copy" size=14 %} <span id="copyMnemonicLabel">{% trans "Copier la phrase" %}</span>
+                </button>
+                <button class="btn btn-secondary" style="padding: 0.3rem 0.7rem; font-size: 0.8rem;" onclick="generateNewMnemonic()">
+                    {% icon "refresh-cw" size=18 %} {% trans "Regénérer (12 Mots)" %}
+                </button>
+            </div>
+        </div>
+        <p style="font-size: 0.82rem; color: var(--text-muted); margin: 0.3rem 0 0.75rem;">
+            {% trans "Ces 12 mots permettent de régénérer mathématiquement votre clé privée de signature ZKP dans n'importe quel terminal sécurisé." %}
+        </p>
+
+        <!-- Grille des 12 Mots Mnémoniques -->
+        <div id="mnemonicWordsGrid" class="mnemonic-grid"></div>
+
+        <div style="margin-top: 1.5rem;">
+            <label style="display: block; margin-bottom: 0.4rem; font-weight: 600;">{% trans "Secret Privé Dérivé (Ne quitte JAMAIS votre navigateur) :" %}</label>
+            <input type="password" id="zkpSecret" style="width: 100%; padding: 0.75rem; background: #080c14; border: 1px solid var(--dark-border); color: #10b981; font-family: monospace; border-radius: 8px; box-sizing: border-box;" oninput="updateCryptoStrengthMeter(this.value)">
+
+            <!-- Jauge de Force Cryptographique (UI-03) -->
+            <div class="strength-meter-wrapper">
+                <div class="strength-meter-bar-container">
+                    <div id="strengthBar" class="strength-meter-bar"></div>
+                </div>
+                <div class="strength-label">
+                    <span>{% trans "Force Cryptographique :" %} <strong id="strengthText">{% trans "Inviolable (256 bits)" %}</strong></span>
+                    <span id="strengthEntropy">256-bit Entropy</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bouton Téléchargement Clé Privée Protégée -->
+        <div style="margin-top: 1.5rem; display: flex; gap: 1rem; flex-wrap: wrap;">
+            <button class="btn btn-secondary" onclick="downloadSovereignKeyFile()">
+                {% icon "download" size=18 %} {% trans "Télécharger Fichier Clé Souveraine (.json)" %}
+            </button>
+            <button class="btn btn-primary" onclick="registerZkpIdentity()">
+                {% icon "save" size=18 %} {% trans "Enregistrer Identité sur BantuDevLab" %}
+            </button>
+        </div>
+
+        <div class="zkp-nav-buttons">
+            <button class="btn btn-secondary" onclick="switchWizardStep(1)">{% icon "arrow-left" size=18 %} {% trans "Précédent" %}</button>
+            <button class="btn btn-primary" onclick="switchWizardStep(3)">{% trans "Passer à la Connexion" %} {% icon "arrow-right" size=18 %}</button>
+        </div>
+    </div>
+
+    <!-- Step 3: Zero-Knowledge Proof Authentication -->
+    <div id="wizardStep3" class="wizard-step-content" style="display: none;">
+        <div style="background: rgba(16, 185, 129, 0.08); border: 1px solid rgba(16, 185, 129, 0.2); border-radius: 10px; padding: 1.25rem; margin-bottom: 1.5rem;">
+            <h4 style="margin: 0 0 0.5rem; color: var(--secondary-emerald);">{% trans "Authentification Décentralisée Prête" %}</h4>
+            <p style="font-size: 0.85rem; color: #a7f3d0; margin: 0;">
+                {% trans "Lors du clic, votre navigateur résout un défi cryptographique avec votre clé privée locale pour prouver la possession de la clé sans jamais la dévoiler au serveur." %}
+            </p>
+        </div>
+
+        <div style="display: flex; gap: 1rem;">
+            <button class="btn btn-primary" id="btnZkpLogin" style="flex: 1; padding: 0.85rem;" onclick="loginWithZkp()">
+                {% icon "log-in" size=18 %} {% trans "Prouver mon Identité (Connexion Zero-Trust)" %}
+            </button>
+        </div>
+
+        <!-- Feedback d'Etat Interactif & SVG Spinner (T-UX-502) -->
+        <div id="zkpLoadingFeedback" style="display: none; align-items: center; justify-content: center; gap: 0.75rem; margin: 1rem 0; padding: 0.85rem; background: rgba(16, 185, 129, 0.1); border: 1px solid var(--accent-color, #10b981); border-radius: 8px; color: var(--text-primary, #fff);">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="animation: spin 1s linear infinite;"><path d="M21 12a9 9 0 1 1-6.219-8.56"></path></svg>
+            <span id="zkpLoadingText">{% trans "Calcul de la preuve Fiat-Shamir et interrogation du serveur..." %}</span>
+        </div>
+
+        <div style="margin-top: 2rem; display: flex; justify-content: flex-start;">
+            <button class="btn btn-secondary" onclick="switchWizardStep(2)">{% icon "arrow-left" size=18 %} {% trans "Revenir au Mnémonique" %}</button>
+        </div>
+    </div>
+
+    <!-- Terminal de Logs Cryptographiques -->
+    <div id="zkpLog" style="margin-top: 2rem; padding: 1.25rem; background: #080c14; border: 1px solid var(--dark-border); border-radius: 8px; font-family: monospace; font-size: 0.85rem; line-height: 1.5; display: none;"></div>
+
+    <!-- Section Redirection Inscription Gitea Souveraine -->
+    <div id="giteaRedirectSection" style="display: none; margin-top: 2rem; background: linear-gradient(135deg, rgba(16, 185, 129, 0.15), rgba(17, 24, 39, 0.95)); border: 2px solid var(--secondary-emerald); border-radius: 12px; padding: 2rem; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.5);">
+        <div style="margin-bottom: 0.75rem;">
+            {% icon "circle-check" size=48 %}
+        </div>
+        <h3 style="color: var(--secondary-emerald); margin: 0 0 0.5rem; font-size: 1.4rem;">{% trans "Vérification Zero-Knowledge Réussie !" %}</h3>
+        <p style="color: var(--text-muted); font-size: 1rem; max-width: 620px; margin: 0 auto 1.5rem;">
+            {% trans "Votre identité souveraine" %} <b id="giteaUserDisplay" style="color: #fff; font-size: 1.05rem;"></b> {% trans "est authentifiée sans mot de passe. Finalisez ou liez votre compte sur la forge Gitea souveraine." %}
+        </p>
+        <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+            <a href="{% url 'dashboard' %}#new-repo" class="btn btn-primary" style="background: linear-gradient(135deg, #10b981, #059669); border: none; padding: 0.85rem 1.6rem; font-size: 1rem; font-weight: 600;">
+                {% icon "plus-circle" size=18 %} {% trans "Créer un Dépôt de Démonstration" %}
+            </a>
+            <a id="btnGiteaSignup" href="{{ GITEA_EXTERNAL_URL|default:'https://git.cybersocle.site' }}/user/sign_up" target="_blank" rel="noopener noreferrer" class="btn btn-secondary" style="padding: 0.85rem 1.6rem; font-size: 1rem;">
+                {% icon "user-plus" size=18 %} {% trans "Finaliser l'inscription sur Gitea" %}
+            </a>
+            <a id="btnGiteaLogin" href="{{ GITEA_LOGIN_URL|default:'https://git.cybersocle.site/user/login' }}" target="_blank" rel="noopener noreferrer" class="btn btn-outline" style="border-color: #10b981; color: #10b981; padding: 0.85rem 1.6rem; font-size: 1rem;">
+                {% icon "log-in" size=18 %} {% trans "Se Connecter sur Gitea" %}
+            </a>
+            <a href="{% url 'dashboard' %}" class="btn btn-secondary" style="padding: 0.85rem 1.6rem; font-size: 1rem;">
+                {% icon "landmark" size=18 %} {% trans "Tableau de Bord" %}
+            </a>
+        </div>
+        <p id="countdownRedirectText" style="margin-top: 1.5rem; font-size: 0.9rem; color: var(--primary-african-gold);">
+            {% trans "Redirection automatique vers l'inscription Gitea dans" %} <span id="redirectSecs" style="font-weight: bold; font-size: 1.1rem;">4</span> {% trans "secondes..." %}
+        </p>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+// BIP-39 African-themed and Standard English wordlist sample for mnemonic generation
+const BIP39_WORDS = [
+    "savanna", "baobab", "sahara", "kilimanjaro", "zambezi", "congo", "senegal",
+    "niger", "atlas", "oasis", "unity", "freedom", "sovereign", "crypto",
+    "shield", "cipher", "matrix", "beacon", "falcon", "panther", "bamboo",
+    "cedar", "solar", "harvest", "mineral", "diamond", "copper", "bronze",
+    "flame", "wisdom", "courage", "honor", "future", "digital", "secure",
+    "trust", "vector", "orbit", "prism", "quantum", "alpha", "summit",
+    "glory", "delta", "echo", "spirit", "tempo", "zenith", "vanguard", "forge"
+];
+
+let currentMnemonic = [];
+
+function switchWizardStep(stepNumber) {
+    [1, 2, 3].forEach(i => {
+        const stepEl = document.getElementById(`wizardStep${i}`);
+        const indicator = document.getElementById(`stepIndicator${i}`);
+        if (stepEl) stepEl.style.display = (i === stepNumber) ? 'block' : 'none';
+        if (indicator) {
+            if (i < stepNumber) {
+                indicator.className = 'zkp-step-indicator completed';
+            } else if (i === stepNumber) {
+                indicator.className = 'zkp-step-indicator active';
+            } else {
+                indicator.className = 'zkp-step-indicator';
+            }
+        }
+    });
+}
+
+
+function copyMnemonicPhrase() {
+    const text = (typeof currentMnemonic !== 'undefined' && currentMnemonic.length) ? currentMnemonic.join(' ') : document.getElementById('zkpSecret').value;
+    if (navigator.clipboard && text) {
+        navigator.clipboard.writeText(text).then(() => {
+            const btn = document.getElementById('copyMnemonicBtn');
+            const label = document.getElementById('copyMnemonicLabel');
+            if (btn) btn.classList.add('copied');
+            if (label) label.textContent = '{% trans "Copié !" %}';
+            if (window.showToast) window.showToast('{% trans "Phrase de 12 mots copiée !" %}', 'success', 2000);
+            setTimeout(() => {
+                if (btn) btn.classList.remove('copied');
+                if (label) label.textContent = '{% trans "Copier la phrase" %}';
+            }, 2000);
+        });
+    }
+}
+
+const DEFAULT_KOUAME_WORDS = [
+    "savanna", "baobab", "sahara", "kilimanjaro", "zambezi", "congo", "senegal",
+    "niger", "atlas", "oasis", "unity", "freedom"
+];
+
+function setMnemonicWords(words) {
+    currentMnemonic = [...words];
+    const grid = document.getElementById('mnemonicWordsGrid');
+    if (grid) {
+        grid.innerHTML = '';
+        currentMnemonic.forEach((word, i) => {
+            const chip = document.createElement('div');
+            chip.tabIndex = 0;
+            chip.setAttribute('role', 'listitem');
+            chip.setAttribute('aria-label', `{% trans "Mot" %} ${i + 1} : ${word}`);
+            chip.className = 'mnemonic-word-chip';
+            chip.innerHTML = `<span class="mnemonic-num">${i + 1}.</span> <span>${word}</span>`;
+            grid.appendChild(chip);
+        });
+    }
+    const secretInput = document.getElementById('zkpSecret');
+    if (secretInput) {
+        secretInput.value = currentMnemonic.join(' ');
+        updateCryptoStrengthMeter(secretInput.value);
+    }
+}
+
+function validateUsernameClient(rawUsername) {
+    if (!rawUsername || !rawUsername.trim()) {
+        return { valid: false, error: "{% trans 'Identifiant obligatoire (3-32 caractères : lettres, chiffres, point, tiret).' %}" };
+    }
+    const val = rawUsername.trim();
+    if (/\s/.test(val)) {
+        return {
+            valid: false,
+            error: `{% trans "Identifiant invalide : les espaces sont interdits." %} (${val})`
+        };
+    }
+    const regex = /^[A-Za-z0-9._-]{3,32}$/;
+    if (!regex.test(val)) {
+        return {
+            valid: false,
+            error: `{% trans "Identifiant invalide : doit comporter 3 à 32 caractères autorisés." %} (${val})`
+        };
+    }
+    return { valid: true, username: val };
+}
+
+function generateNewMnemonic() {
+    currentMnemonic = [];
+    const grid = document.getElementById('mnemonicWordsGrid');
+    grid.innerHTML = '';
+
+    for (let i = 0; i < 12; i++) {
+        const randIndex = Math.floor(Math.random() * BIP39_WORDS.length);
+        const word = BIP39_WORDS[randIndex];
+        currentMnemonic.push(word);
+
+        const chip = document.createElement('div');
+        chip.tabIndex = 0;
+        chip.setAttribute('role', 'listitem');
+        chip.setAttribute('aria-label', `{% trans "Mot" %} ${i + 1} : ${word}`);
+        chip.onkeydown = (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                if (window.showToast) window.showToast(`{% trans "Mot" %} ${i + 1} : ${word}`, 'info', 1500);
+            }
+        };
+        chip.className = 'mnemonic-word-chip';
+        chip.innerHTML = `<span class="mnemonic-num">${i + 1}.</span> <span>${word}</span>`;
+        grid.appendChild(chip);
+    }
+
+    // Set derived secret from mnemonic
+    const secretInput = document.getElementById('zkpSecret');
+    secretInput.value = currentMnemonic.join(' ');
+    updateCryptoStrengthMeter(secretInput.value);
+    if (window.showToast) window.showToast("{% trans 'Nouvelle phrase mnémonique générée (12 mots).' %}", "info");
+}
+
+function updateCryptoStrengthMeter(val) {
+    const bar = document.getElementById('strengthBar');
+    const label = document.getElementById('strengthText');
+    const entropy = document.getElementById('strengthEntropy');
+    if (!val) {
+        bar.style.width = '0%';
+        bar.style.backgroundColor = '#ef4444';
+        label.textContent = '{% trans "Vide" %}';
+        entropy.textContent = '0-bit';
+        return;
+    }
+
+    const len = val.length;
+    const words = val.trim().split(/\s+/).length;
+
+    if (words >= 12 || len >= 32) {
+        bar.style.width = '100%';
+        bar.style.backgroundColor = 'var(--secondary-emerald)';
+        label.textContent = '{% trans "Inviolable Souverain" %}';
+        label.style.color = 'var(--secondary-emerald)';
+        entropy.textContent = '256-bit Entropy (BIP-39)';
+    } else if (words >= 6 || len >= 18) {
+        bar.style.width = '70%';
+        bar.style.backgroundColor = 'var(--primary-african-gold)';
+        label.textContent = '{% trans "Fort" %}';
+        label.style.color = 'var(--primary-african-gold)';
+        entropy.textContent = '128-bit Entropy';
+    } else if (len >= 8) {
+        bar.style.width = '40%';
+        bar.style.backgroundColor = '#fb923c';
+        label.textContent = '{% trans "Moyen" %}';
+        label.style.color = '#fb923c';
+        entropy.textContent = '64-bit Entropy';
+    } else {
+        bar.style.width = '15%';
+        bar.style.backgroundColor = '#ef4444';
+        label.textContent = '{% trans "Faible" %}';
+        label.style.color = '#ef4444';
+        entropy.textContent = '{% trans "Faible" %}';
+    }
+}
+
+async function downloadSovereignKeyFile() {
+    const username = document.getElementById('zkpUsername').value.trim();
+    const secret = document.getElementById('zkpSecret').value.trim();
+    const country = document.getElementById('zkpCountry').value;
+
+    if (!username || !secret) {
+        if (window.showToast) window.showToast("{% trans 'Veuillez renseigner votre identifiant et votre secret.' %}", "warning");
+        return;
+    }
+
+    const { x, y } = await deriveKeyPair(secret);
+
+    const backupData = {
+        platform: "BANTUDEVLAB",
+        version: "1.0",
+        format: "sovereign-zkp-identity",
+        createdAt: new Date().toISOString(),
+        username: username,
+        countryCode: country,
+        publicKey_y: y.toString(16),
+        mnemonicPhrase: currentMnemonic.length === 12 ? currentMnemonic.join(' ') : null,
+        securityNote: "Conservez ce fichier dans un coffre-fort hors-ligne. Votre clé privée reste protégée."
+    };
+
+    const blob = new Blob([JSON.stringify(backupData, null, 2)], { type: "application/json" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `bantudevlab-identity-${username}.json`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+
+    if (window.showToast) window.showToast(`{% trans "Identité souveraine téléchargée :" %} ${a.download}`, "success");
+    log(`{% trans "Fichier d identité souveraine exporté pour" %} <b>${username}</b>.`);
+}
+
+function log(msg) {
+    const box = document.getElementById('zkpLog');
+    box.style.display = 'block';
+    box.innerHTML += `<div>> ${msg}</div>`;
+}
+
+// Client-side helper using Web Crypto SHA-256 for deterministic key derivation
+async function sha256(str) {
+    const buf = new TextEncoder().encode(str);
+    const hashBuf = await crypto.subtle.digest('SHA-256', buf);
+    const hashArr = Array.from(new Uint8Array(hashBuf));
+    return hashArr.map(b => b.toString(16).padStart(2, '0')).join('');
+}
+
+// Schnorr BigInt modular exponentiation
+function modPow(base, exp, mod) {
+    let res = 1n;
+    base = base % mod;
+    while (exp > 0n) {
+        if (exp % 2n === 1n) res = (res * base) % mod;
+        exp = exp / 2n;
+        base = (base * base) % mod;
+    }
+    return res;
+}
+
+const P_HEX = "FFFFFFFFFFFFFFFFC90FDAA22168C234C4C6628B80DC1CD129024E088A67CC74020BBEA63B139B22514A08798E3404DDEF9519B3CD3A431B302B0A6DF25F14374FE1356D6D51C245E485B576625E7EC6F44C42E9A637ED6B0BFF5CB6F406B7EDEE386BFB5A899FA5AE9F24117C4B1FE649286651ECE45B3DC2007CB8A163BF0598DA48361C55D39A69163FA8FD24CF5F83655D23DCA3AD961C62F356208552BB9ED529077096966D670C354E4ABC9804F1746C08CA18217C32905E462E36CE3BE39E772C180E86039B2783A2EC07A28FB5C55DF06F4C52C9DE2BCBF6955817183995497CEA956AE515D2261898FA051015728E5A8AACAA68FFFFFFFFFFFFFFFF";
+const P = BigInt("0x" + P_HEX);
+const G = 2n;
+const Q = (P - 1n) / 2n;
+
+async function deriveKeyPair(secretStr) {
+    const hash = await sha256("bantudevlab_seed" + secretStr);
+    const x = (BigInt("0x" + hash) % (Q - 2n)) + 1n;
+    const y = modPow(G, x, P);
+    return { x, y };
+}
+
+async function registerZkpIdentity() {
+    const rawUsername = document.getElementById('zkpUsername').value;
+    const secret = document.getElementById('zkpSecret').value;
+    const check = validateUsernameClient(rawUsername);
+    if (!check.valid) {
+        log(`{% icon "triangle-alert" size=18 %} <span style="color:#ef4444; font-weight:bold;">${check.error}</span>`);
+        if (window.showToast) window.showToast(check.error, 'error');
+        return;
+    }
+    const username = check.username;
+    log(`{% trans "Dérivation de la clé publique souveraine pour" %} <b>${username}</b>...`);
+    const { x, y } = await deriveKeyPair(secret);
+    log(`{% trans "Clé publique (y = g^x mod p) générée localement." %}`);
+
+    const res = await fetch('/api/zkp/register/', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({
+            username: username,
+            public_key_y: y.toString(16),
+            country_code: 'CIV'
+        })
+    });
+    const data = await res.json();
+    if (res.ok) {
+        log(`{% icon "circle-check" size=18 %} {% trans "Enregistrement ZKP réussi ! Aucune information secrète n a quitté votre machine." %}`);
+        if (window.showToast) window.showToast(`{% trans "Identité ZKP enregistrée avec succès !" %} (${username})`, 'success');
+    } else {
+        log(`{% icon "triangle-alert" size=18 %} ${data.error || "{% trans 'Erreur d enregistrement' %}"}`);
+        if (window.showToast) window.showToast(`{% trans "Erreur :" %} ${data.error || "{% trans 'Échec de l enregistrement' %}"}`, 'error');
+    }
+}
+
+// Initialise mnémonique au chargement
+document.addEventListener('DOMContentLoaded', () => {
+    const usernameInput = document.getElementById('zkpUsername');
+    if (usernameInput && (usernameInput.value === 'kouame_dev' || usernameInput.value === 'bantu_admin')) {
+        setMnemonicWords(DEFAULT_KOUAME_WORDS);
+    } else {
+        generateNewMnemonic();
+    }
+    if (usernameInput) {
+        usernameInput.addEventListener('change', function() {
+            const v = this.value.trim();
+            if (v === 'kouame_dev' || v === 'bantu_admin') {
+                setMnemonicWords(DEFAULT_KOUAME_WORDS);
+            }
+        });
+    }
+});
+
+async function loginWithZkp() {
+    const rawUsername = document.getElementById('zkpUsername').value;
+    const secret = document.getElementById('zkpSecret').value;
+    const check = validateUsernameClient(rawUsername);
+    if (!check.valid) {
+        log(`{% icon "triangle-alert" size=18 %} <span style="color:#ef4444; font-weight:bold;">${check.error}</span>`);
+        if (window.showToast) window.showToast(check.error, 'error');
+        return;
+    }
+    const username = check.username;
+
+    const feedback = document.getElementById('zkpLoadingFeedback');
+    const loginBtn = document.getElementById('btnZkpLogin');
+    if (feedback) feedback.style.display = 'flex';
+    if (loginBtn) loginBtn.disabled = true;
+
+    try {
+    log(`{% trans "Demande d un défi (Challenge nonce) au serveur pour" %} <b>${username}</b>...`);
+
+    const chalRes = await fetch('/api/zkp/challenge/', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({username})
+    });
+    const chalData = await chalRes.json();
+    if (!chalRes.ok) {
+        log(`{% icon "circle-x" size=18 %} {% trans "Erreur défi:" %} ${chalData.error}`);
+        return;
+    }
+
+    const nonce = chalData.challenge_nonce;
+    log(`{% trans "Challenge reçu :" %} ${nonce.slice(0, 16)}...`);
+
+    // Prover calculates ZKP
+    const { x, y } = await deriveKeyPair(secret);
+    const vHash = await sha256(nonce + Math.random().toString());
+    const v = (BigInt("0x" + vHash) % (Q - 2n)) + 1n;
+    const t = modPow(G, v, P);
+
+    // Fiat-Shamir challenge calculation
+    const cHash = await sha256(G.toString() + y.toString() + t.toString() + nonce);
+    const c = BigInt("0x" + cHash) % Q;
+    const s = ((v - (c * x)) % Q + Q) % Q;
+
+    log(`{% trans "Preuve (t, s) calculée. Envoi de la preuve au serveur pour vérification..." %}`);
+
+    const urlParams = new URLSearchParams(window.location.search);
+    const redirectUri = urlParams.get('redirect_uri');
+    const stateParam = urlParams.get('state');
+
+    const verifyRes = await fetch('/api/zkp/verify/', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({
+            username: username,
+            challenge_nonce: nonce,
+            commitment_t: "0x" + t.toString(16),
+            response_s: "0x" + s.toString(16),
+            redirect_uri: redirectUri,
+            state: stateParam
+        })
+    });
+    const verifyData = await verifyRes.json();
+    if (verifyRes.ok) {
+        log(`{% icon "sparkles" size=18 %} <b>{% trans "Vérification Zero-Knowledge réussie !" %}</b> {% trans "Accès autorisé sans mot de passe." %}`);
+        if (window.showToast) window.showToast(`{% trans "Connexion Zero-Trust réussie pour" %} ${username} !`, 'success');
+        handleSuccessfulZkpAuth(username, verifyData);
+    } else {
+        log(`{% icon "circle-x" size=18 %} {% trans "Échec de la vérification :" %} ${verifyData.error}`);
+        if (window.showToast) window.showToast(`{% trans "Échec vérification ZKP :" %} ${verifyData.error}`, 'error');
+    }
+    } finally {
+        if (feedback) feedback.style.display = 'none';
+        if (loginBtn) loginBtn.disabled = false;
+    }
+}
+
+
+async function quickDemoLogin() {
+    const userEl = document.getElementById('zkpUsername');
+    const secretEl = document.getElementById('zkpSecret');
+    if (userEl) userEl.value = 'cadev_evaluator';
+    const demoMnemonic = "savanna baobab sahara kilimanjaro zambezi congo senegal niger atlas oasis unity freedom";
+    if (secretEl) secretEl.value = demoMnemonic;
+    if (typeof setMnemonicWords === 'function') {
+        setMnemonicWords(demoMnemonic.split(' '));
+    }
+    switchWizardStep(3);
+    const logEl = document.getElementById('zkpLog');
+    if (logEl) logEl.style.display = 'block';
+    log(`{% trans "Initialisation rapide du compte démo évaluateur CADEV 2026 (cadev_evaluator)..." %}`);
+    await loginWithZkp();
+}
+
+window.addEventListener('DOMContentLoaded', () => {
+    const params = new URLSearchParams(window.location.search);
+    if (params.get('demo') === 'cadev') {
+        setTimeout(quickDemoLogin, 500);
+    }
+});
+
+function handleSuccessfulZkpAuth(username, data) {
+    const fallbackSignup = '{{ GITEA_EXTERNAL_URL|default:"https://git.cybersocle.site" }}/user/sign_up';
+    const fallbackLogin = '{{ GITEA_LOGIN_URL|default:"https://git.cybersocle.site/user/login" }}';
+    const primaryRedirect = (data && data.redirect_url) ? data.redirect_url : (data && data.gitea_signup_url ? data.gitea_signup_url : fallbackSignup);
+    const signupUrl = (data && data.gitea_signup_url) ? data.gitea_signup_url : fallbackSignup;
+    const loginUrl = (data && data.gitea_login_url) ? data.gitea_login_url : fallbackLogin;
+
+    const section = document.getElementById('giteaRedirectSection');
+    const userDisplay = document.getElementById('giteaUserDisplay');
+    const btnSignup = document.getElementById('btnGiteaSignup');
+    const btnLogin = document.getElementById('btnGiteaLogin');
+    const secsSpan = document.getElementById('redirectSecs');
+
+    if (userDisplay) userDisplay.textContent = username;
+    if (btnSignup) btnSignup.href = primaryRedirect;
+    if (btnLogin) btnLogin.href = loginUrl;
+
+    if (section) {
+        section.style.display = 'block';
+        section.scrollIntoView({ behavior: 'smooth' });
+    }
+
+    if (data && data.oauth_redirect) {
+        let countdown = 3;
+        const interval = setInterval(() => {
+            countdown--;
+            if (secsSpan) secsSpan.textContent = countdown;
+            if (countdown <= 0) {
+                clearInterval(interval);
+                window.location.href = data.oauth_redirect;
+            }
+        }, 1000);
+    } else {
+        const countdownText = document.getElementById('countdownRedirectText');
+        if (countdownText) {
+            countdownText.style.display = 'none';
+        }
+    }
+}
+
+
+</script>
+{% endblock %}

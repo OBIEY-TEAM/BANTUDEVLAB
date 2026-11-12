@@ -1,0 +1,31 @@
+__pycache__/
+*.py[cod]
+*$py.class
+*.sqlite3
+db.sqlite3
+.env
+.env.*
+!.env.example
+!.env.production.example
+local_settings.py
+*.log
+staticfiles/
+finetuning/sovereign_instruct_dataset.jsonl
+finetuning/lora_gemma_weights/
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Binaires et donnees runtime locales Gitea / Forge
+bin/
+gitea_home/
+forge_data/
+
+# SAST Artefacts
+*.sarif
+
+# Backups
+backups/
+
+# SBOM Artefacts
+*.cyclonedx.json

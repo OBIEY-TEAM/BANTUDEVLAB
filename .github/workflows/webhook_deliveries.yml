@@ -1,0 +1,28 @@
+name: Sovereign Webhook Delivery & Redelivery CI
+
+on:
+  push:
+    branches: [ "main", "develop*", "feature/*" ]
+    paths:
+      - "apps/gitea_client/**"
+      - "tests/test_gitea_client.py"
+      - ".github/workflows/webhook_deliveries.yml"
+  pull_request:
+    branches: [ "main", "develop*" ]
+
+jobs:
+  webhook-verify:
+    name: Verify Webhook Delivery & Redeliver Simulator
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup BantuDevLab Environment
+        uses: ./.github/actions/setup-bantudevlab
+        with:
+          python-version: "3.11"
+      - name: Test Webhook Redelivery
+        run: |
+          pytest tests/test_gitea_client.py -k "webhook_redeliver" -v -o addopts=""

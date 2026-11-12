@@ -1,0 +1,29 @@
+name: Sovereign Draft Pull Requests CI
+
+on:
+  push:
+    branches: [ "main", "develop*", "feature/*" ]
+    paths:
+      - "custom/public/assets/css/**"
+      - "custom/templates/custom/header.tmpl"
+      - "tests/test_ui_axes.py"
+      - ".github/workflows/draft_prs.yml"
+  pull_request:
+    branches: [ "main", "develop*" ]
+
+jobs:
+  draft-prs-verify:
+    name: Verify Draft PRs Badges & Ready For Review Flow
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup BantuDevLab Environment
+        uses: ./.github/actions/setup-bantudevlab
+        with:
+          python-version: "3.11"
+      - name: Test Draft PRs Flow
+        run: |
+          pytest tests/test_ui_axes.py -k "test_t_drf_2301_and_2302_draft_prs_flow" -v -o addopts=""

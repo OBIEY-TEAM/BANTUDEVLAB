@@ -1,0 +1,28 @@
+name: Sovereign SBOM & Dependency Graph CI
+
+on:
+  push:
+    branches: [ "main", "develop*", "feature/*" ]
+    paths:
+      - "scripts/generate_sovereign_sbom.py"
+      - "requirements*.txt"
+      - ".github/workflows/sbom_cyclonedx.yml"
+  pull_request:
+    branches: [ "main", "develop*" ]
+
+jobs:
+  sbom-generate:
+    name: Generate and Verify CycloneDX v1.5 SBOM
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup BantuDevLab Environment
+        uses: ./.github/actions/setup-bantudevlab
+        with:
+          python-version: "3.11"
+      - name: Run SBOM Test Suite
+        run: |
+          pytest tests/test_security_hardening.py -k "cyclonedx_sbom" -v -o addopts=""

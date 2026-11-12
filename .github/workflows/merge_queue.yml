@@ -1,0 +1,30 @@
+name: Sovereign Merge Queue CI
+
+on:
+  push:
+    branches: [ "main", "develop*", "feature/*" ]
+    paths:
+      - "scripts/simulate_merge_queue.py"
+      - "docs/SOVEREIGN_MERGE_QUEUE.md"
+      - "custom/public/assets/css/**"
+      - "tests/test_sec_axes.py"
+      - ".github/workflows/merge_queue.yml"
+  pull_request:
+    branches: [ "main", "develop*" ]
+
+jobs:
+  merge-queue-verify:
+    name: Verify Merge Queue Simulation & Styles
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup BantuDevLab Environment
+        uses: ./.github/actions/setup-bantudevlab
+        with:
+          python-version: "3.11"
+      - name: Test Merge Queue Simulation
+        run: |
+          pytest tests/test_sec_axes.py -k "test_t_mrg_2401_and_2402_merge_queue_simulation" -v -o addopts=""

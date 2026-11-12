@@ -1,0 +1,30 @@
+name: Sovereign Advanced Code Search CI
+
+on:
+  push:
+    branches: [ "main", "develop*", "feature/*" ]
+    paths:
+      - "docs/SOVEREIGN_CODE_SEARCH.md"
+      - "custom/public/assets/css/**"
+      - "custom/templates/custom/header.tmpl"
+      - "tests/test_ui_axes.py"
+      - ".github/workflows/code_search.yml"
+  pull_request:
+    branches: [ "main", "develop*" ]
+
+jobs:
+  code-search-verify:
+    name: Verify Code Search Qualifiers & UI Helpers
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup BantuDevLab Environment
+        uses: ./.github/actions/setup-bantudevlab
+        with:
+          python-version: "3.11"
+      - name: Test Code Search Qualifiers
+        run: |
+          pytest tests/test_ui_axes.py -k "test_t_src_1801_and_1802_code_search_qualifiers_and_docs" -v -o addopts=""

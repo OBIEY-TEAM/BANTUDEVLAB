@@ -1,0 +1,441 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block title %}{% trans "Guide d'Utilisation & FAQ Souveraine - BANTUDEVLAB" %}{% endblock %}
+
+{% block content %}
+<div class="breadcrumbs">
+    <a href="{% url 'home' %}">{% trans "Accueil" %}</a>
+    <span class="breadcrumbs-separator">/</span>
+    <span class="breadcrumbs-current">{% trans "Guide & FAQ" %}</span>
+</div>
+
+<section class="hero" style="padding: 2.5rem 1rem 2rem;">
+    <h1>{% trans "Guide d'Utilisation & Foire Aux Questions" %}</h1>
+    <p>
+        {% trans "Retrouvez l'ensemble des réponses techniques pour exploiter la forge souveraine BANTUDEVLAB et son intégration GitLab CE/EE : création de compte, connexion Zero-Trust, consultation du code source et collaboration sécurisée." %}
+    </p>
+</section>
+
+<!-- Barre de recherche rapide FAQ -->
+<div class="faq-search-wrapper" style="max-width: 680px; margin: 0 auto 2.5rem;">
+    <div style="position: relative;">
+        <input type="text" id="faqSearchInput" class="input-field" placeholder="{% trans 'Rechercher une question, mot-clé (ex: Git, ZKP, token, clone, merge request)...' %}" style="width: 100%; padding: 0.85rem 1rem 0.85rem 2.8rem; border-radius: 10px; border: 1px solid var(--dark-border); background: var(--dark-surface); color: var(--text-main); font-size: 0.95rem; box-sizing: border-box;" aria-label="{% trans 'Rechercher dans la FAQ' %}">
+        <span style="position: absolute; left: 1rem; top: 50%; transform: translateY(-50%); color: var(--text-muted); pointer-events: none;">
+            {% icon "search" size=18 %}
+        </span>
+    </div>
+</div>
+
+<!-- Section 1 : Guide Fondamental d'Utilisation -->
+<div style="margin-bottom: 3rem;">
+    <h2 style="display: flex; align-items: center; gap: 0.5rem; border-bottom: 2px solid var(--primary-african-gold); padding-bottom: 0.5rem;">
+        {% icon "book-open" size=24 %} {% trans "Mode d'Utilisation Fondamental : GitLab & BantuDevLab" %}
+    </h2>
+    <p style="color: var(--text-muted); margin-top: 0.5rem;">
+        {% trans "Les trois étapes indispensables pour initialiser votre environnement de travail souverain." %}
+    </p>
+
+    <div class="faq-accordion-group">
+        <!-- Q-DEMO : Parcours Démo Évaluateur CADEV 2026 -->
+        <details class="faq-item" id="faq-cadev-demo" open>
+            <summary class="faq-summary" style="background: linear-gradient(135deg, rgba(16, 185, 129, 0.15), rgba(245, 158, 11, 0.08)); border-left: 4px solid #10b981;">
+                <span class="faq-summary-title">
+                    <span class="faq-badge" style="background: #10b981; color: #000; font-weight: bold;">DEMO</span>
+                    <strong>{% trans "Évaluateur CADEV 2026 : Comment tester l'ensemble du parcours sans friction ?" %}</strong>
+                </span>
+                <span class="faq-chevron">{% icon "chevron-down" size=18 %}</span>
+            </summary>
+            <div class="faq-content">
+                <p>
+                    {% trans "Bienvenue au jury et aux évaluateurs du concours CADEV 2026 (Systalink Cloud). Voici le parcours pas-à-pas pour évaluer BantuDevLab en toute autonomie :" %}
+                </p>
+                <div class="faq-steps-list">
+                    <div class="faq-step-item">
+                        <strong>{% trans "1. Connexion Zero-Trust immédiate :" %}</strong>
+                        <p>{% trans "Ouvrez la page de connexion ZKP et cliquez sur le bouton « Connexion Démo 1-Clic ». Le compte " %}<code>cadev_evaluator</code>{% trans " s'authentifie instantanément via la preuve mathématique de Schnorr (RFC 3526 MODP 2048 bits) sans transmettre aucun mot de passe." %}</p>
+                    </div>
+                    <div class="faq-step-item" style="margin-top: 0.75rem;">
+                        <strong>{% trans "2. Consultation de la FAQ et conformité :" %}</strong>
+                        <p>{% trans "Cette section détaille les principes Zero-Trust, l'absence de dépendance aux CDN tiers, la politique Zéro-Emoji et la bascule vers le cache permissif Valkey 7.2 (BSD-3-Clause) en remplacement de Redis." %}</p>
+                    </div>
+                    <div class="faq-step-item" style="margin-top: 0.75rem;">
+                        <strong>{% trans "3. Création d'un dépôt de démonstration :" %}</strong>
+                        <p>{% trans "Sur le Tableau de Bord, cliquez sur « Créer un Dépôt de Démonstration ». Renseignez le nom (ex: demo-cadev-2026) et validez. Le dépôt est créé sur la forge souveraine et apparaît immédiatement avec ses actions de sécurité." %}</p>
+                    </div>
+                    <div class="faq-step-item" style="margin-top: 0.75rem;">
+                        <strong>{% trans "4. Audit SAST et Revue IA Locale Gemma 2 2B :" %}</strong>
+                        <p>{% trans "Sur n'importe quel dépôt, cliquez sur « Run Security Audit » pour calculer l'entropie de Shannon ($H \ge 3.8$) ou « Ask Gemma Review » pour invoquer le modèle compact local exécuté sur conteneur Ollama." %}</p>
+                    </div>
+                </div>
+            </div>
+        </details>
+
+        <!-- Q1 : Comment créer un compte GitLab ? -->
+        <details class="faq-item" id="faq-create-account">
+            <summary class="faq-summary">
+                <span class="faq-summary-title">
+                    <span class="faq-badge">1</span>
+                    {% trans "Comment créer un compte GitLab sur la plateforme souveraine ?" %}
+                </span>
+                <span class="faq-chevron">{% icon "chevron-down" size=18 %}</span>
+            </summary>
+            <div class="faq-content">
+                <p>
+                    {% trans "Sur la plateforme souveraine BANTUDEVLAB, l'accès à GitLab CE est unifié avec votre identité cryptographique Zero-Trust. Vous avez deux méthodes pour créer votre compte :" %}
+                </p>
+                <div class="faq-steps-list">
+                    <div class="faq-step-item">
+                        <strong>{% trans "Méthode 1 : Inscription cryptographique via BantuDevLab (Recommandée)" %}</strong>
+                        <ol>
+                            <li>{% trans "Rendez-vous sur l'onglet" %} <a href="{% url 'zkp_auth:zkp_login_page' %}" style="color: var(--primary-african-gold); font-weight: 600;">{% trans "Connexion Zero-Trust" %}</a>.</li>
+                            <li>{% trans "Basculez sur l'onglet « Inscription Souveraine » de l'assistant interactif." %}</li>
+                            <li>{% trans "Choisissez votre identifiant développeur et sélectionnez votre pays souverain d'attachement (ex: Côte d'Ivoire, Sénégal, Kenya, Nigeria)." %}</li>
+                            <li>{% trans "Générez votre trousseau de clés mathématiques (phrase mnémonique BIP-39 et clé publique Schnorr). Conservez précieusement votre phrase secrète : elle ne quitte jamais votre terminal." %}</li>
+                            <li>{% trans "Validez : votre identité souveraine est instantanément enregistrée. Votre compte GitLab CE associé est automatiquement provisionné sans aucun mot de passe requis." %}</li>
+                        </ol>
+                    </div>
+                    <div class="faq-step-item" style="margin-top: 1rem;">
+                        <strong>{% trans "Méthode 2 : Inscription directe sur l'instance GitLab auto-hébergée" %}</strong>
+                        <p>
+                            {% trans "Si votre organisation dispose d'une passerelle GitLab dédiée, ouvrez l'interface GitLab (via le bouton « Accès Forge Git »), cliquez sur « S'inscrire » (Register), complétez votre profil institutionnel, puis associez votre clé ZKP BantuDevLab via le bouton « Connecter avec Bantu ZKP »." %}
+                        </p>
+                    </div>
+                </div>
+                <div class="faq-tip-box">
+                    {% icon "shield" size=18 %} <strong>{% trans "Règle de sécurité :" %}</strong> {% trans "Aucun mot de passe en clair n'est stocké en base de données. L'authentification repose exclusivement sur des preuves mathématiques à divulgation nulle de connaissance." %}
+                </div>
+            </div>
+        </details>
+
+        <!-- Q2 : Comment se connecter ? -->
+        <details class="faq-item" id="faq-login">
+            <summary class="faq-summary">
+                <span class="faq-summary-title">
+                    <span class="faq-badge">2</span>
+                    {% trans "Comment se connecter à son compte ?" %}
+                </span>
+                <span class="faq-chevron">{% icon "chevron-down" size=18 %}</span>
+            </summary>
+            <div class="faq-content">
+                <p>
+                    {% trans "La connexion s'opère en mode Zero-Trust sans mot de passe, garantissant l'immunité contre le hameçonnage, le vol d'identifiants et les attaques par force brute :" %}
+                </p>
+                <ol>
+                    <li>
+                        <strong>{% trans "Connexion à BantuDevLab :" %}</strong>
+                        {% trans "Allez sur la page de connexion ZKP. Renseignez votre identifiant développeur. L'application émet un défi cryptographique (nonce à usage unique valable 5 minutes). Saisissez votre phrase mnémonique ou clé secrète locale pour calculer la preuve de Schnorr" %} <code>(t, s)</code>. {% trans "Une fois la preuve vérifiée par le serveur, votre session est ouverte." %}
+                    </li>
+                    <li>
+                        <strong>{% trans "Connexion à GitLab CE via Single Sign-On (SSO OmniAuth ZKP) :" %}</strong>
+                        {% trans "Sur la mire de connexion GitLab, cliquez sur le bouton souverain" %} <em>« Connexion avec Bantu ZKP »</em>. {% trans "Si vous êtes déjà authentifié sur BantuDevLab, la session GitLab est ouverte instantanément. Sinon, vous serez invité à signer le défi cryptographique sans jamais saisir de mot de passe." %}
+                    </li>
+                </ol>
+                <div style="margin: 1rem 0; padding: 0.75rem 1rem; background: rgba(16, 185, 129, 0.08); border-left: 3px solid #10b981; border-radius: 4px;">
+                    <strong>Accès direct Gitea :</strong> Chemin de connexion direct aux dépôts Git : <a href="{{ GITEA_LOGIN_URL|default:BASE_URL_2 }}" target="_blank" rel="noopener noreferrer" style="color: #10b981; font-weight: 600; text-decoration: underline;">{{ GITEA_LOGIN_URL|default:BASE_URL_2 }}</a>
+                </div>
+                <div class="faq-tip-box">
+                    {% icon "info" size=18 %} <strong>{% trans "Protection anti-rejeu :" %}</strong> {% trans "Chaque défi de connexion est unique et consommé atomiquement. Une preuve interceptée sur le réseau ne peut jamais être réutilisée." %}
+                </div>
+            </div>
+        </details>
+
+        <!-- Q3 : Comment consulter et cloner le code source ? -->
+        <details class="faq-item" id="faq-view-source">
+            <summary class="faq-summary">
+                <span class="faq-summary-title">
+                    <span class="faq-badge">3</span>
+                    {% trans "Comment consulter et cloner le code source des dépôts souverains ?" %}
+                </span>
+                <span class="faq-chevron">{% icon "chevron-down" size=18 %}</span>
+            </summary>
+            <div class="faq-content">
+                <p>
+                    {% trans "Le code source hébergé sur BANTUDEVLAB et GitLab est consultable et clonable selon plusieurs modalités :" %}
+                </p>
+                <div class="faq-subgrid">
+                    <div class="card" style="margin-top: 0; padding: 1rem;">
+                        <h4 style="display: flex; align-items: center; gap: 0.4rem;">{% icon "globe" size=18 %} {% trans "Consultation Web Immédiate" %}</h4>
+                        <p style="font-size: 0.9rem; color: var(--text-muted);">
+                            {% trans "Depuis le" %} <a href="{% url 'dashboard' %}" style="color: var(--primary-african-gold);">{% trans "Tableau de Bord" %}</a>, {% trans "consultez la liste des dépôts, l'arborescence des fichiers, l'historique des commits et éditez du code en ligne avec colorisation syntaxique." %}
+                        </p>
+                    </div>
+                    <div class="card" style="margin-top: 0; padding: 1rem;">
+                        <h4 style="display: flex; align-items: center; gap: 0.4rem;">{% icon "terminal" size=18 %} {% trans "Clone HTTPS avec Jeton Git ZKP" %}</h4>
+                        <p style="font-size: 0.9rem; color: var(--text-muted);">
+                            {% trans "Générez un token d'accès Git" %} (<code>bnt_...</code>) {% trans "validé par preuve ZKP depuis l'API" %} <code>/api/zkp/tokens/generate/</code>. {% trans "Clonez ensuite via :" %}
+                        </p>
+                        <pre class="faq-code"><code>git clone https://bnt_token@git.bantudevlab.africa/organisation/projet.git</code></pre>
+                    </div>
+                    <div class="card" style="margin-top: 0; padding: 1rem;">
+                        <h4 style="display: flex; align-items: center; gap: 0.4rem;">{% icon "key" size=18 %} {% trans "Clone Sécurisé SSH" %}</h4>
+                        <p style="font-size: 0.9rem; color: var(--text-muted);">
+                            {% trans "Ajoutez votre clé publique SSH (Ed25519 ou RSA 4096 bits) dans vos paramètres GitLab pour cloner directement :" %}
+                        </p>
+                        <pre class="faq-code"><code>git clone git@git.bantudevlab.africa:organisation/projet.git</code></pre>
+                    </div>
+                </div>
+            </div>
+        </details>
+    </div>
+</div>
+
+<!-- Section 2 : Foire Aux Questions Approfondie -->
+<div style="margin-top: 3.5rem;">
+    <h2 style="display: flex; align-items: center; gap: 0.5rem; border-bottom: 2px solid var(--secondary-emerald); padding-bottom: 0.5rem;">
+        {% icon "activity" size=24 %} {% trans "Questions Fréquentes Techniques & Sécurité" %}
+    </h2>
+    <p style="color: var(--text-muted); margin-top: 0.5rem;">
+        {% trans "Approfondissement sur les fonctionnalités avancées : ZKP, IA Gemma 5B, SAST, Multi-Tenancy et souveraineté continentale." %}
+    </p>
+
+    <div class="faq-accordion-group">
+        <!-- Q-DEMO : Parcours Démo Évaluateur CADEV 2026 -->
+        <details class="faq-item" id="faq-cadev-demo" open>
+            <summary class="faq-summary" style="background: linear-gradient(135deg, rgba(16, 185, 129, 0.15), rgba(245, 158, 11, 0.08)); border-left: 4px solid #10b981;">
+                <span class="faq-summary-title">
+                    <span class="faq-badge" style="background: #10b981; color: #000; font-weight: bold;">DEMO</span>
+                    <strong>{% trans "Évaluateur CADEV 2026 : Comment tester l'ensemble du parcours sans friction ?" %}</strong>
+                </span>
+                <span class="faq-chevron">{% icon "chevron-down" size=18 %}</span>
+            </summary>
+            <div class="faq-content">
+                <p>
+                    {% trans "Bienvenue au jury et aux évaluateurs du concours CADEV 2026 (Systalink Cloud). Voici le parcours pas-à-pas pour évaluer BantuDevLab en toute autonomie :" %}
+                </p>
+                <div class="faq-steps-list">
+                    <div class="faq-step-item">
+                        <strong>{% trans "1. Connexion Zero-Trust immédiate :" %}</strong>
+                        <p>{% trans "Ouvrez la page de connexion ZKP et cliquez sur le bouton « Connexion Démo 1-Clic ». Le compte " %}<code>cadev_evaluator</code>{% trans " s'authentifie instantanément via la preuve mathématique de Schnorr (RFC 3526 MODP 2048 bits) sans transmettre aucun mot de passe." %}</p>
+                    </div>
+                    <div class="faq-step-item" style="margin-top: 0.75rem;">
+                        <strong>{% trans "2. Consultation de la FAQ et conformité :" %}</strong>
+                        <p>{% trans "Cette section détaille les principes Zero-Trust, l'absence de dépendance aux CDN tiers, la politique Zéro-Emoji et la bascule vers le cache permissif Valkey 7.2 (BSD-3-Clause) en remplacement de Redis." %}</p>
+                    </div>
+                    <div class="faq-step-item" style="margin-top: 0.75rem;">
+                        <strong>{% trans "3. Création d'un dépôt de démonstration :" %}</strong>
+                        <p>{% trans "Sur le Tableau de Bord, cliquez sur « Créer un Dépôt de Démonstration ». Renseignez le nom (ex: demo-cadev-2026) et validez. Le dépôt est créé sur la forge souveraine et apparaît immédiatement avec ses actions de sécurité." %}</p>
+                    </div>
+                    <div class="faq-step-item" style="margin-top: 0.75rem;">
+                        <strong>{% trans "4. Audit SAST et Revue IA Locale Gemma 2 2B :" %}</strong>
+                        <p>{% trans "Sur n'importe quel dépôt, cliquez sur « Run Security Audit » pour calculer l'entropie de Shannon ($H \ge 3.8$) ou « Ask Gemma Review » pour invoquer le modèle compact local exécuté sur conteneur Ollama." %}</p>
+                    </div>
+                </div>
+            </div>
+        </details>
+
+        <!-- Q4 : Qu'est-ce que l'authentification Zero-Trust ZKP ? -->
+        <details class="faq-item">
+            <summary class="faq-summary">
+                <span class="faq-summary-title">
+                    {% trans "Qu'est-ce que l'authentification Zero-Trust ZKP et pourquoi surpasse-t-elle les mots de passe classiques ?" %}
+                </span>
+                <span class="faq-chevron">{% icon "chevron-down" size=18 %}</span>
+            </summary>
+            <div class="faq-content">
+                <p>
+                    {% trans "ZKP (Zero-Knowledge Proof, ou preuve à divulgation nulle de connaissance) est un protocole cryptographique mathématique fondé sur le problème du logarithme discret (RFC 3526 MODP 2048 bits). Grâce au protocole de Schnorr rendu non-interactif via la transformation de Fiat-Shamir, vous prouvez au serveur que vous détenez votre secret mathématique sans JAMAIS lui révéler ce secret, ni même le faire transiter sur le réseau." %}
+                </p>
+                <p>
+                    {% trans "Avantages majeurs :" %}
+                </p>
+                <ul>
+                    <li>{% trans "Même en cas de compromission totale de la base de données du serveur, aucun mot de passe ni clé privée ne peut fuiter, car seules les clés publiques sont enregistrées." %}</li>
+                    <li>{% trans "Immunité intégrale contre les écoutes réseau et le rejeu de requêtes grâce aux nonces éphémères consommés atomiquement." %}</li>
+                    <li>{% trans "Validation mathématique stricte de non-appartenance aux petits sous-groupes pour éliminer toute tentative de falsification de clé." %}</li>
+                </ul>
+            </div>
+        </details>
+
+        <!-- Q5 : Comment fonctionne la double approbation ZKP sur les Merge Requests ? -->
+        <details class="faq-item">
+            <summary class="faq-summary">
+                <span class="faq-summary-title">
+                    {% trans "Comment fonctionne la double approbation ZKP sur les Merge Requests (MR) ?" %}
+                </span>
+                <span class="faq-chevron">{% icon "chevron-down" size=18 %}</span>
+            </summary>
+            <div class="faq-content">
+                <p>
+                    {% trans "Pour les projets critiques des ministères, banques centrales et agences publiques, BANTUDEVLAB intègre un quorum d'approbation cryptographique :" %}
+                </p>
+                <ul>
+                    <li>{% trans "La fusion (merge) d'une branche de fonctionnalités vers la branche principale exige la signature mathématique d'au moins deux relecteurs habilités." %}</li>
+                    <li>{% trans "Chaque approbation est scellée par une preuve ZKP enregistrée sous le modèle SovereignMergeRequestApproval." %}</li>
+                    <li>{% trans "Le pipeline GitLab CI/CD et la passerelle de fusion bloquent automatiquement l'opération si le quorum cryptographique n'est pas réuni." %}</li>
+                </ul>
+            </div>
+        </details>
+
+        <!-- Q6 : Comment l'assistant IA local Gemma 5B protège-t-il la confidentialité du code ? -->
+        <details class="faq-item">
+            <summary class="faq-summary">
+                <span class="faq-summary-title">
+                    {% trans "Comment l'assistant IA local Gemma 5B audite-t-il le code sans aucune fuite vers l'étranger ?" %}
+                </span>
+                <span class="faq-chevron">{% icon "chevron-down" size=18 %}</span>
+            </summary>
+            <div class="faq-content">
+                <p>
+                    {% trans "Contrairement aux assistants cloud propriétaires hébergés sous juridiction étrangère (Cloud Act, FISA), le modèle Gemma 5B de BANTUDEVLAB :" %}
+                </p>
+                <ul>
+                    <li>{% trans "Est déployé exclusivement sur des serveurs physiques situés sur le sol africain (Systalink Cloud, datacenters Tier-3 Abidjan, Dakar, Nairobi, Kigali)." %}</li>
+                    <li>{% trans "S'exécute en local via vLLM / Ollama sans aucune transmission de télémétrie ou de code source à des tiers." %}</li>
+                    <li>{% trans "Masque et anonymise automatiquement les secrets éventuels avant toute journalisation (AIInteractionLog)." %}</li>
+                    <li>{% trans "Est fine-tuné avec LoRA/QLoRA (4-bit GGUF) sur les cadres légaux panafricains et les meilleures pratiques de souveraineté logicielle." %}</li>
+                </ul>
+            </div>
+        </details>
+
+        <!-- Q7 : Comment fonctionne le scanner de sécurité SAST et le score de souveraineté ? -->
+        <details class="faq-item">
+            <summary class="faq-summary">
+                <span class="faq-summary-title">
+                    {% trans "Comment fonctionne le scanner de sécurité SAST et comment est calculé le score de souveraineté ?" %}
+                </span>
+                <span class="faq-chevron">{% icon "chevron-down" size=18 %}</span>
+            </summary>
+            <div class="faq-content">
+                <p>
+                    {% trans "Le scanner d'analyse statique SAST de BANTUDEVLAB analyse automatiquement chaque commit et fichier soumis :" %}
+                </p>
+                <ul>
+                    <li>{% trans "Détection des secrets codés en dur (clés privées, tokens API, identifiants)." %}</li>
+                    <li>{% trans "Détection des injections SQL, exécutions de commandes non sécurisées (eval, exec, pickle)." %}</li>
+                    <li>{% trans "Détection des dépendances externes non souveraines ou non auditées." %}</li>
+                    <li>{% trans "Attribution d'un score de 0 à 100 : un score inférieur à 70 peut déclencher un blocage automatique préventif dans les hooks de pre-receive." %}</li>
+                    <li>{% trans "Exportation des rapports aux formats standard OASIS SARIF 2.1.0 et GitLab SAST (gl-sast-report.json)." %}</li>
+                </ul>
+            </div>
+        </details>
+
+        <!-- Q8 : Comment est gérée la séparation des organisations (Multi-Tenancy) ? -->
+        <details class="faq-item">
+            <summary class="faq-summary">
+                <span class="faq-summary-title">
+                    {% trans "Comment est assurée l'étanchéité entre organisations (Banques, Ministères, Universités, Startups) ?" %}
+                </span>
+                <span class="faq-chevron">{% icon "chevron-down" size=18 %}</span>
+            </summary>
+            <div class="faq-content">
+                <p>
+                    {% trans "Le modèle SovereignOrganization assure une compartimentation multi-tenancy stricte :" %}
+                </p>
+                <ul>
+                    <li>{% trans "Chaque organisation dispose d'espaces de noms (namespaces) dédiés synchronisés avec les groupes GitLab." %}</li>
+                    <li>{% trans "La création d'organisations est soumise à validation administrative (contrôle IsAdminUser)." %}</li>
+                    <li>{% trans "Des niveaux de souveraineté graduels (Tier-1 Continental, Tier-2 Régional, Tier-3 Startup) définissent les règles de chiffrement et d'hébergement." %}</li>
+                </ul>
+            </div>
+        </details>
+
+        <!-- Q9 : En quoi BANTUDEVLAB respecte-t-il la Convention de Malabo ? -->
+        <details class="faq-item">
+            <summary class="faq-summary">
+                <span class="faq-summary-title">
+                    {% trans "En quoi BANTUDEVLAB est-il conforme à la Convention de Malabo et aux réglementations africaines de cybersécurité ?" %}
+                </span>
+                <span class="faq-chevron">{% icon "chevron-down" size=18 %}</span>
+            </summary>
+            <div class="faq-content">
+                <p>
+                    {% trans "La Convention de l'Union Africaine sur la Cybersécurité et la Protection des Données à Caractère Personnel (Malabo 2014) impose des garanties strictes d'intégrité, de traçabilité et de non-ingérence :" %}
+                </p>
+                <ul>
+                    <li>{% trans "Journal d'audit immuable (AuditTrailLog) chaîné cryptographiquement par hachage SHA-256 (blockchain interne vérifiable)." %}</li>
+                    <li>{% trans "Vérification automatisée de l'intégrité via la commande de gestion :" %} <code>python manage.py export_malabo_compliance_report</code>.</li>
+                    <li>{% trans "Souveraineté des données garantie : aucun hébergement soumis à des législations extraterritoriales." %}</li>
+                </ul>
+            </div>
+        </details>
+
+        <!-- Q10 : Pourquoi la plateforme n'utilise-t-elle aucun emoji ? -->
+        <details class="faq-item">
+            <summary class="faq-summary">
+                <span class="faq-summary-title">
+                    {% trans "Pourquoi la plateforme n'utilise-t-elle aucun emoji ?" %}
+                </span>
+                <span class="faq-chevron">{% icon "chevron-down" size=18 %}</span>
+            </summary>
+            <div class="faq-content">
+                <p>
+                    {% trans "BANTUDEVLAB applique une politique stricte Zéro-Emoji (contrôlée en continu par le script scripts/check_no_emoji.py) pour trois raisons majeures :" %}
+                </p>
+                <ol>
+                    <li>{% trans "Accessibilité universelle (WCAG 2.2 AA) : les lecteurs d'écran pour personnes malvoyantes prononcent souvent de façon erratique les pictogrammes Unicode." %}</li>
+                    <li>{% trans "Souveraineté visuelle & neutralité : l'ensemble des icônes et drapeaux sont des fichiers vectoriels SVG auto-hébergés sans aucun recours à des polices ou CDN tiers." %}</li>
+                    <li>{% trans "Cohérence d'affichage : affichage strictement identique quel que soit le système d'exploitation client (Linux, BSD, Windows, macOS, terminaux mobiles)." %}</li>
+                </ol>
+            </div>
+        </details>
+
+        <!-- Q11 : Comment exécuter les pipelines CI/CD sur des runners panafricains ? -->
+        <details class="faq-item">
+            <summary class="faq-summary">
+                <span class="faq-summary-title">
+                    {% trans "Comment configurer et exécuter des pipelines CI/CD sur les runners souverains ?" %}
+                </span>
+                <span class="faq-chevron">{% icon "chevron-down" size=18 %}</span>
+            </summary>
+            <div class="faq-content">
+                <p>
+                    {% trans "Vos fichiers .gitlab-ci.yml peuvent cibler directement les nœuds d'exécution certifiés panafricains grâce aux tags de runners :" %}
+                </p>
+                <pre class="faq-code"><code>build-sovereign:
+  stage: build
+  tags:
+    - sovereign-abidjan
+    - tier1-runner
+  script:
+    - python -m pytest
+    - python scripts/check_no_emoji.py</code></pre>
+                <p style="margin-top: 0.5rem;">
+                    {% trans "Ces runners sont isolés dans des conteneurs sécurisés rootless hébergés dans nos datacenters partenaires." %}
+                </p>
+            </div>
+        </details>
+    </div>
+</div>
+
+<!-- Boîte d'assistance & support -->
+<div class="card" style="margin-top: 3.5rem; text-align: center; border: 1px solid var(--primary-african-gold); background: radial-gradient(circle at 50% 50%, rgba(245, 158, 11, 0.08), var(--dark-surface));">
+    <h3 style="margin-bottom: 0.5rem;">{% icon "help-circle" size=24 %} {% trans "Une autre question technique ?" %}</h3>
+    <p style="color: var(--text-muted); max-width: 600px; margin: 0 auto 1.5rem;">
+        {% trans "Consultez la documentation technique approfondie du projet ou adressez-vous directement aux ingénieurs souverains de BANTUDEVLAB." %}
+    </p>
+    <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+        <a href="{% url 'dashboard' %}" class="btn btn-secondary">{% icon "activity" size=16 %} {% trans "Accéder au Tableau de Bord" %}</a>
+        <a href="{% url 'zkp_auth:zkp_login_page' %}" class="btn btn-primary">{% icon "key" size=16 %} {% trans "Connexion Zero-Trust" %}</a>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+// Script de filtrage instantané de la FAQ
+(function initFaqSearch() {
+    const searchInput = document.getElementById('faqSearchInput');
+    const items = document.querySelectorAll('.faq-item');
+    if (!searchInput || !items.length) return;
+
+    searchInput.addEventListener('input', function() {
+        const query = this.value.toLowerCase().trim();
+        items.forEach(item => {
+            const text = item.textContent.toLowerCase();
+            if (!query || text.includes(query)) {
+                item.style.display = '';
+                if (query) {
+                    item.setAttribute('open', '');
+                } else {
+                    item.removeAttribute('open');
+                }
+            } else {
+                item.style.display = 'none';
+            }
+        });
+    });
+})();
+</script>
+{% endblock %}

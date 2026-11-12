@@ -1,0 +1,304 @@
+x-django-env: &django-env
+  DEBUG: ${DEBUG:-True}
+  DJANGO_SECRET_KEY: ${DJANGO_SECRET_KEY:-bantu_dev_secret_key_9f8e7d6c5b4a3210_cadev2026_sovereign_africa}
+  ALLOWED_HOSTS: ${ALLOWED_HOSTS:-*}
+  CSRF_TRUSTED_ORIGINS: ${CSRF_TRUSTED_ORIGINS:-http://localhost:8001,http://127.0.0.1:8001}
+  SECURE_SSL_REDIRECT: "False"
+  DB_ENGINE: postgres
+  POSTGRES_DB: ${POSTGRES_DB:-bantudevlab}
+  POSTGRES_USER: ${POSTGRES_USER:-bantudevlab_admin}
+  POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-sovereign_pass_2025}
+  POSTGRES_HOST: db
+  POSTGRES_PORT: "5432"
+  GITEA_API_URL: http://gitea:3000/api/v1
+  GITEA_EXTERNAL_URL: ${GITEA_EXTERNAL_URL:-http://localhost:3002}
+  GITEA_LOGIN_URL: ${GITEA_LOGIN_URL:-http://localhost:3002/user/login}
+  GITEA_ADMIN_TOKEN: ${GITEA_ADMIN_TOKEN:-1749a33d29fee921385f891d05e6cc2aa5fa97f2}
+  GITEA_WEBHOOK_SECRET: ${GITEA_WEBHOOK_SECRET:-bantu_dev_webhook_secret_key_2026}
+  GITLAB_URL: ${GITLAB_URL:-http://localhost:3001}
+  GEMMA_API_URL: ${GEMMA_API_URL:-http://ollama:11434/api/generate}
+  GEMMA_MODEL_NAME: ${GEMMA_MODEL_NAME:-gemma2:2b}
+  REDIS_URL: redis://:${REDIS_PASSWORD:-sovereign_redis_pass_2025}@redis:6379/0
+  CELERY_BROKER_URL: redis://:${REDIS_PASSWORD:-sovereign_redis_pass_2025}@redis:6379/0
+  CELERY_RESULT_BACKEND: redis://:${REDIS_PASSWORD:-sovereign_redis_pass_2025}@redis:6379/0
+
+x-hardening: &hardening
+  security_opt:
+    - no-new-privileges:true
+
+services:
+  # Base de donnees PostgreSQL souveraine
+  db:
+    image: postgres:16-alpine
+    container_name: bantudevlab_postgres
+    restart: always
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-bantudevlab}
+      POSTGRES_USER: ${POSTGRES_USER:-bantudevlab_admin}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-sovereign_pass_2025}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    security_opt:
+      - no-new-privileges:true
+    networks:
+      - backend_net
+
+  # Broker Valkey (Remplacement permissif BSD-3 de Redis pour CADEV 2026) & Cache
+  redis:
+    image: valkey/valkey:7.2-alpine
+    container_name: bantudevlab_redis
+    restart: always
+    command: ["valkey-server", "--requirepass", "${REDIS_PASSWORD:-sovereign_redis_pass_2025}"]
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD-SHELL", "valkey-cli -a \"$$REDIS_PASSWORD\" ping | grep PONG || redis-cli -a \"$$REDIS_PASSWORD\" ping | grep PONG"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+    environment:
+      REDIS_PASSWORD: ${REDIS_PASSWORD:-sovereign_redis_pass_2025}
+    <<: *hardening
+    networks:
+      - backend_net
+
+  # Moteur Git Officiel Gitea (port hote 3002)
+  gitea:
+    image: gitea/gitea:1.22
+    container_name: bantudevlab_gitea
+    restart: always
+    environment:
+      - USER_UID=1000
+      - USER_GID=1000
+      - GITEA__database__DB_TYPE=sqlite3
+      - GITEA__database__PATH=/data/gitea/gitea.db
+      - GITEA__database__SQLITE_JOURNAL_MODE=WAL
+      - GITEA__server__DOMAIN=localhost
+      - GITEA__server__HTTP_PORT=3000
+      - GITEA__server__ROOT_URL=http://localhost:3002/
+      - GITEA__server__LANDING_PAGE=explore
+      - GITEA__server__SSH_PORT=2222
+      - GITEA__ui__DEFAULT_THEME=github-dark
+      - GITEA__ui__THEMES=gitea-auto,gitea-light,gitea-dark,github,github-dark
+      - GITEA__i18n__LANGS=fr-FR,en-US,sw-KE,pt-PT
+      - GITEA__i18n__NAMES=Français,English,Kiswahili,Português
+      - GITEA__security__INSTALL_LOCK=true
+      - GITEA__security__SECRET_KEY=bantu_gitea_secret_key_2026_sovereign_africa
+      - GITEA__service__DISABLE_REGISTRATION=false
+      - GITEA__service__ENABLE_CAPTCHA=false
+      - GITEA__webhook__ALLOWED_HOST_LIST=django_app,forge_engine,127.0.0.1,localhost,host.docker.internal
+    volumes:
+      - gitea_data:/data
+      - ./custom:/data/gitea/custom:ro
+      - ./custom/templates:/data/gitea/templates:ro
+      - ./custom/public:/data/gitea/public:ro
+      - ./forge_data/repos:/data/git/repositories
+    ports:
+      - "3002:3000"
+      - "2222:2222"
+    depends_on:
+      db:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD-SHELL", "curl -fsS http://localhost:3000/api/healthz || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 15
+      start_period: 120s
+    security_opt:
+      - no-new-privileges:true
+    networks:
+      - sovereign_net
+      - backend_net
+
+  # Initialisation automatique du compte admin Gitea
+  gitea_init:
+    image: gitea/gitea:1.22
+    container_name: bantudevlab_gitea_init
+    restart: "no"
+    depends_on:
+      gitea:
+        condition: service_healthy
+    volumes:
+      - gitea_data:/data
+    entrypoint:
+      - "sh"
+      - "-c"
+      - |
+        sleep 2
+        su-exec git gitea --work-path /data/gitea admin user create --username bantu_admin --password BantuAdmin2026! --email admin@bantudevlab.africa --admin --must-change-password=false 2>/dev/null || true
+        su-exec git gitea --work-path /data/gitea admin user change-password --username bantu_admin --password BantuAdmin2026! --must-change-password=false 2>/dev/null || true
+        su-exec git gitea --work-path /data/gitea admin user create --username kouame_dev --password BantuAdmin2026! --email kouame_dev@bantudevlab.africa --admin --must-change-password=false 2>/dev/null || true
+        su-exec git gitea --work-path /data/gitea admin user change-password --username kouame_dev --password BantuAdmin2026! --must-change-password=false 2>/dev/null || true
+        echo "Gitea admin users (bantu_admin / kouame_dev) ready."
+    networks:
+      - sovereign_net
+      - backend_net
+
+  # Portail Central BantuDevLab (port hote 8001)
+  django_app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: bantudevlab_core
+    restart: always
+    environment:
+      <<: *django-env
+      WEB_CONCURRENCY: "4"
+    ports:
+      - "8001:8000"
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      gitea:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "http://127.0.0.1:8000/healthz"]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+    <<: *hardening
+    networks:
+      - sovereign_net
+      - backend_net
+
+  # Moteur Forge Git Souveraine (port hote 3001)
+  forge_engine:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: bantudevlab_forge
+    restart: always
+    command: ["python", "forge_server.py"]
+    ports:
+      - "3001:3001"
+    environment:
+      PORT: "3001"
+      BANTU_CORE_URL: "http://localhost:8001"
+      BANTU_CORE_INTERNAL_URL: "http://django_app:8000"
+      GITEA_EXTERNAL_URL: "http://localhost:3002"
+      GITEA_LOGIN_URL: "http://localhost:3002/user/login"
+      GITEA_WEBHOOK_SECRET: ${GITEA_WEBHOOK_SECRET:-bantu_dev_webhook_secret_key_2026}
+    volumes:
+      - forge_repos:/app/forge_data/repos
+    <<: *hardening
+    networks:
+      - sovereign_net
+      - backend_net
+
+  # Taches asynchrones Celery
+  celery_worker:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: bantudevlab_celery
+    restart: always
+    command: ["celery", "-A", "config", "worker", "--loglevel=info", "--concurrency=2"]
+    environment:
+      <<: *django-env
+      DEBUG: "False"
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    <<: *hardening
+    networks:
+      - sovereign_net
+      - backend_net
+
+  # Moteur d'Inference IA Locale Ollama (Gemma 2 2B) - T-OPS-501 & T-OPS-503
+  ollama:
+    image: ollama/ollama:latest
+    container_name: bantudevlab_ollama
+    restart: always
+    volumes:
+      - ollama_models:/root/.ollama
+      - ./deploy/ai/start_gemma_engine.sh:/entrypoint.sh:ro
+    entrypoint: ["/bin/sh", "/entrypoint.sh"]
+    environment:
+      - OLLAMA_KEEP_ALIVE=24h
+      - GEMMA_MODEL=gemma2:2b
+    networks:
+      - backend_net
+    <<: *hardening
+
+  # Service Renovate Bot (Equivalent Dependabot pour Gitea - T-SEC-602)
+  renovate:
+    image: renovate/renovate:latest
+    container_name: bantudevlab_renovate
+    restart: unless-stopped
+    environment:
+      RENOVATE_PLATFORM: gitea
+      RENOVATE_ENDPOINT: http://gitea:3000/api/v1
+      RENOVATE_TOKEN: ${GITEA_RENOVATE_TOKEN:-bantu_admin_token_2026}
+      RENOVATE_AUTODISCOVER: "true"
+      RENOVATE_CONFIG_FILE: /usr/src/app/renovate.json
+    volumes:
+      - ./renovate.json:/usr/src/app/renovate.json:ro
+    networks:
+      - backend_net
+    depends_on:
+      - gitea
+
+  # Demonstrateur Gitea Actions / GitHub Actions Runner (T-ACT-602)
+  act_runner:
+    image: gitea/act_runner:latest
+    container_name: bantudevlab_act_runner
+    restart: always
+    environment:
+      GITEA_INSTANCE_URL: http://gitea:3000
+      GITEA_RUNNER_REGISTRATION_TOKEN: ${GITEA_RUNNER_REGISTRATION_TOKEN:-bantu_act_runner_token_2026}
+      GITEA_RUNNER_NAME: bantudevlab-act-runner
+      GITEA_RUNNER_LABELS: ubuntu-latest:docker://catthehacker/ubuntu:act-latest,ubuntu-22.04:docker://catthehacker/ubuntu:act-22.04,ubuntu-20.04:docker://catthehacker/ubuntu:act-20.04
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - act_runner_data:/data
+      - ./deploy/ci/act_runner_config.yaml:/config.yaml:ro
+    command: ["daemon", "--config", "/config.yaml"]
+    networks:
+      - backend_net
+    depends_on:
+      - gitea
+
+  # Ordonnanceur periodique Celery Beat (T-DEV-502, T-DEV-503, T-DEV-504)
+  celery_beat:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: bantudevlab_celery_beat
+    restart: always
+    command: ["celery", "-A", "config", "beat", "--loglevel=info", "-s", "/tmp/celerybeat-schedule"]
+    environment:
+      <<: *django-env
+      DEBUG: "False"
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    <<: *hardening
+    networks:
+      - backend_net
+
+volumes:
+  postgres_data:
+  gitea_data:
+  redis_data:
+  forge_repos:
+  ollama_models:
+  act_runner_data:
+
+networks:
+  sovereign_net:
+    driver: bridge
+  backend_net:
+    driver: bridge
+    internal: true

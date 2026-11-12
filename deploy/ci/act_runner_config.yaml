@@ -1,0 +1,31 @@
+# BANTUDEVLAB - Configuration durcie du démon act_runner (Gitea Actions / GitHub Actions Compatible)
+log:
+  level: info
+
+runner:
+  file: .runner
+  capacity: 2
+  timeout: 3h
+  shutdown_timeout: 10s
+  insecure: false
+  fetch_timeout: 10s
+  fetch_interval: 2s
+  labels:
+    - "ubuntu-latest:docker://catthehacker/ubuntu:act-latest"
+    - "ubuntu-22.04:docker://catthehacker/ubuntu:act-22.04"
+    - "ubuntu-20.04:docker://catthehacker/ubuntu:act-20.04"
+
+cache:
+  enabled: true
+  dir: ""
+  host: ""
+  port: 0
+  external_server: ""
+
+container:
+  network: "backend_net"
+  privileged: false
+  options: "--read-only --cap-drop=ALL --cap-add=CHOWN --cap-add=SETUID --cap-add=SETGID"
+  workdir_parent: ""
+  valid_volumes: []
+  force_pull: false

@@ -1,0 +1,1130 @@
+/* ==========================================================================
+   BANTUDEVLAB - Theme GitHub Dark (GitHub Primer Design Tokens)
+   Compatible Gitea 1.22+ / Aligné sur GitHub Moderne Dark Mode
+   ========================================================================== */
+
+:root {
+  /* Gitea 1.22+ Standard Variables for Dark Mode */
+  --color-body: #020617;
+  --color-box-header: #050b18;
+  --color-box-body: #070e1e;
+  --color-box-body-highlight: #0b1528;
+  --color-text: #f8fafc;
+  --color-text-dark: #f8fafc;
+  --color-text-light: #94a3b8;
+  --color-text-light-1: #94a3b8;
+  --color-text-light-2: #64748b;
+  --color-text-light-3: #475569;
+  --color-footer: #050b18;
+  --color-navbar: #050b18;
+  --color-nav-bg: #050b18;
+  --color-nav-hover-bg: #0b1528;
+  --color-menu: #070e1e;
+  --color-card: #070e1e;
+  --color-secondary-bg: #070e1e;
+  --color-secondary-nav-bg: #050b18;
+  --color-input-background: #0b1528;
+  --color-input-text: #f8fafc;
+  --color-input-border: #1e293b;
+  --color-input-border-hover: #00e5ff;
+  --color-markup-code-block: #0b1528;
+  --color-markup-code-inline: #1e293b;
+  --color-console-bg: #020617;
+  --color-console-fg: #f8fafc;
+  --color-border: #1e293b;
+  --color-border-subtle: #0f172a;
+  --color-active: rgba(0, 229, 255, 0.15);
+  --color-hover: rgba(255, 255, 255, 0.05);
+
+  /* GitHub Primer Color Tokens (Dark) */
+  --color-canvas-default: #020617;
+  --color-canvas-subtle: #070e1e;
+  --color-border-default: #30363d;
+  --color-border-muted: #21262d;
+  --color-neutral-muted: rgba(110, 118, 129, 0.4);
+  --color-accent-fg: #00e5ff; /* Cyber Cyan */
+  --color-accent-emphasis: #1f6feb;
+  --color-success-fg: #3fb950;
+  --color-success-emphasis: #238636;
+  --color-attention-fg: #d29922;
+  --color-attention-emphasis: #9e6a03;
+  --color-severe-fg: #db6d28;
+  --color-danger-fg: #f85149;
+  --color-danger-emphasis: #da3633;
+  --color-done-fg: #a371f7;
+  --color-done-emphasis: #8957e5;
+
+  /* Gitea Internal Mapping to GitHub Primer Dark */
+  --color-primary: #238636;
+  --color-primary-contrast: #ffffff;
+  --color-primary-dark-1: #1f7f32;
+  --color-primary-dark-2: #196c2a;
+  --color-primary-dark-3: #135521;
+  --color-primary-dark-4: #0e3f18;
+  --color-primary-light-1: #2ea043;
+  --color-primary-light-2: #3fb950;
+  --color-primary-light-3: #56d364;
+  --color-primary-light-4: #7ee787;
+  --color-primary-light-5: #aff5b4;
+  --color-primary-alpha-10: rgba(46, 160, 67, 0.15);
+  --color-primary-alpha-20: rgba(46, 160, 67, 0.25);
+  --color-primary-alpha-30: rgba(46, 160, 67, 0.35);
+
+  --color-body: #020617; /* Deep Cyber Obsidian */
+  --color-box-header: #161b22;
+  --color-box-body: #0d1117;
+  --color-text: #e6edf3;
+  --color-text-light: #7d8590;
+  --color-text-light-1: #7d8590;
+  --color-text-light-2: #848d97;
+  --color-text-light-3: #6e7681;
+  --color-text-dark: #f0f6fc;
+
+  --color-footer: #0d1117;
+  --color-navbar: #050b18;
+  --color-navbar-transparent: rgba(1, 4, 9, 0.9);
+  --color-light: #161b22;
+  --color-light-mimic-enabled: rgba(255, 255, 255, calc(40 / 255 * 222 / 255 / var(--opacity-boost)));
+  --color-light-border: #30363d;
+
+  --color-secondary: #21262d;
+  --color-secondary-bg: #161b22;
+  --color-secondary-border: #30363d;
+  --color-secondary-border-dark-1: #3b434b;
+  --color-secondary-border-dark-2: #48525c;
+  --color-secondary-hover: #30363d;
+  --color-secondary-active: #282e33;
+
+  --color-hover: #161b22;
+  --color-active: #1f242c;
+  --color-border: #30363d;
+  --color-border-subtle: #21262d;
+
+  --color-red: #f85149;
+  --color-orange: #db6d28;
+  --color-yellow: #d29922;
+  --color-green: #3fb950;
+  --color-teal: #39c5cf;
+  --color-blue: #2f81f7;
+  --color-purple: #a371f7;
+
+  /* Typography Stack - GitHub Native */
+  --fonts-regular: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+  --fonts-monospace: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
+  --border-radius: 6px;
+  --border-radius-medium: 6px;
+}
+
+body {
+  font-family: var(--fonts-regular);
+  color: var(--color-text);
+  background-color: var(--color-body);
+}
+
+/* GitHub Style Top Navigation (Dark Header) */
+.ui.menu.navbar {
+  background-color: #010409 !important;
+  border-bottom: 1px solid #30363d !important;
+  box-shadow: none !important;
+}
+
+/* GitHub Style Repository Header & Tabs */
+.ui.tabular.menu {
+  border-bottom: 1px solid #30363d !important;
+}
+
+.ui.tabular.menu .item {
+  border: none !important;
+  border-bottom: 2px solid transparent !important;
+  color: #7d8590 !important;
+  font-weight: 500 !important;
+  padding: 8px 16px !important;
+  border-radius: 0 !important;
+}
+
+.ui.tabular.menu .item.active {
+  border-bottom: 2px solid #f78166 !important;
+  color: #f0f6fc !important;
+  font-weight: 600 !important;
+  background: transparent !important;
+}
+
+.ui.tabular.menu .item:hover {
+  border-bottom: 2px solid #8b949e !important;
+  color: #f0f6fc !important;
+}
+
+/* GitHub Style Buttons */
+.ui.button {
+  border-radius: 6px !important;
+  font-weight: 500 !important;
+  background-color: #21262d !important;
+  color: #c9d1d9 !important;
+  border: 1px solid #30363d !important;
+}
+
+.ui.button:hover {
+  background-color: #30363d !important;
+  color: #f0f6fc !important;
+}
+
+.ui.button.primary, .ui.button.green {
+  background-color: #238636 !important;
+  color: #ffffff !important;
+  border-color: rgba(240, 246, 252, 0.1) !important;
+}
+
+.ui.button.primary:hover, .ui.button.green:hover {
+  background-color: #2ea043 !important;
+}
+
+/* GitHub Style Rounded Counter Badges */
+.ui.label, .counter {
+  border-radius: 20px !important;
+  font-weight: 500 !important;
+  font-size: 12px !important;
+  background-color: rgba(110, 118, 129, 0.4) !important;
+  color: #e6edf3 !important;
+}
+
+/* GitHub Style Panels / Segments */
+.ui.segment {
+  border-radius: 6px !important;
+  border: 1px solid #30363d !important;
+  background-color: #0d1117 !important;
+  box-shadow: none !important;
+}
+
+/* GitHub Flavored Markdown Alerts (T-UI-603) */
+.markdown-alert, blockquote.alert-note, blockquote.alert-tip, blockquote.alert-important, blockquote.alert-warning, blockquote.alert-caution {
+  padding: 8px 16px !important;
+  margin-bottom: 16px !important;
+  border-left: 0.25em solid #2f81f7 !important;
+  border-radius: 0 6px 6px 0 !important;
+  background-color: #161b22 !important;
+}
+
+.markdown-alert-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 600;
+  font-size: 14px;
+  margin-bottom: 4px;
+}
+
+.markdown-alert-note { border-left-color: #2f81f7 !important; }
+.markdown-alert-note .markdown-alert-title { color: #2f81f7; }
+
+.markdown-alert-tip { border-left-color: #3fb950 !important; }
+.markdown-alert-tip .markdown-alert-title { color: #3fb950; }
+
+.markdown-alert-important { border-left-color: #a371f7 !important; }
+.markdown-alert-important .markdown-alert-title { color: #a371f7; }
+
+.markdown-alert-warning { border-left-color: #d29922 !important; }
+.markdown-alert-warning .markdown-alert-title { color: #d29922; }
+
+.markdown-alert-caution { border-left-color: #f85149 !important; }
+.markdown-alert-caution .markdown-alert-title { color: #f85149; }
+
+/* GitHub Rounded Star / Fork / Watch Buttons Dark */
+.repo-buttons .ui.labeled.button, .ui.buttons .ui.button {
+  border-radius: 6px !important;
+  font-size: 12px !important;
+  font-weight: 500 !important;
+}
+
+.repo-buttons .ui.basic.label {
+  border-radius: 0 6px 6px 0 !important;
+  border-left: 0 !important;
+  background: #0d1117 !important;
+  color: #e6edf3 !important;
+  font-weight: 600 !important;
+  padding: 4px 8px !important;
+}
+
+/* GitHub Modern Pull Request Merge Box & Status Checks (T-PR-802) */
+.gh-merge-box, .ui.segment.branch-status, .diff-detail-box.merge-box {
+  border: 1px solid #30363d !important;
+  border-radius: 8px !important;
+  background-color: #0d1117 !important;
+  padding: 16px !important;
+  margin-top: 16px !important;
+  box-shadow: 0 1px 3px rgba(1, 4, 9, 0.4) !important;
+}
+
+.gh-merge-box.clean, .branch-status.clean {
+  border-left: 5px solid #238636 !important;
+}
+
+.gh-merge-box.conflict, .branch-status.conflict {
+  border-left: 5px solid #da3633 !important;
+}
+
+.gh-merge-box.checking, .branch-status.checking {
+  border-left: 5px solid #d29922 !important;
+}
+
+.gh-status-check-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 12px;
+  border-bottom: 1px solid #21262d;
+  font-size: 13px;
+  color: #e6edf3;
+}
+
+.gh-status-check-item:last-child {
+  border-bottom: none;
+}
+
+.gh-status-check-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 500;
+}
+
+.gh-status-check-badge.success {
+  color: #3fb950;
+  font-weight: 600;
+}
+
+.gh-status-check-badge.failure {
+  color: #f85149;
+  font-weight: 600;
+}
+
+.gh-status-check-badge.pending {
+  color: #d29922;
+  font-weight: 600;
+}
+
+.gh-merge-action-bar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding-top: 12px;
+  margin-top: 12px;
+  border-top: 1px solid #30363d;
+}
+
+.gh-merge-btn-primary {
+  background-color: #238636 !important;
+  color: #ffffff !important;
+  border-radius: 6px !important;
+  font-weight: 600 !important;
+  padding: 7px 16px !important;
+  border: 1px solid rgba(240, 246, 252, 0.1) !important;
+  box-shadow: 0 1px 0 rgba(240, 246, 252, 0.1) !important;
+}
+
+.gh-merge-btn-primary:hover {
+  background-color: #2ea043 !important;
+}
+
+/* GitHub Interactive Blame View & Heatmap Gradient (T-BLM-901) */
+.blame .lines-blame, .file-view.blame table {
+  border-collapse: separate !important;
+  border-spacing: 0 !important;
+}
+
+.blame-commit, .lines-blame td.blame-line {
+  position: relative !important;
+  padding: 4px 12px !important;
+  font-size: 12px !important;
+  border-bottom: 1px solid #21262d !important;
+  background-color: #161b22 !important;
+}
+
+.gh-blame-heat-marker, .blame-heat-gradient {
+  display: inline-block;
+  width: 4px;
+  height: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+.gh-blame-heat-marker.heat-new { background-color: #2f81f7; }
+.gh-blame-heat-marker.heat-mid { background-color: #a371f7; }
+.gh-blame-heat-marker.heat-old { background-color: #484f58; }
+
+.blame-commit-author {
+  font-weight: 600;
+  color: #e6edf3;
+}
+
+.blame-commit-date {
+  color: #8b949e;
+  font-size: 11px;
+  margin-left: 6px;
+}
+
+.blame-commit-message {
+  color: #e6edf3;
+  margin-top: 2px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 320px;
+}
+
+/* GitHub Modern Markdown Tables (T-TAB-1001) */
+.markdown table, .markup table {
+  border-spacing: 0 !important;
+  border-collapse: collapse !important;
+  display: block !important;
+  width: max-content !important;
+  max-width: 100% !important;
+  overflow: auto !important;
+  margin-top: 0 !important;
+  margin-bottom: 16px !important;
+}
+
+.markdown table th, .markup table th {
+  font-weight: 600 !important;
+  padding: 6px 13px !important;
+  border: 1px solid #30363d !important;
+  background-color: #161b22 !important;
+  color: #e6edf3 !important;
+}
+
+.markdown table td, .markup table td {
+  padding: 6px 13px !important;
+  border: 1px solid #30363d !important;
+  color: #e6edf3 !important;
+}
+
+.markdown table tr:nth-child(2n), .markup table tr:nth-child(2n) {
+  background-color: rgba(110, 118, 129, 0.1) !important;
+}
+
+/* GitHub Pinned Repositories & Language Dots (T-PRF-1201) */
+.gh-pinned-repo-grid {
+  display: grid !important;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)) !important;
+  gap: 16px !important;
+  margin-top: 12px !important;
+  margin-bottom: 24px !important;
+}
+
+.gh-pinned-repo-card {
+  border: 1px solid #30363d !important;
+  border-radius: 6px !important;
+  padding: 16px !important;
+  background-color: #0d1117 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: space-between !important;
+  transition: border-color 0.15s ease !important;
+}
+
+.gh-pinned-repo-card:hover {
+  border-color: #2f81f7 !important;
+}
+
+.gh-pinned-repo-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 600;
+  font-size: 14px;
+  color: #2f81f7;
+}
+
+.gh-pinned-repo-desc {
+  font-size: 12px;
+  color: #8b949e;
+  margin-top: 8px;
+  margin-bottom: 12px;
+  flex: 1;
+}
+
+.gh-pinned-repo-meta {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  font-size: 12px;
+  color: #8b949e;
+}
+
+.repo-language-color {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  margin-right: 4px;
+}
+
+.repo-lang-python { background-color: #3572A5; }
+.repo-lang-javascript { background-color: #f1e05a; }
+.repo-lang-typescript { background-color: #3178c6; }
+.repo-lang-go { background-color: #00ADD8; }
+.repo-lang-rust { background-color: #dea584; }
+.repo-lang-html { background-color: #e34c26; }
+
+/* GitHub Accessible Text Reactions & Badges (T-REA-1301) */
+.gh-reactions-container, .ui.labeled.button.reaction-button {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+  margin-top: 6px !important;
+}
+
+.gh-reaction-btn, .reaction-button {
+  background-color: #161b22 !important;
+  border: 1px solid #30363d !important;
+  border-radius: 20px !important;
+  padding: 2px 8px !important;
+  font-size: 11px !important;
+  font-weight: 600 !important;
+  color: #e6edf3 !important;
+  cursor: pointer !important;
+  transition: background-color 0.15s ease, border-color 0.15s ease !important;
+}
+
+.gh-reaction-btn:hover, .reaction-button:hover {
+  background-color: #21262d !important;
+  border-color: #2f81f7 !important;
+}
+
+.gh-reaction-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.gh-reaction-tag {
+  font-size: 11px;
+  font-weight: 600;
+  padding: 1px 6px;
+  border-radius: 12px;
+  background: rgba(110, 118, 129, 0.4);
+  color: #e6edf3;
+}
+
+/* GitHub Webhook Deliveries & Status Pills (T-WHK-1402) */
+.gh-webhook-delivery-list {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 8px !important;
+  margin-top: 12px !important;
+}
+
+.gh-webhook-delivery-item {
+  border: 1px solid #30363d !important;
+  border-radius: 6px !important;
+  padding: 10px 14px !important;
+  background-color: #0d1117 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  font-size: 13px !important;
+  color: #e6edf3 !important;
+}
+
+.gh-status-pill {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 4px !important;
+  font-size: 11px !important;
+  font-weight: 600 !important;
+  padding: 2px 8px !important;
+  border-radius: 12px !important;
+}
+
+.gh-status-pill.success {
+  background-color: rgba(63, 185, 80, 0.2) !important;
+  color: #3fb950 !important;
+}
+
+.gh-status-pill.failure {
+  background-color: rgba(248, 81, 73, 0.2) !important;
+  color: #f85149 !important;
+}
+
+/* GitHub Verified & Unverified Commit Badges (T-BRN-1501) */
+.gh-commit-badge, .ui.label.text.green, .commit-status-badge {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 4px !important;
+  font-size: 11px !important;
+  font-weight: 600 !important;
+  padding: 1px 7px !important;
+  border-radius: 12px !important;
+  text-decoration: none !important;
+  border: 1px solid transparent !important;
+}
+
+.gh-commit-badge.verified, .ui.label.text.green {
+  border-color: rgba(63, 185, 80, 0.4) !important;
+  color: #3fb950 !important;
+  background-color: rgba(63, 185, 80, 0.15) !important;
+}
+
+.gh-commit-badge.unverified {
+  border-color: var(--color-border-default, #30363d) !important;
+  color: var(--color-text-light, #8b949e) !important;
+  background-color: var(--color-canvas-subtle, #161b22) !important;
+}
+
+/* GitHub Notifications Inbox & Filter Tabs (T-NTF-1601) */
+.gh-notifications-nav {
+  display: flex !important;
+  gap: 8px !important;
+  border-bottom: 1px solid var(--color-border-default, #30363d) !important;
+  padding-bottom: 8px !important;
+  margin-bottom: 16px !important;
+}
+
+.gh-notifications-nav .gh-filter-tab {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+  padding: 6px 12px !important;
+  font-size: 13px !important;
+  font-weight: 500 !important;
+  color: var(--color-text-light, #8b949e) !important;
+  border-radius: 6px !important;
+  cursor: pointer !important;
+  text-decoration: none !important;
+}
+
+.gh-notifications-nav .gh-filter-tab:hover,
+.gh-notifications-nav .gh-filter-tab.active {
+  background-color: var(--color-canvas-subtle, #161b22) !important;
+  color: var(--color-text-default, #e6edf3) !important;
+  font-weight: 600 !important;
+}
+
+.gh-filter-badge {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  min-width: 18px !important;
+  height: 18px !important;
+  padding: 0 6px !important;
+  font-size: 11px !important;
+  font-weight: 600 !important;
+  border-radius: 9px !important;
+  background-color: rgba(110, 118, 129, 0.4) !important;
+  color: var(--color-text-light, #8b949e) !important;
+}
+
+.gh-notification-item {
+  display: flex !important;
+  align-items: flex-start !important;
+  gap: 12px !important;
+  padding: 12px 16px !important;
+  border-bottom: 1px solid var(--color-border-muted, #21262d) !important;
+  transition: background-color 0.15s ease !important;
+}
+
+.gh-notification-item:hover {
+  background-color: var(--color-canvas-subtle, #161b22) !important;
+}
+
+.gh-notification-item.gh-notification-unread {
+  background-color: rgba(56, 139, 253, 0.1) !important;
+  border-left: 3px solid #2f81f7 !important;
+}
+
+/* GitHub Advanced Code Search & Qualifiers Popover (T-SRC-1801) */
+.gh-search-qualifiers-popover {
+  position: absolute !important;
+  top: 100% !important;
+  left: 0 !important;
+  width: 320px !important;
+  background-color: var(--color-canvas-default, #0d1117) !important;
+  border: 1px solid var(--color-border-default, #30363d) !important;
+  border-radius: 6px !important;
+  box-shadow: 0 8px 24px rgba(1, 4, 9, 0.8) !important;
+  padding: 8px 0 !important;
+  z-index: 1000 !important;
+  margin-top: 4px !important;
+}
+
+.gh-qualifier-item {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  padding: 6px 12px !important;
+  cursor: pointer !important;
+  font-size: 12px !important;
+  color: var(--color-text-default, #e6edf3) !important;
+}
+
+.gh-qualifier-item:hover {
+  background-color: var(--color-canvas-subtle, #161b22) !important;
+}
+
+.gh-qualifier-badge {
+  font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace !important;
+  font-size: 11px !important;
+  padding: 2px 6px !important;
+  border-radius: 4px !important;
+  background-color: rgba(110, 118, 129, 0.4) !important;
+  color: var(--color-accent-fg, #2f81f7) !important;
+  font-weight: 600 !important;
+}
+
+/* GitHub Pull Request Suggested Changes Widget (T-SUG-1901) */
+.gh-suggestion-box {
+  border: 1px solid var(--color-border-default, #30363d) !important;
+  border-radius: 6px !important;
+  overflow: hidden !important;
+  margin: 12px 0 !important;
+  background-color: var(--color-canvas-default, #0d1117) !important;
+}
+
+.gh-suggestion-header {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  padding: 8px 12px !important;
+  background-color: var(--color-canvas-subtle, #161b22) !important;
+  border-bottom: 1px solid var(--color-border-default, #30363d) !important;
+  font-size: 12px !important;
+  font-weight: 600 !important;
+  color: var(--color-text-default, #e6edf3) !important;
+}
+
+.gh-suggestion-body {
+  font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace !important;
+  font-size: 12px !important;
+  line-height: 1.5 !important;
+  background-color: rgba(46, 160, 67, 0.15) !important;
+  padding: 10px 12px !important;
+  color: #3fb950 !important;
+  white-space: pre-wrap !important;
+  border-left: 3px solid #238636 !important;
+}
+
+.gh-suggestion-btn {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 4px !important;
+  font-size: 12px !important;
+  font-weight: 500 !important;
+  padding: 3px 10px !important;
+  border-radius: 6px !important;
+  border: 1px solid var(--color-border-default, #30363d) !important;
+  background-color: var(--color-btn-bg, #21262d) !important;
+  color: var(--color-text-default, #e6edf3) !important;
+  cursor: pointer !important;
+  transition: background-color 0.1s ease !important;
+}
+
+.gh-suggestion-btn:hover {
+  background-color: rgba(46, 160, 67, 0.25) !important;
+  border-color: #3fb950 !important;
+  color: #3fb950 !important;
+}
+
+/* GitHub Modern Commit Graph & Topology (T-GRP-2001) */
+.gh-graph-container {
+  overflow-x: auto !important;
+  padding: 16px !important;
+  background-color: var(--color-canvas-default, #0d1117) !important;
+  border: 1px solid var(--color-border-default, #30363d) !important;
+  border-radius: 6px !important;
+  margin: 16px 0 !important;
+}
+
+.gh-graph-dot {
+  r: 4 !important;
+  transition: r 0.15s ease, stroke-width 0.15s ease !important;
+  cursor: pointer !important;
+}
+
+.gh-graph-dot:hover {
+  r: 6 !important;
+  stroke: #0d1117 !important;
+  stroke-width: 2 !important;
+}
+
+.gh-graph-branch-tag {
+  display: inline-flex !important;
+  align-items: center !important;
+  font-size: 11px !important;
+  font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace !important;
+  font-weight: 600 !important;
+  padding: 2px 8px !important;
+  border-radius: 12px !important;
+  background-color: var(--color-canvas-subtle, #161b22) !important;
+  border: 1px solid var(--color-border-default, #30363d) !important;
+  color: var(--color-text-default, #e6edf3) !important;
+}
+
+/* GitHub Milestones & Burndown Progress (T-MLS-2101) */
+.gh-milestone-card {
+  padding: 16px !important;
+  border: 1px solid var(--color-border-default, #30363d) !important;
+  border-radius: 6px !important;
+  margin-bottom: 16px !important;
+  background-color: var(--color-canvas-default, #0d1117) !important;
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+}
+
+.gh-milestone-progress-bar {
+  height: 8px !important;
+  background-color: var(--color-canvas-subtle, #161b22) !important;
+  border-radius: 4px !important;
+  overflow: hidden !important;
+  border: 1px solid var(--color-border-default, #30363d) !important;
+  width: 240px !important;
+  margin: 6px 0 !important;
+}
+
+.gh-milestone-progress-fill {
+  height: 100% !important;
+  background-color: #238636 !important;
+  transition: width 0.3s ease !important;
+}
+
+.gh-milestone-meta {
+  font-size: 12px !important;
+  color: var(--color-text-light, #8b949e) !important;
+  display: flex !important;
+  gap: 12px !important;
+  align-items: center !important;
+}
+
+/* GitHub Organization Teams & Role Matrix (T-ORG-2201) */
+.gh-team-card {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  padding: 12px 16px !important;
+  border: 1px solid var(--color-border-default, #30363d) !important;
+  border-radius: 6px !important;
+  margin-bottom: 10px !important;
+  background-color: var(--color-canvas-default, #0d1117) !important;
+}
+
+.gh-role-badge {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 4px !important;
+  font-size: 11px !important;
+  font-weight: 600 !important;
+  padding: 2px 8px !important;
+  border-radius: 12px !important;
+  text-decoration: none !important;
+  border: 1px solid transparent !important;
+}
+
+.gh-role-badge.triage {
+  background-color: rgba(56, 139, 253, 0.15) !important;
+  color: #58a6ff !important;
+  border-color: rgba(56, 139, 253, 0.4) !important;
+}
+
+.gh-role-badge.maintain {
+  background-color: rgba(163, 113, 247, 0.15) !important;
+  color: #bc8cff !important;
+  border-color: rgba(163, 113, 247, 0.4) !important;
+}
+
+.gh-role-badge.admin {
+  background-color: rgba(248, 81, 73, 0.15) !important;
+  color: #f85149 !important;
+  border-color: rgba(248, 81, 73, 0.4) !important;
+}
+
+/* GitHub Draft Pull Requests & Ready for Review (T-DRF-2301) */
+.gh-draft-badge {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+  font-size: 13px !important;
+  font-weight: 600 !important;
+  padding: 4px 10px !important;
+  border-radius: 20px !important;
+  background-color: var(--color-canvas-subtle, #161b22) !important;
+  border: 1px solid var(--color-border-default, #30363d) !important;
+  color: var(--color-text-light, #8b949e) !important;
+}
+
+.gh-draft-banner {
+  padding: 12px 16px !important;
+  border: 1px solid var(--color-border-default, #30363d) !important;
+  border-radius: 6px !important;
+  background-color: var(--color-canvas-subtle, #161b22) !important;
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  margin: 12px 0 !important;
+}
+
+.gh-ready-for-review-btn {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 4px !important;
+  font-size: 12px !important;
+  font-weight: 600 !important;
+  padding: 4px 12px !important;
+  border-radius: 6px !important;
+  border: 1px solid #238636 !important;
+  background-color: #238636 !important;
+  color: #ffffff !important;
+  cursor: pointer !important;
+  transition: opacity 0.15s ease !important;
+}
+
+.gh-ready-for-review-btn:hover {
+  opacity: 0.9 !important;
+}
+
+/* GitHub Merge Queue & Status Badges (T-MRG-2401) */
+.gh-merge-queue-badge {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+  font-size: 11px !important;
+  font-weight: 600 !important;
+  padding: 3px 8px !important;
+  border-radius: 12px !important;
+  background-color: rgba(56, 139, 253, 0.15) !important;
+  color: #58a6ff !important;
+  border: 1px solid rgba(56, 139, 253, 0.4) !important;
+}
+
+.gh-merge-queue-box {
+  padding: 16px !important;
+  border: 1px solid var(--color-border-default, #30363d) !important;
+  border-radius: 6px !important;
+  background-color: var(--color-canvas-default, #0d1117) !important;
+  margin: 16px 0 !important;
+}
+
+.gh-merge-queue-item {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  padding: 8px 12px !important;
+  border-bottom: 1px solid var(--color-border-muted, #21262d) !important;
+  font-size: 13px !important;
+}
+
+.gh-merge-queue-item:last-child {
+  border-bottom: none !important;
+}
+
+/* GitHub Security Advisories & Severity Badges (T-SEC-2501) */
+.gh-advisory-card {
+  padding: 16px !important;
+  border: 1px solid var(--color-border-default, #30363d) !important;
+  border-radius: 6px !important;
+  margin-bottom: 12px !important;
+  background-color: var(--color-canvas-default, #0d1117) !important;
+}
+
+.gh-severity-badge {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 4px !important;
+  font-size: 11px !important;
+  font-weight: 700 !important;
+  padding: 2px 8px !important;
+  border-radius: 12px !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.5px !important;
+}
+
+.gh-severity-badge.critical {
+  background-color: rgba(248, 81, 73, 0.15) !important;
+  color: #f85149 !important;
+  border: 1px solid rgba(248, 81, 73, 0.4) !important;
+}
+
+.gh-severity-badge.high {
+  background-color: rgba(219, 109, 40, 0.15) !important;
+  color: #db6d28 !important;
+  border: 1px solid rgba(219, 109, 40, 0.4) !important;
+}
+
+.gh-severity-badge.medium {
+  background-color: rgba(210, 153, 34, 0.15) !important;
+  color: #d29922 !important;
+  border: 1px solid rgba(210, 153, 34, 0.4) !important;
+}
+
+.gh-severity-badge.low {
+  background-color: rgba(56, 139, 253, 0.15) !important;
+  color: #58a6ff !important;
+  border: 1px solid rgba(56, 139, 253, 0.4) !important;
+}
+
+.gh-confidential-banner {
+  padding: 12px 16px !important;
+  border: 1px solid rgba(219, 109, 40, 0.4) !important;
+  border-radius: 6px !important;
+  background-color: rgba(219, 109, 40, 0.1) !important;
+  color: #f0883e !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 12px !important;
+  margin-bottom: 16px !important;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+/* ==========================================================================
+   SOLID OPAQUE MODALS & REDUCED WINDOW FIX (T27.7 - ZERO TRANSPARENCY LEAK)
+   ========================================================================== */
+.ui.dimmer {
+  background-color: rgba(1, 4, 9, 0.8) !important;
+  backdrop-filter: blur(3px) !important;
+}
+
+.ui.modal,
+.ui.modal > .header,
+.ui.modal > .content,
+.ui.modal > .actions {
+  background-color: #0d1117 !important;
+  color: #e6edf3 !important;
+  border-color: #30363d !important;
+  opacity: 1 !important;
+}
+
+.ui.modal {
+  border: 1px solid #30363d !important;
+  border-radius: 8px !important;
+  box-shadow: 0 16px 32px rgba(1, 4, 9, 0.6) !important;
+  background: #0d1117 !important;
+}
+
+/* Reduced window, mobile menu, dropdowns & popups - solid opaque dark */
+.ui.dropdown .menu,
+.ui.popup,
+.ui.vertical.menu,
+.mobile-menu,
+.following.bar,
+.ui.attached.menu {
+  background-color: #161b22 !important;
+  color: #e6edf3 !important;
+  border: 1px solid #30363d !important;
+  opacity: 1 !important;
+  box-shadow: 0 8px 24px rgba(1, 4, 9, 0.45) !important;
+}
+
+.ui.dropdown .menu > .item {
+  color: #e6edf3 !important;
+  background-color: #161b22 !important;
+}
+
+.ui.dropdown .menu > .item:hover {
+  background-color: #21262d !important;
+  color: #58a6ff !important;
+}
+
+/* ==========================================================================
+   COPILOT & CHATBOT DARK THEME EXPLICIT OVERRIDES
+   ========================================================================== */
+#sovereign-copilot-container #copilot-window {
+  background-color: #0d1117 !important;
+  color: #e6edf3 !important;
+  border-color: #30363d !important;
+  box-shadow: 0 12px 32px rgba(1, 4, 9, 0.8) !important;
+}
+
+#sovereign-copilot-container #copilot-window * {
+  border-color: #30363d;
+}
+
+#sovereign-copilot-container #copilot-messages {
+  background-color: #0d1117 !important;
+  color: #e6edf3 !important;
+}
+
+#sovereign-copilot-container #copilot-welcome-msg {
+  background-color: #161b22 !important;
+  color: #e6edf3 !important;
+  border-color: #30363d !important;
+}
+
+#sovereign-copilot-container #copilot-input {
+  background-color: #0d1117 !important;
+  color: #e6edf3 !important;
+  border-color: #30363d !important;
+}
+
+#sovereign-copilot-container #copilot-input::placeholder {
+  color: #7d8590 !important;
+}
+
+/* ==========================================================================
+   COMPLETE DARK BACKGROUND COVERAGE (ZERO WHITE FLASH / ZERO WHITE BG LEAK)
+   ========================================================================== */
+html,
+body,
+.full.height,
+#wrapper,
+.page-content,
+.ui.container,
+.ui.page.grid,
+.repository,
+.repository .repo-content,
+.repository.file.list,
+.repository.file.view,
+.repository .file-view,
+.repo-header-container,
+.file-view-header,
+.gh-file-viewer-wrapper,
+.gh-file-tree-sidebar,
+.tab.segment,
+.ui.tab,
+.ui.tabular.menu,
+.ui.attached.segment,
+.ui.bottom.attached.segment,
+.ui.segments {
+  background-color: #020617 !important;
+  color: #f8fafc !important;
+}
+
+.repository .repo-header,
+.repo-header-tabs,
+.repo-header-container,
+.file-view-header,
+.gh-file-tree-sidebar,
+.ui.tabular.menu,
+.ui.segment,
+.ui.attached.header {
+  background-color: #070e1e !important;
+  border-color: #1e293b !important;
+}
+
+.gh-file-tree-item,
+.gh-file-tree-header,
+.gh-file-filter-input {
+  background-color: #0b1528 !important;
+  color: #f8fafc !important;
+  border-color: #1e293b !important;
+}
+
+.gh-file-tree-item:hover {
+  background-color: #161b22 !important;
+  color: #00e5ff !important;
+}
+
+#gh-tasklist-progress-wrap,
+#gh-profile-readme-card {
+  background-color: #070e1e !important;
+  border-color: #1e293b !important;
+  color: #f8fafc !important;
+}

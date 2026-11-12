@@ -1,0 +1,31 @@
+name: Sovereign Release Notes Generator CI
+
+on:
+  push:
+    branches: [ "main", "develop*", "feature/*" ]
+    paths:
+      - "scripts/generate_release_notes.py"
+      - "docs/SOVEREIGN_RELEASE_NOTES.md"
+      - ".github/release.yml"
+      - ".gitea/release.yml"
+      - "tests/test_sec_axes.py"
+      - ".github/workflows/release_notes.yml"
+  pull_request:
+    branches: [ "main", "develop*" ]
+
+jobs:
+  release-notes-verify:
+    name: Verify Release Notes Generator & Schema
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup BantuDevLab Environment
+        uses: ./.github/actions/setup-bantudevlab
+        with:
+          python-version: "3.11"
+      - name: Test Release Notes Generator
+        run: |
+          pytest tests/test_sec_axes.py -k "test_t_rel_1703_automated_release_notes_generator" -v -o addopts=""

@@ -1,0 +1,75 @@
+<!-- BANTUDEVLAB - GitHub Style Repository Header & Navigation Tabs (T-UI-602, T-EXT-602) -->
+<div class="repo-header-container" style="background-color: var(--color-canvas-subtle, var(--color-box-header, #070e1e)); padding-top: 16px; border-bottom: 1px solid var(--color-border-default, #1e293b);">
+  <div style="max-width: 1280px; margin: 0 auto; padding: 0 16px;">
+    <!-- Repo title, badges and actions bar -->
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; flex-wrap: wrap; gap: 12px;">
+      <div style="display: flex; align-items: center; gap: 8px; font-size: 18px; flex-wrap: wrap;">
+        <svg height="16" viewBox="0 0 16 16" width="16" fill="var(--color-text-light, #94a3b8)"><path d="M2 2.5A2.5 2.5 0 0 1 4.5 0h8.75a.75.75 0 0 1 .75.75v12.5a.75.75 0 0 1-.75.75h-2.5a.75.75 0 0 1 0-1.5h1.75v-2h-8a1 1 0 0 0-.714 1.7.75.75 0 1 1-1.072 1.05A2.495 2.495 0 0 1 2 11.5Zm10.5-1h-8a1 1 0 0 0-1 1v6.708A2.486 2.486 0 0 1 4.5 9h8ZM5 12.25a.25.25 0 0 1 .25-.25h3.5a.25.75 0 0 1 .25.25v3.25a.25.25 0 0 1-.4.2l-1.45-1.087a.249.249 0 0 0-.3 0L5.4 15.7a.25.25 0 0 1-.4-.2Z"></path></svg>
+        <span style="font-weight: 400; color: var(--color-accent-fg, #00e5ff);"><a href="{{.RepoOwner.HomeLink}}">{{.RepoOwner.Name}}</a></span>
+        <span style="color: var(--color-text-light, #94a3b8);">/</span>
+        <span style="font-weight: 600; color: var(--color-accent-fg, #00e5ff);"><a href="{{.RepoLink}}">{{.Repository.Name}}</a></span>
+        {{if .Repository.IsPrivate}}
+          <span style="font-size: 12px; font-weight: 500; padding: 2px 7px; border: 1px solid var(--color-border-default, #1e293b); border-radius: 12px; color: var(--color-text-light, #94a3b8);">Private</span>
+        {{else}}
+          <span style="font-size: 12px; font-weight: 500; padding: 2px 7px; border: 1px solid var(--color-border-default, #1e293b); border-radius: 12px; color: var(--color-text-light, #94a3b8);">Public</span>
+        {{end}}
+      </div>
+
+      <!-- Actions Souveraines sur chaque depot : Run Security Audit, Ask Gemma Review & Codespaces / IDE -->
+      <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
+        <button type="button" id="repo-run-security-btn" class="bantu-pro-action-btn bantu-pro-btn-security" onclick="if(window.openBantuCommandTerminal) window.openBantuCommandTerminal('security', '{{.RepoOwner.Name}}/{{.Repository.Name}}', '{{.BranchName}}');" title="Run Security Audit (SAST) sur ce dépôt">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+          <span class="bantu-i18n-security-label">Run Security Audit</span>
+        </button>
+        <button type="button" id="repo-ask-gemma-btn" class="bantu-pro-action-btn bantu-pro-btn-gemma" onclick="if(window.openBantuCommandTerminal) window.openBantuCommandTerminal('gemma', '{{.RepoOwner.Name}}/{{.Repository.Name}}', '{{.BranchName}}');" title="Ask Gemma Review (IA) sur ce dépôt">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="4" y="4" width="16" height="16" rx="2"></rect><rect x="9" y="9" width="6" height="6"></rect></svg>
+          <span class="bantu-i18n-gemma-label">Ask Gemma Review</span>
+        </button>
+        <a id="repo-codespaces-btn" class="ui small button green" href="https://cybersocle.site/dashboard/" onclick="if(window.location.hostname==='localhost'||window.location.hostname==='127.0.0.1'){this.href='http://'+window.location.hostname+':8001/dashboard/';}" target="_blank" rel="noopener noreferrer" title="Ouvrir le code dans l'IDE Web souverain (Codespaces)">
+          <svg height="14" viewBox="0 0 16 16" width="14" fill="currentColor" style="vertical-align: text-bottom; margin-right: 4px;"><path d="M0 2.75C0 1.784.784 1 1.75 1h12.5c.966 0 1.75.784 1.75 1.75v10.5A1.75 1.75 0 0 1 14.25 15H1.75A1.75 1.75 0 0 1 0 13.75Zm1.75-.25a.25.25 0 0 0-.25.25v10.5c0 .138.112.25.25.25h12.5a.25.25 0 0 0 .25-.25V2.75a.25.25 0 0 0-.25-.25ZM7.28 7.78a.75.75 0 0 1 0 1.06l-2.25 2.25a.75.75 0 0 1-1.06-1.06L5.69 8.25 3.97 6.53a.75.75 0 0 1 1.06-1.06Zm2.47 3.97a.75.75 0 0 1 .75-.75h2.5a.75.75 0 0 1 0 1.5h-2.5a.75.75 0 0 1-.75-.75Z"></path></svg>
+          Codespaces / IDE
+        </a>
+      </div>
+    </div>
+
+    <!-- GitHub Standard Tab Navigation -->
+    <nav class="repo-header-tabs" aria-label="Repository Navigation" style="display: flex; gap: 4px; overflow-x: auto; margin-bottom: -1px;">
+      <a class="repo-tab-item {{if or .PageIsViewCode .PageIsDiff}}active{{end}}" href="{{.RepoLink}}">
+        <svg height="16" viewBox="0 0 16 16" width="16" fill="currentColor"><path d="m11.28 3.22 4.25 4.25a.75.75 0 0 1 0 1.06l-4.25 4.25a.749.749 0 0 1-1.275-.326.749.749 0 0 1 .215-.734L13.94 8l-3.72-3.72a.749.749 0 0 1 .326-1.275.749.749 0 0 1 .734.215Zm-6.56 0a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042L2.06 8l3.72 3.72a.749.749 0 0 1-.326 1.275.749.749 0 0 1-.734-.215L.47 8.53a.75.75 0 0 1 0-1.06Z"></path></svg>
+        <span>Code</span>
+      </a>
+      <a class="repo-tab-item {{if .PageIsIssueList}}active{{end}}" href="{{.RepoLink}}/issues">
+        <svg height="16" viewBox="0 0 16 16" width="16" fill="currentColor"><path d="M8 9.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3Z"></path><path d="M8 0a8 8 0 1 1 0 16A8 8 0 0 1 8 0ZM1.5 8a6.5 6.5 0 1 0 13 0 6.5 6.5 0 0 0-13 0Z"></path></svg>
+        <span>Issues</span>
+        {{if .Repository.NumOpenIssues}}<span style="border-radius: 20px; font-size: 11px; padding: 1px 6px; background-color: var(--color-neutral-muted, rgba(175,184,193,0.2));">{{.Repository.NumOpenIssues}}</span>{{end}}
+      </a>
+      <a class="repo-tab-item {{if .PageIsPullList}}active{{end}}" href="{{.RepoLink}}/pulls">
+        <svg height="16" viewBox="0 0 16 16" width="16" fill="currentColor"><path d="M1.5 3.25a2.25 2.25 0 1 1 3 2.122v5.256a2.251 2.251 0 1 1-1.5 0V5.372A2.25 2.25 0 0 1 1.5 3.25Zm5.677-.923A.75.75 0 0 1 7.75 2h5.5a.75.75 0 0 1 .75.75v5.5a.75.75 0 0 1-1.5 0V4.56l-3.22 3.22a.75.75 0 0 1-1.06-1.06l3.22-3.22H7.75a.75.75 0 0 1-.573-.253Z"></path></svg>
+        <span>Pull requests</span>
+        {{if .Repository.NumOpenPulls}}<span style="border-radius: 20px; font-size: 11px; padding: 1px 6px; background-color: var(--color-neutral-muted, rgba(175,184,193,0.2));">{{.Repository.NumOpenPulls}}</span>{{end}}
+      </a>
+      <a class="repo-tab-item" href="{{.RepoLink}}/actions">
+        <svg height="16" viewBox="0 0 16 16" width="16" fill="currentColor"><path d="M8 0a8 8 0 1 1 0 16A8 8 0 0 1 8 0ZM1.5 8a6.5 6.5 0 1 0 13 0 6.5 6.5 0 0 0-13 0Zm4.879-2.773 4.264 2.559a.25.25 0 0 1 0 .428l-4.264 2.559A.25.25 0 0 1 6 10.559V5.442a.25.25 0 0 1 .379-.215Z"></path></svg>
+        <span>Actions</span>
+      </a>
+      <a class="repo-tab-item" href="{{.RepoLink}}/projects">
+        <svg height="16" viewBox="0 0 16 16" width="16" fill="currentColor"><path d="M1.75 0h12.5C15.216 0 16 .784 16 1.75v12.5A1.75 1.75 0 0 1 14.25 16H1.75A1.75 1.75 0 0 1 0 14.25V1.75C0 .784.784 0 1.75 0ZM1.5 1.75v12.5c0 .138.112.25.25.25h12.5a.25.25 0 0 0 .25-.25V1.75a.25.25 0 0 0-.25-.25H1.75a.25.25 0 0 0-.25.25ZM11.75 3a.75.75 0 0 1 .75.75v7.5a.75.75 0 0 1-1.5 0v-7.5a.75.75 0 0 1 .75-.75Zm-8.25.75a.75.75 0 0 1 1.5 0v5.5a.75.75 0 0 1-1.5 0v-5.5Zm4-.75a.75.75 0 0 1 .75.75v8.5a.75.75 0 0 1-1.5 0v-8.5a.75.75 0 0 1 .75-.75Z"></path></svg>
+        <span>Projects</span>
+      </a>
+      <a class="repo-tab-item" href="{{.RepoLink}}/wiki">
+        <svg height="16" viewBox="0 0 16 16" width="16" fill="currentColor"><path d="M0 1.75A.75.75 0 0 1 .75 1h4.253c1.227 0 2.317.59 3 1.501A3.743 3.743 0 0 1 11.006 1h4.244a.75.75 0 0 1 .75.75v10.5a.75.75 0 0 1-.75.75h-4.244a2.25 2.25 0 0 0-1.756.843l-.25.333-1.028-1.37A2.25 2.25 0 0 0 6.003 13H.75a.75.75 0 0 1-.75-.75Zm1.5.75v9h3.503c.764 0 1.488.35 1.964.945l.283.354V3.882c-.524-.555-1.266-.882-2.083-.882Zm7.75 10.299c.476-.595 1.2-.945 1.964-.945H14.5v-9h-3.494c-.817 0-1.559.327-2.083.882v8.718Z"></path></svg>
+        <span>Wiki</span>
+      </a>
+      <a class="repo-tab-item {{if or .PageIsActivity (eq .Tab "insights")}}active{{end}}" href="{{.RepoLink}}/activity" title="Insights, Graphe de dependances et SBOM (T-SBM-1102)">
+        <svg height="16" viewBox="0 0 16 16" width="16" fill="currentColor"><path d="M1.5 1.75V13.5h13.75a.75.75 0 0 1 0 1.5H.75a.75.75 0 0 1-.75-.75V1.75a.75.75 0 0 1 1.5 0Zm14.28 2.97-4.5 4.5a.75.75 0 0 1-1.06 0L7.5 6.56l-3.22 3.22a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042l3.75-3.75a.75.75 0 0 1 1.06 0L10.75 7.69l3.97-3.97a.75.75 0 0 1 1.06 1.06Z"></path></svg>
+        <span>Insights</span>
+      </a>
+      {{if .Permission.IsAdmin}}
+      <a class="repo-tab-item {{if .PageIsSettings}}active{{end}}" href="{{.RepoLink}}/settings">
+        <svg height="16" viewBox="0 0 16 16" width="16" fill="currentColor"><path d="M8 0a8.2 8.2 0 0 1 .701.031C9.444.095 9.99.645 10.16 1.29l.288 1.107c.377.098.733.25 1.064.446l1.014-.52c.602-.31 1.343-.07 1.782.493l.875 1.125a1.5 1.5 0 0 1-.122 1.963l-.79.79a5.1 5.1 0 0 1 .002 1.612l.79.79a1.5 1.5 0 0 1 .122 1.963l-.875 1.125a1.503 1.503 0 0 1-1.782.493l-1.014-.52a5.4 5.4 0 0 1-1.064.446l-.288 1.107c-.17.645-.716 1.195-1.459 1.259A8.2 8.2 0 0 1 8 16a8.2 8.2 0 0 1-.701-.031c-.743-.064-1.289-.614-1.459-1.259l-.288-1.107a5.4 5.4 0 0 1-1.064-.446l-1.014.52a1.503 1.503 0 0 1-1.782-.493l-.875-1.125a1.5 1.5 0 0 1 .122-1.963l.79-.79a5.1 5.1 0 0 1-.002-1.612l-.79-.79a1.5 1.5 0 0 1-.122-1.963l.875-1.125a1.503 1.503 0 0 1 1.782-.493l1.014.52c.331-.196.687-.348 1.064-.446l.288-1.107c.17-.645.716-1.195 1.459-1.259A8.2 8.2 0 0 1 8 0Zm0 10.5a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5Z"></path></svg>
+        <span>Settings</span>
+      </a>
+      {{end}}
+    </nav>
+  </div>
+</div>

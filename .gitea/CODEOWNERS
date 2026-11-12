@@ -1,0 +1,21 @@
+# BANTUDEVLAB - Affectation des responsables de code (CODEOWNERS)
+# Compatible GitHub et Gitea
+
+# Regles globales
+*                   @bantu_admin
+
+# Modules de Securite et Zero-Knowledge Proofs
+/apps/zkp_auth/     @bantu_admin
+/apps/security_scanner/ @bantu_admin
+/apps/core/audit.py @bantu_admin
+
+# Moteur Intelligence Artificielle et LLM
+/apps/ai_assistant/ @bantu_admin
+/finetuning/        @bantu_admin
+
+# Deploiement, CI/CD et Orchestration
+/deploy/            @bantu_admin
+/.github/           @bantu_admin
+/.gitea/            @bantu_admin
+/.gitlab-ci.yml     @bantu_admin
+/docker-compose*.yml @bantu_admin

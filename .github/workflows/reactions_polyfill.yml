@@ -1,0 +1,28 @@
+name: Sovereign Accessible Reactions & Shortcodes CI
+
+on:
+  push:
+    branches: [ "main", "develop*", "feature/*" ]
+    paths:
+      - "custom/public/assets/css/**"
+      - "custom/templates/custom/**"
+      - ".github/workflows/reactions_polyfill.yml"
+  pull_request:
+    branches: [ "main", "develop*" ]
+
+jobs:
+  reactions-verify:
+    name: Verify Accessible Reactions & Emoji Polyfill
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup BantuDevLab Environment
+        uses: ./.github/actions/setup-bantudevlab
+        with:
+          python-version: "3.11"
+      - name: Test Reaction Polyfill Components
+        run: |
+          pytest tests/test_design_and_ux.py -k "reactions_and_shortcodes" -v -o addopts=""

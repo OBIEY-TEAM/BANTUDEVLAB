@@ -1,0 +1,28 @@
+name: Sovereign Copilot & AI Code Intelligence Verification
+
+on:
+  push:
+    branches: [ "main", "develop*", "feature/*" ]
+    paths:
+      - "apps/ai_assistant/**"
+      - "tests/test_ai_assistant.py"
+      - ".github/workflows/copilot_verification.yml"
+  pull_request:
+    branches: [ "main", "develop*" ]
+
+jobs:
+  copilot-test:
+    name: Verify Sovereign Copilot Endpoints & Gemma Fallback
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup BantuDevLab Environment
+        uses: ./.github/actions/setup-bantudevlab
+        with:
+          python-version: "3.11"
+      - name: Execute Copilot AI Tests
+        run: |
+          pytest tests/test_ai_assistant.py -v -o addopts=""

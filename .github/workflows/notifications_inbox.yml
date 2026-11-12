@@ -1,0 +1,29 @@
+name: Sovereign Notifications Inbox CI
+
+on:
+  push:
+    branches: [ "main", "develop*", "feature/*" ]
+    paths:
+      - "custom/public/assets/css/**"
+      - "custom/templates/custom/header.tmpl"
+      - "tests/test_ui_axes.py"
+      - ".github/workflows/notifications_inbox.yml"
+  pull_request:
+    branches: [ "main", "develop*" ]
+
+jobs:
+  notifications-verify:
+    name: Verify Notifications Inbox Styles & Filtering
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup BantuDevLab Environment
+        uses: ./.github/actions/setup-bantudevlab
+        with:
+          python-version: "3.11"
+      - name: Test Notifications Inbox
+        run: |
+          pytest tests/test_ui_axes.py -k "test_t_ntf_1601_and_1602_notifications_inbox_and_filter_tabs" -v -o addopts=""

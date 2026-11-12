@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block content %}
+<section class="hero">
+    <h1>{% trans "La Forge Logicielle Souveraine de l'Afrique" %}</h1>
+    <p>
+        {% trans "BANTUDEVLAB réunit la robustesse d'un moteur Git distribué, la sécurité mathématique des preuves à divulgation nulle de connaissance (Zero-Knowledge Proofs), et l'intelligence artificielle locale Gemma 2 2B pour garantir l'indépendance technologique du continent." %} 
+    </p>
+    <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+        <a href="{% url 'zkp_auth:zkp_login_page' %}?demo=cadev" class="btn btn-primary" style="background: linear-gradient(135deg, #10b981, #059669); border: none; font-weight: 600;">
+            {% icon "zap" size=18 %} {% trans "Parcours Démo Évaluateur CADEV 2026 (1-Clic)" %}
+        </a>
+        <a href="{% url 'dashboard' %}" class="btn btn-secondary">{% trans "Explorer le Tableau de Bord" %}</a>
+        <a href="{% url 'faq' %}" class="btn btn-secondary">{% icon "help-circle" size=18 %} {% trans "Mode d'Emploi & FAQ" %}</a>
+    </div>
+</section>
+
+<div class="card-grid">
+    <div class="card">
+        <h3>{% icon "landmark" size=22 %} {% trans "Moteur Git Souverain (Systalink Cloud)" %}</h3>
+        <p>{% trans "Forge distribuée basée sur Gitea/GitLab CE déployée sur nos serveurs en Afrique. Zéro dépendance vis-à-vis des juridictions extérieures (Cloud Act exempt)." %}</p>
+        <span class="stat-number">100%</span>
+        <div style="margin-top: 0.5rem;">
+            <a href="{{ GITEA_LOGIN_URL|default:BASE_URL_2 }}" target="_blank" rel="noopener noreferrer" style="color: var(--secondary-emerald); font-size: 0.85rem; text-decoration: underline; display: inline-flex; align-items: center; gap: 0.35rem;">
+                {% icon "external-link" size=14 %} {% trans "Connexion Gitea" %} ({{ GITEA_LOGIN_URL|default:BASE_URL_2 }})
+            </a>
+        </div>
+        <p style="color: var(--secondary-emerald); font-weight: bold;">{% trans "Contrôle Panafricain" %}</p>
+    </div>
+
+    <div class="card">
+        <h3>{% icon "key" size=22 %} {% trans "Authentification Zero-Trust ZKP" %}</h3>
+        <p>{% trans "Protocole cryptographique de Schnorr / Sigma non-interactif via Fiat-Shamir. Prouvez votre identité sans JAMAIS transmettre votre mot de passe au réseau." %}</p>
+        <span class="stat-number">NIZKP</span>
+        <p style="color: var(--primary-african-gold); font-weight: bold;">{% trans "Confidentialité Mathématique" %}</p>
+    </div>
+
+    <div class="card">
+        <h3>{% icon "bot" size=22 %} {% trans "IA Locale Gemma 2 2B Souveraine" %}</h3>
+        <p>{% trans "Assistant d'ingénierie logicielle exécuté localement pour auditer le code, détecter les secrets et assister les développeurs sans fuite de code vers l'extérieur." %}</p>
+        <span class="stat-number">2 {% trans "Milliards" %}</span>
+        <p style="color: var(--secondary-emerald); font-weight: bold;">{% trans "Paramètres Optimisés" %}</p>
+    </div>
+</div>
+
+<!-- Bannière d'accès direct au Guide d'utilisation et FAQ -->
+<div class="card" style="margin-top: 3rem; background: linear-gradient(135deg, rgba(245, 158, 11, 0.08), rgba(17, 24, 39, 0.95)); border: 1px solid var(--primary-african-gold); display: flex; align-items: center; justify-content: space-between; gap: 1.5rem; flex-wrap: wrap;">
+    <div>
+        <h3 style="margin: 0 0 0.5rem 0; display: flex; align-items: center; gap: 0.5rem;">
+            {% icon "book-open" size=22 %} {% trans "Nouveau sur BANTUDEVLAB & GitLab ?" %}
+        </h3>
+        <p style="color: var(--text-muted); margin: 0; font-size: 0.95rem;">
+            {% trans "Consultez notre guide complet : création de compte, connexion sans mot de passe Zero-Trust, consultation du code source, clone avec token Git et foire aux questions." %}
+        </p>
+    </div>
+    <a href="{% url 'faq' %}" class="btn btn-primary" style="white-space: nowrap;">
+        {% trans "Consulter la FAQ & Guide" %} {% icon "chevron-right" size=16 %}
+    </a>
+</div>
+
+<div style="margin-top: 3rem;">
+    <h2>{% trans "Dépôts Souverains Récents" %}</h2>
+    <div class="card-grid">
+        {% for repo in featured_repos %}
+        <div class="card">
+            <h4>{% icon "package" size=20 %} {{ repo.full_name|default:repo.name }}</h4>
+            <p style="color: var(--text-muted); font-size: 0.95rem;">{{ repo.description }}</p>
+            <div style="margin-top: 1rem; font-size: 0.85rem; color: var(--primary-african-gold);">
+                {% icon "star" size=16 %} {{ repo.stars_count|default:0 }} | {% icon "git-fork" size=16 %} {{ repo.forks_count|default:0 }} | {% icon "shield" size=18 %} {{ repo.sovereignty_level|default:"Tier-1 Continental" }}
+            </div>
+        </div>
+        {% empty %}
+        <p>{% trans "Initialisation de la synchronisation avec Gitea..." %}</p>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

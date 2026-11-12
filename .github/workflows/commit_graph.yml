@@ -1,0 +1,29 @@
+name: Sovereign Commit Network Graph CI
+
+on:
+  push:
+    branches: [ "main", "develop*", "feature/*" ]
+    paths:
+      - "custom/public/assets/css/**"
+      - "custom/templates/custom/header.tmpl"
+      - "tests/test_ui_axes.py"
+      - ".github/workflows/commit_graph.yml"
+  pull_request:
+    branches: [ "main", "develop*" ]
+
+jobs:
+  graph-verify:
+    name: Verify Commit Graph Styles & SVG Topology
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup BantuDevLab Environment
+        uses: ./.github/actions/setup-bantudevlab
+        with:
+          python-version: "3.11"
+      - name: Test Commit Graph
+        run: |
+          pytest tests/test_ui_axes.py -k "test_t_grp_2001_and_2002_commit_network_graph" -v -o addopts=""

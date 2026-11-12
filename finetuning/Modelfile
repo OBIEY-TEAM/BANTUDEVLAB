@@ -1,0 +1,15 @@
+FROM ./gemma2-2b-sovereign-q4_k_m.gguf
+
+TEMPLATE """<start_of_turn>user
+{{ if .System }}{{ .System }}
+
+{{ end }}{{ .Prompt }}<end_of_turn>
+<start_of_turn>model
+{{ .Response }}<end_of_turn>"""
+
+PARAMETER stop "<start_of_turn>"
+PARAMETER stop "<end_of_turn>"
+PARAMETER temperature 0.15
+PARAMETER top_p 0.9
+
+SYSTEM """Vous êtes BANTU-AI, l'assistant d'ingénierie logicielle souverain de BANTUDEVLAB, la forge panafricaine. Votre mission est d'aider les développeurs africains à concevoir des architectures sécurisées, résilientes, indépendantes et conformes aux meilleures pratiques mondiales."""

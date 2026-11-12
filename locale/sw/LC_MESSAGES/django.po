@@ -1,0 +1,1021 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Language: sw\n"
+"MIME-Version: 1.0\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgid "0 problème détecté"
+msgstr "0 problème détecté"
+
+msgid "5 Milliards"
+msgstr "Bilioni 5"
+
+msgid "Accessibilité universelle (WCAG 2.2 AA) : les lecteurs d'écran pour personnes malvoyantes prononcent souvent de façon erratique les pictogrammes Unicode."
+msgstr "Upatikanaji kwa wote (WCAG 2.2 AA): visoma-skrini vya wasioona mara nyingi husoma vibaya picha za Unicode."
+
+msgid "Accueil"
+msgstr "Nyumbani"
+
+msgid "Accès autorisé sans mot de passe."
+msgstr "Ufikiaji umeruhusiwa bila nenosiri."
+
+msgid "Accéder au Tableau de Bord"
+msgstr "Nenda Dashibodi"
+
+msgid "Accédez directement à vos espaces de dépôts Gitea ou GitLab CE."
+msgstr "Pata nafasi zako za hifadhi za Gitea au GitLab CE."
+
+msgid "Actif & Opérationnel"
+msgstr "Actif & Opérationnel"
+
+msgid "Action"
+msgstr "Hatua"
+
+msgid "Actualisation des metriques souveraines..."
+msgstr "Inasasisha vipimo huru..."
+
+msgid "Actualiser les Métriques"
+msgstr "Sasisha Takwimu"
+
+msgid "Ajoutez votre clé publique SSH (Ed25519 ou RSA 4096 bits) dans vos paramètres GitLab pour cloner directement :"
+msgstr "Ongeza ufunguo wako wa umma wa SSH (Ed25519 au RSA 4096 bits) kwenye mipangilio yako ya GitLab ili kunakili moja kwa moja:"
+
+msgid "Allez sur la page de connexion ZKP. Renseignez votre identifiant développeur. L'application émet un défi cryptographique (nonce à usage unique valable 5 minutes). Saisissez votre phrase mnémonique ou clé secrète locale pour calculer la preuve de Schnorr"
+msgstr "Nenda kwenye ukurasa wa kuingia wa ZKP. Weka jina la msanidi. Programu inatoa changamoto ya kriptografia (nonce ya dakika 5). Weka neno lako la siri ili kuhesabu uthibitisho wa Schnorr."
+
+msgid "Analyse Complétée"
+msgstr "Uchambuzi Umekamilika"
+
+msgid "Analyse par le moteur de sécurité souverain..."
+msgstr "Uchambuzi na injini ya usalama huru..."
+
+msgid "Approfondissement sur les fonctionnalités avancées : ZKP, IA Gemma 5B, SAST, Multi-Tenancy et souveraineté continentale."
+msgstr "Uchambuzi wa kina wa vipengele vya juu: ZKP, AI ya Gemma 5B, SAST, Multi-Tenancy na mamlaka ya bara."
+
+msgid "Assistant d'Identité & Connexion Zero-Trust"
+msgstr "Msaidizi wa Utambulisho & Kuingia Zero-Trust"
+
+msgid "Assistant d'ingénierie logicielle exécuté localement pour auditer le code, détecter les secrets et assister les développeurs sans fuite de code vers l'extérieur."
+msgstr "Msaidizi wa programu wa kienyeji anayekagua msimbo bila data kuvuja nje."
+
+msgid "Attribution d'un score de 0 à 100 : un score inférieur à 70 peut déclencher un blocage automatique préventif dans les hooks de pre-receive."
+msgstr "Utoaji wa alama kutoka 0 hadi 100: alama chini ya 70 inaweza kuzuia kiotomatiki kusukuma msimbo kupitia pre-receive hooks."
+
+msgid "Aucun audit récent enregistré. Lancez un premier scan !"
+msgstr "Hakuna ukaguzi wa hivi karibuni. Anzisha ukaguzi wako wa kwanza!"
+
+msgid "Aucun dépôt détecté sur le cluster Gitea local."
+msgstr "Hakuna hifadhi iliyopatikana kwenye mfumo wa ndani wa Gitea."
+
+msgid "Aucun mot de passe en clair n'est stocké en base de données. L'authentification repose exclusivement sur des preuves mathématiques à divulgation nulle de connaissance."
+msgstr "Hakuna nenosiri la wazi linalohifadhiwa kwenye hifadhidata. Uthibitishaji unategemea pekee uthibitisho wa kihisabati wa maarifa sifuri."
+
+msgid "Aucune empreinte secrète conservée."
+msgstr "Hakuna alama ya siri inayohifadhiwa."
+
+msgid "Aucune vulnérabilité détectée !"
+msgstr "Hakuna udhaifu uliogunduliwa!"
+
+msgid "Audits IA Gemma 5B"
+msgstr "Ukaguzi wa AI Gemma 5B"
+
+msgid "Audits Récents"
+msgstr "Ukaguzi wa Hivi Karibuni"
+
+msgid "Authentification Décentralisée Prête"
+msgstr "Uthibitishaji wa Ugatuzi Uko Tayari"
+
+msgid "Authentification Zero-Trust"
+msgstr "Uthibitishaji wa Zero-Trust ZKP ni nini na kwa nini unazidi manenosiri ya kawaida?"
+
+msgid "Authentification Zero-Trust (ZKP)"
+msgstr "Uthibitishaji wa Zero-Trust (ZKP)"
+
+msgid "Authentification Zero-Trust ZKP"
+msgstr "Uthibitishaji Zero-Trust ZKP"
+
+msgid "Avantages majeurs :"
+msgstr "Faida kuu:"
+
+msgid "BANTUDEVLAB - Forge Logicielle Souveraine Africaine"
+msgstr "BANTUDEVLAB - Hifadhi Huru ya Programu ya Afrika"
+
+msgid "BANTUDEVLAB applique une politique stricte Zéro-Emoji (contrôlée en continu par le script scripts/check_no_emoji.py) pour trois raisons majeures :"
+msgstr "BANTUDEVLAB inatekeleza sera kali ya Zero-Emoji (inayofuatiliwa kila mara na scripts/check_no_emoji.py) kwa sababu tatu kuu:"
+
+msgid "BANTUDEVLAB réunit la robustesse d'un moteur Git distribué, la sécurité mathématique des preuves à divulgation nulle de connaissance (Zero-Knowledge Proofs), et l'intelligence artificielle locale Gemma 5B pour garantir l'indépendance technologique du continent."
+msgstr "BANTUDEVLAB inaunganisha nguvu ya mfumo wa Git, usalama wa hisabati wa ZKP, na akili bandia ya kienyeji ya Gemma 5B."
+
+msgid "Bande Passante IXP"
+msgstr "Upana wa Bendi ya IXP"
+
+msgid "Bascule d'Environnement Forge Souveraine"
+msgstr "Badilisha Mazingira ya Hifadhi"
+
+msgid "Basculer thème clair / sombre"
+msgstr "Badilisha mandhari meusi / meupe"
+
+msgid "Basculer vers Gitea"
+msgstr "Hamia Gitea"
+
+msgid "Basculez sur l'onglet « Inscription Souveraine » de l'assistant interactif."
+msgstr "Badilisha kwenye kichupo cha 'Usajili Huru' cha msaidizi wa maingiliano."
+
+msgid "Branche"
+msgstr "Tawi"
+
+msgid "CERTIFIÉ TIER-3 SOUVERAIN"
+msgstr "IMETHIBITISHWA TIER-3 HURU"
+
+msgid "CERTIFIÉ TIER-4 DATACENTER"
+msgstr "CERTIFIÉ TIER-4 DATACENTER"
+
+msgid "CONFORME"
+msgstr "INAFUATA VIWANGO"
+
+msgid "Calcul de la preuve Fiat-Shamir et interrogation du serveur..."
+msgstr "Inahesabu uthibitisho wa Fiat-Shamir na kuita seva..."
+
+msgid "Centre d interconnexion pour l Afrique de l Ouest francophone, nœud de réplication chiffrée ZKP et miroirs de sécurité."
+msgstr "Centre d interconnexion pour l Afrique de l Ouest francophone, nœud de réplication chiffrée ZKP et miroirs de sécurité."
+
+msgid "Ces 12 mots permettent de régénérer mathématiquement votre clé privée de signature ZKP dans n'importe quel terminal sécurisé."
+msgstr "Maneno haya 12 yanakuwezesha kutengeneza upya ufunguo wako wa siri wa ZKP kwenye kifaa chochote salama."
+
+msgid "Ces runners sont isolés dans des conteneurs sécurisés rootless hébergés dans nos datacenters partenaires."
+msgstr "Waendeshaji hawa wametengwa katika kontena salama zisizo na mizizi (rootless) zilizopo kwenye vituo vyetu vya data vya washirika."
+
+msgid "Challenge reçu :"
+msgstr "Changamoto imepokelewa:"
+
+msgid "Changer de langue"
+msgstr "Badilisha lugha"
+
+msgid "Chaque approbation est scellée par une preuve ZKP enregistrée sous le modèle SovereignMergeRequestApproval."
+msgstr "Kila idhini inafungwa na uthibitisho wa ZKP uliorekodiwa chini ya muundo wa SovereignMergeRequestApproval."
+
+msgid "Chaque défi de connexion est unique et consommé atomiquement. Une preuve interceptée sur le réseau ne peut jamais être réutilisée."
+msgstr "Kila changamoto ya muunganisho ni ya kipekee na inatumiwa mara moja tu. Uthibitisho ulionaswa mtandaoni hauwezi kamwe kutumiwa tena."
+
+msgid "Chaque organisation dispose d'espaces de noms (namespaces) dédiés synchronisés avec les groupes GitLab."
+msgstr "Kila shirika lina nafasi maalum za majina (namespaces) zilizosawazishwa na vikundi vya GitLab."
+
+msgid "Chat Bot"
+msgstr "Chat Bot"
+
+msgid "Chatbot"
+msgstr "Chatbot"
+
+msgid "Choisissez votre identifiant développeur et sélectionnez votre pays souverain d'attachement (ex: Côte d'Ivoire, Sénégal, Kenya, Nigeria)."
+msgstr "Chagua jina lako la mtumiaji la msanidi na uchague nchi yako huru (mf: Ivory Coast, Senegal, Kenya, Nigeria)."
+
+msgid "Cliquez sur un nœud ou une carte pour inspecter les métriques locales"
+msgstr "Bonyeza kituo kuona takwimu za mtaa"
+
+msgid "Clone HTTPS avec Jeton Git ZKP"
+msgstr "Kunakili kwa HTTPS kwa Kutumia Tokeni ya Git ZKP"
+
+msgid "Clone Sécurisé SSH"
+msgstr "Kunakili Salama kwa SSH"
+
+msgid "Clonez ensuite via :"
+msgstr "Kisha nakili kupitia:"
+
+msgid "Clé publique (y = g^x mod p) générée localement."
+msgstr "Ufunguo wa umma (y = g^x mod p) umetengenezwa ndani ya kifaa."
+
+msgid "Code de démonstration rechargé."
+msgstr "Msimbo wa mfano umepakiwa tena."
+
+msgid "Cohérence d'affichage : affichage strictement identique quel que soit le système d'exploitation client (Linux, BSD, Windows, macOS, terminaux mobiles)."
+msgstr "Uthabiti wa muonekano: muonekano unaofanana kabisa kwenye mfumo wowote wa uendeshaji (Linux, BSD, Windows, macOS, vifaa vya mkononi)."
+
+msgid "Comment configurer et exécuter des pipelines CI/CD sur les runners souverains ?"
+msgstr "Jinsi ya kusanidi na kuendesha mabomba ya CI/CD kwenye waendeshaji huru?"
+
+msgid "Comment consulter et cloner le code source des dépôts souverains ?"
+msgstr "Jinsi ya kuona na kunakili msimbo chanzo kutoka hazina huru?"
+
+msgid "Comment créer un compte GitLab sur la plateforme souveraine ?"
+msgstr "Jinsi ya kuunda akaunti ya GitLab kwenye jukwaa huru?"
+
+msgid "Comment est assurée l'étanchéité entre organisations (Banques, Ministères, Universités, Startups) ?"
+msgstr "Jinsi gani utengano unahakikishwa kati ya mashirika (Benki, Wizara, Vyuo Vikuu, Startups)?"
+
+msgid "Comment fonctionne la double approbation ZKP sur les Merge Requests (MR) ?"
+msgstr "Jinsi idhini mbili ya ZKP inavyofanya kazi kwenye Merge Requests (MR)?"
+
+msgid "Comment fonctionne le scanner de sécurité SAST et comment est calculé le score de souveraineté ?"
+msgstr "Jinsi gani skana ya usalama ya SAST inavyofanya kazi na jinsi alama ya mamlaka inavyopigwa mahesabu?"
+
+msgid "Comment l'assistant IA local Gemma 5B audite-t-il le code sans aucune fuite vers l'étranger ?"
+msgstr "Jinsi gani msaidizi wa ndani wa AI Gemma 5B anavyokagua msimbo bila uvujaji wowote nje ya nchi?"
+
+msgid "Comment se connecter à son compte ?"
+msgstr "Jinsi ya kuingia kwenye akaunti yako?"
+
+msgid "Confidentialité Mathématique"
+msgstr "Usiri wa Kihisabati"
+
+msgid "Connexion Gitea"
+msgstr "Connexion Gitea"
+
+msgid "Connexion Gitea : http://localhost:3002/user/login"
+msgstr "Kuingia Gitea : http://localhost:3002/user/login"
+
+msgid "Connexion Zero-Trust"
+msgstr "Kuingia Zero-Trust"
+
+msgid "Connexion Zero-Trust réussie pour"
+msgstr "Kuingia kwa Zero-Trust kumefanikiwa kwa"
+
+msgid "Connexion au flux SSE de Gemma 5B..."
+msgstr "Inaunganisha kwenye mtiririko wa SSE wa Gemma 5B..."
+
+msgid "Connexion directe Gitea"
+msgstr "Kuingia moja kwa moja Gitea"
+
+msgid "Connexion et bascule sur la forge logicielle Gitea"
+msgstr "Kuingia na kubadili hadi Gitea"
+
+msgid "Connexion sécurisée au moteur IA On-Premise Gemma 5B..."
+msgstr "Muunganisho salama kwa injini ya AI ya Gemma 5B..."
+
+msgid "Connexion à BantuDevLab :"
+msgstr "Kuingia BantuDevLab:"
+
+msgid "Connexion à GitLab CE via Single Sign-On (SSO OmniAuth ZKP) :"
+msgstr "Kuingia GitLab CE kupitia Single Sign-On (SSO OmniAuth ZKP):"
+
+msgid "Consultation Web Immédiate"
+msgstr "Kuvinjari Wavuti Papo Hapo"
+
+msgid "Consulter la FAQ & Guide"
+msgstr "Tazama Mwongozo & Maswali"
+
+msgid "Consultez la documentation technique approfondie du projet ou adressez-vous directement aux ingénieurs souverains de BANTUDEVLAB."
+msgstr "Angalia nyaraka za kiufundi za kina au wasiliana moja kwa moja na wahandisi huru wa BANTUDEVLAB."
+
+msgid "Consultez notre guide complet : création de compte, connexion sans mot de passe Zero-Trust, consultation du code source, clone avec token Git et foire aux questions."
+msgstr "Soma mwongozo wetu kamili: kufungua akaunti, kuingia bila nenosiri, na maswali yanayoulizwa mara kwa mara."
+
+msgid "Contrairement aux assistants cloud propriétaires hébergés sous juridiction étrangère (Cloud Act, FISA), le modèle Gemma 5B de BANTUDEVLAB :"
+msgstr "Tofauti na wasaidizi wa wingu wa kigeni wanaotawaliwa na sheria za kigeni (Cloud Act, FISA), mfumo wa Gemma 5B wa BANTUDEVLAB:"
+
+msgid "Contrôle Panafricain"
+msgstr "Udhibiti wa Afrika Nzima"
+
+msgid "Copier la phrase"
+msgstr "Nakili maneno"
+
+msgid "Copié !"
+msgstr "Imenakiliwa!"
+
+msgid "Critiques"
+msgstr "Hatari Kubwa"
+
+msgid "Cryptographie Zero-Knowledge (ZKP)"
+msgstr "Kriptografia ya Maarifa Sifuri (ZKP)"
+
+msgid "Côte d Ivoire"
+msgstr "Côte d Ivoire"
+
+msgid "Côte d'Ivoire (Systalink Abidjan DC)"
+msgstr "Ivory Coast (Systalink Abidjan DC)"
+
+msgid "Datacenter Systalink Tier-3"
+msgstr "Datacenter Systalink Tier-3"
+
+msgid "Demande d un défi (Challenge nonce) au serveur pour"
+msgstr "Inaomba changamoto (nonce) kutoka kwa seva kwa"
+
+msgid "Demander l'Avis de Gemma"
+msgstr "Omba Maoni ya Gemma"
+
+msgid "Demander l'Avis de Gemma 5B"
+msgstr "Omba Maoni ya AI ya Gemma 5B"
+
+msgid "Depuis le"
+msgstr "Kutoka"
+
+msgid "Des niveaux de souveraineté graduels (Tier-1 Continental, Tier-2 Régional, Tier-3 Startup) définissent les règles de chiffrement et d'hébergement."
+msgstr "Ngazi za mamlaka za taratibu (Tier-1 Bara, Tier-2 Kanda, Tier-3 Startup) zinaamuru sheria za usimbaji fiche na uhifadhi."
+
+msgid "Disponibilité SLA"
+msgstr "Upatikanaji wa SLA"
+
+msgid "Données Réelles Gitea API"
+msgstr "Data Halisi ya API ya Gitea"
+
+msgid "Droit Ivoirien & Cadre UA"
+msgstr "Droit Ivoirien & Cadre UA"
+
+msgid "Droit Ivoirien & UA"
+msgstr "Droit Ivoirien & UA"
+
+msgid "Droit Kényan & EAC"
+msgstr "Droit Kényan & EAC"
+
+msgid "Droit Nigérian (NDPR)"
+msgstr "Droit Nigérian (NDPR)"
+
+msgid "Droit Rwandais & Smart Africa"
+msgstr "Droit Rwandais & Smart Africa"
+
+msgid "Droit Sénégalais & CEDEAO"
+msgstr "Droit Sénégalais & CEDEAO"
+
+msgid "Dépôt"
+msgstr "Hifadhi"
+
+msgid "Dépôts Actifs"
+msgstr "Hifadhi Hai"
+
+msgid "Dépôts Hébergés sur Gitea Souverain"
+msgstr "Hifadhi Zilizowekwa kwenye Gitea Huru"
+
+msgid "Dépôts Souverains Récents"
+msgstr "Hifadhi Huru za Hivi Karibuni"
+
+msgid "Dérivation de la clé publique souveraine pour"
+msgstr "Inatengeneza ufunguo wa umma huru kwa"
+
+msgid "Détection des dépendances externes non souveraines ou non auditées."
+msgstr "Ugunduzi wa utegemezi wa nje usio huru au usiofanyiwa ukaguzi."
+
+msgid "Détection des injections SQL, exécutions de commandes non sécurisées (eval, exec, pickle)."
+msgstr "Ugunduzi wa mashambulizi ya SQL injection na utekelezaji usio salama wa amri (eval, exec, pickle)."
+
+msgid "Détection des secrets codés en dur (clés privées, tokens API, identifiants)."
+msgstr "Ugunduzi wa siri zilizowekwa moja kwa moja kwenye msimbo (funguo za siri, tokeni za API, vitambulisho)."
+
+msgid "East Africa Gateway - Nairobi"
+msgstr "East Africa Gateway - Nairobi"
+
+msgid "East Africa Gateway Tier-3"
+msgstr "East Africa Gateway Tier-3"
+
+msgid "En quoi BANTUDEVLAB est-il conforme à la Convention de Malabo et aux réglementations africaines de cybersécurité ?"
+msgstr "BANTUDEVLAB inafanana vipi na Mkataba wa Malabo na kanuni za usalama wa mtandao za Afrika?"
+
+msgid "Enregistrement ZKP réussi ! Aucune information secrète n a quitté votre machine."
+msgstr "Usajili wa ZKP umefanikiwa! Hakuna taarifa ya siri iliyotoka kwenye kifaa chako."
+
+msgid "Enregistrer Identité sur BantuDevLab"
+msgstr "Sajili Utambulisho kwenye BantuDevLab"
+
+msgid "Erreur"
+msgstr "Hitilafu"
+
+msgid "Erreur :"
+msgstr "Hitilafu:"
+
+msgid "Erreur SSE:"
+msgstr "Hitilafu ya SSE:"
+
+msgid "Erreur d enregistrement"
+msgstr "Hitilafu ya usajili"
+
+msgid "Erreur de connexion IA: HTTP"
+msgstr "Hitilafu ya muunganisho wa AI: HTTP"
+
+msgid "Erreur du scanner :"
+msgstr "Hitilafu ya kikaguzi:"
+
+msgid "Erreur défi:"
+msgstr "Hitilafu ya changamoto:"
+
+msgid "Erreur lors du scan"
+msgstr "Hitilafu wakati wa ukaguzi"
+
+msgid "Erreur lors du streaming SSE:"
+msgstr "Hitilafu wakati wa utiririshaji wa SSE:"
+
+msgid "Espace GitLab"
+msgstr "Eneo la GitLab"
+
+msgid "Est déployé exclusivement sur des serveurs physiques situés sur le sol africain (Systalink Cloud, datacenters Tier-3 Abidjan, Dakar, Nairobi, Kigali)."
+msgstr "Imewekwa pekee kwenye seva halisi zilizopo barani Afrika (Systalink Cloud, vituo vya data vya Tier-3 Abidjan, Dakar, Nairobi, Kigali)."
+
+msgid "Est fine-tuné avec LoRA/QLoRA (4-bit GGUF) sur les cadres légaux panafricains et les meilleures pratiques de souveraineté logicielle."
+msgstr "Imefunzwa kwa kina na LoRA/QLoRA (GGUF ya biti 4) kuhusu mifumo ya kisheria ya Afrika nzima na viwango vya juu vya mamlaka ya programu."
+
+msgid "Etape 1 : Identite"
+msgstr "Etape 1 : Identite"
+
+msgid "Etape 2 : Mnemonique"
+msgstr "Etape 2 : Mnemonique"
+
+msgid "Etape 3 : Zero-Trust Auth"
+msgstr "Uthibitishaji Zero-Trust"
+
+msgid "Explorer le Tableau de Bord"
+msgstr "Gundua Dashibodi"
+
+msgid "Exportation des rapports aux formats standard OASIS SARIF 2.1.0 et GitLab SAST (gl-sast-report.json)."
+msgstr "Usafirishaji wa ripoti katika miundo rasmi ya OASIS SARIF 2.1.0 na GitLab SAST (gl-sast-report.json)."
+
+msgid "FORGE SOUVERAINE"
+msgstr "HIFADHI HURU YA PROGRAMU"
+
+msgid "Faible"
+msgstr "Dhaifu"
+
+msgid "Fermer"
+msgstr "Funga"
+
+msgid "Fermer le menu"
+msgstr "Funga menyu"
+
+msgid "Fichier :"
+msgstr "Fichier :"
+
+msgid "Fichier d identité souveraine exporté pour"
+msgstr "Faili ya utambulisho huru imehamishwa kwa"
+
+msgid "Fil d Ariane"
+msgstr "Njia ya Ukurasa"
+
+msgid "Finaliser l'Inscription Gitea"
+msgstr "Kamilisha Usajili wa Gitea"
+
+msgid "Finaliser l'inscription sur Gitea"
+msgstr "Kamilisha usajili kwenye Gitea"
+
+msgid "Force Cryptographique :"
+msgstr "Nguvu ya Kriptografia:"
+
+msgid "Forge Logicielle Panafricaine & Souveraine. Hébergée sur Systalink Cloud."
+msgstr "Hifadhi Huru ya Programu Barani Afrika. Imewekwa kwenye Systalink Cloud."
+
+msgid "Forge distribuée basée sur Gitea/GitLab CE déployée sur nos serveurs en Afrique. Zéro dépendance vis-à-vis des juridictions extérieures (Cloud Act exempt)."
+msgstr "Hifadhi ya programu ya Gitea/GitLab CE iliyowekwa Afrika bila utegemezi wa nje."
+
+msgid "Fort"
+msgstr "Imara"
+
+msgid "Gitea"
+msgstr "Gitea"
+
+msgid "Guide & FAQ"
+msgstr "Mwongozo na Maswali"
+
+msgid "Guide d'Utilisation & FAQ Souveraine - BANTUDEVLAB"
+msgstr "Mwongozo wa Mtumiaji & Maswali ya Enzi - BANTUDEVLAB"
+
+msgid "Guide d'Utilisation & Foire Aux Questions"
+msgstr "Mwongozo wa Mtumiaji & Maswali Yanayoulizwa Mara kwa Mara"
+
+msgid "Générez un token d'accès Git"
+msgstr "Tengeneza tokeni ya ufikiaji ya Git"
+
+msgid "Générez votre clé souveraine protégée par mnémonique BIP-39 et prouvez mathématiquement votre identité sans jamais exposer de mot de passe."
+msgstr "Tengeneza ufunguo wako huru unaolindwa na maneno ya BIP-39 na uthibitishe utambulisho wako bila kuweka wazi nenosiri."
+
+msgid "Générez votre trousseau de clés mathématiques (phrase mnémonique BIP-39 et clé publique Schnorr). Conservez précieusement votre phrase secrète : elle ne quitte jamais votre terminal."
+msgstr "Tengeneza jozi ya funguo za kihisabati (neno la siri la BIP-39 na ufunguo wa umma wa Schnorr). Hifadhi neno lako la siri vizuri: haliwahi kutoka kwenye kifaa chako."
+
+msgid "Hautes"
+msgstr "Juu"
+
+msgid "Hub majeur de connectivité pour les fintechs et startups d Afrique de l Ouest, hébergeant des miroirs rapides de paquets."
+msgstr "Hub majeur de connectivité pour les fintechs et startups d Afrique de l Ouest, hébergeant des miroirs rapides de paquets."
+
+msgid "Hôte principal du moteur Git souverain Gitea, cluster PostgreSQL répliqué et API BantuDevLab."
+msgstr "Mwenyeji mkuu wa injini huru ya Git Gitea, nguzo ya PostgreSQL iliyorudiwa na API ya BantuDevLab."
+
+msgid "IA Locale Gemma 5B Fine-tunée"
+msgstr "AI ya Kienyeji ya Gemma 5B"
+
+msgid "Identifiant invalide : doit comporter 3 à 32 caractères autorisés."
+msgstr "Jina la mtumiaji si sahihi: lazima liwe na herufi 3 hadi 32 zinazoruhusiwa."
+
+msgid "Identifiant invalide : les espaces sont interdits."
+msgstr "Jina la mtumiaji si sahihi: nafasi haziruhusiwi."
+
+msgid "Identifiant obligatoire (3-32 caractères : lettres, chiffres, point, tiret)."
+msgstr "Jina la mtumiaji linahitajika (herufi 3-32: herufi, nambari, nukta)."
+
+msgid "Identité"
+msgstr "Utambulisho"
+
+msgid "Identité ZKP enregistrée avec succès !"
+msgstr "Utambulisho wa ZKP umesajiliwa kwa mafanikio!"
+
+msgid "Identité souveraine téléchargée :"
+msgstr "Utambulisho huru umepakuliwa:"
+
+msgid "Identités ZKP"
+msgstr "Utambulisho vya ZKP"
+
+msgid "Immunité intégrale contre les écoutes réseau et le rejeu de requêtes grâce aux nonces éphémères consommés atomiquement."
+msgstr "Kinga kamili dhidi ya udukuzi wa mtandao na mashambulizi ya kurudia kutokana na nonces zinazotumiwa mara moja tu."
+
+msgid "Immunité totale face au CLOUD Act et aux juridictions extraterritoriales."
+msgstr "Kinga kamili dhidi ya Sheria ya CLOUD na mamlaka za kigeni."
+
+msgid "Indicateurs & Topologie Souveraine Panafricaine"
+msgstr "Viashiria na Muundo wa Uhuru wa Afrika"
+
+msgid "Initialisation de la synchronisation avec Gitea..."
+msgstr "Kuanzisha usawazishaji na Gitea..."
+
+msgid "Innovation City DC Tier-3"
+msgstr "Innovation City DC Tier-3"
+
+msgid "Intelligence Artificielle Locale (Gemma 5B)"
+msgstr "Akili Bandia ya Ndani (Gemma 5B)"
+
+msgid "Inviolable (256 bits)"
+msgstr "Haiwezi Kuvunjwa (biti 256)"
+
+msgid "Inviolable Souverain"
+msgstr "Huru Isiyovunjika"
+
+msgid "Journal d'audit immuable (AuditTrailLog) chaîné cryptographiquement par hachage SHA-256 (blockchain interne vérifiable)."
+msgstr "Kumbukumbu ya ukaguzi isiyobadilika (AuditTrailLog) iliyounganishwa kwa kriptografia kupitia heshi ya SHA-256 (blockchain ya ndani inayoweza kukaguliwa)."
+
+msgid "Juridiction Continentale (Nœud Souverain)"
+msgstr "Mamlaka ya Bara (Nodi Huru)"
+
+msgid "Kenya"
+msgstr "Kenya"
+
+msgid "Kenya (Nairobi IXP Hub)"
+msgstr "Kenya (Kitovu cha IXP Nairobi)"
+
+msgid "Kigali Innovation City DC - Kigali"
+msgstr "Kigali Innovation City DC - Kigali"
+
+msgid "La Convention de l'Union Africaine sur la Cybersécurité et la Protection des Données à Caractère Personnel (Malabo 2014) impose des garanties strictes d'intégrité, de traçabilité et de non-ingérence :"
+msgstr "Mkataba wa Umoja wa Afrika kuhusu Usalama wa Mtandao na Ulinzi wa Data ya Kibinafsi (Malabo 2014) unahitaji dhamana kali za uadilifu, ufuatiliaji na kutoingiliwa:"
+
+msgid "La Forge Logicielle Souveraine de l'Afrique"
+msgstr "Hifadhi Huru ya Programu ya Afrika"
+
+msgid "La connexion s'opère en mode Zero-Trust sans mot de passe, garantissant l'immunité contre le hameçonnage, le vol d'identifiants et les attaques par force brute :"
+msgstr "Kuingia kunafanyika katika hali ya Zero-Trust bila nenosiri, kuhakikisha kinga dhidi ya hadaa, wizi wa vitambulisho na mashambulizi ya brute force:"
+
+msgid "La création d'organisations est soumise à validation administrative (contrôle IsAdminUser)."
+msgstr "Uundaji wa mashirika unahitaji uthibitisho wa kiutawala (udhibiti wa IsAdminUser)."
+
+msgid "La fusion (merge) d'une branche de fonctionnalités vers la branche principale exige la signature mathématique d'au moins deux relecteurs habilités."
+msgstr "Kuunganisha tawi la vipengele kwenye tawi kuu kunahitaji saini ya kihisabati ya angalau wakaguzi wawili walioidhinishwa."
+
+msgid "Lancer l'Audit de Sécurité"
+msgstr "Anzisha Ukaguzi wa Usalama"
+
+msgid "Langage"
+msgstr "Lugha ya Programu"
+
+msgid "Latence Locale"
+msgstr "Muda wa Kuchelewa wa Ndani"
+
+msgid "Latence Réelle"
+msgstr "Muda Halisi"
+
+msgid "Latence directe RTT :"
+msgstr "Muda wa moja kwa moja wa RTT:"
+
+msgid "Latence mesuree en temps reel : RTT local"
+msgstr "Muda wa mtandao umepimwa: RTT ya ndani"
+
+msgid "Le code respecte strictement les critères de souveraineté panafricaine."
+msgstr "Msimbo unazingatia kikamilifu vigezo vya uhuru wa Afrika."
+
+msgid "Le code source hébergé sur BANTUDEVLAB et GitLab est consultable et clonable selon plusieurs modalités :"
+msgstr "Msimbo chanzo uliopo BantuDevLab na GitLab unaweza kutazamwa na kunakiliwa kwa njia kadhaa:"
+
+msgid "Le modèle SovereignOrganization assure une compartimentation multi-tenancy stricte :"
+msgstr "Muundo wa SovereignOrganization unahakikisha utengano mkali wa wateja wengi (multi-tenancy):"
+
+msgid "Le pipeline GitLab CI/CD et la passerelle de fusion bloquent automatiquement l'opération si le quorum cryptographique n'est pas réuni."
+msgstr "Bomba la GitLab CI/CD na lango la kuunganisha huzuia kiotomatiki operesheni ikiwa akidi ya kriptografia haijafikiwa."
+
+msgid "Le scanner d'analyse statique SAST de BANTUDEVLAB analyse automatiquement chaque commit et fichier soumis :"
+msgstr "Skana ya uchambuzi tuli ya SAST ya BANTUDEVLAB inachunguza kiotomatiki kila commit na faili iliyowasilishwa:"
+
+msgid "Les serveurs Git, bases de données relationnelles PostgreSQL et sauvegardes sont hébergés sur l'infrastructure Systalink Cloud en Côte d'Ivoire et au Sénégal."
+msgstr "Seva za Git, hifadhidata za PostgreSQL na nakala rudufu zinahifadhiwa kwenye miundombinu ya Systalink Cloud nchini Ivory Coast na Senegal."
+
+msgid "Les trois étapes indispensables pour initialiser votre environnement de travail souverain."
+msgstr "Hatua tatu muhimu za kuanzisha mazingira yako ya kazi huru."
+
+msgid "Ligne"
+msgstr "Mstari"
+
+msgid "Localisation des Données & Hébergement"
+msgstr "Mahali pa Data & Uhifadhi"
+
+msgid "Lors du clic, votre navigateur résout un défi cryptographique avec votre clé privée locale pour prouver la possession de la clé sans jamais la dévoiler au serveur."
+msgstr "Unapobonyeza, kivinjari chako kinatatua changamoto ya kriptografia kwa ufunguo wako wa siri ili kuthibitisha umiliki bila kuufichua kwa seva."
+
+msgid "MainOne Datacenter Gateway - Lagos"
+msgstr "MainOne Datacenter Gateway - Lagos"
+
+msgid "Masque et anonymise automatiquement les secrets éventuels avant toute journalisation (AIInteractionLog)."
+msgstr "Inaficha na kubadilisha siri zote kuwa zisizojulikana kabla ya kuweka kumbukumbu (AIInteractionLog)."
+
+msgid "Menu de navigation"
+msgstr "Menyu ya urambazaji"
+
+msgid "Menu mobile"
+msgstr "Menyu ya Simu"
+
+msgid "Mesure de la latence reseau en temps reel (Ping RTT)..."
+msgstr "Inapima muda wa mtandao kwa wakati halisi (Ping RTT)..."
+
+msgid "Mesures de Latence Réelle Intra-Afrique (Temps Réel)"
+msgstr "Vipimo Halisi vya Muda wa Mawasiliano Barani Afrika"
+
+msgid "Metriques et latences actualisees en direct."
+msgstr "Vipimo na muda wa mawasiliano vimesasishwa moja kwa moja."
+
+msgid "Milliards"
+msgstr "Bilioni"
+
+msgid "Mnémonique"
+msgstr "Mnemonic"
+
+msgid "Mode d'Emploi & FAQ"
+msgstr "Mwongozo na Maswali"
+
+msgid "Mode d'Utilisation Fondamental : GitLab & BantuDevLab"
+msgstr "Hali ya Matumizi ya Msingi: GitLab & BantuDevLab"
+
+msgid "Modèle de fondation Gemma 5B fine-tuné sur les dépôts de code et besoins d'infrastructures télécoms/fintech africaines. Exécution 100% On-Premise / Local."
+msgstr "Mfano wa msingi wa Gemma 5B uliofunzwa kwa hazina za msimbo na miundombinu ya simu/fintech ya Kiafrika. Utekelezaji wa 100% wa ndani."
+
+msgid "Mot"
+msgstr "Neno"
+
+msgid "Moteur Git Panafricain & Dépôts Souverains"
+msgstr "Injini ya Git ya Afrika na Hazina Huru"
+
+msgid "Moteur Git Souverain (Systalink Cloud)"
+msgstr "Mfumo wa Git Huru (Systalink Cloud)"
+
+msgid "Moyen"
+msgstr "Wastani"
+
+msgid "Moyennes"
+msgstr "Wastani"
+
+msgid "Méthode 1 : Inscription cryptographique via BantuDevLab (Recommandée)"
+msgstr "Njia 1: Usajili wa kriptografia kupitia BantuDevLab (Inashauriwa)"
+
+msgid "Méthode 2 : Inscription directe sur l'instance GitLab auto-hébergée"
+msgstr "Njia 2: Usajili wa moja kwa moja kwenye GitLab ya kujilisha"
+
+msgid "Même en cas de compromission totale de la base de données du serveur, aucun mot de passe ni clé privée ne peut fuiter, car seules les clés publiques sont enregistrées."
+msgstr "Hata kama hifadhidata ya seva itadukuliwa kabisa, hakuna nenosiri wala ufunguo wa siri utakaovuja, kwa sababu funguo za umma pekee ndizo zilizohifadhiwa."
+
+msgid "Navigation Principale"
+msgstr "Urambazaji Mkuu"
+
+msgid "Nigeria"
+msgstr "Nigeria"
+
+msgid "Nigeria (Lagos Datacenter)"
+msgstr "Nigeria (Kituo cha Data cha Lagos)"
+
+msgid "Nom de Développeur Souverain (Username)"
+msgstr "Jina la Msanidi Huru (Jina la Mtumiaji)"
+
+msgid "Normes de Souveraineté Numérique ADSS-v1"
+msgstr "Viwango vya Uhuru wa Kidijitali ADSS-v1"
+
+msgid "Nouveau sur BANTUDEVLAB & GitLab ?"
+msgstr "Mgeni kwenye BANTUDEVLAB & GitLab?"
+
+msgid "Nouvelle phrase mnémonique générée (12 mots)."
+msgstr "Maneno mapya ya siri yametengenezwa (maneno 12)."
+
+msgid "NŒUD SOUVERAIN ACTIF"
+msgstr "KITUO HURU CHA UTENDAJI"
+
+msgid "Nœud"
+msgstr "Kituo"
+
+msgid "Nœud Central Systalink Cloud - Abidjan"
+msgstr "Nœud Central Systalink Cloud - Abidjan"
+
+msgid "Nœud central de la forge souveraine : héberge le moteur Gitea CE, les référentiels Git maîtres et le pipeline de fine-tuning Gemma 5B."
+msgstr "Nœud central de la forge souveraine : héberge le moteur Gitea CE, les référentiels Git maîtres et le pipeline de fine-tuning Gemma 5B."
+
+msgid "Nœud sélectionné :"
+msgstr "Nœud sélectionné :"
+
+msgid "Ouvre GitLab dans un nouvel onglet"
+msgstr "Fungua GitLab kwenye kichupo kipya"
+
+msgid "PROTOCOLE SCHNORR NIZKP / FIAT-SHAMIR"
+msgstr "ITIFAKI YA SCHNORR NIZKP / FIAT-SHAMIR"
+
+msgid "Paramètres Optimisés"
+msgstr "Vigezo Vilivyoboreshwa"
+
+msgid "Passer à la Connexion"
+msgstr "Endelea Kuingia"
+
+msgid "Passerelle souveraine d Afrique de l Est pour les services financiers mobiles, M-Pesa connectors et pipelines CI/CD."
+msgstr "Passerelle souveraine d Afrique de l Est pour les services financiers mobiles, M-Pesa connectors et pipelines CI/CD."
+
+msgid "Pays"
+msgstr "Nchi"
+
+msgid "Phrase Mnémonique Souveraine (Standard BIP-39) :"
+msgstr "Maneno ya Siri Huru (Kiwango cha BIP-39):"
+
+msgid "Phrase de 12 mots copiée !"
+msgstr "Maneno 12 yamenakiliwa!"
+
+msgid "Pour les projets critiques des ministères, banques centrales et agences publiques, BANTUDEVLAB intègre un quorum d'approbation cryptographique :"
+msgstr "Kwa miradi nyeti ya wizara, benki kuu na mashirika ya umma, BANTUDEVLAB inajumuisha akidi ya idhini ya kriptografia:"
+
+msgid "Pourquoi la plateforme n'utilise-t-elle aucun emoji ?"
+msgstr "Kwa nini jukwaa halitumii emoji yoyote?"
+
+msgid "Preuve (t, s) calculée. Envoi de la preuve au serveur pour vérification..."
+msgstr "Uthibitisho (t, s) umehesabiwa. Inatuma uthibitisho kwa seva kuhakikiwa..."
+
+msgid "Preuves de Schnorr non-interactives basées sur Fiat-Shamir garantissant une authentification à divulgation nulle de connaissance. Même en cas de compromission serveur, aucun mot de passe n'existe."
+msgstr "Uthibitisho wa Schnorr kupitia Fiat-Shamir unaohakikisha uingiaji wa maarifa sifuri. Hata seva ikivamiwa, hakuna nenosiri linalopatikana."
+
+msgid "Privé"
+msgstr "Binafsi"
+
+msgid "Protection Légale"
+msgstr "Ulinzi wa Kisheria"
+
+msgid "Protection anti-rejeu :"
+msgstr "Ulinzi dhidi ya kurudia:"
+
+msgid "Protocole cryptographique de Schnorr / Sigma non-interactif via Fiat-Shamir. Prouvez votre identité sans JAMAIS transmettre votre mot de passe au réseau."
+msgstr "Itifaki ya Schnorr / Sigma kupitia Fiat-Shamir. Thibitisha utambulisho bila nenosiri kwenye mtandao."
+
+msgid "Prouver mon Identité (Connexion Zero-Trust)"
+msgstr "Thibitisha Utambulisho Wangu (Kuingia Zero-Trust)"
+
+msgid "Précédent"
+msgstr "Iliyotangulia"
+
+msgid "Prêt"
+msgstr "Tayari"
+
+msgid "Public Souverain"
+msgstr "Umma Huru"
+
+msgid "Pôle d innovation panafricain pour le calcul distribué, l audit IA local et l hébergement des architectures souveraines."
+msgstr "Pôle d innovation panafricain pour le calcul distribué, l audit IA local et l hébergement des architectures souveraines."
+
+msgid "Qu'est-ce que l'authentification Zero-Trust ZKP et pourquoi surpasse-t-elle les mots de passe classiques ?"
+msgstr "Uthibitishaji wa Zero-Trust ZKP ni nini na kwa nini unazidi manenosiri ya kawaida?"
+
+msgid "Questions Fréquentes Techniques & Sécurité"
+msgstr "Maswali ya Kiufundi & Usalama"
+
+msgid "Rapport d'Audit Gemma 5B (Local / On-Premise)"
+msgstr "Ripoti ya Ukaguzi wa Gemma 5B (Ndani / On-Premise)"
+
+msgid "Rechercher dans la FAQ"
+msgstr "Tafuta katika Maswali"
+
+msgid "Rechercher une question, mot-clé (ex: Git, ZKP, token, clone, merge request)..."
+msgstr "Tafuta swali au neno muhimu (mf: Git, ZKP, token, clone, merge request)..."
+
+msgid "Recommandation Souveraine :"
+msgstr "Mapendekezo Huru:"
+
+msgid "Redirection automatique vers l'inscription Gitea dans"
+msgstr "Inaelekeza kiotomatiki kwenye usajili wa Gitea ndani ya"
+
+msgid "Regénérer (12 Mots)"
+msgstr "Tengeneza Upya (Maneno 12)"
+
+msgid "Rendez-vous sur l'onglet"
+msgstr "Nenda kwenye kichupo cha"
+
+msgid "Retrouvez l'ensemble des réponses techniques pour exploiter la forge souveraine BANTUDEVLAB et son intégration GitLab CE/EE : création de compte, connexion Zero-Trust, consultation du code source et collaboration sécurisée."
+msgstr "Pata majibu yote ya kiufundi ya kutumia jukwaa huru la BANTUDEVLAB na muunganiko wake wa GitLab CE/EE: uundaji wa akaunti, kuingia Zero-Trust, kuvinjari msimbo chanzo na ushirikiano salama."
+
+msgid "Revenir au Mnémonique"
+msgstr "Rudi kwenye Maneno ya Siri"
+
+msgid "Revue de code par Gemma 5B complétée."
+msgstr "Ukaguzi wa msimbo na Gemma 5B umekamilika."
+
+msgid "Rwanda"
+msgstr "Rwanda"
+
+msgid "Rwanda (Kigali Innovation City)"
+msgstr "Rwanda (Jiji la Ubunifu la Kigali)"
+
+msgid "Règle de sécurité :"
+msgstr "Kanuni ya usalama:"
+
+msgid "S'exécute en local via vLLM / Ollama sans aucune transmission de télémétrie ou de code source à des tiers."
+msgstr "Inaendeshwa ndani ya nchi kupitia vLLM / Ollama bila kutuma data yoyote au msimbo kwa wahusika wengine."
+
+msgid "Scan en cours..."
+msgstr "Ukaguzi unaendelea..."
+
+msgid "Scan terminé ! Score de souveraineté :"
+msgstr "Ukaguzi umekamilika! Alama ya uhuru:"
+
+msgid "Score de Souveraineté"
+msgstr "Alama ya Uhuru"
+
+msgid "Se Connecter sur Gitea"
+msgstr "Ingia kwenye Gitea"
+
+msgid "Secret Privé Dérivé (Ne quitte JAMAIS votre navigateur) :"
+msgstr "Siri Binafsi Iliyotokana (HAIWAHI kutoka kwenye kivinjari chako):"
+
+msgid "Session authentifiée via Zero-Trust ZKP"
+msgstr "Kipindi kimethibitishwa kupitia Zero-Trust ZKP"
+
+msgid "Si votre organisation dispose d'une passerelle GitLab dédiée, ouvrez l'interface GitLab (via le bouton « Accès Forge Git »), cliquez sur « S'inscrire » (Register), complétez votre profil institutionnel, puis associez votre clé ZKP BantuDevLab via le bouton « Connecter avec Bantu ZKP »."
+msgstr "Ikiwa shirika lako lina lango maalum la GitLab, fungua kiolesura cha GitLab (kupitia kitufe cha 'Ufikiaji wa Git Forge'), bonyeza 'Sajili', kamilisha wasifu wako, kisha unganisha ufunguo wako wa ZKP kupitia kitufe cha 'Unganisha na Bantu ZKP'."
+
+msgid "Si vous êtes déjà authentifié sur BantuDevLab, la session GitLab est ouverte instantanément. Sinon, vous serez invité à signer le défi cryptographique sans jamais saisir de mot de passe."
+msgstr "Ikiwa tayari umethibitishwa kwenye BantuDevLab, kikao cha GitLab kinafunguliwa mara moja. Vinginevyo, utaalikwa kusaini changamoto ya kriptografia bila kuingiza nenosiri."
+
+msgid "Snippet Démo"
+msgstr "Msimbo wa Mfano"
+
+msgid "Souveraineté"
+msgstr "Uhuru wa Kidijitali"
+
+msgid "Souveraineté Numérique"
+msgstr "Uhuru wa Kidijitali"
+
+msgid "Souveraineté des données garantie : aucun hébergement soumis à des législations extraterritoriales."
+msgstr "Mamlaka ya data yamehakikishwa: hakuna uhifadhi unaotawaliwa na sheria za kigeni."
+
+msgid "Souveraineté visuelle & neutralité : l'ensemble des icônes et drapeaux sont des fichiers vectoriels SVG auto-hébergés sans aucun recours à des polices ou CDN tiers."
+msgstr "Mamlaka ya kuona & kutopendelea: aikoni na bendera zote ni faili za vektori za SVG za ndani bila kutegemea fonti au CDN za nje."
+
+msgid "Sovereign IXP Datacenter - Dakar"
+msgstr "Sovereign IXP Datacenter - Dakar"
+
+msgid "Sovereign IXP Hub Tier-3"
+msgstr "Sovereign IXP Hub Tier-3"
+
+msgid "Statut"
+msgstr "Hali"
+
+msgid "Statut : 100% Souverain"
+msgstr "Hali: 100% Huru"
+
+msgid "Statut : Cryptographiquement inviolable"
+msgstr "Hali: Haiwezi Kuvunjwa Kikriptografia"
+
+msgid "Statut : Zéro fuite de télémétrie"
+msgstr "Hali: Hakuna Uvujaji wa Takwimu"
+
+msgid "Suivant : Générer la Clé Souveraine"
+msgstr "Ifuatayo: Tengeneza Ufunguo Huru"
+
+msgid "Supervision en temps réel des nœuds certifiés et conformité UA 2020-2030."
+msgstr "Uangalizi wa wakati halisi wa vituo vilivyothibitishwa."
+
+msgid "Sur la mire de connexion GitLab, cliquez sur le bouton souverain"
+msgstr "Kwenye ukurasa wa kuingia wa GitLab, bonyeza kitufe huru"
+
+msgid "Sur la plateforme souveraine BANTUDEVLAB, l'accès à GitLab CE est unifié avec votre identité cryptographique Zero-Trust. Vous avez deux méthodes pour créer votre compte :"
+msgstr "Kwenye jukwaa huru la BANTUDEVLAB, ufikiaji wa GitLab CE umeunganishwa na utambulisho wako wa kriptografia wa Zero-Trust. Una njia mbili za kuunda akaunti yako:"
+
+msgid "Surveillance de la forge logicielle, sécurité Zero-Trust et assistance IA locale"
+msgstr "Uangalizi wa mfumo wa programu, usalama wa Zero-Trust na msaada wa AI"
+
+msgid "Systalink Cloud Datacenter - Abidjan"
+msgstr "Systalink Cloud Datacenter - Abidjan"
+
+msgid "Sénégal"
+msgstr "Sénégal"
+
+msgid "Sénégal (Dakar Sovereign Node)"
+msgstr "Senegal (Nodi Huru ya Dakar)"
+
+msgid "Tableau de Bord"
+msgstr "Dashibodi"
+
+msgid "Tableau de Bord Souverain BANTUDEVLAB"
+msgstr "Dashibodi Huru ya BANTUDEVLAB"
+
+msgid "Terminé"
+msgstr "Imekamilika"
+
+msgid "Tester la Latence"
+msgstr "Pima Muda wa Mawasiliano"
+
+msgid "Thème clair activé"
+msgstr "Mandhari meupe yamewashwa"
+
+msgid "Thème sombre activé"
+msgstr "Mandhari meusi yamewashwa"
+
+msgid "Topologie des Datacenters Certifiés"
+msgstr "Muundo wa Vituo vya Data Vilivyothibitishwa"
+
+msgid "Télécharger Fichier Clé Souveraine (.json)"
+msgstr "Pakua Faili ya Ufunguo Huru (.json)"
+
+msgid "Une autre question technique ?"
+msgstr "Swali lingine la kiufundi?"
+
+msgid "Une fois la preuve vérifiée par le serveur, votre session est ouverte."
+msgstr "Mara uthibitisho unapothibitishwa na seva, kikao chako kinafunguliwa."
+
+msgid "Validation mathématique stricte de non-appartenance aux petits sous-groupes pour éliminer toute tentative de falsification de clé."
+msgstr "Uthibitishaji mkali wa kihisabati wa kutokuwa sehemu ya vikundi vidogo ili kuzuia majaribio yote ya kughushi funguo."
+
+msgid "Validez : votre identité souveraine est instantanément enregistrée. Votre compte GitLab CE associé est automatiquement provisionné sans aucun mot de passe requis."
+msgstr "Thibitisha: utambulisho wako huru unasajiliwa papo hapo. Akaunti yako inayohusiana ya GitLab CE inatolewa kiotomatiki bila nenosiri lolote linalohitajika."
+
+msgid "Veuillez renseigner votre identifiant et votre secret."
+msgstr "Tafadhali weka jina lako la mtumiaji na siri yako."
+
+msgid "Veuillez saisir du code pour l audit IA."
+msgstr "Tafadhali weka msimbo kwa ukaguzi wa AI."
+
+msgid "Veuillez saisir du code à analyser."
+msgstr "Tafadhali weka msimbo wa kuchambua."
+
+msgid "Vide"
+msgstr "Tupu"
+
+msgid "Ville"
+msgstr "Mji"
+
+msgid "Visibilité"
+msgstr "Mwonekano"
+
+msgid "Vos algorithmes critiques restent strictement confidentiels."
+msgstr "Mifumo yako nyeti inabaki kuwa siri kabisa."
+
+msgid "Vos fichiers .gitlab-ci.yml peuvent cibler directement les nœuds d'exécution certifiés panafricains grâce aux tags de runners :"
+msgstr "Vos fichiers .gitlab-ci.yml peuvent cibler directement les nœuds d'exécution certifiés panafricains grâce aux tags de runners :"
+
+msgid "Votre identité souveraine"
+msgstr "Utambulisho wako huru"
+
+msgid "Vulnérabilité"
+msgstr "Udhaifu"
+
+msgid "Vulnérabilités & Fuites Détectées"
+msgstr "Kasoro na Uvujaji Uliogunduliwa"
+
+msgid "Vérification Zero-Knowledge Réussie !"
+msgstr "Uthibitishaji wa Zero-Knowledge Umefanikiwa!"
+
+msgid "Vérification Zero-Knowledge réussie !"
+msgstr "Uthibitishaji wa Zero-Knowledge Umefanikiwa!"
+
+msgid "Vérification automatisée de l'intégrité via la commande de gestion :"
+msgstr "Uthibitishaji wa kiotomatiki wa uadilifu kupitia amri ya usimamizi:"
+
+msgid "West Africa Interconnect Tier-4"
+msgstr "West Africa Interconnect Tier-4"
+
+msgid "Workbench Souverain & Audit SAST"
+msgstr "Jukwaa Huru la Kazi na Ukaguzi wa SAST"
+
+msgid "ZKP (Zero-Knowledge Proof, ou preuve à divulgation nulle de connaissance) est un protocole cryptographique mathématique fondé sur le problème du logarithme discret (RFC 3526 MODP 2048 bits). Grâce au protocole de Schnorr rendu non-interactif via la transformation de Fiat-Shamir, vous prouvez au serveur que vous détenez votre secret mathématique sans JAMAIS lui révéler ce secret, ni même le faire transiter sur le réseau."
+msgstr "ZKP (Uthibitisho wa Maarifa Sifuri) ni itifaki ya kihisabati ya kriptografia inayotegemea tatizo la discrete logarithm (RFC 3526 MODP 2048 bits). Kupitia itifaki ya Schnorr na Fiat-Shamir, unathibitisha una siri yako bila KUWEKA WAZI kamwe au kuituma mtandaoni."
+
+msgid "Zero-Trust Auth"
+msgstr "Uthibitishaji Zero-Trust"
+
+msgid "consultez la liste des dépôts, l'arborescence des fichiers, l'historique des commits et éditez du code en ligne avec colorisation syntaxique."
+msgstr "angalia orodha ya hazina, muundo wa faili, historia ya commits na hariri msimbo mtandaoni kwa rangi za sintaksia."
+
+msgid "est authentifiée sans mot de passe. Finalisez ou liez votre compte sur la forge Gitea souveraine."
+msgstr "imethibitishwa bila nenosiri. Kamilisha au unganisha akaunti yako kwenye Gitea huru."
+
+msgid "problème détecté"
+msgstr "tatizo lililogunduliwa"
+
+msgid "problème(s) identifié(s)"
+msgstr "matatizo yaliyotambuliwa"
+
+msgid "secondes..."
+msgstr "sekunde..."
+
+msgid "validé par preuve ZKP depuis l'API"
+msgstr "iliyothibitishwa na ZKP kutoka kwa API"
+
+msgid "Échec de l enregistrement"
+msgstr "Usajili umeshindwa"
+
+msgid "Échec de la vérification :"
+msgstr "Uthibitishaji umeshindwa:"
+
+msgid "Échec vérification ZKP :"
+msgstr "Uthibitishaji wa ZKP umeshindwa:"
+
+msgid "Éditeur avec coloration syntaxique & numérotation"
+msgstr "Kihariri chenye rangi ya msimbo na nambari za mistari"
+

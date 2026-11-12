@@ -1,0 +1,29 @@
+name: Sovereign Organization Teams & Roles CI
+
+on:
+  push:
+    branches: [ "main", "develop*", "feature/*" ]
+    paths:
+      - "docs/SOVEREIGN_ORG_ROLES.md"
+      - "custom/public/assets/css/**"
+      - "tests/test_sec_axes.py"
+      - ".github/workflows/org_teams.yml"
+  pull_request:
+    branches: [ "main", "develop*" ]
+
+jobs:
+  org-teams-verify:
+    name: Verify Organization Teams & Role Matrix
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup BantuDevLab Environment
+        uses: ./.github/actions/setup-bantudevlab
+        with:
+          python-version: "3.11"
+      - name: Test Organization Roles
+        run: |
+          pytest tests/test_sec_axes.py -k "test_t_org_2201_and_2202_organization_roles_matrix" -v -o addopts=""

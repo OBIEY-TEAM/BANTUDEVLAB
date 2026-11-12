@@ -1,0 +1,53 @@
+# GitLab CI/CD Pipeline - BantuDevLab Sovereign African Edition (T-OPS-502)
+# Fused with BantuDevLab Core
+
+stages:
+  - lint
+  - test
+  - security-sast
+  - zkp-verification
+  - gemma-ai-review
+  - deploy-sovereign
+
+variables:
+  PYTHONUNBUFFERED: "1"
+  DJANGO_SETTINGS_MODULE: "config.settings"
+  DJANGO_SECRET_KEY: "bantu-gitlab-ci-sovereign-secret-key-2026"
+  BANTU_CORE_URL: "http://127.0.0.1:8001"
+
+code-quality-and-lint:
+  stage: lint
+  script:
+    - ruff check .
+    - ruff format --check .
+    - python scripts/check_no_emoji.py
+
+test-django-core:
+  stage: test
+  script:
+    - pytest --cov=apps/zkp_auth --cov=apps/security_scanner --cov=apps/ai_assistant --cov-fail-under=95
+
+sovereign-sast:
+  stage: security-sast
+  script:
+    - bandit -r apps config -lll
+    - python -c "from apps.security_scanner.engine import SecurityScannerEngine; import json; r = SecurityScannerEngine.scan_code('snippet.py', 'print(1)'); print('SAST Score:', r['sovereignty_score'])"
+
+zero-trust-zkp-check:
+  stage: zkp-verification
+  script:
+    - python -c "from apps.zkp_auth.crypto import ZKPCrypto; x, y = ZKPCrypto.generate_keypair(); p = ZKPCrypto.generate_proof(x, y, 'nonce'); assert ZKPCrypto.verify_proof(y, p); print('ZKP Proof Passed')"
+
+gemma-review:
+  stage: gemma-ai-review
+  script:
+    - python -c "from apps.ai_assistant.gemma import GemmaAssistant; r = GemmaAssistant().analyze_code('def test(): pass'); assert r['success']; print('Gemma 2 2B Local AI OK')"
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
+
+deploy-systalink-tier1:
+  stage: deploy-sovereign
+  script:
+    - echo "Déploiement sur cluster souverain Systalink Cloud (Abidjan/Dakar/Nairobi)"
+  only:
+    - main

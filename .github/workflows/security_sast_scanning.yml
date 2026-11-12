@@ -1,0 +1,45 @@
+name: BantuDevLab Sovereign CodeQL & SAST Security Scanning
+
+on:
+  push:
+    branches: [ main, develop, develop-jule ]
+  pull_request:
+    branches: [ main, develop, develop-jule ]
+  schedule:
+    - cron: '0 2 * * 1'
+
+jobs:
+  sast-and-secret-scan:
+    name: SAST, Secret Scanning & SARIF Analysis
+    runs-on: ubuntu-latest
+    permissions:
+      security-events: write
+      contents: read
+    steps:
+      - name: Checkout Source Code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: "pip"
+
+      - name: Install Scanner Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install ruff bandit django djangorestframework celery python-dotenv requests drf-spectacular
+
+      - name: Execute Sovereign SAST & Secret Scanner
+        env:
+          DJANGO_SETTINGS_MODULE: config.settings
+          SECRET_KEY: ci_sast_key_2026
+        run: |
+          python scripts/run_sovereign_sast.py
+
+      - name: Upload SARIF Security Findings
+        uses: actions/upload-artifact@v4
+        with:
+          name: sast-sarif-report
+          path: results.sarif
+          retention-days: 30
