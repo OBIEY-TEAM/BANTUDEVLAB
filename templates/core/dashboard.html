@@ -5,231 +5,11 @@
 <!-- CodeMirror (UI-01) -->
 <link rel="stylesheet" href="{% static 'vendor/codemirror/codemirror.min.css' %}">
 <link rel="stylesheet" href="{% static 'vendor/codemirror/theme/material-darker.min.css' %}">
-<script src="{% static 'vendor/codemirror/codemirror.min.js' %}">
-function openNewRepoModal() {
-    const modal = document.getElementById('modalNewRepo');
-    if (modal) modal.style.display = 'flex';
-}
-function closeNewRepoModal() {
-    const modal = document.getElementById('modalNewRepo');
-    if (modal) modal.style.display = 'none';
-}
-async function submitNewDemoRepo() {
-    const name = document.getElementById('modalRepoName').value.trim();
-    const description = document.getElementById('modalRepoDesc').value.trim();
-    const isPrivate = document.getElementById('modalRepoPrivate').checked;
-    const feedback = document.getElementById('modalRepoFeedback');
-    const submitBtn = document.getElementById('btnSubmitNewRepo');
-
-    if (!name) {
-        if (feedback) {
-            feedback.style.display = 'block';
-            feedback.style.background = 'rgba(239, 68, 68, 0.15)';
-            feedback.style.color = '#ef4444';
-            feedback.textContent = '{% trans "Veuillez renseigner un nom de dépôt." %}';
-        }
-        return;
-    }
-
-    if (submitBtn) submitBtn.disabled = true;
-    if (feedback) {
-        feedback.style.display = 'block';
-        feedback.style.background = 'rgba(16, 185, 129, 0.1)';
-        feedback.style.color = '#10b981';
-        feedback.textContent = '{% trans "Création du dépôt sur la forge en cours..." %}';
-    }
-
-    try {
-        const headers = {'Content-Type': 'application/json'};
-        if (window.getCsrfToken && window.getCsrfToken()) {
-            headers['X-CSRFToken'] = window.getCsrfToken();
-        }
-        const res = await fetch('/api/forge/repositories/', {
-            method: 'POST',
-            headers: headers,
-            body: JSON.stringify({name, description, private: isPrivate})
-        });
-        const data = await res.json();
-        if (res.ok) {
-            feedback.style.background = 'rgba(16, 185, 129, 0.2)';
-            feedback.style.color = '#10b981';
-            feedback.textContent = '{% trans "Dépôt créé avec succès !" %}';
-            if (window.showToast) window.showToast(`Dépôt ${name} créé avec succès !`, 'success');
-            setTimeout(() => {
-                closeNewRepoModal();
-                window.location.reload();
-            }, 1000);
-        } else {
-            feedback.style.background = 'rgba(239, 68, 68, 0.15)';
-            feedback.style.color = '#ef4444';
-            feedback.textContent = data.error || '{% trans "Échec de création du dépôt." %}';
-        }
-    } catch (err) {
-        feedback.style.background = 'rgba(239, 68, 68, 0.15)';
-        feedback.style.color = '#ef4444';
-        feedback.textContent = err.message || '{% trans "Erreur de connexion." %}';
-    } finally {
-        if (submitBtn) submitBtn.disabled = false;
-    }
-}
-
-window.addEventListener('DOMContentLoaded', () => {
-    if (window.location.hash === '#new-repo') {
-        setTimeout(openNewRepoModal, 400);
-    }
-});
-
-</script>
-<script src="{% static 'vendor/codemirror/mode/python/python.min.js' %}">
-function openNewRepoModal() {
-    const modal = document.getElementById('modalNewRepo');
-    if (modal) modal.style.display = 'flex';
-}
-function closeNewRepoModal() {
-    const modal = document.getElementById('modalNewRepo');
-    if (modal) modal.style.display = 'none';
-}
-async function submitNewDemoRepo() {
-    const name = document.getElementById('modalRepoName').value.trim();
-    const description = document.getElementById('modalRepoDesc').value.trim();
-    const isPrivate = document.getElementById('modalRepoPrivate').checked;
-    const feedback = document.getElementById('modalRepoFeedback');
-    const submitBtn = document.getElementById('btnSubmitNewRepo');
-
-    if (!name) {
-        if (feedback) {
-            feedback.style.display = 'block';
-            feedback.style.background = 'rgba(239, 68, 68, 0.15)';
-            feedback.style.color = '#ef4444';
-            feedback.textContent = '{% trans "Veuillez renseigner un nom de dépôt." %}';
-        }
-        return;
-    }
-
-    if (submitBtn) submitBtn.disabled = true;
-    if (feedback) {
-        feedback.style.display = 'block';
-        feedback.style.background = 'rgba(16, 185, 129, 0.1)';
-        feedback.style.color = '#10b981';
-        feedback.textContent = '{% trans "Création du dépôt sur la forge en cours..." %}';
-    }
-
-    try {
-        const headers = {'Content-Type': 'application/json'};
-        if (window.getCsrfToken && window.getCsrfToken()) {
-            headers['X-CSRFToken'] = window.getCsrfToken();
-        }
-        const res = await fetch('/api/forge/repositories/', {
-            method: 'POST',
-            headers: headers,
-            body: JSON.stringify({name, description, private: isPrivate})
-        });
-        const data = await res.json();
-        if (res.ok) {
-            feedback.style.background = 'rgba(16, 185, 129, 0.2)';
-            feedback.style.color = '#10b981';
-            feedback.textContent = '{% trans "Dépôt créé avec succès !" %}';
-            if (window.showToast) window.showToast(`Dépôt ${name} créé avec succès !`, 'success');
-            setTimeout(() => {
-                closeNewRepoModal();
-                window.location.reload();
-            }, 1000);
-        } else {
-            feedback.style.background = 'rgba(239, 68, 68, 0.15)';
-            feedback.style.color = '#ef4444';
-            feedback.textContent = data.error || '{% trans "Échec de création du dépôt." %}';
-        }
-    } catch (err) {
-        feedback.style.background = 'rgba(239, 68, 68, 0.15)';
-        feedback.style.color = '#ef4444';
-        feedback.textContent = err.message || '{% trans "Erreur de connexion." %}';
-    } finally {
-        if (submitBtn) submitBtn.disabled = false;
-    }
-}
-
-window.addEventListener('DOMContentLoaded', () => {
-    if (window.location.hash === '#new-repo') {
-        setTimeout(openNewRepoModal, 400);
-    }
-});
-
-</script>
-<script src="{% static 'vendor/codemirror/addon/edit/closebrackets.min.js' %}">
-function openNewRepoModal() {
-    const modal = document.getElementById('modalNewRepo');
-    if (modal) modal.style.display = 'flex';
-}
-function closeNewRepoModal() {
-    const modal = document.getElementById('modalNewRepo');
-    if (modal) modal.style.display = 'none';
-}
-async function submitNewDemoRepo() {
-    const name = document.getElementById('modalRepoName').value.trim();
-    const description = document.getElementById('modalRepoDesc').value.trim();
-    const isPrivate = document.getElementById('modalRepoPrivate').checked;
-    const feedback = document.getElementById('modalRepoFeedback');
-    const submitBtn = document.getElementById('btnSubmitNewRepo');
-
-    if (!name) {
-        if (feedback) {
-            feedback.style.display = 'block';
-            feedback.style.background = 'rgba(239, 68, 68, 0.15)';
-            feedback.style.color = '#ef4444';
-            feedback.textContent = '{% trans "Veuillez renseigner un nom de dépôt." %}';
-        }
-        return;
-    }
-
-    if (submitBtn) submitBtn.disabled = true;
-    if (feedback) {
-        feedback.style.display = 'block';
-        feedback.style.background = 'rgba(16, 185, 129, 0.1)';
-        feedback.style.color = '#10b981';
-        feedback.textContent = '{% trans "Création du dépôt sur la forge en cours..." %}';
-    }
-
-    try {
-        const headers = {'Content-Type': 'application/json'};
-        if (window.getCsrfToken && window.getCsrfToken()) {
-            headers['X-CSRFToken'] = window.getCsrfToken();
-        }
-        const res = await fetch('/api/forge/repositories/', {
-            method: 'POST',
-            headers: headers,
-            body: JSON.stringify({name, description, private: isPrivate})
-        });
-        const data = await res.json();
-        if (res.ok) {
-            feedback.style.background = 'rgba(16, 185, 129, 0.2)';
-            feedback.style.color = '#10b981';
-            feedback.textContent = '{% trans "Dépôt créé avec succès !" %}';
-            if (window.showToast) window.showToast(`Dépôt ${name} créé avec succès !`, 'success');
-            setTimeout(() => {
-                closeNewRepoModal();
-                window.location.reload();
-            }, 1000);
-        } else {
-            feedback.style.background = 'rgba(239, 68, 68, 0.15)';
-            feedback.style.color = '#ef4444';
-            feedback.textContent = data.error || '{% trans "Échec de création du dépôt." %}';
-        }
-    } catch (err) {
-        feedback.style.background = 'rgba(239, 68, 68, 0.15)';
-        feedback.style.color = '#ef4444';
-        feedback.textContent = err.message || '{% trans "Erreur de connexion." %}';
-    } finally {
-        if (submitBtn) submitBtn.disabled = false;
-    }
-}
-
-window.addEventListener('DOMContentLoaded', () => {
-    if (window.location.hash === '#new-repo') {
-        setTimeout(openNewRepoModal, 400);
-    }
-});
-
-</script>
+<script src="{% static 'vendor/codemirror/codemirror.min.js' %}"></script>
+<script src="{% static 'vendor/codemirror/mode/python/python.min.js' %}"></script>
+<script src="{% static 'vendor/codemirror/mode/javascript/javascript.min.js' %}"></script>
+<script src="{% static 'vendor/codemirror/mode/yaml/yaml.min.js' %}"></script>
+<script src="{% static 'vendor/codemirror/mode/dockerfile/dockerfile.min.js' %}"></script>
 <style>
 .CodeMirror {
     font-family: 'JetBrains Mono', 'Fira Code', 'Courier New', monospace;
@@ -251,7 +31,6 @@ window.addEventListener('DOMContentLoaded', () => {
     border-left: 2px solid var(--accent-color, #10b981) !important;
 }
 </style>
-
 {% endblock %}
 
 {% block content %}
@@ -264,7 +43,10 @@ window.addEventListener('DOMContentLoaded', () => {
 <div class="dashboard-header">
     <div>
         <h2>{% trans "Tableau de Bord Souverain BANTUDEVLAB" %}</h2>
-        <p style="color: var(--text-muted);">{% trans "Surveillance de la forge logicielle, sécurité Zero-Trust et assistance IA locale" %}</p>
+        <p style="color: var(--text-muted); margin-top: 0.25rem;">
+            {% trans "Surveillance de la forge logicielle, sécurité Zero-Trust et assistance IA locale" %} — 
+            <span style="color: var(--primary-african-gold); font-weight: 600;">{% trans "Développé par l'équipe CYBERSOCLE pour la CADEV 2026" %} (OBIEY Christ Dany &amp; MAMPOUYA Alicia Syrianne)</span>
+        </p>
     </div>
     <span class="brand-badge" style="font-size: 0.9rem; padding: 0.4rem 0.8rem;">{% trans "NŒUD SOUVERAIN ACTIF" %}</span>
 </div>
@@ -319,9 +101,9 @@ window.addEventListener('DOMContentLoaded', () => {
             </div>
         </div>
         <div class="card table-responsive" style="margin-top: 1rem;">
-            <table style="width: 100%; text-align: left; border-collapse: collapse;">
+            <table class="bantu-repo-table" style="width: 100%; text-align: left; border-collapse: collapse;">
                 <thead>
-                    <tr style="border-bottom: 1px solid var(--dark-border); color: var(--text-muted);">
+                    <tr style="border-bottom: 2px solid var(--dark-border); color: var(--text-muted);">
                         <th style="padding: 0.75rem;">{% trans "Dépôt" %}</th>
                         <th style="padding: 0.75rem;">{% trans "Visibilité" %}</th>
                         <th style="padding: 0.75rem;">{% trans "Branche" %}</th>
@@ -330,9 +112,9 @@ window.addEventListener('DOMContentLoaded', () => {
                 </thead>
                 <tbody>
                     {% for repo in repos %}
-                    <tr style="border-bottom: 1px solid rgba(255,255,255,0.05);">
+                    <tr style="border-bottom: 1px solid var(--dark-border);">
                         <td style="padding: 0.75rem;">
-                            <a href="{{ repo.html_url|default:BASE_URL_2|add:'/'|add:repo.full_name }}" target="_blank" rel="noopener noreferrer" style="color: #10b981; font-weight: 600; text-decoration: none;">
+                            <a href="https://git.cybersocle.site/{% if repo.full_name %}{{ repo.full_name }}{% elif repo.owner.username %}{{ repo.owner.username }}/{{ repo.name }}{% else %}obiey-code/{{ repo.name }}{% endif %}.git" target="_blank" rel="noopener noreferrer" style="color: var(--secondary-emerald); font-weight: 600; text-decoration: none;">
                                 {{ repo.full_name|default:repo.name }}
                             </a>
                             {% if repo.description %}
@@ -340,20 +122,20 @@ window.addEventListener('DOMContentLoaded', () => {
                             {% endif %}
                         </td>
                         <td style="padding: 0.75rem;">
-                            {% if repo.private %}<span style="color: #f87171; font-size: 0.8rem;">{% trans "Privé" %}</span>{% else %}<span style="color: var(--secondary-emerald); font-size: 0.8rem;">{% trans "Public Souverain" %}</span>{% endif %}
+                            {% if repo.private %}<span style="color: #f87171; font-size: 0.8rem; font-weight: 600;">{% trans "Privé" %}</span>{% else %}<span style="color: var(--secondary-emerald); font-size: 0.8rem; font-weight: 600;">{% trans "Public Souverain" %}</span>{% endif %}
                         </td>
                         <td style="padding: 0.75rem; font-family: monospace; font-size: 0.85rem; color: var(--primary-african-gold);">
                             {{ repo.default_branch|default:"main" }}
                         </td>
                         <td style="padding: 0.75rem; text-align: right;">
                             <div style="display: inline-flex; gap: 0.4rem; flex-wrap: wrap; justify-content: flex-end;">
-                                <button type="button" class="bantu-pro-action-btn bantu-pro-btn-security" style="padding: 0.25rem 0.55rem; font-size: 0.72rem;" onclick="if(window.openBantuCommandTerminal) window.openBantuCommandTerminal('security', '{{ repo.full_name|default:repo.name }}', '{{ repo.default_branch|default:'main' }}')">
-                                    {% icon "shield" size=12 %} <span class="bantu-i18n-security-label">Run Security Audit</span>
+                                <button type="button" class="bantu-pro-action-btn bantu-pro-btn-security" style="padding: 0.25rem 0.55rem; font-size: 0.72rem;" onclick="if(window.openBantuCommandTerminal) window.openBantuCommandTerminal('security', '{% if repo.full_name %}{{ repo.full_name }}{% elif repo.owner.username %}{{ repo.owner.username }}/{{ repo.name }}{% else %}obiey-code/{{ repo.name }}{% endif %}', '{{ repo.default_branch|default:'main' }}', true);" title="{% trans 'Lancer immédiatement Run Security Review sur ce dépôt' %}">
+                                    {% icon "shield" size=12 %} <span class="bantu-i18n-security-label">Run Security Review</span>
                                 </button>
-                                <button type="button" class="bantu-pro-action-btn bantu-pro-btn-gemma" style="padding: 0.25rem 0.55rem; font-size: 0.72rem;" onclick="if(window.openBantuCommandTerminal) window.openBantuCommandTerminal('gemma', '{{ repo.full_name|default:repo.name }}', '{{ repo.default_branch|default:'main' }}')">
+                                <button type="button" class="bantu-pro-action-btn bantu-pro-btn-gemma" style="padding: 0.25rem 0.55rem; font-size: 0.72rem;" onclick="if(window.openBantuCommandTerminal) window.openBantuCommandTerminal('gemma', '{% if repo.full_name %}{{ repo.full_name }}{% elif repo.owner.username %}{{ repo.owner.username }}/{{ repo.name }}{% else %}obiey-code/{{ repo.name }}{% endif %}', '{{ repo.default_branch|default:'main' }}', true);" title="{% trans 'Lancer immédiatement Ask Gemma Review sur ce dépôt' %}">
                                     {% icon "bot" size=12 %} <span class="bantu-i18n-gemma-label">Ask Gemma Review</span>
                                 </button>
-                                <a href="{{ repo.html_url|default:BASE_URL_2|add:'/'|add:repo.full_name }}" target="_blank" rel="noopener noreferrer" class="btn btn-secondary" style="padding: 0.25rem 0.6rem; font-size: 0.75rem;">
+                                <a href="https://git.cybersocle.site/{% if repo.full_name %}{{ repo.full_name }}{% elif repo.owner.username %}{{ repo.owner.username }}/{{ repo.name }}{% else %}obiey-code/{{ repo.name }}{% endif %}.git" target="_blank" rel="noopener noreferrer" class="btn btn-secondary" style="padding: 0.25rem 0.6rem; font-size: 0.75rem;" title="{% trans 'Ouvrir https://git.cybersocle.site/<username>/<repot>.git sur Gitea' %}">
                                     {% icon "external-link" size=12 %} {% trans "Gitea" %}
                                 </a>
                             </div>
@@ -399,11 +181,11 @@ window.addEventListener('DOMContentLoaded', () => {
             </div>
 
             <div style="margin-top: 1.25rem; display: flex; gap: 1rem; flex-wrap: wrap;">
-                <button class="btn btn-primary" onclick="runSecurityScan()">
-                    {% icon "shield" size=18 %} {% trans "Lancer l'Audit de Sécurité" %}
+                <button class="btn btn-primary" onclick="runSecurityScan()" title="{% trans 'Exécuter Run Security Review sur le code du Workbench' %}">
+                    {% icon "shield" size=18 %} <span class="bantu-i18n-security-label">{% trans "Run Security Review" %}</span>
                 </button>
-                <button class="btn btn-secondary" onclick="runAiReview()">
-                    {% icon "bot" size=18 %} {% trans "Demander l'Avis de Gemma" %}
+                <button class="btn btn-secondary" onclick="runAiReview()" title="{% trans 'Exécuter Ask Gemma Review sur le code du Workbench' %}">
+                    {% icon "bot" size=18 %} <span class="bantu-i18n-gemma-label">{% trans "Ask Gemma Review" %}</span>
                 </button>
             </div>
 
