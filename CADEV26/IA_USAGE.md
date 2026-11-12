@@ -61,6 +61,7 @@ Plusieurs commits de fusion attestent de l'intégration de branches préparées 
 ### 3.2 Fichiers Portant la Trace de Plans et de Tâches
 Plusieurs documents du dépôt témoignent d'une structuration assistée par étapes et tâches de travail :
 - **Dossier `docs/archive/TASK/` :** Fichiers de planification séquentielle (`TASK2.md`, `TASK3.md`, `TASK5.md` jusqu'à `TASK27.md`) documentant les jalons successifs du développement.
+- **Fichier `develop-design.md` :** Document d'alignement UX et architecture front-end portant en en-tête la mention d'assistance de conception Antigravity.
 - **Dossier `docs/archive/scratch/` :** Scripts Python d'automatisation ponctuelle et de refactorisation (`patch_base_html.py`, `patch_style_css.py`, `patch_templates_design.py`, `fix_claims.py`, etc.).
 - **Dossier `docs/archive/` :** Fichiers d'intervention et de suivi (`backlod.md`, `intervension.md`, `intervention.md`).
 - **Scripts de validation CI :** `scripts/check_licenses.py` et `scripts/check_no_emoji.py` conçus pour garantir le respect automatique des contraintes du concours.
