@@ -855,6 +855,145 @@ footer {
 
 [data-theme="light"] .CodeMirror {
   border-color: var(--dark-border);
+  background-color: #ffffff !important;
+  color: #0f172a !important;
+}
+
+[data-theme="light"] .CodeMirror-gutters {
+  background-color: #f1f5f9 !important;
+  border-right-color: #cbd5e1 !important;
+}
+
+[data-theme="light"] .CodeMirror-linenumber {
+  color: #64748b !important;
+}
+
+[data-theme="light"] .bantu-repo-table th {
+  border-bottom: 2px solid #cbd5e1 !important;
+  color: #475569 !important;
+}
+
+[data-theme="light"] .bantu-repo-table td {
+  border-bottom: 1px solid #e2e8f0 !important;
+  color: #0f172a !important;
+}
+
+[data-theme="light"] .bantu-repo-table tr:hover {
+  background-color: #f1f5f9 !important;
+}
+
+[data-theme="light"] .editor-container {
+  background: #ffffff !important;
+  border-color: #cbd5e1 !important;
+}
+
+[data-theme="light"] .editor-toolbar {
+  background: #f8fafc !important;
+  border-bottom-color: #cbd5e1 !important;
+  color: #475569 !important;
+}
+
+[data-theme="light"] .editor-toolbar .file-tag {
+  color: #0f172a !important;
+}
+
+[data-theme="light"] .sovereignty-gauge-card {
+  background: #ffffff !important;
+  border-color: #cbd5e1 !important;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+}
+
+[data-theme="light"] .gauge-bg-circle {
+  stroke: #e2e8f0 !important;
+}
+
+[data-theme="light"] .gauge-percentage {
+  color: #0f172a !important;
+}
+
+[data-theme="light"] .metric-pill {
+  background: #f8fafc !important;
+  border-color: #cbd5e1 !important;
+}
+
+[data-theme="light"] .metric-pill .pill-lbl {
+  color: #64748b !important;
+}
+
+[data-theme="light"] .vulnerability-card {
+  background: #ffffff !important;
+  border-color: #cbd5e1 !important;
+}
+
+[data-theme="light"] .vulnerability-card:hover {
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08) !important;
+}
+
+[data-theme="light"] .vulnerability-title {
+  color: #0f172a !important;
+}
+
+[data-theme="light"] .vulnerability-file {
+  color: #64748b !important;
+}
+
+[data-theme="light"] .vulnerability-snippet {
+  background: #f1f5f9 !important;
+  color: #0f172a !important;
+  border-color: #cbd5e1 !important;
+}
+
+[data-theme="light"] .vulnerability-recommendation {
+  background: #ecfdf5 !important;
+  border-color: #a7f3d0 !important;
+  color: #065f46 !important;
+}
+
+[data-theme="light"] .forge-switch-banner {
+  background: #ecfdf5 !important;
+  border-color: #a7f3d0 !important;
+}
+
+[data-theme="light"] .forge-switch-banner strong {
+  color: #047857 !important;
+}
+
+[data-theme="light"] .forge-switch-banner p {
+  color: #475569 !important;
+}
+
+[data-theme="light"] .stat-number {
+  color: #0051cc !important;
+}
+
+[data-theme="light"] .brand-badge {
+  background: #ecfdf5 !important;
+  color: #047857 !important;
+  border-color: #6ee7b7 !important;
+}
+
+[data-theme="light"] #aiReviewContent {
+  background: #f8fafc !important;
+  color: #0f172a !important;
+  border-color: #cbd5e1 !important;
+}
+
+[data-theme="light"] #modalNewRepo > div {
+  background: #ffffff !important;
+  border-color: #cbd5e1 !important;
+  color: #0f172a !important;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12) !important;
+}
+
+[data-theme="light"] #modalNewRepo h3,
+[data-theme="light"] #modalNewRepo label {
+  color: #0f172a !important;
+}
+
+[data-theme="light"] #modalNewRepo input[type="text"] {
+  background: #f8fafc !important;
+  color: #0f172a !important;
+  border-color: #cbd5e1 !important;
 }
 
 /* ==========================================================================
