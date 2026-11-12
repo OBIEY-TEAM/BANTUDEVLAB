@@ -69,13 +69,12 @@ docker compose -f docker-compose.production.yml --env-file .env.production up -d
 
 ---
 
-## 4. Identifiants Administrateur Preconfigures
+## 4. Provisionnement des Comptes & Securite (CADEV 2026)
 
-| Service | Utilisateur | Mot de passe | Role |
-|---|---|---|---|
-| **Gitea Forge** | `bantu_admin` | `BantuAdmin2026!` | Administrateur global de la forge |
-| **PostgreSQL** | `bantudevlab_admin` | `sovereign_pass_2025` | Base `bantudevlab` |
-| **Redis** | `default` | `sovereign_redis_pass_2025` | Cache distribue |
+Conformement aux exigences de securite CADEV 2026, aucun mot de passe d'administration n'est fixe en dur :
+- **Compte Administrateur :** Defini lors du deploiement via les variables d'environnement (`BANTU_ADMIN_USER`, `BANTU_ADMIN_PASSWORD`, `GITEA_ADMIN_USER`, `GITEA_ADMIN_PASSWORD`).
+- **Compte de Demonstration CADEV :** Compte `cadev_evaluator` (authentification ZKP Zero-Trust sans mot de passe, non-privilegie).
+- **Mots de passe des services (PostgreSQL / Valkey) :** Configures dans `.env.production` isole (voir `CADEV26/ROTATION_SECRETS.md`).
 
 ---
 

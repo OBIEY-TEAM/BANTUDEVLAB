@@ -30,8 +30,8 @@ echo  - Portail BantuDevLab  : http://localhost:8001/
 echo  - Connexion Gitea      : http://localhost:3002/user/login
 echo  - Moteur Forge Git     : http://localhost:3001/
 echo.
-echo  Identifiants administrateur preconfigures :
-echo  - Utilisateur : bantu_admin
-echo  - Mot de passe : BantuAdmin2026!
+echo  Provisionnement des comptes :
+echo  - Administrateur : configure via variables d'environnement (BANTU_ADMIN_USER, BANTU_ADMIN_PASSWORD)
+echo  - Demonstration CADEV 2026 : compte 'cadev_evaluator' (authentification ZKP sans mot de passe)
 echo =========================================================================
 pause
