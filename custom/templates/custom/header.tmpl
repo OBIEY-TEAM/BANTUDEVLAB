@@ -776,16 +776,9 @@ document.addEventListener('DOMContentLoaded', function() {
   initGiteaThemeToggle();
 
 
-  // Inject sovereign Gist shortcut in top navbar if present
-  const navContainer = document.querySelector('.ui.secondary.menu') || document.querySelector('.ui.menu.navbar');
-  if (navContainer && !document.querySelector('.nav-gist-item')) {
-    const gistLink = document.createElement('a');
-    gistLink.className = 'item nav-gist-item';
-    gistLink.href = 'http://localhost:6157/';
-    gistLink.target = '_blank';
-    gistLink.rel = 'noopener noreferrer';
-    gistLink.textContent = 'Gists';
-    navContainer.appendChild(gistLink);
+  // Replace default Gitea tab title if present
+  if (document.title && document.title.indexOf('Gitea: Git with a cup of tea') !== -1) {
+    document.title = document.title.replace('Gitea: Git with a cup of tea', 'BantuDevLab - Forge souveraine');
   }
 
   // Command palette live filtering & actions
@@ -815,8 +808,8 @@ document.addEventListener('DOMContentLoaded', function() {
         const copilotBtn = document.getElementById('copilot-toggle-btn');
         if (copilotBtn) copilotBtn.click();
       }
-      if (action === 'open-codespaces') window.open('http://localhost:8443/', '_blank');
-      if (action === 'open-gists') window.open('http://localhost:6157/', '_blank');
+      if (action === 'open-codespaces') window.open('https://cybersocle.site/dashboard/', '_blank');
+      if (action === 'open-gists') window.open('https://git.cybersocle.site/explore/repos', '_blank');
       if (action === 'toggle-theme') {
         const themeBtn = document.querySelector('.theme-toggle, [data-theme]');
         if (themeBtn) themeBtn.click();

@@ -18,7 +18,7 @@
     };
     const SYNC_TOAST_I18N = {
         'fr': {
-            langChanged: 'Langue activee : Francais',
+            langChanged: 'Langue activée : Français',
             themeDark: 'Theme sombre active',
             themeLight: 'Theme clair active',
             btnDark: 'Sombre',

@@ -98,7 +98,7 @@ class GitTokenService:
             "permissions": token_record.permissions,
             "expires_at": expires_at.isoformat(),
             "username": user.username,
-            "instructions": f"Utilisez ce token comme mot de passe pour git clone / git push : https://{user.username}:{raw_token}@forge.bantudevlab.africa/...",
+            "instructions": f"Utilisez ce token comme mot de passe pour git clone / git push : https://{user.username}:{raw_token}@git.cybersocle.site/...",
         }
 
     @classmethod

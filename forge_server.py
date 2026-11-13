@@ -37,27 +37,26 @@ FORGE_I18N = {
         "brand_title": "BANTUDEVLAB FORGE GIT",
         "brand_badge": "FORGE SOUVERAINE",
         "switch_gitea": "Basculer vers Gitea",
-        "switch_gitlab": "Espace GitLab",
         "portal_return": "Portail BantuDevLab",
         "dashboard_audit": "Tableau de Bord & Audit",
-        "hero_title": "Moteur Git Panafricain & Depots Souverains (Production)",
-        "hero_desc": "Forge logicielle distribuee connectee en temps reel au portail BantuDevLab. Protocoles Git Smart HTTP, Zero-Trust ZKP et Webhooks signes HMAC.",
-        "emit_webhook": "Emettre Webhook de Production HMAC vers BantuDevLab",
-        "hosted_repos": "Depots Heberges sur l'Infrastructure Souveraine",
-        "stars": "Etoiles",
+        "hero_title": "Moteur Git Gitea CE & Dépôts (Production)",
+        "hero_desc": "Forge logicielle connectée en temps réel au portail BantuDevLab. Protocoles Git Smart HTTP, Zero-Trust ZKP et Webhooks signés HMAC.",
+        "emit_webhook": "Émettre Webhook de Production HMAC vers BantuDevLab",
+        "hosted_repos": "Dépôts Hébergés",
+        "stars": "Étoiles",
         "forks": "Forks",
-        "tier_badge": "Tier-1 Souverain",
-        "clone_prompt": "Cloner le depot sur votre poste",
-        "zkp_note": "Pour pousser avec ZKP, utilisez votre token souverain genere depuis l'assistant Zero-Trust.",
-        "recent_commits": "Historique Recent des Commits",
+        "tier_badge": "Gitea CE",
+        "clone_prompt": "Cloner le dépôt sur votre poste",
+        "zkp_note": "Pour pousser avec ZKP, utilisez votre token généré depuis l'assistant Zero-Trust.",
+        "recent_commits": "Historique Récent des Commits",
         "by_author": "Par",
         "theme_toggle": "Mode d'Affichage",
         "theme_dark": "Sombre",
         "theme_light": "Clair",
-        "lang_fr": "Francais",
+        "lang_fr": "Français",
         "lang_en": "English",
         "lang_sw": "Kiswahili",
-        "lang_pt": "Portugues",
+        "lang_pt": "Português",
     },
     "en": {
         "brand_title": "BANTUDEVLAB GIT FORGE",
@@ -935,7 +934,7 @@ class SovereignForgeHandler(BaseHTTPRequestHandler):
             </p>
             <div style="display: flex; gap: 1rem; justify-content: center;">
                 <a href="/api/v1/version" target="_blank" class="btn btn-outline">Consulter Version API v1</a>
-                <a href="/" class="btn btn-emerald">{t["switch_gitlab"]}</a>
+                <a href="/" class="btn btn-emerald">{t["portal_return"]}</a>
             </div>
         </div>
 
