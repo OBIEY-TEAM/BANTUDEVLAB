@@ -102,7 +102,7 @@ services:
       - GITEA__i18n__LANGS=fr-FR,en-US,sw-KE,pt-PT
       - GITEA__i18n__NAMES=Français,English,Kiswahili,Português
       - GITEA__security__INSTALL_LOCK=true
-      - GITEA__security__SECRET_KEY=bantu_gitea_secret_key_2026_sovereign_africa
+      - GITEA__security__SECRET_KEY=${GITEA_SECURITY_SECRET_KEY:-}
       - GITEA__service__DISABLE_REGISTRATION=false
       - GITEA__service__ENABLE_CAPTCHA=false
       - GITEA__webhook__ALLOWED_HOST_LIST=django_app,forge_engine,127.0.0.1,localhost,host.docker.internal,cybersocle.site,git.cybersocle.site
@@ -171,7 +171,7 @@ services:
       BANTU_CORE_INTERNAL_URL: "http://django_app:8000"
       GITEA_EXTERNAL_URL: https://git.cybersocle.site
       GITEA_LOGIN_URL: https://git.cybersocle.site/user/login
-      GITEA_WEBHOOK_SECRET: ${GITEA_WEBHOOK_SECRET:-bantu_dev_webhook_secret_key_2026}
+      GITEA_WEBHOOK_SECRET: ${GITEA_WEBHOOK_SECRET:-}
     volumes:
       - forge_production_repos:/app/forge_data/repos
     security_opt:
@@ -185,6 +185,8 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+      args:
+        INSTALL_POSTGRES: "true"
     container_name: bantudevlab_django_prod
     restart: always
     env_file:
@@ -219,6 +221,8 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+      args:
+        INSTALL_POSTGRES: "true"
     container_name: bantudevlab_celery_prod
     restart: always
     command: celery -A config worker --loglevel=info --concurrency=4
@@ -240,6 +244,8 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+      args:
+        INSTALL_POSTGRES: "true"
     container_name: bantudevlab_celery_beat_prod
     restart: always
     command: ["celery", "-A", "config", "beat", "--loglevel=info", "-s", "/tmp/celerybeat-schedule"]

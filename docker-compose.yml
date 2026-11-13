@@ -4,7 +4,8 @@ x-django-env: &django-env
   ALLOWED_HOSTS: ${ALLOWED_HOSTS:-*}
   CSRF_TRUSTED_ORIGINS: ${CSRF_TRUSTED_ORIGINS:-http://localhost:8001,http://127.0.0.1:8001}
   SECURE_SSL_REDIRECT: "False"
-  DB_ENGINE: postgres
+  DB_ENGINE: ${DB_ENGINE:-sqlite}
+  SQLITE_PATH: /app/data/db.sqlite3
   POSTGRES_DB: ${POSTGRES_DB:-bantudevlab}
   POSTGRES_USER: ${POSTGRES_USER:-bantudevlab_admin}
   POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-sovereign_pass_2025}
@@ -13,7 +14,7 @@ x-django-env: &django-env
   GITEA_API_URL: http://gitea:3000/api/v1
   GITEA_EXTERNAL_URL: ${GITEA_EXTERNAL_URL:-http://localhost:3002}
   GITEA_LOGIN_URL: ${GITEA_LOGIN_URL:-http://localhost:3002/user/login}
-  GITEA_ADMIN_TOKEN: ${GITEA_ADMIN_TOKEN:-1749a33d29fee921385f891d05e6cc2aa5fa97f2}
+  GITEA_ADMIN_TOKEN: ${GITEA_ADMIN_TOKEN:-}
   GITEA_WEBHOOK_SECRET: ${GITEA_WEBHOOK_SECRET:-bantu_dev_webhook_secret_key_2026}
   GITLAB_URL: ${GITLAB_URL:-http://localhost:3001}
   GEMMA_API_URL: ${GEMMA_API_URL:-http://ollama:11434/api/generate}
@@ -154,6 +155,8 @@ services:
       WEB_CONCURRENCY: "4"
     ports:
       - "8001:8000"
+    volumes:
+      - sqlite_data:/app/data
     depends_on:
       db:
         condition: service_healthy
@@ -206,6 +209,8 @@ services:
     environment:
       <<: *django-env
       DEBUG: "False"
+    volumes:
+      - sqlite_data:/app/data
     depends_on:
       db:
         condition: service_healthy
@@ -281,6 +286,8 @@ services:
     environment:
       <<: *django-env
       DEBUG: "False"
+    volumes:
+      - sqlite_data:/app/data
     depends_on:
       db:
         condition: service_healthy
@@ -297,6 +304,7 @@ volumes:
   forge_repos:
   ollama_models:
   act_runner_data:
+  sqlite_data:
 
 networks:
   sovereign_net:
