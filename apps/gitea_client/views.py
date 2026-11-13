@@ -58,6 +58,9 @@ class RepositoryListView(APIView):
         )
 
     def post(self, request):
+        from datetime import timedelta
+        from django.utils import timezone
+
         name = request.data.get("name")
         description = request.data.get("description", "")
         private = request.data.get("private", False)
@@ -65,15 +68,30 @@ class RepositoryListView(APIView):
         if not name:
             return Response({"error": "name est requis"}, status=status.HTTP_400_BAD_REQUEST)
 
+        is_demo_user = request.user.is_authenticated and request.user.username == "cadev_evaluator"
+        if is_demo_user:
+            if len(str(description).encode("utf-8")) > 1024:
+                return Response(
+                    {"error": "Quota démo dépassé : description limitée à 1024 octets."},
+                    status=status.HTTP_400_BAD_REQUEST,
+                )
+            cutoff = timezone.now() - timedelta(hours=24)
+            SovereignRepository.objects.filter(owner="cadev_evaluator", created_at__lt=cutoff).delete()
+            if SovereignRepository.objects.filter(owner="cadev_evaluator").count() >= 5:
+                return Response(
+                    {"error": "Quota démo atteint : maximum 5 dépôts actifs pour cadev_evaluator."},
+                    status=status.HTTP_429_TOO_MANY_REQUESTS,
+                )
+
         client = GiteaClient()
         result = client.create_repository(name=name, description=description, private=private)
 
         # Cache in local sovereign repository table
         repo_data = result.get("data", {})
         owner_username = (
-            repo_data.get("owner", {}).get("username", "sovereign-org")
+            repo_data.get("owner", {}).get("username", "cadev_evaluator" if is_demo_user else "sovereign-org")
             if isinstance(repo_data.get("owner"), dict)
-            else "sovereign-org"
+            else ("cadev_evaluator" if is_demo_user else "sovereign-org")
         )
         from config.base_urls import build_portal_url
 

@@ -295,6 +295,10 @@ CELERY_BEAT_SCHEDULE = {
         "task": "apps.zkp_auth.tasks.purge_expired_zkp_challenges",
         "schedule": 900.0,
     },
+    "cleanup-demo-repositories-hourly": {
+        "task": "apps.core.tasks.cleanup_demo_repositories",
+        "schedule": 3600.0,
+    },
 }
 
 
