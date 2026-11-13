@@ -320,6 +320,7 @@
       ".bantu-term-select:focus{border-color:#00e5ff !important;}" +
       ".bantu-term-results-topup{padding:16px;max-height:62vh;overflow-y:auto;background:#050b18;font-family:system-ui,-apple-system,sans-serif;}" +
       ".bantu-gitea-repo-banner{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 14px;margin:10px 0;background:rgba(7,14,30,0.9);border:1px solid rgba(0,229,255,0.35);border-radius:8px;flex-wrap:wrap;}" +
+      "@media (max-width:1024px){#bantu-django-nav-pro-actions,#bantu-gitea-nav-pro-actions{display:none !important;}}" +
       "@media (max-width:768px){.bantu-term-options-bar{grid-template-columns:1fr;}.bantu-pro-actions-group{margin-left:4px !important;gap:4px !important;flex-wrap:wrap;}}" +
       "@media (max-width:480px){.bantu-pro-action-btn{padding:4px 7px !important;font-size:11px !important;}.bantu-term-prompt-row{padding:10px;}.bantu-term-exec-btn{width:100%;justify-content:center;}}";
     document.head.appendChild(style);
@@ -1042,6 +1043,23 @@
         openCommandTerminal("security", "", "");
       });
       dGroup.querySelector("#bantu-django-gemma-btn").addEventListener("click", function () {
+        openCommandTerminal("gemma", "", "");
+      });
+    }
+
+    // 2b. Also expose pro buttons inside Mobile Nav Drawer (#navDrawer .nav-drawer-links)
+    var drawerLinks = document.querySelector("#navDrawer .nav-drawer-links");
+    if (drawerLinks && !document.getElementById("bantu-drawer-pro-actions")) {
+      var drawerGroup = document.createElement("div");
+      drawerGroup.id = "bantu-drawer-pro-actions";
+      drawerGroup.style.cssText = "display:flex;flex-direction:column;gap:8px;margin-top:8px;";
+      drawerGroup.innerHTML = buildProButtonsHtml(t, "bantu-drawer-security-btn", "bantu-drawer-gemma-btn");
+      drawerLinks.appendChild(drawerGroup);
+
+      drawerGroup.querySelector("#bantu-drawer-security-btn").addEventListener("click", function () {
+        openCommandTerminal("security", "", "");
+      });
+      drawerGroup.querySelector("#bantu-drawer-gemma-btn").addEventListener("click", function () {
         openCommandTerminal("gemma", "", "");
       });
     }

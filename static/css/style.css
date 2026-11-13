@@ -1681,3 +1681,50 @@ footer {
     padding: 1rem;
   }
 }
+
+/* 7. Global Anti-Horizontal-Overflow Hardening (All Viewports: Mobile, Tablet, Desktop) */
+html,
+body {
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+.navbar,
+.navbar-container,
+main.container,
+.card,
+.africa-map-wrapper {
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+.navbar-container {
+  flex-wrap: nowrap;
+  gap: 0.5rem;
+}
+
+.navbar .brand {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+pre,
+code,
+.faq-code {
+  max-width: 100%;
+  overflow-x: auto;
+  word-break: break-word;
+}
+
+@media (max-width: 768px) {
+  .navbar .brand-badge {
+    display: none;
+  }
+  .bantu-repo-table,
+  table {
+    display: block;
+    width: 100%;
+    overflow-x: auto;
+  }
+}
