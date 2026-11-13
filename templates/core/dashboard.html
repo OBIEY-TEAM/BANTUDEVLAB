@@ -802,11 +802,20 @@ async function runAiReview() {
 // Initialize on DOM ready
 document.addEventListener('DOMContentLoaded', initCodeEditor);
 
+function clearNewRepoHash() {
+    if (window.location.hash === '#new-repo' && window.history && window.history.replaceState) {
+        window.history.replaceState(null, '', window.location.pathname + window.location.search);
+    }
+}
 function openNewRepoModal() {
+    clearNewRepoHash();
     const modal = document.getElementById('modalNewRepo');
+    const feedback = document.getElementById('modalRepoFeedback');
+    if (feedback) feedback.style.display = 'none';
     if (modal) modal.style.display = 'flex';
 }
 function closeNewRepoModal() {
+    clearNewRepoHash();
     const modal = document.getElementById('modalNewRepo');
     if (modal) modal.style.display = 'none';
 }
@@ -853,8 +862,8 @@ async function submitNewDemoRepo() {
             if (window.showToast) window.showToast(`Dépôt ${name} créé avec succès !`, 'success');
             setTimeout(() => {
                 closeNewRepoModal();
-                window.location.reload();
-            }, 1000);
+                window.location.assign(window.location.pathname + window.location.search);
+            }, 900);
         } else {
             feedback.style.background = 'rgba(239, 68, 68, 0.15)';
             feedback.style.color = '#ef4444';

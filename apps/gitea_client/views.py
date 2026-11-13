@@ -94,7 +94,12 @@ class RepositoryListView(APIView):
                 )
 
         client = GiteaClient()
-        result = client.create_repository(name=name, description=description, private=private)
+        result = client.create_repository(
+            name=name,
+            description=description,
+            private=private,
+            owner="cadev_evaluator" if is_demo_user else "",
+        )
 
         # Cache in local sovereign repository table
         repo_data = result.get("data", {})

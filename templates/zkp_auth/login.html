@@ -477,7 +477,11 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 
+let zkpLoginInFlight = false;
+
 async function loginWithZkp() {
+    if (zkpLoginInFlight) return;
+    zkpLoginInFlight = true;
     const rawUsername = document.getElementById('zkpUsername').value;
     const secret = document.getElementById('zkpSecret').value;
     const check = validateUsernameClient(rawUsername);
@@ -554,6 +558,7 @@ async function loginWithZkp() {
         if (window.showToast) window.showToast(`{% trans "Échec vérification ZKP :" %} ${verifyData.error}`, 'error');
     }
     } finally {
+        zkpLoginInFlight = false;
         if (feedback) feedback.style.display = 'none';
         if (loginBtn) loginBtn.disabled = false;
     }

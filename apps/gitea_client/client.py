@@ -202,7 +202,9 @@ class GiteaClient:
             cache.set(self.CACHE_KEY_REPOS, repos, self.CACHE_TTL)
         return repos
 
-    def create_repository(self, name: str, description: str = "", private: bool = False) -> Dict[str, Any]:
+    def create_repository(
+        self, name: str, description: str = "", private: bool = False, owner: str = ""
+    ) -> Dict[str, Any]:
         """Creates a repository on Gitea and invalidates cached repository listings."""
         payload = {
             "name": name,
@@ -211,7 +213,9 @@ class GiteaClient:
             "auto_init": True,
             "default_branch": "main",
         }
-        res = self._post("/user/repos", payload)
+        res = self._post(f"/admin/users/{owner}/repos", payload) if owner else {"success": False}
+        if not res.get("success"):
+            res = self._post("/user/repos", payload)
         # Invalider le cache des dépôts
         cache.delete(self.CACHE_KEY_REPOS)
 
