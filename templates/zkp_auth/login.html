@@ -13,7 +13,7 @@
         <span class="brand-badge" style="font-size: 0.8rem; margin-bottom: 0.5rem;">{% trans "PROTOCOLE SCHNORR NIZKP / FIAT-SHAMIR" %}</span>
         <h2 style="margin: 0.5rem 0;">{% icon "key" size=22 %} {% trans "Assistant d'Identité & Connexion Zero-Trust" %}</h2>
         <p style="color: var(--text-muted); font-size: 0.95rem; max-width: 550px; margin: 0 auto;">
-            {% trans "Générez votre clé souveraine protégée par mnémonique BIP-39 et prouvez mathématiquement votre identité sans jamais exposer de mot de passe." %}
+            {% trans "Générez votre clé souveraine protégée par mnémonique BIP-39 et prouvez mathématiquement votre identité sans exposer de mot de passe." %}
         </p>
     </div>
 
@@ -89,7 +89,7 @@
         <div id="mnemonicWordsGrid" class="mnemonic-grid"></div>
 
         <div style="margin-top: 1.5rem;">
-            <label style="display: block; margin-bottom: 0.4rem; font-weight: 600;">{% trans "Secret Privé Dérivé (Ne quitte JAMAIS votre navigateur) :" %}</label>
+            <label style="display: block; margin-bottom: 0.4rem; font-weight: 600;">{% trans "Secret Privé Dérivé (conservé localement dans votre navigateur) :" %}</label>
             <input type="password" id="zkpSecret" style="width: 100%; padding: 0.75rem; background: #080c14; border: 1px solid var(--dark-border); color: #10b981; font-family: monospace; border-radius: 8px; box-sizing: border-box;" oninput="updateCryptoStrengthMeter(this.value)">
 
             <!-- Jauge de Force Cryptographique (UI-03) -->
@@ -125,7 +125,7 @@
         <div style="background: rgba(16, 185, 129, 0.08); border: 1px solid rgba(16, 185, 129, 0.2); border-radius: 10px; padding: 1.25rem; margin-bottom: 1.5rem;">
             <h4 style="margin: 0 0 0.5rem; color: var(--secondary-emerald);">{% trans "Authentification Décentralisée Prête" %}</h4>
             <p style="font-size: 0.85rem; color: #a7f3d0; margin: 0;">
-                {% trans "Lors du clic, votre navigateur résout un défi cryptographique avec votre clé privée locale pour prouver la possession de la clé sans jamais la dévoiler au serveur." %}
+                {% trans "Lors du clic, votre navigateur résout un défi cryptographique avec votre clé privée locale pour prouver la possession de la clé sans la transmettre au serveur." %}
             </p>
         </div>
 

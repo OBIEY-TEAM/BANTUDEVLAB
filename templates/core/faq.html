@@ -119,7 +119,7 @@
             </summary>
             <div class="faq-content">
                 <p>
-                    {% trans "La connexion s'opère en mode Zero-Trust sans mot de passe, garantissant l'immunité contre le hameçonnage, le vol d'identifiants et les attaques par force brute :" %}
+                    {% trans "La connexion s'opère en mode Zero-Trust sans mot de passe, réduisant l'exposition au hameçonnage et au vol de mots de passe :" %}
                 </p>
                 <ol>
                     <li>
@@ -135,7 +135,7 @@
                     <strong>Accès direct Gitea :</strong> Chemin de connexion direct aux dépôts Git : <a href="{{ GITEA_LOGIN_URL|default:BASE_URL_2 }}" target="_blank" rel="noopener noreferrer" style="color: #10b981; font-weight: 600; text-decoration: underline;">{{ GITEA_LOGIN_URL|default:BASE_URL_2 }}</a>
                 </div>
                 <div class="faq-tip-box">
-                    {% icon "info" size=18 %} <strong>{% trans "Protection anti-rejeu :" %}</strong> {% trans "Chaque défi de connexion est unique et consommé atomiquement. Une preuve interceptée sur le réseau ne peut jamais être réutilisée." %}
+                    {% icon "info" size=18 %} <strong>{% trans "Protection anti-rejeu :" %}</strong> {% trans "Chaque défi de connexion est unique (nonce à usage unique) et invalidé après vérification." %}
                 </div>
             </div>
         </details>
@@ -234,7 +234,7 @@
             </summary>
             <div class="faq-content">
                 <p>
-                    {% trans "ZKP (Zero-Knowledge Proof, ou preuve à divulgation nulle de connaissance) est un protocole cryptographique mathématique fondé sur le problème du logarithme discret (RFC 3526 MODP 2048 bits). Grâce au protocole de Schnorr rendu non-interactif via la transformation de Fiat-Shamir, vous prouvez au serveur que vous détenez votre secret mathématique sans JAMAIS lui révéler ce secret, ni même le faire transiter sur le réseau." %}
+                    {% trans "ZKP (Zero-Knowledge Proof, ou preuve à divulgation nulle de connaissance) est un protocole cryptographique mathématique fondé sur le problème du logarithme discret (RFC 3526 MODP 2048 bits). Grâce au protocole de Schnorr rendu non-interactif via la transformation de Fiat-Shamir, vous prouvez au serveur que vous détenez votre secret mathématique sans le transmettre sur le réseau." %}
                 </p>
                 <p>
                     {% trans "Avantages majeurs :" %}
@@ -343,7 +343,7 @@
                 <ul>
                     <li>{% trans "Journal d'audit immuable (AuditTrailLog) chaîné cryptographiquement par hachage SHA-256 (blockchain interne vérifiable)." %}</li>
                     <li>{% trans "Vérification automatisée de l'intégrité via la commande de gestion :" %} <code>python manage.py export_malabo_compliance_report</code>.</li>
-                    <li>{% trans "Souveraineté des données garantie : aucun hébergement soumis à des législations extraterritoriales." %}</li>
+                    <li>{% trans "Application hébergée sur un VPS Ubuntu externe ; domaines acquis chez Datacloud. Déploiement souverain : objectif de la feuille de route." %}</li>
                 </ul>
             </div>
         </details>

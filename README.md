@@ -37,7 +37,7 @@ BANTUDEVLAB répond aux impératifs d'indépendance numérique et technologique 
 - **Souveraineté des Données :** Contrôle territorialisé des données (aucun transfert vers des hyperscalers tiers).
 - **Zéro Dépendance aux CDN Tiers :** Tous les composants frontaux (styles Primer, polices, scripts CodeMirror, icônes SVG) sont auto-hébergés localement.
 - **Zéro Emoji :** Respect d'une interface professionnelle sobre et accessible, excluant tout caractère emoji au profit d'icônes vectorielles SVG souveraines.
-- **Résilience et Mode Déconnecté :** Fonctionnement garanti en intranet ou réseau isolé avec modèles d'intelligence artificielle compacts exécutés en local (quantification GGUF 4-bit).
+- **Résilience et Mode Déconnecté :** Conçu pour fonctionner en intranet ou réseau isolé avec des modèles d'intelligence artificielle exécutés localement via Ollama.
 
 ---
 
@@ -154,7 +154,7 @@ python manage.py runserver 0.0.0.0:8000
 ## Sécurité et Hardening
 
 - **Contrôle d'accès par défaut :** Toutes les routes de l'API requièrent une authentification par défaut (`IsAuthenticated`), à l'exception des points de terminaison cryptographiques publics (inscription ZKP, défi de challenge, vérification de preuve, santé).
-- **Audit Trail Immuable :** Chaque action critique (connexion ZKP, création de dépôt, scan SAST, approbation de MR) est inscrite dans `AuditTrailLog` avec chaînage cryptographique SHA-256 (`previous_hash -> hash`) pour garantir la non-répudiation (vérifiable via `python manage.py export_malabo_compliance_report`).
+- **Audit Trail Chaîné :** Chaque action critique (connexion ZKP, création de dépôt, scan SAST) est inscrite dans `AuditTrailLog` avec chaînage cryptographique SHA-256 (`previous_hash -> hash`) pour assurer la traçabilité (vérifiable via `python manage.py export_malabo_compliance_report`).
 - **En-têtes de Sécurité HTTP :** CSP strict sans `'unsafe-inline'` externe, HSTS avec préchargement, protection contre le clickjacking (`DENY`), isolation d'origine croisée (`COOP`/`COEP`).
 - **Conteneurs Hardened :** Exécution sous utilisateur non-privilégié (`appuser:appgroup`, UID 1000), `read_only_root_filesystem`, et révocation de toutes les capacités Linux (`cap_drop: ALL`).
 
@@ -295,7 +295,7 @@ Le projet applique une politique d'assurance qualité stricte validée automatiq
 
 - **Couverture réelle démontrée :** **95,78 %** mesurée sur les modules clés (`apps/zkp_auth`, `apps/security_scanner`, `apps/ai_assistant`) avec 204 tests collectés (201 exécutés avec succès, 3 tests E2E ignorés en environnement sans Chromium binaire).
 - **Langues supportées et démontrées :** **4 langues** avec catalogues compilés complets (`.mo` / `.po`) : Français (`fr`), Anglais (`en`), Kiswahili (`sw`), Portugais (`pt`).
-- **Garantie Zéro Dépendance Non Permissive :** Validation automatique en CI via `python scripts/check_licenses.py` garantissant 0 dépendance sous GPL/AGPL/LGPL.
+- **Contrôle des Dépendances Permissives :** Validation automatique en CI via `python scripts/check_licenses.py` vérifiant 0 dépendance sous GPL/AGPL/LGPL.
 
 ```bash
 # Verification stricte du formatage et du linting (Ruff)

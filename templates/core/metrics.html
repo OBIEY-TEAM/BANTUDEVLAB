@@ -174,9 +174,9 @@
 
     <div class="card" style="margin-bottom: 1.5rem;">
         <h3>{% icon "lock" size=20 %} {% trans "Cryptographie Zero-Knowledge (ZKP)" %}</h3>
-        <p>{% trans "Preuves de Schnorr non-interactives basées sur Fiat-Shamir garantissant une authentification à divulgation nulle de connaissance. Même en cas de compromission serveur, aucun mot de passe n'existe." %}</p>
+        <p>{% trans "Preuves de Schnorr non-interactives basées sur Fiat-Shamir permettant une authentification à divulgation nulle de connaissance. Aucun mot de passe utilisateur n'est stocké côté serveur." %}</p>
         <div style="background: rgba(245, 158, 11, 0.2); border-left: 4px solid var(--primary-african-gold); padding: 0.8rem; margin-top: 1rem;">
-            <strong>{% trans "Statut : Cryptographiquement inviolable" %}</strong> — {% trans "Aucune empreinte secrète conservée." %}
+            <strong>{% trans "Statut : Authentification sans mot de passe (Schnorr NIZKP)" %}</strong> — {% trans "Seule la clé publique Y est conservée en base." %}
         </div>
     </div>
 
