@@ -193,6 +193,7 @@ REST_FRAMEWORK = {
         "zkp": "5/minute",
         "scanner": "10/minute",
         "zkp_register": "10/hour",
+        "repo_create": "10/hour",
         "ai": "20/minute",
     },
     **({"DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema"} if HAS_DRF_SPECTACULAR else {}),

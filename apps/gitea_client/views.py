@@ -48,6 +48,14 @@ class RepositoryListView(APIView):
 
     authentication_classes = [CsrfExemptSessionAuthentication]
     permission_classes = [IsAuthenticated]
+    throttle_scope = "repo_create"
+
+    def get_throttles(self):
+        if self.request and self.request.method == "POST":
+            from rest_framework.throttling import ScopedRateThrottle
+
+            return [ScopedRateThrottle()]
+        return super().get_throttles()
 
     def get(self, request):
         client = GiteaClient()
