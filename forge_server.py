@@ -871,6 +871,7 @@ class SovereignForgeHandler(BaseHTTPRequestHandler):
             for r in repos
         )
 
+        repos_section = f"<h2>{t['hosted_repos']}</h2>\n        {repos_html}" if repos else ""
         html = f"""<!DOCTYPE html>
 <html lang="{lang}" data-theme="{theme}">
 {self._render_head(f"BANTUDEVLAB - {t['brand_title']}", theme)}
@@ -889,8 +890,7 @@ class SovereignForgeHandler(BaseHTTPRequestHandler):
             <div id="webhookResult" style="margin-top: 1rem; font-family: monospace; font-size: 0.85rem; color: var(--emerald);"></div>
         </div>
 
-        <h2>{t["hosted_repos"]}</h2>
-        {repos_html}
+        {repos_section}
     </div>
 
     {self._render_scripts()}
@@ -920,6 +920,7 @@ class SovereignForgeHandler(BaseHTTPRequestHandler):
             for r in repos
         )
 
+        repos_section = f"<h2>{t['hosted_repos']}</h2>\n        {repos_html}" if repos else ""
         html = f"""<!DOCTYPE html>
 <html lang="{lang}" data-theme="{theme}">
 {self._render_head("Gitea Souverain - BANTUDEVLAB", theme)}
@@ -938,8 +939,7 @@ class SovereignForgeHandler(BaseHTTPRequestHandler):
             </div>
         </div>
 
-        <h2>{t["hosted_repos"]}</h2>
-        {repos_html}
+        {repos_section}
     </div>
 
     {self._render_scripts()}
@@ -968,6 +968,7 @@ class SovereignForgeHandler(BaseHTTPRequestHandler):
             for c in commits
         )
 
+        repos_section = f"<h2>{t['hosted_repos']}</h2>\n        {repos_html}" if repos else ""
         html = f"""<!DOCTYPE html>
 <html lang="{lang}" data-theme="{theme}">
 {self._render_head(f"{owner}/{repo} - BantuDevLab Forge", theme)}
