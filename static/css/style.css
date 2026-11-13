@@ -1005,12 +1005,20 @@ footer {
   align-items: center;
   justify-content: space-between;
   width: 100%;
+  min-width: 0;
 }
 
 .nav-actions {
   display: flex;
   align-items: center;
   gap: 0.75rem;
+  min-width: 0;
+}
+
+@media (max-width: 480px) {
+  .nav-actions {
+    gap: 0.35rem;
+  }
 }
 
 /* Theme Switch Button */
@@ -1089,12 +1097,16 @@ footer {
   display: flex;
   flex-direction: column;
   gap: 1.25rem;
-  transition: right 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  visibility: hidden;
+  pointer-events: none;
+  transition: right 0.3s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.3s ease;
   box-shadow: -5px 0 25px rgba(0, 0, 0, 0.4);
 }
 
 .nav-drawer.open {
   right: 0;
+  visibility: visible;
+  pointer-events: auto;
 }
 
 .nav-drawer-header {

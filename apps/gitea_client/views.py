@@ -58,8 +58,10 @@ class RepositoryListView(APIView):
         return super().get_throttles()
 
     def get(self, request):
+        from apps.core.views import _merge_local_sovereign_repos
+
         client = GiteaClient()
-        repos = client.list_repositories()
+        repos = _merge_local_sovereign_repos(client.list_repositories())
         return Response(
             {"count": len(repos), "source": "Gitea CE Sovereign Backend", "repositories": repos},
             status=status.HTTP_200_OK,

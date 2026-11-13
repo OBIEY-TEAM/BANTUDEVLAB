@@ -390,6 +390,26 @@ jobs:
       - run: python scripts/check_no_emoji.py</code></pre>
             </div>
         </details>
+
+        <!-- Q12 : Conformité CADEV 2026 (Équipe CYBERSOCLE, licences et usage d'IA) -->
+        <details class="faq-item">
+            <summary class="faq-summary">
+                <span class="faq-summary-title">
+                    {% trans "Comment BANTUDEVLAB respecte-t-il le règlement CADEV 2026 (Article 6 et Annexe 1) ?" %}
+                </span>
+                <span class="faq-chevron">{% icon "chevron-down" size=18 %}</span>
+            </summary>
+            <div class="faq-content">
+                <p>
+                    {% trans "Projet soumis par l'équipe CYBERSOCLE (République du Congo) dans le cadre du concours CADEV 2026 :" %}
+                </p>
+                <ul>
+                    <li>{% trans "Originalité et licence : code source publié sous licence MIT ; 100% des dépendances Python vérifiées permissives (MIT, BSD, Apache-2.0, PSF) via scripts/check_licenses.py." %}</li>
+                    <li>{% trans "Déclaration d'usage transparent de l'IA (Article 6) : l'assistant de revue de code utilise exclusivement Gemma 2 2B exécuté localement via Ollama, sans appel à des API externes ni envoi de code tiers." %}</li>
+                    <li>{% trans "Recevabilité Datacloud : noms de domaine acquis auprès de Systalink/Datacloud ; application hébergée sur un VPS Ubuntu externe." %}</li>
+                </ul>
+            </div>
+        </details>
     </div>
 </div>
 
