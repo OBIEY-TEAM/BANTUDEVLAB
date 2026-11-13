@@ -4,8 +4,11 @@
 {% block content %}
 <section class="hero">
     <h1>{% trans "La Forge Logicielle Souveraine de l'Afrique" %}</h1>
+    <p style="font-size: 1.15rem; font-weight: 600; color: var(--text-main); margin-bottom: 0.5rem;">
+        {% trans "Hébergez votre code, connectez-vous sans mot de passe, faites analyser votre code par une IA locale." %}
+    </p>
     <p>
-        {% trans "BANTUDEVLAB réunit un moteur Git Gitea CE (MIT), l'authentification par preuves à divulgation nulle de connaissance (Zero-Knowledge Proofs), et l'analyse locale par Gemma 2 2B via Ollama." %} 
+        {% trans "BANTUDEVLAB réunit un moteur Git Gitea CE (MIT), l'authentification par preuves à divulgation nulle de connaissance (Zero-Knowledge Proofs), et l'analyse locale par Gemma 2 2B via Ollama." %}
     </p>
     <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
         <a href="{% url 'zkp_auth:zkp_login_page' %}?demo=cadev" class="btn btn-primary" style="background: linear-gradient(135deg, #10b981, #059669); border: none; font-weight: 600;">
@@ -83,6 +86,26 @@
             </div>
         </div>
         {% endfor %}
+    </div>
+</div>
+
+<div style="margin-top: 3rem;">
+    <h2>{% trans "Échange" %}</h2>
+    <div class="card-grid">
+        <div class="card">
+            <h3>{% icon "git-branch" size=20 %} {% trans "Dépôts & Discussions (Issues / PR)" %}</h3>
+            <p style="color: var(--text-muted); font-size: 0.95rem;">
+                {% trans "Échangez sur le code, ouvrez des tickets (Issues) et relisez les Pull Requests directement sur la forge Gitea CE." %}
+            </p>
+            <a href="https://git.cybersocle.site/explore/repos" class="btn btn-secondary" target="_blank" rel="noopener noreferrer">{% trans "Accéder aux dépôts et discussions" %}</a>
+        </div>
+        <div class="card">
+            <h3>{% icon "package" size=20 %} {% trans "Registres de Paquets (Gitea Packages)" %}</h3>
+            <p style="color: var(--text-muted); font-size: 0.95rem;">
+                {% trans "Publiez et consommez des paquets (Docker, PyPI, npm, génériques) via le registre intégré de Gitea CE." %}
+            </p>
+            <a href="https://git.cybersocle.site/explore/repos" class="btn btn-secondary" target="_blank" rel="noopener noreferrer">{% trans "Ouvrir la forge Gitea" %}</a>
+        </div>
     </div>
 </div>
 {% endblock %}
