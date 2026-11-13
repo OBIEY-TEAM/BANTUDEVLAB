@@ -101,7 +101,7 @@ flowchart TD
 | **Forge Git** | Gitea CE 1.22.6 (MIT) | Dépôts Git, Pull Requests, Code Review, Registres de paquets |
 | **Base de Données** | PostgreSQL 16 + PgBouncer | Stockage relationnel haute performance avec pooling de connexions |
 | **Cache & Tâches** | Redis 7 + Celery 5.6 | Files d'attente asynchrones, invalidation de cache, sessions |
-| **Intelligence Artificielle** | Gemma 2 2B (Google) | Modèle souverain compact (2 milliards de paramètres), QLoRA / GGUF |
+| **Intelligence Artificielle** | Gemma 2 2B (Ollama local) | Modèle compact (2 milliards de paramètres) exécuté localement via Ollama |
 | **Cryptographie** | Cryptography 50+, hashlib | Zero-Knowledge Proofs Schnorr/Fiat-Shamir, SHA-256 Chained Audit |
 | **Serveur ASGI/WSGI** | Gunicorn + Uvicorn Workers | Serveur d'application durci avec dimensionnement dynamique |
 | **Interface Utilisateur** | Primer CSS, SVG natifs, CodeMirror | Équivalence visuelle GitHub, thème sombre/clair, sans CDN |

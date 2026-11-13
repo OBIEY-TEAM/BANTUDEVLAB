@@ -186,7 +186,7 @@
         {% icon "activity" size=24 %} {% trans "Questions Fréquentes Techniques & Sécurité" %}
     </h2>
     <p style="color: var(--text-muted); margin-top: 0.5rem;">
-        {% trans "Approfondissement sur les fonctionnalités avancées : ZKP, IA Gemma 5B, SAST, Multi-Tenancy et souveraineté continentale." %}
+        {% trans "Approfondissement sur les fonctionnalités avancées : ZKP, IA Gemma 2 2B, SAST, Multi-Tenancy et architecture cible." %}
     </p>
 
     <div class="faq-accordion-group">
@@ -266,23 +266,22 @@
             </div>
         </details>
 
-        <!-- Q6 : Comment l'assistant IA local Gemma 5B protège-t-il la confidentialité du code ? -->
+        <!-- Q6 : Comment l'assistant IA local Gemma 2 2B protège-t-il la confidentialité du code ? -->
         <details class="faq-item">
             <summary class="faq-summary">
                 <span class="faq-summary-title">
-                    {% trans "Comment l'assistant IA local Gemma 5B audite-t-il le code sans aucune fuite vers l'étranger ?" %}
+                    {% trans "Comment l'assistant IA local Gemma 2 2B audite-t-il le code sans fuite vers des API cloud tierces ?" %}
                 </span>
                 <span class="faq-chevron">{% icon "chevron-down" size=18 %}</span>
             </summary>
             <div class="faq-content">
                 <p>
-                    {% trans "Contrairement aux assistants cloud propriétaires hébergés sous juridiction étrangère (Cloud Act, FISA), le modèle Gemma 5B de BANTUDEVLAB :" %}
+                    {% trans "Contrairement aux assistants cloud propriétaires, le modèle Gemma 2 2B de BANTUDEVLAB :" %}
                 </p>
                 <ul>
                     <li>{% trans "Application hébergée sur un VPS Ubuntu externe ; domaines acquis chez Datacloud. Déploiement souverain : objectif de la feuille de route." %}</li>
-                    <li>{% trans "S'exécute en local via vLLM / Ollama sans aucune transmission de télémétrie ou de code source à des tiers." %}</li>
-                    <li>{% trans "Masque et anonymise automatiquement les secrets éventuels avant toute journalisation (AIInteractionLog)." %}</li>
-                    <li>{% trans "Est fine-tuné avec LoRA/QLoRA (4-bit GGUF) sur les cadres légaux panafricains et les meilleures pratiques de souveraineté logicielle." %}</li>
+                    <li>{% trans "S'exécute en local via Ollama sans transmission de code source à des API d'IA tierces." %}</li>
+                    <li>{% trans "Masque les secrets détectés avant journalisation (AIInteractionLog)." %}</li>
                 </ul>
             </div>
         </details>

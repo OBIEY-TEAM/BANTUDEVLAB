@@ -191,7 +191,7 @@ class GiteaWebhookReceiverView(APIView):
                 "actions": [
                     "ZKP Zero-Trust verification confirmed",
                     "Automated sovereign security scanner triggered",
-                    "Gemma 5B AI PR review queued",
+                    "Gemma 2 2B AI PR review queued",
                 ],
             },
             status=status.HTTP_200_OK,

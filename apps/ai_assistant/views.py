@@ -207,7 +207,7 @@ class GemmaStatusView(APIView):
         return Response(
             {
                 "model": "Gemma 2 2B (African Sovereign Code Assistant)",
-                "precision": "4-bit / 8-bit QLoRA Finetuned",
+                "precision": "Quantifié GGUF via Ollama (modèle de base gemma2:2b)",
                 "host_environment": "VPS Ubuntu externe (Ollama local)",
                 "offline_mode_capable": True,
                 "status": "READY",
