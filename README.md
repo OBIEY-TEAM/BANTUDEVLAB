@@ -1,6 +1,6 @@
 # BANTUDEVLAB - Forge Logicielle Souveraine de l'Afrique
 
-> **BANTUDEVLAB** centralise le code des développeurs africains sur une infrastructure souveraine et sécurisée : moteur Git résilient (Gitea / GitLab), authentification Zero-Trust sans mot de passe par preuve à divulgation nulle de connaissance (ZKP), scanner de sécurité et d'entropie de Shannon (SAST / SARIF 2.1.0), et assistant IA local (Gemma 2 2B) optimisé pour l'inférence locale et l'embarqué sans dépendance externe.
+> **BANTUDEVLAB** centralise le code des développeurs africains sur une infrastructure souveraine et sécurisée : moteur Git résilient (Gitea CE), authentification Zero-Trust sans mot de passe par preuve à divulgation nulle de connaissance (ZKP), scanner de sécurité et d'entropie de Shannon (SAST / SARIF 2.1.0), et assistant IA local (Gemma 2 2B) optimisé pour l'inférence locale via Ollama.
 
 - **Dépôt officiel (Forge souveraine Gitea) :** [https://git.cybersocle.site/obiey-code/bantudevlab.git](https://git.cybersocle.site/obiey-code/bantudevlab.git)
 - **Accès web & Commits (branche `main`) :** [https://git.cybersocle.site/obiey-code/bantudevlab/commits/branch/main](https://git.cybersocle.site/obiey-code/bantudevlab/commits/branch/main)
@@ -60,7 +60,6 @@ flowchart TD
     subgraph CorePlatform["Plateforme Souveraine BantuDevLab"]
         DjangoCore["Django Core & DRF (Port 8000)<br/>Gouvernance, Multi-Tenancy & ZKP"]
         GiteaForge["Gitea CE Engine (Port 3002)<br/>Depots Git, Issues, PRs, LFS, Actions"]
-        GitLabBridge["GitLab Bridge Client (Port 3001)<br/>Federation & Webhooks"]
     end
 
     subgraph StorageData["Persistance & Cache Isole"]
@@ -86,7 +85,6 @@ flowchart TD
     DjangoCore --> RedisCache
     DjangoCore --> GemmaEngine
     DjangoCore -->|"REST API v1 + HMAC"| GiteaForge
-    DjangoCore -->|"API v4 + Tokens"| GitLabBridge
 
     CeleryWorker --> RedisCache
     CeleryWorker --> PgBouncer
@@ -100,7 +98,7 @@ flowchart TD
 | Domaine | Composant | Rôle & Spécificités |
 |---|---|---|
 | **Backend Core** | Python 3.12, Django 5.2, DRF 3.18 | API REST, multi-tenancy souverain, gouvernance des organisations |
-| **Forge Git** | Gitea CE 1.23+ / GitLab CE 16.11 | Dépôts Git, Pull Requests, Code Review, Registres de paquets |
+| **Forge Git** | Gitea CE 1.22.6 (MIT) | Dépôts Git, Pull Requests, Code Review, Registres de paquets |
 | **Base de Données** | PostgreSQL 16 + PgBouncer | Stockage relationnel haute performance avec pooling de connexions |
 | **Cache & Tâches** | Redis 7 + Celery 5.6 | Files d'attente asynchrones, invalidation de cache, sessions |
 | **Intelligence Artificielle** | Gemma 2 2B (Google) | Modèle souverain compact (2 milliards de paramètres), QLoRA / GGUF |
@@ -200,7 +198,7 @@ sequenceDiagram
 Le module `apps/security_scanner` intègre un moteur d'analyse statique de sécurité (SAST) multi-langages :
 - **Calcul d'Entropie de Shannon :** Détection automatique des clés privées, jetons d'accès et secrets enfouis dans le code source ($H \ge 3.8$).
 - **Règles Anti-Vulnérabilités :** Injections SQL, fonctions d'exécution arbitraire (`eval`, `exec`), failles XSS, et bibliothèques non souveraines.
-- **Formats Standards d'Exportation :** Rapports complets conformes à la norme internationale OASIS SARIF 2.1.0 (`/api/security/sarif/`) et format natif GitLab SAST (`gl-sast-report.json`).
+- **Formats Standards d'Exportation :** Rapports complets conformes à la norme internationale OASIS SARIF 2.1.0 (`/api/security/sarif/`).
 
 ---
 

@@ -67,21 +67,21 @@
     </div>
 </div>
 
-<!-- Bannière Bascule d'Environnement Forge (Gitea / GitLab) -->
+<!-- Bannière Bascule d'Environnement Forge (Gitea CE) -->
 <div class="card forge-switch-banner">
     <div style="display: flex; align-items: center; gap: 0.8rem; min-width: 0;">
         {% icon "git-branch" size=22 %}
         <div style="min-width: 0;">
             <strong style="color: #10b981;">{% trans "Bascule d'Environnement Forge Souveraine" %}</strong>
-            <p style="margin: 0; font-size: 0.85rem; color: var(--text-muted); word-break: break-word;">{% trans "Accédez directement à vos espaces de dépôts Gitea ou GitLab CE." %} <span style="opacity: 0.8; font-family: monospace; font-size: 0.8rem;">(Gitea : <a href="{{ GITEA_LOGIN_URL|default:BASE_URL_2 }}" target="_blank" rel="noopener noreferrer" style="color: #10b981; text-decoration: underline;">{{ GITEA_LOGIN_URL|default:BASE_URL_2 }}</a>)</span></p>
+            <p style="margin: 0; font-size: 0.85rem; color: var(--text-muted); word-break: break-word;">{% trans "Accédez directement à vos espaces de dépôts Gitea CE." %} <span style="opacity: 0.8; font-family: monospace; font-size: 0.8rem;">(Gitea : <a href="{{ GITEA_LOGIN_URL|default:BASE_URL_2 }}" target="_blank" rel="noopener noreferrer" style="color: #10b981; text-decoration: underline;">{{ GITEA_LOGIN_URL|default:BASE_URL_2 }}</a>)</span></p>
         </div>
     </div>
     <div class="forge-switch-actions">
         <a href="{{ GITEA_LOGIN_URL|default:BASE_URL_2 }}" target="_blank" rel="noopener noreferrer" class="btn btn-outline" style="border-color: #10b981; color: #10b981;" title="{% trans 'Connexion directe Gitea' %}">
             {% icon "git-branch" size=14 %} {% trans "Basculer vers Gitea" %}
         </a>
-        <a href="{{ GITLAB_URL|default:BASE_URL_2 }}" target="_blank" rel="noopener noreferrer" class="btn btn-primary">
-            {% icon "code" size=14 %} {% trans "Espace GitLab" %}
+        <a href="https://git.cybersocle.site/explore/repos" target="_blank" rel="noopener noreferrer" class="btn btn-primary">
+            {% icon "code" size=14 %} {% trans "Explorer Gitea" %}
         </a>
     </div>
 </div>

@@ -15,16 +15,13 @@ FORGE_REPOS_CACHE_KEY = "bantudevlab_forge_repos_cache"
 @shared_task(name="apps.core.tasks.sync_forge_repositories_cache")
 def sync_forge_repositories_cache() -> int:
     """
-    T-DEV-502 : Tâche Celery périodique rafraîchissant les dépôts GitLab et Gitea
-    dans le cache Redis toutes les 30 secondes en tâche de fond.
+    T-DEV-502 : Tâche Celery périodique rafraîchissant les dépôts Gitea CE
+    dans le cache Valkey/Redis toutes les 30 secondes en tâche de fond.
     """
     try:
         from apps.gitea_client.client import GiteaClient
-        from apps.gitlab_client.client import GitLabClient
 
-        gitlab_repos = GitLabClient().list_repositories()
-        gitea_repos = GiteaClient().list_repositories()
-        repos = gitlab_repos or gitea_repos or []
+        repos = GiteaClient().list_repositories() or []
 
         cache.set(FORGE_REPOS_CACHE_KEY, repos, 60)
         logger.info("T-DEV-502 : Cache des dépôts synchronisé avec succès (%d dépôts).", len(repos))

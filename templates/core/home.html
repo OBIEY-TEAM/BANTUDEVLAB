@@ -19,7 +19,7 @@
 <div class="card-grid">
     <div class="card">
         <h3>{% icon "landmark" size=22 %} {% trans "Moteur Git Souverain (Systalink Cloud)" %}</h3>
-        <p>{% trans "Forge distribuée basée sur Gitea/GitLab CE déployée sur nos serveurs en Afrique. Zéro dépendance vis-à-vis des juridictions extérieures (Cloud Act exempt)." %}</p>
+        <p>{% trans "Forge logicielle basée sur Gitea CE (MIT), avec authentification Zero-Trust et analyse locale de code." %}</p>
         <span class="stat-number">100%</span>
         <div style="margin-top: 0.5rem;">
             <a href="{{ GITEA_LOGIN_URL|default:BASE_URL_2 }}" target="_blank" rel="noopener noreferrer" style="color: var(--secondary-emerald); font-size: 0.85rem; text-decoration: underline; display: inline-flex; align-items: center; gap: 0.35rem;">
@@ -48,7 +48,7 @@
 <div class="card" style="margin-top: 3rem; background: linear-gradient(135deg, rgba(245, 158, 11, 0.08), rgba(17, 24, 39, 0.95)); border: 1px solid var(--primary-african-gold); display: flex; align-items: center; justify-content: space-between; gap: 1.5rem; flex-wrap: wrap;">
     <div>
         <h3 style="margin: 0 0 0.5rem 0; display: flex; align-items: center; gap: 0.5rem;">
-            {% icon "book-open" size=22 %} {% trans "Nouveau sur BANTUDEVLAB & GitLab ?" %}
+            {% icon "book-open" size=22 %} {% trans "Nouveau sur BANTUDEVLAB ?" %}
         </h3>
         <p style="color: var(--text-muted); margin: 0; font-size: 0.95rem;">
             {% trans "Consultez notre guide complet : création de compte, connexion sans mot de passe Zero-Trust, consultation du code source, clone avec token Git et foire aux questions." %}

@@ -21,7 +21,7 @@ class ApiViewsTestCase(TestCase):
         response = self.client.get("/faq/")
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, "Foire Aux Questions")
-        self.assertContains(response, "Comment créer un compte GitLab")
+        self.assertContains(response, "Comment créer un compte")
         self.assertContains(response, "Comment se connecter")
         self.assertContains(response, "Comment consulter et cloner le code source")
 

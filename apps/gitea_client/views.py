@@ -133,7 +133,7 @@ class ForgeStatusView(APIView):
         version_data = client.get_server_version()
         return Response(
             {
-                "forge_engine": "Gitea / GitLab CE Hybrid",
+                "forge_engine": "Gitea CE (MIT)",
                 "cloud_provider": "Systalink Cloud Sovereign Africa",
                 "datacenter_location": "Abidjan, Ivory Coast / Tier-3 DataCenter",
                 "version_info": version_data,

@@ -12,7 +12,6 @@ from rest_framework.views import APIView
 
 from apps.ai_assistant.models import AIInteractionLog
 from apps.gitea_client.client import GiteaClient
-from apps.gitlab_client.client import GitLabClient
 from apps.security_scanner.models import SecurityAuditReport
 from apps.zkp_auth.models import SovereignIdentity
 
@@ -191,7 +190,7 @@ def metrics_view(request):
 
 
 def faq_view(request):
-    """Fiche FAQ complète et guide d'utilisation de la forge souveraine BANTUDEVLAB & GitLab."""
+    """Fiche FAQ complète et guide d'utilisation de la forge souveraine BANTUDEVLAB (Gitea CE)."""
     return render(request, "core/faq.html")
 
 
