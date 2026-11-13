@@ -63,7 +63,7 @@ class GemmaAssistant:
             "status_clean": "Code sain",
             "findings_hdr": "Constats",
             "recs_hdr": "Recommandations Souveraines",
-            "footer": "Inférence certifiée par le nœud souverain BantuDevLab (Systalink Cloud Africa)",
+            "footer": "Inférence locale sur le nœud BantuDevLab (Gemma 2 2B / Ollama)",
             "eval_find": "[CRITIQUE] Alerte Critique : Présence de fonction d'exécution dynamique non sécurisée (eval/exec). Risque immédiat d'exécution de code arbitraire à distance (RCE).",
             "eval_rec": "Remplacez `eval`/`exec` par `ast.literal_eval`, `JSON.parse` ou une structure de données typée.",
             "sql_find": "[AVERTISSEMENT] Vulnérabilité SQL : Détection de concaténation dans une requête SQL. Risque d'injection SQL.",
@@ -73,11 +73,11 @@ class GemmaAssistant:
             "docker_find": "[CONTENEUR] Sécurité Dockerfile : Image non épinglée (`:latest`), exécution en `root`, ou script distant exécuté via `curl | sh` / `chmod 777`.",
             "docker_rec": "Épinglez le digest SHA256 de l'image de base, créez un utilisateur dédié non-root (`USER appuser`) et évitez `chmod 777`.",
             "yaml_find": "[PIPELINE CI/CD] Sécurité YAML : Conteneur en mode `privileged: true`, contournement `allow_failure: true` ou fuite vers un cloud non souverain.",
-            "yaml_rec": "Désactivez `privileged: true`, imposez le blocage sur les jobs SAST et ciblez les runners souverains (`sovereign-abidjan`).",
+            "yaml_rec": "Désactivez `privileged: true`, imposez le blocage sur les jobs SAST et exécutez vos workflows sur Gitea Actions.",
             "js_find": "[FRONTEND/NODE] Sécurité JavaScript : Injection DOM XSS potentielle via `innerHTML` ou exécution système via `child_process.exec`.",
             "js_rec": "Utilisez `textContent` à la place de `innerHTML` et remplacez `exec` par `execFile` avec liste d'arguments validés.",
             "telemetry_find": "[SOUVERAINETE] Fuite de télémétrie : Appel réseau vers un service tiers hors juridiction africaine (tracking/AWS/Google).",
-            "telemetry_rec": "Redirigez les flux d'audit et de stockage vers le cluster souverain Systalink Cloud (Abidjan, Dakar, Nairobi, Kigali).",
+            "telemetry_rec": "Redirigez les flux d'audit et de stockage vers votre instance auto-hébergée.",
             "clean_find": "[CONFORME] Qualité de code : La structure générale respecte les principes de modularité et aucune anomalie critique évidente n'a été relevée.",
             "clean_rec": "Poursuivre avec la mise en place de tests unitaires et la validation ZKP des commits.",
             "explain_tpl": "Explication souveraine ({lang_label}) : Ce module comporte {lines} lignes d'instructions structurant la logique métier et les contrôles de sécurité.",
@@ -90,7 +90,7 @@ class GemmaAssistant:
             "status_clean": "Clean code",
             "findings_hdr": "Findings",
             "recs_hdr": "Sovereign Recommendations",
-            "footer": "Inference certified by the BantuDevLab Sovereign Node (Systalink Cloud Africa)",
+            "footer": "Local inference on BantuDevLab node (Gemma 2 2B / Ollama)",
             "eval_find": "[CRITICAL] Critical Alert: Unsafe dynamic code execution (`eval`/`exec`) detected. Immediate risk of Remote Code Execution (RCE).",
             "eval_rec": "Replace `eval`/`exec` with `ast.literal_eval`, `JSON.parse`, or a strictly typed parser.",
             "sql_find": "[WARNING] SQL Vulnerability: String concatenation detected in SQL query. High risk of SQL Injection.",
@@ -100,11 +100,11 @@ class GemmaAssistant:
             "docker_find": "[CONTAINER] Dockerfile Security: Unpinned `:latest` tag, `USER root` execution, or remote script piped to shell (`curl | sh` / `chmod 777`).",
             "docker_rec": "Pin base image versions, run as a non-root user (`USER appuser`), and apply least-privilege permissions.",
             "yaml_find": "[CI/CD PIPELINE] YAML Security: `privileged: true` container mode, `allow_failure: true` security bypass, or non-sovereign cloud endpoint.",
-            "yaml_rec": "Disable `privileged: true`, enforce strict SAST gates, and target Pan-African runners (`sovereign-abidjan`).",
+            "yaml_rec": "Disable `privileged: true`, enforce strict SAST gates, and run workflows on Gitea Actions.",
             "js_find": "[FRONTEND/NODE] JavaScript Security: Potential DOM XSS via `innerHTML` or shell injection via `child_process.exec`.",
             "js_rec": "Use `textContent` instead of `innerHTML` and replace `exec` with parameterized `execFile`.",
             "telemetry_find": "[SOVEREIGNTY] Telemetry Leakage: Outbound network call to a foreign third-party tracking or cloud endpoint.",
-            "telemetry_rec": "Route all telemetry and storage to the Systalink Cloud Pan-African Sovereign Cluster.",
+            "telemetry_rec": "Route all telemetry and storage to your self-hosted instance.",
             "clean_find": "[COMPLIANT] Code Quality: The overall structure follows modularity best practices with no critical anomalies detected.",
             "clean_rec": "Continue with automated unit testing and ZKP cryptographic commit signing.",
             "explain_tpl": "Sovereign Explanation ({lang_label}): This component defines {lines} lines of code structuring business logic and security controls.",
@@ -320,6 +320,8 @@ class GemmaAssistant:
         prompt = self._build_prompt(code_snippet=code_snippet, context=context, lang=lang_code)
 
         response = None
+        stream_started = time.monotonic()
+        max_stream_seconds = 35.0
         try:
             timeout_val = 0.5 if getattr(settings, "TESTING", False) else 10
             response = requests.post(
@@ -336,6 +338,9 @@ class GemmaAssistant:
             if response.status_code == 200:
                 try:
                     for line in response.iter_lines():
+                        if time.monotonic() - stream_started > max_stream_seconds:
+                            yield "\n\n[Délai maximal de 35s atteint : le moteur Ollama local n'a pas terminé à temps. Veuillez réessayer.]"
+                            return
                         if line:
                             chunk = json.loads(line.decode("utf-8"))
                             token = chunk.get("response", "")

@@ -1,6 +1,6 @@
 # BANTUDEVLAB - Forge Logicielle Souveraine de l'Afrique
 
-> **BANTUDEVLAB** centralise le code des développeurs africains sur une infrastructure souveraine et sécurisée : moteur Git résilient (Gitea / GitLab), authentification Zero-Trust sans mot de passe par preuve à divulgation nulle de connaissance (ZKP), scanner de sécurité et d'entropie de Shannon (SAST / SARIF 2.1.0), et assistant IA local (Gemma 2 2B) optimisé pour l'inférence locale et l'embarqué sans dépendance externe.
+> **BANTUDEVLAB** centralise le code des développeurs africains sur une infrastructure souveraine et sécurisée : moteur Git résilient (Gitea CE), authentification Zero-Trust sans mot de passe par preuve à divulgation nulle de connaissance (ZKP), scanner de sécurité et d'entropie de Shannon (SAST / SARIF 2.1.0), et assistant IA local (Gemma 2 2B) optimisé pour l'inférence locale via Ollama.
 
 - **Dépôt officiel (Forge souveraine Gitea) :** [https://git.cybersocle.site/obiey-code/bantudevlab.git](https://git.cybersocle.site/obiey-code/bantudevlab.git)
 - **Accès web & Commits (branche `main`) :** [https://git.cybersocle.site/obiey-code/bantudevlab/commits/branch/main](https://git.cybersocle.site/obiey-code/bantudevlab/commits/branch/main)
@@ -37,7 +37,7 @@ BANTUDEVLAB répond aux impératifs d'indépendance numérique et technologique 
 - **Souveraineté des Données :** Contrôle territorialisé des données (aucun transfert vers des hyperscalers tiers).
 - **Zéro Dépendance aux CDN Tiers :** Tous les composants frontaux (styles Primer, polices, scripts CodeMirror, icônes SVG) sont auto-hébergés localement.
 - **Zéro Emoji :** Respect d'une interface professionnelle sobre et accessible, excluant tout caractère emoji au profit d'icônes vectorielles SVG souveraines.
-- **Résilience et Mode Déconnecté :** Fonctionnement garanti en intranet ou réseau isolé avec modèles d'intelligence artificielle compacts exécutés en local (quantification GGUF 4-bit).
+- **Résilience et Mode Déconnecté :** Conçu pour fonctionner en intranet ou réseau isolé avec des modèles d'intelligence artificielle exécutés localement via Ollama.
 
 ---
 
@@ -60,7 +60,6 @@ flowchart TD
     subgraph CorePlatform["Plateforme Souveraine BantuDevLab"]
         DjangoCore["Django Core & DRF (Port 8000)<br/>Gouvernance, Multi-Tenancy & ZKP"]
         GiteaForge["Gitea CE Engine (Port 3002)<br/>Depots Git, Issues, PRs, LFS, Actions"]
-        GitLabBridge["GitLab Bridge Client (Port 3001)<br/>Federation & Webhooks"]
     end
 
     subgraph StorageData["Persistance & Cache Isole"]
@@ -86,7 +85,6 @@ flowchart TD
     DjangoCore --> RedisCache
     DjangoCore --> GemmaEngine
     DjangoCore -->|"REST API v1 + HMAC"| GiteaForge
-    DjangoCore -->|"API v4 + Tokens"| GitLabBridge
 
     CeleryWorker --> RedisCache
     CeleryWorker --> PgBouncer
@@ -100,10 +98,10 @@ flowchart TD
 | Domaine | Composant | Rôle & Spécificités |
 |---|---|---|
 | **Backend Core** | Python 3.12, Django 5.2, DRF 3.18 | API REST, multi-tenancy souverain, gouvernance des organisations |
-| **Forge Git** | Gitea CE 1.23+ / GitLab CE 16.11 | Dépôts Git, Pull Requests, Code Review, Registres de paquets |
+| **Forge Git** | Gitea CE 1.22.6 (MIT) | Dépôts Git, Pull Requests, Code Review, Registres de paquets |
 | **Base de Données** | PostgreSQL 16 + PgBouncer | Stockage relationnel haute performance avec pooling de connexions |
 | **Cache & Tâches** | Redis 7 + Celery 5.6 | Files d'attente asynchrones, invalidation de cache, sessions |
-| **Intelligence Artificielle** | Gemma 2 2B (Google) | Modèle souverain compact (2 milliards de paramètres), QLoRA / GGUF |
+| **Intelligence Artificielle** | Gemma 2 2B (Ollama local) | Modèle compact (2 milliards de paramètres) exécuté localement via Ollama |
 | **Cryptographie** | Cryptography 50+, hashlib | Zero-Knowledge Proofs Schnorr/Fiat-Shamir, SHA-256 Chained Audit |
 | **Serveur ASGI/WSGI** | Gunicorn + Uvicorn Workers | Serveur d'application durci avec dimensionnement dynamique |
 | **Interface Utilisateur** | Primer CSS, SVG natifs, CodeMirror | Équivalence visuelle GitHub, thème sombre/clair, sans CDN |
@@ -156,7 +154,7 @@ python manage.py runserver 0.0.0.0:8000
 ## Sécurité et Hardening
 
 - **Contrôle d'accès par défaut :** Toutes les routes de l'API requièrent une authentification par défaut (`IsAuthenticated`), à l'exception des points de terminaison cryptographiques publics (inscription ZKP, défi de challenge, vérification de preuve, santé).
-- **Audit Trail Immuable :** Chaque action critique (connexion ZKP, création de dépôt, scan SAST, approbation de MR) est inscrite dans `AuditTrailLog` avec chaînage cryptographique SHA-256 (`previous_hash -> hash`) pour garantir la non-répudiation (vérifiable via `python manage.py export_malabo_compliance_report`).
+- **Audit Trail Chaîné :** Chaque action critique (connexion ZKP, création de dépôt, scan SAST) est inscrite dans `AuditTrailLog` avec chaînage cryptographique SHA-256 (`previous_hash -> hash`) pour assurer la traçabilité (vérifiable via `python manage.py export_malabo_compliance_report`).
 - **En-têtes de Sécurité HTTP :** CSP strict sans `'unsafe-inline'` externe, HSTS avec préchargement, protection contre le clickjacking (`DENY`), isolation d'origine croisée (`COOP`/`COEP`).
 - **Conteneurs Hardened :** Exécution sous utilisateur non-privilégié (`appuser:appgroup`, UID 1000), `read_only_root_filesystem`, et révocation de toutes les capacités Linux (`cap_drop: ALL`).
 
@@ -200,7 +198,7 @@ sequenceDiagram
 Le module `apps/security_scanner` intègre un moteur d'analyse statique de sécurité (SAST) multi-langages :
 - **Calcul d'Entropie de Shannon :** Détection automatique des clés privées, jetons d'accès et secrets enfouis dans le code source ($H \ge 3.8$).
 - **Règles Anti-Vulnérabilités :** Injections SQL, fonctions d'exécution arbitraire (`eval`, `exec`), failles XSS, et bibliothèques non souveraines.
-- **Formats Standards d'Exportation :** Rapports complets conformes à la norme internationale OASIS SARIF 2.1.0 (`/api/security/sarif/`) et format natif GitLab SAST (`gl-sast-report.json`).
+- **Formats Standards d'Exportation :** Rapports complets conformes à la norme internationale OASIS SARIF 2.1.0 (`/api/security/sarif/`).
 
 ---
 
@@ -297,7 +295,7 @@ Le projet applique une politique d'assurance qualité stricte validée automatiq
 
 - **Couverture réelle démontrée :** **95,78 %** mesurée sur les modules clés (`apps/zkp_auth`, `apps/security_scanner`, `apps/ai_assistant`) avec 204 tests collectés (201 exécutés avec succès, 3 tests E2E ignorés en environnement sans Chromium binaire).
 - **Langues supportées et démontrées :** **4 langues** avec catalogues compilés complets (`.mo` / `.po`) : Français (`fr`), Anglais (`en`), Kiswahili (`sw`), Portugais (`pt`).
-- **Garantie Zéro Dépendance Non Permissive :** Validation automatique en CI via `python scripts/check_licenses.py` garantissant 0 dépendance sous GPL/AGPL/LGPL.
+- **Contrôle des Dépendances Permissives :** Validation automatique en CI via `python scripts/check_licenses.py` vérifiant 0 dépendance sous GPL/AGPL/LGPL.
 
 ```bash
 # Verification stricte du formatage et du linting (Ruff)

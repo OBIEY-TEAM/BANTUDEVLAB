@@ -48,6 +48,14 @@ class RepositoryListView(APIView):
 
     authentication_classes = [CsrfExemptSessionAuthentication]
     permission_classes = [IsAuthenticated]
+    throttle_scope = "repo_create"
+
+    def get_throttles(self):
+        if self.request and self.request.method == "POST":
+            from rest_framework.throttling import ScopedRateThrottle
+
+            return [ScopedRateThrottle()]
+        return super().get_throttles()
 
     def get(self, request):
         client = GiteaClient()
@@ -58,6 +66,9 @@ class RepositoryListView(APIView):
         )
 
     def post(self, request):
+        from datetime import timedelta
+        from django.utils import timezone
+
         name = request.data.get("name")
         description = request.data.get("description", "")
         private = request.data.get("private", False)
@@ -65,15 +76,30 @@ class RepositoryListView(APIView):
         if not name:
             return Response({"error": "name est requis"}, status=status.HTTP_400_BAD_REQUEST)
 
+        is_demo_user = request.user.is_authenticated and request.user.username == "cadev_evaluator"
+        if is_demo_user:
+            if len(str(description).encode("utf-8")) > 1024:
+                return Response(
+                    {"error": "Quota démo dépassé : description limitée à 1024 octets."},
+                    status=status.HTTP_400_BAD_REQUEST,
+                )
+            cutoff = timezone.now() - timedelta(hours=24)
+            SovereignRepository.objects.filter(owner="cadev_evaluator", created_at__lt=cutoff).delete()
+            if SovereignRepository.objects.filter(owner="cadev_evaluator").count() >= 5:
+                return Response(
+                    {"error": "Quota démo atteint : maximum 5 dépôts actifs pour cadev_evaluator."},
+                    status=status.HTTP_429_TOO_MANY_REQUESTS,
+                )
+
         client = GiteaClient()
         result = client.create_repository(name=name, description=description, private=private)
 
         # Cache in local sovereign repository table
         repo_data = result.get("data", {})
         owner_username = (
-            repo_data.get("owner", {}).get("username", "sovereign-org")
+            repo_data.get("owner", {}).get("username", "cadev_evaluator" if is_demo_user else "sovereign-org")
             if isinstance(repo_data.get("owner"), dict)
-            else "sovereign-org"
+            else ("cadev_evaluator" if is_demo_user else "sovereign-org")
         )
         from config.base_urls import build_portal_url
 
@@ -97,6 +123,11 @@ class RepositoryListView(APIView):
             details={"repository": name, "private": private},
         )
 
+        from django.core.cache import cache
+
+        cache.delete("bantudevlab_forge_repos_cache")
+        cache.delete(GiteaClient.CACHE_KEY_REPOS)
+
         return Response(result, status=status.HTTP_201_CREATED)
 
 
@@ -110,12 +141,12 @@ class ForgeStatusView(APIView):
         version_data = client.get_server_version()
         return Response(
             {
-                "forge_engine": "Gitea / GitLab CE Hybrid",
-                "cloud_provider": "Systalink Cloud Sovereign Africa",
-                "datacenter_location": "Abidjan, Ivory Coast / Tier-3 DataCenter",
+                "forge_engine": "Gitea CE (MIT)",
+                "cloud_provider": "VPS Ubuntu externe (domaines Datacloud)",
+                "datacenter_location": "VPS Ubuntu externe — Déploiement souverain : objectif de la feuille de route",
                 "version_info": version_data,
                 "status": "ONLINE",
-                "sovereignty_assurance": "100% African Jurisdiction",
+                "sovereignty_assurance": "Auto-hébergement local (Gitea CE + Ollama)",
             },
             status=status.HTTP_200_OK,
         )
@@ -168,7 +199,7 @@ class GiteaWebhookReceiverView(APIView):
                 "actions": [
                     "ZKP Zero-Trust verification confirmed",
                     "Automated sovereign security scanner triggered",
-                    "Gemma 5B AI PR review queued",
+                    "Gemma 2 2B AI PR review queued",
                 ],
             },
             status=status.HTTP_200_OK,

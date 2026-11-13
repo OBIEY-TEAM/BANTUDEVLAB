@@ -31,7 +31,7 @@
       allFiles: "* (Tous les fichiers du dépôt)",
       btnExecute: "Exécuter",
       runningSecurity: "Exécution de l'audit SAST souverain sur le dépôt...",
-      runningGemma: "Consultation du moteur local Gemma 5B sur le dépôt...",
+      runningGemma: "Consultation du moteur local Gemma 2 2B sur le dépôt...",
       toastStartSecurity: "Audit de sécurité SAST lancé sur ",
       toastStartGemma: "Revue IA Gemma lancée sur ",
       toastDoneSecurity: "Audit terminé ! Score de souveraineté : ",
@@ -59,7 +59,7 @@
       allFiles: "* (All files in repository)",
       btnExecute: "Execute",
       runningSecurity: "Running sovereign SAST security audit on repository...",
-      runningGemma: "Querying local Gemma 5B AI engine on repository...",
+      runningGemma: "Querying local Gemma 2 2B AI engine on repository...",
       toastStartSecurity: "SAST Security Audit started on ",
       toastStartGemma: "Gemma AI Review started on ",
       toastDoneSecurity: "Audit completed! Sovereignty score: ",
@@ -87,7 +87,7 @@
       allFiles: "* (Faili zote za hazina)",
       btnExecute: "Tekeleza",
       runningSecurity: "Inakagua usalama wa SAST kwenye hazina...",
-      runningGemma: "Inachambua msimbo kupitia Gemma 5B AI...",
+      runningGemma: "Inachambua msimbo kupitia Gemma 2 2B AI...",
       toastStartSecurity: "Ukaguzi wa usalama umeanza kwenye ",
       toastStartGemma: "Ukaguzi wa Gemma AI umeanza kwenye ",
       toastDoneSecurity: "Ukaguzi umekamilika! Alama ya uhuru: ",
@@ -115,7 +115,7 @@
       allFiles: "* (Todos os ficheiros do repositório)",
       btnExecute: "Executar",
       runningSecurity: "A executar auditoria de segurança SAST no repositório...",
-      runningGemma: "A consultar o motor local Gemma 5B IA no repositório...",
+      runningGemma: "A consultar o motor local Gemma 2 2B IA no repositório...",
       toastStartSecurity: "Auditoria SAST iniciada em ",
       toastStartGemma: "Revisão Gemma IA iniciada em ",
       toastDoneSecurity: "Auditoria concluída! Pontuação de soberania: ",
@@ -320,6 +320,7 @@
       ".bantu-term-select:focus{border-color:#00e5ff !important;}" +
       ".bantu-term-results-topup{padding:16px;max-height:62vh;overflow-y:auto;background:#050b18;font-family:system-ui,-apple-system,sans-serif;}" +
       ".bantu-gitea-repo-banner{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 14px;margin:10px 0;background:rgba(7,14,30,0.9);border:1px solid rgba(0,229,255,0.35);border-radius:8px;flex-wrap:wrap;}" +
+      "@media (max-width:1024px){#bantu-django-nav-pro-actions,#bantu-gitea-nav-pro-actions{display:none !important;}}" +
       "@media (max-width:768px){.bantu-term-options-bar{grid-template-columns:1fr;}.bantu-pro-actions-group{margin-left:4px !important;gap:4px !important;flex-wrap:wrap;}}" +
       "@media (max-width:480px){.bantu-pro-action-btn{padding:4px 7px !important;font-size:11px !important;}.bantu-term-prompt-row{padding:10px;}.bantu-term-exec-btn{width:100%;justify-content:center;}}";
     document.head.appendChild(style);
@@ -1042,6 +1043,23 @@
         openCommandTerminal("security", "", "");
       });
       dGroup.querySelector("#bantu-django-gemma-btn").addEventListener("click", function () {
+        openCommandTerminal("gemma", "", "");
+      });
+    }
+
+    // 2b. Also expose pro buttons inside Mobile Nav Drawer (#navDrawer .nav-drawer-links)
+    var drawerLinks = document.querySelector("#navDrawer .nav-drawer-links");
+    if (drawerLinks && !document.getElementById("bantu-drawer-pro-actions")) {
+      var drawerGroup = document.createElement("div");
+      drawerGroup.id = "bantu-drawer-pro-actions";
+      drawerGroup.style.cssText = "display:flex;flex-direction:column;gap:8px;margin-top:8px;";
+      drawerGroup.innerHTML = buildProButtonsHtml(t, "bantu-drawer-security-btn", "bantu-drawer-gemma-btn");
+      drawerLinks.appendChild(drawerGroup);
+
+      drawerGroup.querySelector("#bantu-drawer-security-btn").addEventListener("click", function () {
+        openCommandTerminal("security", "", "");
+      });
+      drawerGroup.querySelector("#bantu-drawer-gemma-btn").addEventListener("click", function () {
         openCommandTerminal("gemma", "", "");
       });
     }

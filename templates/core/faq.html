@@ -13,14 +13,14 @@
 <section class="hero" style="padding: 2.5rem 1rem 2rem;">
     <h1>{% trans "Guide d'Utilisation & Foire Aux Questions" %}</h1>
     <p>
-        {% trans "Retrouvez l'ensemble des réponses techniques pour exploiter la forge souveraine BANTUDEVLAB et son intégration GitLab CE/EE : création de compte, connexion Zero-Trust, consultation du code source et collaboration sécurisée." %}
+        {% trans "Retrouvez l'ensemble des réponses techniques pour exploiter la forge souveraine BANTUDEVLAB et son moteur Gitea CE (MIT) : création de compte, connexion Zero-Trust, consultation du code source et collaboration sécurisée." %}
     </p>
 </section>
 
 <!-- Barre de recherche rapide FAQ -->
 <div class="faq-search-wrapper" style="max-width: 680px; margin: 0 auto 2.5rem;">
     <div style="position: relative;">
-        <input type="text" id="faqSearchInput" class="input-field" placeholder="{% trans 'Rechercher une question, mot-clé (ex: Git, ZKP, token, clone, merge request)...' %}" style="width: 100%; padding: 0.85rem 1rem 0.85rem 2.8rem; border-radius: 10px; border: 1px solid var(--dark-border); background: var(--dark-surface); color: var(--text-main); font-size: 0.95rem; box-sizing: border-box;" aria-label="{% trans 'Rechercher dans la FAQ' %}">
+        <input type="text" id="faqSearchInput" class="input-field" placeholder="{% trans 'Rechercher une question, mot-clé (ex: Git, ZKP, token, clone, pull request)...' %}" style="width: 100%; padding: 0.85rem 1rem 0.85rem 2.8rem; border-radius: 10px; border: 1px solid var(--dark-border); background: var(--dark-surface); color: var(--text-main); font-size: 0.95rem; box-sizing: border-box;" aria-label="{% trans 'Rechercher dans la FAQ' %}">
         <span style="position: absolute; left: 1rem; top: 50%; transform: translateY(-50%); color: var(--text-muted); pointer-events: none;">
             {% icon "search" size=18 %}
         </span>
@@ -30,7 +30,7 @@
 <!-- Section 1 : Guide Fondamental d'Utilisation -->
 <div style="margin-bottom: 3rem;">
     <h2 style="display: flex; align-items: center; gap: 0.5rem; border-bottom: 2px solid var(--primary-african-gold); padding-bottom: 0.5rem;">
-        {% icon "book-open" size=24 %} {% trans "Mode d'Utilisation Fondamental : GitLab & BantuDevLab" %}
+        {% icon "book-open" size=24 %} {% trans "Mode d'Utilisation Fondamental : Gitea CE & BantuDevLab" %}
     </h2>
     <p style="color: var(--text-muted); margin-top: 0.5rem;">
         {% trans "Les trois étapes indispensables pour initialiser votre environnement de travail souverain." %}
@@ -48,7 +48,7 @@
             </summary>
             <div class="faq-content">
                 <p>
-                    {% trans "Bienvenue au jury et aux évaluateurs du concours CADEV 2026 (Systalink Cloud). Voici le parcours pas-à-pas pour évaluer BantuDevLab en toute autonomie :" %}
+                    {% trans "Bienvenue au jury et aux évaluateurs du concours CADEV 2026. Application hébergée sur un VPS Ubuntu externe ; domaines acquis chez Datacloud. Déploiement souverain : objectif de la feuille de route. Voici le parcours pas-à-pas pour évaluer BantuDevLab :" %}
                 </p>
                 <div class="faq-steps-list">
                     <div class="faq-step-item">
@@ -71,18 +71,18 @@
             </div>
         </details>
 
-        <!-- Q1 : Comment créer un compte GitLab ? -->
+        <!-- Q1 : Comment créer un compte sur la forge ? -->
         <details class="faq-item" id="faq-create-account">
             <summary class="faq-summary">
                 <span class="faq-summary-title">
                     <span class="faq-badge">1</span>
-                    {% trans "Comment créer un compte GitLab sur la plateforme souveraine ?" %}
+                    {% trans "Comment créer un compte sur la plateforme souveraine ?" %}
                 </span>
                 <span class="faq-chevron">{% icon "chevron-down" size=18 %}</span>
             </summary>
             <div class="faq-content">
                 <p>
-                    {% trans "Sur la plateforme souveraine BANTUDEVLAB, l'accès à GitLab CE est unifié avec votre identité cryptographique Zero-Trust. Vous avez deux méthodes pour créer votre compte :" %}
+                    {% trans "Sur la plateforme souveraine BANTUDEVLAB, l'accès à la forge Gitea CE est associé à votre identité cryptographique Zero-Trust. Vous avez deux méthodes pour créer votre compte :" %}
                 </p>
                 <div class="faq-steps-list">
                     <div class="faq-step-item">
@@ -92,13 +92,13 @@
                             <li>{% trans "Basculez sur l'onglet « Inscription Souveraine » de l'assistant interactif." %}</li>
                             <li>{% trans "Choisissez votre identifiant développeur et sélectionnez votre pays souverain d'attachement (ex: Côte d'Ivoire, Sénégal, Kenya, Nigeria)." %}</li>
                             <li>{% trans "Générez votre trousseau de clés mathématiques (phrase mnémonique BIP-39 et clé publique Schnorr). Conservez précieusement votre phrase secrète : elle ne quitte jamais votre terminal." %}</li>
-                            <li>{% trans "Validez : votre identité souveraine est instantanément enregistrée. Votre compte GitLab CE associé est automatiquement provisionné sans aucun mot de passe requis." %}</li>
+                            <li>{% trans "Validez : votre identité souveraine est instantanément enregistrée et liée à votre espace Gitea CE sans mot de passe transmis." %}</li>
                         </ol>
                     </div>
                     <div class="faq-step-item" style="margin-top: 1rem;">
-                        <strong>{% trans "Méthode 2 : Inscription directe sur l'instance GitLab auto-hébergée" %}</strong>
+                        <strong>{% trans "Méthode 2 : Accès direct sur l'instance Gitea auto-hébergée" %}</strong>
                         <p>
-                            {% trans "Si votre organisation dispose d'une passerelle GitLab dédiée, ouvrez l'interface GitLab (via le bouton « Accès Forge Git »), cliquez sur « S'inscrire » (Register), complétez votre profil institutionnel, puis associez votre clé ZKP BantuDevLab via le bouton « Connecter avec Bantu ZKP »." %}
+                            {% trans "Ouvrez l'interface Gitea (via le bouton « Basculer vers Gitea » sur" %} <code>https://git.cybersocle.site</code>{% trans "), puis connectez-vous ou créez un compte Gitea pour gérer vos dépôts et clés SSH." %}
                         </p>
                     </div>
                 </div>
@@ -119,7 +119,7 @@
             </summary>
             <div class="faq-content">
                 <p>
-                    {% trans "La connexion s'opère en mode Zero-Trust sans mot de passe, garantissant l'immunité contre le hameçonnage, le vol d'identifiants et les attaques par force brute :" %}
+                    {% trans "La connexion s'opère en mode Zero-Trust sans mot de passe, réduisant l'exposition au hameçonnage et au vol de mots de passe :" %}
                 </p>
                 <ol>
                     <li>
@@ -127,15 +127,15 @@
                         {% trans "Allez sur la page de connexion ZKP. Renseignez votre identifiant développeur. L'application émet un défi cryptographique (nonce à usage unique valable 5 minutes). Saisissez votre phrase mnémonique ou clé secrète locale pour calculer la preuve de Schnorr" %} <code>(t, s)</code>. {% trans "Une fois la preuve vérifiée par le serveur, votre session est ouverte." %}
                     </li>
                     <li>
-                        <strong>{% trans "Connexion à GitLab CE via Single Sign-On (SSO OmniAuth ZKP) :" %}</strong>
-                        {% trans "Sur la mire de connexion GitLab, cliquez sur le bouton souverain" %} <em>« Connexion avec Bantu ZKP »</em>. {% trans "Si vous êtes déjà authentifié sur BantuDevLab, la session GitLab est ouverte instantanément. Sinon, vous serez invité à signer le défi cryptographique sans jamais saisir de mot de passe." %}
+                        <strong>{% trans "Connexion à la forge Gitea CE :" %}</strong>
+                        {% trans "Utilisez le bouton « Basculer vers Gitea » ou rendez-vous sur" %} <code>https://git.cybersocle.site</code> {% trans "pour accéder à vos dépôts et Pull Requests, ou utilisez vos jetons Git ZKP générés depuis le portail." %}
                     </li>
                 </ol>
                 <div style="margin: 1rem 0; padding: 0.75rem 1rem; background: rgba(16, 185, 129, 0.08); border-left: 3px solid #10b981; border-radius: 4px;">
                     <strong>Accès direct Gitea :</strong> Chemin de connexion direct aux dépôts Git : <a href="{{ GITEA_LOGIN_URL|default:BASE_URL_2 }}" target="_blank" rel="noopener noreferrer" style="color: #10b981; font-weight: 600; text-decoration: underline;">{{ GITEA_LOGIN_URL|default:BASE_URL_2 }}</a>
                 </div>
                 <div class="faq-tip-box">
-                    {% icon "info" size=18 %} <strong>{% trans "Protection anti-rejeu :" %}</strong> {% trans "Chaque défi de connexion est unique et consommé atomiquement. Une preuve interceptée sur le réseau ne peut jamais être réutilisée." %}
+                    {% icon "info" size=18 %} <strong>{% trans "Protection anti-rejeu :" %}</strong> {% trans "Chaque défi de connexion est unique (nonce à usage unique) et invalidé après vérification." %}
                 </div>
             </div>
         </details>
@@ -151,7 +151,7 @@
             </summary>
             <div class="faq-content">
                 <p>
-                    {% trans "Le code source hébergé sur BANTUDEVLAB et GitLab est consultable et clonable selon plusieurs modalités :" %}
+                    {% trans "Le code source hébergé sur BANTUDEVLAB et Gitea CE est consultable et clonable selon plusieurs modalités :" %}
                 </p>
                 <div class="faq-subgrid">
                     <div class="card" style="margin-top: 0; padding: 1rem;">
@@ -165,14 +165,14 @@
                         <p style="font-size: 0.9rem; color: var(--text-muted);">
                             {% trans "Générez un token d'accès Git" %} (<code>bnt_...</code>) {% trans "validé par preuve ZKP depuis l'API" %} <code>/api/zkp/tokens/generate/</code>. {% trans "Clonez ensuite via :" %}
                         </p>
-                        <pre class="faq-code"><code>git clone https://bnt_token@git.bantudevlab.africa/organisation/projet.git</code></pre>
+                        <pre class="faq-code"><code>git clone https://bnt_token@git.cybersocle.site/organisation/projet.git</code></pre>
                     </div>
                     <div class="card" style="margin-top: 0; padding: 1rem;">
                         <h4 style="display: flex; align-items: center; gap: 0.4rem;">{% icon "key" size=18 %} {% trans "Clone Sécurisé SSH" %}</h4>
                         <p style="font-size: 0.9rem; color: var(--text-muted);">
-                            {% trans "Ajoutez votre clé publique SSH (Ed25519 ou RSA 4096 bits) dans vos paramètres GitLab pour cloner directement :" %}
+                            {% trans "Ajoutez votre clé publique SSH (Ed25519 ou RSA 4096 bits) dans vos paramètres Gitea pour cloner directement :" %}
                         </p>
-                        <pre class="faq-code"><code>git clone git@git.bantudevlab.africa:organisation/projet.git</code></pre>
+                        <pre class="faq-code"><code>git clone git@git.cybersocle.site:organisation/projet.git</code></pre>
                     </div>
                 </div>
             </div>
@@ -186,7 +186,7 @@
         {% icon "activity" size=24 %} {% trans "Questions Fréquentes Techniques & Sécurité" %}
     </h2>
     <p style="color: var(--text-muted); margin-top: 0.5rem;">
-        {% trans "Approfondissement sur les fonctionnalités avancées : ZKP, IA Gemma 5B, SAST, Multi-Tenancy et souveraineté continentale." %}
+        {% trans "Approfondissement sur les fonctionnalités avancées : ZKP, IA Gemma 2 2B, SAST, Multi-Tenancy et architecture cible." %}
     </p>
 
     <div class="faq-accordion-group">
@@ -201,7 +201,7 @@
             </summary>
             <div class="faq-content">
                 <p>
-                    {% trans "Bienvenue au jury et aux évaluateurs du concours CADEV 2026 (Systalink Cloud). Voici le parcours pas-à-pas pour évaluer BantuDevLab en toute autonomie :" %}
+                    {% trans "Bienvenue au jury et aux évaluateurs du concours CADEV 2026. Application hébergée sur un VPS Ubuntu externe ; domaines acquis chez Datacloud. Déploiement souverain : objectif de la feuille de route. Voici le parcours pas-à-pas pour évaluer BantuDevLab :" %}
                 </p>
                 <div class="faq-steps-list">
                     <div class="faq-step-item">
@@ -234,7 +234,7 @@
             </summary>
             <div class="faq-content">
                 <p>
-                    {% trans "ZKP (Zero-Knowledge Proof, ou preuve à divulgation nulle de connaissance) est un protocole cryptographique mathématique fondé sur le problème du logarithme discret (RFC 3526 MODP 2048 bits). Grâce au protocole de Schnorr rendu non-interactif via la transformation de Fiat-Shamir, vous prouvez au serveur que vous détenez votre secret mathématique sans JAMAIS lui révéler ce secret, ni même le faire transiter sur le réseau." %}
+                    {% trans "ZKP (Zero-Knowledge Proof, ou preuve à divulgation nulle de connaissance) est un protocole cryptographique mathématique fondé sur le problème du logarithme discret (RFC 3526 MODP 2048 bits). Grâce au protocole de Schnorr rendu non-interactif via la transformation de Fiat-Shamir, vous prouvez au serveur que vous détenez votre secret mathématique sans le transmettre sur le réseau." %}
                 </p>
                 <p>
                     {% trans "Avantages majeurs :" %}
@@ -247,43 +247,41 @@
             </div>
         </details>
 
-        <!-- Q5 : Comment fonctionne la double approbation ZKP sur les Merge Requests ? -->
+        <!-- Q5 : Comment fonctionne la revue de code sur les Pull Requests ? -->
         <details class="faq-item">
             <summary class="faq-summary">
                 <span class="faq-summary-title">
-                    {% trans "Comment fonctionne la double approbation ZKP sur les Merge Requests (MR) ?" %}
+                    {% trans "Comment fonctionne la revue et l'audit sur les Pull Requests (PR) ?" %}
                 </span>
                 <span class="faq-chevron">{% icon "chevron-down" size=18 %}</span>
             </summary>
             <div class="faq-content">
                 <p>
-                    {% trans "Pour les projets critiques des ministères, banques centrales et agences publiques, BANTUDEVLAB intègre un quorum d'approbation cryptographique :" %}
+                    {% trans "Dans Gitea CE et le portail BANTUDEVLAB, chaque Pull Request peut être vérifiée avant fusion :" %}
                 </p>
                 <ul>
-                    <li>{% trans "La fusion (merge) d'une branche de fonctionnalités vers la branche principale exige la signature mathématique d'au moins deux relecteurs habilités." %}</li>
-                    <li>{% trans "Chaque approbation est scellée par une preuve ZKP enregistrée sous le modèle SovereignMergeRequestApproval." %}</li>
-                    <li>{% trans "Le pipeline GitLab CI/CD et la passerelle de fusion bloquent automatiquement l'opération si le quorum cryptographique n'est pas réuni." %}</li>
+                    <li>{% trans "Analyse SAST locale (entropie de Shannon et détection de secrets) et revue assistée par Gemma 2 2B via Ollama." %}</li>
+                    <li>{% trans "Protection de la branche principale via les règles de branche Gitea (revues requises et contrôles de statut)." %}</li>
                 </ul>
             </div>
         </details>
 
-        <!-- Q6 : Comment l'assistant IA local Gemma 5B protège-t-il la confidentialité du code ? -->
+        <!-- Q6 : Comment l'assistant IA local Gemma 2 2B protège-t-il la confidentialité du code ? -->
         <details class="faq-item">
             <summary class="faq-summary">
                 <span class="faq-summary-title">
-                    {% trans "Comment l'assistant IA local Gemma 5B audite-t-il le code sans aucune fuite vers l'étranger ?" %}
+                    {% trans "Comment l'assistant IA local Gemma 2 2B audite-t-il le code sans fuite vers des API cloud tierces ?" %}
                 </span>
                 <span class="faq-chevron">{% icon "chevron-down" size=18 %}</span>
             </summary>
             <div class="faq-content">
                 <p>
-                    {% trans "Contrairement aux assistants cloud propriétaires hébergés sous juridiction étrangère (Cloud Act, FISA), le modèle Gemma 5B de BANTUDEVLAB :" %}
+                    {% trans "Contrairement aux assistants cloud propriétaires, le modèle Gemma 2 2B de BANTUDEVLAB :" %}
                 </p>
                 <ul>
-                    <li>{% trans "Est déployé exclusivement sur des serveurs physiques situés sur le sol africain (Systalink Cloud, datacenters Tier-3 Abidjan, Dakar, Nairobi, Kigali)." %}</li>
-                    <li>{% trans "S'exécute en local via vLLM / Ollama sans aucune transmission de télémétrie ou de code source à des tiers." %}</li>
-                    <li>{% trans "Masque et anonymise automatiquement les secrets éventuels avant toute journalisation (AIInteractionLog)." %}</li>
-                    <li>{% trans "Est fine-tuné avec LoRA/QLoRA (4-bit GGUF) sur les cadres légaux panafricains et les meilleures pratiques de souveraineté logicielle." %}</li>
+                    <li>{% trans "Application hébergée sur un VPS Ubuntu externe ; domaines acquis chez Datacloud. Déploiement souverain : objectif de la feuille de route." %}</li>
+                    <li>{% trans "S'exécute en local via Ollama sans transmission de code source à des API d'IA tierces." %}</li>
+                    <li>{% trans "Masque les secrets détectés avant journalisation (AIInteractionLog)." %}</li>
                 </ul>
             </div>
         </details>
@@ -305,7 +303,7 @@
                     <li>{% trans "Détection des injections SQL, exécutions de commandes non sécurisées (eval, exec, pickle)." %}</li>
                     <li>{% trans "Détection des dépendances externes non souveraines ou non auditées." %}</li>
                     <li>{% trans "Attribution d'un score de 0 à 100 : un score inférieur à 70 peut déclencher un blocage automatique préventif dans les hooks de pre-receive." %}</li>
-                    <li>{% trans "Exportation des rapports aux formats standard OASIS SARIF 2.1.0 et GitLab SAST (gl-sast-report.json)." %}</li>
+                    <li>{% trans "Exportation des rapports au format standard OASIS SARIF 2.1.0." %}</li>
                 </ul>
             </div>
         </details>
@@ -323,7 +321,7 @@
                     {% trans "Le modèle SovereignOrganization assure une compartimentation multi-tenancy stricte :" %}
                 </p>
                 <ul>
-                    <li>{% trans "Chaque organisation dispose d'espaces de noms (namespaces) dédiés synchronisés avec les groupes GitLab." %}</li>
+                    <li>{% trans "Chaque organisation dispose d'espaces de noms (organisations) dédiés dans Gitea CE." %}</li>
                     <li>{% trans "La création d'organisations est soumise à validation administrative (contrôle IsAdminUser)." %}</li>
                     <li>{% trans "Des niveaux de souveraineté graduels (Tier-1 Continental, Tier-2 Régional, Tier-3 Startup) définissent les règles de chiffrement et d'hébergement." %}</li>
                 </ul>
@@ -345,7 +343,7 @@
                 <ul>
                     <li>{% trans "Journal d'audit immuable (AuditTrailLog) chaîné cryptographiquement par hachage SHA-256 (blockchain interne vérifiable)." %}</li>
                     <li>{% trans "Vérification automatisée de l'intégrité via la commande de gestion :" %} <code>python manage.py export_malabo_compliance_report</code>.</li>
-                    <li>{% trans "Souveraineté des données garantie : aucun hébergement soumis à des législations extraterritoriales." %}</li>
+                    <li>{% trans "Application hébergée sur un VPS Ubuntu externe ; domaines acquis chez Datacloud. Déploiement souverain : objectif de la feuille de route." %}</li>
                 </ul>
             </div>
         </details>
@@ -370,29 +368,26 @@
             </div>
         </details>
 
-        <!-- Q11 : Comment exécuter les pipelines CI/CD sur des runners panafricains ? -->
+        <!-- Q11 : Comment exécuter les pipelines CI/CD avec Gitea Actions ? -->
         <details class="faq-item">
             <summary class="faq-summary">
                 <span class="faq-summary-title">
-                    {% trans "Comment configurer et exécuter des pipelines CI/CD sur les runners souverains ?" %}
+                    {% trans "Comment configurer et exécuter des pipelines CI/CD avec Gitea Actions ?" %}
                 </span>
                 <span class="faq-chevron">{% icon "chevron-down" size=18 %}</span>
             </summary>
             <div class="faq-content">
                 <p>
-                    {% trans "Vos fichiers .gitlab-ci.yml peuvent cibler directement les nœuds d'exécution certifiés panafricains grâce aux tags de runners :" %}
+                    {% trans "Vos workflows Gitea Actions (.gitea/workflows/) peuvent exécuter les contrôles de tests et de conformité automatiquement :" %}
                 </p>
-                <pre class="faq-code"><code>build-sovereign:
-  stage: build
-  tags:
-    - sovereign-abidjan
-    - tier1-runner
-  script:
-    - python -m pytest
-    - python scripts/check_no_emoji.py</code></pre>
-                <p style="margin-top: 0.5rem;">
-                    {% trans "Ces runners sont isolés dans des conteneurs sécurisés rootless hébergés dans nos datacenters partenaires." %}
-                </p>
+                <pre class="faq-code"><code>name: sovereign-ci
+on: [push, pull_request]
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - run: python -m pytest
+      - run: python scripts/check_no_emoji.py</code></pre>
             </div>
         </details>
     </div>

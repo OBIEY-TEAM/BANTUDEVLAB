@@ -193,6 +193,7 @@ REST_FRAMEWORK = {
         "zkp": "5/minute",
         "scanner": "10/minute",
         "zkp_register": "10/hour",
+        "repo_create": "10/hour",
         "ai": "20/minute",
     },
     **({"DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema"} if HAS_DRF_SPECTACULAR else {}),
@@ -294,6 +295,10 @@ CELERY_BEAT_SCHEDULE = {
     "purge-expired-zkp-challenges-every-15m": {
         "task": "apps.zkp_auth.tasks.purge_expired_zkp_challenges",
         "schedule": 900.0,
+    },
+    "cleanup-demo-repositories-hourly": {
+        "task": "apps.core.tasks.cleanup_demo_repositories",
+        "schedule": 3600.0,
     },
 }
 

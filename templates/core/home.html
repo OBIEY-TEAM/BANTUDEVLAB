@@ -4,8 +4,11 @@
 {% block content %}
 <section class="hero">
     <h1>{% trans "La Forge Logicielle Souveraine de l'Afrique" %}</h1>
+    <p style="font-size: 1.15rem; font-weight: 600; color: var(--text-main); margin-bottom: 0.5rem;">
+        {% trans "Hébergez votre code, connectez-vous sans mot de passe, faites analyser votre code par une IA locale." %}
+    </p>
     <p>
-        {% trans "BANTUDEVLAB réunit la robustesse d'un moteur Git distribué, la sécurité mathématique des preuves à divulgation nulle de connaissance (Zero-Knowledge Proofs), et l'intelligence artificielle locale Gemma 2 2B pour garantir l'indépendance technologique du continent." %} 
+        {% trans "BANTUDEVLAB réunit un moteur Git Gitea CE (MIT), l'authentification par preuves à divulgation nulle de connaissance (Zero-Knowledge Proofs), et l'analyse locale par Gemma 2 2B via Ollama." %}
     </p>
     <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
         <a href="{% url 'zkp_auth:zkp_login_page' %}?demo=cadev" class="btn btn-primary" style="background: linear-gradient(135deg, #10b981, #059669); border: none; font-weight: 600;">
@@ -18,20 +21,22 @@
 
 <div class="card-grid">
     <div class="card">
-        <h3>{% icon "landmark" size=22 %} {% trans "Moteur Git Souverain (Systalink Cloud)" %}</h3>
-        <p>{% trans "Forge distribuée basée sur Gitea/GitLab CE déployée sur nos serveurs en Afrique. Zéro dépendance vis-à-vis des juridictions extérieures (Cloud Act exempt)." %}</p>
-        <span class="stat-number">100%</span>
+        <h3>{% icon "landmark" size=22 %} {% trans "Moteur Git Gitea CE (MIT)" %}</h3>
+        <p>{% trans "Forge logicielle basée sur Gitea CE (MIT), avec authentification Zero-Trust et analyse locale de code." %}</p>
+        <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 0.5rem;">
+            {% trans "Application hébergée sur un VPS Ubuntu externe ; domaines acquis chez Datacloud. Déploiement souverain : objectif de la feuille de route." %}
+        </p>
         <div style="margin-top: 0.5rem;">
             <a href="{{ GITEA_LOGIN_URL|default:BASE_URL_2 }}" target="_blank" rel="noopener noreferrer" style="color: var(--secondary-emerald); font-size: 0.85rem; text-decoration: underline; display: inline-flex; align-items: center; gap: 0.35rem;">
                 {% icon "external-link" size=14 %} {% trans "Connexion Gitea" %} ({{ GITEA_LOGIN_URL|default:BASE_URL_2 }})
             </a>
         </div>
-        <p style="color: var(--secondary-emerald); font-weight: bold;">{% trans "Contrôle Panafricain" %}</p>
+        <p style="color: var(--secondary-emerald); font-weight: bold;">{% trans "Architecture Ouverte" %}</p>
     </div>
 
     <div class="card">
         <h3>{% icon "key" size=22 %} {% trans "Authentification Zero-Trust ZKP" %}</h3>
-        <p>{% trans "Protocole cryptographique de Schnorr / Sigma non-interactif via Fiat-Shamir. Prouvez votre identité sans JAMAIS transmettre votre mot de passe au réseau." %}</p>
+        <p>{% trans "Protocole cryptographique de Schnorr / Sigma non-interactif via Fiat-Shamir. Prouvez votre identité sans transmettre de mot de passe sur le réseau." %}</p>
         <span class="stat-number">NIZKP</span>
         <p style="color: var(--primary-african-gold); font-weight: bold;">{% trans "Confidentialité Mathématique" %}</p>
     </div>
@@ -48,7 +53,7 @@
 <div class="card" style="margin-top: 3rem; background: linear-gradient(135deg, rgba(245, 158, 11, 0.08), rgba(17, 24, 39, 0.95)); border: 1px solid var(--primary-african-gold); display: flex; align-items: center; justify-content: space-between; gap: 1.5rem; flex-wrap: wrap;">
     <div>
         <h3 style="margin: 0 0 0.5rem 0; display: flex; align-items: center; gap: 0.5rem;">
-            {% icon "book-open" size=22 %} {% trans "Nouveau sur BANTUDEVLAB & GitLab ?" %}
+            {% icon "book-open" size=22 %} {% trans "Nouveau sur BANTUDEVLAB ?" %}
         </h3>
         <p style="color: var(--text-muted); margin: 0; font-size: 0.95rem;">
             {% trans "Consultez notre guide complet : création de compte, connexion sans mot de passe Zero-Trust, consultation du code source, clone avec token Git et foire aux questions." %}
@@ -71,8 +76,36 @@
             </div>
         </div>
         {% empty %}
-        <p>{% trans "Initialisation de la synchronisation avec Gitea..." %}</p>
+        <div class="card" style="grid-column: 1 / -1;">
+            <p style="margin: 0; color: var(--text-muted);">
+                {% trans "Aucun dépôt public synchronisé pour le moment. Créez un dépôt de démonstration depuis votre tableau de bord ou explorez la forge Gitea." %}
+            </p>
+            <div style="margin-top: 0.75rem; display: flex; gap: 0.75rem; flex-wrap: wrap;">
+                <a href="{% url 'dashboard' %}#new-repo" class="btn btn-primary">{% trans "Créer un Dépôt de Démonstration" %}</a>
+                <a href="https://git.cybersocle.site/explore/repos" class="btn btn-secondary" target="_blank" rel="noopener noreferrer">{% trans "Explorer la forge Gitea" %}</a>
+            </div>
+        </div>
         {% endfor %}
+    </div>
+</div>
+
+<div style="margin-top: 3rem;">
+    <h2>{% trans "Échange" %}</h2>
+    <div class="card-grid">
+        <div class="card">
+            <h3>{% icon "git-branch" size=20 %} {% trans "Dépôts & Discussions (Issues / PR)" %}</h3>
+            <p style="color: var(--text-muted); font-size: 0.95rem;">
+                {% trans "Échangez sur le code, ouvrez des tickets (Issues) et relisez les Pull Requests directement sur la forge Gitea CE." %}
+            </p>
+            <a href="https://git.cybersocle.site/explore/repos" class="btn btn-secondary" target="_blank" rel="noopener noreferrer">{% trans "Accéder aux dépôts et discussions" %}</a>
+        </div>
+        <div class="card">
+            <h3>{% icon "package" size=20 %} {% trans "Registres de Paquets (Gitea Packages)" %}</h3>
+            <p style="color: var(--text-muted); font-size: 0.95rem;">
+                {% trans "Publiez et consommez des paquets (Docker, PyPI, npm, génériques) via le registre intégré de Gitea CE." %}
+            </p>
+            <a href="https://git.cybersocle.site/explore/repos" class="btn btn-secondary" target="_blank" rel="noopener noreferrer">{% trans "Ouvrir la forge Gitea" %}</a>
+        </div>
     </div>
 </div>
 {% endblock %}

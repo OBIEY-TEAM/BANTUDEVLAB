@@ -133,7 +133,7 @@ class GiteaClient:
             return res
         return {
             "success": True,
-            "data": {"version": "1.23.0-sovereign", "status": "Systalink Cloud Sovereign Forge"},
+            "data": {"version": "1.22.6", "status": "Gitea CE (MIT) — VPS Ubuntu externe"},
             "fallback": True,
         }
 
