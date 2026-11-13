@@ -17,6 +17,14 @@ forge_data/
 .gitignore
 .dockerignore
 .env
+.env.*
+!.env.example
+!.env.production.example
+*.sqlite3
+db.sqlite3
+backups/
+*.sarif
+*.cyclonedx.json
 *.log
 node_modules/
 .idea/

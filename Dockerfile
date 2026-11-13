@@ -15,9 +15,11 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     curl \
     && rm -rf /var/lib/apt/lists/*
 
-# Installation des dependances Python
-COPY requirements.txt /app/
-RUN pip install --no-cache-dir -r requirements.txt
+# Installation des dependances Python (build standard 100% permissif par defaut; PostgreSQL optionnel pour VPS)
+ARG INSTALL_POSTGRES=false
+COPY requirements.txt requirements-postgres.txt /app/
+RUN pip install --no-cache-dir -r requirements.txt && \
+    if [ "$INSTALL_POSTGRES" = "true" ]; then pip install --no-cache-dir -r requirements-postgres.txt; fi
 
 # Creation d'un utilisateur et groupe non-root pour le durcissement du conteneur
 RUN groupadd -g 1000 appgroup && \
@@ -25,7 +27,7 @@ RUN groupadd -g 1000 appgroup && \
 
 # Copie du code applicatif et attribution des permissions a appuser
 COPY --chown=appuser:appgroup . /app/
-RUN mkdir -p /app/staticfiles /app/forge_data/repos && \
+RUN mkdir -p /app/staticfiles /app/forge_data/repos /app/data && \
     python manage.py collectstatic --no-input && \
     chown -R appuser:appgroup /app
 

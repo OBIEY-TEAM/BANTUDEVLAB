@@ -57,6 +57,14 @@ Pour deployer l'architecture durcie 3 tiers avec GitLab CE Omnibus, PgBouncer et
 docker compose -f docker-compose.production.yml --env-file .env.production up -d --build
 ```
 
+### Mise a jour d'un VPS deja deploye
+Pour mettre a jour le VPS sans ecraser `.env.production` ni les volumes de donnees :
+
+```bash
+chmod +x deploy/vps_update.sh
+./deploy/vps_update.sh docker-cadev26
+```
+
 ### Cartographie de Production
 - **Nginx Reverse Proxy** : Ports `8080` (HTTP -> HTTPS) et `8443` (TLS 1.3 durci, certbot LetsEncrypt)
 - **GitLab CE Omnibus** : Service interne `gitlab:80` et SSH sur port `2222`
