@@ -1544,6 +1544,10 @@ footer {
 
 /* 3b. Tablet Landscape Hero Adjustments (<= 992px) */
 @media (max-width: 992px) {
+  .navbar .bantu-pro-actions-group,
+  #bantu-django-nav-pro-actions {
+    display: none !important;
+  }
   .hero {
     padding: 3rem 1rem;
   }
