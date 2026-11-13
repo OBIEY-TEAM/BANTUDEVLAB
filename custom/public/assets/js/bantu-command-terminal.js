@@ -320,8 +320,9 @@
       ".bantu-term-select:focus{border-color:#00e5ff !important;}" +
       ".bantu-term-results-topup{padding:16px;max-height:62vh;overflow-y:auto;background:#050b18;font-family:system-ui,-apple-system,sans-serif;}" +
       ".bantu-gitea-repo-banner{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 14px;margin:10px 0;background:rgba(7,14,30,0.9);border:1px solid rgba(0,229,255,0.35);border-radius:8px;flex-wrap:wrap;}" +
-      "@media (max-width:1024px){#navbar .navbar-left .bantu-pro-actions-group,nav#navbar .bantu-pro-actions-group,.navbar .bantu-pro-actions-group,#bantu-django-nav-pro-actions,#bantu-gitea-nav-pro-actions{display:none !important;}}" +
-      "@media (max-width:768px){.bantu-term-options-bar{grid-template-columns:1fr;}.bantu-pro-actions-group{margin-left:4px !important;gap:4px !important;flex-wrap:wrap;}}" +
+      ".bantu-pro-actions-group,.bantu-pro-action-btn{white-space:nowrap;flex-shrink:0;}" +
+      "@media (max-width:1024px){#navbar .navbar-left .bantu-pro-actions-group,nav#navbar .bantu-pro-actions-group,#bantu-gitea-nav-pro-actions{display:none !important;}}" +
+      "@media (max-width:768px){.navbar .bantu-pro-actions-group,#bantu-django-nav-pro-actions{display:none !important;}.bantu-term-options-bar{grid-template-columns:1fr;}}" +
       "@media (max-width:480px){.bantu-pro-action-btn{padding:4px 7px !important;font-size:11px !important;}.bantu-term-prompt-row{padding:10px;}.bantu-term-exec-btn{width:100%;justify-content:center;}}";
     document.head.appendChild(style);
   }
