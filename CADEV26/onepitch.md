@@ -1,8 +1,8 @@
 # BANTUDEVLAB — Le Pitch en Une Phrase & Stack Technique (CADEV 2026)
 
 **Équipe candidate :** Équipe CYBERSOCLE  
-- **Capitaine d'équipe :** OBIEY Christ Dany (Lead Architect / Fullstack)  
-- **Membre de l'équipe :** MAMPOUYA Alicia Syrianne (QA & Sécurité)  
+- **Capitaine d'équipe :** OBIEY Christ Dany (Lead Architecture & Développement Fullstack)  
+- **Membre de l'équipe :** MAMPOUYA Alicia Syrianne (Présentation vidéo démo & parcours utilisateur)  
 **Projet :** BANTUDEVLAB — Forge Logicielle Souveraine Panafricaine  
 **Concours :** CADEV 2026 (Systalink / Datacloud) — Date limite : 15 novembre 2026, 17 h 00 GMT  
 **Accès en ligne :** https://cybersocle.site | https://git.cybersocle.site  

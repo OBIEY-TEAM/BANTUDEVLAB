@@ -111,7 +111,7 @@ L'évaluation lucide des deux ébauches de pitch précédentes révèle des faib
 ## 3. Pitch Professionnel Hackathon CADEV 2026 (5 Minutes Chronométrées)
 
 **Format :** Soutenance orale de 5 minutes avec démonstration live intégrée.
-**Intervenants :** OBIEY Christ Dany (Capitaine & Lead Développeur) et MAMPOUYA Alicia Syrianne (Équipe CYBERSOCLE).
+**Présentatrice principale (Pitch & Démonstration) :** MAMPOUYA Alicia Syrianne (Présentation vidéo démo & parcours utilisateur) — Équipe CYBERSOCLE, aux côtés de OBIEY Christ Dany (Capitaine & Lead Architecture).
 
 ---
 
@@ -125,7 +125,7 @@ L'évaluation lucide des deux ébauches de pitch précédentes révèle des faib
 >
 > Nous payons une bande passante sous-marine prohibitive pour pousser du code chez des hyperscalers tiers, tandis que nos institutions manquent aux exigences de la Convention de Malabo sur la territorialité des données.
 >
-> Je m'appelle Christ Dany Obiey, développeur à Pointe-Noire, capitaine de l'équipe CYBERSOCLE, aux côtés de ma co-équipière Alicia Syrianne Mampouya. Avec notre équipe, nous avons refusé cette fatalité. Voici **BANTUDEVLAB** : une forge logicielle souveraine panafricaine, conçue par les développeurs africains, pour les développeurs africains. »
+> Je m'appelle Alicia Syrianne Mampouya, membre de l'équipe CYBERSOCLE, aux côtés de notre capitaine et architecte Christ Dany Obiey à Pointe-Noire. Avec notre équipe, nous avons refusé cette fatalité. Voici **BANTUDEVLAB** : une forge logicielle souveraine panafricaine, conçue par les développeurs africains, pour les développeurs africains. »
 
 ---
 
@@ -191,7 +191,7 @@ L'évaluation lucide des deux ébauches de pitch précédentes révèle des faib
 >
 > BANTUDEVLAB est prêt, sécurisé et opérationnel. Construisons ensemble notre souveraineté technologique.
 >
-> Je vous remercie pour votre attention et suis prêt pour vos questions. »
+> Je vous remercie pour votre attention et je suis prête pour vos questions. »
 
 ---
 
@@ -216,40 +216,40 @@ L'évaluation lucide des deux ébauches de pitch précédentes révèle des faib
 ### Catégorie A : Infrastructure & Hébergement
 
 **Question 1 : Comment est hébergée votre application et comment s'articule l'usage des services Systalink / Datacloud ?**
-> *Réponse du Lead :* « Nos domaines de production officiels (`cybersocle.site` et `git.cybersocle.site`) ont été achetés chez Systalink / Datacloud. Pour cette phase de validation, l'application est hébergée sur un VPS Ubuntu externe avec une architecture entièrement conteneurisée sous Docker Compose (Django, Gitea CE, Valkey, PostgreSQL, PgBouncer, Nginx). Cette portabilité garantit une transition sans friction vers les infrastructures Datacloud de Systalink pour le passage à l'échelle panafricain. »
+> *Réponse de l'équipe (Alicia / Christ Dany) :* « Nos domaines de production officiels (`cybersocle.site` et `git.cybersocle.site`) ont été achetés chez Systalink / Datacloud. Pour cette phase de validation, l'application est hébergée sur un VPS Ubuntu externe avec une architecture entièrement conteneurisée sous Docker Compose (Django, Gitea CE, Valkey, PostgreSQL, PgBouncer, Nginx). Cette portabilité garantit une transition sans friction vers les infrastructures Datacloud de Systalink pour le passage à l'échelle panafricain. »
 
 **Question 2 : Que se passe-t-il en cas de coupure de fibre sous-marine ou de connectivité internationale dégradée ?**
-> *Réponse du Lead :* « C'est l'essence même de notre conception. Git est par essence un système distribué : chaque développeur détient l'historique complet en local. De plus, notre moteur de forge et notre assistant d'IA Gemma 2 2B tournent localement sur le réseau ou en intranet. Même si l'ensemble de la connectivité internationale vers l'Europe ou les États-Unis est rompue, les équipes africaines continuent de commiter, pusher, auditer et collaborer sans interruption. »
+> *Réponse de l'équipe (Alicia / Christ Dany) :* « C'est l'essence même de notre conception. Git est par essence un système distribué : chaque développeur détient l'historique complet en local. De plus, notre moteur de forge et notre assistant d'IA Gemma 2 2B tournent localement sur le réseau ou en intranet. Même si l'ensemble de la connectivité internationale vers l'Europe ou les États-Unis est rompue, les équipes africaines continuent de commiter, pusher, auditer et collaborer sans interruption. »
 
 ---
 
 ### Catégorie B : Cybersécurité, Cryptographie & Zero-Trust
 
 **Question 3 : En quoi votre implémentation Zero-Trust ZKP est-elle supérieure à un simple système d'authentification 2FA ?**
-> *Réponse du Lead :* « Le 2FA traditionnel (SMS ou TOTP) continue de reposer sur un secret partagé stocké dans la base de données du serveur (le mot de passe et la graine TOTP). Si la base de données est compromise, ces secrets sont exposés. Avec notre protocole ZKP de Schnorr sur le groupe RFC 3526 (2048 bits), le serveur ne stocke **que la clé publique $y$**. L'authentification s'effectue par vérification d'une équation d'engagement $g^s \cdot y^c \equiv t \pmod p$. Le secret $x$ ne quitte jamais la mémoire du navigateur ou du terminal du développeur. De plus, nos défis aléatoires à usage unique (nonces) sont consommés de manière atomique en base pour empêcher toute attaque par rejeu. »
+> *Réponse de l'équipe (Alicia / Christ Dany) :* « Le 2FA traditionnel (SMS ou TOTP) continue de reposer sur un secret partagé stocké dans la base de données du serveur (le mot de passe et la graine TOTP). Si la base de données est compromise, ces secrets sont exposés. Avec notre protocole ZKP de Schnorr sur le groupe RFC 3526 (2048 bits), le serveur ne stocke **que la clé publique $y$**. L'authentification s'effectue par vérification d'une équation d'engagement $g^s \cdot y^c \equiv t \pmod p$. Le secret $x$ ne quitte jamais la mémoire du navigateur ou du terminal du développeur. De plus, nos défis aléatoires à usage unique (nonces) sont consommés de manière atomique en base pour empêcher toute attaque par rejeu. »
 
 **Question 4 : Comment le développeur utilise-t-il Git en ligne de commande (CLI) sans mot de passe ?**
-> *Réponse du Lead :* « Nous avons développé le service `GitTokenService` (`apps/zkp_auth/tokens.py`). Le développeur valide son identité via une preuve ZKP ponctuelle, ce qui lui permet d'émettre un jeton Git sécurisé à privilèges limités (lecture, écriture, administration) avec expiration automatique, directement compatible avec Git CLI et notre outil en ligne de commande `tea`. »
+> *Réponse de l'équipe (Alicia / Christ Dany) :* « Nous avons développé le service `GitTokenService` (`apps/zkp_auth/tokens.py`). Le développeur valide son identité via une preuve ZKP ponctuelle, ce qui lui permet d'émettre un jeton Git sécurisé à privilèges limités (lecture, écriture, administration) avec expiration automatique, directement compatible avec Git CLI et notre outil en ligne de commande `tea`. »
 
 **Question 5 : Votre journal d'audit est-il vraiment infalsifiable ?**
-> *Réponse du Lead :* « Oui. Nous avons implémenté dans `apps/core/models.py` le modèle `AuditTrailLog` reposant sur un chaînage cryptographique SHA-256 similaire à une blockchain privée (`previous_hash -> current_hash`). Toute modification frauduleuse ou suppression d'un événement rompt immédiatement la chaîne de hachage. La conformité peut être vérifiée et exportée en ligne de commande via la commande `python manage.py export_malabo_compliance_report`. »
+> *Réponse de l'équipe (Alicia / Christ Dany) :* « Oui. Nous avons implémenté dans `apps/core/models.py` le modèle `AuditTrailLog` reposant sur un chaînage cryptographique SHA-256 similaire à une blockchain privée (`previous_hash -> current_hash`). Toute modification frauduleuse ou suppression d'un événement rompt immédiatement la chaîne de hachage. La conformité peut être vérifiée et exportée en ligne de commande via la commande `python manage.py export_malabo_compliance_report`. »
 
 ---
 
 ### Catégorie C : Intelligence Artificielle & Modèle Gemma 2 2B
 
 **Question 6 : Pourquoi avoir choisi Gemma 2 2B plutôt qu'un modèle plus volumineux comme Llama-3 8B ou un modèle 5B ?**
-> *Réponse du Lead :* « C'est le fruit d'une analyse rigoureuse consignée dans notre rapport `TASK/TASK5.md`. Un modèle 5B ou 8B exige des cartes graphiques professionnelles coûteuses (16 Go à 24 Go de VRAM) souvent indisponibles ou hors de prix sur notre continent. Gemma 2 2B, quantifié en 4-bit (GGUF Q4_K_M), ne pèse que 1,6 Go et tourne avec une fluidité exceptionnelle (plus de 35 tokens par seconde) sur un simple processeur multicœur ou un GPU d'entrée de gamme de 4 Go de VRAM. Ses performances sur l'analyse de syntaxe, l'extraction de vulnérabilités et la génération de patchs sont remarquables tout en respectant notre impératif d'éco-conception souveraine. »
+> *Réponse de l'équipe (Alicia / Christ Dany) :* « C'est le fruit d'une analyse rigoureuse consignée dans notre rapport `TASK/TASK5.md`. Un modèle 5B ou 8B exige des cartes graphiques professionnelles coûteuses (16 Go à 24 Go de VRAM) souvent indisponibles ou hors de prix sur notre continent. Gemma 2 2B, quantifié en 4-bit (GGUF Q4_K_M), ne pèse que 1,6 Go et tourne avec une fluidité exceptionnelle (plus de 35 tokens par seconde) sur un simple processeur multicœur ou un GPU d'entrée de gamme de 4 Go de VRAM. Ses performances sur l'analyse de syntaxe, l'extraction de vulnérabilités et la génération de patchs sont remarquables tout en respectant notre impératif d'éco-conception souveraine. »
 
 **Question 7 : Que répondez-vous au risque d'hallucination de l'IA lors des revues de sécurité ?**
-> *Réponse du Lead :* « Nous appliquons le principe de défense en profondeur : l'IA Gemma 2 2B n'agit jamais seule. Elle intervient en surcouche d'un scanner SAST déterministe qui effectue le calcul d'entropie de Shannon et l'analyse syntaxique stricte des vulnérabilités connues (injections, secrets en dur). L'IA est strictement consultative : elle fournit des suggestions de refactorisation que le développeur ou le relecteur humain valide explicitement avant toute fusion. »
+> *Réponse de l'équipe (Alicia / Christ Dany) :* « Nous appliquons le principe de défense en profondeur : l'IA Gemma 2 2B n'agit jamais seule. Elle intervient en surcouche d'un scanner SAST déterministe qui effectue le calcul d'entropie de Shannon et l'analyse syntaxique stricte des vulnérabilités connues (injections, secrets en dur). L'IA est strictement consultative : elle fournit des suggestions de refactorisation que le développeur ou le relecteur humain valide explicitement avant toute fusion. »
 
 ---
 
 ### Catégorie D : Positionnement Produit & Concurrence
 
 **Question 8 : « N'est-ce pas simplement un habillage de Gitea ? »**
-> *Réponse du Lead :* « Gitea est notre moteur Git de bas niveau, tout comme Linux est le noyau d'Ubuntu ou Android. Nous avons bâti au-dessus une surcouche souveraine propriétaire et open source comprenant :
+> *Réponse de l'équipe (Alicia / Christ Dany) :* « Gitea est notre moteur Git de bas niveau, tout comme Linux est le noyau d'Ubuntu ou Android. Nous avons bâti au-dessus une surcouche souveraine open source (licence MIT) comprenant :
 > 1. Un moteur d'authentification cryptographique Zero-Trust ZKP complet.
 > 2. Un scanner SAST multi-langages conforme SARIF 2.1.0.
 > 3. Un agent d'IA local autonome piloté par Celery.
@@ -258,7 +258,7 @@ L'évaluation lucide des deux ébauches de pitch précédentes révèle des faib
 > 6. Plus de 20 cycles d'extensions documentés dans `TASK/` garantissant une équivalence fonctionnelle complète avec GitHub. »
 
 **Question 9 : Pourquoi un développeur quitterait-il GitHub pour BantuDevLab ?**
-> *Réponse du Lead :* « Il ne s'agit pas d'opposer les plateformes, mais d'offrir le choix de la souveraineté. Pour les projets open source mondiaux, GitHub reste pertinent. Mais pour les infrastructures critiques, les banques centrales, les dossiers médicaux, les télécoms et le code d'État, héberger sur BantuDevLab vise la conformité avec la Convention de Malabo et la certitude qu'aucune IA étrangère n'exploite le code africain. De plus, nos fonctionnalités de miroir Git permettent une synchronisation transparente entre les deux mondes. »
+> *Réponse de l'équipe (Alicia / Christ Dany) :* « Il ne s'agit pas d'opposer les plateformes, mais d'offrir le choix de la souveraineté. Pour les projets open source mondiaux, GitHub reste pertinent. Mais pour les infrastructures critiques, les banques centrales, les dossiers médicaux, les télécoms et le code d'État, héberger sur BantuDevLab vise la conformité avec la Convention de Malabo et la certitude qu'aucune IA étrangère n'exploite le code africain. De plus, nos fonctionnalités de miroir Git permettent une synchronisation transparente entre les deux mondes. »
 
 ---
 
