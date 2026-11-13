@@ -164,15 +164,13 @@ L'évaluation lucide des deux ébauches de pitch précédentes révèle des faib
 
 ---
 
-### [3:15 – 4:05] 5. Adéquation au Thème CADEV, Traction & Équipe MIABE
+### [3:15 – 4:05] 5. Adéquation au Thème CADEV, Traction & Équipe CYBERSOCLE
 
 > « Le thème de ce hackathon est : *"Construire la plateforme d'échange africaine, pour les devs, par les devs"*.
 >
 > BANTUDEVLAB en est la réalisation tangible. Nous ne présentons pas un concept théorique, mais une forge logicielle opérationnelle, forte de 308 commits d'ingénierie rigoureuse, 201 tests automatisés validés à 95,62 % de couverture de code, 63 dépendances Python vérifiées permissives et une politique d'accessibilité stricte zéro emoji.
 >
-> La plateforme héberge d'ores et déjà des briques stratégiques panafricaines, notamment notre passerelle `afri-fintech-gateway`.
->
-> Notre équipe n'en est pas à son coup d'essai. Nous avons remporté le 1er prix du Hackathon MIABE 2026 grâce à FoncierChain sur Hyperledger Fabric. Nous maîtrisons les passerelles USSD, la cryptographie distribuée et le DevOps de production. »
+> La plateforme héberge d'ores et déjà des briques stratégiques panafricaines, notamment notre passerelle `afri-fintech-gateway`. »
 
 ---
 
