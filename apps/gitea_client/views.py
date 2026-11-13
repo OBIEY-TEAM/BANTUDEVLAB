@@ -134,11 +134,11 @@ class ForgeStatusView(APIView):
         return Response(
             {
                 "forge_engine": "Gitea CE (MIT)",
-                "cloud_provider": "Systalink Cloud Sovereign Africa",
-                "datacenter_location": "Abidjan, Ivory Coast / Tier-3 DataCenter",
+                "cloud_provider": "VPS Ubuntu externe (domaines Datacloud)",
+                "datacenter_location": "VPS Ubuntu externe — Déploiement souverain : objectif de la feuille de route",
                 "version_info": version_data,
                 "status": "ONLINE",
-                "sovereignty_assurance": "100% African Jurisdiction",
+                "sovereignty_assurance": "Auto-hébergement local (Gitea CE + Ollama)",
             },
             status=status.HTTP_200_OK,
         )

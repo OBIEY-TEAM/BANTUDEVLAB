@@ -153,8 +153,8 @@ def home_view(request):
     recent_audits = SecurityAuditReport.objects.all().order_by("-scanned_at")[:3]
     context = {
         "total_repos": len(repos),
-        "sovereignty_level": "100% Panafricain",
-        "active_nodes": "Systalink Cloud (Abidjan, Dakar, Nairobi, Kigali)",
+        "sovereignty_level": "Auto-hébergé (VPS Ubuntu externe)",
+        "active_nodes": "VPS Ubuntu externe — Topologie souveraine cible (projet)",
         "featured_repos": repos,
         "recent_audits": recent_audits,
     }

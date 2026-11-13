@@ -208,7 +208,7 @@ class GemmaStatusView(APIView):
             {
                 "model": "Gemma 2 2B (African Sovereign Code Assistant)",
                 "precision": "4-bit / 8-bit QLoRA Finetuned",
-                "host_environment": "Systalink Sovereign Cloud Cluster",
+                "host_environment": "VPS Ubuntu externe (Ollama local)",
                 "offline_mode_capable": True,
                 "status": "READY",
             },

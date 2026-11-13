@@ -18,15 +18,17 @@
 
 <div class="card-grid">
     <div class="card">
-        <h3>{% icon "landmark" size=22 %} {% trans "Moteur Git Souverain (Systalink Cloud)" %}</h3>
+        <h3>{% icon "landmark" size=22 %} {% trans "Moteur Git Gitea CE (MIT)" %}</h3>
         <p>{% trans "Forge logicielle basée sur Gitea CE (MIT), avec authentification Zero-Trust et analyse locale de code." %}</p>
-        <span class="stat-number">100%</span>
+        <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 0.5rem;">
+            {% trans "Application hébergée sur un VPS Ubuntu externe ; domaines acquis chez Datacloud. Déploiement souverain : objectif de la feuille de route." %}
+        </p>
         <div style="margin-top: 0.5rem;">
             <a href="{{ GITEA_LOGIN_URL|default:BASE_URL_2 }}" target="_blank" rel="noopener noreferrer" style="color: var(--secondary-emerald); font-size: 0.85rem; text-decoration: underline; display: inline-flex; align-items: center; gap: 0.35rem;">
                 {% icon "external-link" size=14 %} {% trans "Connexion Gitea" %} ({{ GITEA_LOGIN_URL|default:BASE_URL_2 }})
             </a>
         </div>
-        <p style="color: var(--secondary-emerald); font-weight: bold;">{% trans "Contrôle Panafricain" %}</p>
+        <p style="color: var(--secondary-emerald); font-weight: bold;">{% trans "Architecture Ouverte" %}</p>
     </div>
 
     <div class="card">

@@ -108,7 +108,7 @@ class SecurityScannerEngine:
             "vuln_rec": "Remplacer par des requêtes paramétrées ou une alternative sécurisée.",
             "ast_desc": "Appel dangereux à {func_name}() détecté via analyse syntaxique AST (T-SEC-502)",
             "ast_rec": "Remplacer par ast.literal_eval, une structure typée ou subprocess sans shell=True.",
-            "sov_rec": "Migrer les endpoints vers Systalink Cloud ou l'infrastructure souveraine panafricaine.",
+            "sov_rec": "Migrer les endpoints vers une infrastructure auto-hébergée ou souveraine.",
             "jurisdiction": "African Digital Sovereignty Standards (ADSS-v1)",
         },
         "en": {
@@ -118,7 +118,7 @@ class SecurityScannerEngine:
             "vuln_rec": "Replace with parameterized queries, rootless container rules, or a safe API.",
             "ast_desc": "Dangerous call to {func_name}() detected via AST static analysis (T-SEC-502)",
             "ast_rec": "Replace with ast.literal_eval, typed structures, or subprocess without shell=True.",
-            "sov_rec": "Migrate endpoints to Systalink Cloud or the Pan-African sovereign infrastructure.",
+            "sov_rec": "Migrate endpoints to a self-hosted or sovereign infrastructure.",
             "jurisdiction": "African Digital Sovereignty Standards (ADSS-v1)",
         },
         "sw": {
