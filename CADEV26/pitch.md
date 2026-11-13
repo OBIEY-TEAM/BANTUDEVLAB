@@ -34,19 +34,19 @@ L'état actuel du référentiel Git démontre une trajectoire d'industrialisatio
 
 - **Industrialisation des 6 Axes Métier (`6a6a1da`, `2c1f0b4`, `3763a05`, `2d26ecf`, `b315e70`, `bff59af`) :**
   - **Axe 1 (Sécurité & Zero-Trust) :** Hardening strict de l'authentification ZKP avec vérification des sous-groupes premiers ($y^q \equiv 1 \pmod p$), expiration atomique des nonces anti-rejeu, jetons Git CLI ZKP (`GitAccessToken`), et journal d'audit immuable SHA-256 (`AuditTrailLog` conforme Convention de Malabo 2014).
-  - **Axe 2 (Scalabilité & Résilience) :** Traitement asynchrone Celery adossé à Redis, cache Django structuré avec repli hors-ligne, circuit breakers et sondes Kubernetes (`/healthz`, `/readyz`).
-  - **Axe 3 (Architecture & Écosystème) :** Synchronisation bidirectionnelle REST v1 avec Gitea (`GiteaSyncService`), modélisation multi-tenant `SovereignOrganization` (banques centrales, ministères, universités, startups), conformité OASIS SARIF 2.1.0 et GitLab SAST (`gl-sast-report.json`), documentation OpenAPI 3.0 via `drf-spectacular`.
-  - **Axe 4 (Design System & Expérience Développeur) :** Intégration de l'éditeur CodeMirror auto-hébergé, jauge circulaire de score de souveraineté numérique, wizard ZKP avec mnémonique BIP-39 (12 mots), système de notifications toasts unifié, et cartographie interactive des nœuds souverains panafricains (Abidjan, Dakar, Lagos, Nairobi, Kigali).
-  - **Axe 6 (Assurance Qualité & Tests) :** Tests de fuzzing cryptographique (`test_zkp_fuzzing.py`), tests end-to-end Playwright (`test_e2e_playwright.py`), couverture de test stricte supérieure à 95%, linting/formatage automatisé Ruff, et audit de sécurité Bandit.
-  - **Industrialisation IA & Packaging GGUF :** Packaging complet des poids de fine-tuning LoRA vers GGUF quantifié 4-bit (`export_gguf.py`) et conteneurisation Docker durcie sous utilisateur non-root (`appuser:appgroup`).
+  - **Axe 2 (Scalabilité & Résilience) :** Traitement asynchrone Celery adossé à Valkey 7.2 (remplacement BSD-3 de Redis), cache Django structuré avec repli hors-ligne, circuit breakers et sondes Kubernetes (`/healthz`, `/readyz`).
+  - **Axe 3 (Architecture & Écosystème) :** Synchronisation bidirectionnelle REST v1 avec Gitea (`GiteaSyncService`), modélisation multi-tenant `SovereignOrganization` (banques centrales, ministères, universités, startups), conformité OASIS SARIF 2.1.0, documentation OpenAPI 3.0 via `drf-spectacular`.
+  - **Axe 4 (Design System & Expérience Développeur) :** Intégration de l'éditeur CodeMirror auto-hébergé, jauge circulaire de score de souveraineté numérique, wizard ZKP avec mnémonique BIP-39 (12 mots), système de notifications toasts unifié, et cartographie interactive de la topologie cible panafricaine (Projet, non déployé : Abidjan, Dakar, Lagos, Nairobi, Kigali).
+  - **Axe 6 (Assurance Qualité & Tests) :** Tests de fuzzing cryptographique (`test_zkp_fuzzing.py`), tests end-to-end Playwright (`test_e2e_playwright.py`), couverture de test stricte à 95,62 %, linting/formatage automatisé Ruff, et audit de sécurité Bandit.
+  - **Industrialisation IA & Conteneurisation :** Scripts de préparation LoRA/GGUF (`finetuning/`) hors inférence de production (modèle actif : `gemma2:2b` standard via Ollama) et conteneurisation Docker durcie sous utilisateur non-root (`appuser:appgroup`).
 
 - **Convergence et Alignement Modèle Local `gemma2:2b` (`c192064`, `ff7e4ef`, `f8c1a1e`) :**
   - Rédaction de l'audit exhaustif `TASK/TASK5.md` identifiant le désalignement historique : correction du tag `gemma:5b` vers l'architecture compacte et souveraine `gemma2:2b` (Google Gemma 2 2B Instruct / Q4_K_M).
   - Résolution du dimensionnement de mémoire : passage d'un modèle 5B lourd et non standard à un modèle 2B compact capable de tourner sur CPU ou GPU modeste (4 à 8 Go VRAM) en datacenter africain ou environnement local déconnecté.
   - Assainissement strict des payloads avant inférence (anonymisation IP/tokens) et limitation de contexte à 8192 tokens.
 
-- **Fédération GitLab & Guides de Souveraineté (`09a6d3a`, `d0ff819`, `50d5438`) :**
-  - Intégration du client GitLab API v4 (`apps/gitlab_client`), pont d'authentification Ruby OmniAuth ZKP (`gitlab/lib/gitlab/auth/bantu_zkp.rb`), et service de revue automatique d'IA (`gemma_review_service.rb`).
+- **Consolidation Gitea & Retrait de GitLab (`09a6d3a`, `d0ff819`, `50d5438`, `8f59411`) :**
+  - Forge unifiée autour de Gitea CE 1.22 (MIT) ; les anciens éléments GitLab ont été retirés de l'interface, des menus et de la CI (`docs/archive/`).
   - Conteneurisation Docker clé-en-main avec redirection automatique vers Gitea (port 3002).
   - Rédaction des spécifications d'équivalence totale GitHub dans `TASK/TASK6.md` et des 20 cycles opérationnels dans `TASK/`.
 
@@ -84,7 +84,7 @@ L'état actuel du référentiel Git démontre une trajectoire d'industrialisatio
 ├── static/ & templates/         # Interface web Primer, CodeMirror local, carte des nœuds
 ├── tests/                       # Suite de tests (E2E Playwright, Fuzzing ZKP, couverture > 95%)
 ├── Dockerfile                   # Image de production durcie non-root UID 1000 Gunicorn/Uvicorn
-├── docker-compose.yml           # Composition orchestrée (Django, Gitea, Postgres, Redis, Celery)
+├── docker-compose.yml           # Composition orchestrée (Django, Gitea, Postgres, Valkey, Celery)
 └── pyproject.toml               # Configuration Ruff, Bandit, Pytest et couverture
 ```
 
@@ -144,7 +144,7 @@ L'évaluation lucide des deux ébauches de pitch précédentes révèle des faib
 > « BANTUDEVLAB transforme radicalement cette donne en combinant un moteur Git ultra-performant (Gitea CE) et une surcouche de gouvernance souveraine industrielle en Python/Django, bâtie sur trois piliers robustes et vérifiables :
 >
 > - **Pilier 1 : La Souveraineté de l'Infrastructure et des Données.**
->   BANTUDEVLAB est 100 % autonome, conteneurisé avec Docker, PgBouncer, PostgreSQL et Valkey. Déployé avec des domaines achetés chez Systalink/Datacloud et une application hébergée sur un VPS Ubuntu externe. L'intégralité des dépôts reste sous juridiction africaine, avec un chaînage cryptographique SHA-256 garantissant un journal d'audit immuable aligné sur la Convention de Malabo.
+>   BANTUDEVLAB est autonome, conteneurisé avec Docker, PgBouncer, PostgreSQL et Valkey. Déployé avec des domaines achetés chez Systalink/Datacloud et une application hébergée sur un VPS Ubuntu externe (déploiement souverain en objectif de la feuille de route), avec un chaînage cryptographique SHA-256 garantissant un journal d'audit immuable aligné sur la Convention de Malabo.
 >
 > - **Pilier 2 : La Sécurité Zero-Trust par Preuve à Divulgation Nulle (ZKP).**
 >   Nous éliminons les mots de passe. L'authentification repose sur le protocole mathématique de **Schnorr (groupe RFC 3526 MODP 2048 bits)** avec transformée de Fiat-Shamir. L'utilisateur prouve qu'il détient son secret sans jamais le transmettre au serveur. Même en cas de compromission de l'infrastructure, aucun mot de passe ne peut fuiter car aucun mot de passe n'existe sur le serveur. Ce protocole protège également l'émission des jetons d'accès Git CLI (`tea` et `git-credential`).
@@ -168,7 +168,7 @@ L'évaluation lucide des deux ébauches de pitch précédentes révèle des faib
 
 > « Le thème de ce hackathon est : *"Construire la plateforme d'échange africaine, pour les devs, par les devs"*.
 >
-> BANTUDEVLAB en est la réalisation tangible. Nous ne présentons pas un concept théorique, mais une forge logicielle opérationnelle, forte de 26 commits d'ingénierie rigoureuse, 20 cycles d'équivalence GitHub déjà spécifiés, plus de 500 tests automatisés validés à plus de 95 % de couverture de code, et une politique d'accessibilité stricte zéro emoji.
+> BANTUDEVLAB en est la réalisation tangible. Nous ne présentons pas un concept théorique, mais une forge logicielle opérationnelle, forte de 308 commits d'ingénierie rigoureuse, 201 tests automatisés validés à 95,62 % de couverture de code, 63 dépendances Python vérifiées permissives et une politique d'accessibilité stricte zéro emoji.
 >
 > La plateforme héberge d'ores et déjà des briques stratégiques panafricaines, notamment notre passerelle `afri-fintech-gateway`.
 >
@@ -181,7 +181,7 @@ L'évaluation lucide des deux ébauches de pitch précédentes révèle des faib
 > « Notre modèle de durabilité est clair :
 > - **Gratuit et ouvert :** Pour tous les développeurs individuels, étudiants et communautés open source africaines.
 > - **Offres Entreprises & Souveraineté Dédiée :** Abonnements de conformité, instances privées durcies, clusters d'inférence GPU pour banques centrales, ministères et grands groupes de télécommunications.
-> - **Alliance avec Systalink / Datacloud :** Le partenariat avec Systalink permettra de déployer des nœuds de forge interconnectés à Abidjan, Dakar, Lagos, Nairobi et Kigali, éliminant la latence et offrant une réplication inter-régionale native sur les infrastructures Datacloud. »
+> - **Alliance avec Systalink / Datacloud (Feuille de route) :** L'objectif de la feuille de route est de déployer des nœuds de forge interconnectés (topologie cible : Abidjan, Dakar, Lagos, Nairobi, Kigali), afin de réduire la latence et d'offrir une réplication inter-régionale. »
 
 ---
 
@@ -207,7 +207,7 @@ L'évaluation lucide des deux ébauches de pitch précédentes révèle des faib
 | **0:55 – 1:35** | Redirection vers le Dashboard. Vue sur les dépôts souverains synchronisés avec Gitea. Ouverture d'un dépôt (`afri-fintech-gateway`). Édition d'un fichier avec CodeMirror embarqué. | « Je bascule directement dans ma forge. Mes dépôts sont synchronisés en temps réel avec le moteur Gitea local. Pas d'attente, pas de transfert à l'autre bout de la planète. Je peux naviguer dans l'arborescence, inspecter les branches et éditer mon code en local. » | Éditeur CodeMirror, arborescence interactive, raccourci clavier `t`. |
 | **1:35 – 2:15** | Dans le Workbench Souverain, collage d'un code Python contenant une clé secrète en dur (`sk_live_...`) et un `SELECT * FROM users WHERE id=` concaténé. Clic sur *Lancer l'Audit SAST*. | « Démonstration de notre scanner SAST souverain : en une fraction de seconde, le moteur calcule l'entropie de Shannon des chaînes, détecte les secrets enfouis et les injections SQL, calcule notre score de souveraineté et produit un rapport au standard OASIS SARIF 2.1.0 prêt pour la CI. » | Score de souveraineté dynamique, cartes interactives des failles, bouton d'export SARIF. |
 | **2:15 – 2:45** | Clic sur *Revue par Gemma 2 2B*. L'IA locale répond en streaming continu sans accès Internet. Proposition d'un patch de sécurité immédiat. | « Voici notre modèle d'aide au développement : l'assistant d'IA local Gemma 2 2B Instruct. Exécuté localement via Ollama, il analyse le diff en direct, signale la faille et propose des suggestions de revue sans qu'aucun octet ne quitte notre machine. » | Flux SSE continu, suggestion de code nettoyé, zéro appel réseau extérieur. |
-| **2:45 – 3:00** | Ouverture de l'onglet `/metrics/` : visualisation de la carte interactive des 5 nœuds panafricains et latence mesurée en direct (< 15 ms). | « Enfin, notre télémétrie en temps réel montre l'avantage stratégique de la proximité : une latence sous les 20 ms contre plus de 200 ms vers l'étranger. BANTUDEVLAB : par les devs, pour les devs. » | Carte interactive SVG, jauges de latence vertes, journal chaîné SHA-256. |
+| **2:45 – 3:00** | Ouverture de l'onglet `/sovereignty-metrics/` : visualisation de la topologie cible des 5 nœuds panafricains (Projet, non déployé) et mesure de latence en direct vers le serveur actif (`/healthz`). | « Enfin, notre télémétrie en temps réel mesure la latence directe du serveur actif et présente notre topologie cible panafricaine. BANTUDEVLAB : par les devs, pour les devs. » | Carte interactive SVG annotée « Projet, non déployé », mesure `/healthz` en direct, journal chaîné SHA-256. |
 
 ---
 
@@ -258,7 +258,7 @@ L'évaluation lucide des deux ébauches de pitch précédentes révèle des faib
 > 6. Plus de 20 cycles d'extensions documentés dans `TASK/` garantissant une équivalence fonctionnelle complète avec GitHub. »
 
 **Question 9 : Pourquoi un développeur quitterait-il GitHub pour BantuDevLab ?**
-> *Réponse du Lead :* « Il ne s'agit pas d'opposer les plateformes, mais d'offrir le choix de la souveraineté. Pour les projets open source mondiaux, GitHub reste pertinent. Mais pour les infrastructures critiques, les banques centrales, les dossiers médicaux, les télécoms et le code d'État, héberger sur BantuDevLab garantit la conformité juridique avec la Convention de Malabo, une latence divisée par dix, et la certitude qu'aucune IA étrangère n'exploite le code africain. De plus, nos fonctionnalités de miroir Git permettent une synchronisation transparente entre les deux mondes. »
+> *Réponse du Lead :* « Il ne s'agit pas d'opposer les plateformes, mais d'offrir le choix de la souveraineté. Pour les projets open source mondiaux, GitHub reste pertinent. Mais pour les infrastructures critiques, les banques centrales, les dossiers médicaux, les télécoms et le code d'État, héberger sur BantuDevLab vise la conformité avec la Convention de Malabo et la certitude qu'aucune IA étrangère n'exploite le code africain. De plus, nos fonctionnalités de miroir Git permettent une synchronisation transparente entre les deux mondes. »
 
 ---
 
@@ -273,7 +273,7 @@ L'évaluation lucide des deux ébauches de pitch précédentes révèle des faib
   python scripts/check_no_emoji.py
   ruff check .
   ```
-- [ ] Connecter un compte de démonstration préalablement initialisé (`sovereign-dev`) et vérifier que le dépôt témoin `afri-fintech-gateway` est prêt avec ses branches.
+- [ ] Connecter le compte de démonstration non privilégié (`cadev_evaluator`) via « Connexion Démo 1-Clic » et vérifier que le dépôt témoin est prêt.
 - [ ] Ouvrir la vidéo de secours 1080p dans un lecteur multimédia réduit dans la barre des tâches.
 - [ ] Mettre l'ordinateur en mode « Ne pas déranger » et désactiver le verrouillage automatique d'écran.
 

@@ -2,7 +2,7 @@
 
 > **Projet :** BANTUDEVLAB — Forge Logicielle Souveraine Panafricaine  
 > **Équipe candidate :** CYBERSOCLE  
-> **Date du plan :** 12 novembre 2026  
+> **Date du plan :** 13 novembre 2026  
 > **Document de conformité :** Tâche 2 — Audit de sécurité et gestion des identifiants sensibles
 
 ---
@@ -45,7 +45,7 @@ python -c 'import secrets; print(secrets.token_hex(24))'
 python -c 'import secrets; print(secrets.token_hex(32))'
 ```
 
-### Étape 2 : Déploiement dans `.env.production` sur le VPS Hostinger
+### Étape 2 : Déploiement dans `.env.production` sur le VPS Ubuntu externe
 Renseigner ces valeurs générées directement dans le fichier sécurisé `~/.env.production` (droits `chmod 600`, propriété `root` ou `bantu`), sans jamais versionner ce fichier dans Git :
 ```bash
 DJANGO_SECRET_KEY=<NOUVELLE_CLE_GENEREE>

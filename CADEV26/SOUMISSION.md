@@ -22,7 +22,7 @@ Le continent africain fait face à une dépendance critique vis-à-vis des plate
 BANTUDEVLAB est une forge logicielle panafricaine souveraine d'échange et de revue de code, conçue selon le principe « par les développeurs, pour les développeurs ». Elle associe :
 1. **Un moteur Git distribué et léger :** Intégration de Gitea CE 1.22 (licence MIT) avec passerelle multi-forges et synchronisation d'écosystème.
 2. **Une authentification Zero-Trust sans mot de passe (ZKP) :** Système cryptographique fondé sur le protocole de Schnorr non interactif (Fiat-Shamir sur groupe RFC 3526 MODP 2048 bits), évitant la transmission ou le stockage de mots de passe sur le serveur.
-3. **Un scanner d'analyse statique SAST intégré :** Détection de secrets par calcul d'entropie de Shannon ($H \ge 3.8$), détection de vulnérabilités multi-langages, calcul d'un score de souveraineté numérique (0 à 100%) et exports normalisés OASIS SARIF 2.1.0 et GitLab SAST (`gl-sast-report.json`).
+3. **Un scanner d'analyse statique SAST intégré :** Détection de secrets par calcul d'entropie de Shannon ($H \ge 3.8$), détection de vulnérabilités multi-langages, calcul d'un score de souveraineté numérique (0 à 100%) et exports normalisés OASIS SARIF 2.1.0.
 4. **Un assistant de revue de code IA local (Gemma 2 2B) :** Inférence locale via Ollama au sein du conteneur d'infrastructure, sans fuite de télémétrie ni de code vers des tiers.
 5. **Une expérience utilisateur multi-écrans bilingue et panafricaine :** Terminal de commande guidé sans saisie libre, éditeur CodeMirror 5, et 4 langues supportées (Français, Anglais, Kiswahili, Portugais).
 
@@ -162,8 +162,8 @@ Conformément à l'Article 6 du règlement du concours (déclaration obligatoire
 ### Déclaration Factuelle :
 - **Date du tout premier commit Git :** **31 octobre 2026 à 11:14:31 GMT** (`b0fa102ec01065d0b9a788363b3d4c03b2f99535`).
 - **Commits réalisés avant le 29 septembre 2026 :** **ZÉRO (0 commit)**. Aucun code préexistant antérieur au 29 septembre 2026 n'a été réutilisé ou importé dans le projet.
-- **Nombre total de commits enregistrés :** 280 commits traçables, documentant le développement continu entre le 31 octobre 2026 et le 12 novembre 2026.
+- **Nombre total de commits enregistrés :** 308 commits traçables, documentant le développement continu entre le 31 octobre 2026 et le 13 novembre 2026.
 - **Auteurs des contributions :**  
-  - OBIEY Christ Dany : 280 commits (identifiants `obiey`, `obieydany-code`, `obiey christ dany`, `OBIEY Christ Dany`).
+  - OBIEY Christ Dany : 308 commits (identifiants `obiey`, `obieydany-code`, `obiey christ dany`, `OBIEY Christ Dany`).
 - **Composants tiers non modifiés :** Gitea CE 1.22 (0% de code modifié), Valkey 7.2 (0% de code modifié), Nginx 1.27 (0% de code modifié), Ollama (0% de code modifié).
 - **Code original produit par l'équipe :** 100% du code applicatif situé dans `apps/` (~4 632 lignes Python), les templates HTML/CSS (~6 000 lignes), les scripts de contrôle qualité et la documentation ont été écrits intégralement durant la période officielle du concours.

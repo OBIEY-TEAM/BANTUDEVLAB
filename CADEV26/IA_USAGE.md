@@ -5,7 +5,7 @@
 - **Capitaine d'équipe :** OBIEY Christ Dany (Lead Architecture & Développement Fullstack)  
 - **Membre de l'équipe :** MAMPOUYA Alicia Syrianne (Présentation vidéo démo & parcours utilisateur)  
 **Cadre réglementaire :** Article 6 du concours CADEV 2026 (Transparence et déclaration des outils d'assistance)  
-**Date du relevé :** 12 novembre 2026  
+**Date du relevé :** 13 novembre 2026  
 
 ---
 
@@ -36,7 +36,7 @@ Le flux de travail collaboratif mis en place par l'équipe CYBERSOCLE associe pi
 
 ### 2.2 Mécanismes de Relecture et de Validation Humaine
 1. **Relecture Systématique :** Chaque proposition de code, script ou documentation issue d'un éditeur ou assistant est intégralement relue et analysée par l'ingénieur humain avant toute intégration.
-2. **Exécution des Tests Automatisés :** Aucune modification n'est conservée sans validation par la suite de tests Pytest (201 tests unitaires et d'intégration validés, avec une couverture mesurée de 95,78%).
+2. **Exécution des Tests Automatisés :** Aucune modification n'est conservée sans validation par la suite de tests Pytest (201 tests unitaires et d'intégration validés, avec une couverture mesurée de 95,62%).
 3. **Contrôles Statiques Automatisés :** Exécution systématique des outils de contrôle qualité :
    - `scripts/check_no_emoji.py` : interdiction stricte de tout emoji.
    - `scripts/check_licenses.py` : interdiction stricte de tout composant sous GPL, AGPL, LGPL ou licences assimilées dans le build standard.

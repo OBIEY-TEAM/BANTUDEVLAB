@@ -7,7 +7,7 @@
 > **Conformité au règlement CADEV 2026 (Systalink) :**  
 > Le règlement stipule que tout composant sous licence GPL, AGPL ou LGPL rend le projet irrecevable (Article 6).  
 > Seules les licences permissives (**MIT, Apache 2.0, BSD 2/3-Clause, PSF, ISC, Public Domain**) sont strictement admises.  
-> Date d'audit : 12 novembre 2026 — Inventaire généré via `pip-licenses`, introspection `importlib.metadata` et audit statique de l'écosystème.
+> Date d'audit : 13 novembre 2026 — Inventaire généré via `pip-licenses`, introspection `importlib.metadata` et vérifié par `scripts/check_licenses.py` (`63/63` paquets conformes).
 
 ---
 

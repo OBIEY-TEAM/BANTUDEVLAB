@@ -53,3 +53,13 @@ Conditions : Navigateur sans cache, affichage Desktop (`1440x900`) et Mobile (`3
 2. **`apps/gitea_client/views.py` & `apps/core/views.py`** : Invalidation du cache `bantudevlab_forge_repos_cache` et `gitea_repos_list` lors de la création d'un dépôt, et fusion des dépôts locaux `SovereignRepository` dans `get_cached_repositories()` afin que `demo-cadev-2026` apparaisse immédiatement dans `/dashboard/`.
 3. **`apps/ai_assistant/gemma.py` & `templates/core/dashboard.html`** : Ajout d'un délai maximal côté serveur (35 s en streaming) et d'un `AbortController` côté client (45 s) affichant un message clair si Ollama ne répond pas.
 4. **`templates/zkp_auth/login.html`** : Envoi systématique de `X-CSRFToken` (si disponible) lors des appels `POST /api/zkp/challenge/` et `POST /api/zkp/verify/`.
+5. **`apps/gitea_client/views.py`** : Fusion des dépôts locaux `SovereignRepository` dans `GET /api/forge/repositories/` (commit `52bcb82`).
+6. **`static/css/style.css` & `bantu-command-terminal.js`** : Barre de navigation responsive adaptée de `320px` au grand bureau sans retour à la ligne ni débordement (commit `db196a8`).
+
+---
+
+## Re-vérification en ligne (13 novembre 2026)
+
+- **`https://forge.cybersocle.site`** : Redirection HTTP 301 vérifiée vers `https://git.cybersocle.site/explore/repos`.
+- **`https://git.cybersocle.site`** : Titre `Explorateur - BantuDevLab - Forge souveraine`, lien vers `https://cybersocle.site/faq/`, suppression du lien `localhost:6157`, accents corrigés.
+- **Points restants côté VPS** : Redéployer la branche `docker-cadev26` (`db196a8`) sur le VPS et rendre public le dépôt `bantudevlab` dans l'instance Gitea de production.

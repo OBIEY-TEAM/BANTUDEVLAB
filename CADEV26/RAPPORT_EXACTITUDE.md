@@ -1,7 +1,7 @@
 # Rapport d'Exactitude, Cohérence et Conformité — CADEV 2026 (`CADEV26/RAPPORT_EXACTITUDE.md`)
 
 **Projet :** BANTUDEVLAB (Équipe CYBERSOCLE : OBIEY Christ Dany, capitaine ; MAMPOUYA Alicia Syrianne, présentation vidéo et parcours utilisateur)  
-**Branche de travail :** `cadev-site-exactitude` (avant fusion dans `main`)  
+**Branche de travail :** `main` / `docker-cadev26` (commit `db196a8`, tag `v1-cadev-submission`)  
 **Date :** 13 novembre 2026
 
 ---
@@ -58,10 +58,12 @@
       - La branche Gitea 1.22.6 corrige des failles antérieures (ex. CVE-2024-6886), mais des avis de sécurité plus récents concernent les versions non mises à jour (notamment épuisement de ressources `go-git < v5.13` dans certaines distributions 1.22, et des CVE critiques publiées sur les branches Gitea suivantes telles que CVE-2026-59774 lecture arbitraire de fichiers et CVE-2026-60004 RCE via hooks Git).
       - **Recommandation** : Planifier une mise à jour de l'image `gitea/gitea:1.22` vers la dernière version stable maintenue après sauvegarde complète (`scripts/backup_gitea.py`) et validation en pré-production.
 
-12. **Tâche 12 — Responsivité multi-appareils** :
-    - Masquage des boutons Pro injectés dans la barre supérieure sur `<= 1024px` et déplacement dans le menu tiroir mobile (`#navDrawer`) dans `static/js/bantu-command-terminal.js` et `custom/public/assets/js/bantu-command-terminal.js`.
-    - Durcissement CSS anti-débordement horizontal (`html, body { overflow-x: hidden; max-width: 100%; }`, tableaux défilables sur mobile) dans `static/css/style.css`.
+12. **Tâche 12 — Responsivité multi-appareils & conformité finale** :
+    - Masquage des boutons Pro injectés dans la barre supérieure sur `<= 768px` (Django) / `<= 1024px` (Gitea) et déplacement dans le menu tiroir mobile (`#navDrawer`) dans `static/js/bantu-command-terminal.js` et `custom/public/assets/js/bantu-command-terminal.js`.
+    - Adaptation complète de la navbar dans `static/css/style.css` (`white-space: nowrap`, breakpoints `1460px`, `1240px`, `768px`) pour éviter tout débordement ou retour à la ligne de `320px` au grand bureau, et durcissement anti-débordement horizontal (`html, body { overflow-x: hidden; max-width: 100%; }`).
     - Marge inférieure mobile ajoutée au pied de page Gitea (`custom/templates/custom/footer.tmpl`) pour éviter le chevauchement avec le bouton flottant Copilot IA.
+    - Ajout de la section Q12 dans `templates/core/faq.html` détaillant la conformité CADEV 2026 (Art. 6 et Annexe 1) et fusion des dépôts fallback dans `GET /api/forge/repositories/` (`apps/gitea_client/views.py`).
+    - Validation locale complète : `scripts/check_licenses.py` (`63/63` paquets conformes), `scripts/check_no_emoji.py` (`OK`), `pytest -q` (`201 passed, 3 skipped, 43 subtests passed`, couverture `95,62 %`).
 
 ---
 

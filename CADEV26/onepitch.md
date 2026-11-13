@@ -43,7 +43,7 @@
 | **Noyau Applicatif & API** | Python 3.12 / Django 5.2 & DRF | Architecture backend, modèles de données, API REST et vues d'authentification | BSD-3-Clause |
 | **Moteur Forge Git** | Gitea CE 1.22 (Go) | Moteur Git distribué, gestion des dépôts, branches, commits, PR et webhooks (utilisé tel quel) | MIT |
 | **Cryptographie Zero-Trust** | Protocole Schnorr NIZKP (RFC 3526) | Preuves non-interactives Fiat-Shamir sur groupe 2048-bit, génération BIP-39 (12 mots), tokens Git signés, aucun mot de passe | code original de l'équipe, licence MIT |
-| **Scanner de Sécurité SAST** | Python AST & Entropie Shannon | Détection de fuites de secrets ($H \ge 3.8$), détection de failles, calcul du score de souveraineté ADSS-v1, exports OASIS SARIF 2.1.0 et GitLab SAST | code original de l'équipe, licence MIT |
+| **Scanner de Sécurité SAST** | Python AST & Entropie Shannon | Détection de fuites de secrets ($H \ge 3.8$), détection de failles, calcul du score de souveraineté ADSS-v1, exports OASIS SARIF 2.1.0 | code original de l'équipe, licence MIT |
 | **Assistant IA Local** | Google Gemma 2 2B & Ollama | Petit modèle local d'aide au développement et à la revue de code, inférence on-premise sans fuite de données | Ollama (MIT) / Gemma Terms Google (modèle local non redistribué) |
 | **Base de Données** | SQLite (build standard) & PostgreSQL 16 (optionnel) | Base SQLite standard pour l'évaluation ; PostgreSQL et PgBouncer configurables pour la production | Domaine Public (SQLite) / PostgreSQL License |
 | **Cache & Broker Async** | Valkey 7.2-alpine & Celery 5.6 | Cache distribué en mémoire (remplacement BSD-3 de Redis) et exécution des tâches périodiques/asynchrones | BSD-3-Clause |

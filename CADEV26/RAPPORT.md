@@ -4,7 +4,7 @@
 **Équipe candidate :** Équipe CYBERSOCLE  
 - **Capitaine d'équipe :** OBIEY Christ Dany  
 - **Membre de l'équipe :** MAMPOUYA Alicia Syrianne (Présentation vidéo démo & parcours utilisateur)  
-**Organisateur & Événement :** Systalink Cloud — Concours CADEV 2026  
+**Organisateur & Événement :** SYSTALINK SENEGAL — Concours CADEV 2026  
 **Date limite impérative :** Dimanche 15 novembre 2026 à 17 h 00 GMT  
 **URL de Production :** https://cybersocle.site (Portail) / https://git.cybersocle.site (Forge Gitea CE)  
 **Dépôt Source Officiel (Forge Souveraine Gitea) :** https://git.cybersocle.site/obiey-code/bantudevlab.git  
@@ -46,12 +46,12 @@ L'intégralité du dépôt BantuDevLab a été audité, durci et rendu rigoureus
 - **Relevé objectif dans `CADEV26/HISTORIQUE.md` :**
   - Date du premier commit : 31 octobre 2026 à 11:14:31 GMT.
   - Commits antérieurs au 29 septembre 2026 : **ZÉRO (0 commit)**.
-  - Nombre total de commits : 280 commits documentés.
+  - Nombre total de commits : 308 commits documentés.
   - Décomposition claire : composants tiers éprouvés non modifiés (Gitea 0%, Valkey 0%, Nginx 0%, Ollama 0%) vs code original développé par l'équipe (~4 632 lignes Python, ~6 000 lignes templates/UI, scripts et tests).
 
 ### TÂCHE 6 — Mesure réelle des tests et correction des métriques
-- **Couverture réelle démontrée :** **95,78 %** sur les modules applicatifs cibles (`apps/zkp_auth`, `apps/security_scanner`, `apps/ai_assistant`), au-dessus du seuil requis de 94%.
-- **Suite de tests :** 201 tests passés avec succès.
+- **Couverture réelle démontrée :** **95,62 %** sur les modules applicatifs cibles (`apps/zkp_auth`, `apps/security_scanner`, `apps/ai_assistant`), au-dessus du seuil requis de 94%.
+- **Suite de tests :** 201 tests passés avec succès (3 ignorés, 43 sous-tests validés).
 - **Correction des assets :** Élimination des balises orphelines dans `templates/core/dashboard.html` pour garantir 100% de succès sur `test_static_assets.py`.
 - **Langues effectives :** 4 langues fonctionnelles compilées (`fr`, `en`, `sw`, `pt`).
 - **Workflows Gitea Actions :** Documentation détaillée du statut « en attente » causé par l'absence d'instance `act_runner` connectée, avec guide de configuration pas à pas.
@@ -81,7 +81,7 @@ L'intégralité du dépôt BantuDevLab a été audité, durci et rendu rigoureus
 Avant l'heure limite du **dimanche 15 novembre 2026 à 17 h 00 GMT**, les membres de l'équipe CYBERSOCLE doivent impérativement accomplir les démarches suivantes :
 
 ### Action 1 : Rotation effective des secrets en production
-- Sur le serveur VPS de production (Hostinger), générer un nouveau secret Django `SECRET_KEY` cryptographiquement sûr (`python -c "import secrets; print(secrets.token_urlsafe(50))"`).
+- Sur le serveur VPS Ubuntu externe de production, générer un nouveau secret Django `SECRET_KEY` cryptographiquement sûr (`python -c "import secrets; print(secrets.token_urlsafe(50))"`).
 - Renouveler les mots de passe de base de données PostgreSQL et les tokens de connexion Gitea dans le fichier `/srv/bantudevlab/.env.production`.
 - Redémarrer la pile de conteneurs : `docker compose -f docker-compose.production.yml up -d --force-recreate`.
 - *Rappel : Ne jamais commiter de secret réel dans le dépôt Git.*

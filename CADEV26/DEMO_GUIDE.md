@@ -54,7 +54,7 @@ BantuDevLab intègre une authentification sans mot de passe reposant sur les pre
 
 ## 4. Étape 3 : Consultation de la FAQ Souveraine
 
-1. Cliquez sur l'onglet **« FAQ »** dans le menu de navigation ou accédez à : **https://cybersocle.site/faq/**
+1. Cliquez sur l'onglet **« Guide & FAQ »** dans le menu de navigation ou accédez à : **https://cybersocle.site/faq/**
 2. Cette section répond aux questions fondamentales sur le projet :
    - Qu'est-ce que le score de souveraineté ADSS-v1 ?
    - Comment fonctionne le protocole Schnorr Zero-Knowledge Proof ?
@@ -74,11 +74,9 @@ L'évaluateur peut créer ou inspecter un dépôt Git souverain en quelques clic
 3. Cliquez sur le bouton externe **Gitea** pour ouvrir directement la vue du dépôt sur la forge :  
    `https://git.cybersocle.site/obiey-code/bantudevlab.git`
 
-### Option B : Création d'un nouveau dépôt de test sur Gitea
-1. Ouvrez l'interface de la forge : **https://git.cybersocle.site/**
-2. Cliquez sur le bouton **« + »** en haut à droite puis sur **« Nouveau dépôt »**.
-3. Renseignez un nom de dépôt (ex: `demo-audit-2026`) et cochez « Initialiser le dépôt (ajoute un .gitignore, une licence et un README) ».
-4. Validez en cliquant sur **« Créer un dépôt »**. Le dépôt est immédiatement disponible pour les analyses SAST et les revues de code IA.
+### Option B : Création d'un nouveau dépôt de démonstration depuis le portail ou Gitea
+1. Depuis le tableau de bord (**https://cybersocle.site/dashboard/**), cliquez sur **« Créer un Dépôt de Démonstration »** (ex. `demo-cadev-2026`) et validez.
+2. Alternativement, ouvrez l'interface Gitea (**https://git.cybersocle.site/**), cliquez sur **« + »** puis **« Nouveau dépôt »** et cochez « Initialiser le dépôt ». Le dépôt est immédiatement disponible pour les analyses SAST et les revues de code IA.
 
 ---
 
@@ -88,7 +86,7 @@ Le moteur d'intelligence artificielle locale de BantuDevLab s'appuie sur le mod�
 
 > **Note sur le modèle 2B :** Un modèle compact de 2 milliards de paramètres est optimisé pour des tâches précises d'analyse de code, de détection de patterns de vulnérabilité et de documentation ciblée. Il ne s'agit pas d'un modèle généraliste lourd, mais d'une sentinelle de code souveraine exécutée on-premise sans fuite de données.
 
-Voici **3 exemples concrets et prêts à tester** dans le Workbench du Dashboard (`/dashboard/`) ou via l'API de revue `/api/ai/code-review/` :
+Voici **3 exemples concrets et prêts à tester** dans le Workbench du Dashboard (`/dashboard/`) ou via l'API de revue `/api/ai/review/` :
 
 ---
 
