@@ -320,6 +320,8 @@ class GemmaAssistant:
         prompt = self._build_prompt(code_snippet=code_snippet, context=context, lang=lang_code)
 
         response = None
+        stream_started = time.monotonic()
+        max_stream_seconds = 35.0
         try:
             timeout_val = 0.5 if getattr(settings, "TESTING", False) else 10
             response = requests.post(
@@ -336,6 +338,9 @@ class GemmaAssistant:
             if response.status_code == 200:
                 try:
                     for line in response.iter_lines():
+                        if time.monotonic() - stream_started > max_stream_seconds:
+                            yield "\n\n[Délai maximal de 35s atteint : le moteur Ollama local n'a pas terminé à temps. Veuillez réessayer.]"
+                            return
                         if line:
                             chunk = json.loads(line.decode("utf-8"))
                             token = chunk.get("response", "")

@@ -496,9 +496,14 @@ async function loginWithZkp() {
     try {
     log(`{% trans "Demande d un défi (Challenge nonce) au serveur pour" %} <b>${username}</b>...`);
 
+    const zkpHeaders = {'Content-Type': 'application/json'};
+    if (window.getCsrfToken && window.getCsrfToken()) {
+        zkpHeaders['X-CSRFToken'] = window.getCsrfToken();
+    }
+
     const chalRes = await fetch('/api/zkp/challenge/', {
         method: 'POST',
-        headers: {'Content-Type': 'application/json'},
+        headers: zkpHeaders,
         body: JSON.stringify({username})
     });
     const chalData = await chalRes.json();
@@ -529,7 +534,7 @@ async function loginWithZkp() {
 
     const verifyRes = await fetch('/api/zkp/verify/', {
         method: 'POST',
-        headers: {'Content-Type': 'application/json'},
+        headers: zkpHeaders,
         body: JSON.stringify({
             username: username,
             challenge_nonce: nonce,

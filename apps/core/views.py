@@ -93,6 +93,35 @@ def readyz_view(request):
 FORGE_REPOS_CACHE_KEY = "bantudevlab_forge_repos_cache"
 
 
+def _merge_local_sovereign_repos(repos: list) -> list:
+    """Include locally registered SovereignRepository entries missing from Gitea search (e.g. private demo repos)."""
+    try:
+        from apps.gitea_client.models import SovereignRepository
+
+        existing_names = {r.get("name") for r in repos if isinstance(r, dict) and r.get("name")}
+        merged = list(repos)
+        for sr in SovereignRepository.objects.order_by("-created_at")[:50]:
+            if sr.name not in existing_names:
+                merged.append(
+                    {
+                        "id": sr.id,
+                        "name": sr.name,
+                        "full_name": f"{sr.owner}/{sr.name}",
+                        "owner": {"username": sr.owner},
+                        "description": sr.description,
+                        "private": sr.is_private,
+                        "html_url": sr.html_url,
+                        "clone_url": sr.clone_url,
+                        "default_branch": "main",
+                        "sovereignty_level": sr.sovereignty_level,
+                    }
+                )
+                existing_names.add(sr.name)
+        return merged
+    except Exception:
+        return repos
+
+
 def get_cached_repositories() -> list:
     """
     Retourne les dépôts Git réels depuis Gitea (API REST v1 souveraine).
@@ -102,29 +131,21 @@ def get_cached_repositories() -> list:
 
     repos = cache.get(FORGE_REPOS_CACHE_KEY)
     if repos is not None:
-        return repos
+        return _merge_local_sovereign_repos(repos)
 
     cached_gitea = cache.get(GiteaClient.CACHE_KEY_REPOS)
     if cached_gitea is not None:
-        return cached_gitea
+        return _merge_local_sovereign_repos(cached_gitea)
 
     try:
         repos = GiteaClient().list_repositories(use_cache=False)
         if repos:
             cache.set(FORGE_REPOS_CACHE_KEY, repos, 30)
-            return repos
+            return _merge_local_sovereign_repos(repos)
     except Exception:
         pass
 
-    try:
-        repos = GitLabClient().list_repositories() or []
-        if repos:
-            cache.set(FORGE_REPOS_CACHE_KEY, repos, 30)
-            return repos
-    except Exception:
-        pass
-
-    return []
+    return _merge_local_sovereign_repos([])
 
 
 def home_view(request):

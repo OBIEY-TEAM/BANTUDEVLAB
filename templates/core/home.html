@@ -71,7 +71,15 @@
             </div>
         </div>
         {% empty %}
-        <p>{% trans "Initialisation de la synchronisation avec Gitea..." %}</p>
+        <div class="card" style="grid-column: 1 / -1;">
+            <p style="margin: 0; color: var(--text-muted);">
+                {% trans "Aucun dépôt public synchronisé pour le moment. Créez un dépôt de démonstration depuis votre tableau de bord ou explorez la forge Gitea." %}
+            </p>
+            <div style="margin-top: 0.75rem; display: flex; gap: 0.75rem; flex-wrap: wrap;">
+                <a href="{% url 'dashboard' %}#new-repo" class="btn btn-primary">{% trans "Créer un Dépôt de Démonstration" %}</a>
+                <a href="https://git.cybersocle.site/explore/repos" class="btn btn-secondary" target="_blank" rel="noopener noreferrer">{% trans "Explorer la forge Gitea" %}</a>
+            </div>
+        </div>
         {% endfor %}
     </div>
 </div>

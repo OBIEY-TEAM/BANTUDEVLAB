@@ -728,6 +728,9 @@ async function runAiReview() {
     aiContent.textContent = t.aiConnecting + '\n';
     if (window.showToast) window.showToast(t.aiToastStart, "info");
 
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 45000);
+
     try {
         const aiHeaders = {
             'Content-Type': 'application/json',
@@ -740,6 +743,7 @@ async function runAiReview() {
         const response = await fetch('/api/ai/review/', {
             method: 'POST',
             headers: aiHeaders,
+            signal: controller.signal,
             body: JSON.stringify({
                 code: code,
                 context: `security_audit:${meta.filename}`,
@@ -782,8 +786,16 @@ async function runAiReview() {
         }
         if (window.showToast) window.showToast(t.aiDoneToast, "success");
     } catch(err) {
-        aiContent.textContent = t.aiSseError + err;
-        if (window.showToast) window.showToast(`${t.aiSseError}${err.message}`, 'error');
+        if (err && err.name === 'AbortError') {
+            const timeoutMsg = 'Délai maximal (45 s) dépassé : le moteur local Ollama (Gemma 2 2B) ne répond pas. Veuillez réessayer.';
+            aiContent.textContent = timeoutMsg;
+            if (window.showToast) window.showToast(timeoutMsg, 'error');
+        } else {
+            aiContent.textContent = t.aiSseError + err;
+            if (window.showToast) window.showToast(`${t.aiSseError}${err.message}`, 'error');
+        }
+    } finally {
+        clearTimeout(timeoutId);
     }
 }
 

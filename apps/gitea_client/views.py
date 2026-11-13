@@ -97,6 +97,11 @@ class RepositoryListView(APIView):
             details={"repository": name, "private": private},
         )
 
+        from django.core.cache import cache
+
+        cache.delete("bantudevlab_forge_repos_cache")
+        cache.delete(GiteaClient.CACHE_KEY_REPOS)
+
         return Response(result, status=status.HTTP_201_CREATED)
 
 
