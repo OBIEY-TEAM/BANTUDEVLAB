@@ -112,7 +112,7 @@ def _merge_local_sovereign_repos(repos: list) -> list:
                         "html_url": sr.html_url,
                         "clone_url": sr.clone_url,
                         "default_branch": "main",
-                        "sovereignty_level": sr.sovereignty_level,
+                        "sovereignty_score": sr.sovereignty_score,
                     }
                 )
                 existing_names.add(sr.name)
