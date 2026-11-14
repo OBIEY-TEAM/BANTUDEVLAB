@@ -124,14 +124,13 @@ class EcosystemI18nMiddleware:
         active_short = GITEA_TO_DJANGO_LANG.get(active_lang, "fr")
         active_gitea = DJANGO_TO_GITEA_LANG.get(active_short, "fr-FR")
 
-        response.set_cookie(
-            getattr(settings, "LANGUAGE_COOKIE_NAME", "django_language"),
-            active_short,
-            max_age=31536000,
-            path="/",
-            samesite="Lax",
-        )
-        response.set_cookie("bantu_lang", active_short, max_age=31536000, path="/", samesite="Lax")
-        response.set_cookie("lang", active_gitea, max_age=31536000, path="/", samesite="Lax")
+        host = request.get_host().split(":")[0].lower()
+        cookie_domain = ".cybersocle.site" if host.endswith("cybersocle.site") else None
+        for cname, cval in (
+            (getattr(settings, "LANGUAGE_COOKIE_NAME", "django_language"), active_short),
+            ("bantu_lang", active_short),
+            ("lang", active_gitea),
+        ):
+            response.set_cookie(cname, cval, max_age=31536000, path="/", samesite="Lax", domain=cookie_domain)
 
         return response

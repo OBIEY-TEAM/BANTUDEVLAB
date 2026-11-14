@@ -55,7 +55,7 @@
                         {% icon "chevron-down" size=12 %}
                     </button>
                     <div class="lang-menu" id="langMenu" role="menu" aria-labelledby="langMenuBtn">
-                        <form action="{% url 'set_language' %}" method="post" id="setLangForm">
+                        <form action="{% url 'switch_language' %}" method="post" id="setLangForm">
                             {% csrf_token %}
                             <input name="next" type="hidden" value="{{ request.get_full_path|default:'/' }}">
                             <button type="submit" name="language" value="fr" class="lang-item" role="menuitem">

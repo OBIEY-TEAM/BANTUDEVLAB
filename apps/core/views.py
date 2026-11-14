@@ -46,10 +46,15 @@ def switch_language_view(request):
             request.session["django_language"] = lang_code
         gitea_map = {"fr": "fr-FR", "en": "en-US", "sw": "sw-KE", "pt": "pt-PT"}
         gitea_lang = gitea_map.get(lang_code, "fr-FR")
-        response.set_cookie(settings.LANGUAGE_COOKIE_NAME, lang_code, max_age=31536000, samesite="Lax")
-        response.set_cookie("django_language", lang_code, max_age=31536000, samesite="Lax")
-        response.set_cookie("bantu_lang", lang_code, max_age=31536000, samesite="Lax")
-        response.set_cookie("lang", gitea_lang, max_age=31536000, samesite="Lax")
+        host = request.get_host().split(":")[0].lower()
+        cookie_domain = ".cybersocle.site" if host.endswith("cybersocle.site") else None
+        for cname, cval in (
+            (settings.LANGUAGE_COOKIE_NAME, lang_code),
+            ("django_language", lang_code),
+            ("bantu_lang", lang_code),
+            ("lang", gitea_lang),
+        ):
+            response.set_cookie(cname, cval, max_age=31536000, samesite="Lax", domain=cookie_domain)
     return response
 
 
