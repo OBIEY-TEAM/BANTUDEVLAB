@@ -539,6 +539,36 @@ html, body {
     padding: 8px 12px !important;
     gap: 6px !important;
   }
+  #navbar.shown,
+  .ui.menu.navbar.shown {
+    flex-direction: column !important;
+    align-items: stretch !important;
+  }
+  #navbar.shown .navbar-left,
+  #navbar.shown .navbar-right,
+  .ui.menu.navbar .navbar-left.shown,
+  .ui.menu.navbar .navbar-right.shown {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: stretch !important;
+    width: 100% !important;
+    margin: 4px 0 !important;
+    gap: 4px !important;
+  }
+  #navbar.shown .navbar-left > .item,
+  #navbar.shown .navbar-right > .item,
+  #navbar.shown .bantu-pro-actions-group,
+  #navbar.shown #bantu-gitea-nav-pro-actions {
+    width: 100% !important;
+    flex-direction: column !important;
+    align-items: stretch !important;
+    justify-content: flex-start !important;
+    margin: 2px 0 !important;
+  }
+  #navbar.shown .bantu-pro-action-btn {
+    width: 100% !important;
+    justify-content: flex-start !important;
+  }
   .github-search-input,
   .github-search-input:focus {
     width: 200px !important;
