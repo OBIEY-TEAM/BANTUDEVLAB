@@ -111,7 +111,7 @@
                     {% for repo in repos %}
                     <tr style="border-bottom: 1px solid var(--dark-border);">
                         <td style="padding: 0.75rem;">
-                            <a href="https://git.cybersocle.site/{% if repo.full_name %}{{ repo.full_name }}{% elif repo.owner.username %}{{ repo.owner.username }}/{{ repo.name }}{% else %}obiey-code/{{ repo.name }}{% endif %}.git" target="_blank" rel="noopener noreferrer" style="color: var(--secondary-emerald); font-weight: 600; text-decoration: none;">
+                            <a href="{{ repo.html_url|default:GITEA_EXTERNAL_URL }}" target="_blank" rel="noopener noreferrer" style="color: var(--secondary-emerald); font-weight: 600; text-decoration: none;">
                                 {{ repo.full_name|default:repo.name }}
                             </a>
                             {% if repo.description %}
