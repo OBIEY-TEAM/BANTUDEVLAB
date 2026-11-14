@@ -151,7 +151,7 @@ class GiteaClient:
         }
 
     def _get_fallback_repositories(self) -> List[Dict[str, Any]]:
-        """Scan local forge bare repositories or return sovereign default repos."""
+        """Scan local forge bare repositories (returns empty list if none exist)."""
         from config.base_urls import build_gitea_url
 
         repos: List[Dict[str, Any]] = []
@@ -173,29 +173,6 @@ class GiteaClient:
                         "default_branch": "main",
                     }
                 )
-        if not repos:
-            repos = [
-                {
-                    "id": 1,
-                    "name": "afri-fintech-gateway",
-                    "full_name": "sovereign-org/afri-fintech-gateway",
-                    "owner": {"username": "sovereign-org"},
-                    "private": False,
-                    "html_url": build_gitea_url("sovereign-org/afri-fintech-gateway"),
-                    "clone_url": build_gitea_url("sovereign-org/afri-fintech-gateway.git"),
-                    "default_branch": "main",
-                },
-                {
-                    "id": 2,
-                    "name": "bantu-zkp-identity",
-                    "full_name": "bantudevlab/bantu-zkp-identity",
-                    "owner": {"username": "bantudevlab"},
-                    "private": False,
-                    "html_url": build_gitea_url("bantudevlab/bantu-zkp-identity"),
-                    "clone_url": build_gitea_url("bantudevlab/bantu-zkp-identity.git"),
-                    "default_branch": "main",
-                },
-            ]
         return repos
 
     def list_repositories(self, use_cache: bool = True) -> List[Dict[str, Any]]:
