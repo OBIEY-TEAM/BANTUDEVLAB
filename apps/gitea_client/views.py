@@ -87,9 +87,12 @@ class RepositoryListView(APIView):
                 )
             cutoff = timezone.now() - timedelta(hours=24)
             SovereignRepository.objects.filter(owner="cadev_evaluator", created_at__lt=cutoff).delete()
-            if SovereignRepository.objects.filter(owner="cadev_evaluator").count() >= 5:
+            if (
+                not SovereignRepository.objects.filter(owner="cadev_evaluator", name=name).exists()
+                and SovereignRepository.objects.filter(owner="cadev_evaluator").count() >= 20
+            ):
                 return Response(
-                    {"error": "Quota démo atteint : maximum 5 dépôts actifs pour cadev_evaluator."},
+                    {"error": "Quota démo atteint : maximum 20 dépôts actifs pour cadev_evaluator."},
                     status=status.HTTP_429_TOO_MANY_REQUESTS,
                 )
 

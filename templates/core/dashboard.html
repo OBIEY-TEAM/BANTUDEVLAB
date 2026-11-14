@@ -867,7 +867,7 @@ async function submitNewDemoRepo() {
         } else {
             feedback.style.background = 'rgba(239, 68, 68, 0.15)';
             feedback.style.color = '#ef4444';
-            feedback.textContent = data.error || '{% trans "Échec de création du dépôt." %}';
+            feedback.textContent = data.error || data.detail || '{% trans "Échec de création du dépôt." %}';
         }
     } catch (err) {
         feedback.style.background = 'rgba(239, 68, 68, 0.15)';
