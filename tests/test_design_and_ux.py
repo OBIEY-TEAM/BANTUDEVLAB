@@ -101,7 +101,7 @@ class DesignAndNavigationTestCase(TestCase):
         content = resp.content.decode("utf-8")
         self.assertIn('id="langMenuBtn"', content)
         self.assertIn('id="langMenu"', content)
-        self.assertIn('action="/i18n/setlang/"', content)
+        self.assertIn(f'action="{reverse("switch_language")}"', content)
 
     # UI-01: Bouton de Copie Mnémonique (Feedback "Copié !")
     def test_ui01_copy_mnemonic_button(self):

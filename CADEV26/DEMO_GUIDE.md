@@ -29,7 +29,7 @@ Le parcours s'articule autour de 4 étapes fluides :
 2. Vous arrivez sur la page d'accueil de la forge souveraine :
    - Présentation de la mission panafricaine (indépendance numérique, conformité Convention de Malabo 2014).
    - Jauge circulaire du score de souveraineté globale (ADSS-v1).
-   - Sélecteur de langue bilingue et panafricain en haut à droite : Français (`FR`), Anglais (`EN`), Kiswahili (`SW`), Portugais (`PT`).
+   - Sélecteur de langue bilingue et panafricain dans la barre de navigation verticale à droite (desktop) ou dans le tiroir latéral droit (mobile) : Français (`FR`), Anglais (`EN`), Kiswahili (`SW`), Portugais (`PT`).
    - Bascule de thème Sombre / Clair via le bouton d'accessibilité.
 
 ---

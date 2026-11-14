@@ -58,8 +58,11 @@ Conditions : Navigateur sans cache, affichage Desktop (`1440x900`) et Mobile (`3
 
 ---
 
-## Re-vérification en ligne (13 novembre 2026)
+## Re-vérification en ligne et durcissement (14 novembre 2026)
 
 - **`https://forge.cybersocle.site`** : Redirection HTTP 301 vérifiée vers `https://git.cybersocle.site/explore/repos`.
-- **`https://git.cybersocle.site`** : Titre `Explorateur - BantuDevLab - Forge souveraine`, lien vers `https://cybersocle.site/faq/`, suppression du lien `localhost:6157`, accents corrigés.
-- **Points restants côté VPS** : Redéployer la branche `docker-cadev26` (`db196a8`) sur le VPS et rendre public le dépôt `bantudevlab` dans l'instance Gitea de production.
+- **`https://git.cybersocle.site`** : Titre `Explorateur - BantuDevLab - Forge souveraine`, lien vers `https://cybersocle.site/faq/`, suppression du lien `localhost:6157`, accents corrigés, menu mobile vertical et détection de langue synchronisée via cookie `.cybersocle.site`.
+- **Correctifs complémentaires appliqués (`502f2b1`)** :
+  - **Navigation verticale à droite (`>= 993px`) & tiroir latéral droit (`<= 992px`)** dans `static/css/style.css` et `templates/base.html`.
+  - **Création de dépôt et quotas** : Passage de `repo_create` à `60/hour` (`config/settings.py`), quota `cadev_evaluator` relevé à `20` dépôts actifs / 24h (`apps/gitea_client/views.py`), repli Basic Auth (`GITEA_ADMIN_USER`/`GITEA_ADMIN_PASSWORD` et `cadev_evaluator`) dans `apps/gitea_client/client.py`, création automatique de l'organisation `sovereign-org` (`ensure_organization`), URLs `html_url` sans suffixe `.git` (`templates/core/dashboard.html`) et suppression des dépôts de repli codés en dur dans `_get_fallback_repositories()`.
+  - **Authentification ZKP & i18n inter-domaines** : `authentication_classes = []` sur `ZKPChallengeView` (`apps/zkp_auth/views.py`), ordre `LocaleMiddleware` avant `EcosystemI18nMiddleware` (`config/settings.py`), action `switch_language` sur `#setLangForm` (`templates/base.html`) et cookies sur `.cybersocle.site` (`apps/core/views.py`, `apps/core/middleware.py`).

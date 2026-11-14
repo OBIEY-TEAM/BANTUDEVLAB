@@ -46,12 +46,12 @@ L'intégralité du dépôt BantuDevLab a été audité, durci et rendu rigoureus
 - **Relevé objectif dans `CADEV26/HISTORIQUE.md` :**
   - Date du premier commit : 31 octobre 2026 à 11:14:31 GMT.
   - Commits antérieurs au 29 septembre 2026 : **ZÉRO (0 commit)**.
-  - Nombre total de commits : 308 commits documentés.
+  - Nombre total de commits : 325 commits documentés.
   - Décomposition claire : composants tiers éprouvés non modifiés (Gitea 0%, Valkey 0%, Nginx 0%, Ollama 0%) vs code original développé par l'équipe (~4 632 lignes Python, ~6 000 lignes templates/UI, scripts et tests).
 
 ### TÂCHE 6 — Mesure réelle des tests et correction des métriques
-- **Couverture réelle démontrée :** **95,62 %** sur les modules applicatifs cibles (`apps/zkp_auth`, `apps/security_scanner`, `apps/ai_assistant`), au-dessus du seuil requis de 94%.
-- **Suite de tests :** 201 tests passés avec succès (3 ignorés, 43 sous-tests validés).
+- **Couverture réelle démontrée :** **95,65 %** sur les modules applicatifs cibles (`apps/zkp_auth`, `apps/security_scanner`, `apps/ai_assistant`), au-dessus du seuil requis de 94%.
+- **Suite de tests :** 202 tests passés avec succès (3 ignorés, 43 sous-tests validés).
 - **Correction des assets :** Élimination des balises orphelines dans `templates/core/dashboard.html` pour garantir 100% de succès sur `test_static_assets.py`.
 - **Langues effectives :** 4 langues fonctionnelles compilées (`fr`, `en`, `sw`, `pt`).
 - **Workflows Gitea Actions :** Documentation détaillée du statut « en attente » causé par l'absence d'instance `act_runner` connectée, avec guide de configuration pas à pas.

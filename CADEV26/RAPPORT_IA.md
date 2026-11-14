@@ -5,7 +5,7 @@
 - **Capitaine d'équipe :** OBIEY Christ Dany (Lead Architecture & Développement Fullstack)  
 - **Membre de l'équipe :** MAMPOUYA Alicia Syrianne (Présentation vidéo démo & parcours utilisateur)  
 **Branche de travail :** `main` / `docker-cadev26`  
-**Date du rapport :** 13 novembre 2026  
+**Date du rapport :** 14 novembre 2026  
 
 ---
 
@@ -31,7 +31,7 @@ L'intégralité de la chaîne de déclaration d'usage de l'intelligence artifici
 - Indexation dans le sommaire principal du README.
 
 ### 1.3 Tâche 3 — Traçabilité et flux de travail dans `CADEV26/IA_USAGE.md`
-- Rédaction d'un rapport de traçabilité complet décrivant la méthodologie de relecture humaine systématique et la validation par les tests automatisés (201 tests, couverture réelle de 95,62%).
+- Rédaction d'un rapport de traçabilité complet décrivant la méthodologie de relecture humaine systématique et la validation par les tests automatisés (202 tests, couverture réelle de 95,65%).
 - Inventaire exhaustif des traces observables dans l'historique Git (branches et PRs Jules, fichiers de planification `TASK/`, scripts d'outillage ponctuels `scratch/`).
 - Respect strict de la consigne d'objectivité : aucune extrapolation sur un pourcentage de code généré n'a été formulée.
 

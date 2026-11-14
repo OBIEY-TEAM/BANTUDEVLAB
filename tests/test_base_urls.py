@@ -115,13 +115,13 @@ class DynamicUrlIntegrationTestCase(TestCase):
     """Vérifie l'intégration dynamique dans les clients et vues."""
 
     def test_gitea_client_create_repository_dynamic_url(self):
-        """Vérifie que la création de dépôt de repli utilise dynamiquement BASE_URL_1."""
+        """Vérifie que la création de dépôt de repli utilise dynamiquement build_gitea_url."""
         client = GiteaClient()
         with patch.object(client, "_post", return_value={"success": False}):
             res = client.create_repository(name="sovereign-smart-contract", description="Test repo")
             data = res.get("data", {})
-            expected_html = bu.build_portal_url("sovereign-developer/sovereign-smart-contract")
-            expected_clone = bu.build_portal_url("sovereign-developer/sovereign-smart-contract.git")
+            expected_html = bu.build_gitea_url("cadev_evaluator/sovereign-smart-contract")
+            expected_clone = bu.build_gitea_url("cadev_evaluator/sovereign-smart-contract.git")
             self.assertEqual(data.get("html_url"), expected_html)
             self.assertEqual(data.get("clone_url"), expected_clone)
 

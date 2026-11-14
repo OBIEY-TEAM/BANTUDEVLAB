@@ -1,8 +1,8 @@
 # Rapport d'Exactitude, Cohérence et Conformité — CADEV 2026 (`CADEV26/RAPPORT_EXACTITUDE.md`)
 
 **Projet :** BANTUDEVLAB (Équipe CYBERSOCLE : OBIEY Christ Dany, capitaine ; MAMPOUYA Alicia Syrianne, présentation vidéo et parcours utilisateur)  
-**Branche de travail :** `main` / `docker-cadev26` (commit `db196a8`, tag `v1-cadev-submission`)  
-**Date :** 13 novembre 2026
+**Branche de travail :** `main` / `docker-cadev26` (commit `502f2b1`, tag `v1-cadev-submission`)  
+**Date :** 14 novembre 2026
 
 ---
 
@@ -17,7 +17,7 @@
 2. **Tâche 2 — Compte de démonstration (`cadev_evaluator`)** :
    - Vérification dans `apps/core/management/commands/init_sovereign_admin.py` : `is_staff=False`, `is_superuser=False`, `set_unusable_password()`, identité ZKP dérivée de `DEFAULT_DEMO_MNEMONIC`.
    - **Fonctionnement du bouton « Connexion Démo 1-Clic »** : Le bouton pré-remplit `cadev_evaluator` et le mnémonique de démonstration dans le navigateur, puis exécute **réellement** le protocole cryptographique Schnorr NIZKP (RFC 3526 MODP 2048 bits) : demande de nonce à `/api/zkp/challenge/`, calcul côté client de `(t, s)`, vérification serveur sur `/api/zkp/verify/`. Cela ne contredit pas l'authentification ZKP des autres comptes : aucune porte dérobée ni contournement de mot de passe n'existe ; seul un compte de démonstration strictement non privilégié et limité en quotas utilise une graine publique de test.
-   - **Quotas & nettoyage automatique** : Pour `cadev_evaluator`, limitation à 5 dépôts actifs maximum, description limitée à 1024 octets (`apps/gitea_client/views.py`), purge automatique des dépôts > 24 h à la création et tâche périodique Celery Beat `cleanup-demo-repositories-hourly` (`apps/core/tasks.py`, `config/settings.py`).
+   - **Quotas & nettoyage automatique** : Pour `cadev_evaluator`, limitation à 20 dépôts actifs maximum, description limitée à 1024 octets (`apps/gitea_client/views.py`), purge automatique des dépôts > 24 h à la création et tâche périodique Celery Beat `cleanup-demo-repositories-hourly` (`apps/core/tasks.py`, `config/settings.py`).
 
 3. **Tâche 3 — Dépôts visibles & intégrité des secrets** :
    - Ajout du dépôt `bantudevlab/bantudevlab` (public, avec `README.md`, licence `MIT`, lien de démo `https://cybersocle.site`) dans `scripts/init_forge_repos.py`.
@@ -53,7 +53,7 @@
 
 11. **Tâche 11 — Sécurité de production** :
     - Vérification `config/settings.py` & `docker-compose.production.yml` : `DEBUG=False`, `SECURE_SSL_REDIRECT=True`, HSTS (1 an, subdomains, preload), `SESSION_COOKIE_SECURE=True`, `CSRF_COOKIE_SECURE=True`, `HttpOnly`, `SameSite=Strict`, `X_FRAME_OPTIONS="DENY"`, `SECURE_CONTENT_TYPE_NOSNIFF=True`, CSP active, CSRF actif.
-    - Limitation de rythme ajoutée : `zkp_register` (`10/hour`) et `repo_create` (`10/hour` sur `POST /api/forge/repositories/`).
+    - Limitation de rythme ajoutée : `zkp_register` (`10/hour`) et `repo_create` (`60/hour` sur `POST /api/forge/repositories/`).
     - **Gitea 1.22.6 — Vulnérabilités connues & proposition de mise à jour (non appliquée)** :
       - La branche Gitea 1.22.6 corrige des failles antérieures (ex. CVE-2024-6886), mais des avis de sécurité plus récents concernent les versions non mises à jour (notamment épuisement de ressources `go-git < v5.13` dans certaines distributions 1.22, et des CVE critiques publiées sur les branches Gitea suivantes telles que CVE-2026-59774 lecture arbitraire de fichiers et CVE-2026-60004 RCE via hooks Git).
       - **Recommandation** : Planifier une mise à jour de l'image `gitea/gitea:1.22` vers la dernière version stable maintenue après sauvegarde complète (`scripts/backup_gitea.py`) et validation en pré-production.
@@ -63,7 +63,7 @@
     - Adaptation complète de la navbar dans `static/css/style.css` (`white-space: nowrap`, breakpoints `1460px`, `1240px`, `768px`) pour éviter tout débordement ou retour à la ligne de `320px` au grand bureau, et durcissement anti-débordement horizontal (`html, body { overflow-x: hidden; max-width: 100%; }`).
     - Marge inférieure mobile ajoutée au pied de page Gitea (`custom/templates/custom/footer.tmpl`) pour éviter le chevauchement avec le bouton flottant Copilot IA.
     - Ajout de la section Q12 dans `templates/core/faq.html` détaillant la conformité CADEV 2026 (Art. 6 et Annexe 1) et fusion des dépôts fallback dans `GET /api/forge/repositories/` (`apps/gitea_client/views.py`).
-    - Validation locale complète : `scripts/check_licenses.py` (`63/63` paquets conformes), `scripts/check_no_emoji.py` (`OK`), `pytest -q` (`201 passed, 3 skipped, 43 subtests passed`, couverture `95,62 %`).
+    - Validation locale complète : `scripts/check_licenses.py` (`63/63` paquets conformes), `scripts/check_no_emoji.py` (`OK`), `pytest -q` (`202 passed, 3 skipped, 43 subtests passed`, couverture `95,65 %`).
 
 ---
 

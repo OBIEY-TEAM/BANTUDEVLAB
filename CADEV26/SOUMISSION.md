@@ -162,8 +162,8 @@ Conformément à l'Article 6 du règlement du concours (déclaration obligatoire
 ### Déclaration Factuelle :
 - **Date du tout premier commit Git :** **31 octobre 2026 à 11:14:31 GMT** (`b0fa102ec01065d0b9a788363b3d4c03b2f99535`).
 - **Commits réalisés avant le 29 septembre 2026 :** **ZÉRO (0 commit)**. Aucun code préexistant antérieur au 29 septembre 2026 n'a été réutilisé ou importé dans le projet.
-- **Nombre total de commits enregistrés :** 308 commits traçables, documentant le développement continu entre le 31 octobre 2026 et le 13 novembre 2026.
+- **Nombre total de commits enregistrés :** 325 commits traçables, documentant le développement continu entre le 31 octobre 2026 et le 14 novembre 2026.
 - **Auteurs des contributions :**  
-  - OBIEY Christ Dany : 308 commits (identifiants `obiey`, `obieydany-code`, `obiey christ dany`, `OBIEY Christ Dany`).
+  - OBIEY Christ Dany : 325 commits (identifiants `obiey`, `obieydany-code`, `obiey christ dany`, `OBIEY Christ Dany`).
 - **Composants tiers non modifiés :** Gitea CE 1.22 (0% de code modifié), Valkey 7.2 (0% de code modifié), Nginx 1.27 (0% de code modifié), Ollama (0% de code modifié).
 - **Code original produit par l'équipe :** 100% du code applicatif situé dans `apps/` (~4 632 lignes Python), les templates HTML/CSS (~6 000 lignes), les scripts de contrôle qualité et la documentation ont été écrits intégralement durant la période officielle du concours.
