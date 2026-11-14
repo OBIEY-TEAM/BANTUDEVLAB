@@ -211,6 +211,19 @@ class GiteaClient:
             cache.set(self.CACHE_KEY_REPOS, repos, self.CACHE_TTL)
         return repos
 
+    def ensure_organization(self, org_name: str = "sovereign-org") -> None:
+        """Ensures the target Gitea organization exists (idempotent)."""
+        check = self._get(f"/orgs/{org_name}")
+        if not check.get("success"):
+            self._post(
+                "/orgs",
+                {
+                    "username": org_name,
+                    "full_name": "BantuDevLab Sovereign Organization",
+                    "visibility": "public",
+                },
+            )
+
     def create_repository(
         self, name: str, description: str = "", private: bool = False, owner: str = ""
     ) -> Dict[str, Any]:
@@ -222,7 +235,11 @@ class GiteaClient:
             "auto_init": True,
             "default_branch": "main",
         }
-        res = self._post(f"/admin/users/{owner}/repos", payload) if owner else {"success": False}
+        if owner == "sovereign-org" or not owner:
+            self.ensure_organization("sovereign-org")
+            res = self._post("/orgs/sovereign-org/repos", payload)
+        else:
+            res = self._post(f"/admin/users/{owner}/repos", payload)
         if not res.get("success"):
             res = self._post("/user/repos", payload)
         # Invalider le cache des dépôts
