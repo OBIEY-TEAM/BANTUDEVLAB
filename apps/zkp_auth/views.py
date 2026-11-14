@@ -39,6 +39,7 @@ class ZKPRegisterView(APIView):
     The server NEVER receives or stores any password or private key.
     """
 
+    authentication_classes = []
     permission_classes = [AllowAny]
 
     throttle_classes = [ScopedRateThrottle]
@@ -119,6 +120,7 @@ class ZKPChallengeView(APIView):
     ZKP authentication wizard (login-ui/) while preserving query parameters.
     """
 
+    authentication_classes = []
     permission_classes = [AllowAny]
 
     throttle_classes = [ScopedRateThrottle]
@@ -168,6 +170,7 @@ class ZKPVerifyView(APIView):
     Throttled to 5 req/min.
     """
 
+    authentication_classes = []
     permission_classes = [AllowAny]
 
     throttle_classes = [ScopedRateThrottle]
@@ -271,6 +274,7 @@ class GitTokenGenerateView(APIView):
     Requires and validates a Zero-Knowledge Proof (ZKP).
     """
 
+    authentication_classes = []
     permission_classes = [AllowAny]
 
     def post(self, request):
@@ -324,6 +328,7 @@ class ZKPUserInfoView(APIView):
     provisionnement automatique d'utilisateurs souverains sans mot de passe.
     """
 
+    authentication_classes = []
     permission_classes = [AllowAny]
 
     def get(self, request):
@@ -365,6 +370,7 @@ class ZKPOpenIDConfigurationView(APIView):
     par Gitea et les services tiers.
     """
 
+    authentication_classes = []
     permission_classes = [AllowAny]
 
     def get(self, request):
@@ -390,6 +396,7 @@ class GitTokenValidateView(APIView):
     DEV-03: Validates a Git Access Token supplied by Git CLI or Gitea over HTTPS.
     """
 
+    authentication_classes = []
     permission_classes = [AllowAny]
 
     def post(self, request):

@@ -16,9 +16,9 @@
         })();
     </script>
     <link rel="icon" type="image/svg+xml" href="{% static 'img/favicon.svg' %}">
-    <link rel="stylesheet" href="{% static 'css/style.css' %}?v=20261113d">
-    <script src="{% static 'js/bantu-ecosystem-sync.js' %}?v=20261113d"></script>
-    <script src="{% static 'js/bantu-command-terminal.js' %}?v=20261113d" defer></script>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}?v=20261114a">
+    <script src="{% static 'js/bantu-ecosystem-sync.js' %}?v=20261114a"></script>
+    <script src="{% static 'js/bantu-command-terminal.js' %}?v=20261114a" defer></script>
     {% block extra_head %}{% endblock %}
 </head>
 <body>
@@ -55,7 +55,7 @@
                         {% icon "chevron-down" size=12 %}
                     </button>
                     <div class="lang-menu" id="langMenu" role="menu" aria-labelledby="langMenuBtn">
-                        <form action="{% url 'set_language' %}" method="post" id="setLangForm">
+                        <form action="{% url 'switch_language' %}" method="post" id="setLangForm">
                             {% csrf_token %}
                             <input name="next" type="hidden" value="{{ request.get_full_path|default:'/' }}">
                             <button type="submit" name="language" value="fr" class="lang-item" role="menuitem">

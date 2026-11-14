@@ -62,3 +62,39 @@ class GiteaClientTestCase(TestCase):
             content_type="application/json",
         )
         self.assertEqual(res.status_code, 400)
+
+    def test_demo_repo_creation_appears_in_list_and_dashboard(self):
+        from django.contrib.auth import get_user_model
+
+        demo_user = get_user_model().objects.create_user(username="cadev_evaluator", password="x")
+        self.client.force_login(demo_user)
+        with patch("apps.gitea_client.client.GiteaClient.create_repository") as mock_create, patch(
+            "apps.gitea_client.client.GiteaClient.list_repositories", return_value=[]
+        ):
+            mock_create.return_value = {
+                "success": True,
+                "fallback": True,
+                "data": {
+                    "id": 99,
+                    "name": "demo-cadev-sovereign",
+                    "full_name": "cadev_evaluator/demo-cadev-sovereign",
+                    "owner": {"username": "cadev_evaluator"},
+                    "html_url": "https://git.cybersocle.site/cadev_evaluator/demo-cadev-sovereign",
+                    "clone_url": "https://git.cybersocle.site/cadev_evaluator/demo-cadev-sovereign.git",
+                },
+            }
+            res_create = self.client.post(
+                "/api/forge/repositories/",
+                data={"name": "demo-cadev-sovereign", "description": "Demo repo"},
+                content_type="application/json",
+            )
+            self.assertEqual(res_create.status_code, 201)
+
+            res_list = self.client.get("/api/forge/repositories/")
+            self.assertEqual(res_list.status_code, 200)
+            names = [r["name"] for r in res_list.json().get("repositories", [])]
+            self.assertIn("demo-cadev-sovereign", names)
+
+            res_dash = self.client.get("/dashboard/")
+            self.assertEqual(res_dash.status_code, 200)
+            self.assertContains(res_dash, "demo-cadev-sovereign")

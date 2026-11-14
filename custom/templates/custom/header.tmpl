@@ -539,6 +539,36 @@ html, body {
     padding: 8px 12px !important;
     gap: 6px !important;
   }
+  #navbar.shown,
+  .ui.menu.navbar.shown {
+    flex-direction: column !important;
+    align-items: stretch !important;
+  }
+  #navbar.shown .navbar-left,
+  #navbar.shown .navbar-right,
+  .ui.menu.navbar .navbar-left.shown,
+  .ui.menu.navbar .navbar-right.shown {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: stretch !important;
+    width: 100% !important;
+    margin: 4px 0 !important;
+    gap: 4px !important;
+  }
+  #navbar.shown .navbar-left > .item,
+  #navbar.shown .navbar-right > .item,
+  #navbar.shown .bantu-pro-actions-group,
+  #navbar.shown #bantu-gitea-nav-pro-actions {
+    width: 100% !important;
+    flex-direction: column !important;
+    align-items: stretch !important;
+    justify-content: flex-start !important;
+    margin: 2px 0 !important;
+  }
+  #navbar.shown .bantu-pro-action-btn {
+    width: 100% !important;
+    justify-content: flex-start !important;
+  }
   .github-search-input,
   .github-search-input:focus {
     width: 200px !important;
@@ -583,6 +613,16 @@ html, body {
   }
   #gitea-theme-toggle-btn span {
     display: none !important;
+  }
+  .bantu-pro-actions-group,
+  #bantu-gitea-nav-pro-actions {
+    flex-wrap: wrap !important;
+    max-width: 100% !important;
+    gap: 4px !important;
+  }
+  .bantu-pro-action-btn {
+    padding: 4px 8px !important;
+    font-size: 11px !important;
   }
 }
 
@@ -1179,9 +1219,9 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 </script>
 
-<script src="/assets/js/bantu-ecosystem-sync.js?v=20261113d"></script>
-<script src="/static/js/bantu-command-terminal.js?v=20261113d" defer></script>
-<script src="/assets/js/bantu-command-terminal.js?v=20261113d" defer></script>
+<script src="/assets/js/bantu-ecosystem-sync.js?v=20261114a"></script>
+<script src="/static/js/bantu-command-terminal.js?v=20261114a" defer></script>
+<script src="/assets/js/bantu-command-terminal.js?v=20261114a" defer></script>
 <script>
 // Synchronisation Automatique de Langue et Mode d'Affichage avec BantuDevLab & GitLab Forge
 (function initGiteaBantuSync() {
@@ -1207,13 +1247,22 @@ document.addEventListener('DOMContentLoaded', function() {
         { code: 'pt', gitea: 'pt-PT', label: 'PT' }
       ];
 
+      const _mBantu = document.cookie.match(/(?:^|;\s*)bantu_lang=([^;]+)/);
+      const _mGitea = document.cookie.match(/(?:^|;\s*)lang=([^;]+)/);
+      const _htmlLang = (document.documentElement.getAttribute('lang') || '').toLowerCase();
+      const _activeCode = (_mBantu && _mBantu[1])
+        ? _mBantu[1].slice(0, 2).toLowerCase()
+        : (_mGitea && _mGitea[1])
+          ? _mGitea[1].slice(0, 2).toLowerCase()
+          : (_htmlLang ? _htmlLang.slice(0, 2) : 'fr');
+
       langs.forEach(l => {
         const a = document.createElement('a');
         a.href = '#';
         a.textContent = l.label;
         a.style.padding = '2px 6px';
         a.style.borderRadius = '4px';
-        const isCurrent = document.cookie.includes('lang=' + l.gitea) || document.cookie.includes('bantu_lang=' + l.code);
+        const isCurrent = (_activeCode === l.code);
         a.style.color = isCurrent ? '#00e5ff' : '#94a3b8';
         a.style.fontWeight = isCurrent ? 'bold' : 'normal';
         a.style.border = isCurrent ? '1px solid #00e5ff' : '1px solid rgba(148, 163, 184, 0.2)';

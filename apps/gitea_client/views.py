@@ -108,15 +108,15 @@ class RepositoryListView(APIView):
             if isinstance(repo_data.get("owner"), dict)
             else ("cadev_evaluator" if is_demo_user else "sovereign-org")
         )
-        from config.base_urls import build_portal_url
+        from config.base_urls import build_gitea_url
 
         SovereignRepository.objects.update_or_create(
             name=name,
             owner=owner_username,
             defaults={
                 "description": description,
-                "html_url": repo_data.get("html_url", build_portal_url(f"sovereign-org/{name}")),
-                "clone_url": repo_data.get("clone_url", build_portal_url(f"sovereign-org/{name}.git")),
+                "html_url": repo_data.get("html_url", build_gitea_url(f"{owner_username}/{name}")),
+                "clone_url": repo_data.get("clone_url", build_gitea_url(f"{owner_username}/{name}.git")),
                 "is_private": private,
             },
         )

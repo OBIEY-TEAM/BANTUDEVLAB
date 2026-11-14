@@ -66,6 +66,7 @@ class GiteaClient:
     }
 
     def __init__(self, api_url: Optional[str] = None, token: Optional[str] = None):
+        import os
         from config.base_urls import GITEA_WEB_URL
 
         default_api = getattr(settings, "GITEA_API_URL", None) or f"{GITEA_WEB_URL}/api/v1"
@@ -75,8 +76,14 @@ class GiteaClient:
             "Content-Type": "application/json",
             "Accept": "application/json",
         }
+        self._basic_auth = None
         if self.token:
             self.headers["Authorization"] = f"token {self.token}"
+        else:
+            admin_user = os.environ.get("GITEA_ADMIN_USER", "")
+            admin_pass = os.environ.get("GITEA_ADMIN_PASSWORD", "")
+            if admin_user and admin_pass:
+                self._basic_auth = (admin_user, admin_pass)
 
     # PERF-061: circuit breaker - apres BREAKER_THRESHOLD echecs consecutifs, Gitea n'est plus
     # sollicite pendant BREAKER_COOLDOWN secondes (les appelants utilisent leur repli).
@@ -105,6 +112,8 @@ class GiteaClient:
         url = f"{self.api_url}/{endpoint.lstrip('/')}"
         try:
             # SEC-046: timeout systematique, pas de redirection suivie (anti-SSRF).
+            if self._basic_auth and "auth" not in kwargs:
+                kwargs["auth"] = self._basic_auth
             response = getattr(requests, method)(
                 url, headers=self.headers, timeout=self.REQUEST_TIMEOUT, allow_redirects=False, **kwargs
             )
@@ -202,6 +211,19 @@ class GiteaClient:
             cache.set(self.CACHE_KEY_REPOS, repos, self.CACHE_TTL)
         return repos
 
+    def ensure_organization(self, org_name: str = "sovereign-org") -> None:
+        """Ensures the target Gitea organization exists (idempotent)."""
+        check = self._get(f"/orgs/{org_name}")
+        if not check.get("success"):
+            self._post(
+                "/orgs",
+                {
+                    "username": org_name,
+                    "full_name": "BantuDevLab Sovereign Organization",
+                    "visibility": "public",
+                },
+            )
+
     def create_repository(
         self, name: str, description: str = "", private: bool = False, owner: str = ""
     ) -> Dict[str, Any]:
@@ -213,7 +235,11 @@ class GiteaClient:
             "auto_init": True,
             "default_branch": "main",
         }
-        res = self._post(f"/admin/users/{owner}/repos", payload) if owner else {"success": False}
+        if owner == "sovereign-org" or not owner:
+            self.ensure_organization("sovereign-org")
+            res = self._post("/orgs/sovereign-org/repos", payload)
+        else:
+            res = self._post(f"/admin/users/{owner}/repos", payload)
         if not res.get("success"):
             res = self._post("/user/repos", payload)
         # Invalider le cache des dépôts
@@ -221,18 +247,20 @@ class GiteaClient:
 
         if res.get("success"):
             return res
-        from config.base_urls import build_portal_url
+        from config.base_urls import build_gitea_url
 
+        effective_owner = owner or "cadev_evaluator"
         return {
             "success": True,
             "data": {
                 "id": 99,
                 "name": name,
-                "full_name": f"sovereign-developer/{name}",
+                "full_name": f"{effective_owner}/{name}",
+                "owner": {"username": effective_owner},
                 "description": description,
                 "private": private,
-                "html_url": build_portal_url(f"sovereign-developer/{name}"),
-                "clone_url": build_portal_url(f"sovereign-developer/{name}.git"),
+                "html_url": build_gitea_url(f"{effective_owner}/{name}"),
+                "clone_url": build_gitea_url(f"{effective_owner}/{name}.git"),
             },
             "fallback": True,
         }
