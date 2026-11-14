@@ -112,10 +112,14 @@ class GiteaClient:
         url = f"{self.api_url}/{endpoint.lstrip('/')}"
         try:
             # SEC-046: timeout systematique, pas de redirection suivie (anti-SSRF).
-            if self._basic_auth and "auth" not in kwargs:
-                kwargs["auth"] = self._basic_auth
+            if "auth" in kwargs:
+                req_headers = {k: v for k, v in self.headers.items() if k.lower() != "authorization"}
+            else:
+                req_headers = self.headers
+                if self._basic_auth:
+                    kwargs["auth"] = self._basic_auth
             response = getattr(requests, method)(
-                url, headers=self.headers, timeout=self.REQUEST_TIMEOUT, allow_redirects=False, **kwargs
+                url, headers=req_headers, timeout=self.REQUEST_TIMEOUT, allow_redirects=False, **kwargs
             )
         except Exception:
             self._record_failure()

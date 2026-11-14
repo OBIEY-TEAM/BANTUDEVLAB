@@ -151,6 +151,7 @@ services:
         fi
         # Compte de demonstration evaluateur CADEV 2026 (utilisateur standard sans droits admin)
         su-exec git gitea --work-path /data/gitea admin user create --username cadev_evaluator --password "$${DEMO_USER_PASSWORD:-DemoCadev2026!}" --email evaluator@cadev2026.africa --must-change-password=false 2>/dev/null || true
+        su-exec git gitea --work-path /data/gitea admin user change-password --username cadev_evaluator --password "$${DEMO_USER_PASSWORD:-DemoCadev2026!}" --must-change-password=false 2>/dev/null || true
         echo "Comptes et organisation Gitea prets."
     networks:
       - app_net
