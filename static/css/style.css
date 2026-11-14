@@ -1546,17 +1546,135 @@ footer {
   }
 }
 
-/* 2b. Compact Desktop (<= 1560px) */
-@media (max-width: 1560px) {
+/* 2b & 3. Desktop Right Vertical Scrollable Sidebar (>= 993px) */
+@media (min-width: 993px) {
+  .navbar {
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: auto;
+    width: 265px;
+    height: 100vh;
+    overflow-y: auto;
+    overflow-x: hidden;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: flex-start;
+    padding: 1.25rem 1rem;
+    border-bottom: none;
+    border-left: 2px solid var(--neon-cyan);
+    z-index: 100;
+    scrollbar-width: thin;
+  }
+  .navbar-container {
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: flex-start;
+    gap: 1rem;
+    min-height: 100%;
+    width: 100%;
+  }
+  .navbar .brand {
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    padding-bottom: 0.85rem;
+    border-bottom: 1px solid var(--dark-border);
+    white-space: normal;
+  }
   .navbar .brand-badge {
+    display: inline-block;
+  }
+  .navbar .bantu-pro-actions-group,
+  #bantu-django-nav-pro-actions {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 0.5rem !important;
+    margin: 0 !important;
+    width: 100%;
+  }
+  .navbar .bantu-pro-action-btn {
+    width: 100%;
+    justify-content: flex-start !important;
+    padding: 0.55rem 0.75rem !important;
+  }
+  .nav-links {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.35rem;
+    width: 100%;
+  }
+  .nav-links a {
+    display: flex;
+    align-items: center;
+    padding: 0.6rem 0.75rem;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    white-space: normal;
+  }
+  .nav-links a:hover,
+  .nav-links a.active {
+    background: rgba(245, 158, 11, 0.12);
+    color: var(--primary-african-gold);
+  }
+  .nav-links a.btn {
+    margin-top: 0.5rem;
+    justify-content: center;
+  }
+  .nav-actions {
+    margin-top: auto;
+    padding-top: 1rem;
+    border-top: 1px solid var(--dark-border);
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 0.5rem;
+    width: 100%;
+  }
+  .nav-actions .lang-menu {
+    top: auto;
+    bottom: 100%;
+    right: 0;
+    left: auto;
+    margin-top: 0;
+    margin-bottom: 0.5rem;
+  }
+  .nav-actions .user-session-badge {
+    max-width: 100%;
+    width: 100%;
+    justify-content: flex-start;
+  }
+  .navbar-toggle {
     display: none;
+  }
+  main.container,
+  footer {
+    margin-left: 0;
+    margin-right: 265px;
+    width: calc(100% - 265px);
+    max-width: calc(100% - 265px);
+    box-sizing: border-box;
   }
 }
 
-/* 3. Standard Laptops & Tablet Landscape (<= 1360px) */
-@media (max-width: 1360px) {
+/* 3b. Tablet & Mobile Top Compact Bar + Right Vertical Drawer (<= 992px) */
+@media (max-width: 992px) {
   .navbar {
-    padding: 0.85rem 1.25rem;
+    padding: 0.75rem 1rem;
+  }
+  .navbar-container {
+    flex-wrap: nowrap;
+    gap: 0.5rem;
+    width: 100%;
+  }
+  .navbar .brand {
+    min-width: 0;
+    flex: 1 1 auto;
+    overflow: hidden;
+  }
+  .navbar .brand span:not(.brand-badge) {
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
   .nav-links {
     display: none;
@@ -1565,14 +1683,30 @@ footer {
     display: inline-flex;
     align-items: center;
     justify-content: center;
+    flex-shrink: 0;
   }
-}
-
-/* 3b. Tablet Landscape Hero Adjustments (<= 992px) */
-@media (max-width: 992px) {
   .navbar .bantu-pro-actions-group,
   #bantu-django-nav-pro-actions {
     display: none !important;
+  }
+  .nav-drawer {
+    border-left: 2px solid var(--neon-cyan);
+  }
+  .nav-drawer .bantu-pro-actions-group,
+  #bantu-drawer-nav-pro-actions {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 0.5rem !important;
+    width: 100%;
+    margin: 0 0 0.5rem 0 !important;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid var(--dark-border);
+  }
+  .nav-drawer .bantu-pro-action-btn {
+    width: 100%;
+    justify-content: flex-start !important;
+    padding: 0.55rem 0.75rem !important;
   }
   .hero {
     padding: 3rem 1rem;
@@ -1772,16 +1906,6 @@ main.container,
 .africa-map-wrapper {
   max-width: 100%;
   box-sizing: border-box;
-}
-
-.navbar-container {
-  flex-wrap: nowrap;
-  gap: 0.5rem;
-}
-
-.navbar .brand {
-  flex-shrink: 0;
-  white-space: nowrap;
 }
 
 pre,
