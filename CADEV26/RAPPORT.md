@@ -35,7 +35,7 @@ L'intégralité du dépôt BantuDevLab a été audité, durci et rendu rigoureus
 - **Paramètres de production vérifiés :** DEBUG désactivé par défaut, ALLOWED_HOSTS restreint, HSTS sur 1 an, cookies Secure/HttpOnly/Strict, CSRF et CSP stricte sans appel CDN externe.
 
 ### TÂCHE 3 — Fichiers de licence officiels
-- **LICENSE :** Texte MIT officiel intact à la racine, attribuant la titularité aux deux membres de l'Équipe CYBERSOCLE : OBIEY Christ Dany (Capitaine) et MAMPOUYA Alicia Syrianne.
+- **LICENSE :** Texte MIT officiel intact à la racine, attribuant la titularité aux membres de l'Équipe CYBERSOCLE : OBIEY Christ Dany (Capitaine), MAMPOUYA Alicia Syrianne et GAMBOUE Ursie Semence.
 - **THIRD_PARTY_LICENSES.md :** Tableau exhaustif à la racine répertoriant tous les composants tiers et leurs licences permissives.
 - **NOTICE :** Précision formelle à la racine indiquant que Gitea CE 1.22 (MIT) est utilisé tel quel sans modification de code source, Valkey 7.2 (BSD-3-Clause), CodeMirror 5 (MIT), et les conditions d'utilisation de Gemma 2 2B.
 
@@ -58,7 +58,7 @@ L'intégralité du dépôt BantuDevLab a été audité, durci et rendu rigoureus
 - **Workflows Gitea Actions :** Documentation détaillée du statut « en attente » causé par l'absence d'instance `act_runner` connectée, avec guide de configuration pas à pas.
 
 ### TÂCHE 7 — Fiche officielle de soumission (`CADEV26/SOUMISSION.md`)
-- Rdaction complète et rigoureuse respectant les critères a) à g) : présentation, engagement de titularité avec champs vides pour OBIEY Christ Dany et MAMPOUYA Alicia Syrianne, tableau de licences conforme Art. 6, déclaration IA (modèle local Gemma 2 2B sous Google Gemma Terms, aide à la revue sans remplacer le développeur, maîtrise du code), architecture de déploiement, preuve d'achat Datacloud réservée, et déclaration de code antérieur conforme à la Tâche 5.
+- Rédaction complète et rigoureuse respectant les critères a) à g) : présentation, engagement de titularité avec champs vides pour OBIEY Christ Dany, MAMPOUYA Alicia Syrianne et GAMBOUE Ursie Semence, tableau de licences conforme Art. 6, déclaration IA (modèle local Gemma 2 2B sous Google Gemma Terms, aide à la revue sans remplacer le développeur, maîtrise du code), architecture de déploiement, preuve d'achat Datacloud réservée, et déclaration de code antérieur conforme à la Tâche 5.
 
 ### TÂCHE 8 — Parcours de démo sans friction (`CADEV26/DEMO_GUIDE.md`)
 - Guide complet pour juré non technique : accueil, connexion ZKP 1-clic avec `cadev_evaluator`, consultation de la FAQ, création autonome de dépôt.

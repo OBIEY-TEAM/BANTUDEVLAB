@@ -238,14 +238,14 @@
       </div>
       <div style="display: flex; gap: 16px; flex-wrap: wrap;">
         <a id="footer-link-portal" href="https://cybersocle.site/" style="color: var(--color-accent-fg, #00e5ff); text-decoration: none;">Portail Central</a>
-        <a href="/explore/repos" style="color: var(--color-accent-fg, #00e5ff); text-decoration: none;">Dépôts</a>
+        <a id="footer-link-repos" href="/explore/repos" style="color: var(--color-accent-fg, #00e5ff); text-decoration: none;">Dépôts</a>
         <a href="/api/v1/swagger" style="color: var(--color-accent-fg, #00e5ff); text-decoration: none;">API REST</a>
-        <a href="https://cybersocle.site/faq/" target="_blank" rel="noopener noreferrer" style="color: var(--color-text-light, #94a3b8); text-decoration: none;">Documentation</a>
+        <a id="footer-link-docs" href="https://cybersocle.site/faq/" target="_blank" rel="noopener noreferrer" style="color: var(--color-text-light, #94a3b8); text-decoration: none;">Documentation</a>
         <a id="footer-link-metrics" href="https://cybersocle.site/sovereignty-metrics/" style="color: var(--color-text-light, #94a3b8); text-decoration: none;">Souveraineté Numérique</a>
       </div>
     </div>
-    <div style="border-top: 1px solid var(--color-border-default, rgba(255,255,255,0.1)); padding-top: 10px; font-size: 11px; text-align: center; color: var(--color-text-light, #94a3b8);">
-      <span style="color: #f59e0b; font-weight: 600;">Développé par l'équipe CYBERSOCLE pour la CADEV 2026</span> — OBIEY Christ Dany (Capitaine) &amp; MAMPOUYA Alicia Syrianne
+    <div id="footer-attribution" style="border-top: 1px solid var(--color-border-default, rgba(255,255,255,0.1)); padding-top: 10px; font-size: 11px; text-align: center; color: var(--color-text-light, #94a3b8);">
+      <span style="color: #f59e0b; font-weight: 600;">Développé par l'équipe CYBERSOCLE pour la CADEV 2026</span> — OBIEY Christ Dany (Capitaine), MAMPOUYA Alicia Syrianne &amp; GAMBOUE Ursie Semence
     </div>
   </div>
 </footer>
@@ -497,6 +497,48 @@ function applyCopilotI18n() {
 
   const welcomeMsg = document.getElementById('copilot-welcome-msg');
   if (welcomeMsg) welcomeMsg.textContent = t.welcome;
+
+  const FOOTER_I18N = {
+    fr: {
+      portal: "Portail Central",
+      repos: "Dépôts",
+      docs: "Documentation",
+      metrics: "Souveraineté Numérique",
+      team: '<span style="color: #f59e0b; font-weight: 600;">Développé par l\'équipe CYBERSOCLE pour la CADEV 2026</span> — OBIEY Christ Dany (Capitaine), MAMPOUYA Alicia Syrianne &amp; GAMBOUE Ursie Semence'
+    },
+    en: {
+      portal: "Central Portal",
+      repos: "Repositories",
+      docs: "Documentation",
+      metrics: "Digital Sovereignty",
+      team: '<span style="color: #f59e0b; font-weight: 600;">Developed by Team CYBERSOCLE for CADEV 2026</span> — OBIEY Christ Dany (Captain), MAMPOUYA Alicia Syrianne &amp; GAMBOUE Ursie Semence'
+    },
+    sw: {
+      portal: "Tovuti Kuu",
+      repos: "Hazina",
+      docs: "Nyaraka",
+      metrics: "Uhuru wa Kidijitali",
+      team: '<span style="color: #f59e0b; font-weight: 600;">Imetengenezwa na Timu ya CYBERSOCLE kwa CADEV 2026</span> — OBIEY Christ Dany (Nahodha), MAMPOUYA Alicia Syrianne &amp; GAMBOUE Ursie Semence'
+    },
+    pt: {
+      portal: "Portal Central",
+      repos: "Repositórios",
+      docs: "Documentação",
+      metrics: "Soberania Digital",
+      team: '<span style="color: #f59e0b; font-weight: 600;">Desenvolvido pela equipa CYBERSOCLE para a CADEV 2026</span> — OBIEY Christ Dany (Capitão), MAMPOUYA Alicia Syrianne &amp; GAMBOUE Ursie Semence'
+    }
+  };
+  const ft = FOOTER_I18N[lang] || FOOTER_I18N.fr;
+  const fPortal = document.getElementById('footer-link-portal');
+  if (fPortal) fPortal.textContent = ft.portal;
+  const fRepos = document.getElementById('footer-link-repos');
+  if (fRepos) fRepos.textContent = ft.repos;
+  const fDocs = document.getElementById('footer-link-docs');
+  if (fDocs) fDocs.textContent = ft.docs;
+  const fMetrics = document.getElementById('footer-link-metrics');
+  if (fMetrics) fMetrics.textContent = ft.metrics;
+  const fAttr = document.getElementById('footer-attribution');
+  if (fAttr) fAttr.innerHTML = ft.team;
 }
 
 document.addEventListener('DOMContentLoaded', function() {
