@@ -4,7 +4,7 @@
 > **Équipe candidate :** CYBERSOCLE  
 > - **Capitaine d'équipe :** OBIEY Christ Dany  
 > - **Membre de l'équipe :** MAMPOUYA Alicia Syrianne  
-> - **Membre de l'équipe :** GAMBOUE Ursie Semence (Présentatrice)  
+> - **Membre de l'équipe :** GAMBOUE Ursie (Présentatrice)  
 > **Date du relevé :** 15 novembre 2026  
 > **Source des données :** Historique Git du dépôt (`git log`) et arborescence du projet.  
 > **Règle méthodologique appliquée :** Aucune conclusion subjective ; relevé strict et exhaustif des faits vérifiables.

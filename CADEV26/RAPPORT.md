@@ -4,7 +4,7 @@
 **Équipe candidate :** Équipe CYBERSOCLE  
 - **Capitaine d'équipe :** OBIEY Christ Dany  
 - **Membre de l'équipe :** MAMPOUYA Alicia Syrianne (Présentation vidéo démo & parcours utilisateur)  
-- **Membre de l'équipe :** GAMBOUE Ursie Semence (Présentatrice — Présentation vidéo démo & parcours utilisateur)  
+- **Membre de l'équipe :** GAMBOUE Ursie (Présentatrice — Présentation vidéo démo & parcours utilisateur)  
 **Organisateur & Événement :** SYSTALINK SENEGAL — Concours CADEV 2026  
 **Date limite impérative :** Dimanche 15 novembre 2026 à 17 h 00 GMT  
 **URL de Production :** https://cybersocle.site (Portail) / https://git.cybersocle.site (Forge Gitea CE)  
@@ -35,7 +35,7 @@ L'intégralité du dépôt BantuDevLab a été audité, durci et rendu rigoureus
 - **Paramètres de production vérifiés :** DEBUG désactivé par défaut, ALLOWED_HOSTS restreint, HSTS sur 1 an, cookies Secure/HttpOnly/Strict, CSRF et CSP stricte sans appel CDN externe.
 
 ### TÂCHE 3 — Fichiers de licence officiels
-- **LICENSE :** Texte MIT officiel intact à la racine, attribuant la titularité aux membres de l'Équipe CYBERSOCLE : OBIEY Christ Dany (Capitaine), MAMPOUYA Alicia Syrianne et GAMBOUE Ursie Semence.
+- **LICENSE :** Texte MIT officiel intact à la racine, attribuant la titularité aux membres de l'Équipe CYBERSOCLE : OBIEY Christ Dany (Capitaine), MAMPOUYA Alicia Syrianne et GAMBOUE Ursie.
 - **THIRD_PARTY_LICENSES.md :** Tableau exhaustif à la racine répertoriant tous les composants tiers et leurs licences permissives.
 - **NOTICE :** Précision formelle à la racine indiquant que Gitea CE 1.22 (MIT) est utilisé tel quel sans modification de code source, Valkey 7.2 (BSD-3-Clause), CodeMirror 5 (MIT), et les conditions d'utilisation de Gemma 2 2B.
 
@@ -58,7 +58,7 @@ L'intégralité du dépôt BantuDevLab a été audité, durci et rendu rigoureus
 - **Workflows Gitea Actions :** Documentation détaillée du statut « en attente » causé par l'absence d'instance `act_runner` connectée, avec guide de configuration pas à pas.
 
 ### TÂCHE 7 — Fiche officielle de soumission (`CADEV26/SOUMISSION.md`)
-- Rédaction complète et rigoureuse respectant les critères a) à g) : présentation, engagement de titularité avec champs vides pour OBIEY Christ Dany, MAMPOUYA Alicia Syrianne et GAMBOUE Ursie Semence, tableau de licences conforme Art. 6, déclaration IA (modèle local Gemma 2 2B sous Google Gemma Terms, aide à la revue sans remplacer le développeur, maîtrise du code), architecture de déploiement, preuve d'achat Datacloud réservée, et déclaration de code antérieur conforme à la Tâche 5.
+- Rédaction complète et rigoureuse respectant les critères a) à g) : présentation, engagement de titularité avec champs vides pour OBIEY Christ Dany, MAMPOUYA Alicia Syrianne et GAMBOUE Ursie, tableau de licences conforme Art. 6, déclaration IA (modèle local Gemma 2 2B sous Google Gemma Terms, aide à la revue sans remplacer le développeur, maîtrise du code), architecture de déploiement, preuve d'achat Datacloud réservée, et déclaration de code antérieur conforme à la Tâche 5.
 
 ### TÂCHE 8 — Parcours de démo sans friction (`CADEV26/DEMO_GUIDE.md`)
 - Guide complet pour juré non technique : accueil, connexion ZKP 1-clic avec `cadev_evaluator`, consultation de la FAQ, création autonome de dépôt.
@@ -92,7 +92,7 @@ Avant l'heure limite du **dimanche 15 novembre 2026 à 17 h 00 GMT**, les membre
 - Renseigner la date et faire apposer la signature ou mention « Lu et approuvé » par chaque membre :
   - **OBIEY Christ Dany** (Capitaine d'équipe)
   - **MAMPOUYA Alicia Syrianne** (Membre d'équipe)
-  - **GAMBOUE Ursie Semence** (Membre d'équipe)
+  - **GAMBOUE Ursie** (Membre d'équipe)
 - Renseigner les outils d'assistance au développement utilisés par l'équipe à la section **d.2**.
 
 ### Action 3 : Justificatif et référence de commande Datacloud
@@ -113,7 +113,7 @@ Transmettre le dossier officiel par email avant le **15 novembre 2026 à 17 h 00
   - Fiche de soumission `CADEV26/SOUMISSION.md` signée en pièce jointe ou corps de message.
 
 ### Action 5 : Participation obligatoire au vote des pairs
-- Chaque membre inscrit de l'équipe (**OBIEY Christ Dany**, **MAMPOUYA Alicia Syrianne** et **GAMBOUE Ursie Semence**) doit impérativement participer à la session de vote des pairs organisée par Systalink conformément au règlement du concours.
+- Chaque membre inscrit de l'équipe (**OBIEY Christ Dany**, **MAMPOUYA Alicia Syrianne** et **GAMBOUE Ursie**) doit impérativement participer à la session de vote des pairs organisée par Systalink conformément au règlement du concours.
 
 ### Action 6 : Questions formelles à poser à Systalink (`cadev@systalink.com`)
 Pour sécuriser le dossier sur le plan juridique, poser par écrit les 3 questions de confirmation suivantes :

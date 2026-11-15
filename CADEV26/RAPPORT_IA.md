@@ -4,7 +4,7 @@
 **Équipe candidate :** Équipe CYBERSOCLE  
 - **Capitaine d'équipe :** OBIEY Christ Dany (Lead Architecture & Développement Fullstack)  
 - **Membre de l'équipe :** MAMPOUYA Alicia Syrianne (Présentation vidéo démo & parcours utilisateur)  
-- **Membre de l'équipe :** GAMBOUE Ursie Semence (Présentatrice — Présentation vidéo démo & parcours utilisateur)  
+- **Membre de l'équipe :** GAMBOUE Ursie (Présentatrice — Présentation vidéo démo & parcours utilisateur)  
 **Branche de travail :** `main` / `docker-cadev26`  
 **Date du rapport :** 15 novembre 2026  
 
@@ -24,7 +24,7 @@ L'intégralité de la chaîne de déclaration d'usage de l'intelligence artifici
 - **Rôles de l'équipe formalisés :**
   - OBIEY Christ Dany : Capitaine d'équipe, Lead Architecture & Développement Fullstack.
   - MAMPOUYA Alicia Syrianne : Membre de l'équipe, Présentation vidéo démo & parcours utilisateur.
-  - GAMBOUE Ursie Semence : Membre de l'équipe, Présentatrice — Présentation vidéo démo & parcours utilisateur.
+  - GAMBOUE Ursie : Membre de l'équipe, Présentatrice — Présentation vidéo démo & parcours utilisateur.
 - **Engagement d'appropriation :** Déclaration solennelle certifiant que l'équipe comprend, relit, teste et assume l'intégralité du code et de l'architecture livrés.
 - **Champs de signature :** Emplacements réservés avec signatures laissées vides pour chaque membre.
 
@@ -59,7 +59,7 @@ Les points suivants relèvent de la validation humaine des membres de l'équipe 
 - **MAMPOUYA Alicia Syrianne :**
   - Renseigner la date et apposer la signature / mention « Lu et approuvé » pour la titularité des droits (section b).
   - Apposer la signature pour l'engagement de validation du parcours démo et de la solution livrée (section d.3).
-- **GAMBOUE Ursie Semence :**
+- **GAMBOUE Ursie :**
   - Renseigner la date et apposer la signature / mention « Lu et approuvé » pour la titularité des droits (section b).
   - Apposer la signature pour l'engagement de validation de la présentation, du parcours démo et de la solution livrée (section d.3).
 

@@ -4,7 +4,7 @@
 **Équipe candidate :** Équipe CYBERSOCLE  
 - **Capitaine d'équipe :** OBIEY Christ Dany  
 - **Membre de l'équipe :** MAMPOUYA Alicia Syrianne (Présentation vidéo démo & parcours utilisateur)  
-- **Membre de l'équipe :** GAMBOUE Ursie Semence (Présentatrice — Présentation vidéo démo & parcours utilisateur)  
+- **Membre de l'équipe :** GAMBOUE Ursie (Présentatrice — Présentation vidéo démo & parcours utilisateur)  
 **Public cible :** Membres du Jury et Évaluateurs CADEV 2026 (profil technique ou non technique)  
 **Environnement de test :**  
 - Portail Souverain & API : https://cybersocle.site  

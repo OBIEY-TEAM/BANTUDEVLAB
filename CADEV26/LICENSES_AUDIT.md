@@ -3,7 +3,7 @@
 > **Équipe candidate : CYBERSOCLE**  
 > - **Capitaine d'équipe :** OBIEY Christ Dany  
 > - **Membre de l'équipe :** MAMPOUYA Alicia Syrianne  
-> - **Membre de l'équipe :** GAMBOUE Ursie Semence (Présentatrice)  
+> - **Membre de l'équipe :** GAMBOUE Ursie (Présentatrice)  
 > **Projet :** BANTUDEVLAB — Forge Logicielle Souveraine Panafricaine  
 > **Conformité au règlement CADEV 2026 (Systalink) :**  
 > Le règlement stipule que tout composant sous licence GPL, AGPL ou LGPL rend le projet irrecevable (Article 6).  

@@ -2,7 +2,7 @@
 
 **Auteurs :** Équipe CYBERSOCLE  
 - **Capitaine d'équipe :** OBIEY Christ Dany  
-- **Membre de l'équipe (Présentatrice) :** GAMBOUE Ursie Semence  
+- **Membre de l'équipe (Présentatrice) :** GAMBOUE Ursie  
 - **Membre de l'équipe (Présentatrice) :** MAMPOUYA Alicia Syrianne  
 **Événement :** Systalink Challenge / CADEV 2026 (29 sept. – 15 nov. 2026)
 **Thème officiel :** « Construire la plateforme d'échange africaine, pour les devs, par les devs. »
@@ -113,7 +113,7 @@ L'évaluation lucide des deux ébauches de pitch précédentes révèle des faib
 
 **Thème officiel :** « Construire la plateforme d’échange africaine, pour les devs, par les devs. »  
 **Livrables demandés :** dépôt Git + démo en ligne (projet utilisable et hébergé en ligne).  
-**Présentation :** GAMBOUE Ursie Semence, MAMPOUYA Alicia Syrianne, avec OBIEY Christ Dany (capitaine).
+**Présentation :** GAMBOUE Ursie, MAMPOUYA Alicia Syrianne, avec OBIEY Christ Dany (capitaine).
 
 ---
 
@@ -121,7 +121,7 @@ L'évaluation lucide des deux ébauches de pitch précédentes révèle des faib
 
 > « Mesdames et messieurs les membres du jury, bonjour.
 > Le thème de ce challenge est : construire la plateforme d’échange africaine, pour les devs, par les devs. Posons-nous une question simple : où échangent aujourd’hui les développeurs africains ? Sur des plateformes situées à des milliers de kilomètres, soumises à des lois qui ne sont pas les nôtres, et dont le code peut alimenter des modèles d’IA hébergés hors du continent.
-> Nous sommes l’équipe CYBERSOCLE, de Pointe-Noire. Je suis Ursie Semence GAMBOUE, Alicia Mampouya, et avec notre capitaine Christ Dany Obiey, nous avons construit BantuDevLab. »
+> Nous sommes l’équipe CYBERSOCLE, de Pointe-Noire. Je suis Ursie GAMBOUE, Alicia Mampouya, et avec notre capitaine Christ Dany Obiey, nous avons construit BantuDevLab. »
 
 ---
 

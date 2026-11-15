@@ -4,7 +4,7 @@
 **Équipe candidate :** Équipe CYBERSOCLE  
 - **Capitaine d'équipe :** OBIEY Christ Dany (Lead Architecture & Développement Fullstack)  
 - **Membre de l'équipe :** MAMPOUYA Alicia Syrianne (Présentation vidéo démo & parcours utilisateur)  
-- **Membre de l'équipe :** GAMBOUE Ursie Semence (Présentatrice — Présentation vidéo démo & parcours utilisateur)  
+- **Membre de l'équipe :** GAMBOUE Ursie (Présentatrice — Présentation vidéo démo & parcours utilisateur)  
 **Événement :** Concours CADEV 2026 — Systalink Cloud  
 **Date limite de soumission :** 15 novembre 2026 à 17 h 00 GMT  
 **URL de production :** https://cybersocle.site (Portail Central & API) / https://git.cybersocle.site (Forge Gitea CE)  
@@ -34,7 +34,7 @@ BANTUDEVLAB est une forge logicielle panafricaine souveraine d'échange et de re
 Les soussignés, membres de l'équipe candidate **CYBERSOCLE** :
 1. **OBIEY Christ Dany** (Capitaine d'équipe, Lead Architecture & Développement Fullstack)
 2. **MAMPOUYA Alicia Syrianne** (Membre de l'équipe, Présentation vidéo démo & parcours utilisateur)
-3. **GAMBOUE Ursie Semence** (Membre de l'équipe, Présentatrice — Présentation vidéo démo & parcours utilisateur)
+3. **GAMBOUE Ursie** (Membre de l'équipe, Présentatrice — Présentation vidéo démo & parcours utilisateur)
 
 déclarent sur l'honneur que le projet BANTUDEVLAB a été conçu, développé et réalisé à titre personnel et indépendant, **hors de toute mission, contrat de travail, mandat ou commande émanant d'un employeur, client ou établissement d'enseignement**. L'ensemble des droits d'auteur et de propriété intellectuelle afférents au code original développé appartient exclusivement aux membres de l'équipe CYBERSOCLE et est mis à disposition sous licence permissive MIT.
 
@@ -44,7 +44,7 @@ déclarent sur l'honneur que le projet BANTUDEVLAB a été conçu, développé e
 | :--- | :--- | :--- | :--- | :--- |
 | **OBIEY Christ Dany** | **Capitaine d'équipe**, Architecture & Développement Fullstack | Travaux réalisés à titre personnel et indépendant hors contrat employeur/client | [À signer par OBIEY Christ Dany : Mention « Lu et approuvé »] | [Date à compléter : JJ/MM/2026] |
 | **MAMPOUYA Alicia Syrianne** | **Membre de l'équipe**, Présentation vidéo démo & parcours utilisateur | Travaux réalisés à titre personnel et indépendant hors contrat employeur/client | [À signer par MAMPOUYA Alicia Syrianne : Mention « Lu et approuvé »] | [Date à compléter : JJ/MM/2026] |
-| **GAMBOUE Ursie Semence** | **Membre de l'équipe**, Présentatrice — Présentation vidéo démo & parcours utilisateur | Travaux réalisés à titre personnel et indépendant hors contrat employeur/client | [À signer par GAMBOUE Ursie Semence : Mention « Lu et approuvé »] | [Date à compléter : JJ/MM/2026] |
+| **GAMBOUE Ursie** | **Membre de l'équipe**, Présentatrice — Présentation vidéo démo & parcours utilisateur | Travaux réalisés à titre personnel et indépendant hors contrat employeur/client | [À signer par GAMBOUE Ursie : Mention « Lu et approuvé »] | [Date à compléter : JJ/MM/2026] |
 
 ---
 
@@ -120,7 +120,7 @@ L'équipe CYBERSOCLE certifie sur l'honneur qu'aucun code n'a été intégré à
 | :--- | :--- | :--- | :--- | :--- |
 | **OBIEY Christ Dany** | **Capitaine d'équipe**, Lead Architecture & Développement Fullstack | Je certifie comprendre, avoir relu, testé et assumer l'ensemble de la solution technique livrée | [Signature d'OBIEY Christ Dany] | [Date : JJ/MM/2026] |
 | **MAMPOUYA Alicia Syrianne** | **Membre de l'équipe**, Présentation vidéo démo & parcours utilisateur | Je certifie valider le parcours utilisateur, la présentation de démonstration et assumer la solution livrée | [Signature de MAMPOUYA Alicia Syrianne] | [Date : JJ/MM/2026] |
-| **GAMBOUE Ursie Semence** | **Membre de l'équipe**, Présentatrice — Présentation vidéo démo & parcours utilisateur | Je certifie valider la présentation de démonstration, le parcours utilisateur et assumer la solution livrée | [Signature de GAMBOUE Ursie Semence] | [Date : JJ/MM/2026] |
+| **GAMBOUE Ursie** | **Membre de l'équipe**, Présentatrice — Présentation vidéo démo & parcours utilisateur | Je certifie valider la présentation de démonstration, le parcours utilisateur et assumer la solution livrée | [Signature de GAMBOUE Ursie] | [Date : JJ/MM/2026] |
 
 ---
 

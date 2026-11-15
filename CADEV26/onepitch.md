@@ -3,7 +3,7 @@
 **Équipe candidate :** Équipe CYBERSOCLE  
 - **Capitaine d'équipe :** OBIEY Christ Dany (Lead Architecture & Développement Fullstack)  
 - **Membre de l'équipe :** MAMPOUYA Alicia Syrianne (Présentation vidéo démo & parcours utilisateur)  
-- **Membre de l'équipe :** GAMBOUE Ursie Semence (Présentatrice — Présentation vidéo démo & parcours utilisateur)  
+- **Membre de l'équipe :** GAMBOUE Ursie (Présentatrice — Présentation vidéo démo & parcours utilisateur)  
 **Projet :** BANTUDEVLAB — Forge Logicielle Souveraine Panafricaine  
 **Concours :** CADEV 2026 (Systalink / Datacloud) — Date limite : 15 novembre 2026, 17 h 00 GMT  
 **Accès en ligne :** https://cybersocle.site | https://git.cybersocle.site  
