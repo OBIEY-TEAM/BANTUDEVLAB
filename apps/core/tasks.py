@@ -61,7 +61,9 @@ def cleanup_demo_repositories(max_age_hours: int = 24) -> int:
     """
     try:
         from datetime import timedelta
+
         from django.utils import timezone
+
         from apps.gitea_client.models import SovereignRepository
 
         cutoff = timezone.now() - timedelta(hours=max_age_hours)

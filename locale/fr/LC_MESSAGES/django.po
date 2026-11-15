@@ -5,11 +5,32 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Transfer-Encoding: 8bit\n"
 
+msgid " s'authentifie instantanément via la preuve mathématique de Schnorr (RFC 3526 MODP 2048 bits) sans transmettre aucun mot de passe."
+msgstr " s'authentifie instantanément via la preuve mathématique de Schnorr (RFC 3526 MODP 2048 bits) sans transmettre aucun mot de passe."
+
+msgid "), puis connectez-vous ou créez un compte Gitea pour gérer vos dépôts et clés SSH."
+msgstr "), puis connectez-vous ou créez un compte Gitea pour gérer vos dépôts et clés SSH."
+
 msgid "0 problème détecté"
 msgstr "0 problème détecté"
 
+msgid "1. Connexion Zero-Trust immédiate :"
+msgstr "1. Connexion Zero-Trust immédiate :"
+
+msgid "2. Consultation de la FAQ et conformité :"
+msgstr "2. Consultation de la FAQ et conformité :"
+
+msgid "3. Création d'un dépôt de démonstration :"
+msgstr "3. Création d'un dépôt de démonstration :"
+
+msgid "4. Audit SAST et Revue IA Locale Gemma 2 2B :"
+msgstr "4. Audit SAST et Revue IA Locale Gemma 2 2B :"
+
 msgid "5 Milliards"
 msgstr "5 Milliards"
+
+msgid "Abidjan — Topologie cible (projet)"
+msgstr "Abidjan — Topologie cible (projet)"
 
 msgid "Accessibilité universelle (WCAG 2.2 AA) : les lecteurs d'écran pour personnes malvoyantes prononcent souvent de façon erratique les pictogrammes Unicode."
 msgstr "Accessibilité universelle (WCAG 2.2 AA) : les lecteurs d'écran pour personnes malvoyantes prononcent souvent de façon erratique les pictogrammes Unicode."
@@ -22,6 +43,12 @@ msgstr "Accès autorisé sans mot de passe."
 
 msgid "Accéder au Tableau de Bord"
 msgstr "Accéder au Tableau de Bord"
+
+msgid "Accéder aux dépôts et discussions"
+msgstr "Accéder aux dépôts et discussions"
+
+msgid "Accédez directement à vos espaces de dépôts Gitea CE."
+msgstr "Accédez directement à vos espaces de dépôts Gitea CE."
 
 msgid "Accédez directement à vos espaces de dépôts Gitea ou GitLab CE."
 msgstr "Accédez directement à vos espaces de dépôts Gitea ou GitLab CE."
@@ -41,17 +68,41 @@ msgstr "Actualiser les Métriques"
 msgid "Ajoutez votre clé publique SSH (Ed25519 ou RSA 4096 bits) dans vos paramètres GitLab pour cloner directement :"
 msgstr "Ajoutez votre clé publique SSH (Ed25519 ou RSA 4096 bits) dans vos paramètres GitLab pour cloner directement :"
 
+msgid "Ajoutez votre clé publique SSH (Ed25519 ou RSA 4096 bits) dans vos paramètres Gitea pour cloner directement :"
+msgstr "Ajoutez votre clé publique SSH (Ed25519 ou RSA 4096 bits) dans vos paramètres Gitea pour cloner directement :"
+
 msgid "Allez sur la page de connexion ZKP. Renseignez votre identifiant développeur. L'application émet un défi cryptographique (nonce à usage unique valable 5 minutes). Saisissez votre phrase mnémonique ou clé secrète locale pour calculer la preuve de Schnorr"
 msgstr "Allez sur la page de connexion ZKP. Renseignez votre identifiant développeur. L'application émet un défi cryptographique (nonce à usage unique valable 5 minutes). Saisissez votre phrase mnémonique ou clé secrète locale pour calculer la preuve de Schnorr"
 
 msgid "Analyse Complétée"
 msgstr "Analyse Complétée"
 
+msgid "Analyse SAST locale (entropie de Shannon et détection de secrets) et revue assistée par Gemma 2 2B via Ollama."
+msgstr "Analyse SAST locale (entropie de Shannon et détection de secrets) et revue assistée par Gemma 2 2B via Ollama."
+
 msgid "Analyse par le moteur de sécurité souverain..."
 msgstr "Analyse par le moteur de sécurité souverain..."
 
+msgid "Annuler"
+msgstr "Annuler"
+
+msgid "Application hébergée sur un VPS Ubuntu externe ; domaines acquis chez Datacloud. Déploiement souverain : objectif de la feuille de route."
+msgstr "Application hébergée sur un VPS Ubuntu externe ; domaines acquis chez Datacloud. Déploiement souverain : objectif de la feuille de route."
+
+msgid "Approfondissement sur les fonctionnalités avancées : ZKP, IA Gemma 2 2B, SAST, Multi-Tenancy et architecture cible."
+msgstr "Approfondissement sur les fonctionnalités avancées : ZKP, IA Gemma 2 2B, SAST, Multi-Tenancy et architecture cible."
+
 msgid "Approfondissement sur les fonctionnalités avancées : ZKP, IA Gemma 5B, SAST, Multi-Tenancy et souveraineté continentale."
 msgstr "Approfondissement sur les fonctionnalités avancées : ZKP, IA Gemma 5B, SAST, Multi-Tenancy et souveraineté continentale."
+
+msgid "Architecture Ouverte"
+msgstr "Architecture Ouverte"
+
+msgid "Architecture panafricaine visée sur la feuille de route (nœuds non déployés à ce stade). Cliquez sur un nœud pour voir son rôle cible."
+msgstr "Architecture panafricaine visée sur la feuille de route (nœuds non déployés à ce stade). Cliquez sur un nœud pour voir son rôle cible."
+
+msgid "Ask Gemma Review"
+msgstr "Ask Gemma Review"
 
 msgid "Assistant d'Identité & Connexion Zero-Trust"
 msgstr "Assistant d'Identité & Connexion Zero-Trust"
@@ -68,6 +119,9 @@ msgstr "Aucun audit récent enregistré. Lancez un premier scan !"
 msgid "Aucun dépôt détecté sur le cluster Gitea local."
 msgstr "Aucun dépôt détecté sur le cluster Gitea local."
 
+msgid "Aucun dépôt public synchronisé pour le moment. Créez un dépôt de démonstration depuis votre tableau de bord ou explorez la forge Gitea."
+msgstr "Aucun dépôt public synchronisé pour le moment. Créez un dépôt de démonstration depuis votre tableau de bord ou explorez la forge Gitea."
+
 msgid "Aucun mot de passe en clair n'est stocké en base de données. L'authentification repose exclusivement sur des preuves mathématiques à divulgation nulle de connaissance."
 msgstr "Aucun mot de passe en clair n'est stocké en base de données. L'authentification repose exclusivement sur des preuves mathématiques à divulgation nulle de connaissance."
 
@@ -76,6 +130,9 @@ msgstr "Aucune empreinte secrète conservée."
 
 msgid "Aucune vulnérabilité détectée !"
 msgstr "Aucune vulnérabilité détectée !"
+
+msgid "Audits IA Gemma 2 2B"
+msgstr "Audits IA Gemma 2 2B"
 
 msgid "Audits IA Gemma 5B"
 msgstr "Audits IA Gemma 5B"
@@ -107,6 +164,9 @@ msgstr "BANTUDEVLAB applique une politique stricte Zéro-Emoji (contrôlée en c
 msgid "BANTUDEVLAB réunit la robustesse d'un moteur Git distribué, la sécurité mathématique des preuves à divulgation nulle de connaissance (Zero-Knowledge Proofs), et l'intelligence artificielle locale Gemma 5B pour garantir l'indépendance technologique du continent."
 msgstr "BANTUDEVLAB réunit la robustesse d'un moteur Git distribué, la sécurité mathématique des preuves à divulgation nulle de connaissance (Zero-Knowledge Proofs), et l'intelligence artificielle locale Gemma 5B pour garantir l'indépendance technologique du continent."
 
+msgid "BANTUDEVLAB réunit un moteur Git Gitea CE (MIT), l'authentification par preuves à divulgation nulle de connaissance (Zero-Knowledge Proofs), et l'analyse locale par Gemma 2 2B via Ollama."
+msgstr "BANTUDEVLAB réunit un moteur Git Gitea CE (MIT), l'authentification par preuves à divulgation nulle de connaissance (Zero-Knowledge Proofs), et l'analyse locale par Gemma 2 2B via Ollama."
+
 msgid "Bande Passante IXP"
 msgstr "Bande Passante IXP"
 
@@ -122,6 +182,9 @@ msgstr "Basculer vers Gitea"
 msgid "Basculez sur l'onglet « Inscription Souveraine » de l'assistant interactif."
 msgstr "Basculez sur l'onglet « Inscription Souveraine » de l'assistant interactif."
 
+msgid "Bienvenue au jury et aux évaluateurs du concours CADEV 2026. Application hébergée sur un VPS Ubuntu externe ; domaines acquis chez Datacloud. Déploiement souverain : objectif de la feuille de route. Voici le parcours pas-à-pas pour évaluer BantuDevLab :"
+msgstr "Bienvenue au jury et aux évaluateurs du concours CADEV 2026. Application hébergée sur un VPS Ubuntu externe ; domaines acquis chez Datacloud. Déploiement souverain : objectif de la feuille de route. Voici le parcours pas-à-pas pour évaluer BantuDevLab :"
+
 msgid "Branche"
 msgstr "Branche"
 
@@ -133,6 +196,9 @@ msgstr "CERTIFIÉ TIER-4 DATACENTER"
 
 msgid "CONFORME"
 msgstr "CONFORME"
+
+msgid "Cadre visé"
+msgstr "Cadre visé"
 
 msgid "Calcul de la preuve Fiat-Shamir et interrogation du serveur..."
 msgstr "Calcul de la preuve Fiat-Shamir et interrogation du serveur..."
@@ -146,6 +212,9 @@ msgstr "Ces 12 mots permettent de régénérer mathématiquement votre clé priv
 msgid "Ces runners sont isolés dans des conteneurs sécurisés rootless hébergés dans nos datacenters partenaires."
 msgstr "Ces runners sont isolés dans des conteneurs sécurisés rootless hébergés dans nos datacenters partenaires."
 
+msgid "Cette section détaille les principes Zero-Trust, l'absence de dépendance aux CDN tiers, la politique Zéro-Emoji et la bascule vers le cache permissif Valkey 7.2 (BSD-3-Clause) en remplacement de Redis."
+msgstr "Cette section détaille les principes Zero-Trust, l'absence de dépendance aux CDN tiers, la politique Zéro-Emoji et la bascule vers le cache permissif Valkey 7.2 (BSD-3-Clause) en remplacement de Redis."
+
 msgid "Challenge reçu :"
 msgstr "Challenge reçu :"
 
@@ -155,11 +224,17 @@ msgstr "Changer de langue"
 msgid "Chaque approbation est scellée par une preuve ZKP enregistrée sous le modèle SovereignMergeRequestApproval."
 msgstr "Chaque approbation est scellée par une preuve ZKP enregistrée sous le modèle SovereignMergeRequestApproval."
 
+msgid "Chaque défi de connexion est unique (nonce à usage unique) et invalidé après vérification."
+msgstr "Chaque défi de connexion est unique (nonce à usage unique) et invalidé après vérification."
+
 msgid "Chaque défi de connexion est unique et consommé atomiquement. Une preuve interceptée sur le réseau ne peut jamais être réutilisée."
 msgstr "Chaque défi de connexion est unique et consommé atomiquement. Une preuve interceptée sur le réseau ne peut jamais être réutilisée."
 
 msgid "Chaque organisation dispose d'espaces de noms (namespaces) dédiés synchronisés avec les groupes GitLab."
 msgstr "Chaque organisation dispose d'espaces de noms (namespaces) dédiés synchronisés avec les groupes GitLab."
+
+msgid "Chaque organisation dispose d'espaces de noms (organisations) dédiés dans Gitea CE."
+msgstr "Chaque organisation dispose d'espaces de noms (organisations) dédiés dans Gitea CE."
 
 msgid "Chat Bot"
 msgstr "Chat Bot"
@@ -191,6 +266,12 @@ msgstr "Code de démonstration rechargé."
 msgid "Cohérence d'affichage : affichage strictement identique quel que soit le système d'exploitation client (Linux, BSD, Windows, macOS, terminaux mobiles)."
 msgstr "Cohérence d'affichage : affichage strictement identique quel que soit le système d'exploitation client (Linux, BSD, Windows, macOS, terminaux mobiles)."
 
+msgid "Comment BANTUDEVLAB respecte-t-il le règlement CADEV 2026 (Article 6 et Annexe 1) ?"
+msgstr "Comment BANTUDEVLAB respecte-t-il le règlement CADEV 2026 (Article 6 et Annexe 1) ?"
+
+msgid "Comment configurer et exécuter des pipelines CI/CD avec Gitea Actions ?"
+msgstr "Comment configurer et exécuter des pipelines CI/CD avec Gitea Actions ?"
+
 msgid "Comment configurer et exécuter des pipelines CI/CD sur les runners souverains ?"
 msgstr "Comment configurer et exécuter des pipelines CI/CD sur les runners souverains ?"
 
@@ -200,14 +281,23 @@ msgstr "Comment consulter et cloner le code source des dépôts souverains ?"
 msgid "Comment créer un compte GitLab sur la plateforme souveraine ?"
 msgstr "Comment créer un compte GitLab sur la plateforme souveraine ?"
 
+msgid "Comment créer un compte sur la plateforme souveraine ?"
+msgstr "Comment créer un compte sur la plateforme souveraine ?"
+
 msgid "Comment est assurée l'étanchéité entre organisations (Banques, Ministères, Universités, Startups) ?"
 msgstr "Comment est assurée l'étanchéité entre organisations (Banques, Ministères, Universités, Startups) ?"
 
 msgid "Comment fonctionne la double approbation ZKP sur les Merge Requests (MR) ?"
 msgstr "Comment fonctionne la double approbation ZKP sur les Merge Requests (MR) ?"
 
+msgid "Comment fonctionne la revue et l'audit sur les Pull Requests (PR) ?"
+msgstr "Comment fonctionne la revue et l'audit sur les Pull Requests (PR) ?"
+
 msgid "Comment fonctionne le scanner de sécurité SAST et comment est calculé le score de souveraineté ?"
 msgstr "Comment fonctionne le scanner de sécurité SAST et comment est calculé le score de souveraineté ?"
+
+msgid "Comment l'assistant IA local Gemma 2 2B audite-t-il le code sans fuite vers des API cloud tierces ?"
+msgstr "Comment l'assistant IA local Gemma 2 2B audite-t-il le code sans fuite vers des API cloud tierces ?"
 
 msgid "Comment l'assistant IA local Gemma 5B audite-t-il le code sans aucune fuite vers l'étranger ?"
 msgstr "Comment l'assistant IA local Gemma 5B audite-t-il le code sans aucune fuite vers l'étranger ?"
@@ -215,8 +305,17 @@ msgstr "Comment l'assistant IA local Gemma 5B audite-t-il le code sans aucune fu
 msgid "Comment se connecter à son compte ?"
 msgstr "Comment se connecter à son compte ?"
 
+msgid "Compte Démo Évaluateur (Connexion en 1 Clic)"
+msgstr "Compte Démo Évaluateur (Connexion en 1 Clic)"
+
+msgid "Compte préconfiguré :"
+msgstr "Compte préconfiguré :"
+
 msgid "Confidentialité Mathématique"
 msgstr "Confidentialité Mathématique"
+
+msgid "Connexion Démo 1-Clic"
+msgstr "Connexion Démo 1-Clic"
 
 msgid "Connexion Gitea"
 msgstr "Connexion Gitea"
@@ -248,6 +347,9 @@ msgstr "Connexion à BantuDevLab :"
 msgid "Connexion à GitLab CE via Single Sign-On (SSO OmniAuth ZKP) :"
 msgstr "Connexion à GitLab CE via Single Sign-On (SSO OmniAuth ZKP) :"
 
+msgid "Connexion à la forge Gitea CE :"
+msgstr "Connexion à la forge Gitea CE :"
+
 msgid "Consultation Web Immédiate"
 msgstr "Consultation Web Immédiate"
 
@@ -263,8 +365,14 @@ msgstr "Consultez notre guide complet : création de compte, connexion sans mot 
 msgid "Contrairement aux assistants cloud propriétaires hébergés sous juridiction étrangère (Cloud Act, FISA), le modèle Gemma 5B de BANTUDEVLAB :"
 msgstr "Contrairement aux assistants cloud propriétaires hébergés sous juridiction étrangère (Cloud Act, FISA), le modèle Gemma 5B de BANTUDEVLAB :"
 
+msgid "Contrairement aux assistants cloud propriétaires, le modèle Gemma 2 2B de BANTUDEVLAB :"
+msgstr "Contrairement aux assistants cloud propriétaires, le modèle Gemma 2 2B de BANTUDEVLAB :"
+
 msgid "Contrôle Panafricain"
 msgstr "Contrôle Panafricain"
+
+msgid "Convention de Malabo (UA)"
+msgstr "Convention de Malabo (UA)"
 
 msgid "Copier la phrase"
 msgstr "Copier la phrase"
@@ -278,11 +386,29 @@ msgstr "Critiques"
 msgid "Cryptographie Zero-Knowledge (ZKP)"
 msgstr "Cryptographie Zero-Knowledge (ZKP)"
 
+msgid "Création du dépôt sur la forge en cours..."
+msgstr "Création du dépôt sur la forge en cours..."
+
+msgid "Créer le Dépôt Immédiatement"
+msgstr "Créer le Dépôt Immédiatement"
+
+msgid "Créer un Dépôt de Démonstration"
+msgstr "Créer un Dépôt de Démonstration"
+
 msgid "Côte d Ivoire"
 msgstr "Côte d Ivoire"
 
+msgid "Côte d'Ivoire (CIV)"
+msgstr "Côte d'Ivoire (CIV)"
+
 msgid "Côte d'Ivoire (Systalink Abidjan DC)"
 msgstr "Côte d'Ivoire (Systalink Abidjan DC)"
+
+msgid "Dakar — Topologie cible (projet)"
+msgstr "Dakar — Topologie cible (projet)"
+
+msgid "Dans Gitea CE et le portail BANTUDEVLAB, chaque Pull Request peut être vérifiée avant fusion :"
+msgstr "Dans Gitea CE et le portail BANTUDEVLAB, chaque Pull Request peut être vérifiée avant fusion :"
 
 msgid "Datacenter Systalink Tier-3"
 msgstr "Datacenter Systalink Tier-3"
@@ -301,6 +427,9 @@ msgstr "Depuis le"
 
 msgid "Des niveaux de souveraineté graduels (Tier-1 Continental, Tier-2 Régional, Tier-3 Startup) définissent les règles de chiffrement et d'hébergement."
 msgstr "Des niveaux de souveraineté graduels (Tier-1 Continental, Tier-2 Régional, Tier-3 Startup) définissent les règles de chiffrement et d'hébergement."
+
+msgid "Description :"
+msgstr "Description :"
 
 msgid "Disponibilité SLA"
 msgstr "Disponibilité SLA"
@@ -326,8 +455,20 @@ msgstr "Droit Rwandais & Smart Africa"
 msgid "Droit Sénégalais & CEDEAO"
 msgstr "Droit Sénégalais & CEDEAO"
 
+msgid "Déclaration d'usage transparent de l'IA (Article 6) : l'assistant de revue de code utilise exclusivement Gemma 2 2B exécuté localement via Ollama, sans appel à des API externes ni envoi de code tiers."
+msgstr "Déclaration d'usage transparent de l'IA (Article 6) : l'assistant de revue de code utilise exclusivement Gemma 2 2B exécuté localement via Ollama, sans appel à des API externes ni envoi de code tiers."
+
 msgid "Dépôt"
 msgstr "Dépôt"
+
+msgid "Dépôt créé avec succès !"
+msgstr "Dépôt créé avec succès !"
+
+msgid "Dépôt privé (accès restreint à l'organisation)"
+msgstr "Dépôt privé (accès restreint à l'organisation)"
+
+msgid "Dépôts & Discussions (Issues / PR)"
+msgstr "Dépôts & Discussions (Issues / PR)"
 
 msgid "Dépôts Actifs"
 msgstr "Dépôts Actifs"
@@ -349,6 +490,9 @@ msgstr "Détection des injections SQL, exécutions de commandes non sécurisées
 
 msgid "Détection des secrets codés en dur (clés privées, tokens API, identifiants)."
 msgstr "Détection des secrets codés en dur (clés privées, tokens API, identifiants)."
+
+msgid "Développé par l'équipe CYBERSOCLE pour la CADEV 2026"
+msgstr "Développé par l'équipe CYBERSOCLE pour la CADEV 2026"
 
 msgid "East Africa Gateway - Nairobi"
 msgstr "East Africa Gateway - Nairobi"
@@ -380,6 +524,9 @@ msgstr "Erreur d'enregistrement"
 msgid "Erreur de connexion IA: HTTP"
 msgstr "Erreur de connexion IA: HTTP"
 
+msgid "Erreur de connexion."
+msgstr "Erreur de connexion."
+
 msgid "Erreur du scanner :"
 msgstr "Erreur du scanner :"
 
@@ -410,11 +557,26 @@ msgstr "Etape 2 : Mnemonique"
 msgid "Etape 3 : Zero-Trust Auth"
 msgstr "Zero-Trust Auth"
 
+msgid "Explorer Gitea"
+msgstr "Explorer Gitea"
+
+msgid "Explorer la forge Gitea"
+msgstr "Explorer la forge Gitea"
+
 msgid "Explorer le Tableau de Bord"
 msgstr "Explorer le Tableau de Bord"
 
+msgid "Exportation des rapports au format standard OASIS SARIF 2.1.0."
+msgstr "Exportation des rapports au format standard OASIS SARIF 2.1.0."
+
 msgid "Exportation des rapports aux formats standard OASIS SARIF 2.1.0 et GitLab SAST (gl-sast-report.json)."
 msgstr "Exportation des rapports aux formats standard OASIS SARIF 2.1.0 et GitLab SAST (gl-sast-report.json)."
+
+msgid "Exécuter Ask Gemma Review sur le code du Workbench"
+msgstr "Exécuter Ask Gemma Review sur le code du Workbench"
+
+msgid "Exécuter Run Security Review sur le code du Workbench"
+msgstr "Exécuter Run Security Review sur le code du Workbench"
 
 msgid "FORGE SOUVERAINE"
 msgstr "FORGE SOUVERAINE"
@@ -452,6 +614,9 @@ msgstr "Forge Logicielle Panafricaine & Souveraine. Hébergée sur Systalink Clo
 msgid "Forge distribuée basée sur Gitea/GitLab CE déployée sur nos serveurs en Afrique. Zéro dépendance vis-à-vis des juridictions extérieures (Cloud Act exempt)."
 msgstr "Forge distribuée basée sur Gitea/GitLab CE déployée sur nos serveurs en Afrique. Zéro dépendance vis-à-vis des juridictions extérieures (Cloud Act exempt)."
 
+msgid "Forge logicielle basée sur Gitea CE (MIT), avec authentification Zero-Trust et analyse locale de code."
+msgstr "Forge logicielle basée sur Gitea CE (MIT), avec authentification Zero-Trust et analyse locale de code."
+
 msgid "Fort"
 msgstr "Fort"
 
@@ -470,6 +635,9 @@ msgstr "Guide d'Utilisation & Foire Aux Questions"
 msgid "Générez un token d'accès Git"
 msgstr "Générez un token d'accès Git"
 
+msgid "Générez votre clé souveraine protégée par mnémonique BIP-39 et prouvez mathématiquement votre identité sans exposer de mot de passe."
+msgstr "Générez votre clé souveraine protégée par mnémonique BIP-39 et prouvez mathématiquement votre identité sans exposer de mot de passe."
+
 msgid "Générez votre clé souveraine protégée par mnémonique BIP-39 et prouvez mathématiquement votre identité sans jamais exposer de mot de passe."
 msgstr "Générez votre clé souveraine protégée par mnémonique BIP-39 et prouvez mathématiquement votre identité sans jamais exposer de mot de passe."
 
@@ -482,8 +650,17 @@ msgstr "Hautes"
 msgid "Hub majeur de connectivité pour les fintechs et startups d Afrique de l Ouest, hébergeant des miroirs rapides de paquets."
 msgstr "Hub majeur de connectivité pour les fintechs et startups d Afrique de l Ouest, hébergeant des miroirs rapides de paquets."
 
+msgid "Hébergement actuel"
+msgstr "Hébergement actuel"
+
+msgid "Hébergez votre code, connectez-vous sans mot de passe, faites analyser votre code par une IA locale."
+msgstr "Hébergez votre code, connectez-vous sans mot de passe, faites analyser votre code par une IA locale."
+
 msgid "Hôte principal du moteur Git souverain Gitea, cluster PostgreSQL répliqué et API BantuDevLab."
 msgstr "Hôte principal du moteur Git souverain Gitea, cluster PostgreSQL répliqué et API BantuDevLab."
+
+msgid "IA Locale Gemma 2 2B Souveraine"
+msgstr "IA Locale Gemma 2 2B Souveraine"
 
 msgid "IA Locale Gemma 5B Fine-tunée"
 msgstr "IA Locale Gemma 5B Fine-tunée"
@@ -515,14 +692,35 @@ msgstr "Immunité intégrale contre les écoutes réseau et le rejeu de requête
 msgid "Immunité totale face au CLOUD Act et aux juridictions extraterritoriales."
 msgstr "Immunité totale face au CLOUD Act et aux juridictions extraterritoriales."
 
+msgid "Impossible de mesurer la latence du serveur."
+msgstr "Impossible de mesurer la latence du serveur."
+
 msgid "Indicateurs & Topologie Souveraine Panafricaine"
 msgstr "Indicateurs & Topologie Souveraine Panafricaine"
+
+msgid "Indicateurs & Topologie cible (projet)"
+msgstr "Indicateurs & Topologie cible (projet)"
+
+msgid "Indisponible"
+msgstr "Indisponible"
+
+msgid "Infrastructure actuelle sur VPS Ubuntu externe ; relocalisation souveraine prévue."
+msgstr "Infrastructure actuelle sur VPS Ubuntu externe ; relocalisation souveraine prévue."
 
 msgid "Initialisation de la synchronisation avec Gitea..."
 msgstr "Initialisation de la synchronisation avec Gitea..."
 
+msgid "Initialisation rapide du compte démo évaluateur CADEV 2026 (cadev_evaluator)..."
+msgstr "Initialisation rapide du compte démo évaluateur CADEV 2026 (cadev_evaluator)..."
+
+msgid "Initialisez un dépôt souverain sur la forge Gitea avec branche principale par défaut et traçabilité dans l'Audit Trail immuable."
+msgstr "Initialisez un dépôt souverain sur la forge Gitea avec branche principale par défaut et traçabilité dans l'Audit Trail immuable."
+
 msgid "Innovation City DC Tier-3"
 msgstr "Innovation City DC Tier-3"
+
+msgid "Intelligence Artificielle Locale (Gemma 2 2B)"
+msgstr "Intelligence Artificielle Locale (Gemma 2 2B)"
 
 msgid "Intelligence Artificielle Locale (Gemma 5B)"
 msgstr "Intelligence Artificielle Locale (Gemma 5B)"
@@ -548,6 +746,9 @@ msgstr "Kenya (Nairobi IXP Hub)"
 msgid "Kigali Innovation City DC - Kigali"
 msgstr "Kigali Innovation City DC - Kigali"
 
+msgid "Kigali — Topologie cible (projet)"
+msgstr "Kigali — Topologie cible (projet)"
+
 msgid "La Convention de l'Union Africaine sur la Cybersécurité et la Protection des Données à Caractère Personnel (Malabo 2014) impose des garanties strictes d'intégrité, de traçabilité et de non-ingérence :"
 msgstr "La Convention de l'Union Africaine sur la Cybersécurité et la Protection des Données à Caractère Personnel (Malabo 2014) impose des garanties strictes d'intégrité, de traçabilité et de non-ingérence :"
 
@@ -557,11 +758,23 @@ msgstr "La Forge Logicielle Souveraine de l'Afrique"
 msgid "La connexion s'opère en mode Zero-Trust sans mot de passe, garantissant l'immunité contre le hameçonnage, le vol d'identifiants et les attaques par force brute :"
 msgstr "La connexion s'opère en mode Zero-Trust sans mot de passe, garantissant l'immunité contre le hameçonnage, le vol d'identifiants et les attaques par force brute :"
 
+msgid "La connexion s'opère en mode Zero-Trust sans mot de passe, réduisant l'exposition au hameçonnage et au vol de mots de passe :"
+msgstr "La connexion s'opère en mode Zero-Trust sans mot de passe, réduisant l'exposition au hameçonnage et au vol de mots de passe :"
+
 msgid "La création d'organisations est soumise à validation administrative (contrôle IsAdminUser)."
 msgstr "La création d'organisations est soumise à validation administrative (contrôle IsAdminUser)."
 
 msgid "La fusion (merge) d'une branche de fonctionnalités vers la branche principale exige la signature mathématique d'au moins deux relecteurs habilités."
 msgstr "La fusion (merge) d'une branche de fonctionnalités vers la branche principale exige la signature mathématique d'au moins deux relecteurs habilités."
+
+msgid "Lagos — Topologie cible (projet)"
+msgstr "Lagos — Topologie cible (projet)"
+
+msgid "Lancer immédiatement Ask Gemma Review sur ce dépôt"
+msgstr "Lancer immédiatement Ask Gemma Review sur ce dépôt"
+
+msgid "Lancer immédiatement Run Security Review sur ce dépôt"
+msgstr "Lancer immédiatement Run Security Review sur ce dépôt"
 
 msgid "Lancer l'Audit de Sécurité"
 msgstr "Lancer l'Audit de Sécurité"
@@ -581,11 +794,23 @@ msgstr "Latência directe RTT :"
 msgid "Latence mesuree en temps reel : RTT local"
 msgstr "Latence mesurée en temps réel : RTT local"
 
+msgid "Latence mesurée en direct (serveur actuel) :"
+msgstr "Latence mesurée en direct (serveur actuel) :"
+
+msgid "Latence serveur réel"
+msgstr "Latence serveur réel"
+
+msgid "Le code analysé reste sur l'instance d'exécution."
+msgstr "Le code analysé reste sur l'instance d'exécution."
+
 msgid "Le code respecte strictement les critères de souveraineté panafricaine."
 msgstr "Le code respecte strictement les critères de souveraineté panafricaine."
 
 msgid "Le code source hébergé sur BANTUDEVLAB et GitLab est consultable et clonable selon plusieurs modalités :"
 msgstr "Le code source hébergé sur BANTUDEVLAB et GitLab est consultable et clonable selon plusieurs modalités :"
+
+msgid "Le code source hébergé sur BANTUDEVLAB et Gitea CE est consultable et clonable selon plusieurs modalités :"
+msgstr "Le code source hébergé sur BANTUDEVLAB et Gitea CE est consultable et clonable selon plusieurs modalités :"
 
 msgid "Le modèle SovereignOrganization assure une compartimentation multi-tenancy stricte :"
 msgstr "Le modèle SovereignOrganization assure une compartimentation multi-tenancy stricte :"
@@ -611,11 +836,17 @@ msgstr "Localisation des Données & Hébergement"
 msgid "Lors du clic, votre navigateur résout un défi cryptographique avec votre clé privée locale pour prouver la possession de la clé sans jamais la dévoiler au serveur."
 msgstr "Lors du clic, votre navigateur résout un défi cryptographique avec votre clé privée locale pour prouver la possession de la clé sans jamais la dévoiler au serveur."
 
+msgid "Lors du clic, votre navigateur résout un défi cryptographique avec votre clé privée locale pour prouver la possession de la clé sans la transmettre au serveur."
+msgstr "Lors du clic, votre navigateur résout un défi cryptographique avec votre clé privée locale pour prouver la possession de la clé sans la transmettre au serveur."
+
 msgid "MainOne Datacenter Gateway - Lagos"
 msgstr "MainOne Datacenter Gateway - Lagos"
 
 msgid "Masque et anonymise automatiquement les secrets éventuels avant toute journalisation (AIInteractionLog)."
 msgstr "Masque et anonymise automatiquement les secrets éventuels avant toute journalisation (AIInteractionLog)."
+
+msgid "Masque les secrets détectés avant journalisation (AIInteractionLog)."
+msgstr "Masque les secrets détectés avant journalisation (AIInteractionLog)."
 
 msgid "Menu de navigation"
 msgstr "Menu de navigation"
@@ -625,6 +856,12 @@ msgstr "Menu mobile"
 
 msgid "Mesure de la latence reseau en temps reel (Ping RTT)..."
 msgstr "Mesure de la latence réseau en temps réel (Ping RTT)..."
+
+msgid "Mesure en direct de la latence vers le serveur réel..."
+msgstr "Mesure en direct de la latence vers le serveur réel..."
+
+msgid "Mesurer la latence du serveur"
+msgstr "Mesurer la latence du serveur"
 
 msgid "Mesures de Latence Réelle Intra-Afrique (Temps Réel)"
 msgstr "Mesures de Latence Réelle Intra-Afrique (Temps Réel)"
@@ -644,11 +881,20 @@ msgstr "Mode d'Emploi & FAQ"
 msgid "Mode d'Utilisation Fondamental : GitLab & BantuDevLab"
 msgstr "Mode d'Utilisation Fondamental : GitLab & BantuDevLab"
 
+msgid "Mode d'Utilisation Fondamental : Gitea CE & BantuDevLab"
+msgstr "Mode d'Utilisation Fondamental : Gitea CE & BantuDevLab"
+
+msgid "Modèle compact Gemma 2 2B exécuté localement via Ollama sur le serveur applicatif, sans appel à des API d'IA externes."
+msgstr "Modèle compact Gemma 2 2B exécuté localement via Ollama sur le serveur applicatif, sans appel à des API d'IA externes."
+
 msgid "Modèle de fondation Gemma 5B fine-tuné sur les dépôts de code et besoins d'infrastructures télécoms/fintech africaines. Exécution 100% On-Premise / Local."
 msgstr "Modèle de fondation Gemma 5B fine-tuné sur les dépôts de code et besoins d'infrastructures télécoms/fintech africaines. Exécution 100% On-Premise / Local."
 
 msgid "Mot"
 msgstr "Mot"
+
+msgid "Moteur Git Gitea CE (MIT)"
+msgstr "Moteur Git Gitea CE (MIT)"
 
 msgid "Moteur Git Panafricain & Dépôts Souverains"
 msgstr "Moteur Git Panafricain & Dépôts Souverains"
@@ -665,11 +911,17 @@ msgstr "Moyennes"
 msgid "Méthode 1 : Inscription cryptographique via BantuDevLab (Recommandée)"
 msgstr "Méthode 1 : Inscription cryptographique via BantuDevLab (Recommandée)"
 
+msgid "Méthode 2 : Accès direct sur l'instance Gitea auto-hébergée"
+msgstr "Méthode 2 : Accès direct sur l'instance Gitea auto-hébergée"
+
 msgid "Méthode 2 : Inscription directe sur l'instance GitLab auto-hébergée"
 msgstr "Méthode 2 : Inscription directe sur l'instance GitLab auto-hébergée"
 
 msgid "Même en cas de compromission totale de la base de données du serveur, aucun mot de passe ni clé privée ne peut fuiter, car seules les clés publiques sont enregistrées."
 msgstr "Même en cas de compromission totale de la base de données du serveur, aucun mot de passe ni clé privée ne peut fuiter, car seules les clés publiques sont enregistrées."
+
+msgid "Nairobi — Topologie cible (projet)"
+msgstr "Nairobi — Topologie cible (projet)"
 
 msgid "Navigation Principale"
 msgstr "Navigation Principale"
@@ -683,11 +935,23 @@ msgstr "Nigeria (Lagos Datacenter)"
 msgid "Nom de Développeur Souverain (Username)"
 msgstr "Nom de Développeur Souverain (Username) :"
 
+msgid "Nom du Dépôt :"
+msgstr "Nom du Dépôt :"
+
+msgid "Non mesurée"
+msgstr "Non mesurée"
+
 msgid "Normes de Souveraineté Numérique ADSS-v1"
 msgstr "Normes de Souveraineté Numérique ADSS-v1"
 
+msgid "Nouveau Dépôt de Démonstration"
+msgstr "Nouveau Dépôt de Démonstration"
+
 msgid "Nouveau sur BANTUDEVLAB & GitLab ?"
 msgstr "Nouveau sur BANTUDEVLAB & GitLab ?"
+
+msgid "Nouveau sur BANTUDEVLAB ?"
+msgstr "Nouveau sur BANTUDEVLAB ?"
 
 msgid "Nouvelle phrase mnémonique générée (12 mots)."
 msgstr "Nouvelle phrase mnémonique générée (12 mots)."
@@ -704,17 +968,65 @@ msgstr "Nœud Central Systalink Cloud - Abidjan"
 msgid "Nœud central de la forge souveraine : héberge le moteur Gitea CE, les référentiels Git maîtres et le pipeline de fine-tuning Gemma 5B."
 msgstr "Nœud central de la forge souveraine : héberge le moteur Gitea CE, les référentiels Git maîtres et le pipeline de fine-tuning Gemma 5B."
 
+msgid "Nœud cible :"
+msgstr "Nœud cible :"
+
+msgid "Nœud cible Afrique de l Est prévu sur la feuille de route (non déployé actuellement)."
+msgstr "Nœud cible Afrique de l Est prévu sur la feuille de route (non déployé actuellement)."
+
+msgid "Nœud cible Afrique de l Ouest prévu sur la feuille de route (non déployé actuellement)."
+msgstr "Nœud cible Afrique de l Ouest prévu sur la feuille de route (non déployé actuellement)."
+
+msgid "Nœud cible Afrique de l'Est"
+msgstr "Nœud cible Afrique de l'Est"
+
+msgid "Nœud cible Afrique de l'Ouest"
+msgstr "Nœud cible Afrique de l'Ouest"
+
+msgid "Nœud cible Nigeria"
+msgstr "Nœud cible Nigeria"
+
+msgid "Nœud cible Rwanda"
+msgstr "Nœud cible Rwanda"
+
+msgid "Nœud cible Sénégal"
+msgstr "Nœud cible Sénégal"
+
+msgid "Nœud cible prévu sur la feuille de route (non déployé actuellement)."
+msgstr "Nœud cible prévu sur la feuille de route (non déployé actuellement)."
+
 msgid "Nœud sélectionné :"
 msgstr "Nœud sélectionné :"
 
+msgid "Originalité et licence : code source publié sous licence MIT ; 100% des dépendances Python vérifiées permissives (MIT, BSD, Apache-2.0, PSF) via scripts/check_licenses.py."
+msgstr "Originalité et licence : code source publié sous licence MIT ; 100% des dépendances Python vérifiées permissives (MIT, BSD, Apache-2.0, PSF) via scripts/check_licenses.py."
+
 msgid "Ouvre GitLab dans un nouvel onglet"
 msgstr "Ouvre GitLab dans un nouvel onglet"
+
+msgid "Ouvrez l'interface Gitea (via le bouton « Basculer vers Gitea » sur"
+msgstr "Ouvrez l'interface Gitea (via le bouton « Basculer vers Gitea » sur"
+
+msgid "Ouvrez la page de connexion ZKP et cliquez sur le bouton « Connexion Démo 1-Clic ». Le compte "
+msgstr "Ouvrez la page de connexion ZKP et cliquez sur le bouton « Connexion Démo 1-Clic ». Le compte "
+
+msgid "Ouvrir https://git.cybersocle.site/<username>/<repot>.git sur Gitea"
+msgstr "Ouvrir https://git.cybersocle.site/<username>/<repot>.git sur Gitea"
+
+msgid "Ouvrir la forge Gitea"
+msgstr "Ouvrir la forge Gitea"
+
+msgid "PARCOURS D'ÉVALUATION CADEV 2026"
+msgstr "PARCOURS D'ÉVALUATION CADEV 2026"
 
 msgid "PROTOCOLE SCHNORR NIZKP / FIAT-SHAMIR"
 msgstr "PROTOCOLE SCHNORR NIZKP / FIAT-SHAMIR"
 
 msgid "Paramètres Optimisés"
 msgstr "Paramètres Optimisés"
+
+msgid "Parcours Démo Évaluateur CADEV 2026 (1-Clic)"
+msgstr "Parcours Démo Évaluateur CADEV 2026 (1-Clic)"
 
 msgid "Passer à la Connexion"
 msgstr "Passer à la Connexion"
@@ -743,8 +1055,20 @@ msgstr "Preuve (t, s) calculée. Envoi de la preuve au serveur pour vérificatio
 msgid "Preuves de Schnorr non-interactives basées sur Fiat-Shamir garantissant une authentification à divulgation nulle de connaissance. Même en cas de compromission serveur, aucun mot de passe n'existe."
 msgstr "Preuves de Schnorr non-interactives basées sur Fiat-Shamir garantissant une authentification à divulgation nulle de connaissance. Même en cas de compromission serveur, aucun mot de passe n'existe."
 
+msgid "Preuves de Schnorr non-interactives basées sur Fiat-Shamir permettant une authentification à divulgation nulle de connaissance. Aucun mot de passe utilisateur n'est stocké côté serveur."
+msgstr "Preuves de Schnorr non-interactives basées sur Fiat-Shamir permettant une authentification à divulgation nulle de connaissance. Aucun mot de passe utilisateur n'est stocké côté serveur."
+
 msgid "Privé"
 msgstr "Privé"
+
+msgid "Projet"
+msgstr "Projet"
+
+msgid "Projet soumis par l'équipe CYBERSOCLE (République du Congo) dans le cadre du concours CADEV 2026 :"
+msgstr "Projet soumis par l'équipe CYBERSOCLE (République du Congo) dans le cadre du concours CADEV 2026 :"
+
+msgid "Projet, non déployé"
+msgstr "Projet, non déployé"
 
 msgid "Protection Légale"
 msgstr "Protection Légale"
@@ -752,8 +1076,17 @@ msgstr "Protection Légale"
 msgid "Protection anti-rejeu :"
 msgstr "Protection anti-rejeu :"
 
+msgid "Protection de la branche principale via les règles de branche Gitea (revues requises et contrôles de statut)."
+msgstr "Protection de la branche principale via les règles de branche Gitea (revues requises et contrôles de statut)."
+
+msgid "Protocole Zero-Trust Schnorr NIZKP sans mot de passe."
+msgstr "Protocole Zero-Trust Schnorr NIZKP sans mot de passe."
+
 msgid "Protocole cryptographique de Schnorr / Sigma non-interactif via Fiat-Shamir. Prouvez votre identité sans JAMAIS transmettre votre mot de passe au réseau."
 msgstr "Protocole cryptographique de Schnorr / Sigma non-interactif via Fiat-Shamir. Prouvez votre identité sans JAMAIS transmettre votre mot de passe au réseau."
+
+msgid "Protocole cryptographique de Schnorr / Sigma non-interactif via Fiat-Shamir. Prouvez votre identité sans transmettre de mot de passe sur le réseau."
+msgstr "Protocole cryptographique de Schnorr / Sigma non-interactif via Fiat-Shamir. Prouvez votre identité sans transmettre de mot de passe sur le réseau."
 
 msgid "Prouver mon Identité (Connexion Zero-Trust)"
 msgstr "Prouver mon Identité (Connexion Zero-Trust)"
@@ -767,6 +1100,9 @@ msgstr "Prêt"
 msgid "Public Souverain"
 msgstr "Public Souverain"
 
+msgid "Publiez et consommez des paquets (Docker, PyPI, npm, génériques) via le registre intégré de Gitea CE."
+msgstr "Publiez et consommez des paquets (Docker, PyPI, npm, génériques) via le registre intégré de Gitea CE."
+
 msgid "Pôle d innovation panafricain pour le calcul distribué, l audit IA local et l hébergement des architectures souveraines."
 msgstr "Pôle d innovation panafricain pour le calcul distribué, l audit IA local et l hébergement des architectures souveraines."
 
@@ -776,8 +1112,14 @@ msgstr "Qu'est-ce que l'authentification Zero-Trust ZKP et pourquoi surpasse-t-e
 msgid "Questions Fréquentes Techniques & Sécurité"
 msgstr "Questions Fréquentes Techniques & Sécurité"
 
+msgid "Rapport d'Audit Gemma 2 2B (Local / Ollama)"
+msgstr "Rapport d'Audit Gemma 2 2B (Local / Ollama)"
+
 msgid "Rapport d'Audit Gemma 5B (Local / On-Premise)"
 msgstr "Rapport d'Audit Gemma 5B (Local / On-Premise)"
+
+msgid "Recevabilité Datacloud : noms de domaine acquis auprès de Systalink/Datacloud ; application hébergée sur un VPS Ubuntu externe."
+msgstr "Recevabilité Datacloud : noms de domaine acquis auprès de Systalink/Datacloud ; application hébergée sur un VPS Ubuntu externe."
 
 msgid "Rechercher dans la FAQ"
 msgstr "Rechercher dans la FAQ"
@@ -785,11 +1127,17 @@ msgstr "Rechercher dans la FAQ"
 msgid "Rechercher une question, mot-clé (ex: Git, ZKP, token, clone, merge request)..."
 msgstr "Rechercher une question, mot-clé (ex: Git, ZKP, token, clone, merge request)..."
 
+msgid "Rechercher une question, mot-clé (ex: Git, ZKP, token, clone, pull request)..."
+msgstr "Rechercher une question, mot-clé (ex: Git, ZKP, token, clone, pull request)..."
+
 msgid "Recommandation Souveraine :"
 msgstr "Recommandation Souveraine :"
 
 msgid "Redirection automatique vers l'inscription Gitea dans"
 msgstr "Redirection automatique vers l'inscription Gitea dans"
+
+msgid "Registres de Paquets (Gitea Packages)"
+msgstr "Registres de Paquets (Gitea Packages)"
 
 msgid "Regénérer (12 Mots)"
 msgstr "Regénérer (12 Mots)"
@@ -800,11 +1148,17 @@ msgstr "Rendez-vous sur l'onglet"
 msgid "Retrouvez l'ensemble des réponses techniques pour exploiter la forge souveraine BANTUDEVLAB et son intégration GitLab CE/EE : création de compte, connexion Zero-Trust, consultation du code source et collaboration sécurisée."
 msgstr "Retrouvez l'ensemble des réponses techniques pour exploiter la forge souveraine BANTUDEVLAB et son intégration GitLab CE/EE : création de compte, connexion Zero-Trust, consultation du code source et collaboration sécurisée."
 
+msgid "Retrouvez l'ensemble des réponses techniques pour exploiter la forge souveraine BANTUDEVLAB et son moteur Gitea CE (MIT) : création de compte, connexion Zero-Trust, consultation du code source et collaboration sécurisée."
+msgstr "Retrouvez l'ensemble des réponses techniques pour exploiter la forge souveraine BANTUDEVLAB et son moteur Gitea CE (MIT) : création de compte, connexion Zero-Trust, consultation du code source et collaboration sécurisée."
+
 msgid "Revenir au Mnémonique"
 msgstr "Revenir au Mnémonique"
 
 msgid "Revue de code par Gemma 5B complétée."
 msgstr "Revue de code par Gemma 5B complétée."
+
+msgid "Run Security Review"
+msgstr "Run Security Review"
 
 msgid "Rwanda"
 msgstr "Rwanda"
@@ -814,6 +1168,9 @@ msgstr "Rwanda (Kigali Innovation City)"
 
 msgid "Règle de sécurité :"
 msgstr "Règle de sécurité :"
+
+msgid "S'exécute en local via Ollama sans transmission de code source à des API d'IA tierces."
+msgstr "S'exécute en local via Ollama sans transmission de code source à des API d'IA tierces."
 
 msgid "S'exécute en local via vLLM / Ollama sans aucune transmission de télémétrie ou de code source à des tiers."
 msgstr "S'exécute en local via vLLM / Ollama sans aucune transmission de télémétrie ou de code source à des tiers."
@@ -833,8 +1190,14 @@ msgstr "Se Connecter sur Gitea"
 msgid "Secret Privé Dérivé (Ne quitte JAMAIS votre navigateur) :"
 msgstr "Secret Privé Dérivé (Ne quitte JAMAIS votre navigateur) :"
 
+msgid "Secret Privé Dérivé (conservé localement dans votre navigateur) :"
+msgstr "Secret Privé Dérivé (conservé localement dans votre navigateur) :"
+
 msgid "Session authentifiée via Zero-Trust ZKP"
 msgstr "Session authentifiée via Zero-Trust ZKP"
+
+msgid "Seule la clé publique Y est conservée en base."
+msgstr "Seule la clé publique Y est conservée en base."
 
 msgid "Si votre organisation dispose d'une passerelle GitLab dédiée, ouvrez l'interface GitLab (via le bouton « Accès Forge Git »), cliquez sur « S'inscrire » (Register), complétez votre profil institutionnel, puis associez votre clé ZKP BantuDevLab via le bouton « Connecter avec Bantu ZKP »."
 msgstr "Si votre organisation dispose d'une passerelle GitLab dédiée, ouvrez l'interface GitLab (via le bouton « Accès Forge Git »), cliquez sur « S'inscrire » (Register), complétez votre profil institutionnel, puis associez votre clé ZKP BantuDevLab via le bouton « Connecter avec Bantu ZKP »."
@@ -869,8 +1232,17 @@ msgstr "Statut"
 msgid "Statut : 100% Souverain"
 msgstr "Statut : 100% Souverain"
 
+msgid "Statut : Authentification sans mot de passe (Schnorr NIZKP)"
+msgstr "Statut : Authentification sans mot de passe (Schnorr NIZKP)"
+
 msgid "Statut : Cryptographiquement inviolable"
 msgstr "Statut : Cryptographiquement inviolable"
+
+msgid "Statut : Feuille de route"
+msgstr "Statut : Feuille de route"
+
+msgid "Statut : Inférence locale Ollama"
+msgstr "Statut : Inférence locale Ollama"
 
 msgid "Statut : Zéro fuite de télémétrie"
 msgstr "Statut : Zéro fuite de télémétrie"
@@ -886,6 +1258,15 @@ msgstr "Sur la mire de connexion GitLab, cliquez sur le bouton souverain"
 
 msgid "Sur la plateforme souveraine BANTUDEVLAB, l'accès à GitLab CE est unifié avec votre identité cryptographique Zero-Trust. Vous avez deux méthodes pour créer votre compte :"
 msgstr "Sur la plateforme souveraine BANTUDEVLAB, l'accès à GitLab CE est unifié avec votre identité cryptographique Zero-Trust. Vous avez deux méthodes pour créer votre compte :"
+
+msgid "Sur la plateforme souveraine BANTUDEVLAB, l'accès à la forge Gitea CE est associé à votre identité cryptographique Zero-Trust. Vous avez deux méthodes pour créer votre compte :"
+msgstr "Sur la plateforme souveraine BANTUDEVLAB, l'accès à la forge Gitea CE est associé à votre identité cryptographique Zero-Trust. Vous avez deux méthodes pour créer votre compte :"
+
+msgid "Sur le Tableau de Bord, cliquez sur « Créer un Dépôt de Démonstration ». Renseignez le nom (ex: demo-cadev-2026) et validez. Le dépôt est créé sur la forge souveraine et apparaît immédiatement avec ses actions de sécurité."
+msgstr "Sur le Tableau de Bord, cliquez sur « Créer un Dépôt de Démonstration ». Renseignez le nom (ex: demo-cadev-2026) et validez. Le dépôt est créé sur la forge souveraine et apparaît immédiatement avec ses actions de sécurité."
+
+msgid "Sur n'importe quel dépôt, cliquez sur « Run Security Audit » pour calculer l'entropie de Shannon ($H \\ge 3.8$) ou « Ask Gemma Review » pour invoquer le modèle compact local exécuté sur conteneur Ollama."
+msgstr "Sur n'importe quel dépôt, cliquez sur « Run Security Audit » pour calculer l'entropie de Shannon ($H \\ge 3.8$) ou « Ask Gemma Review » pour invoquer le modèle compact local exécuté sur conteneur Ollama."
 
 msgid "Surveillance de la forge logicielle, sécurité Zero-Trust et assistance IA locale"
 msgstr "Surveillance de la forge logicielle, sécurité Zero-Trust et assistance IA locale"
@@ -917,6 +1298,9 @@ msgstr "Thème clair activé"
 msgid "Thème sombre activé"
 msgstr "Thème sombre activé"
 
+msgid "Topologie cible (projet)"
+msgstr "Topologie cible (projet)"
+
 msgid "Topologie des Datacenters Certifiés"
 msgstr "Topologie des Datacenters Certifiés"
 
@@ -929,11 +1313,23 @@ msgstr "Une autre question technique ?"
 msgid "Une fois la preuve vérifiée par le serveur, votre session est ouverte."
 msgstr "Une fois la preuve vérifiée par le serveur, votre session est ouverte."
 
+msgid "Utilisez le bouton « Basculer vers Gitea » ou rendez-vous sur"
+msgstr "Utilisez le bouton « Basculer vers Gitea » ou rendez-vous sur"
+
+msgid "VPS Ubuntu externe"
+msgstr "VPS Ubuntu externe"
+
 msgid "Validation mathématique stricte de non-appartenance aux petits sous-groupes pour éliminer toute tentative de falsification de clé."
 msgstr "Validation mathématique stricte de non-appartenance aux petits sous-groupes pour éliminer toute tentative de falsification de clé."
 
+msgid "Validez : votre identité souveraine est instantanément enregistrée et liée à votre espace Gitea CE sans mot de passe transmis."
+msgstr "Validez : votre identité souveraine est instantanément enregistrée et liée à votre espace Gitea CE sans mot de passe transmis."
+
 msgid "Validez : votre identité souveraine est instantanément enregistrée. Votre compte GitLab CE associé est automatiquement provisionné sans aucun mot de passe requis."
 msgstr "Validez : votre identité souveraine est instantanément enregistrée. Votre compte GitLab CE associé est automatiquement provisionné sans aucun mot de passe requis."
+
+msgid "Veuillez renseigner un nom de dépôt."
+msgstr "Veuillez renseigner un nom de dépôt."
 
 msgid "Veuillez renseigner votre identifiant et votre secret."
 msgstr "Veuillez renseigner votre identifiant et votre secret."
@@ -958,6 +1354,9 @@ msgstr "Vos algorithmes critiques restent strictement confidentiels."
 
 msgid "Vos fichiers .gitlab-ci.yml peuvent cibler directement les nœuds d'exécution certifiés panafricains grâce aux tags de runners :"
 msgstr "Vos fichiers .gitlab-ci.yml peuvent cibler directement les nœuds d'exécution certifiés panafricains grâce aux tags de runners :"
+
+msgid "Vos workflows Gitea Actions (.gitea/workflows/) peuvent exécuter les contrôles de tests et de conformité automatiquement :"
+msgstr "Vos workflows Gitea Actions (.gitea/workflows/) peuvent exécuter les contrôles de tests et de conformité automatiquement :"
 
 msgid "Votre identité souveraine"
 msgstr "Votre identité souveraine"
@@ -986,6 +1385,9 @@ msgstr "Workbench Souverain & Audit SAST"
 msgid "ZKP (Zero-Knowledge Proof, ou preuve à divulgation nulle de connaissance) est un protocole cryptographique mathématique fondé sur le problème du logarithme discret (RFC 3526 MODP 2048 bits). Grâce au protocole de Schnorr rendu non-interactif via la transformation de Fiat-Shamir, vous prouvez au serveur que vous détenez votre secret mathématique sans JAMAIS lui révéler ce secret, ni même le faire transiter sur le réseau."
 msgstr "ZKP (Zero-Knowledge Proof, ou preuve à divulgation nulle de connaissance) est un protocole cryptographique mathématique fondé sur le problème du logarithme discret (RFC 3526 MODP 2048 bits). Grâce au protocole de Schnorr rendu non-interactif via la transformation de Fiat-Shamir, vous prouvez au serveur que vous détenez votre secret mathématique sans JAMAIS lui révéler ce secret, ni même le faire transiter sur le réseau."
 
+msgid "ZKP (Zero-Knowledge Proof, ou preuve à divulgation nulle de connaissance) est un protocole cryptographique mathématique fondé sur le problème du logarithme discret (RFC 3526 MODP 2048 bits). Grâce au protocole de Schnorr rendu non-interactif via la transformation de Fiat-Shamir, vous prouvez au serveur que vous détenez votre secret mathématique sans le transmettre sur le réseau."
+msgstr "ZKP (Zero-Knowledge Proof, ou preuve à divulgation nulle de connaissance) est un protocole cryptographique mathématique fondé sur le problème du logarithme discret (RFC 3526 MODP 2048 bits). Grâce au protocole de Schnorr rendu non-interactif via la transformation de Fiat-Shamir, vous prouvez au serveur que vous détenez votre secret mathématique sans le transmettre sur le réseau."
+
 msgid "Zero-Trust Auth"
 msgstr "Zero-Trust Auth"
 
@@ -994,6 +1396,9 @@ msgstr "consultez la liste des dépôts, l'arborescence des fichiers, l'historiq
 
 msgid "est authentifiée sans mot de passe. Finalisez ou liez votre compte sur la forge Gitea souveraine."
 msgstr "est authentifiée sans mot de passe. Finalisez ou liez votre compte sur la forge Gitea souveraine."
+
+msgid "pour accéder à vos dépôts et Pull Requests, ou utilisez vos jetons Git ZKP générés depuis le portail."
+msgstr "pour accéder à vos dépôts et Pull Requests, ou utilisez vos jetons Git ZKP générés depuis le portail."
 
 msgid "problème détecté"
 msgstr "problème détecté"
@@ -1007,6 +1412,15 @@ msgstr "secondes..."
 msgid "validé par preuve ZKP depuis l'API"
 msgstr "validé par preuve ZKP depuis l'API"
 
+msgid "Échange"
+msgstr "Échange"
+
+msgid "Échangez sur le code, ouvrez des tickets (Issues) et relisez les Pull Requests directement sur la forge Gitea CE."
+msgstr "Échangez sur le code, ouvrez des tickets (Issues) et relisez les Pull Requests directement sur la forge Gitea CE."
+
+msgid "Échec de création du dépôt."
+msgstr "Échec de création du dépôt."
+
 msgid "Échec de l enregistrement"
 msgstr "Échec de l'enregistrement"
 
@@ -1019,3 +1433,5 @@ msgstr "Échec vérification ZKP :"
 msgid "Éditeur avec coloration syntaxique & numérotation"
 msgstr "Éditeur avec coloration syntaxique & numérotation"
 
+msgid "Évaluateur CADEV 2026 : Comment tester l'ensemble du parcours sans friction ?"
+msgstr "Évaluateur CADEV 2026 : Comment tester l'ensemble du parcours sans friction ?"

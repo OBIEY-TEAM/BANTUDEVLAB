@@ -76,8 +76,8 @@
       closeLabel: "Close",
     },
     sw: {
-      btnSecurity: "Run Security Audit",
-      btnGemma: "Ask Gemma Review",
+      btnSecurity: "Tekeleza Ukaguzi wa Usalama",
+      btnGemma: "Uliza Mapitio ya Gemma",
       termTitleSecurity: "KITUO HURU — RUN SECURITY AUDIT (SAST)",
       termTitleGemma: "KITUO HURU — ASK GEMMA REVIEW (AI)",
       plusTooltip: "Sanidi chaguo za amri (+ Hazina, Tawi, Faili)",
@@ -104,8 +104,8 @@
       closeLabel: "Funga",
     },
     pt: {
-      btnSecurity: "Run Security Audit",
-      btnGemma: "Ask Gemma Review",
+      btnSecurity: "Executar Auditoria de Segurança",
+      btnGemma: "Pedir Revisão Gemma",
       termTitleSecurity: "TERMINAL SOBERANO — RUN SECURITY AUDIT (SAST)",
       termTitleGemma: "TERMINAL SOBERANO — ASK GEMMA REVIEW (IA)",
       plusTooltip: "Configurar opções do comando (+ Repositório, Ramo, Ficheiro)",
@@ -220,6 +220,11 @@
     }, 3800);
   }
 
+  function normalizeRepoFullName(r) {
+    var cleaned = String(r || "").trim().replace(/^\/+|\/+$/g, "").replace(/\.git$/, "");
+    return /^[^/\s]+\/[^/\s]+$/.test(cleaned) ? cleaned : "";
+  }
+
   function detectCurrentRepoFromUrl() {
     var path = window.location.pathname.replace(/^\/+|\/+$/g, "");
     if (!path) return "";
@@ -290,7 +295,7 @@
     var style = document.createElement("style");
     style.id = "bantu-cmd-terminal-styles";
     style.textContent =
-      ".bantu-pro-actions-group{display:inline-flex !important;align-items:center !important;align-self:center !important;gap:8px !important;margin:0 6px 0 8px !important;padding:0 !important;flex-wrap:nowrap;vertical-align:middle !important;flex-shrink:0;}" +
+      ".bantu-pro-actions-group{display:inline-flex !important;align-items:center !important;align-self:center !important;gap:8px !important;margin:0 8px 0 14px !important;padding:0 !important;flex-wrap:nowrap;vertical-align:middle !important;flex-shrink:0;}" +
       "#navbar .navbar-left .bantu-pro-actions-group,nav#navbar .bantu-pro-actions-group{display:inline-flex !important;align-items:center !important;align-self:center !important;height:auto !important;margin-left:8px !important;}" +
       ".bantu-pro-action-btn{display:inline-flex !important;align-items:center !important;justify-content:center !important;gap:6px !important;padding:5px 11px !important;border-radius:6px !important;font-size:12px !important;font-weight:700 !important;cursor:pointer !important;transition:all 0.15s ease !important;text-decoration:none !important;white-space:nowrap !important;line-height:1.2 !important;font-family:system-ui,-apple-system,sans-serif !important;}" +
       ".bantu-pro-btn-security{background:rgba(245,158,11,0.16) !important;color:#f59e0b !important;border:1px solid rgba(245,158,11,0.65) !important;}" +
@@ -493,25 +498,28 @@
       var repoMap = {};
       var repoList = [];
 
-      // 1. Try logged-in user repos first (includes private repos created by the dev)
-      try {
-        var rUser = await fetch("/api/v1/user/repos?limit=50", { credentials: "same-origin" });
-        if (rUser.ok) {
-          var uData = await rUser.json();
-          if (Array.isArray(uData)) {
-            uData.forEach(function (r) {
-              if (r && r.full_name && !repoMap[r.full_name]) {
-                repoMap[r.full_name] = true;
-                repoList.push({
-                  full_name: r.full_name,
-                  name: r.name,
-                  default_branch: r.default_branch || "main",
-                });
-              }
-            });
+      // 1. Try logged-in user repos first only when a Gitea session appears active
+      var hasGiteaSession = !!document.querySelector('a[href*="/user/logout"], .user.menu, img.avatar');
+      if (hasGiteaSession) {
+        try {
+          var rUser = await fetch("/api/v1/user/repos?limit=50", { credentials: "same-origin" });
+          if (rUser.ok) {
+            var uData = await rUser.json();
+            if (Array.isArray(uData)) {
+              uData.forEach(function (r) {
+                if (r && r.full_name && !repoMap[r.full_name]) {
+                  repoMap[r.full_name] = true;
+                  repoList.push({
+                    full_name: r.full_name,
+                    name: r.name,
+                    default_branch: r.default_branch || "main",
+                  });
+                }
+              });
+            }
           }
-        }
-      } catch (e1) {}
+        } catch (e1) {}
+      }
 
       // 2. Also search public/visible repos on Gitea
       try {
@@ -563,7 +571,11 @@
         }
       });
 
-      var selectedRepo = preferredRepo || detectCurrentRepoFromUrl() || (repoList[0] && repoList[0].full_name) || "";
+      var selectedRepo =
+        normalizeRepoFullName(preferredRepo) ||
+        detectCurrentRepoFromUrl() ||
+        (repoList[0] && normalizeRepoFullName(repoList[0].full_name)) ||
+        "";
       if (selectedRepo && !repoMap[selectedRepo]) {
         repoList.unshift({
           full_name: selectedRepo,
@@ -758,6 +770,8 @@
         })
         .slice(0, 8);
     }
+    repo = normalizeRepoFullName(repo);
+    if (!repo) return [];
     var results = [];
     for (var i = 0; i < targets.length; i++) {
       var fp = targets[i];

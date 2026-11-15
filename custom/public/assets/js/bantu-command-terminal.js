@@ -76,8 +76,8 @@
       closeLabel: "Close",
     },
     sw: {
-      btnSecurity: "Run Security Audit",
-      btnGemma: "Ask Gemma Review",
+      btnSecurity: "Tekeleza Ukaguzi wa Usalama",
+      btnGemma: "Uliza Mapitio ya Gemma",
       termTitleSecurity: "KITUO HURU — RUN SECURITY AUDIT (SAST)",
       termTitleGemma: "KITUO HURU — ASK GEMMA REVIEW (AI)",
       plusTooltip: "Sanidi chaguo za amri (+ Hazina, Tawi, Faili)",
@@ -87,7 +87,7 @@
       allFiles: "* (Faili zote za hazina)",
       btnExecute: "Tekeleza",
       runningSecurity: "Inakagua usalama wa SAST kwenye hazina...",
-      runningGemma: "Inachambua msimbo kupitia Gemma 5B AI...",
+      runningGemma: "Inachambua msimbo kupitia Gemma 2 2B AI...",
       toastStartSecurity: "Ukaguzi wa usalama umeanza kwenye ",
       toastStartGemma: "Ukaguzi wa Gemma AI umeanza kwenye ",
       toastDoneSecurity: "Ukaguzi umekamilika! Alama ya uhuru: ",
@@ -104,8 +104,8 @@
       closeLabel: "Funga",
     },
     pt: {
-      btnSecurity: "Run Security Audit",
-      btnGemma: "Ask Gemma Review",
+      btnSecurity: "Executar Auditoria de Segurança",
+      btnGemma: "Pedir Revisão Gemma",
       termTitleSecurity: "TERMINAL SOBERANO — RUN SECURITY AUDIT (SAST)",
       termTitleGemma: "TERMINAL SOBERANO — ASK GEMMA REVIEW (IA)",
       plusTooltip: "Configurar opções do comando (+ Repositório, Ramo, Ficheiro)",
@@ -115,7 +115,7 @@
       allFiles: "* (Todos os ficheiros do repositório)",
       btnExecute: "Executar",
       runningSecurity: "A executar auditoria de segurança SAST no repositório...",
-      runningGemma: "A consultar o motor local Gemma 5B IA no repositório...",
+      runningGemma: "A consultar o motor local Gemma 2 2B IA no repositório...",
       toastStartSecurity: "Auditoria SAST iniciada em ",
       toastStartGemma: "Revisão Gemma IA iniciada em ",
       toastDoneSecurity: "Auditoria concluída! Pontuação de soberania: ",
@@ -218,6 +218,11 @@
     toast._timer = setTimeout(function () {
       toast.style.opacity = "0";
     }, 3800);
+  }
+
+  function normalizeRepoFullName(r) {
+    var cleaned = String(r || "").trim().replace(/^\/+|\/+$/g, "").replace(/\.git$/, "");
+    return /^[^/\s]+\/[^/\s]+$/.test(cleaned) ? cleaned : "";
   }
 
   function detectCurrentRepoFromUrl() {
@@ -493,25 +498,28 @@
       var repoMap = {};
       var repoList = [];
 
-      // 1. Try logged-in user repos first (includes private repos created by the dev)
-      try {
-        var rUser = await fetch("/api/v1/user/repos?limit=50", { credentials: "same-origin" });
-        if (rUser.ok) {
-          var uData = await rUser.json();
-          if (Array.isArray(uData)) {
-            uData.forEach(function (r) {
-              if (r && r.full_name && !repoMap[r.full_name]) {
-                repoMap[r.full_name] = true;
-                repoList.push({
-                  full_name: r.full_name,
-                  name: r.name,
-                  default_branch: r.default_branch || "main",
-                });
-              }
-            });
+      // 1. Try logged-in user repos first only when a Gitea session appears active
+      var hasGiteaSession = !!document.querySelector('a[href*="/user/logout"], .user.menu, img.avatar');
+      if (hasGiteaSession) {
+        try {
+          var rUser = await fetch("/api/v1/user/repos?limit=50", { credentials: "same-origin" });
+          if (rUser.ok) {
+            var uData = await rUser.json();
+            if (Array.isArray(uData)) {
+              uData.forEach(function (r) {
+                if (r && r.full_name && !repoMap[r.full_name]) {
+                  repoMap[r.full_name] = true;
+                  repoList.push({
+                    full_name: r.full_name,
+                    name: r.name,
+                    default_branch: r.default_branch || "main",
+                  });
+                }
+              });
+            }
           }
-        }
-      } catch (e1) {}
+        } catch (e1) {}
+      }
 
       // 2. Also search public/visible repos on Gitea
       try {
@@ -563,7 +571,11 @@
         }
       });
 
-      var selectedRepo = preferredRepo || detectCurrentRepoFromUrl() || (repoList[0] && repoList[0].full_name) || "";
+      var selectedRepo =
+        normalizeRepoFullName(preferredRepo) ||
+        detectCurrentRepoFromUrl() ||
+        (repoList[0] && normalizeRepoFullName(repoList[0].full_name)) ||
+        "";
       if (selectedRepo && !repoMap[selectedRepo]) {
         repoList.unshift({
           full_name: selectedRepo,
@@ -758,6 +770,8 @@
         })
         .slice(0, 8);
     }
+    repo = normalizeRepoFullName(repo);
+    if (!repo) return [];
     var results = [];
     for (var i = 0; i < targets.length; i++) {
       var fp = targets[i];

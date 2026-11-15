@@ -1,0 +1,44 @@
+{
+  "fr": {
+    "output": "C:\\Users\\User\\Desktop\\AGENT\\BANTUDEVLAB\\video\\output\\BANTUDEVLAB_CADEV26_FR.mp4",
+    "voice": "fr-FR-VivienneMultilingualNeural",
+    "segments_count": 14,
+    "segments": [
+      "Excellents membres du jury, bonjour depuis la gare de Pointe-Noire. À cet instant précis, des milliers de développeurs africains conçoivent les systèmes bancaires, les infrastructures d'énergie et les services publics du continent. Mais aujourd'hui, ce patrimoine stratégique réside à huit mille kilomètres d'ici, soumis à des juridictions étrangères et analysé par des intelligences artificielles externes.",
+      "Je m'appelle Alicia Syrianne Mampouya, membre de l'équipe CYBERSOCLE, aux côtés de notre capitaine et architecte Christ Dany Obiey. Nous avons refusé cette dépendance. Voici BantuDevLab : une forge logicielle panafricaine souveraine, conçue par des développeurs africains, pour les développeurs africains, alignée sur la Convention de Malabo.",
+      "Notre dépendance aux plateformes étrangères engendre trois ruptures critiques : l'extraterritorialité de nos dépôts et secrets industriels, la vulnérabilité des mots de passe et jetons transmis en clair sur les réseaux, et la fuite de notre propriété intellectuelle vers des assistants d'IA hébergés hors d'Afrique.",
+      "BantuDevLab répond par une architecture industrielle conteneurisée avec Gitea, Valkey, PostgreSQL et un journal d'audit SHA-256 immuable. L'authentification élimine les mots de passe grâce aux preuves à divulgation nulle de Schnorr 2048 bits : le navigateur prouve son secret sans jamais le transmettre au serveur.",
+      "Notre scanner SAST calcule l'entropie de Shannon pour bloquer les clés secrètes enfouies, exporte des rapports OASIS SARIF 2.1.0 pour la CI/CD, et exécute localement le modèle Google Gemma 2 2B via Ollama pour auditer le code sans qu'aucune ligne ne quitte notre infrastructure.",
+      "Passons à la démonstration en direct sur cybersocle point site. Sur la page d'accueil, l'interface Primer est entièrement auto-hébergée sans aucun CDN étranger. On retrouve immédiatement le score de souveraineté numérique et la télémétrie des nœuds.",
+      "BantuDevLab parle aux développeurs de tout le continent en français, anglais, kiswahili et portugais, avec synchronisation bidirectionnelle du thème sombre et clair sans flash blanc entre le portail et Gitea.",
+      "Dans le module de connexion Zero-Trust, le compte évaluateur cadev_evaluator génère localement son engagement et sa réponse Fiat-Shamir. En quelques millisecondes, le serveur valide la preuve mathématique sans jamais connaître ni stocker aucun mot de passe.",
+      "Une fois authentifié, l'évaluateur accède au tableau de bord souverain. Il visualise la latence des nœuds, gère ses dépôts de démonstration et lance directement les analyses de sécurité depuis le Workbench intégré.",
+      "En soumettant un extrait de code vulnérable dans le Workbench, le scanner SAST détecte immédiatement les clés API codées en dur grâce à l'entropie de Shannon, signale les injections SQL et génère un rapport structuré prêt pour l'export SARIF.",
+      "En un clic sur la revue IA, notre modèle local Gemma 2 2B quantifié en 4 bits analyse les failles et propose des correctifs précis en temps réel, tout en garantissant que zéro octet de code ne traverse les frontières.",
+      "Enfin, la page de métriques mesure la latence directe du serveur actif et présente notre topologie cible panafricaine. Côté forge sur git point cybersocle point site, Gitea CE offre une expérience complète avec boutons d'audit SAST et revue Gemma intégrés.",
+      "BantuDevLab n'est pas un concept : c'est une forge opérationnelle forte de trois cent vingt-cinq commits, deux cent deux tests automatisés à quatre-vingt-quinze virgule soixante-cinq pour cent de couverture, et soixante-trois dépendances vérifiées sous licences permissives, avec des domaines acquis chez Systalink Datacloud.",
+      "L'Afrique doit posséder ses forges, ses clés cryptographiques et son intelligence artificielle. BantuDevLab est prêt, sécurisé et accessible dès maintenant sur cybersocle point site. Merci pour votre attention."
+    ]
+  },
+  "en": {
+    "output": "C:\\Users\\User\\Desktop\\AGENT\\BANTUDEVLAB\\video\\output\\BANTUDEVLAB_CADEV26_EN.mp4",
+    "voice": "en-NG-EzinneNeural",
+    "segments_count": 14,
+    "segments": [
+      "Distinguished members of the jury, greetings from Pointe-Noire railway station. At this very moment, thousands of African developers are building our continent's banking systems, energy grids, and public digital services. Yet today, that strategic source code lives eight thousand kilometers away, subject to foreign jurisdictions and analyzed by external cloud AI models.",
+      "I am Alicia Syrianne Mampouya from Team CYBERSOCLE, alongside our captain and lead architect Christ Dany Obiey. We refused this dependency. Meet BantuDevLab: a sovereign Pan-African software forge built by African developers, for African developers, aligned with the African Union Malabo Convention.",
+      "Reliance on foreign hosting platforms creates three critical risks: extraterritorial exposure of our repositories and trade secrets, password and token interception across public networks, and intellectual property leakage whenever proprietary code is sent to external AI assistants.",
+      "BantuDevLab solves this with an autonomous containerized stack powered by Gitea, Valkey, PostgreSQL, and an immutable SHA-256 audit log. Our Zero-Trust authentication eliminates passwords using 2048-bit Schnorr Zero-Knowledge Proofs: your browser proves ownership of its secret without ever transmitting it to the server.",
+      "Our built-in SAST scanner computes Shannon entropy to catch leaked secrets, exports industry-standard OASIS SARIF 2.1.0 reports for CI/CD pipelines, and runs Google Gemma 2 2B locally via Ollama for code reviews without a single line of code leaving our infrastructure.",
+      "Let us walk through the live demo at cybersocle dot site. On the landing page, the Primer interface is completely self-hosted with zero external CDNs. Evaluators immediately see the digital sovereignty score and real-time node telemetry.",
+      "BantuDevLab speaks to developers across the continent in English, French, Kiswahili, and Portuguese, with seamless bidirectional Dark and Light theme synchronization and zero white flash between the portal and Gitea.",
+      "In the Zero-Trust login module, the cadev_evaluator account locally computes its cryptographic commitment and Fiat-Shamir response. Within milliseconds, the server verifies the mathematical proof without ever seeing or storing a password.",
+      "Once authenticated, the evaluator lands on the sovereign dashboard to monitor node latency, inspect repositories, and launch security audits directly from the integrated workbench.",
+      "When pasting vulnerable code into the workbench, the SAST engine immediately catches hardcoded API keys using Shannon entropy, flags SQL injection patterns, and prepares an OASIS SARIF report.",
+      "With one click on Ask Gemma Review, our 4-bit quantized Gemma 2 2B model analyzes the vulnerabilities locally and streams actionable security patches with zero external cloud data egress.",
+      "Finally, our sovereignty metrics page benchmarks live server latency and maps our target Pan-African topology. Inside Gitea CE at git dot cybersocle dot site, developers enjoy a full Git forge with integrated SAST and Gemma review buttons.",
+      "BantuDevLab is production-ready: three hundred and twenty-five engineering commits, two hundred and two automated tests with ninety-five point sixty-five percent coverage, sixty-three verified permissive dependencies, and domains acquired through Systalink Datacloud.",
+      "Africa must own its software forges, its cryptographic keys, and its artificial intelligence. BantuDevLab is ready, secure, and live today at cybersocle dot site. Thank you for your attention."
+    ]
+  }
+}

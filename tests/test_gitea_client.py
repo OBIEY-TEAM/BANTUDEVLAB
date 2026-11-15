@@ -98,3 +98,7 @@ class GiteaClientTestCase(TestCase):
             res_dash = self.client.get("/dashboard/")
             self.assertEqual(res_dash.status_code, 200)
             self.assertContains(res_dash, "demo-cadev-sovereign")
+            self.assertContains(res_dash, 'href="https://git.cybersocle.site/cadev_evaluator/demo-cadev-sovereign"')
+            self.assertNotContains(
+                res_dash, 'href="https://git.cybersocle.site/cadev_evaluator/demo-cadev-sovereign.git"'
+            )

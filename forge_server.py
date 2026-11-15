@@ -426,13 +426,25 @@ class SovereignForgeHandler(BaseHTTPRequestHandler):
 
     # ---------------- Git HTTP backend ----------------
     def _handle_git_http(self, url):
+        query = urllib.parse.parse_qs(url.query)
+        svc = query.get("service", [None])[0]
+        if svc is None and url.path.rstrip("/").endswith(".git"):
+            m = re.match(r"^/([^/]+)/([^/]+)\.git/?$", url.path)
+            if m:
+                owner, name = m.groups()
+                target = f"/{owner}/{name}"
+                if url.query:
+                    target = f"{target}?{url.query}"
+                self.send_response(302)
+                self.send_header("Location", target)
+                self.end_headers()
+                return
+
         # Service info/refs
         git_dir, service = self._resolve_git_repo(url.path)
         if not git_dir or not git_dir.exists():
             return self._send_html("Dépôt Git introuvable", status=404)
 
-        query = urllib.parse.parse_qs(url.query)
-        svc = query.get("service", [None])[0]
         if svc in ("git-upload-pack", "git-receive-pack"):
             cmd = ["git", svc.replace("git-", ""), "--stateless-rpc", "--advertise-refs", str(git_dir)]
             res = subprocess.run(cmd, capture_output=True)
@@ -967,7 +979,6 @@ class SovereignForgeHandler(BaseHTTPRequestHandler):
             for c in commits
         )
 
-        repos_section = f"<h2>{t['hosted_repos']}</h2>\n        {repos_html}" if repos else ""
         html = f"""<!DOCTYPE html>
 <html lang="{lang}" data-theme="{theme}">
 {self._render_head(f"{owner}/{repo} - BantuDevLab Forge", theme)}

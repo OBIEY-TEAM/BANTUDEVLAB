@@ -67,6 +67,7 @@ class GiteaClient:
 
     def __init__(self, api_url: Optional[str] = None, token: Optional[str] = None):
         import os
+
         from config.base_urls import GITEA_WEB_URL
 
         default_api = getattr(settings, "GITEA_API_URL", None) or f"{GITEA_WEB_URL}/api/v1"
