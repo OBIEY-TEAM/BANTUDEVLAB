@@ -4,7 +4,8 @@
 > **Équipe candidate :** CYBERSOCLE  
 > - **Capitaine d'équipe :** OBIEY Christ Dany  
 > - **Membre de l'équipe :** MAMPOUYA Alicia Syrianne  
-> **Date du relevé :** 14 novembre 2026  
+> - **Membre de l'équipe :** GAMBOUE Ursie Semence (Présentatrice)  
+> **Date du relevé :** 15 novembre 2026  
 > **Source des données :** Historique Git du dépôt (`git log`) et arborescence du projet.  
 > **Règle méthodologique appliquée :** Aucune conclusion subjective ; relevé strict et exhaustif des faits vérifiables.
 
@@ -15,9 +16,9 @@
 - **Date et heure du premier commit :**  
   `2026-10-31 11:14:31 +0100` (SHA: `23945e2` / `62062f2`)
 - **Date et heure du dernier commit analysé :**  
-  `2026-11-14 12:32:42 +0100` (SHA: `502f2b1`)
+  `2026-11-14 12:43:05 +0100` (SHA: `b1b1ebb`)
 - **Nombre total de commits enregistrés :**  
-  `325` commits
+  `326` commits (325 commits techniques jusqu'à `502f2b1` + commit documentaire `b1b1ebb`)
 - **Code antérieur au 29 septembre 2026 (Article 6 du règlement CADEV 2026) :**  
   `0` commit.  
   Aucun fichier, commit ou branche n'est antérieur au 29 septembre 2026. L'intégralité du travail consigné dans l'historique Git a débuté le 31 octobre 2026.
@@ -30,11 +31,11 @@ Les commits de l'historique se répartissent comme suit entre les identités de 
 
 | Auteur déclaré dans Git | Email Git | Nombre de commits | Pourcentage |
 | :--- | :--- | :---: | :---: |
-| **obiey** | `obieychristdany@gmail.com` | 229 | 70,5 % |
-| **obieydany-code** | `286418433+obieydany-code@users.noreply.github.com` & `obieydany@gmail.com` | 79 | 24,3 % |
+| **obiey** | `obieychristdany@gmail.com` | 230 | 70,6 % |
+| **obieydany-code** | `286418433+obieydany-code@users.noreply.github.com` & `obieydany@gmail.com` | 79 | 24,2 % |
 | **obiey christ dany** | `admin_noisim@srv1825963.hstgr.cloud` | 11 | 3,4 % |
 | **OBIEY Christ Dany** | `obieychristdany@gmail.com` & `obieydany@gmail.com` | 6 | 1,8 % |
-| **Total** | — | **325** | **100,0 %** |
+| **Total** | — | **326** | **100,0 %** |
 
 ---
 
@@ -44,7 +45,7 @@ Les commits de l'historique se répartissent comme suit entre les identités de 
 | :--- | :--- | :---: | :--- |
 | **2026-W44** | 26 octobre 2026 – 01 novembre 2026 | 15 | Création du dépôt, squelette Django, intégration initiale Gitea et premier module ZKP |
 | **2026-W45** | 02 novembre 2026 – 08 novembre 2026 | 238 | Industrialisation des 6 axes, durcissement Zero-Trust, scanner SAST, assistant IA local Gemma 2 2B, intégration Docker et composition de production |
-| **2026-W46** | 09 novembre 2026 – 15 novembre 2026 | 72 | Audit et remédiation des licences (CADEV 2026 Art. 6), assainissement des identifiants, exactitude et parcours évaluateur, barre de navigation verticale à droite, i18n inter-domaines et correctifs forge Gitea |
+| **2026-W46** | 09 novembre 2026 – 15 novembre 2026 | 73 | Audit et remédiation des licences (CADEV 2026 Art. 6), assainissement des identifiants, exactitude et parcours évaluateur, barre de navigation verticale à droite, i18n inter-domaines et correctifs forge Gitea |
 
 ---
 

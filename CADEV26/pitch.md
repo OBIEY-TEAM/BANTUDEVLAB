@@ -2,9 +2,10 @@
 
 **Auteurs :** Équipe CYBERSOCLE  
 - **Capitaine d'équipe :** OBIEY Christ Dany  
-- **Membre de l'équipe :** MAMPOUYA Alicia Syrianne  
+- **Membre de l'équipe (Présentatrice) :** GAMBOUE Ursie Semence  
+- **Membre de l'équipe (Présentatrice) :** MAMPOUYA Alicia Syrianne  
 **Événement :** Systalink Challenge / CADEV 2026 (29 sept. – 15 nov. 2026)
-**Thème officiel :** « Construire la plateforme d'échange africaine, pour les devs, par les devs »
+**Thème officiel :** « Construire la plateforme d'échange africaine, pour les devs, par les devs. »
 **Positionnement :** Forge logicielle panafricaine souveraine (Alternative locale à GitHub / GitLab avec Zero-Trust ZKP, scanner SAST Shannon SARIF 2.1.0 et IA d'audit in-forge Gemma 2 2B quantifiée en local).
 
 ---
@@ -12,11 +13,11 @@
 ## Sommaire Exécutif
 
 1. [Analyse Technique Approfondie du Projet (Commits, PRs, Fichiers)](#1-analyse-technique-approfondie-du-projet-commits-prs-fichiers)
-2. [Autopsie Critique des Deux Pitches Antérieurs (Facteurs d'Échec)](#2-autopsie-critique-des-deux-pitches-antérieurs-facteurs-déchec)
-3. [Pitch Professionnel Hackathon CADEV 2026 (5 Minutes Chronométrées)](#3-pitch-professionnel-hackathon-cadev-2026-5-minutes-chronométrées)
-4. [Script Scénarisé de la Démonstration (Vidéo & Direct - 3 Minutes)](#4-script-scénarisé-de-la-démonstration-vidéo--direct---3-minutes)
-5. [Matrice Stratégique de Défense face au Jury (Q&A Haute Précision)](#5-matrice-stratégique-de-défense-face-au-jury-qa-haute-précision)
-6. [Checklist Opérationnelle pour le Jour J](#6-checklist-opérationnelle-pour-le-jour-j)
+2. [Autopsie Critique des Pitches Antérieurs (Facteurs d'Échec)](#2-autopsie-critique-des-pitches-antérieurs-facteurs-déchec)
+3. [Discours Final CADEV 2026 (5 Minutes Chronométrées)](#3-discours-final-cadev-2026-5-minutes-chronométrées)
+4. [Aide-Mémoire (à tenir en main)](#4-aide-mémoire-à-tenir-en-main)
+5. [Réponses Éclair aux Questions Pièges & Matrice Technique](#5-réponses-éclair-aux-questions-pièges--matrice-technique)
+6. [Checklist Avant de Passer (Jour J)](#6-checklist-avant-de-passer-jour-j)
 
 ---
 
@@ -37,7 +38,7 @@ L'état actuel du référentiel Git démontre une trajectoire d'industrialisatio
   - **Axe 2 (Scalabilité & Résilience) :** Traitement asynchrone Celery adossé à Valkey 7.2 (remplacement BSD-3 de Redis), cache Django structuré avec repli hors-ligne, circuit breakers et sondes Kubernetes (`/healthz`, `/readyz`).
   - **Axe 3 (Architecture & Écosystème) :** Synchronisation bidirectionnelle REST v1 avec Gitea (`GiteaSyncService`), modélisation multi-tenant `SovereignOrganization` (banques centrales, ministères, universités, startups), conformité OASIS SARIF 2.1.0, documentation OpenAPI 3.0 via `drf-spectacular`.
   - **Axe 4 (Design System & Expérience Développeur) :** Intégration de l'éditeur CodeMirror auto-hébergé, jauge circulaire de score de souveraineté numérique, wizard ZKP avec mnémonique BIP-39 (12 mots), système de notifications toasts unifié, et cartographie interactive de la topologie cible panafricaine (Projet, non déployé : Abidjan, Dakar, Lagos, Nairobi, Kigali).
-  - **Axe 6 (Assurance Qualité & Tests) :** Tests de fuzzing cryptographique (`test_zkp_fuzzing.py`), tests end-to-end Playwright (`test_e2e_playwright.py`), couverture de test stricte à 95,62 %, linting/formatage automatisé Ruff, et audit de sécurité Bandit.
+  - **Axe 6 (Assurance Qualité & Tests) :** Tests de fuzzing cryptographique (`test_zkp_fuzzing.py`), tests end-to-end Playwright (`test_e2e_playwright.py`), couverture de test mesurée à 95,65 % sur les modules cœur, linting/formatage automatisé Ruff, et audit de sécurité Bandit.
   - **Industrialisation IA & Conteneurisation :** Scripts de préparation LoRA/GGUF (`finetuning/`) hors inférence de production (modèle actif : `gemma2:2b` standard via Ollama) et conteneurisation Docker durcie sous utilisateur non-root (`appuser:appgroup`).
 
 - **Convergence et Alignement Modèle Local `gemma2:2b` (`c192064`, `ff7e4ef`, `f8c1a1e`) :**
@@ -108,108 +109,102 @@ L'évaluation lucide des deux ébauches de pitch précédentes révèle des faib
 
 ---
 
-## 3. Pitch Professionnel Hackathon CADEV 2026 (5 Minutes Chronométrées)
+## 3. Discours Final CADEV 2026 (5 Minutes Chronométrées)
 
-**Format :** Soutenance orale de 5 minutes avec démonstration live intégrée.
-**Présentatrice principale (Pitch & Démonstration) :** MAMPOUYA Alicia Syrianne (Présentation vidéo démo & parcours utilisateur) — Équipe CYBERSOCLE, aux côtés de OBIEY Christ Dany (Capitaine & Lead Architecture).
-
----
-
-### [0:00 – 0:35] 1. L'Accroche Souveraine : Le Paradoxe Numérique Africain
-
-> « Excellents membres du jury,
->
-> À cet instant précis, des milliers de développeurs conçoivent les systèmes bancaires, les infrastructures d'énergie et les applications gouvernementales de l'Afrique. Mais où réside ce patrimoine stratégique ?
->
-> Il réside sur des serveurs situés à 8 000 kilomètres d'ici. Soumis à des juridictions étrangères, vulnérable à des coupures unilatérales d'accès, et audité par des intelligences artificielles propriétaires qui s'abreuvent de nos données.
->
-> Nous payons une bande passante sous-marine prohibitive pour pousser du code chez des hyperscalers tiers, tandis que nos institutions manquent aux exigences de la Convention de Malabo sur la territorialité des données.
->
-> Je m'appelle Alicia Syrianne Mampouya, membre de l'équipe CYBERSOCLE, aux côtés de notre capitaine et architecte Christ Dany Obiey à Pointe-Noire. Avec notre équipe, nous avons refusé cette fatalité. Voici **BANTUDEVLAB** : une forge logicielle souveraine panafricaine, conçue par les développeurs africains, pour les développeurs africains. »
+**Thème officiel :** « Construire la plateforme d’échange africaine, pour les devs, par les devs. »  
+**Livrables demandés :** dépôt Git + démo en ligne (projet utilisable et hébergé en ligne).  
+**Présentation :** GAMBOUE Ursie Semence, MAMPOUYA Alicia Syrianne, avec OBIEY Christ Dany (capitaine).
 
 ---
 
-### [0:35 – 1:15] 2. Le Problème : La Triple Rupture Technologique
+### [0:00 – 0:30] Accroche
 
-> « Notre dépendance aux plateformes comme GitHub et GitLab engendre trois ruptures critiques pour le continent :
->
-> - **Rupture 1 : L'extraterritorialité du code.** Nos dépôts sensibles, nos brevets logiciels et nos secrets industriels échappent à toute souveraineté juridique locale.
-> - **Rupture 2 : La vulnérabilité de l'identité.** Les mots de passe et les jetons d'accès API traditionnels circulent en clair sur les réseaux et sont régulièrement dérobés par ingénierie sociale ou attaques de type "Man-in-the-Middle".
-> - **Rupture 3 : La fuite intellectuelle vers l'IA.** Lorsque nos développeurs utilisent des assistants de code hébergés dans le Cloud public, chaque ligne de code stratégique traverse les frontières pour entraîner des modèles fermés hors d'Afrique. »
+> « Mesdames et messieurs les membres du jury, bonjour.
+> Le thème de ce challenge est : construire la plateforme d’échange africaine, pour les devs, par les devs. Posons-nous une question simple : où échangent aujourd’hui les développeurs africains ? Sur des plateformes situées à des milliers de kilomètres, soumises à des lois qui ne sont pas les nôtres, et dont le code peut alimenter des modèles d’IA hébergés hors du continent.
+> Nous sommes l’équipe CYBERSOCLE, de Pointe-Noire. Je suis Ursie Semence GAMBOUE, Alicia Mampouya, et avec notre capitaine Christ Dany Obiey, nous avons construit BantuDevLab. »
 
 ---
 
-### [1:15 – 2:30] 3. La Solution BANTUDEVLAB : Les Trois Piliers Robustes et Vérifiables
+### [0:30 – 1:05] Le problème
 
-> « BANTUDEVLAB transforme radicalement cette donne en combinant un moteur Git ultra-performant (Gitea CE) et une surcouche de gouvernance souveraine industrielle en Python/Django, bâtie sur trois piliers robustes et vérifiables :
->
-> - **Pilier 1 : La Souveraineté de l'Infrastructure et des Données.**
->   BANTUDEVLAB est autonome, conteneurisé avec Docker, PgBouncer, PostgreSQL et Valkey. Déployé avec des domaines achetés chez Systalink/Datacloud et une application hébergée sur un VPS Ubuntu externe (déploiement souverain en objectif de la feuille de route), avec un chaînage cryptographique SHA-256 garantissant un journal d'audit immuable aligné sur la Convention de Malabo.
->
-> - **Pilier 2 : La Sécurité Zero-Trust par Preuve à Divulgation Nulle (ZKP).**
->   Nous éliminons les mots de passe. L'authentification repose sur le protocole mathématique de **Schnorr (groupe RFC 3526 MODP 2048 bits)** avec transformée de Fiat-Shamir. L'utilisateur prouve qu'il détient son secret sans jamais le transmettre au serveur. Même en cas de compromission de l'infrastructure, aucun mot de passe ne peut fuiter car aucun mot de passe n'existe sur le serveur. Ce protocole protège également l'émission des jetons d'accès Git CLI (`tea` et `git-credential`).
->
-> - **Pilier 3 : L'Intelligence Artificielle d'Aide à la Revue 100 % Locale (Gemma 2 2B via Ollama).**
->   Intégration d'un petit modèle local d'aide au développement : le modèle **Gemma 2 2B Instruct de Google** (sous conditions d'utilisation Google Gemma Terms, exécuté localement sans redistribution). L'IA audite les commits et Pull Requests en tâche d'arrière-plan Celery, détecte les secrets enfouis grâce à notre scanner d'entropie de Shannon, et propose des suggestions de revue sans qu'aucune ligne de code ne quitte l'infrastructure. »
+> « Trois risques concrets.
+> Un : notre code échappe à notre cadre juridique. Deux : nos accès reposent sur des mots de passe, l’une des principales causes de compromission. Trois : chaque ligne envoyée à une IA dans le cloud peut servir à entraîner des modèles fermés, hors d’Afrique.
+> Pour une banque, un ministère ou une startup, c’est un risque stratégique. »
 
 ---
 
-### [2:30 – 3:15] 4. Démonstration Opérationnelle en Direct (3 Points d'Impact)
+### [1:05 – 2:10] La solution
 
-> « Ne nous croyez pas sur parole : regardons la forge en direct.
->
-> 1. **Connexion Zero-Trust :** Je génère ma clé cryptographique via une phrase mnémonique de 12 mots. Je demande un défi aléatoire au serveur, je calcule ma preuve locale. En 80 millisecondes, le serveur valide l'équation sans avoir vu mon secret, et m'ouvre l'accès.
-> 2. **Audit de Sécurité Shannon & SARIF 2.1.0 :** J'injecte un code contenant une clé privée et une vulnérabilité SQL dans le Workbench. Le moteur calcule l'entropie de Shannon, génère instantanément un rapport officiel OASIS SARIF 2.1.0 pour nos pipelines CI/CD, et attribue un score de souveraineté en temps réel.
-> 3. **Revue de Code par l'IA Locale :** J'invoque notre assistant Gemma 2 2B local. En streaming instantané sans aucun accès Internet, le modèle analyse le diff, identifie la faille et propose la remédiation exacte. Rien n'est simulé, tout tourne sur notre machine hôte. »
-
----
-
-### [3:15 – 4:05] 5. Adéquation au Thème CADEV, Traction & Équipe CYBERSOCLE
-
-> « Le thème de ce hackathon est : *"Construire la plateforme d'échange africaine, pour les devs, par les devs"*.
->
-> BANTUDEVLAB en est la réalisation tangible. Nous ne présentons pas un concept théorique, mais une forge logicielle opérationnelle, forte de 325 commits d'ingénierie rigoureuse, 202 tests automatisés validés à 95,65 % de couverture de code, 63 dépendances Python vérifiées permissives et une politique d'accessibilité stricte zéro emoji.
->
-> La plateforme permet de créer et d'auditer instantanément des dépôts souverains (par exemple un dépôt de démonstration `demo-cadev-2026` ou `afri-fintech-gateway` lors des tests). »
+> « BantuDevLab est une plateforme d’échange de code : dépôts, branches, revues et tickets. Elle est hébergée en ligne et utilisable dès aujourd’hui. Elle s’appuie sur le moteur Git Gitea, et nous avons développé par-dessus trois briques.
+> Première brique : l’identité sans mot de passe. Notre authentification utilise une preuve à divulgation nulle de connaissance, le protocole de Schnorr. Vous prouvez que vous possédez votre clé sans jamais l’envoyer. Notre serveur ne stocke que la clé publique : s’il est piraté, il n’y a aucun mot de passe à voler.
+> Deuxième brique : l’audit de sécurité intégré. Notre scanner repère les secrets oubliés dans le code grâce à l’entropie de Shannon, détecte les injections SQL, et exporte ses rapports au standard SARIF 2.1.0, utilisable directement en CI/CD.
+> Troisième brique : une IA qui reste chez nous. Nous utilisons Gemma 2 2B, un modèle compact qui tourne en local, sans connexion externe. L’IA suggère, le scanner vérifie, et c’est toujours l’humain qui décide. »
 
 ---
 
-### [4:05 – 4:40] 6. Modèle Économique et Vision d'Avenir avec Systalink / Datacloud
+### [2:10 – 3:35] Démonstration en direct
 
-> « Notre modèle de durabilité est clair :
-> - **Gratuit et ouvert :** Pour tous les développeurs individuels, étudiants et communautés open source africaines.
-> - **Offres Entreprises & Souveraineté Dédiée :** Abonnements de conformité, instances privées durcies, clusters d'inférence GPU pour banques centrales, ministères et grands groupes de télécommunications.
-> - **Alliance avec Systalink / Datacloud (Feuille de route) :** L'objectif de la feuille de route est de déployer des nœuds de forge interconnectés (topologie cible : Abidjan, Dakar, Lagos, Nairobi, Kigali), afin de réduire la latence et d'offrir une réplication inter-régionale. »
+> « Ne nous croyez pas sur parole, regardez.
+> *(Ouvrir cybersocle.site)* Voici la plateforme en ligne. Je clique sur la connexion démo : mon navigateur calcule une preuve cryptographique, le serveur la vérifie, et j’entre sans aucun mot de passe.
+> *(Dashboard)* Je crée un dépôt, et il est immédiatement synchronisé avec notre forge Git.
+> *(Échange)* Sur ce dépôt, j’ouvre un ticket, et un second compte peut y répondre : c’est cela, l’échange entre développeurs.
+> *(Workbench)* Je colle un code contenant une clé secrète et une requête SQL vulnérable. Je lance l’audit : en environ une seconde, les failles sont détectées et un rapport SARIF est prêt.
+> *(Revue IA)* Je demande la revue à Gemma. La réponse arrive en continu et propose la correction, sans qu’une seule ligne de code ne quitte l’infrastructure. »
 
----
-
-### [4:40 – 5:00] 7. Conclusion & Appel à l'Action
-
-> « L'Afrique ne peut plus se contenter de consommer les infrastructures logicielles du reste du monde. Si nous voulons protéger notre jeunesse, nos données et nos innovations, nous devons posséder nos forges, nos modèles d'intelligence artificielle et nos clés cryptographiques.
->
-> BANTUDEVLAB est prêt, sécurisé et opérationnel. Construisons ensemble notre souveraineté technologique.
->
-> Je vous remercie pour votre attention et je suis prête pour vos questions. »
+*Note : répétez l’étape « Échange » (ticket + second compte) avant le jour J. Si elle n’est pas prête, supprimez cette phrase plutôt que de l’improviser.*
 
 ---
 
-## 4. Script Scénarisé de la Démonstration (Vidéo & Direct - 3 Minutes)
+### [3:35 – 4:20] Preuves et transparence
 
-**Conditions techniques requises :** Navigateur en plein écran (zoom 110-125 %), thème sombre GitHub activé, terminal Git ouvert en split-screen, notifications système coupées.
-**Plan de secours :** Vidéo MP4 pré-enregistrée 1080p 60fps disponible en local sur clé USB et bureau.
-
-| Horodatage | Action à l'Écran | Démonstrateur (Voix Off / Direct) | Données / Éléments Visuels |
-|---|---|---|---|
-| **0:00 – 0:25** | Affichage de la mire d'accueil BANTUDEVLAB (`/`). Bascule instantanée de la langue (Français / Swahili) et démonstration de l'identité visuelle sans aucun emoji. | « Bienvenue sur BANTUDEVLAB. Une interface sobre, accessible, inspirée des standards Primer, auto-hébergée sans aucune dépendance à des CDN externes. » | Logo carte d'Afrique vectoriel SVG, absence totale de flash blanc (FOUC). |
-| **0:25 – 0:55** | Clic sur *Connexion Souveraine*. Wizard ZKP : génération des 12 mots BIP-39, calcul de la clé publique $y = g^x \pmod p$. Clic sur *Prouver mon identité*. Validation instantanée et toast de succès. | « Fini les mots de passe vulnérables. L'authentification repose sur une preuve de Schnorr Zero-Knowledge (groupe RFC 3526). Mon navigateur prouve la connaissance de la clé privée sans la transmettre. Le serveur vérifie l'équation mathématique : accès validé sans compromission possible. » | Jauge d'entropie, consommation atomique du challenge nonce unique. |
-| **0:55 – 1:35** | Redirection vers le Dashboard. Création ou ouverture d'un dépôt souverain synchronisé avec Gitea (ex. `demo-cadev-2026`). Édition d'un fichier avec CodeMirror embarqué. | « Je bascule directement dans ma forge. Mes dépôts sont synchronisés en temps réel avec le moteur Gitea local. Pas d'attente, pas de transfert à l'autre bout de la planète. Je peux naviguer dans l'arborescence, inspecter les branches et éditer mon code en local. » | Éditeur CodeMirror, arborescence interactive, raccourci clavier `t`. |
-| **1:35 – 2:15** | Dans le Workbench Souverain, collage d'un code Python contenant une clé secrète en dur (`sk_live_...`) et un `SELECT * FROM users WHERE id=` concaténé. Clic sur *Lancer l'Audit SAST*. | « Démonstration de notre scanner SAST souverain : en une fraction de seconde, le moteur calcule l'entropie de Shannon des chaînes, détecte les secrets enfouis et les injections SQL, calcule notre score de souveraineté et produit un rapport au standard OASIS SARIF 2.1.0 prêt pour la CI. » | Score de souveraineté dynamique, cartes interactives des failles, bouton d'export SARIF. |
-| **2:15 – 2:45** | Clic sur *Revue par Gemma 2 2B*. L'IA locale répond en streaming continu sans accès Internet. Proposition d'un patch de sécurité immédiat. | « Voici notre modèle d'aide au développement : l'assistant d'IA local Gemma 2 2B Instruct. Exécuté localement via Ollama, il analyse le diff en direct, signale la faille et propose des suggestions de revue sans qu'aucun octet ne quitte notre machine. » | Flux SSE continu, suggestion de code nettoyé, zéro appel réseau extérieur. |
-| **2:45 – 3:00** | Ouverture de l'onglet `/sovereignty-metrics/` : visualisation de la topologie cible des 5 nœuds panafricains (Projet, non déployé) et mesure de latence en direct vers le serveur actif (`/healthz`). | « Enfin, notre télémétrie en temps réel mesure la latence directe du serveur actif et présente notre topologie cible panafricaine. BANTUDEVLAB : par les devs, pour les devs. » | Carte interactive SVG annotée « Projet, non déployé », mesure `/healthz` en direct, journal chaîné SHA-256. |
+> « Ce projet est réel. Notre premier commit date du 31 octobre : en deux semaines, nous avons produit 325 commits et 202 tests automatisés, avec 95,65 % de couverture sur nos modules cœur. Notre build de soumission ne contient aucun composant GPL, AGPL ou LGPL, vérifié automatiquement. Le modèle Gemma reste sous les conditions d’utilisation de Google, exécuté en local et non redistribué.
+> Nous tenons aussi à être transparents. Nos domaines sont achetés chez Systalink Datacloud, et l’application tourne aujourd’hui sur un serveur VPS externe. L’étape suivante est de la migrer sur l’infrastructure Systalink. Nous avons aussi déclaré tous les outils d’assistance utilisés, et nous assumons chaque ligne livrée. »
 
 ---
 
-## 5. Matrice Stratégique de Défense face au Jury (Q&A Haute Précision)
+### [4:20 – 4:40] Vision
+
+> « Notre feuille de route : des nœuds interconnectés à Abidjan, Dakar, Lagos, Nairobi et Kigali, pour rapprocher le code des développeurs. Gratuit pour les développeurs, étudiants et communautés open source ; des offres dédiées pour les institutions. »
+
+---
+
+### [4:40 – 5:00] Conclusion
+
+> « L’Afrique ne doit pas seulement consommer les plateformes des autres. Elle doit avoir les siennes, par les devs, pour les devs. BantuDevLab est en ligne, il est utilisable, et nous vous invitons à le tester dès maintenant. Merci. »
+
+---
+
+## 4. Aide-Mémoire (à tenir en main)
+
+| Minute | À dire / à faire |
+| :--- | :--- |
+| **0:00** | Accroche : thème officiel + « où échangent les devs africains ? » |
+| **0:30** | 3 risques : droit, mots de passe, IA dans le cloud |
+| **1:05** | 3 briques : ZKP sans mot de passe, audit SAST + SARIF, Gemma 2 2B en local |
+| **2:10** | Démo : connexion démo → dépôt → ticket (échange) → audit → revue IA |
+| **3:35** | Preuves : 325 commits, 202 tests, 95,65 % (modules cœur), pas de GPL/AGPL/LGPL |
+| **3:35** | Transparence : domaines Datacloud, application sur VPS externe, migration prévue |
+| **4:20** | Vision : 5 nœuds cibles (projet, non déployé), modèle gratuit + institutions |
+| **4:40** | Conclusion : « par les devs, pour les devs » + invitation à tester |
+
+---
+
+## 5. Réponses Éclair aux Questions Pièges & Matrice Technique
+
+### Réponses éclair (à dégainer en soutenance)
+
+- **« Pourquoi pas hébergé chez Systalink ? »**  
+  Domaines achetés chez Datacloud, application en conteneurs Docker portable : la migration est l’étape suivante de la feuille de route.
+- **« N’est-ce pas juste Gitea ? »**  
+  Gitea est le moteur Git, utilisé tel quel. Nous avons développé l’authentification ZKP, le scanner SAST, l’assistant IA local, l’audit chaîné SHA-256 et la gestion multi-organisations.
+- **« L’IA peut halluciner. »**  
+  Elle est consultative : le scanner déterministe vérifie, et l’humain valide avant toute fusion.
+- **« Pourquoi un modèle 2B ? »**  
+  Il tourne sur un processeur ou un GPU modeste, sans Internet, ce qui convient aux infrastructures disponibles sur le continent.
+- **« Où est l’échange ? »**  
+  Dépôts partagés, tickets et pull requests entre comptes, sur une forge hébergée en ligne.
+
+### Matrice Technique Complémentaire (Détails pour Questions Approfondies)
 
 ### Catégorie A : Infrastructure & Hébergement
 
@@ -260,23 +255,28 @@ L'évaluation lucide des deux ébauches de pitch précédentes révèle des faib
 
 ---
 
-## 6. Checklist Opérationnelle pour le Jour J
+## 6. Avant de Passer (Checklist Jour J)
 
-### Avant la Présentation (H - 2 heures)
-- [ ] Vérifier la connectivité locale et tester la résolution DNS du serveur.
-- [ ] Démarrer le cluster conteneurisé : `docker compose up -d` ou serveur local actif sur les ports 8000 et 3002.
-- [ ] Vérifier que le runtime Ollama / vLLM local répond sur le modèle `gemma2:2b` : `curl http://localhost:11434/api/tags`.
+### Avant de passer (à cocher juste avant la soutenance)
+- [ ] Vidéo de secours prête dans un lecteur réduit.
+- [ ] Dépôt `bantudevlab` public sur `git.cybersocle.site/explore/repos`.
+- [ ] Étape ticket + second compte répétée.
+- [ ] Notifications coupées, écran en mode « Ne pas déranger ».
+- [ ] Ne pas dépasser 5 minutes : couper la « Vision » en premier si besoin.
+
+### Vérifications Techniques Préalables (H - 2 heures)
+- [ ] Vérifier la connectivité locale et tester la résolution DNS du serveur (`cybersocle.site`, `git.cybersocle.site`).
+- [ ] Vérifier que le runtime Ollama local répond sur le modèle `gemma2:2b` : `curl http://localhost:11434/api/tags`.
 - [ ] Exécuter les vérifications de conformité :
   ```bash
   python scripts/check_no_emoji.py
+  python scripts/check_licenses.py
   ruff check .
   ```
-- [ ] Connecter le compte de démonstration non privilégié (`cadev_evaluator`) via « Connexion Démo 1-Clic » et vérifier que le dépôt témoin est prêt.
-- [ ] Ouvrir la vidéo de secours 1080p dans un lecteur multimédia réduit dans la barre des tâches.
-- [ ] Mettre l'ordinateur en mode « Ne pas déranger » et désactiver le verrouillage automatique d'écran.
+- [ ] Connecter le compte de démonstration non privilégié (`cadev_evaluator`) via « Connexion Démo » et vérifier que le dépôt témoin est prêt.
 
 ### Pendant le Passage (5 Minutes)
 - [ ] Conserver un contact visuel soutenu avec les membres du jury.
-- [ ] Articuler calmement et respecter le minutage (ne pas déborder au-delà des 5 minutes).
-- [ ] En cas de latence réseau imprévue pendant la démo, basculer sans aucune hésitation ni justification vers la vidéo de secours en expliquant les étapes avec assurance.
+- [ ] Articuler calmement et respecter le minutage (ne pas dépasser 5 minutes ; couper la « Vision » en premier si besoin).
+- [ ] En cas de latence réseau imprévue pendant la démo, basculer sans aucune hésitation ni justification vers la vidéo de secours.
 - [ ] Répondre aux questions du jury de façon directe, technique et étayée par les réalisations du référentiel Git.

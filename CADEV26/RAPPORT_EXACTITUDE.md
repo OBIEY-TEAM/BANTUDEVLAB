@@ -1,8 +1,8 @@
 # Rapport d'Exactitude, Cohérence et Conformité — CADEV 2026 (`CADEV26/RAPPORT_EXACTITUDE.md`)
 
-**Projet :** BANTUDEVLAB (Équipe CYBERSOCLE : OBIEY Christ Dany, capitaine ; MAMPOUYA Alicia Syrianne, présentation vidéo et parcours utilisateur)  
-**Branche de travail :** `main` / `docker-cadev26` (commit `502f2b1`, tag `v1-cadev-submission`)  
-**Date :** 14 novembre 2026
+**Projet :** BANTUDEVLAB (Équipe CYBERSOCLE : OBIEY Christ Dany, capitaine ; MAMPOUYA Alicia Syrianne, présentation vidéo et parcours utilisateur ; GAMBOUE Ursie Semence, présentatrice et parcours utilisateur)  
+**Branche de travail :** `main` / `docker-cadev26` (commit `b1b1ebb`, tag `v1-cadev-submission`)  
+**Date :** 15 novembre 2026
 
 ---
 

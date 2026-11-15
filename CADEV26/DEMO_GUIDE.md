@@ -4,6 +4,7 @@
 **Équipe candidate :** Équipe CYBERSOCLE  
 - **Capitaine d'équipe :** OBIEY Christ Dany  
 - **Membre de l'équipe :** MAMPOUYA Alicia Syrianne (Présentation vidéo démo & parcours utilisateur)  
+- **Membre de l'équipe :** GAMBOUE Ursie Semence (Présentatrice — Présentation vidéo démo & parcours utilisateur)  
 **Public cible :** Membres du Jury et Évaluateurs CADEV 2026 (profil technique ou non technique)  
 **Environnement de test :**  
 - Portail Souverain & API : https://cybersocle.site  
@@ -15,11 +16,12 @@
 
 Ce guide a été conçu pour permettre à tout évaluateur de tester l'ensemble des fonctionnalités clés de BantuDevLab en **moins de 5 minutes**, sans configuration préalable, sans ligne de commande complexe et sans aucun risque de blocage.
 
-Le parcours s'articule autour de 4 étapes fluides :
-1. **Accueil & Présentation :** Prise en main et indicateurs de souveraineté.
-2. **Connexion Zero-Trust 1-Clic :** Démonstration de l'authentification ZKP sans mot de passe avec le compte préconfiguré `cadev_evaluator`.
-3. **Consultation de la FAQ :** Compréhension des enjeux de souveraineté et d'architecture.
-4. **Création d'un Dépôt & Revue de Code IA (Gemma 2 2B) :** Test direct de l'assistant d'ingénierie sur 3 exemples ciblés.
+Le parcours s'articule autour de 5 étapes fluides :
+1. **Accueil & Connexion Démo (ZKP) :** Prise en main et authentification sans mot de passe avec le compte `cadev_evaluator`.
+2. **Création de Dépôt & Synchronisation Forge :** Création d'un dépôt sur le Dashboard, synchronisé immédiatement avec Gitea (`https://git.cybersocle.site`).
+3. **Échange entre Développeurs (Ticket / Issue) :** Ouverture d'un ticket sur le dépôt et réponse depuis un second compte pour démontrer l'échange collaboratif.
+4. **Audit de Sécurité SAST (Workbench) :** Collage d'un code vulnérable (clé secrète + requête SQL), détection en ~1 seconde et génération du rapport OASIS SARIF 2.1.0.
+5. **Revue de Code IA Locale (Gemma 2 2B) :** Analyse en continu sans fuite externe, avec consultation complémentaire de la FAQ (`/faq/`).
 
 ---
 
@@ -77,6 +79,10 @@ L'évaluateur peut créer ou inspecter un dépôt Git souverain en quelques clic
 ### Option B : Création d'un nouveau dépôt de démonstration depuis le portail ou Gitea
 1. Depuis le tableau de bord (**https://cybersocle.site/dashboard/**), cliquez sur **« Créer un Dépôt de Démonstration »** (ex. `demo-cadev-2026`) et validez.
 2. Alternativement, ouvrez l'interface Gitea (**https://git.cybersocle.site/**), cliquez sur **« + »** puis **« Nouveau dépôt »** et cochez « Initialiser le dépôt ». Le dépôt est immédiatement disponible pour les analyses SAST et les revues de code IA.
+
+### Option C : Démonstration de l'Échange entre Développeurs (Ticket + Second Compte)
+1. Ouvrez le dépôt fraîchement créé sur la forge (`https://git.cybersocle.site`), puis accédez à l'onglet **« Tickets » (Issues)** et ouvrez un nouveau ticket (ex. demande de revue ou signalement de faille).
+2. Connectez-vous avec un **second compte** sur la forge et répondez au ticket pour illustrer l'échange collaboratif entre développeurs africains. *(Prérequis Jour J : étape répétée et vérifiée avant la soutenance.)*
 
 ---
 
@@ -171,5 +177,5 @@ def compute_sovereignty_ratio(local_nodes, total_nodes):
 | **1. Accueil** | `/` | Découvrir l'interface, tester le switch de langue (FR/EN/SW/PT) | 30 s | Affichage multilingue instantané, score de souveraineté |
 | **2. Connexion ZKP** | `/api/zkp/login-ui/?demo=cadev` | Cliquer sur « Connexion Démo 1-Clic » | 15 s | Preuve cryptographique Schnorr résolue sans mot de passe |
 | **3. FAQ** | `/faq/` | Parcourir les explications d'architecture et de souveraineté | 45 s | Réponses détaillées sur ZKP, Malabo et l'IA locale |
-| **4. Forge Git** | `https://git.cybersocle.site` | Consulter les dépôts ou créer un dépôt test | 1 min | Interface Gitea CE native 100% opérationnelle |
-| **5. Revue IA** | `/dashboard/` | Tester l'un des 3 snippets de code avec Gemma 2 2B | 1 min 30 s | Constats SAST, recommandations de sécurité et correction |
+| **4. Forge Git & Échange** | `https://git.cybersocle.site` | Créer un dépôt, ouvrir un ticket et y répondre avec un second compte | 1 min | Interface Gitea CE native + échange collaboratif opérationnel |
+| **5. Audit & Revue IA** | `/dashboard/` | Coller un snippet vulnérable (secret + SQLi), lancer l'audit puis Gemma 2 2B | 1 min 30 s | Constats SAST, export SARIF 2.1.0 et correction IA en streaming |

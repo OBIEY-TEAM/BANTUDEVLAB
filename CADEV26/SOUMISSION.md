@@ -4,6 +4,7 @@
 **Équipe candidate :** Équipe CYBERSOCLE  
 - **Capitaine d'équipe :** OBIEY Christ Dany (Lead Architecture & Développement Fullstack)  
 - **Membre de l'équipe :** MAMPOUYA Alicia Syrianne (Présentation vidéo démo & parcours utilisateur)  
+- **Membre de l'équipe :** GAMBOUE Ursie Semence (Présentatrice — Présentation vidéo démo & parcours utilisateur)  
 **Événement :** Concours CADEV 2026 — Systalink Cloud  
 **Date limite de soumission :** 15 novembre 2026 à 17 h 00 GMT  
 **URL de production :** https://cybersocle.site (Portail Central & API) / https://git.cybersocle.site (Forge Gitea CE)  
@@ -33,6 +34,7 @@ BANTUDEVLAB est une forge logicielle panafricaine souveraine d'échange et de re
 Les soussignés, membres de l'équipe candidate **CYBERSOCLE** :
 1. **OBIEY Christ Dany** (Capitaine d'équipe, Lead Architecture & Développement Fullstack)
 2. **MAMPOUYA Alicia Syrianne** (Membre de l'équipe, Présentation vidéo démo & parcours utilisateur)
+3. **GAMBOUE Ursie Semence** (Membre de l'équipe, Présentatrice — Présentation vidéo démo & parcours utilisateur)
 
 déclarent sur l'honneur que le projet BANTUDEVLAB a été conçu, développé et réalisé à titre personnel et indépendant, **hors de toute mission, contrat de travail, mandat ou commande émanant d'un employeur, client ou établissement d'enseignement**. L'ensemble des droits d'auteur et de propriété intellectuelle afférents au code original développé appartient exclusivement aux membres de l'équipe CYBERSOCLE et est mis à disposition sous licence permissive MIT.
 
@@ -42,6 +44,7 @@ déclarent sur l'honneur que le projet BANTUDEVLAB a été conçu, développé e
 | :--- | :--- | :--- | :--- | :--- |
 | **OBIEY Christ Dany** | **Capitaine d'équipe**, Architecture & Développement Fullstack | Travaux réalisés à titre personnel et indépendant hors contrat employeur/client | [À signer par OBIEY Christ Dany : Mention « Lu et approuvé »] | [Date à compléter : JJ/MM/2026] |
 | **MAMPOUYA Alicia Syrianne** | **Membre de l'équipe**, Présentation vidéo démo & parcours utilisateur | Travaux réalisés à titre personnel et indépendant hors contrat employeur/client | [À signer par MAMPOUYA Alicia Syrianne : Mention « Lu et approuvé »] | [Date à compléter : JJ/MM/2026] |
+| **GAMBOUE Ursie Semence** | **Membre de l'équipe**, Présentatrice — Présentation vidéo démo & parcours utilisateur | Travaux réalisés à titre personnel et indépendant hors contrat employeur/client | [À signer par GAMBOUE Ursie Semence : Mention « Lu et approuvé »] | [Date à compléter : JJ/MM/2026] |
 
 ---
 
@@ -117,6 +120,7 @@ L'équipe CYBERSOCLE certifie sur l'honneur qu'aucun code n'a été intégré à
 | :--- | :--- | :--- | :--- | :--- |
 | **OBIEY Christ Dany** | **Capitaine d'équipe**, Lead Architecture & Développement Fullstack | Je certifie comprendre, avoir relu, testé et assumer l'ensemble de la solution technique livrée | [Signature d'OBIEY Christ Dany] | [Date : JJ/MM/2026] |
 | **MAMPOUYA Alicia Syrianne** | **Membre de l'équipe**, Présentation vidéo démo & parcours utilisateur | Je certifie valider le parcours utilisateur, la présentation de démonstration et assumer la solution livrée | [Signature de MAMPOUYA Alicia Syrianne] | [Date : JJ/MM/2026] |
+| **GAMBOUE Ursie Semence** | **Membre de l'équipe**, Présentatrice — Présentation vidéo démo & parcours utilisateur | Je certifie valider la présentation de démonstration, le parcours utilisateur et assumer la solution livrée | [Signature de GAMBOUE Ursie Semence] | [Date : JJ/MM/2026] |
 
 ---
 
@@ -162,8 +166,8 @@ Conformément à l'Article 6 du règlement du concours (déclaration obligatoire
 ### Déclaration Factuelle :
 - **Date du tout premier commit Git :** **31 octobre 2026 à 11:14:31 GMT** (`b0fa102ec01065d0b9a788363b3d4c03b2f99535`).
 - **Commits réalisés avant le 29 septembre 2026 :** **ZÉRO (0 commit)**. Aucun code préexistant antérieur au 29 septembre 2026 n'a été réutilisé ou importé dans le projet.
-- **Nombre total de commits enregistrés :** 325 commits traçables, documentant le développement continu entre le 31 octobre 2026 et le 14 novembre 2026.
+- **Nombre total de commits enregistrés :** 326 commits traçables, documentant le développement continu entre le 31 octobre 2026 et le 14 novembre 2026.
 - **Auteurs des contributions :**  
-  - OBIEY Christ Dany : 325 commits (identifiants `obiey`, `obieydany-code`, `obiey christ dany`, `OBIEY Christ Dany`).
+  - OBIEY Christ Dany : 326 commits (identifiants `obiey`, `obieydany-code`, `obiey christ dany`, `OBIEY Christ Dany`).
 - **Composants tiers non modifiés :** Gitea CE 1.22 (0% de code modifié), Valkey 7.2 (0% de code modifié), Nginx 1.27 (0% de code modifié), Ollama (0% de code modifié).
 - **Code original produit par l'équipe :** 100% du code applicatif situé dans `apps/` (~4 632 lignes Python), les templates HTML/CSS (~6 000 lignes), les scripts de contrôle qualité et la documentation ont été écrits intégralement durant la période officielle du concours.

@@ -4,6 +4,7 @@
 **Équipe candidate :** Équipe CYBERSOCLE  
 - **Capitaine d'équipe :** OBIEY Christ Dany  
 - **Membre de l'équipe :** MAMPOUYA Alicia Syrianne (Présentation vidéo démo & parcours utilisateur)  
+- **Membre de l'équipe :** GAMBOUE Ursie Semence (Présentatrice — Présentation vidéo démo & parcours utilisateur)  
 **Organisateur & Événement :** SYSTALINK SENEGAL — Concours CADEV 2026  
 **Date limite impérative :** Dimanche 15 novembre 2026 à 17 h 00 GMT  
 **URL de Production :** https://cybersocle.site (Portail) / https://git.cybersocle.site (Forge Gitea CE)  
@@ -46,7 +47,7 @@ L'intégralité du dépôt BantuDevLab a été audité, durci et rendu rigoureus
 - **Relevé objectif dans `CADEV26/HISTORIQUE.md` :**
   - Date du premier commit : 31 octobre 2026 à 11:14:31 GMT.
   - Commits antérieurs au 29 septembre 2026 : **ZÉRO (0 commit)**.
-  - Nombre total de commits : 325 commits documentés.
+  - Nombre total de commits : 326 commits documentés (dont 325 commits techniques jusqu'à `502f2b1` et 1 commit documentaire `b1b1ebb`).
   - Décomposition claire : composants tiers éprouvés non modifiés (Gitea 0%, Valkey 0%, Nginx 0%, Ollama 0%) vs code original développé par l'équipe (~4 632 lignes Python, ~6 000 lignes templates/UI, scripts et tests).
 
 ### TÂCHE 6 — Mesure réelle des tests et correction des métriques
@@ -91,6 +92,7 @@ Avant l'heure limite du **dimanche 15 novembre 2026 à 17 h 00 GMT**, les membre
 - Renseigner la date et faire apposer la signature ou mention « Lu et approuvé » par chaque membre :
   - **OBIEY Christ Dany** (Capitaine d'équipe)
   - **MAMPOUYA Alicia Syrianne** (Membre d'équipe)
+  - **GAMBOUE Ursie Semence** (Membre d'équipe)
 - Renseigner les outils d'assistance au développement utilisés par l'équipe à la section **d.2**.
 
 ### Action 3 : Justificatif et référence de commande Datacloud
@@ -111,7 +113,7 @@ Transmettre le dossier officiel par email avant le **15 novembre 2026 à 17 h 00
   - Fiche de soumission `CADEV26/SOUMISSION.md` signée en pièce jointe ou corps de message.
 
 ### Action 5 : Participation obligatoire au vote des pairs
-- Chaque membre inscrit de l'équipe (**OBIEY Christ Dany** et **MAMPOUYA Alicia Syrianne**) doit impérativement participer à la session de vote des pairs organisée par Systalink conformément au règlement du concours.
+- Chaque membre inscrit de l'équipe (**OBIEY Christ Dany**, **MAMPOUYA Alicia Syrianne** et **GAMBOUE Ursie Semence**) doit impérativement participer à la session de vote des pairs organisée par Systalink conformément au règlement du concours.
 
 ### Action 6 : Questions formelles à poser à Systalink (`cadev@systalink.com`)
 Pour sécuriser le dossier sur le plan juridique, poser par écrit les 3 questions de confirmation suivantes :

@@ -3,11 +3,12 @@
 > **Équipe candidate : CYBERSOCLE**  
 > - **Capitaine d'équipe :** OBIEY Christ Dany  
 > - **Membre de l'équipe :** MAMPOUYA Alicia Syrianne  
+> - **Membre de l'équipe :** GAMBOUE Ursie Semence (Présentatrice)  
 > **Projet :** BANTUDEVLAB — Forge Logicielle Souveraine Panafricaine  
 > **Conformité au règlement CADEV 2026 (Systalink) :**  
 > Le règlement stipule que tout composant sous licence GPL, AGPL ou LGPL rend le projet irrecevable (Article 6).  
 > Seules les licences permissives (**MIT, Apache 2.0, BSD 2/3-Clause, PSF, ISC, Public Domain**) sont strictement admises.  
-> Date d'audit : 14 novembre 2026 — Inventaire généré via `pip-licenses`, introspection `importlib.metadata` et vérifié par `scripts/check_licenses.py` (`63/63` paquets conformes).
+> Date d'audit : 15 novembre 2026 — Inventaire généré via `pip-licenses`, introspection `importlib.metadata` et vérifié par `scripts/check_licenses.py` (`63/63` paquets conformes).
 
 ---
 

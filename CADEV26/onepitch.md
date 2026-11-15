@@ -3,6 +3,7 @@
 **Équipe candidate :** Équipe CYBERSOCLE  
 - **Capitaine d'équipe :** OBIEY Christ Dany (Lead Architecture & Développement Fullstack)  
 - **Membre de l'équipe :** MAMPOUYA Alicia Syrianne (Présentation vidéo démo & parcours utilisateur)  
+- **Membre de l'équipe :** GAMBOUE Ursie Semence (Présentatrice — Présentation vidéo démo & parcours utilisateur)  
 **Projet :** BANTUDEVLAB — Forge Logicielle Souveraine Panafricaine  
 **Concours :** CADEV 2026 (Systalink / Datacloud) — Date limite : 15 novembre 2026, 17 h 00 GMT  
 **Accès en ligne :** https://cybersocle.site | https://git.cybersocle.site  
@@ -32,7 +33,7 @@
 
 ## 3. Le Hook Éclair Oral (10 Secondes en Début de Soutenance)
 
-> « Membres du jury : aujourd'hui, le code de l'Afrique réside majoritairement hors de ses frontières ; avec **BANTUDEVLAB**, nous favorisons l'autonomie technologique sur le sol africain, sécurisée par des protocoles cryptographiques Zero-Knowledge vérifiés et assistée par un modèle IA local. »
+> « Mesdames et messieurs les membres du jury : où échangent aujourd’hui les développeurs africains ? Sur des plateformes soumises à des lois étrangères et dont le code peut alimenter des IA hors du continent. Avec **BantuDevLab**, l’équipe CYBERSOCLE propose la plateforme d’échange africaine, par les devs, pour les devs : authentification Schnorr sans mot de passe, audit SAST SARIF 2.1.0 et IA locale Gemma 2 2B. »
 
 ---
 

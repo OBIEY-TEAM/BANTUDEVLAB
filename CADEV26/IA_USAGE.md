@@ -4,8 +4,9 @@
 **Équipe candidate :** Équipe CYBERSOCLE  
 - **Capitaine d'équipe :** OBIEY Christ Dany (Lead Architecture & Développement Fullstack)  
 - **Membre de l'équipe :** MAMPOUYA Alicia Syrianne (Présentation vidéo démo & parcours utilisateur)  
+- **Membre de l'équipe :** GAMBOUE Ursie Semence (Présentatrice — Présentation vidéo démo & parcours utilisateur)  
 **Cadre réglementaire :** Article 6 du concours CADEV 2026 (Transparence et déclaration des outils d'assistance)  
-**Date du relevé :** 14 novembre 2026  
+**Date du relevé :** 15 novembre 2026  
 
 ---
 
@@ -29,6 +30,8 @@ Le flux de travail collaboratif mis en place par l'équipe CYBERSOCLE associe pi
   - **Claude IA :** Mobilisé pour la compréhension et l'analyse de documents de référence, l'élaboration de plans d'action de mise en conformité, la rédaction de synthèses méthodologiques et l'argumentation relative à la souveraineté numérique.
 - **MAMPOUYA Alicia Syrianne (Membre d'équipe) :**
   - Intervient sur la validation du parcours utilisateur non technique (parcours d'évaluation), la relecture des interfaces, et la préparation du support audiovisuel de démonstration (vidéo de présentation).
+- **GAMBOUE Ursie Semence (Membre d'équipe — Présentatrice) :**
+  - Intervient en co-présentation du pitch, de la démonstration vidéo et de la validation du parcours utilisateur.
 - **GitHub :**
   - Utilisé comme outil de gestion de version et d'hébergement distant pour le suivi des branches, des revues de Pull Requests et le miroir de sauvegarde (`https://github.com/OBIEY-TEAM/BANTUDEVLAB`). GitHub n'est pas un outil d'intelligence artificielle.
 - **Gemma 2 2B (via Ollama) :**
